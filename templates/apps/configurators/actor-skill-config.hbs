@@ -1,0 +1,24 @@
+<form class="flexcol" autocomplete="off">
+    <label class="title">Skills:</label>
+    <div class="skill">
+        <div class="skill-row">
+            {{#each skills as |skill_cat key|}}
+                <div class="category-area" style="grid-row-end: span {{skill_cat.sub_skills.length}}">
+                    <label class="category-title">{{skill_cat.name}}</label>
+                </div>
+                {{#each skill_cat.sub_skills as |skill subkey|}}
+                    <div class="flexrow">
+                        <label class="name" data-type="skill" data-id="{{skill.id}}">{{skill.name}}</label>
+                        <input class="value-label" type="number" name="skills.{{key}}.{{skill.id}}.success_value" value="{{skill.success_value}}"/>
+                        <input class="value-label" type="number" title="{{ localize "ATORIA.CriticalModifier"}}" name="skills.{{key}}.{{skill.id}}.critical_mod" value="{{skill.critical_mod}}"/>
+                        <input class="value-label" type="number" title="{{ localize "ATORIA.FumbleModifier"}}" name="skills.{{key}}.{{skill.id}}.fumble_mod" value="{{skill.fumble_mod}}"/>
+                    </div>
+                {{/each}}
+            {{/each}}
+        </div>
+    </div>
+  <button type="submit">
+    <i class="far fa-save"></i> {{localize "Save"}}
+  </button>
+</form>
+                

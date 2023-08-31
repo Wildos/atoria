@@ -1,0 +1,10 @@
+<form class="flexcol" autocomplete="off">
+    <div class="flexcol">
+        <label>{{ localize "ATORIA.FeatureNameTitle" }}</label>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.FeatureNameTitle' }}"/>
+        <label>{{ localize "ATORIA.FeatureEffectTitle" }}</label>
+        <input name="system.effect" type="text" value="{{item.system.effect}}" placeholder="{{ localize 'ATORIA.FeatureEffectTitle' }}"/>
+        <label>{{ localize "ATORIA.FeatureDescriptionTitle" }}</label>
+        <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.FeatureDescriptionTitle' }}">{{item.system.description}}</textarea>
+    </div>
+</form>

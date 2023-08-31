@@ -1,0 +1,16 @@
+<form class="flexcol" autocomplete="off">
+    <div class="flexcol">
+        <label>{{ localize "ATORIA.ActionNameTitle" }}</label>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.ActionNameTitle' }}"/>
+        <label>{{ localize "ATORIA.SuccessValue" }}</label>
+        <input name="system.success_value" type="text" value="{{item.system.success_value}}" placeholder="{{ localize 'ATORIA.SuccessValue' }}"/>
+        <label>{{ localize "ATORIA.CriticalModifier" }}</label>
+        <input name="system.critical_mod" type="text" value="{{item.system.critical_mod}}" placeholder="{{ localize 'ATORIA.CriticalModifier' }}"/>
+        <label>{{ localize "ATORIA.FumbleModifier" }}</label>
+        <input name="system.fumble_mod" type="text" value="{{item.system.fumble_mod}}" placeholder="{{ localize 'ATORIA.FumbleModifier' }}"/>
+        <label>{{ localize "ATORIA.ActionEffectRollTitle" }}</label>
+        <input name="system.effect_roll" type="text" value="{{item.system.effect_roll}}" placeholder="{{ localize 'ATORIA.ActionEffectRollTitle' }}"/>
+        <label>{{ localize "ATORIA.ActionDescriptionTitle" }}</label>
+        <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.ActionDescriptionTitle' }}">{{item.system.description}}</textarea>
+    </div>
+</form>

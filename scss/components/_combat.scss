@@ -1,0 +1,248 @@
+.combat {
+    width: max-content;
+
+    .title-label {
+        display: inline-block;
+        text-align: center;
+        background-color: $neutral-color;
+        border-radius: 3px;
+        border: 1px solid var(--color-border-light-tertiary);
+    
+        position: relative;
+        
+        .add-button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            display: inline-block;
+            text-align: center;
+            align-items: center;
+            vertical-align: middle;
+        }
+    }
+
+    .action-row {
+        width: max-content;
+        
+        .name-label {
+            text-align: center;
+            background-color: $transparent-color;
+            border-radius: 3px;
+            border: 1px solid var(--color-border-light-tertiary);
+        }
+
+        .longname-label {
+            text-align: center;
+            background-color: $transparent-color;
+            border-radius: 3px;
+            border: 1px solid var(--color-border-light-tertiary);
+            
+        }
+
+        .value-label {
+            text-align: center;
+            background-color: $transparent-color;
+            border-radius: 3px;
+            border: 1px solid var(--color-border-light-tertiary);
+        }
+
+        .roll-label {
+            text-align: center;
+            background-color: $transparent-color;
+            border-radius: 3px;
+            border: 1px solid var(--color-border-light-tertiary);
+        }
+
+
+        .detail-button {
+            display: inline-block;
+            text-align: center;
+            align-items: center;
+            vertical-align: middle;
+        }
+
+        .description-label {
+            display: none;
+            text-align: left;
+            line-height: var(--form-field-height);
+            background-color: $tanned-color;
+            border-radius: 3px;
+            border: 1px solid var(--color-border-light-tertiary);
+            white-space: pre-wrap;
+            word-break: break-word;
+
+            position: relative;
+        
+            .config-button {
+                position: absolute;
+                right: 20px;
+                top: 0;
+                display: none;
+                text-align: center;
+                align-items: center;
+                vertical-align: middle;
+            }
+            &:hover .config-button {
+                display: inline-block;
+            }
+            
+            .delete-button {
+                position: absolute;
+                right: 0;
+                top: 0;
+                display: none;
+                text-align: center;
+                align-items: center;
+                vertical-align: middle;
+            }
+            &:hover .delete-button {
+                display: inline-block;
+            }
+        }
+    
+    }
+}
+  
+.combat {
+    width: max-content;
+
+    .action-row {
+        width: max-content;
+
+        .name-label {
+            max-width: 160px;
+            min-width: 160px;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        .longname-label {
+            max-width: 220px;
+            min-width: 220px;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        .value-label {
+            max-width: 40px;
+            min-width: 40px;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);}
+
+        .roll-label {
+            max-width: 60px;
+            min-width: 60px;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);}
+
+
+        .detail-button {
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+            min-width: 20px;
+            max-width: 20px;
+            padding-left: 3px;
+            padding-right: 3px;
+        }
+
+        .description-label {
+            max-width: 280px;
+            min-width: 280px;
+            line-height: var(--form-field-height);
+            // max-height: fit-content;
+            min-height: var(--form-field-height);
+        
+            .config-button {
+                height: var(--form-field-height);
+                line-height: var(--form-field-height);
+                min-width: 20px;
+                max-width: 20px;
+                padding-left: 3px;
+                padding-right: 3px;
+            }
+            .delete-button {
+                height: var(--form-field-height);
+                line-height: var(--form-field-height);
+                min-width: 20px;
+                max-width: 20px;
+                padding-left: 3px;
+                padding-right: 3px;
+            }
+        }
+    
+    }
+}
+
+.npc-sheet {
+    .combat {
+        .title-label {
+            max-width: 280px;
+            min-width: 280px;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+            
+            .add-button {
+                height: var(--form-field-height);
+                line-height: var(--form-field-height);
+                min-width: 20px;
+                max-width: 20px;
+                padding-left: 3px;
+                padding-right: 3px;
+            }
+        }
+    }
+}
+
+.character-sheet {
+    .combat {
+        .title-label {
+            max-width: 720px;
+            min-width: 720px;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+            
+            .add-button {
+                height: var(--form-field-height);
+                line-height: var(--form-field-height);
+                min-width: 20px;
+                max-width: 20px;
+                padding-left: 3px;
+                padding-right: 3px;
+            }
+        }
+
+        .name-label {
+            max-width: 165px;
+            min-width: 165px;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        .longname-label {
+            max-width: 225px;
+            min-width: 225px;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+    }
+}

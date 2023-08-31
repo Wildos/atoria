@@ -1,0 +1,21 @@
+<div class="skill">
+    <label class="title">{{ localize "ATORIA.NPCSkillTitle"}}
+        <a class="add-button item-create flex0" data-type="skill" data-action="skill-item" >
+            <i class="fas fa-plus"></i>
+        </a>
+    </label>
+    {{#each skills as |skill key|}}
+        <div class="skill-row item flexcol" data-item-id="{{skill._id}}">
+            <div class="flexrow">
+                <label class="name flex0 rollable" data-type="skill" data-id="{{skill._id}}" title="{{skill.name}}">{{skill.name}}</label>
+                <label class="value-label flex0">{{skill.system.success_value}}</label>
+                <a class="config-button item-config flex0" data-action="skill-item" >
+                    <i class="fas fa-cog"></i>
+                </a>
+                <a class="delete-button item-delete flex0" data-action="skill-item" >
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        </div>
+    {{/each}}
+</div>

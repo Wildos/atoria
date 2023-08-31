@@ -1,0 +1,77 @@
+<form class="flexcol npc-sheet" autocomplete="off">
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <div class="header-fields">
+      <h1 class="charname">{{actor.name}}
+        <a class="config-sheet flex0" data-tooltip="ATORIA.BaseConfig">
+          <i class="fas fa-cog"></i>
+        </a>
+      </h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body flexrow">
+      {{!-- Left side --}}
+      <div class="flex0">
+        {{!-- Base area --}}
+        <div class="flexrow flex0">
+          {{!-- Resource --}}
+          <div class="resources flex0">
+            <div class="resource flexrow">
+                <label class="resource-label health">{{ localize "ATORIA.Health"}}</label>
+                <input type="text" name="system.health.value" value="{{system.health.value}}" data-dtype="Number"/>
+                <label class="health value-label">{{system.health.max}}</label>
+            </div>
+            <div class="resource flexrow">
+                <label class="resource-label stamina">{{ localize "ATORIA.Stamina"}}</label>
+                <input type="text" name="system.stamina.value" value="{{system.stamina.value}}" data-dtype="Number"/>
+                <label class="stamina value-label">{{system.stamina.max}}</label>
+            </div>
+            <div class="resource flexrow">
+                <label class="resource-label mana">{{ localize "ATORIA.Mana"}}</label>
+                <input type="text" name="system.mana.value" value="{{system.mana.value}}" data-dtype="Number"/>
+                <label class="mana value-label">{{system.mana.max}}</label>
+            </div>
+  
+            <div class="resource flexrow">
+                <label class="resource-label armor">{{ localize "ATORIA.Armor"}}</label>
+                <label class="armor value-label">{{system.armor}}</label>
+            </div>
+            <div class="resource flexrow">
+                <label class="resource-label initiative rollable" data-type="initiative">{{ localize "ATORIA.Initiative"}}</label>
+                <label class="initiative value-label">{{system.initiative}}</label>
+            </div>
+            <div class="resource flexrow">
+                <label class="resource-label movement">{{ localize "ATORIA.Movement"}}</label>
+                <label class="movement value-label">{{system.movement}}</label>
+            </div>
+          </div>
+          {{!-- Perceptions --}}
+          <div class="perceptions flex0">
+            {{#each system.perceptionsList}}
+              <div class="perception-row flexrow">
+                  <label class="perception-label perception rollable" data-type="perception" data-id="{{this.id}}">{{this.label}}</label>
+                  <label class="value-label">{{this.success_value}}</label>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+        {{!-- Combat --}}
+        <div class="flexcol flex0">
+          {{>"systems/atoria/templates/actors/parts/actor-npc-combat.hbs"}}
+        </div>
+        {{!-- Features --}}
+        <div class="flexcol flex0">
+          {{>"systems/atoria/templates/actors/parts/actor-npc-feature.hbs"}}
+        </div>
+      </div>
+
+      {{!-- Right side --}}
+      <div class="flex0">
+          {{>"systems/atoria/templates/actors/parts/actor-npc-skill.hbs"}}
+      </div>
+    
+  </section>
+</form>
+

@@ -1,0 +1,20 @@
+<div class="feature">
+    <label class="title-label">{{ localize "ATORIA.CharacterFeatureTitle"}}
+        <a class="add-button item-create flex0" data-type="feature" data-action="feature-item" >
+            <i class="fas fa-plus"></i>
+        </a>
+    </label>
+    {{#each features as |feature key|}}
+        <div class="feature-row item flexcol" data-item-id="{{feature._id}}">
+            <div class="flexrow">
+                <label class="name-label flex0" title="{{feature.name}}">{{feature.name}}</label>
+                <label class="effect-label flex0">{{feature.system.effect}}</label>
+                <a class="detail-button item-detail flex0" data-action="feature-item" data-id="{{feature._id}}" >
+                    <i class="fas fa-circle-info"></i>
+                </a>
+            </div>
+            <label class="description-label flex0" data-id="{{feature._id}}" style="{{feature.display_value}}">{{feature.system.description}}<a class="config-button item-config flex0" data-action="feature-item" ><i class="fas fa-cog"></i></a><a class="delete-button item-delete flex0" data-action="feature-item" ><i class="fas fa-trash"></i>
+            </a></label>
+        </div>
+    {{/each}}
+</div>

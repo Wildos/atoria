@@ -1,0 +1,24 @@
+image: python:3-alpine
+
+before_script:
+  - apk update
+  - apk add zip
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - echo "Creating the package..."
+    - zip atoria.zip -r ./ -x ".*"
+    - echo "Package complete."
+  artifacts:
+    expire_in: never
+    name: atoria
+    when: on_success
+    paths:
+      - atoria.zip
+  when: on_success
+  only:
+    - tags

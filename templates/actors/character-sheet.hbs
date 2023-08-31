@@ -1,0 +1,112 @@
+<form class="flexcol character-sheet" autocomplete="off">
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs flexrow" data-group="primary">
+        <a class="item" data-tab="character">{{ localize "ATORIA.CharacterPage" }}</a>
+        <a class="item" data-tab="inventory">{{ localize "ATORIA.InventoryPage" }}</a>
+        <a class="item" data-tab="spells">{{ localize "ATORIA.SpellPage" }}</a>
+        <a class="config-sheet" data-tooltip="ATORIA.BaseConfig">
+            <i class="fas fa-cog"></i>
+        </a>
+    </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    <div class="tab flexcol" data-group="primary" data-tab="character">
+        {{!-- First row --}}
+        <div class="flex0">
+            <div class="flexrow">
+                {{!-- Resource --}}
+                <div class="flex0">
+                    <div class="resources flexcol">
+                        <div class="flexrow flex0">
+                            <div class="resource flexrow">
+                                <label class="resource-label health">{{ localize "ATORIA.Health"}}</label>
+                                <label class="resource-label sanity">{{ localize "ATORIA.Sanity"}}</label>
+                            </div>
+                            <div class="resource flexrow">
+                                <input type="number" name="system.health.value" value="{{system.health.value}}"/>
+                                <label class="health value-label">{{system.health.max}}</label>
+                                <input type="number" name="system.sanity.value" value="{{system.sanity.value}}"/>
+                                <label class="sanity value-label">{{system.sanity.max}}</label>
+                            </div>
+                        </div>
+                        <div class="flexrow flex0">
+                            <div class="resource flexrow">
+                                <label class="resource-label stamina">{{ localize "ATORIA.Stamina"}}</label>
+                                <label class="resource-label mana">{{ localize "ATORIA.Mana"}}</label>
+                            </div>
+                            <div class="resource flexrow">
+                                <input type="number" name="system.stamina.value" value="{{system.stamina.value}}"/>
+                                <label class="stamina value-label">{{system.stamina.current_max}}</label>
+                                <input type="number" name="system.mana.value" value="{{system.mana.value}}"/>
+                                <label class="mana value-label">{{system.mana.current_max}}</label>
+                            </div>
+                        </div>
+                        <div class="flexrow flex0">
+                            <div class="resource flexrow">
+                                <label class="resource-label endurance">{{ localize "ATORIA.Endurance"}}</label>
+                                <label class="resource-label encumbrance">{{ localize "ATORIA.Encumbrance"}}</label>
+                            </div>
+                            <div class="resource flexrow">
+                                <input type="number" name="system.endurance.value" value="{{system.endurance.value}}"/>
+                                <label class="endurance value-label">{{system.endurance.max}}</label>
+                                <label class="encumbrance value-label">{{system.encumbrance.value}}</label>
+                                <label class="encumbrance value-label">{{system.encumbrance.max}}</label>
+                            </div>
+                        </div>
+                        <div class="resource flexrow">
+                            <label class="resource-label">{{ localize "ATORIA.Luck"}}</label>
+                            <input class="resource-label" type="number" name="system.luck" value="{{system.luck}}"/>  
+                        </div>
+                    </div>
+                </div>
+                {{!-- Perceptions --}}
+                <div class="flex0">
+                    <div class="perceptions flexcol">
+                        <label class="title perception">{{ localize "ATORIA.PerceptionTitle"}}</label>
+                        {{#each system.perceptionsListPair}}
+                            <div class="perception-row flexrow">
+                                {{#each this}}
+                                    <label class="perception-label tanned-color rollable" data-type="perception" data-id="{{this.id}}">{{this.label}}</label>
+                                {{/each}}
+                            </div>
+                            <div class="perception-row flexrow">
+                                {{#each this}}
+                                    <label class="value-label">{{this.success_value}}</label>
+                                {{/each}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{!-- Status Effect --}}
+                <div class="flex0">
+                    {{> "systems/atoria/templates/actors/parts/actor-character-effect.hbs"}}
+                </div>
+            </div>
+        </div>
+        {{!-- Second row --}}
+        <div class="flex0">
+            <div class="flexrow">
+                <div class="flexcol">
+                    <div class="flex0">
+                        {{> "systems/atoria/templates/actors/parts/actor-character-combat.hbs"}}
+                    </div>
+                    <div class="flexrow" style="min-width: 720px">
+                        <div>{{> "systems/atoria/templates/actors/parts/actor-character-skill.hbs"}}</div>
+                        <div>{{> "systems/atoria/templates/actors/parts/actor-character-knowledge.hbs"}}</div>
+                    </div>
+                </div>
+                <div class="flexcol">
+                    {{> "systems/atoria/templates/actors/parts/actor-character-feature.hbs"}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab" data-group="primary" data-tab="inventory">
+        {{> "systems/atoria/templates/actors/parts/actor-character-inventory.hbs"}}
+    </div>
+    <div class="tab" data-group="primary" data-tab="spells">
+        {{> "systems/atoria/templates/actors/parts/actor-character-spell.hbs"}}
+    </div>
+  </section>
+</form>

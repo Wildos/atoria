@@ -1,0 +1,84 @@
+.resource-label {
+  font-weight: bold;
+}
+
+.resources {
+  .resource {
+    text-align: center;
+    align-items: center;
+    width: max-content;
+  }
+
+  label {
+    text-align: center;
+    border-radius: 3px;
+    border: 1px solid var(--color-border-light-tertiary);
+  }
+  
+  input {
+    text-align: center;
+  }
+
+}
+
+.character-sheet {
+  .resources {
+    .charname {
+      max-width: 200px;
+      min-width: 200px;
+      height: var(--form-field-height);
+      line-height: var(--form-field-height);
+    }
+    .resource {
+      label, .resource-label {
+        max-width: 100px;
+        min-width: 100px;
+        height: var(--form-field-height);
+        line-height: var(--form-field-height);
+      }
+
+      .value-label {
+        max-width: 50px;
+        min-width: 50px;
+      }
+
+      input {
+        max-width: 50px;
+        min-width: 50px;
+      }
+
+      .resource-label.armor, .resource-label.initiative, .resource-label.movement {
+        max-width: 100px;
+        min-width: 100px;
+      }
+    }
+  }
+}
+
+.npc-sheet {
+  .resources {
+    .resource {
+      label {
+        max-width: 60px;
+        min-width: 60px;
+        height: var(--form-field-height);
+        line-height: var(--form-field-height);
+      }
+
+      .value-label {
+        max-width: 50px;
+        min-width: 50px;
+      }
+
+      input {
+        max-width: 50px;
+        min-width: 50px;
+      }
+
+      .resource-label.armor, .resource-label.initiative, .resource-label.movement {
+        max-width: 110px;
+        min-width: 110px;
+      }
+    }
+  }
+}

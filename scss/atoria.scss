@@ -1,0 +1,75 @@
+// Add custom fonts by visiting and search https://fonts.google.com
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+// Import utilities.
+@import 'utils/typography';
+@import 'utils/colors';
+
+/* Global styles */
+@import 'global/window';
+@import 'global/grid';
+
+/* Styles limited to atoria sheets */
+@import 'components/configurators';
+.atoria {
+    @import 'components/forms';
+    @import 'components/actor_sheet';
+    @import 'components/spell_sheet';
+    @import 'components/resources';
+    @import 'components/perceptions';
+    @import 'components/combat';
+    @import 'components/feature';
+    @import 'components/skill';
+    @import 'components/knowledge';
+    @import 'components/effects';
+    @import 'components/inventory';
+    @import 'components/spell';
+
+    @import 'dialogs/test_dialog';
+
+  input, textarea{
+    background-color: $clear-color;
+  }
+
+  .perception {
+    background-color: $perception-color;
+  }
+  .health {
+    background-color: $health-color;
+  }
+  .stamina {
+    background-color: $stamina-color;
+  }
+  .mana {
+    background-color: $mana-color;
+  }
+
+  .sanity {
+    background-color: $sanity-color;
+  }
+  .endurance {
+    background-color: $endurance-color;
+  }
+  .encumbrance {
+    background-color: $encumbrance-color;
+  }
+  .armor, .initiative, .movement {
+    background-color: $neutral-color;
+  }
+
+  .coin-copper {
+    background-color: $coin-copper-color;
+  }
+  .coin-silver {
+    background-color: $coin-silver-color;
+  }
+  .coin-gold {
+    background-color: $coin-gold-color;
+  }
+
+  .tanned-color {
+    background-color: $tanned-color;
+  }
+}
+
+@import 'components/chat_message';

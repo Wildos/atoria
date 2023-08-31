@@ -1,0 +1,46 @@
+<div class="skill-roll">
+    {{#if effect_result}}
+        <div class="flexrow">
+            <div class="skill-attribute flexcol">
+                <label>
+                    <span>{{skill_name}} : </span>
+                    <span>{{target}}</span>
+                </label>
+                <label>
+                    <span class="sl-span"><span>{{ localize "ATORIA.RollSL" }} : </span><span>{{SL_modifier}}</span></span>
+                    <span class="luck-span"><span>{{ localize "ATORIA.Luck" }} : </span><span>{{success_modifier}}</span></span>
+                    {{#if adv_string}}
+                        <span class="adv-span">{{adv_string}}</span>
+                    {{/if}}
+                </label>
+            </div>
+            <div class="skill-effect flex0" title="{{effect_detail}}">{{{effect_result}}}</div>
+        </div>
+    {{else}}
+        <div class="skill-attribute flexcol">
+            <label>
+                <span>{{skill_name}}: </span>
+                <span>{{target}}</span>
+            </label>
+            <label>
+                <span class="sl-span"><span>{{ localize "ATORIA.RollSL" }} : </span><span>{{SL_modifier}}</span></span>
+                <span class="luck-span"><span>{{ localize "ATORIA.Luck" }} : </span><span>{{success_modifier}}</span></span>
+                {{#if adv_string}}
+                    <span class="adv-span">{{adv_string}}</span>
+                {{/if}}
+            </label>
+        </div>
+    {{/if}}
+    <div class="skill-result flexrow">
+        {{#if isCritical}}
+            <label style="color: green" title="{{roll_detail}}">{{ localize "ATORIA.RollResult" }} : <span class="dice-result">{{roll}}</span></label>
+        {{else if isFumble}}
+            <label style="color: red" title="{{roll_detail}}">{{ localize "ATORIA.RollResult" }} : <span class="dice-result">{{roll}}</span></label>
+        {{else}}
+            <label title="{{roll_detail}}">{{ localize "ATORIA.RollResult" }} : <span class="dice-result">{{roll}}</span></label>
+        {{/if}}
+        <label>{{ localize "ATORIA.RollSL" }} : <span>{{signedSL}}</span></label>
+        <label>{{ localize "ATORIA.RollMS" }} : <span>{{marginOfSuccess}}</span></label>
+    </div>
+    <div>{{effect_description}}</div>
+</div>

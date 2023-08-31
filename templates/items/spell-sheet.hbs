@@ -1,0 +1,83 @@
+<form class="spell-sheet" autocomplete="off">
+    <input class="name" name="name" type="text" value="{{item.name}}" title="{{ localize 'ATORIA.SpellNameTitle' }}"/>
+
+    <label class="success-value-title category-title">{{ localize "ATORIA.SpellSuccessValueTitle" }}</label>
+    <div class="flexrow">
+        <input class="success-value" name="system.success_value" type="number" value="{{item.system.success_value}}" title="{{ localize 'ATORIA.SpellSuccessValueTitle' }}"/>
+        <label class="critical-title">{{ localize "ATORIA.SpellCriticalValueTitle" }}</label>
+        <input class="critical" name="system.critical_value" type="number" value="{{item.system.critical_value}}" title="{{ localize 'ATORIA.SpellCriticalValueTitle' }}"/>
+        <label class="fumble-title">{{ localize "ATORIA.SpellFumbleValueTitle" }}</label>
+        <input class="fumble" name="system.fumble_value" type="number" value="{{item.system.fumble_value}}" title="{{ localize 'ATORIA.SpellFumbleValueTitle' }}"/>
+    </div>
+
+    <label class="cost-title category-title">{{ localize "ATORIA.SpellCostTitle" }}</label>
+    <div class="flexrow">
+        <input class="cost-input health" name="system.cost.health" type="number" value="{{item.system.cost.health}}" title="{{ localize 'ATORIA.Health' }}"/>
+        <input class="cost-input mana" name="system.cost.mana" type="number" value="{{item.system.cost.mana}}" title="{{ localize 'ATORIA.Mana' }}"/>
+        <input class="cost-input stamina" name="system.cost.stamina" type="number" value="{{item.system.cost.stamina}}" title="{{ localize 'ATORIA.Stamina' }}"/>
+        <input class="cost-input endurance" name="system.cost.endurance" type="number" value="{{item.system.cost.endurance}}" title="{{ localize 'ATORIA.Endurance' }}"/>
+    </div>
+
+    {{!-- <label class="time-title category-title" style="grid-row-end: span 2">{{ localize "ATORIA.SpellTimeTitle" }}</label> --}}
+ 
+    <div class="flexrow" style="grid-column-end: span 2">
+        <label class="time-preparation-title">{{ localize "ATORIA.SpellTimePreparationTitle" }}</label>
+        <input class="time-preparation" name="system.time.preparation" type="text" value="{{item.system.time.preparation}}" title="{{ localize 'ATORIA.SpellTimePreparationTitle' }}"/>
+    </div>
+    <div class="flexrow" style="grid-column-end: span 2">
+        <label class="time-duration-title">{{ localize "ATORIA.SpellTimeDurationTitle" }}</label>
+        <input class="time-modifier" name="system.time.modifier" type="text" value="{{item.system.time.modifier}}" title="{{ localize 'ATORIA.SpellTimeModifierTitle' }}"/>
+        <input class="time-duration" name="system.time.duration" type="text" value="{{item.system.time.duration}}" title="{{ localize 'ATORIA.SpellTimePreparationTitle' }}"/>
+    </div>
+
+    {{!-- <label class="components-title category-title" style="grid-row-end: span 5">{{ localize "ATORIA.SpellComponentsTitle" }}</label> --}}
+
+    <div class="flexrow" style="grid-column-end: span 2">
+        <label class="components-verbal-title" >{{ localize "ATORIA.SpellComponentsVerbalTitle" }}</label>
+        <input class="components-verbal" name="system.components.verbal" type="text" value="{{item.system.components.verbal}}" title="{{ localize 'ATORIA.SpellComponentsVerbalTitle' }}"/>
+    </div>
+    <label class="components-somatic-title" style="grid-column-end: span 2">{{ localize "ATORIA.SpellComponentsSomaticTitle" }}</label>
+    <input class="components-somatic"  style="grid-column-end: span 2" name="system.components.somatic" type="text" value="{{item.system.components.somatic}}" title="{{ localize 'ATORIA.SpellComponentsSomaticTitle' }}"/>
+    <label class="components-material-title" style="grid-column-end: span 2">{{ localize "ATORIA.SpellComponentsMaterialTitle" }}</label>
+    <input class="components-material"  style="grid-column-end: span 2" name="system.components.material" type="text" value="{{item.system.components.material}}" title="{{ localize 'ATORIA.SpellComponentsMaterialTitle' }}"/>
+
+
+    {{!-- <label class="targeting-title category-title" style="grid-row-end: span 3">{{ localize "ATORIA.SpellTargetingTitle" }}</label> --}}
+
+    <div class="flexrow" style="grid-column-end: span 2">
+        <label class="targeting-target-title">{{ localize "ATORIA.SpellTargetingTargetTitle" }}</label>
+        <input class="targeting-target" name="system.targeting.target" type="text" value="{{item.system.targeting.target}}" title="{{ localize 'ATORIA.SpellTargetingTargetTitle' }}"/>
+    </div>
+    <div class="flexrow" style="grid-column-end: span 2">
+        <label class="targeting-range-title">{{ localize "ATORIA.SpellTargetingRangeTitle" }}</label>
+        <input class="targeting-range" name="system.targeting.range" type="text" value="{{item.system.targeting.range}}" title="{{ localize 'ATORIA.SpellTargetingRangeTitle' }}"/>
+    </div>
+    <div class="flexrow" style="grid-column-end: span 2">
+        <label class="targeting-area-title">{{ localize "ATORIA.SpellTargetingAreaTitle" }}</label>
+        <input class="targeting-area" name="system.targeting.area" type="text" value="{{item.system.targeting.area}}" title="{{ localize 'ATORIA.SpellTargetingAreaTitle' }}"/>
+    </div>
+
+    <label class="effect-title">{{ localize "ATORIA.SpellEffectTitle" }}</label>
+    <textarea class="effect" name="system.effect_description" title="{{ localize 'ATORIA.SpellEffectTitle' }}">{{item.system.effect_description}}</textarea>
+
+    <label class="spell-supp-title">{{ localize "ATORIA.SpellSuppTitle" }}
+        <a class="add-button spell-supp-create flex0" data-type="spell_supp" data-action="spell-item" >
+            <i class="fas fa-plus"></i>
+        </a>
+    </label>
+    {{#each item.system.spell_supps as |spell_supp key|}}
+        <div class="spell-supp flexcol" data-id="{{key}}">
+            <div class="flexrow">
+                <input class="cost-input health" name="system.spell_supps.{{key}}.cost.health" type="number" value="{{spell_supp.cost.health}}" title="{{ localize 'ATORIA.Health' }}"/>
+                <input class="cost-input mana" name="system.spell_supps.{{key}}.cost.mana" type="number" value="{{spell_supp.cost.mana}}" title="{{ localize 'ATORIA.Mana' }}"/>
+                <input class="cost-input stamina" name="system.spell_supps.{{key}}.cost.stamina" type="number" value="{{spell_supp.cost.stamina}}" title="{{ localize 'ATORIA.Stamina' }}"/>
+                <input class="cost-input endurance" name="system.spell_supps.{{key}}.cost.endurance" type="number" value="{{spell_supp.cost.endurance}}" title="{{ localize 'ATORIA.Endurance' }}"/>
+                <input class="cost-input time" name="system.spell_supps.{{key}}.cost.time" type="text" value="{{spell_supp.cost.time}}"/>
+                <a class="delete-button spell-supp-delete flex0" data-type="spell_supp" data-action="spell-item" >
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+            <textarea class="effect" name="system.spell_supps.{{key}}.effect_description" title="{{ localize 'ATORIA.SpellEffectTitle' }}">{{spell_supp.effect_description}}</textarea>
+        </div>
+    {{/each}}
+</form>

@@ -1,0 +1,66 @@
+<div class="combat">
+    <label class="title-label">{{ localize "ATORIA.CombatTitle"}}
+        <a class="add-button item-create flex0" data-type="action" data-action="action-item">
+            <i class="fas fa-plus"></i>
+        </a>
+    </label>
+    <div class="flexrow">
+        <div class="flex0 ">
+            <div class="resources flexcol">
+                <div class="resource flexrow">
+                    <label class="resource-label armor">{{ localize "ATORIA.Armor"}}</label>
+                    <label class="armor value-label">{{system.armor}}</label>
+                </div>
+                <div class="resource flexrow">
+                    <label class="resource-label initiative rollable" data-type="initiative">{{ localize "ATORIA.Initiative"}}</label>
+                    <label class="initiative value-label">{{system.initiative}}</label>
+                </div>
+                <div class="resource flexrow">
+                    <label class="resource-label movement">{{ localize "ATORIA.Movement"}}</label>
+                    <label class="movement value-label">{{system.movement}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="grid-2col">
+            {{#each actions as |action key|}}
+                <div class="action-row item flexcol" data-item-id="{{action._id}}">
+                    <div class="flex0">
+                        <div class="flexrow">
+                            {{#if action.system.effect_roll}}
+                                <label class="name-label flex0 rollable" data-type="action" data-id="{{action._id}}" title="{{action.name}}">{{action.name}}</label>
+                                <label class="roll-label flex0">{{action.system.effect_roll}}</label>
+                            {{else}}
+                                <label class="longname-label flex0 rollable" data-type="action" data-id="{{action._id}}" title="{{action.name}}">{{action.name}}</label>
+                            {{/if}}
+
+                            <label class="value-label flex0">{{action.system.success_value}}</label>
+
+                            <a class="detail-button item-detail flex0" data-action="action-item" data-id="{{action._id}}" >
+                                <i class="fas fa-circle-info"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex0">
+                        <label class="description-label" data-id="{{action._id}}" style="{{action.display_value}}">{{action.system.description}}<a class="config-button item-config flex0" data-action="action-item" ><i class="fas fa-cog"></i></a><a class="delete-button item-delete flex0" data-action="action-item" ><i class="fas fa-trash"></i>
+                        </a></label>
+                    </div>
+                </div>
+            {{/each}}
+            {{#each gear_weapons as |weapon key|}}
+                <div class="action-row item flexcol" data-item-id="{{weapon._id}}">
+                    <div class="flex0">
+                        <div class="flexrow">
+                            {{#if weapon.system.damage_roll}}
+                                <label class="name-label flex0 rollable" data-type="gear-weapon" data-id="{{weapon._id}}" title="{{weapon.name}}">{{weapon.name}}</label>
+                                <label class="roll-label flex0">{{weapon.system.damage_roll}}</label>
+                            {{else}}
+                                <label class="longname-label flex0 rollable" data-type="gear-weapon" data-id="{{weapon._id}}" title="{{weapon.name}}">{{weapon.name}}</label>
+                            {{/if}}
+                            <label class="value-label flex0">{{weapon.system.success_value}}</label>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

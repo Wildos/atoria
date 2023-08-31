@@ -1,0 +1,24 @@
+<form class="flexcol" autocomplete="off">
+    <div class="flexcol">
+        <label>{{ localize "ATORIA.ItemNameTitle" }}</label>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.ItemName' }}"/>
+        {{#if isWeapon}}
+            <label>{{ localize "ATORIA.ItemDiceTitle" }}</label>
+            <input name="system.damage_roll" type="text" value="{{item.system.damage_roll}}" placeholder="{{ localize 'ATORIA.DamageRoll' }}"/>
+            <label>{{ localize "ATORIA.SuccessValue" }}</label>
+            <input name="system.success_value" type="text" value="{{item.system.success_value}}" placeholder="{{ localize 'ATORIA.SuccessValue' }}"/>
+            <label>{{ localize "ATORIA.CriticalModifier" }}</label>
+            <input name="system.critical_mod" type="text" value="{{item.system.critical_mod}}" placeholder="{{ localize 'ATORIA.CriticalModifier' }}"/>
+            <label>{{ localize "ATORIA.FumbleModifier" }}</label>
+            <input name="system.fumble_mod" type="text" value="{{item.system.fumble_mod}}" placeholder="{{ localize 'ATORIA.FumbleModifier' }}"/>
+        {{/if}}
+        {{#if isBagItem}}
+            <label>{{ localize "ATORIA.ItemQuantityTitle" }}</label>
+            <input name="system.quantity" type="text" value="{{item.system.quantity}}" placeholder="{{ localize 'ATORIA.Quantity' }}"/>
+        {{/if}}
+        <label>{{ localize "ATORIA.ItemEncumbranceTitle" }}</label>
+        <input name="system.encumbrance" type="text" value="{{item.system.encumbrance}}" placeholder="{{ localize 'ATORIA.Encumbrance' }}"/>
+        <label>{{ localize "ATORIA.ItemDescriptionTitle" }}</label>
+        <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.Description' }}">{{item.system.description}}</textarea>
+    </div>
+</form>

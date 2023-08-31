@@ -1,0 +1,2318 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+/* Global styles */
+.window-app {
+  font-family: "Roboto", sans-serif;
+}
+
+.rollable:hover, .rollable:focus {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+
+.grid-2col {
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Styles limited to atoria sheets */
+.atoria.actor-config .attributes input, .atoria.actor-config .attributes label {
+  min-width: 225px;
+  max-width: 225px;
+}
+.atoria.actor-config .attributes .health {
+  background-color: #cc0000;
+}
+.atoria.actor-config .attributes .stamina {
+  background-color: #6aa84f;
+}
+.atoria.actor-config .attributes .mana {
+  background-color: #3c78d8;
+}
+.atoria.actor-config .attributes .sanity {
+  background-color: #8e7cc3;
+}
+.atoria.actor-config .attributes .endurance {
+  background-color: #e69138;
+}
+.atoria.actor-config .attributes .encumbrance {
+  background-color: #e6b8af;
+}
+.atoria.actor-config .attributes .armor, .atoria.actor-config .attributes .initiative, .atoria.actor-config .attributes .movement {
+  background-color: #cccccc;
+}
+.atoria.actor-config .perceptions .perception label.perception-label {
+  font-weight: bold;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 75px;
+  max-width: 75px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  background-color: #f1c232;
+}
+.atoria.actor-config .perceptions .perception input {
+  text-align: center;
+  min-width: 50px;
+  max-width: 50px;
+}
+
+.atoria.actor-skill-config .skill {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria.actor-skill-config .skill .title {
+  display: inline-block;
+  text-align: center;
+  background-color: #a4c2f4;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria.actor-skill-config .skill .title .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria.actor-skill-config .skill .skill-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria.actor-skill-config .skill .skill-row .category-title {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria.actor-skill-config .skill .skill-row .name {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria.actor-skill-config .skill .skill-row .value-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria.actor-skill-config .skill .skill-row .config-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria.actor-skill-config .skill .skill-row .delete-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria.actor-skill-config .skill {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria.actor-skill-config .skill .title {
+  max-width: 440px;
+  min-width: 440px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria.actor-skill-config .skill .skill-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: repeat(2, minmax(0, -webkit-max-content));
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+.atoria.actor-skill-config .skill .skill-row .category-area {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 90px;
+  min-width: 90px;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria.actor-skill-config .skill .skill-row .category-title {
+  -webkit-box-ordinal-group: 3;
+  -ms-flex-order: 2;
+  order: 2;
+  max-width: 90px;
+  min-width: 90px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 0;
+  border: none;
+}
+.atoria.actor-skill-config .skill .skill-row .name {
+  max-width: 100px;
+  min-width: 100px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria.actor-skill-config .skill .skill-row .value-label {
+  max-width: 30px;
+  min-width: 30px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria.actor-skill-config .skill .skill-row .config-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria.actor-skill-config .skill .skill-row .delete-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.atoria .item-form {
+  font-family: "Roboto", sans-serif;
+}
+.atoria .sheet-header {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 auto;
+  flex: 0 auto;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+.atoria .sheet-header .profile-img {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 100px;
+  flex: 0 0 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+.atoria .sheet-header .header-fields {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+.atoria .sheet-header h1.charname {
+  height: 50px;
+  padding: 0px;
+  margin: 5px 0;
+  border-bottom: 0;
+  position: relative;
+}
+.atoria .sheet-header h1.charname .config-sheet {
+  position: absolute;
+  padding: 4px;
+  right: 0;
+  top: 0;
+  display: none;
+}
+.atoria .sheet-header h1.charname:hover .config-sheet {
+  display: block;
+}
+.atoria .sheet-tabs {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+}
+.atoria .sheet-body,
+.atoria .sheet-body .tab,
+.atoria .sheet-body .tab .editor {
+  height: 100%;
+}
+.atoria .character-sheet nav.sheet-tabs {
+  margin-bottom: 8px;
+}
+.atoria .character-sheet nav.sheet-tabs a {
+  border: solid 1px black;
+}
+.atoria .character-sheet nav.sheet-tabs a.active {
+  text-shadow: none;
+  background-color: #6db088;
+}
+.atoria .character-sheet .config-sheet {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  min-width: 20px;
+  max-width: 100px;
+  padding: 8px 12px;
+}
+.atoria .spell-sheet {
+  min-width: 250px;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: 60px 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+}
+.atoria .spell-sheet .flexrow, .atoria .spell-sheet .flexcol {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.atoria .spell-sheet label, .atoria .spell-sheet input {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  line-height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+  padding: 0;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  width: 100%;
+}
+.atoria .spell-sheet .name {
+  grid-column-end: span 2;
+}
+.atoria .spell-sheet .category-title {
+  min-width: 60px;
+  max-width: 60px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.atoria .spell-sheet .success-value-title {
+  height: var(--form-field-height);
+}
+.atoria .spell-sheet .success-value {
+  min-width: 30px;
+  max-width: 30px;
+}
+.atoria .spell-sheet .critical {
+  min-width: 30px;
+  max-width: 30px;
+}
+.atoria .spell-sheet .fumble {
+  min-width: 30px;
+  max-width: 30px;
+}
+.atoria .spell-sheet .cost-title {
+  height: var(--form-field-height);
+}
+.atoria .spell-sheet .time-title {
+  height: calc(2 * var(--form-field-height));
+  max-height: calc(2 * var(--form-field-height));
+}
+.atoria .spell-sheet .time-preparation-title {
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell-sheet .time-duration-title {
+  min-width: 70px;
+  max-width: 70px;
+}
+.atoria .spell-sheet .time-modifier {
+  min-width: 20px;
+  max-width: 20px;
+}
+.atoria .spell-sheet .components-title {
+  height: calc(5 * var(--form-field-height));
+  max-height: calc(5 * var(--form-field-height));
+}
+.atoria .spell-sheet .components-verbal-title {
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell-sheet .targeting-title {
+  height: calc(3 * var(--form-field-height));
+  max-height: calc(3 * var(--form-field-height));
+}
+.atoria .spell-sheet .targeting-target-title {
+  min-width: 50px;
+  max-width: 50px;
+}
+.atoria .spell-sheet .targeting-range-title {
+  min-width: 50px;
+  max-width: 50px;
+}
+.atoria .spell-sheet .targeting-area-title {
+  min-width: 50px;
+  max-width: 50px;
+}
+.atoria .spell-sheet .effect-title {
+  grid-column-end: span 2;
+}
+.atoria .spell-sheet .effect {
+  grid-column-end: span 2;
+  text-align: left;
+  resize: vertical;
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-indent: 0;
+  text-justify: auto;
+}
+.atoria .spell-sheet .spell-supp-title {
+  grid-column-end: span 2;
+  position: relative;
+}
+.atoria .spell-sheet .spell-supp-title .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .spell-sheet .spell-supp {
+  grid-column-end: span 2;
+}
+.atoria .spell-sheet .spell-supp .flexrow {
+  position: relative;
+}
+.atoria .spell-sheet .spell-supp .flexrow .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .spell-sheet .spell-supp .flexrow:hover .delete-button {
+  display: inline-block;
+}
+.atoria .spell-sheet .cost-input.time {
+  min-width: 100px;
+  max-width: 100px;
+}
+.atoria .resource-label {
+  font-weight: bold;
+}
+.atoria .resources .resource {
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .resources label {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .resources input {
+  text-align: center;
+}
+.atoria .character-sheet .resources .charname {
+  max-width: 200px;
+  min-width: 200px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .resources .resource label, .atoria .character-sheet .resources .resource .resource-label {
+  max-width: 100px;
+  min-width: 100px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .resources .resource .value-label {
+  max-width: 50px;
+  min-width: 50px;
+}
+.atoria .character-sheet .resources .resource input {
+  max-width: 50px;
+  min-width: 50px;
+}
+.atoria .character-sheet .resources .resource .resource-label.armor, .atoria .character-sheet .resources .resource .resource-label.initiative, .atoria .character-sheet .resources .resource .resource-label.movement {
+  max-width: 100px;
+  min-width: 100px;
+}
+.atoria .npc-sheet .resources .resource label {
+  max-width: 60px;
+  min-width: 60px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .npc-sheet .resources .resource .value-label {
+  max-width: 50px;
+  min-width: 50px;
+}
+.atoria .npc-sheet .resources .resource input {
+  max-width: 50px;
+  min-width: 50px;
+}
+.atoria .npc-sheet .resources .resource .resource-label.armor, .atoria .npc-sheet .resources .resource .resource-label.initiative, .atoria .npc-sheet .resources .resource .resource-label.movement {
+  max-width: 110px;
+  min-width: 110px;
+}
+.atoria .sheet-body .perceptions label.title {
+  text-align: center;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .sheet-body .perceptions .perception-row {
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .sheet-body .perceptions .perception-row label.perception-label {
+  font-weight: bold;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .sheet-body .perceptions .perception-row label.value-label {
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .character-sheet .sheet-body .perceptions label.title {
+  max-width: 200px;
+  min-width: 200px;
+  height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .sheet-body .perceptions .perception-row label.perception-label {
+  max-width: 100px;
+  min-width: 100px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .sheet-body .perceptions .perception-row label.value-label {
+  max-width: 100px;
+  min-width: 100px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .npc-sheet .sheet-body .perceptions .perception-row label.perception-label {
+  max-width: 70px;
+  min-width: 70px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .npc-sheet .sheet-body .perceptions .perception-row label.value-label {
+  max-width: 50px;
+  min-width: 50px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .combat {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .combat .title-label {
+  display: inline-block;
+  text-align: center;
+  background-color: #cccccc;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria .combat .title-label .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .combat .action-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .combat .action-row .name-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .combat .action-row .longname-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .combat .action-row .value-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .combat .action-row .roll-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .combat .action-row .detail-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .combat .action-row .description-label {
+  display: none;
+  text-align: left;
+  line-height: var(--form-field-height);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  position: relative;
+}
+.atoria .combat .action-row .description-label .config-button {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  display: none;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .combat .action-row .description-label:hover .config-button {
+  display: inline-block;
+}
+.atoria .combat .action-row .description-label .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .combat .action-row .description-label:hover .delete-button {
+  display: inline-block;
+}
+.atoria .combat {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .combat .action-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .combat .action-row .name-label {
+  max-width: 160px;
+  min-width: 160px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .combat .action-row .longname-label {
+  max-width: 220px;
+  min-width: 220px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .combat .action-row .value-label {
+  max-width: 40px;
+  min-width: 40px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .combat .action-row .roll-label {
+  max-width: 60px;
+  min-width: 60px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .combat .action-row .detail-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .combat .action-row .description-label {
+  max-width: 280px;
+  min-width: 280px;
+  line-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+}
+.atoria .combat .action-row .description-label .config-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .combat .action-row .description-label .delete-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .npc-sheet .combat .title-label {
+  max-width: 280px;
+  min-width: 280px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .npc-sheet .combat .title-label .add-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .combat .title-label {
+  max-width: 720px;
+  min-width: 720px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .combat .title-label .add-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .combat .name-label {
+  max-width: 165px;
+  min-width: 165px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .character-sheet .combat .longname-label {
+  max-width: 225px;
+  min-width: 225px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .feature {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .feature .title-label {
+  display: inline-block;
+  text-align: center;
+  background-color: #cccccc;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria .feature .title-label .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .feature .feature-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .feature .feature-row .name-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .feature .feature-row .effect-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .feature .feature-row .detail-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .feature .feature-row .description-label {
+  display: none;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  position: relative;
+}
+.atoria .feature .feature-row .description-label .config-button {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  display: none;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .feature .feature-row .description-label:hover .config-button {
+  display: inline-block;
+}
+.atoria .feature .feature-row .description-label .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .feature .feature-row .description-label:hover .delete-button {
+  display: inline-block;
+}
+.atoria .npc-sheet .feature {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .npc-sheet .feature .title-label {
+  max-width: 280px;
+  min-width: 280px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .npc-sheet .feature .title-label .add-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .npc-sheet .feature .feature-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .npc-sheet .feature .feature-row .name-label {
+  max-width: 120px;
+  min-width: 120px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .npc-sheet .feature .feature-row .effect-label {
+  max-width: 140px;
+  min-width: 140px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .npc-sheet .feature .feature-row .detail-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .npc-sheet .feature .feature-row .description-label {
+  max-width: 280px;
+  min-width: 280px;
+  min-height: var(--form-field-height);
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .npc-sheet .feature .feature-row .description-label .config-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .npc-sheet .feature .feature-row .description-label .delete-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .feature {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .character-sheet .feature .title-label {
+  max-width: 280px;
+  min-width: 280px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .feature .title-label .add-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .feature .feature-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .character-sheet .feature .feature-row .name-label {
+  max-width: 200px;
+  min-width: 200px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .character-sheet .feature .feature-row .effect-label {
+  max-width: 60px;
+  min-width: 60px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .feature .feature-row .detail-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .feature .feature-row .description-label {
+  max-width: 280px;
+  min-width: 280px;
+  min-height: var(--form-field-height);
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .feature .feature-row .description-label .config-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .feature .feature-row .description-label .delete-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .skill {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .skill .title {
+  display: inline-block;
+  text-align: center;
+  background-color: #a4c2f4;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria .skill .title .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .skill .title .config-button {
+  position: absolute;
+  right: 2px;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .skill .skill-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .skill .skill-row .category-title {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .skill .skill-row .name {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .skill .skill-row .value-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .skill .skill-row .config-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .skill .skill-row .delete-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .npc-sheet .skill {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .npc-sheet .skill .title {
+  max-width: 210px;
+  min-width: 210px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .npc-sheet .skill .title .add-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .npc-sheet .skill .skill-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .npc-sheet .skill .skill-row .name {
+  max-width: 120px;
+  min-width: 120px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .npc-sheet .skill .skill-row .value-label {
+  max-width: 50px;
+  min-width: 50px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .npc-sheet .skill .skill-row .config-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .npc-sheet .skill .skill-row .delete-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .skill {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .character-sheet .skill .title {
+  max-width: 450px;
+  min-width: 450px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .skill .skill-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: repeat(2, minmax(0, -webkit-max-content));
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+.atoria .character-sheet .skill .skill-row .category-area {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 90px;
+  min-width: 90px;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .character-sheet .skill .skill-row .category-title {
+  -webkit-box-ordinal-group: 3;
+  -ms-flex-order: 2;
+  order: 2;
+  max-width: 90px;
+  min-width: 90px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 0;
+  border: none;
+}
+.atoria .character-sheet .skill .skill-row .name {
+  max-width: 105px;
+  min-width: 105px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .character-sheet .skill .skill-row .value-label {
+  max-width: 30px;
+  min-width: 30px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .skill .skill-row .config-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .skill .skill-row .delete-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .knowledge .title {
+  display: inline-block;
+  text-align: center;
+  background-color: #a4c2f4;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria .knowledge .title .config-button {
+  position: absolute;
+  right: 2px;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .knowledge .knowledge-row .category-title {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria .knowledge .knowledge-row .category-title .add-button {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .knowledge .knowledge-row .category-title:hover .add-button {
+  display: inline-block;
+}
+.atoria .knowledge .knowledge-row .name {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .knowledge .knowledge-row .value-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .knowledge .knowledge-row .config-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .knowledge .knowledge-row .delete-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .character-sheet .knowledge {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .character-sheet .knowledge .title {
+  max-width: 270px;
+  min-width: 270px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .knowledge .knowledge-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: repeat(2, minmax(0, -webkit-max-content));
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+.atoria .character-sheet .knowledge .knowledge-row .category-area {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 90px;
+  min-width: 90px;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .character-sheet .knowledge .knowledge-row .category-title {
+  -webkit-box-ordinal-group: 3;
+  -ms-flex-order: 2;
+  order: 2;
+  max-width: 90px;
+  min-width: 90px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 0;
+  border: none;
+}
+.atoria .character-sheet .knowledge .knowledge-row .category-title .add-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .knowledge .knowledge-row .name {
+  max-width: 110px;
+  min-width: 110px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .character-sheet .knowledge .knowledge-row .value-label {
+  max-width: 30px;
+  min-width: 30px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .character-sheet .knowledge .knowledge-row .config-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .character-sheet .knowledge .knowledge-row .delete-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .effects {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .effects .title-label {
+  grid-column-end: span 2;
+  display: inline-block;
+  text-align: center;
+  max-width: 590px;
+  min-width: 590px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  background-color: #cccccc;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria .effects .title-label .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .effects .effect-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .effects .effect-row .name-label {
+  text-align: center;
+  max-width: 135px;
+  min-width: 135px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .effects .effect-row .duration-label {
+  text-align: center;
+  max-width: 140px;
+  min-width: 140px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .effects .effect-row .detail-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .effects .effect-row .description {
+  text-align: center;
+  max-width: 295px;
+  min-width: 295px;
+  line-height: var(--form-field-height);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria .effects .effect-row .description .config-button {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  display: none;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .effects .effect-row .description:hover .config-button {
+  display: inline-block;
+}
+.atoria .effects .effect-row .description .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .effects .effect-row .description:hover .delete-button {
+  display: inline-block;
+}
+.atoria .effects .effect-row .description.hidden {
+  display: none;
+}
+.atoria .inventory {
+  min-width: 1000px;
+  max-width: 1000px;
+}
+.atoria .inventory .flexrow {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+}
+.atoria .inventory .flexrow .inventory-gear-armor {
+  background-color: #434343;
+  color: white;
+}
+.atoria .inventory .flexrow .inventory-gear-weapon {
+  background-color: #434343;
+  color: white;
+}
+.atoria .inventory .flexrow .inventory-gear-bag {
+  background-color: #b49d91;
+}
+.atoria .inventory .flexrow .gray-color {
+  background-color: #999999;
+}
+.atoria .inventory .flexrow .title {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 450px;
+  max-width: 450px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .longtitle {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 500px;
+  max-width: 500px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  position: relative;
+}
+.atoria .inventory .flexrow .longtitle .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .inventory .flexrow .armor-value {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 50px;
+  max-width: 50px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .type-value {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 50px;
+  max-width: 50px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .quantity-value {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 50px;
+  max-width: 50px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .shortname-value {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 100px;
+  max-width: 100px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .name-value {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 130px;
+  max-width: 130px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .longname-value {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 180px;
+  max-width: 180px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .resource-value {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 50px;
+  max-width: 50px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .dice-value {
+  background-color: #999999;
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 50px;
+  max-width: 50px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .encumbrance-value {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 50px;
+  max-width: 50px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .inventory .flexrow .effect-value {
+  text-align: center;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  min-width: 270px;
+  max-width: 270px;
+  min-height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: var(--form-field-height);
+  position: relative;
+}
+.atoria .inventory .flexrow .effect-value .config-button {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  display: none;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .inventory .flexrow .effect-value:hover .config-button {
+  display: inline-block;
+}
+.atoria .inventory .flexrow .effect-value .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .inventory .flexrow .effect-value:hover .delete-button {
+  display: inline-block;
+}
+.atoria .spell {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .spell .title-label {
+  display: inline-block;
+  text-align: center;
+  background-color: #cccccc;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria .spell .title-label .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .spell .shorttitle-label {
+  display: inline-block;
+  text-align: center;
+  background-color: #cccccc;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .spell .spell-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .spell .spell-row .name-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .spell .spell-row .value-label {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .spell .spell-row .detail-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .spell .spell-row .description-label {
+  display: none;
+  text-align: center;
+  line-height: var(--form-field-height);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  position: relative;
+}
+.atoria .spell .spell-row .description-label .config-button {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  display: none;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .spell .spell-row .description-label:hover .config-button {
+  display: inline-block;
+}
+.atoria .spell .spell-row .description-label .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .spell .spell-row .description-label:hover .delete-button {
+  display: inline-block;
+}
+.atoria .spell {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .spell .title-label {
+  max-width: 250px;
+  min-width: 250px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .spell .title-label .add-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .spell .shorttitle-label {
+  max-width: 700px;
+  min-width: 700px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .spell .spell-row {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .spell .spell-row .name-label {
+  max-width: 190px;
+  min-width: 190px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .spell .spell-row .value-label {
+  max-width: 40px;
+  min-width: 40px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .spell .spell-row .detail-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .spell .spell-row .description-label {
+  max-width: 280px;
+  min-width: 280px;
+  min-height: var(--form-field-height);
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .spell .spell-row .description-label .config-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .spell .spell-row .description-label .delete-button {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .spell .spell-details {
+  min-width: 750px;
+  max-width: 750px;
+}
+.atoria .spell .spell-details .spell-detail {
+  min-width: 250px;
+  max-width: 250px;
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: 60px 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+.atoria .spell .spell-details .spell-detail .flexrow, .atoria .spell .spell-details .spell-detail .flexcol {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.atoria .spell .spell-details .spell-detail label, .atoria .spell .spell-details .spell-detail input, .atoria .spell .spell-details .spell-detail span {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  line-height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+  padding: 0;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  width: 100%;
+}
+.atoria .spell .spell-details .spell-detail .name-area {
+  grid-column-end: span 2;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .spell .spell-details .spell-detail .name {
+  min-width: 208px;
+  max-width: 208px;
+  border-radius: 0px;
+  border: none;
+}
+.atoria .spell .spell-details .spell-detail .config-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .spell .spell-details .spell-detail .config-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .spell .spell-details .spell-detail .category-title {
+  min-width: 60px;
+  max-width: 60px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.atoria .spell .spell-details .spell-detail .success-value-title {
+  height: var(--form-field-height);
+}
+.atoria .spell .spell-details .spell-detail .success-value {
+  min-width: 30px;
+  max-width: 30px;
+}
+.atoria .spell .spell-details .spell-detail .critical {
+  min-width: 30px;
+  max-width: 30px;
+}
+.atoria .spell .spell-details .spell-detail .fumble {
+  min-width: 30px;
+  max-width: 30px;
+}
+.atoria .spell .spell-details .spell-detail .cost-title {
+  height: var(--form-field-height);
+}
+.atoria .spell .spell-details .spell-detail .time-title {
+  height: calc(2 * var(--form-field-height));
+  max-height: calc(2 * var(--form-field-height));
+}
+.atoria .spell .spell-details .spell-detail .time-preparation-title {
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell .spell-details .spell-detail .time-duration-title {
+  min-width: 70px;
+  max-width: 70px;
+}
+.atoria .spell .spell-details .spell-detail .time-modifier {
+  min-width: 20px;
+  max-width: 20px;
+}
+.atoria .spell .spell-details .spell-detail .components-title {
+  height: calc(5 * var(--form-field-height));
+  max-height: calc(5 * var(--form-field-height));
+}
+.atoria .spell .spell-details .spell-detail .components-verbal-title {
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell .spell-details .spell-detail .targeting-title {
+  height: calc(3 * var(--form-field-height));
+  max-height: calc(3 * var(--form-field-height));
+}
+.atoria .spell .spell-details .spell-detail .targeting-target-title {
+  min-width: 50px;
+  max-width: 50px;
+}
+.atoria .spell .spell-details .spell-detail .targeting-range-title {
+  min-width: 50px;
+  max-width: 50px;
+}
+.atoria .spell .spell-details .spell-detail .targeting-area-title {
+  min-width: 50px;
+  max-width: 50px;
+}
+.atoria .spell .spell-details .spell-detail .effect-title {
+  grid-column-end: span 2;
+}
+.atoria .spell .spell-details .spell-detail .effect {
+  grid-column-end: span 2;
+  text-align: left;
+  resize: vertical;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  min-height: var(--form-field-height);
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-indent: 0;
+  text-justify: auto;
+  padding: 0;
+}
+.atoria .spell .spell-details .spell-detail .spell-supp-title {
+  grid-column-end: span 2;
+  position: relative;
+}
+.atoria .spell .spell-details .spell-detail .spell-supp-title .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .spell .spell-details .spell-detail .spell-supp {
+  grid-column-end: span 2;
+}
+.atoria .spell .spell-details .spell-detail .cost-input.time {
+  min-width: 100px;
+  max-width: 100px;
+}
+.atoria .test-dialog .adv-dis {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.atoria input, .atoria textarea {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+.atoria .perception {
+  background-color: #f1c232;
+}
+.atoria .health {
+  background-color: #cc0000;
+}
+.atoria .stamina {
+  background-color: #6aa84f;
+}
+.atoria .mana {
+  background-color: #3c78d8;
+}
+.atoria .sanity {
+  background-color: #8e7cc3;
+}
+.atoria .endurance {
+  background-color: #e69138;
+}
+.atoria .encumbrance {
+  background-color: #e6b8af;
+}
+.atoria .armor, .atoria .initiative, .atoria .movement {
+  background-color: #cccccc;
+}
+.atoria .coin-copper {
+  background-color: #f6b26b;
+}
+.atoria .coin-silver {
+  background-color: #d9d9d9;
+}
+.atoria .coin-gold {
+  background-color: #ffd966;
+}
+.atoria .tanned-color {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.chat-message .perception {
+  background-color: #f1c232;
+}
+.chat-message .health {
+  background-color: #cc0000;
+}
+.chat-message .stamina {
+  background-color: #6aa84f;
+}
+.chat-message .mana {
+  background-color: #3c78d8;
+}
+.chat-message .endurance {
+  background-color: #e69138;
+}
+.chat-message .spell-detail {
+  min-width: 250px;
+  max-width: 250px;
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: 60px 1fr;
+  grid-template-rows: repeat(auto-fill, auto);
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+.chat-message .spell-detail .flexrow, .chat-message .spell-detail .flexcol {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.chat-message .spell-detail label, .chat-message .spell-detail input, .chat-message .spell-detail span {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  line-height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+  padding: 0;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  width: 100%;
+}
+.chat-message .spell-detail .name-area {
+  grid-column-end: span 2;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.chat-message .spell-detail .name {
+  min-width: 228px;
+  max-width: 228px;
+  border-radius: 0px;
+  border: none;
+}
+.chat-message .spell-detail .config-button {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.chat-message .spell-detail .category-title {
+  min-width: 60px;
+  max-width: 60px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.chat-message .spell-detail .success-value-title {
+  height: var(--form-field-height);
+}
+.chat-message .spell-detail .success-value {
+  min-width: 30px;
+  max-width: 30px;
+}
+.chat-message .spell-detail .critical {
+  min-width: 30px;
+  max-width: 30px;
+}
+.chat-message .spell-detail .fumble {
+  min-width: 30px;
+  max-width: 30px;
+}
+.chat-message .spell-detail .cost-title {
+  height: var(--form-field-height);
+}
+.chat-message .spell-detail .time-title {
+  height: calc(2 * var(--form-field-height));
+  max-height: calc(2 * var(--form-field-height));
+}
+.chat-message .spell-detail .time-preparation-title {
+  min-width: 90px;
+  max-width: 90px;
+}
+.chat-message .spell-detail .time-duration-title {
+  min-width: 70px;
+  max-width: 70px;
+}
+.chat-message .spell-detail .time-modifier {
+  min-width: 20px;
+  max-width: 20px;
+}
+.chat-message .spell-detail .components-title {
+  height: calc(5 * var(--form-field-height));
+  max-height: calc(5 * var(--form-field-height));
+}
+.chat-message .spell-detail .components-verbal-title {
+  min-width: 90px;
+  max-width: 90px;
+}
+.chat-message .spell-detail .targeting-title {
+  height: calc(3 * var(--form-field-height));
+  max-height: calc(3 * var(--form-field-height));
+}
+.chat-message .spell-detail .targeting-target-title {
+  min-width: 50px;
+  max-width: 50px;
+}
+.chat-message .spell-detail .targeting-range-title {
+  min-width: 50px;
+  max-width: 50px;
+}
+.chat-message .spell-detail .targeting-area-title {
+  min-width: 50px;
+  max-width: 50px;
+}
+.chat-message .spell-detail .effect-title {
+  grid-column-end: span 2;
+}
+.chat-message .spell-detail .effect {
+  grid-column-end: span 2;
+  text-align: left;
+  resize: vertical;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  min-height: var(--form-field-height);
+  white-space: pre-wrap;
+  word-break: break-word;
+  text-indent: 0;
+  text-justify: auto;
+  padding: 0;
+}
+.chat-message .spell-detail .spell-supp-title {
+  grid-column-end: span 2;
+  position: relative;
+}
+.chat-message .spell-detail .spell-supp-title .add-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.chat-message .spell-detail .spell-supp {
+  grid-column-end: span 2;
+}
+.chat-message .spell-detail .cost-input.time {
+  min-width: 100px;
+  max-width: 100px;
+}
+.chat-message .skill-roll {
+  vertical-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.chat-message .skill-roll .skill-attribute .adv-span {
+  display: inline-block;
+  min-width: 100px;
+}
+.chat-message .skill-roll .skill-attribute .sl-span {
+  display: inline-block;
+  min-width: 40px;
+}
+.chat-message .skill-roll .skill-attribute .luck-span {
+  display: inline-block;
+  min-width: 70px;
+}
+.chat-message .skill-roll .skill-effect {
+  min-width: 50px;
+  max-height: var(--form-field-height);
+  text-align: center;
+}
+.chat-message .skill-roll .skill-result {
+  border-top: solid 1px black;
+}

@@ -1,0 +1,24 @@
+.character-sheet {
+    nav.sheet-tabs {
+        margin-bottom: 8px;
+
+        a {
+            border: solid 1px black;
+        }
+
+        a.active {
+            text-shadow: none;
+            background-color: $selected-tab-color;
+        }
+    }
+    .config-sheet {
+        display: inline-block;
+        text-align: center;
+        align-items: center;
+        vertical-align: middle;
+
+        min-width: 20px;
+        max-width: 100px;
+        padding: 8px 12px;
+    }
+}
