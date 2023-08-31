@@ -1,13 +1,16 @@
 {
   "name": "atoria",
   "title": "Atoria",
-  "description": "The Atoria system for FoundryVTT!",
+  "description": "The Atoria 0.3 system for FoundryVTT",
   "version": "0.1.0",
+  "url": "https://github.com/Wildos/atoria/",
+  "manifest": "https://raw.githubusercontent.com/Wildos/atoria/main/system.json",
+  "download": "https://github.com/Wildos/atoria/releases/download/release-0.1.0/atoria-release-0.1.0.zip",
   "minimumCoreVersion": "11",
   "compatibleCoreVersion": "11",
   "compatibility": {
     "minimum": 11,
-    "verified": "11.307"
+    "verified": 11
   },
   "author": "Wildos",
   "esmodules": ["atoria.mjs"],
@@ -26,12 +29,9 @@
       "path": "lang/fr.json"
     }
   ],
-  "gridDistance": 5,
-  "gridUnits": "ft",
+  "gridDistance": 1,
+  "gridUnits": "m",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "stamina",
-  "url": "",
-  "manifest": "",
-  "download": "",
   "license": "LICENSE.txt"
 }
