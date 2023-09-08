@@ -616,6 +616,7 @@
         "area": "" 
       },
       "effect_description": "",
+      "critical_effect_description": "",
       "spell_supps": {}
     },
     "feature": {

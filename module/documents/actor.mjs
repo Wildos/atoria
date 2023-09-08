@@ -271,7 +271,8 @@ export class AtoriaActor extends Actor {
     this._roll({
       title: spell_data.name,
       targetValue: spell_data.system.success_value,
-      effect_description: spell_data.system.effect_description
+      effect_description: spell_data.system.effect_description,
+      critical_effect_description: spell_data.system.critical_effect_description,
     }, roll_options);
   }
 

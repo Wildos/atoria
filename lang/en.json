@@ -262,7 +262,8 @@
   "ATORIA.SpellTargetingTargetTitle": "Target", 
   "ATORIA.SpellTargetingRangeTitle": "Range", 
   "ATORIA.SpellTargetingAreaTitle": "Area", 
-  "ATORIA.SpellEffectTitle": "Effect", 
+  "ATORIA.SpellEffectTitle": "Effect",
+  "ATORIA.SpellCriticalEffectTitle": "Critical Bonus Effect",
   "ATORIA.SpellSuppTitle": "Supp",
 
 

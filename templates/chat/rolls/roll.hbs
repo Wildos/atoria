@@ -43,4 +43,7 @@
         <label>{{ localize "ATORIA.RollMS" }} : <span>{{marginOfSuccess}}</span></label>
     </div>
     <div>{{effect_description}}</div>
+    {{#if isCritical}}
+        <div>{{critical_effect_description}}</div>
+    {{/if}}
 </div>
