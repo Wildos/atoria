@@ -29,6 +29,9 @@
 
     .name {
         grid-column-end: span 2;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .category-title {
@@ -84,6 +87,9 @@
     }
 
     .time-preparation {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .time-duration-title {
@@ -92,7 +98,9 @@
     }
 
     .time-duration {
-
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .time-modifier {
@@ -111,6 +119,9 @@
     }
 
     .components-verbal {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .components-somatic-title {
@@ -118,7 +129,9 @@
     }
 
     .components-somatic {
-
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .components-material-title {
@@ -126,7 +139,9 @@
     }
 
     .components-material {
-
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .targeting-title {
@@ -140,7 +155,9 @@
     }
 
     .targeting-target {
-
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .targeting-range-title {
@@ -149,7 +166,9 @@
     }
 
     .targeting-range {
-
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .targeting-area-title {
@@ -158,7 +177,9 @@
     }
 
     .targeting-area {
-
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .effect-title {

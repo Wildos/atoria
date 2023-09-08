@@ -114,9 +114,10 @@
                 max-width: 120px;
                 min-width: 120px;
                 height: var(--form-field-height);
-                line-height: var(--form-field-height);overflow: hidden;
-                white-space: nowrap;
+                line-height: var(--form-field-height);
+                overflow: hidden;
                 text-overflow: ellipsis;
+                white-space: nowrap;
                 padding-left: 4px;
                 padding-right: 4px;
             }

@@ -1,9 +1,9 @@
 <div class="spell-detail item" data-item-id="{{spell._id}}">
     <div class="name-area flexrow">
         {{#if isChatMessage}}
-            <label class="name" data-type="spell-detail" data-id="{{spell._id}}" >{{spell.name}}</label>
+            <label class="name" data-type="spell-detail" data-id="{{spell._id}}" title="{{spell.name}}">{{spell.name}}</label>
         {{else}}
-            <label class="name rollable" data-type="spell-detail" data-id="{{spell._id}}" >{{spell.name}}</label>
+            <label class="name rollable" data-type="spell-detail" data-id="{{spell._id}}" title="{{spell.name}}">{{spell.name}}</label>
             <a class="config-button item-config" data-action="spell-item" >
                 <i class="fas fa-cog"></i>
             </a>
@@ -34,39 +34,39 @@
 
     <div class="flexrow" style="grid-column-end: span 2">
         <label class="time-preparation-title">{{ localize "ATORIA.SpellTimePreparationTitle" }}</label>
-        <label class="time-preparation">{{spell.system.time.preparation}}</label>
+        <label class="time-preparation" title="{{spell.system.time.preparation}}">{{spell.system.time.preparation}}</label>
     </div>
     <div class="flexrow" style="grid-column-end: span 2">
         <label class="time-duration-title">{{ localize "ATORIA.SpellTimeDurationTitle" }}</label>
         <label class="time-modifier">{{spell.system.time.modifier}}</label>
-        <label class="time-duration">{{spell.system.time.duration}}</label>
+        <label class="time-duration" title="{{spell.system.time.duration}}">{{spell.system.time.duration}}</label>
     </div>
 
     {{!-- <label class="components-title flex0 category-title" style="grid-row-end: span 5">{{ localize "ATORIA.SpellComponentsTitle" }}</label> --}}
 
     <div class="flexrow" style="grid-column-end: span 2">
         <label class="components-verbal-title">{{ localize "ATORIA.SpellComponentsVerbalTitle" }}</label>
-        <label class="components-verbal">{{spell.system.components.verbal}}</label>
+        <label class="components-verbal" title="{{spell.system.components.verbal}}">{{spell.system.components.verbal}}</label>
     </div>
     <label class="components-somatic-title" style="grid-column-end: span 2">{{ localize "ATORIA.SpellComponentsSomaticTitle" }}</label>
-    <label class="components-somatic" style="grid-column-end: span 2">{{spell.system.components.somatic}}</label>
+    <label class="components-somatic" style="grid-column-end: span 2" title="{{spell.system.components.somatic}}">{{spell.system.components.somatic}}</label>
     <label class="components-material-title" style="grid-column-end: span 2">{{ localize "ATORIA.SpellComponentsMaterialTitle" }}</label>
-    <label class="components-material" style="grid-column-end: span 2">{{spell.system.components.material}}</label>
+    <label class="components-material" style="grid-column-end: span 2" title="{{spell.system.components.material}}">{{spell.system.components.material}}</label>
 
 
     {{!-- <label class="targeting-title flex0 category-title" style="grid-row-end: span 3">{{ localize "ATORIA.SpellTargetingTitle" }}</label> --}}
 
     <div class="flexrow" style="grid-column-end: span 2">
         <label class="targeting-target-title">{{ localize "ATORIA.SpellTargetingTargetTitle" }}</label>
-        <label class="targeting-target">{{spell.system.targeting.target}}</label>
+        <label class="targeting-target" title="{{spell.system.targeting.target}}">{{spell.system.targeting.target}}</label>
     </div>
     <div class="flexrow" style="grid-column-end: span 2">
         <label class="targeting-range-title">{{ localize "ATORIA.SpellTargetingRangeTitle" }}</label>
-        <label class="targeting-range">{{spell.system.targeting.range}}</label>
+        <label class="targeting-range" title="{{spell.system.targeting.range}}">{{spell.system.targeting.range}}</label>
     </div>
     <div class="flexrow" style="grid-column-end: span 2">
         <label class="targeting-area-title">{{ localize "ATORIA.SpellTargetingAreaTitle" }}</label>
-        <label class="targeting-area">{{spell.system.targeting.area}}</label>
+        <label class="targeting-area" title="{{spell.system.targeting.area}}">{{spell.system.targeting.area}}</label>
     </div>
 
     <label class="effect-title flex0">{{ localize "ATORIA.SpellEffectTitle" }}</label>

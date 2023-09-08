@@ -330,6 +330,9 @@
 }
 .atoria .spell-sheet .name {
   grid-column-end: span 2;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .atoria .spell-sheet .category-title {
   min-width: 60px;
@@ -367,9 +370,19 @@
   min-width: 90px;
   max-width: 90px;
 }
+.atoria .spell-sheet .time-preparation {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .atoria .spell-sheet .time-duration-title {
   min-width: 70px;
   max-width: 70px;
+}
+.atoria .spell-sheet .time-duration {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .atoria .spell-sheet .time-modifier {
   min-width: 20px;
@@ -383,6 +396,21 @@
   min-width: 90px;
   max-width: 90px;
 }
+.atoria .spell-sheet .components-verbal {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.atoria .spell-sheet .components-somatic {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.atoria .spell-sheet .components-material {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .atoria .spell-sheet .targeting-title {
   height: calc(3 * var(--form-field-height));
   max-height: calc(3 * var(--form-field-height));
@@ -391,13 +419,28 @@
   min-width: 50px;
   max-width: 50px;
 }
+.atoria .spell-sheet .targeting-target {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .atoria .spell-sheet .targeting-range-title {
   min-width: 50px;
   max-width: 50px;
 }
+.atoria .spell-sheet .targeting-range {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .atoria .spell-sheet .targeting-area-title {
   min-width: 50px;
   max-width: 50px;
+}
+.atoria .spell-sheet .targeting-area {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .atoria .spell-sheet .effect-title {
   grid-column-end: span 2;
@@ -913,8 +956,8 @@
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  white-space: nowrap;
   padding-left: 4px;
   padding-right: 4px;
 }
@@ -1623,6 +1666,9 @@
   border: 1px solid var(--color-border-light-tertiary);
   min-width: 100px;
   max-width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -1632,6 +1678,9 @@
   border: 1px solid var(--color-border-light-tertiary);
   min-width: 130px;
   max-width: 130px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -1641,6 +1690,9 @@
   border: 1px solid var(--color-border-light-tertiary);
   min-width: 180px;
   max-width: 180px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -1853,6 +1905,9 @@
   min-width: 40px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .atoria .spell .spell-row .detail-button {
   height: var(--form-field-height);
@@ -1918,6 +1973,9 @@
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
   width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .atoria .spell .spell-details .spell-detail .name-area {
   grid-column-end: span 2;
