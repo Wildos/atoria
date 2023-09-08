@@ -22,6 +22,9 @@
   "TYPES.Item.skill": "Compétence",
   "TYPES.Item.skillPl": "Compétences",
 
+
+  "ATORIA.TitleDeletionDialog": "Supression de {name}",
+  "ATORIA.ContentDeletionDialog": "Confirmer la supression de {name}",
   "ATORIA.ConfirmDeletion": "Confirmer suppression",
   "ATORIA.CancelDeletion": "Annuler suppression",
 

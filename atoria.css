@@ -493,6 +493,98 @@
   min-width: 100px;
   max-width: 100px;
 }
+.atoria .action-sheet .flexcol label, .atoria .action-sheet .flexcol input {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  line-height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+}
+.atoria .action-sheet .flexcol .name-title {
+  width: 100%;
+  position: relative;
+}
+.atoria .action-sheet .flexcol .name-title .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .skill-sheet .flexcol label, .atoria .skill-sheet .flexcol input {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  line-height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+}
+.atoria .skill-sheet .flexcol .name-title {
+  width: 100%;
+  position: relative;
+}
+.atoria .skill-sheet .flexcol .name-title .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .feature-sheet .flexcol label, .atoria .feature-sheet .flexcol input {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  line-height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+}
+.atoria .feature-sheet .flexcol .name-title {
+  width: 100%;
+  position: relative;
+}
+.atoria .feature-sheet .flexcol .name-title .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.atoria .gear-sheet .flexcol label, .atoria .gear-sheet .flexcol input {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  line-height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+}
+.atoria .gear-sheet .flexcol .name-title {
+  width: 100%;
+  position: relative;
+}
+.atoria .gear-sheet .flexcol .name-title .delete-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
 .atoria .resource-label {
   font-weight: bold;
 }
@@ -689,20 +781,6 @@
 }
 .atoria .combat .action-row .description-label .config-button {
   position: absolute;
-  right: 20px;
-  top: 0;
-  display: none;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .combat .action-row .description-label:hover .config-button {
-  display: inline-block;
-}
-.atoria .combat .action-row .description-label .delete-button {
-  position: absolute;
   right: 0;
   top: 0;
   display: none;
@@ -712,7 +790,7 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .combat .action-row .description-label:hover .delete-button {
+.atoria .combat .action-row .description-label:hover .config-button {
   display: inline-block;
 }
 .atoria .combat {
@@ -774,14 +852,6 @@
   min-height: var(--form-field-height);
 }
 .atoria .combat .action-row .description-label .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .combat .action-row .description-label .delete-button {
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   min-width: 20px;
@@ -900,20 +970,6 @@
 }
 .atoria .feature .feature-row .description-label .config-button {
   position: absolute;
-  right: 20px;
-  top: 0;
-  display: none;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .feature .feature-row .description-label:hover .config-button {
-  display: inline-block;
-}
-.atoria .feature .feature-row .description-label .delete-button {
-  position: absolute;
   right: 0;
   top: 0;
   display: none;
@@ -923,7 +979,7 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .feature .feature-row .description-label:hover .delete-button {
+.atoria .feature .feature-row .description-label:hover .config-button {
   display: inline-block;
 }
 .atoria .npc-sheet .feature {
@@ -990,14 +1046,6 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.atoria .npc-sheet .feature .feature-row .description-label .delete-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
 .atoria .character-sheet .feature {
   width: -webkit-max-content;
   width: -moz-max-content;
@@ -1055,14 +1103,6 @@
   line-height: var(--form-field-height);
 }
 .atoria .character-sheet .feature .feature-row .description-label .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .character-sheet .feature .feature-row .description-label .delete-button {
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   min-width: 20px;
@@ -1136,22 +1176,14 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .skill .skill-row .delete-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
 .atoria .npc-sheet .skill {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 .atoria .npc-sheet .skill .title {
-  max-width: 210px;
-  min-width: 210px;
+  max-width: 190px;
+  min-width: 190px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -1345,14 +1377,6 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .knowledge .knowledge-row .delete-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
 .atoria .character-sheet .knowledge {
   width: -webkit-max-content;
   width: -moz-max-content;
@@ -1413,8 +1437,8 @@
   padding-right: 3px;
 }
 .atoria .character-sheet .knowledge .knowledge-row .name {
-  max-width: 110px;
-  min-width: 110px;
+  max-width: 130px;
+  min-width: 130px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
@@ -1430,14 +1454,6 @@
   line-height: var(--form-field-height);
 }
 .atoria .character-sheet .knowledge .knowledge-row .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .character-sheet .knowledge .knowledge-row .delete-button {
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   min-width: 20px;
@@ -1740,20 +1756,6 @@
 }
 .atoria .inventory .flexrow .effect-value .config-button {
   position: absolute;
-  right: 20px;
-  top: 0;
-  display: none;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .inventory .flexrow .effect-value:hover .config-button {
-  display: inline-block;
-}
-.atoria .inventory .flexrow .effect-value .delete-button {
-  position: absolute;
   right: 0;
   top: 0;
   display: none;
@@ -1763,7 +1765,7 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .inventory .flexrow .effect-value:hover .delete-button {
+.atoria .inventory .flexrow .effect-value:hover .config-button {
   display: inline-block;
 }
 .atoria .spell {

@@ -60,12 +60,6 @@
             align-items: center;
             vertical-align: middle;
         }
-        .delete-button {
-            display: inline-block;
-            text-align: center;
-            align-items: center;
-            vertical-align: middle;
-        }
     }
 }
 
@@ -74,8 +68,8 @@
         width: max-content;
     
         .title {
-            max-width: 210px;
-            min-width: 210px;
+            max-width: 190px;
+            min-width: 190px;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
             .add-button {

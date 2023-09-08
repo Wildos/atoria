@@ -164,19 +164,6 @@
         
             .config-button {
                 position: absolute;
-                right: 20px;
-                top: 0;
-                display: none;
-                text-align: center;
-                align-items: center;
-                vertical-align: middle;
-            }
-            &:hover .config-button {
-                display: inline-block;
-            }
-            
-            .delete-button {
-                position: absolute;
                 right: 0;
                 top: 0;
                 display: none;
@@ -184,7 +171,7 @@
                 align-items: center;
                 vertical-align: middle;
             }
-            &:hover .delete-button {
+            &:hover .config-button {
                 display: inline-block;
             }
         }

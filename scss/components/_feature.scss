@@ -59,19 +59,6 @@
         
             .config-button {
                 position: absolute;
-                right: 20px;
-                top: 0;
-                display: none;
-                text-align: center;
-                align-items: center;
-                vertical-align: middle;
-            }
-            &:hover .config-button {
-                display: inline-block;
-            }
-            
-            .delete-button {
-                position: absolute;
                 right: 0;
                 top: 0;
                 display: none;
@@ -79,7 +66,7 @@
                 align-items: center;
                 vertical-align: middle;
             }
-            &:hover .delete-button {
+            &:hover .config-button {
                 display: inline-block;
             }
         }
@@ -145,15 +132,6 @@
                 line-height: var(--form-field-height);
             
                 .config-button {
-                    height: var(--form-field-height);
-                    line-height: var(--form-field-height);
-                    min-width: 20px;
-                    max-width: 20px;
-                    padding-left: 3px;
-                    padding-right: 3px;
-                }
-                
-                .delete-button {
                     height: var(--form-field-height);
                     line-height: var(--form-field-height);
                     min-width: 20px;
@@ -227,15 +205,6 @@
                 line-height: var(--form-field-height);
             
                 .config-button {
-                    height: var(--form-field-height);
-                    line-height: var(--form-field-height);
-                    min-width: 20px;
-                    max-width: 20px;
-                    padding-left: 3px;
-                    padding-right: 3px;
-                }
-                
-                .delete-button {
                     height: var(--form-field-height);
                     line-height: var(--form-field-height);
                     min-width: 20px;

@@ -1,3 +1,6 @@
+import {confirm_deletion} from "../../utils.mjs"
+
+
 /**
  * Override and extend the core ItemSheet implementation to handle specific item types.
  */
@@ -6,8 +9,7 @@ export default class ItemAtoriaSheetGear extends ItemSheet {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      width: 560,
-      height: 400,
+      width: 300,
       classes: ["atoria", "sheet", "gear"],
       resizable: true,
       tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "description"}],
@@ -38,9 +40,34 @@ export default class ItemAtoriaSheetGear extends ItemSheet {
       source: source.system,
       system: item.system,
       isWeapon: item.type === "gear-weapon",
-      isBagItem: [ "gear-consumable", "gear-equipment", "gear-ingredient"].includes(item.type)
+      isBagItem: [ "gear-consumable", "gear-equipment", "gear-ingredient"].includes(item.type),
+      isOwned: !(this.actor === undefined || this.actor === null)
     });
     return context;
+  }
+
+
+
+  /** @inheritdoc */
+  activateListeners(html) {
+    if ( this.isEditable ) {
+      html.find('.item-delete').click(this._onItemDelete.bind(this));
+    }
+  }
+
+  async _onItemDelete(event) {
+    const li = $(event.currentTarget);
+
+    if (this.actor) {
+      const item = this.actor.items.get(li.data("id"));
+  
+      confirm_deletion(item.name, user_confirmed => {
+        if (user_confirmed) {
+          item.delete();
+        }
+      });
+    }
+
   }
 
 }

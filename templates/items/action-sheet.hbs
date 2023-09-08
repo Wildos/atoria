@@ -1,6 +1,12 @@
-<form class="flexcol" autocomplete="off">
+<form class="action-sheet" autocomplete="off">
     <div class="flexcol">
-        <label>{{ localize "ATORIA.ActionNameTitle" }}</label>
+        <label class="name-title">{{ localize "ATORIA.ActionNameTitle" }}
+            {{#if isOwned}}
+                <a class="delete-button item-delete flex0" data-action="action-item" data-id="{{item._id}}" >
+                    <i class="fas fa-trash"></i>
+                </a>
+            {{/if}}
+        </label>
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.ActionNameTitle' }}"/>
         <label>{{ localize "ATORIA.SuccessValue" }}</label>
         <input name="system.success_value" type="text" value="{{item.system.success_value}}" placeholder="{{ localize 'ATORIA.SuccessValue' }}"/>
