@@ -1,4 +1,32 @@
 { 
+
+  "TYPES.Actor.character": "Personnage Joueur",
+  "TYPES.Actor.characterPl": "Personnages Joueur",
+  "TYPES.Actor.npc": "Personnage Non Joueur",
+  "TYPES.Actor.npcPl": "Personnages Non Joueur",
+
+  "TYPES.Item.gear-consumable": "Objet Consommable",
+  "TYPES.Item.gear-consumablePl": "Objets Consommable",
+  "TYPES.Item.gear-equipment": "Objet Equipement",
+  "TYPES.Item.gear-equipmentPl": "Objets Equipement",
+  "TYPES.Item.gear-ingredient": "Objet Ingredient/Materiel",
+  "TYPES.Item.gear-ingredientPl": "Objets Ingredient/Materiel",
+  "TYPES.Item.gear-weapon": "Arme",
+  "TYPES.Item.gear-weaponPl": "Armes",
+  "TYPES.Item.action": "Action",
+  "TYPES.Item.actionPl": "Actions",
+  "TYPES.Item.spell": "Sort",
+  "TYPES.Item.spellPl": "Sorts",
+  "TYPES.Item.feature": "Trait",
+  "TYPES.Item.featurePl": "Traits",
+  "TYPES.Item.skill": "Compétence",
+  "TYPES.Item.skillPl": "Compétences",
+
+  "ATORIA.ConfirmDeletion": "Confirmer suppression",
+  "ATORIA.CancelDeletion": "Annuler suppression",
+
+
+
   "ATORIA.SheetClassCharacter": "AtoriaCharacterSheet",
   "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
   "ATORIA.SheetClassGear": "AtoriaGearSheet",

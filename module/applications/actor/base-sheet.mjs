@@ -1,5 +1,7 @@
 import ActorConfig from "../configurators/actor-config.mjs"
 
+import {confirm_deletion} from "../../utils.mjs"
+
 /**
  * Extend the basic ActorSheet class to suppose system-specific logic and functionality.
  * @abstract
@@ -146,8 +148,13 @@ export default class ActorAtoriaSheet extends ActorSheet {
       html.find('.effect-delete').click(ev => {
         const li = $(ev.currentTarget).parents(".effect");
         const effect = this.actor.effects.get(li.data("effectId"));
-        effect.delete();
-        li.slideUp(200, () => this.render(false));
+
+        confirm_deletion(effect.name, user_confirmed => {
+          if (user_confirmed) {
+            effect.delete();
+            li.slideUp(200, () => this.render(false));
+          }
+        });
       });
     }
     // Handle default listeners last so system listeners are triggered first
@@ -254,11 +261,16 @@ export default class ActorAtoriaSheet extends ActorSheet {
   }
   
 
-  _onItemDelete(event) {
+  async _onItemDelete(event) {
     const li = $(event.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
-    item.delete();
-    li.slideUp(200, () => this.render(false));
+
+    confirm_deletion(item.name, user_confirmed => {
+      if (user_confirmed) {
+        item.delete();
+        li.slideUp(200, () => this.render(false));
+      }
+    });
   }
 
 

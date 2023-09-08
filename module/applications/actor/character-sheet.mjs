@@ -4,6 +4,7 @@ import ActorSkillConfig from "../configurators/actor-skill-config.mjs"
 import ActorKnowledgeConfig from "../configurators/actor-knowledge-config.mjs";
 import ActorMagicConfig from "../configurators/actor-magic-config.mjs";
 
+import {confirm_deletion} from "../../utils.mjs"
 
 /**
  * An Actor sheet for player character type actors.
@@ -342,28 +343,35 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     const header = event.currentTarget;
     const li = $(header).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
-    switch (header.dataset.action) {
-      case 'knowledge-skill-item': {
-        const parent_id = header.dataset.parent;
-        const parent_ids = parent_id.split('.');
-        const new_knowledges = this.actor.system.knowledges;
-        new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills = new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills.filter(el => {return el !== item._id});
-        await this.actor.update({
-          "system.knowledges": new_knowledges
-        });
-        break;
+
+    confirm_deletion(item.name, async user_confirmed => {
+      if (user_confirmed) {
+        switch (header.dataset.action) {
+          case 'knowledge-skill-item': {
+            const parent_id = header.dataset.parent;
+            const parent_ids = parent_id.split('.');
+            const new_knowledges = this.actor.system.knowledges;
+            new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills = new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills.filter(el => {return el !== item._id});
+            await this.actor.update({
+              "system.knowledges": new_knowledges
+            });
+            break;
+          }
+          case 'magic-skill-item': {
+            const parent_id = header.dataset.parent;
+            const new_magics = this.actor.system.magics;
+            new_magics[parent_id].sub_skills = new_magics[parent_id].sub_skills.filter(el => {return el !== item._id});
+            await this.actor.update({
+              "system.magics": new_magics
+            });
+            break;
+          }
+        }
+
+        item.delete();
+        li.slideUp(200, () => this.render(false));
       }
-      case 'magic-skill-item': {
-        const parent_id = header.dataset.parent;
-        const new_magics = this.actor.system.magics;
-        new_magics[parent_id].sub_skills = new_magics[parent_id].sub_skills.filter(el => {return el !== item._id});
-        await this.actor.update({
-          "system.magics": new_magics
-        });
-        break;
-      }
-    }
-    super._onItemDelete(event);
+    });
   } 
   
 

@@ -1,4 +1,33 @@
 { 
+  "TYPES.Actor.character": "Player Character",
+  "TYPES.Actor.characterPl": "Player Characters",
+  "TYPES.Actor.npc": "Non Player Character",
+  "TYPES.Actor.npcPl": "Non Player Characters",
+
+  "TYPES.Item.gear-consumable": "Consumable Object",
+  "TYPES.Item.gear-consumablePl": "Consumable Objects",
+  "TYPES.Item.gear-equipment": "Equipment Object",
+  "TYPES.Item.gear-equipmentPl": "Equipment Objects",
+  "TYPES.Item.gear-ingredient": "Ingredient/Material Object",
+  "TYPES.Item.gear-ingredientPl": "Ingredient/Material Objects",
+  "TYPES.Item.gear-weapon": "Weapon",
+  "TYPES.Item.gear-weaponPl": "Weapons",
+  "TYPES.Item.action": "Action",
+  "TYPES.Item.actionPl": "Actions",
+  "TYPES.Item.spell": "Spell",
+  "TYPES.Item.spellPl": "Spells",
+  "TYPES.Item.feature": "Feature",
+  "TYPES.Item.featurePl": "Features",
+  "TYPES.Item.skill": "Skill",
+  "TYPES.Item.skillPl": "Skills",
+
+
+  "ATORIA.TitleDeletionDialog": "Deletion of {name}",
+  "ATORIA.ContentDeletionDialog": "Do you confirm the deletion of {name}",
+  "ATORIA.ConfirmDeletion": "Confirm deletion",
+  "ATORIA.CancelDeletion": "Cancel deletion",
+  
+
   "ATORIA.SheetClassCharacter": "AtoriaCharacterSheet",
   "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
   "ATORIA.SheetClassGear": "AtoriaGearSheet",
