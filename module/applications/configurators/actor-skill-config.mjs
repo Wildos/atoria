@@ -103,7 +103,6 @@ export default class ActorSkillConfig extends BaseConfigSheet {
     await super._onChangeInput(event);
     const t = event.currentTarget;
     // Update clone with new data & re-render
-    console.log(`changeinput ${t.name} -> ${t.value}`);
     if (t.name === "name") this.clone.updateSource({ [`${t.name}`]: t.value || null });
     else this.clone.updateSource({ [`system.${t.name}`]: t.value || null });
     this.render();

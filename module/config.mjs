@@ -64,7 +64,33 @@ ATORIA.SKILLS_LABEL = {
     "trickery": "ATORIA.Trickery",
     "acting": "ATORIA.Acting",
     "lying": "ATORIA.Lying",
+
+    "combat": "ATORIA.Combative",
+    "brawl": "ATORIA.Brawl",
+    "blade": "ATORIA.Blade",
+    "polearm": "ATORIA.Polearm",
+    "haft-slashing-piercing": "ATORIA.Haft-slashing-piercing",
+    "haft-bludgeonning": "ATORIA.Haft-bludgeonning",
+    "parade": "ATORIA.Parade",
+    "shooting": "ATORIA.Shooting",
+    "throw": "ATORIA.Throw",
+    "focus": "ATORIA.Focus",
+    "instrument": "ATORIA.Instrument",
 }
+
+ATORIA.COMBAT_SKILL = {
+    "brawl": "ATORIA.Brawl",
+    "blade": "ATORIA.Blade",
+    "polearm": "ATORIA.Polearm",
+    "haft-slashing-piercing": "ATORIA.Haft-slashing-piercing",
+    "haft-bludgeonning": "ATORIA.Haft-bludgeonning",
+    "parade": "ATORIA.Parade",
+    "shooting": "ATORIA.Shooting",
+    "throw": "ATORIA.Throw",
+    "focus": "ATORIA.Focus",
+    "instrument": "ATORIA.Instrument",
+};
+
 
 ATORIA.KNOWLEDGES_LABEL = {
     "alchemy": "ATORIA.Alchemy",
@@ -110,6 +136,13 @@ ATORIA.MAGICS_LABEL = {
     "occult": "ATORIA.Occult",
     "druidic": "ATORIA.Druidic",
     "invoker": "ATORIA.Invoker"
+}
+
+
+export function localize_config() {
+    for (let key in ATORIA.COMBAT_SKILL) {
+        ATORIA.COMBAT_SKILL[key] = game.i18n.localize(ATORIA.COMBAT_SKILL[key]);
+    }
 }
 
 export default ATORIA;

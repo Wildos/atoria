@@ -148,6 +148,23 @@
   "ATORIA.Acting": "Comédie",
   "ATORIA.Lying": "Mensonge",
 
+
+
+  "ATORIA.Combative": "Combative",
+  "ATORIA.Brawl": "Pugilat",
+  "ATORIA.Blade": "Lame",
+  "ATORIA.Polearm": "Hast",
+  "ATORIA.Haft-slashing-piercing": "Emmanchée - Tranchant et Perforant",
+  "ATORIA.Haft-bludgeonning": "Emmanchée - Contondant",
+  "ATORIA.Parade": "Parade",
+  "ATORIA.Shooting": "Tir",
+  "ATORIA.Throw": "Jet",
+  "ATORIA.Focus": "Focalisateur",
+  "ATORIA.Instrument": "Instrument",
+
+
+
+
   "ATORIA.Alchemy": "Alchemie",
   "ATORIA.Jewellery": "Bijouterie",
   "ATORIA.Sewing": "Couture",

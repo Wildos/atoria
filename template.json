@@ -27,22 +27,22 @@
       "senses": {
         "perceptions": {
           "sight": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "hearing": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "smell": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "taste": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
@@ -88,220 +88,272 @@
       "skills": {
         "agility": {
           "balance": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "flexibility": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "acrobatics": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "analyse": {
           "insight": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "identification": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "investigation": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "athletic": {
           "hiking": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "running": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "jump": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "charisma": {
           "presence": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "seduction": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "slyness": {
           "silence": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "stealth": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "concealment": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "dressage": {
           "taming": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "riding": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "eloquence": {
           "persusasion": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "calming": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "provocation": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "climbing": {
           "scale": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "fall": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "spirit": {
           "will": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "guarding": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "memory": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "intimidation": {
           "fear": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "authority": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "threat": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "swiming": {
           "ease": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "breath-holding": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "negotiation": {
           "diplomacy": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "bargaining": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "reflex": {
           "evasion": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "opportuneness": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "sturdiness": {
           "force": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "tenacity": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "fortitude": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
         },
         "trickery": {
           "acting": {
-            "success_value": 50,
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
           "lying": {
-            "success_value": 50,
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          }
+        },
+        "combat": {
+          "brawl": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "blade": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "polearm": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "haft-slashing-piercing": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "haft-bludgeonning": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "parade": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "shooting": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "throw": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "focus": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "instrument": {
+            "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           }
@@ -578,20 +630,20 @@
     },
     "gear-weapon": {
       "templates": ["gear"],
-      "success_value": 50,
+      "linked_combative_skill": "brawl",
       "critical_mod": 0,
       "fumble_mod": 0,
       "damage_roll": ""
     },
     "action": {
-      "success_value": 50,
+      "success_value": 10,
       "critical_mod": 0,
       "fumble_mod": 0,
       "effect_roll": "",
       "description": ""
     },
     "spell": {
-      "success_value": 50,
+      "success_value": 10,
       "critical_value": 0,
       "fumble_value": 0,
       "cost": {
@@ -624,7 +676,7 @@
       "description": ""
     },
     "skill": {
-      "success_value": 50,
+      "success_value": 10,
       "critical_mod": 0,
       "fumble_mod": 0
     }

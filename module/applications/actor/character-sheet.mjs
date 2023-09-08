@@ -70,6 +70,8 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       }
       // Append to features.
       if (i.type === 'gear-weapon') {
+        let linked_skill_data = this.actor.system.skills["combat"][i.system.linked_combative_skill];
+        i.system.success_value = linked_skill_data.success_value;
         gear_weapons.push(i);
       }
       // Append to features.

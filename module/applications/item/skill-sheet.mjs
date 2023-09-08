@@ -32,7 +32,7 @@ export default class ItemAtoriaSheetSkill extends ItemSheet {
       const source = item.toObject();
   
       // Game system configuration
-      context.config = CONFIG.DND5E;
+    context.config = CONFIG.ATORIA;
   
       // Item rendering data
       foundry.utils.mergeObject(context, {

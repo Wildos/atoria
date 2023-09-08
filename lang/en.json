@@ -149,6 +149,23 @@
   "ATORIA.Acting": "Acting",
   "ATORIA.Lying": "Lying",
 
+
+
+  "ATORIA.Combative": "Combative",
+  "ATORIA.Brawl": "Brawl",
+  "ATORIA.Blade": "Blade",
+  "ATORIA.Polearm": "Polearm",
+  "ATORIA.Haft-slashing-piercing": "Haft-slashing-piercing",
+  "ATORIA.Haft-bludgeonning": "Haft-bludgeonning",
+  "ATORIA.Parade": "Parade",
+  "ATORIA.Shooting": "Shooting",
+  "ATORIA.Throw": "Throw",
+  "ATORIA.Focus": "Focus",
+  "ATORIA.Instrument": "Instrument",
+
+
+
+
   "ATORIA.Alchemy": "Alchemy",
   "ATORIA.Jewellery": "Jewellery",
   "ATORIA.Sewing": "Sewing",

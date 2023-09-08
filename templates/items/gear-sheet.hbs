@@ -5,8 +5,13 @@
         {{#if isWeapon}}
             <label>{{ localize "ATORIA.ItemDiceTitle" }}</label>
             <input name="system.damage_roll" type="text" value="{{item.system.damage_roll}}" placeholder="{{ localize 'ATORIA.DamageRoll' }}"/>
-            <label>{{ localize "ATORIA.SuccessValue" }}</label>
-            <input name="system.success_value" type="text" value="{{item.system.success_value}}" placeholder="{{ localize 'ATORIA.SuccessValue' }}"/>
+            
+            
+            <label>{{ localize "ATORIA.Combative" }}</label>
+            <select name="system.linked_combative_skill">
+                {{selectOptions config.COMBAT_SKILL selected=system.linked_combative_skill}}
+            </select>
+
             <label>{{ localize "ATORIA.CriticalModifier" }}</label>
             <input name="system.critical_mod" type="text" value="{{item.system.critical_mod}}" placeholder="{{ localize 'ATORIA.CriticalModifier' }}"/>
             <label>{{ localize "ATORIA.FumbleModifier" }}</label>

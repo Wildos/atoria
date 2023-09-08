@@ -51,7 +51,6 @@ export async function skillRoll({
     });
     const defaultRollMode = rollMode || game.settings.get("core", "rollMode");
   
-    console.log(`skillRoll ${JSON.stringify(data, null, 2)}`);
     // Construct the SkillRoll instance
     const roll = new CONFIG.Dice.SkillRoll(formula, data, {
       flavor: flavor || title,
