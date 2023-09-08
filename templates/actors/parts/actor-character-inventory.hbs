@@ -95,7 +95,7 @@
         </div>
         <div class="flexrow">
             <label class="shortname-value encumbrance">{{ localize "ATORIA.Encumbrance"}}</label>
-            <label class="resource-value encumbrance">{{system.encumbrance.value}}</label>
+            <label class="resource-value {{encumbrance_level_display_class}}">{{system.encumbrance.value}}</label>
             <label class="resource-value encumbrance">{{system.encumbrance.max}}</label>
             <label class="resource-value coin-copper">{{ localize "ATORIA.CoinCopper"}}</label>
             <input class="resource-value" type="number" name="system.coins.copper" value="{{system.coins.copper}}"/>

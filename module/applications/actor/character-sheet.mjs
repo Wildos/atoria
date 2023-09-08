@@ -213,7 +213,28 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.system.stamina.current_max = Math.floor(context.system.stamina.max * endurance_ratio);
     context.system.mana.current_max = Math.floor(context.system.mana.max * endurance_ratio);
     // Encumbrance
-    context.system.encumbrance.value = parseFloat(this.getCurrentEncumbrance().toFixed(2));
+    const current_encumbrance = this.getCurrentEncumbrance();
+    context.system.encumbrance.value = parseFloat(current_encumbrance.toFixed(2));
+    if (current_encumbrance >= (context.system.encumbrance.max - 4.0)) {
+      if (current_encumbrance >= context.system.encumbrance.max) {
+        // above max
+        context.encumbrance_level_display_class = "encumbrance-above-max";
+      }
+      else {
+        // stealth malus 
+        context.encumbrance_level_display_class = "encumbrance-stealth-malus";
+      }
+    }
+    else {
+      if (current_encumbrance >= 7) {
+        // normal
+        context.encumbrance_level_display_class = "encumbrance-normal";
+      }
+      else {
+        // stealth bonus 
+        context.encumbrance_level_display_class = "encumbrance-stealth-bonus";
+      }
+    }
   }
 
 

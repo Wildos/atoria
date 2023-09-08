@@ -2151,6 +2151,18 @@
 .atoria .encumbrance {
   background-color: #e6b8af;
 }
+.atoria .encumbrance-normal {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.atoria .encumbrance-above-max {
+  background-color: #d65151;
+}
+.atoria .encumbrance-stealth-malus {
+  background-color: #da904c;
+}
+.atoria .encumbrance-stealth-bonus {
+  background-color: #7dda70;
+}
 .atoria .armor, .atoria .initiative, .atoria .movement {
   background-color: #cccccc;
 }
