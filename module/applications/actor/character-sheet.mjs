@@ -29,39 +29,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   async getData(options={}) {
     const context = await super.getData(options);
 
-    context.expandedData = {};
-    console.log(`getData ${this._expanded.size}`);
-    for (const id of this._expanded) {
-      const item = this.actor.items.get(id);
-      if (item) {
-        switch (item.type) {
-          case "action":
-          case "feature":
-          case "gear-consumable": 
-          case "gear-equipment": 
-          case "gear-ingredient": 
-          case "gear-weapon": {
-            context.expandedData[id] = await TextEditor.enrichHTML(item.system.description, {
-              async: true,
-              relativeTo: item,
-              ...{}
-            });
-            break;
-          }
-        }
-      }
-      else {
-        const effect = this.actor.effects.get(id);
-        if (!effect) continue;
-        context.expandedData[id] = await TextEditor.enrichHTML(effect.description, {
-            async: true,
-            relativeTo: effect,
-            ...{}
-          });
-      }
-    }
-    console.log(`getData ${JSON.stringify(context.expandedData, null, 2)}`);
-
     return foundry.utils.mergeObject(context, {});
   }
 

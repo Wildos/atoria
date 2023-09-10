@@ -29,6 +29,7 @@ export default class ActorAtoriaSheetNPC extends ActorAtoriaSheet {
 
   /** @override */
   _prepareItems(context) {
+    super._prepareItems(context);
     // Initialize containers.
     const actions = [];
     const features = [];

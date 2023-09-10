@@ -71,9 +71,49 @@ export default class ActorAtoriaSheet extends ActorSheet {
     
     const console_data = foundry.utils.mergeObject(this.actor, {});
     context.effects = this._prepareEffects(this.actor.effects);
+    
+    await this.fillExpandedData(context);
 
     return context;
   }
+
+
+  async fillExpandedData(context) {
+    context.expandedData = {};
+    for (const id of this._expanded) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        switch (item.type) {
+          case "action":
+          case "feature":
+          case "gear-consumable": 
+          case "gear-equipment": 
+          case "gear-ingredient": 
+          case "gear-weapon": {
+            context.expandedData[id] = await TextEditor.enrichHTML(item.system.description, {
+              async: true,
+              relativeTo: item,
+              ...{}
+            });
+            break;
+          }
+        }
+      }
+      else {
+        const effect = this.actor.effects.get(id);
+        if (!effect) continue;
+        context.expandedData[id] = await TextEditor.enrichHTML(effect.description, {
+            async: true,
+            relativeTo: effect,
+            ...{}
+          });
+      }
+    }
+  }
+
+
+
+
 
   /* -------------------------------------------- */
 
