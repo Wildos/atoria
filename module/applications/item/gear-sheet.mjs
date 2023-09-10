@@ -10,6 +10,7 @@ export default class ItemAtoriaSheetGear extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       width: 300,
+      height: 600,
       classes: ["atoria", "sheet", "gear"],
       resizable: true,
       tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "description"}],
