@@ -39,22 +39,10 @@ export default class ActorAtoriaSheetNPC extends ActorAtoriaSheet {
     for (let i of context.items) {
       // Append to actions.
       if (i.type === 'action') {
-        if (i.system.show_detail) {
-          i.display_value = 'display: block';
-        }
-        else {
-          i.display_value = 'display: none';
-        }
         actions.push(i);
       }
       // Append to features.
       if (i.type === 'feature') {
-        if (i.system.show_detail) {
-          i.display_value = 'display: block';
-        }
-        else {
-          i.display_value = 'display: none';
-        }
         features.push(i);
       }
       // Append to skills.
