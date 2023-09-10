@@ -118,3 +118,35 @@ export function get_critical_value(success_value=0, critical_mod=0) {
 export function get_fumble_value(success_value=0, fumble_mod=0) {
   return 91 + Math.floor(success_value / 10) - fumble_mod;
 }
+
+
+
+
+
+
+/**
+ * Confirm deletion
+ * Ask for confirmation for deletion of something
+ * @param {String} name Name of the element to delete
+ * @return {boolean} Has the user confirmed the deletion
+ */
+export async function confirm_deletion(name, callback) {
+  const title = game.i18n.format(game.i18n.localize("ATORIA.TitleDeletionDialog"), {name: name});
+  const content = game.i18n.format(game.i18n.localize("ATORIA.ContentDeletionDialog"), {name: name});
+  await new Dialog({
+    title,
+    content,
+    buttons: {
+      confirm: {
+      label: game.i18n.localize("ATORIA.ConfirmDeletion"),
+        callback: html => {console.log("chose confim");callback(true)}
+      },
+      cancel: {
+        label: game.i18n.localize("ATORIA.CancelDeletion"),
+        callback: html => {console.log("chose cancel");callback(false)}
+      }
+    },
+    default: "cancel",
+    close: () => {console.log("Closed");callback(false)}
+  }, {}).render(true);
+}

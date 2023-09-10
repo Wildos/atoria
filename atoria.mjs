@@ -6,6 +6,7 @@
  */
 // Import Configuration
 import ATORIA from "./module/config.mjs";
+import {localize_config} from "./module/config.mjs";
 
 // Import Submodules
 import * as applications from "./module/applications/_module.mjs";
@@ -99,6 +100,9 @@ Hooks.once("init", function() {
   utils.registerHandlebarsHelpers();
   utils.preloadHandlebarsTemplates();
 });
+
+
+Hooks.once("i18nInit", () => localize_config());
 
 
 Hooks.once("ready", function() {

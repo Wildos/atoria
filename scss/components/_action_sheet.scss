@@ -1,0 +1,29 @@
+.action-sheet {
+    .flexcol {
+        label, input {
+            flex: 0;
+            line-height: var(--form-field-height);
+            max-height: var(--form-field-height);
+            min-height: var(--form-field-height);
+        }
+        .name-title {
+            width: 100%;
+            position: relative;
+            
+            .delete-button {
+                position: absolute;
+                right: 0;
+                top: 0;
+                display: inline-block;
+                text-align: center;
+                align-items: center;
+                vertical-align: middle;
+            }
+        }
+
+        .description-area {
+            height: 300px;
+            min-height: 300px;
+        }
+    }
+}

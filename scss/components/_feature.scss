@@ -4,6 +4,7 @@
     .title-label {
         display: inline-block;
         text-align: center;
+        font-weight: bold;
         background-color: $neutral-color;
         border-radius: 3px;
         border: 1px solid var(--color-border-light-tertiary);
@@ -46,20 +47,23 @@
             vertical-align: middle;
         }
 
-        .description-label {
-            display: none;
-            text-align: center;
+        .description {
+            text-align: left;
+            line-height: var(--form-field-height);
             background-color: $tanned-color;
             border-radius: 3px;
             border: 1px solid var(--color-border-light-tertiary);
-            white-space: pre-wrap;
-            word-break: break-word;
-            
+
+            .item-description {
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
+
             position: relative;
         
             .config-button {
                 position: absolute;
-                right: 20px;
+                right: 0;
                 top: 0;
                 display: none;
                 text-align: center;
@@ -69,21 +73,13 @@
             &:hover .config-button {
                 display: inline-block;
             }
-            
-            .delete-button {
-                position: absolute;
-                right: 0;
-                top: 0;
-                display: none;
-                text-align: center;
-                align-items: center;
-                vertical-align: middle;
-            }
-            &:hover .delete-button {
-                display: inline-block;
-            }
         }
-    
+        
+    }
+    .feature-row:not(.expanded) {
+        .description {
+            display: none;
+        }
     }
 }
   
@@ -114,9 +110,10 @@
                 max-width: 120px;
                 min-width: 120px;
                 height: var(--form-field-height);
-                line-height: var(--form-field-height);overflow: hidden;
-                white-space: nowrap;
+                line-height: var(--form-field-height);
+                overflow: hidden;
                 text-overflow: ellipsis;
+                white-space: nowrap;
                 padding-left: 4px;
                 padding-right: 4px;
             }
@@ -136,23 +133,14 @@
                 padding-right: 3px;
             }
     
-            .description-label {
+            .description {
                 max-width: 280px;
                 min-width: 280px;
-                min-height: var(--form-field-height);
-                height: var(--form-field-height);
                 line-height: var(--form-field-height);
+                // max-height: fit-content;
+                min-height: var(--form-field-height);
             
                 .config-button {
-                    height: var(--form-field-height);
-                    line-height: var(--form-field-height);
-                    min-width: 20px;
-                    max-width: 20px;
-                    padding-left: 3px;
-                    padding-right: 3px;
-                }
-                
-                .delete-button {
                     height: var(--form-field-height);
                     line-height: var(--form-field-height);
                     min-width: 20px;
@@ -218,23 +206,14 @@
                 padding-right: 3px;
             }
     
-            .description-label {
+            .description {
                 max-width: 280px;
                 min-width: 280px;
-                min-height: var(--form-field-height);
-                height: var(--form-field-height);
                 line-height: var(--form-field-height);
+                // max-height: fit-content;
+                min-height: var(--form-field-height);
             
                 .config-button {
-                    height: var(--form-field-height);
-                    line-height: var(--form-field-height);
-                    min-width: 20px;
-                    max-width: 20px;
-                    padding-left: 3px;
-                    padding-right: 3px;
-                }
-                
-                .delete-button {
                     height: var(--form-field-height);
                     line-height: var(--form-field-height);
                     min-width: 20px;

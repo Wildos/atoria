@@ -4,6 +4,7 @@ import ActorSkillConfig from "../configurators/actor-skill-config.mjs"
 import ActorKnowledgeConfig from "../configurators/actor-knowledge-config.mjs";
 import ActorMagicConfig from "../configurators/actor-magic-config.mjs";
 
+import {confirm_deletion} from "../../utils.mjs"
 
 /**
  * An Actor sheet for player character type actors.
@@ -34,7 +35,8 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  _prepareItems(context) {
+  async _prepareItems(context) {
+    await super._prepareItems(context);
     // Initialize containers.
     const actions = [];
     const features = [];
@@ -49,38 +51,41 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     for (let i of context.items) {
       // Append to actions.
       if (i.type === 'action') {
-        if (i.system.show_detail) {
-          i.display_value = 'display: inline-block';
-        }
-        else {
-          i.display_value = 'display: none';
-        }
         actions.push(i);
       }
       // Append to features.
       if (i.type === 'feature') {
-        if (i.system.show_detail) {
-          i.display_value = 'display: block';
-        }
-        else {
-          i.display_value = 'display: none';
-        }
         features.push(i);
       }
       // Append to features.
       if (i.type === 'gear-weapon') {
+        let linked_skill_data = this.actor.system.skills["combat"][i.system.linked_combative_skill];
+        i.system.success_value = linked_skill_data.success_value;
+
+        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        i.system.description_cleaned = parseHTML.body.textContent || '';
+
         gear_weapons.push(i);
       }
       // Append to features.
       if (i.type === 'gear-consumable') {
+        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        i.system.description_cleaned = parseHTML.body.textContent || '';
+
         gear_consumables.push(i);
       }
       // Append to features.
       if (i.type === 'gear-equipment') {
+        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        i.system.description_cleaned = parseHTML.body.textContent || '';
+
         gear_equipments.push(i);
       }
       // Append to features.
       if (i.type === 'gear-ingredient') {
+        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        i.system.description_cleaned = parseHTML.body.textContent || '';
+
         gear_ingredients.push(i);
       }
       // Append to features.
@@ -212,7 +217,28 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.system.stamina.current_max = Math.floor(context.system.stamina.max * endurance_ratio);
     context.system.mana.current_max = Math.floor(context.system.mana.max * endurance_ratio);
     // Encumbrance
-    context.system.encumbrance.value = parseFloat(this.getCurrentEncumbrance().toFixed(2));
+    const current_encumbrance = this.getCurrentEncumbrance();
+    context.system.encumbrance.value = parseFloat(current_encumbrance.toFixed(2));
+    if (current_encumbrance >= (context.system.encumbrance.max - 4.0)) {
+      if (current_encumbrance >= context.system.encumbrance.max) {
+        // above max
+        context.encumbrance_level_display_class = "encumbrance-above-max";
+      }
+      else {
+        // stealth malus 
+        context.encumbrance_level_display_class = "encumbrance-stealth-malus";
+      }
+    }
+    else {
+      if (current_encumbrance >= 7) {
+        // normal
+        context.encumbrance_level_display_class = "encumbrance-normal";
+      }
+      else {
+        // stealth bonus 
+        context.encumbrance_level_display_class = "encumbrance-stealth-bonus";
+      }
+    }
   }
 
 
@@ -342,28 +368,35 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     const header = event.currentTarget;
     const li = $(header).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
-    switch (header.dataset.action) {
-      case 'knowledge-skill-item': {
-        const parent_id = header.dataset.parent;
-        const parent_ids = parent_id.split('.');
-        const new_knowledges = this.actor.system.knowledges;
-        new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills = new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills.filter(el => {return el !== item._id});
-        await this.actor.update({
-          "system.knowledges": new_knowledges
-        });
-        break;
+
+    confirm_deletion(item.name, async user_confirmed => {
+      if (user_confirmed) {
+        switch (header.dataset.action) {
+          case 'knowledge-skill-item': {
+            const parent_id = header.dataset.parent;
+            const parent_ids = parent_id.split('.');
+            const new_knowledges = this.actor.system.knowledges;
+            new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills = new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills.filter(el => {return el !== item._id});
+            await this.actor.update({
+              "system.knowledges": new_knowledges
+            });
+            break;
+          }
+          case 'magic-skill-item': {
+            const parent_id = header.dataset.parent;
+            const new_magics = this.actor.system.magics;
+            new_magics[parent_id].sub_skills = new_magics[parent_id].sub_skills.filter(el => {return el !== item._id});
+            await this.actor.update({
+              "system.magics": new_magics
+            });
+            break;
+          }
+        }
+
+        item.delete();
+        li.slideUp(200, () => this.render(false));
       }
-      case 'magic-skill-item': {
-        const parent_id = header.dataset.parent;
-        const new_magics = this.actor.system.magics;
-        new_magics[parent_id].sub_skills = new_magics[parent_id].sub_skills.filter(el => {return el !== item._id});
-        await this.actor.update({
-          "system.magics": new_magics
-        });
-        break;
-      }
-    }
-    super._onItemDelete(event);
+    });
   } 
   
 

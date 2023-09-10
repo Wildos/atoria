@@ -1,10 +1,19 @@
-<form class="flexcol" autocomplete="off">
+<form class="feature-sheet" autocomplete="off">
     <div class="flexcol">
-        <label>{{ localize "ATORIA.FeatureNameTitle" }}</label>
+        <label class="name-title">{{ localize "ATORIA.FeatureNameTitle" }}
+            {{#if isOwned}}
+                <a class="delete-button item-delete flex0" data-action="feature-item" data-id="{{item._id}}" >
+                    <i class="fas fa-trash"></i>
+                </a>
+            {{/if}}
+        </label>
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.FeatureNameTitle' }}"/>
         <label>{{ localize "ATORIA.FeatureEffectTitle" }}</label>
         <input name="system.effect" type="text" value="{{item.system.effect}}" placeholder="{{ localize 'ATORIA.FeatureEffectTitle' }}"/>
         <label>{{ localize "ATORIA.FeatureDescriptionTitle" }}</label>
-        <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.FeatureDescriptionTitle' }}">{{item.system.description}}</textarea>
+        
+        <div class="description-area">
+            {{editor descriptionHTML target="system.description" button=false editable=true engine="prosemirror" collaborate=false}}
+        </div>
     </div>
 </form>

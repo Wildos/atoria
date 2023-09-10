@@ -1,6 +1,6 @@
 .inventory {
-    min-width: 1000px;
-    max-width: 1000px;
+    min-width: 1010px;
+    max-width: 1010px;
    
     .flexrow {
         width: max-content;
@@ -18,26 +18,31 @@
             background-color: $inventory-bag-color;
         }
 
-        .gray-color {
-            background-color: $inventory-sub_armor-color;
+        .subtitle-color {
+            background-color: $inventory-subtitle-color;
+        }
+        .rowdata-color {
+            background-color: $inventory-rowdata-color;
         }
 
 
         .title {
             text-align: center;
             border-radius: 3px;
+            font-weight: bold;
             border: 1px solid var(--color-border-light-tertiary);
-            min-width: 450px;
-            max-width: 450px;
+            min-width: 455px;
+            max-width: 455px;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
         }
         .longtitle {
             text-align: center;
             border-radius: 3px;
+            font-weight: bold;
             border: 1px solid var(--color-border-light-tertiary);
-            min-width: 500px;
-            max-width: 500px;
+            min-width: 505px;
+            max-width: 505px;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
 
@@ -67,8 +72,8 @@
             text-align: center;
             border-radius: 3px;
             border: 1px solid var(--color-border-light-tertiary);
-            min-width: 50px;
-            max-width: 50px;
+            min-width: 55px;
+            max-width: 55px;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
         }
@@ -87,6 +92,9 @@
             border: 1px solid var(--color-border-light-tertiary);
             min-width: 100px;
             max-width: 100px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
         }
@@ -96,6 +104,9 @@
             border: 1px solid var(--color-border-light-tertiary);
             min-width: 130px;
             max-width: 130px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
         }
@@ -105,20 +116,37 @@
             border: 1px solid var(--color-border-light-tertiary);
             min-width: 180px;
             max-width: 180px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+        }
+        .weapon-longname-value {
+            text-align: center;
+            border-radius: 3px;
+            border: 1px solid var(--color-border-light-tertiary);
+            min-width: 185px;
+            max-width: 185px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+        }
+        .title-longname-value {
+            text-align: center;
+            border-radius: 3px;
+            border: 1px solid var(--color-border-light-tertiary);
+            min-width: 185px;
+            max-width: 185px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
         }
         .resource-value {
-            text-align: center;
-            border-radius: 3px;
-            border: 1px solid var(--color-border-light-tertiary);
-            min-width: 50px;
-            max-width: 50px;
-            height: var(--form-field-height);
-            line-height: var(--form-field-height);
-        }
-        .dice-value {
-            background-color: $inventory-sub_armor-color;
             text-align: center;
             border-radius: 3px;
             border: 1px solid var(--color-border-light-tertiary);
@@ -153,9 +181,13 @@
 
             position: relative;
         
+            p, h1, h2, h3, h4, h5 {
+                margin: 0;
+            }
+
             .config-button {
                 position: absolute;
-                right: 20px;
+                right: 0;
                 top: 0;
                 display: none;
                 text-align: center;
@@ -165,19 +197,33 @@
             &:hover .config-button {
                 display: inline-block;
             }
-            
-            .delete-button {
-                position: absolute;
-                right: 0;
-                top: 0;
-                display: none;
-                text-align: center;
-                align-items: center;
-                vertical-align: middle;
-            }
-            &:hover .delete-button {
-                display: inline-block;
-            }
         }
     }
+
+
+    .bag-area {
+        .shortname-value {
+            min-width: 105px;
+            max-width: 105px;
+        }
+        .name-value {
+            min-width: 135px;
+            max-width: 135px;
+        }
+
+        .bag-area-consumable {
+            background-color: $inventory-bag-color-consumable;
+        }
+
+        .bag-area-equipment {
+            background-color: $inventory-bag-color-equipment;
+        }
+
+        .bag-area-ingredient {
+            background-color: $inventory-bag-color-ingredient;
+        }
+
+
+    }
 }
+

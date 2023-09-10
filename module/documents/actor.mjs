@@ -124,7 +124,7 @@ export class AtoriaActor extends Actor {
    * @param {object} options      Options which configure how perception tests or saving throws are rolled
    */
   rollPerception(perceptionId, options={}) {
-    const label = perceptionId;
+    const label = game.i18n.localize(CONFIG.ATORIA.PERCEPTION_LABEL[perceptionId]);
     const perception_options = mergeObject(options, {
       rollMode: "blindroll",
       dialogOptions: {
@@ -135,7 +135,7 @@ export class AtoriaActor extends Actor {
       fumble: get_fumble_value(Number(this.system.perceptions[perceptionId].success_value), Number(this.system.perceptions[perceptionId].fumble_mod)),
     });
     this._roll({
-      title: `Perception ${label}`,
+      title: `Perception - ${label}`,
       targetValue: this.system.perceptions[perceptionId].success_value,
     }, perception_options);
   }
@@ -163,15 +163,16 @@ export class AtoriaActor extends Actor {
 
   rollWeapon(weaponId, options={}) {
     let weapon_item = this.items.get(weaponId);
+    let linked_skill_data = this.system.skills["combat"][weapon_item.system.linked_combative_skill];
 
     const roll_options = foundry.utils.mergeObject(options,  {
-      critical: get_critical_value(Number(weapon_item.system.success_value), Number(weapon_item.system.critical_mod)),
-      fumble: get_fumble_value(Number(weapon_item.system.success_value), Number(weapon_item.system.fumble_mod)),
+      critical: get_critical_value(Number(linked_skill_data.success_value), Number(linked_skill_data.critical_mod) + Number(weapon_item.system.critical_mod)),
+      fumble: get_fumble_value(Number(linked_skill_data.success_value), Number(linked_skill_data.fumble_mod) + Number(weapon_item.system.fumble_mod)),
     });
 
     this._roll({
       title: `${weapon_item.name}`,
-      targetValue: weapon_item.system.success_value,
+      targetValue: linked_skill_data.success_value,
       effect_roll: weapon_item.system.damage_roll
     }, roll_options);
   }
@@ -271,7 +272,8 @@ export class AtoriaActor extends Actor {
     this._roll({
       title: spell_data.name,
       targetValue: spell_data.system.success_value,
-      effect_description: spell_data.system.effect_description
+      effect_description: spell_data.system.effect_description,
+      critical_effect_description: spell_data.system.critical_effect_description,
     }, roll_options);
   }
 
@@ -380,7 +382,7 @@ export class AtoriaActor extends Actor {
 
     /**
      * A hook event that fires after an Actor has rolled for initiative.
-     * @function dnd5e.rollInitiative
+     * @function atoria.rollInitiative
      * @memberof hookEvents
      * @param {Actor5e} actor           The Actor that rolled initiative.
      * @param {Combatant[]} combatants  The associated Combatants in the Combat.

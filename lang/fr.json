@@ -1,4 +1,35 @@
 { 
+
+  "TYPES.Actor.character": "Personnage Joueur",
+  "TYPES.Actor.characterPl": "Personnages Joueur",
+  "TYPES.Actor.npc": "Personnage Non Joueur",
+  "TYPES.Actor.npcPl": "Personnages Non Joueur",
+
+  "TYPES.Item.gear-consumable": "Objet Consommable",
+  "TYPES.Item.gear-consumablePl": "Objets Consommable",
+  "TYPES.Item.gear-equipment": "Objet Equipement",
+  "TYPES.Item.gear-equipmentPl": "Objets Equipement",
+  "TYPES.Item.gear-ingredient": "Objet Ingredient/Matériel",
+  "TYPES.Item.gear-ingredientPl": "Objets Ingredient/Matériel",
+  "TYPES.Item.gear-weapon": "Arme",
+  "TYPES.Item.gear-weaponPl": "Armes",
+  "TYPES.Item.action": "Action",
+  "TYPES.Item.actionPl": "Actions",
+  "TYPES.Item.spell": "Sort",
+  "TYPES.Item.spellPl": "Sorts",
+  "TYPES.Item.feature": "Trait",
+  "TYPES.Item.featurePl": "Traits",
+  "TYPES.Item.skill": "Compétence",
+  "TYPES.Item.skillPl": "Compétences",
+
+
+  "ATORIA.TitleDeletionDialog": "Supression de {name}",
+  "ATORIA.ContentDeletionDialog": "Confirmer la supression de {name}",
+  "ATORIA.ConfirmDeletion": "Confirmer suppression",
+  "ATORIA.CancelDeletion": "Annuler suppression",
+
+
+
   "ATORIA.SheetClassCharacter": "AtoriaCharacterSheet",
   "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
   "ATORIA.SheetClassGear": "AtoriaGearSheet",
@@ -120,6 +151,23 @@
   "ATORIA.Acting": "Comédie",
   "ATORIA.Lying": "Mensonge",
 
+
+
+  "ATORIA.Combative": "Combative",
+  "ATORIA.Brawl": "Pugilat",
+  "ATORIA.Blade": "Lame",
+  "ATORIA.Polearm": "Hast",
+  "ATORIA.Haft-slashing-piercing": "Emmanchée - Tranchant et Perforant",
+  "ATORIA.Haft-bludgeonning": "Emmanchée - Contondant",
+  "ATORIA.Parade": "Parade",
+  "ATORIA.Shooting": "Tir",
+  "ATORIA.Throw": "Jet",
+  "ATORIA.Focus": "Focalisateur",
+  "ATORIA.Instrument": "Instrument",
+
+
+
+
   "ATORIA.Alchemy": "Alchemie",
   "ATORIA.Jewellery": "Bijouterie",
   "ATORIA.Sewing": "Couture",
@@ -172,8 +220,8 @@
   "ATORIA.InventoryGearWeaponTitle": "Arsenal",
   "ATORIA.InventoryGearTitle": "Barda",
   "ATORIA.InventoryGearConsumableTitle": "Consommables",
-  "ATORIA.InventoryGearEquipmentTitle": "Equipements",
-  "ATORIA.InventoryGearIngredientMaterialTitle": "Materiels & Ingrédients",
+  "ATORIA.InventoryGearEquipmentTitle": "Équipements",
+  "ATORIA.InventoryGearIngredientMaterialTitle": "Matériels & Ingrédients",
   
   "ATORIA.NameTitle": "Nom",
   "ATORIA.ArmorQuantityTitle": "Qté.",
@@ -183,12 +231,12 @@
 
   "ATORIA.ArmorHead": "Tête",
   "ATORIA.ArmorTorso": "Torse",
-  "ATORIA.ArmorShoulders": "Épaules",
+  "ATORIA.ArmorShoulders": "Épaule",
   "ATORIA.ArmorArms": "Bras",
   "ATORIA.ArmorHands": "Mains",
   "ATORIA.ArmorWaist": "Taille",
-  "ATORIA.ArmorLegs": "Jambes",
-  "ATORIA.ArmorFeet": "Pieds",
+  "ATORIA.ArmorLegs": "Jambe",
+  "ATORIA.ArmorFeet": "Pied",
   "ATORIA.ArmorCollar": "Collier",
   "ATORIA.ArmorRing": "Anneau",
 
@@ -203,7 +251,7 @@
   "ATORIA.ActionDescriptionTitle": "Description",
 
   "ATORIA.FeatureNameTitle": "Nom",
-  "ATORIA.FeatureEffectTitle": "Effets",
+  "ATORIA.FeatureEffectTitle": "Charge(s)",
   "ATORIA.FeatureDescriptionTitle": "Description",
 
   "ATORIA.SkillNameTitle": "Nom",
@@ -229,12 +277,13 @@
   "ATORIA.SpellComponentsTitle": "Composants", 
   "ATORIA.SpellComponentsVerbalTitle": "Verbales", 
   "ATORIA.SpellComponentsSomaticTitle": "Somatiques", 
-  "ATORIA.SpellComponentsMaterialTitle": "Materielles", 
+  "ATORIA.SpellComponentsMaterialTitle": "Matérielles", 
   "ATORIA.SpellTargetingTitle": "Ciblage", 
   "ATORIA.SpellTargetingTargetTitle": "Cible", 
   "ATORIA.SpellTargetingRangeTitle": "Portée", 
   "ATORIA.SpellTargetingAreaTitle": "Zone", 
   "ATORIA.SpellEffectTitle": "Effets", 
+  "ATORIA.SpellCriticalEffectTitle": "Effet Critique Supplémentaire",
   "ATORIA.SpellSuppTitle": "Supplémentaire",
 
 

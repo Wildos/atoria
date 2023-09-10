@@ -1,12 +1,14 @@
 import ActorConfig from "../configurators/actor-config.mjs"
 
+import {confirm_deletion} from "../../utils.mjs"
+
 /**
  * Extend the basic ActorSheet class to suppose system-specific logic and functionality.
  * @abstract
  */
 export default class ActorAtoriaSheet extends ActorSheet {
 
-  _expanded_effect = new Set();
+  _expanded = new Set();
 
   /** @override */
   /* https://foundryvtt.com/api/interfaces/client.ApplicationOptions.html */
@@ -60,18 +62,58 @@ export default class ActorAtoriaSheet extends ActorSheet {
     context.flags = actorData.flags;
 
     // Prepare items.
-    this._prepareItems(context);
+    await this._prepareItems(context);
 
-    this._prepareData(context);
+    await this._prepareData(context);
 
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
     
     const console_data = foundry.utils.mergeObject(this.actor, {});
     context.effects = this._prepareEffects(this.actor.effects);
+    
+    await this.fillExpandedData(context);
 
     return context;
   }
+
+
+  async fillExpandedData(context) {
+    context.expandedData = {};
+    for (const id of this._expanded) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        switch (item.type) {
+          case "action":
+          case "feature":
+          case "gear-consumable": 
+          case "gear-equipment": 
+          case "gear-ingredient": 
+          case "gear-weapon": {
+            context.expandedData[id] = await TextEditor.enrichHTML(item.system.description, {
+              async: true,
+              relativeTo: item,
+              ...{}
+            });
+            break;
+          }
+        }
+      }
+      else {
+        const effect = this.actor.effects.get(id);
+        if (!effect) continue;
+        context.expandedData[id] = await TextEditor.enrichHTML(effect.description, {
+            async: true,
+            relativeTo: effect,
+            ...{}
+          });
+      }
+    }
+  }
+
+
+
+
 
   /* -------------------------------------------- */
 
@@ -90,7 +132,11 @@ export default class ActorAtoriaSheet extends ActorSheet {
    * Each subclass overrides this method to implement type-specific logic.
    * @protected
    */
-  _prepareItems(context) {}
+  _prepareItems(context) {
+    for (let i of context.items) {
+      i.isExpanded = this._expanded.has(i._id);
+    }
+  }
 
   /**
    * Prepare the data structure which appear on the actor sheet.
@@ -106,6 +152,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
     const effects_sorted = [];    
     // Iterate over active effects, classifying them into categories
     for ( let e of effects ) {
+      e.isExpanded = this._expanded.has(e.id);
       effects_sorted.push(e);
       // if ( e.disabled ) continue;
       // else if ( e.isTemporary ) effects_sorted.temporary.push(e);
@@ -146,8 +193,13 @@ export default class ActorAtoriaSheet extends ActorSheet {
       html.find('.effect-delete').click(ev => {
         const li = $(ev.currentTarget).parents(".effect");
         const effect = this.actor.effects.get(li.data("effectId"));
-        effect.delete();
-        li.slideUp(200, () => this.render(false));
+
+        confirm_deletion(effect.name, user_confirmed => {
+          if (user_confirmed) {
+            effect.delete();
+            li.slideUp(200, () => this.render(false));
+          }
+        });
       });
     }
     // Handle default listeners last so system listeners are triggered first
@@ -235,9 +287,20 @@ export default class ActorAtoriaSheet extends ActorSheet {
     // Get the type of item to create.
     const id = header.dataset.id;
     const item = this.actor.items.get(id);
-    item.update({
-      "system.show_detail": !(item.system.show_detail)
-    });
+    const li = $(header).closest(".item");
+
+    const desc_area = li.children(".description")
+    if ( li.hasClass("expanded") ) {
+      this._expanded.delete(item.id);
+    }
+    else {
+      const item_desc_area = desc_area.children(".item-description");
+      const rendered_description = $(item.system.description || "<p></p>");
+      item_desc_area.html(rendered_description);
+      item_desc_area.slideDown(200);
+      this._expanded.add(item.id);
+    }
+    li.toggleClass("expanded");
   }
 
   /**
@@ -254,11 +317,16 @@ export default class ActorAtoriaSheet extends ActorSheet {
   }
   
 
-  _onItemDelete(event) {
+  async _onItemDelete(event) {
     const li = $(event.currentTarget).parents(".item");
     const item = this.actor.items.get(li.data("itemId"));
-    item.delete();
-    li.slideUp(200, () => this.render(false));
+
+    confirm_deletion(item.name, user_confirmed => {
+      if (user_confirmed) {
+        item.delete();
+        li.slideUp(200, () => this.render(false));
+      }
+    });
   }
 
 
@@ -290,25 +358,21 @@ export default class ActorAtoriaSheet extends ActorSheet {
     const header = event.currentTarget;
     const id = header.dataset.effectId;
     const effect = this.actor.effects.get(id);
-    // effect.flags.show_detail = effect.flags.show_detail || false;
-    // effect.update({
-    //   "flags.show_detail": !(effect.flags.show_detail)
-    // });
     const li = $(header).closest(".effect");
 
 
     const desc_area = li.children(".description")
     if ( li.hasClass("expanded") ) {
-      this._expanded.delete(item.id);
+      this._expanded.delete(id);
     }
     else {
       const effect_desc_area = desc_area.children(".effect-description");
-      const rendered_description = $(effect.description || "<p>None</p>");
+      const rendered_description = $(effect.description || "<p></p>");
       effect_desc_area.html(rendered_description);
       effect_desc_area.slideDown(200);
-      this._expanded_effect.add(id);
+      this._expanded.add(id);
     }
-    desc_area.toggleClass("hidden");
+    li.toggleClass("expanded");
   }
 
   /**

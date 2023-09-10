@@ -16,6 +16,7 @@ export default class SkillRoll extends Roll {
       if ( !this.options.configured ) this.configureModifiers();
       this.targetValue = Number(data?.targetValue);
       this.effect_description = data?.effect_description;
+      this.critical_effect_description = data?.critical_effect_description;
     }
   
     /* -------------------------------------------- */
@@ -267,10 +268,11 @@ export default class SkillRoll extends Roll {
         isCritical: this.isCritical,
         isFumble: this.isFumble,
         roll_obj: this.terms[0].results,
-        adv_string
+        adv_string,
+        critical_effect_description: this.critical_effect_description
       });
 
-      console.log(`tomessage ${JSON.stringify(this.terms[0].results, null, 2)}`);
+      console.log(`tomessage ${this.critical_effect_description}`);
       messageData.content = content;
 
       // Add appropriate advantage mode message flavor and atoria roll flags

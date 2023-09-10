@@ -1,4 +1,33 @@
 { 
+  "TYPES.Actor.character": "Player Character",
+  "TYPES.Actor.characterPl": "Player Characters",
+  "TYPES.Actor.npc": "Non Player Character",
+  "TYPES.Actor.npcPl": "Non Player Characters",
+
+  "TYPES.Item.gear-consumable": "Consumable Object",
+  "TYPES.Item.gear-consumablePl": "Consumable Objects",
+  "TYPES.Item.gear-equipment": "Equipment Object",
+  "TYPES.Item.gear-equipmentPl": "Equipment Objects",
+  "TYPES.Item.gear-ingredient": "Ingredient/Material Object",
+  "TYPES.Item.gear-ingredientPl": "Ingredient/Material Objects",
+  "TYPES.Item.gear-weapon": "Weapon",
+  "TYPES.Item.gear-weaponPl": "Weapons",
+  "TYPES.Item.action": "Action",
+  "TYPES.Item.actionPl": "Actions",
+  "TYPES.Item.spell": "Spell",
+  "TYPES.Item.spellPl": "Spells",
+  "TYPES.Item.feature": "Feature",
+  "TYPES.Item.featurePl": "Features",
+  "TYPES.Item.skill": "Skill",
+  "TYPES.Item.skillPl": "Skills",
+
+
+  "ATORIA.TitleDeletionDialog": "Deletion of {name}",
+  "ATORIA.ContentDeletionDialog": "Do you confirm the deletion of {name}",
+  "ATORIA.ConfirmDeletion": "Confirm deletion",
+  "ATORIA.CancelDeletion": "Cancel deletion",
+  
+
   "ATORIA.SheetClassCharacter": "AtoriaCharacterSheet",
   "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
   "ATORIA.SheetClassGear": "AtoriaGearSheet",
@@ -120,6 +149,23 @@
   "ATORIA.Acting": "Acting",
   "ATORIA.Lying": "Lying",
 
+
+
+  "ATORIA.Combative": "Combative",
+  "ATORIA.Brawl": "Brawl",
+  "ATORIA.Blade": "Blade",
+  "ATORIA.Polearm": "Polearm",
+  "ATORIA.Haft-slashing-piercing": "Haft-slashing-piercing",
+  "ATORIA.Haft-bludgeonning": "Haft-bludgeonning",
+  "ATORIA.Parade": "Parade",
+  "ATORIA.Shooting": "Shooting",
+  "ATORIA.Throw": "Throw",
+  "ATORIA.Focus": "Focus",
+  "ATORIA.Instrument": "Instrument",
+
+
+
+
   "ATORIA.Alchemy": "Alchemy",
   "ATORIA.Jewellery": "Jewellery",
   "ATORIA.Sewing": "Sewing",
@@ -233,7 +279,8 @@
   "ATORIA.SpellTargetingTargetTitle": "Target", 
   "ATORIA.SpellTargetingRangeTitle": "Range", 
   "ATORIA.SpellTargetingAreaTitle": "Area", 
-  "ATORIA.SpellEffectTitle": "Effect", 
+  "ATORIA.SpellEffectTitle": "Effect",
+  "ATORIA.SpellCriticalEffectTitle": "Critical Bonus Effect",
   "ATORIA.SpellSuppTitle": "Supp",
 
 

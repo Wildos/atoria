@@ -1,12 +1,23 @@
-<form class="flexcol" autocomplete="off">
+<form class="gear-sheet" autocomplete="off">
     <div class="flexcol">
-        <label>{{ localize "ATORIA.ItemNameTitle" }}</label>
+        <label class="name-title">{{ localize "ATORIA.ItemNameTitle" }}
+            {{#if isOwned}}
+                <a class="delete-button item-delete flex0" data-action="gear-item" data-id="{{item._id}}" >
+                    <i class="fas fa-trash"></i>
+                </a>
+            {{/if}}
+        </label>
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.ItemName' }}"/>
         {{#if isWeapon}}
             <label>{{ localize "ATORIA.ItemDiceTitle" }}</label>
             <input name="system.damage_roll" type="text" value="{{item.system.damage_roll}}" placeholder="{{ localize 'ATORIA.DamageRoll' }}"/>
-            <label>{{ localize "ATORIA.SuccessValue" }}</label>
-            <input name="system.success_value" type="text" value="{{item.system.success_value}}" placeholder="{{ localize 'ATORIA.SuccessValue' }}"/>
+            
+            
+            <label>{{ localize "ATORIA.Combative" }}</label>
+            <select name="system.linked_combative_skill">
+                {{selectOptions config.COMBAT_SKILL selected=system.linked_combative_skill}}
+            </select>
+
             <label>{{ localize "ATORIA.CriticalModifier" }}</label>
             <input name="system.critical_mod" type="text" value="{{item.system.critical_mod}}" placeholder="{{ localize 'ATORIA.CriticalModifier' }}"/>
             <label>{{ localize "ATORIA.FumbleModifier" }}</label>
@@ -19,6 +30,10 @@
         <label>{{ localize "ATORIA.ItemEncumbranceTitle" }}</label>
         <input name="system.encumbrance" type="text" value="{{item.system.encumbrance}}" placeholder="{{ localize 'ATORIA.Encumbrance' }}"/>
         <label>{{ localize "ATORIA.ItemDescriptionTitle" }}</label>
-        <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.Description' }}">{{item.system.description}}</textarea>
+        
+        <div class="description-area">
+            {{editor descriptionHTML target="system.description" button=false editable=true engine="prosemirror" collaborate=false}}
+        </div>
+        {{!-- <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.Description' }}">{{item.system.description}}</textarea> --}}
     </div>
 </form>
