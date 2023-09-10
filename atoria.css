@@ -716,6 +716,7 @@
 .atoria .combat .title-label {
   display: inline-block;
   text-align: center;
+  font-weight: bold;
   background-color: #cccccc;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
@@ -922,6 +923,7 @@
 .atoria .feature .title-label {
   display: inline-block;
   text-align: center;
+  font-weight: bold;
   background-color: #cccccc;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
@@ -1126,6 +1128,7 @@
 .atoria .skill .title {
   display: inline-block;
   text-align: center;
+  font-weight: bold;
   background-color: #a4c2f4;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
@@ -1328,6 +1331,7 @@
 .atoria .knowledge .title {
   display: inline-block;
   text-align: center;
+  font-weight: bold;
   background-color: #a4c2f4;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
@@ -1478,6 +1482,7 @@
   grid-column-end: span 2;
   display: inline-block;
   text-align: center;
+  font-weight: bold;
   max-width: 590px;
   min-width: 590px;
   height: var(--form-field-height);
@@ -1630,6 +1635,7 @@
 .atoria .inventory .flexrow .title {
   text-align: center;
   border-radius: 3px;
+  font-weight: bold;
   border: 1px solid var(--color-border-light-tertiary);
   min-width: 455px;
   max-width: 455px;
@@ -1639,6 +1645,7 @@
 .atoria .inventory .flexrow .longtitle {
   text-align: center;
   border-radius: 3px;
+  font-weight: bold;
   border: 1px solid var(--color-border-light-tertiary);
   min-width: 505px;
   max-width: 505px;
@@ -1819,6 +1826,7 @@
 .atoria .spell .title-label {
   display: inline-block;
   text-align: center;
+  font-weight: bold;
   background-color: #cccccc;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
@@ -1838,6 +1846,7 @@
 .atoria .spell .shorttitle-label {
   display: inline-block;
   text-align: center;
+  font-weight: bold;
   background-color: #cccccc;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
