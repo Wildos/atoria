@@ -5,7 +5,7 @@
             <label class="armor-value">{{system.armor}}</label>
         </div>
         <div class="flexrow">
-            <label class="longname-value">{{ localize "ATORIA.NameTitle"}}</label>
+            <label class="title-longname-value">{{ localize "ATORIA.NameTitle"}}</label>
             <label class="encumbrance-value">{{ localize "ATORIA.ArmorEncumbranceTitle"}}</label>
             <label class="effect-value">{{ localize "ATORIA.ArmorEffectTitle"}}</label>
         </div>
@@ -76,7 +76,7 @@
         </div>
         {{#each gear_weapons as |weapon key|}}
             <div class="item flexrow" data-item-id="{{weapon._id}}">
-                <label class="longname-value" title="{{weapon.name}}">{{weapon.name}}</label>
+                <label class="weapon-longname-value" title="{{weapon.name}}">{{weapon.name}}</label>
                 <label class="encumbrance-value">{{weapon.system.encumbrance}}</label>
                 <label class="effect-value" title="{{weapon.system.description_cleaned}}">{{{weapon.system.description}}}
                 <a class="config-button item-config flex0" data-action="gear-weapon-item">
@@ -86,7 +86,7 @@
             </div>
         {{/each}}
     </div>
-    <div class="flexcol">
+    <div class="flexcol bag-area">
         <div class="flexrow">
             <label class="longtitle inventory-gear-bag">{{ localize "ATORIA.InventoryGearTitle"}}</label>
         </div>

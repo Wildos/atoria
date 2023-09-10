@@ -1,6 +1,6 @@
 .inventory {
-    min-width: 1000px;
-    max-width: 1000px;
+    min-width: 1010px;
+    max-width: 1010px;
    
     .flexrow {
         width: max-content;
@@ -27,8 +27,8 @@
             text-align: center;
             border-radius: 3px;
             border: 1px solid var(--color-border-light-tertiary);
-            min-width: 450px;
-            max-width: 450px;
+            min-width: 455px;
+            max-width: 455px;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
         }
@@ -36,8 +36,8 @@
             text-align: center;
             border-radius: 3px;
             border: 1px solid var(--color-border-light-tertiary);
-            min-width: 500px;
-            max-width: 500px;
+            min-width: 505px;
+            max-width: 505px;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
 
@@ -67,8 +67,8 @@
             text-align: center;
             border-radius: 3px;
             border: 1px solid var(--color-border-light-tertiary);
-            min-width: 50px;
-            max-width: 50px;
+            min-width: 55px;
+            max-width: 55px;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
         }
@@ -111,6 +111,30 @@
             border: 1px solid var(--color-border-light-tertiary);
             min-width: 180px;
             max-width: 180px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+        }
+        .weapon-longname-value {
+            text-align: center;
+            border-radius: 3px;
+            border: 1px solid var(--color-border-light-tertiary);
+            min-width: 185px;
+            max-width: 185px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
+        }
+        .title-longname-value {
+            text-align: center;
+            border-radius: 3px;
+            border: 1px solid var(--color-border-light-tertiary);
+            min-width: 185px;
+            max-width: 185px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -180,4 +204,17 @@
             }
         }
     }
+
+
+    .bag-area {
+        .shortname-value {
+            min-width: 105px;
+            max-width: 105px;
+        }
+        .name-value {
+            min-width: 135px;
+            max-width: 135px;
+        }
+    }
 }
+
