@@ -6,8 +6,8 @@ export default class ItemAtoriaSheetSpell extends ItemSheet {
     /** @inheritdoc */
     static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
-        width: 280,
-        height: 500,
+        width: 340,
+        height: 660,
         classes: ["atoria", "sheet", "spell"],
         resizable: true,
       });
@@ -31,14 +31,17 @@ export default class ItemAtoriaSheetSpell extends ItemSheet {
       const source = item.toObject();
   
       // Game system configuration
-    context.config = CONFIG.ATORIA;
+      context.config = CONFIG.ATORIA;
   
       // Item rendering data
       foundry.utils.mergeObject(context, {
         source: source.system,
         system: item.system,
       });
-  
+
+      for( let key in item.system.spell_supps) {
+        context.system.spell_supps[key].descriptionHTML = await TextEditor.enrichHTML(item.system.spell_supps[key].description, {async: true});
+      }
       return context;
     }
 

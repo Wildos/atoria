@@ -1,3 +1,4 @@
+
 <form class="action-sheet" autocomplete="off">
     <div class="flexcol">
         <label class="name-title">{{ localize "ATORIA.ActionNameTitle" }}
@@ -16,7 +17,9 @@
         <input name="system.fumble_mod" type="text" value="{{item.system.fumble_mod}}" placeholder="{{ localize 'ATORIA.FumbleModifier' }}"/>
         <label>{{ localize "ATORIA.ActionEffectRollTitle" }}</label>
         <input name="system.effect_roll" type="text" value="{{item.system.effect_roll}}" placeholder="{{ localize 'ATORIA.ActionEffectRollTitle' }}"/>
-        <label>{{ localize "ATORIA.ActionDescriptionTitle" }}</label>
-        <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.ActionDescriptionTitle' }}">{{item.system.description}}</textarea>
+        <label>{{ localize "ATORIA.ActionDescriptionTitle" }}</label>    
+        <div class="description-area">
+            {{editor descriptionHTML target="system.description" button=false editable=true engine="prosemirror" collaborate=false}}
+        </div>
     </div>
 </form>

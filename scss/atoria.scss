@@ -89,6 +89,11 @@
   .tanned-color {
     background-color: $tanned-color;
   }
+
+  .editor {
+    height: 100%;
+    min-height: 300px;
+  }
 }
 
 @import 'components/chat_message';

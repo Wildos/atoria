@@ -8,11 +8,10 @@ export default class ItemAtoriaSheetFeature extends ItemSheet {
     /** @inheritdoc */
     static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
-        width: 300,
-        height: 230,
+        width: 575,
+        height: 330,
         classes: ["atoria", "sheet", "feature"],
-        resizable: true,
-        tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "description"}],
+        resizable: true
       });
     }
   
@@ -34,7 +33,7 @@ export default class ItemAtoriaSheetFeature extends ItemSheet {
       const source = item.toObject();
   
       // Game system configuration
-    context.config = CONFIG.ATORIA;
+      context.config = CONFIG.ATORIA;
   
       // Item rendering data
       foundry.utils.mergeObject(context, {
@@ -42,12 +41,15 @@ export default class ItemAtoriaSheetFeature extends ItemSheet {
         system: item.system,
         isOwned: !(this.actor === undefined || this.actor === null)
       });
+
+      context.descriptionHTML = await TextEditor.enrichHTML(item.system.description, {async: true});
   
       return context;
     }
 
     /** @inheritdoc */
     activateListeners(html) {
+      super.activateListeners(html);
       if ( this.isEditable ) {
         html.find('.item-delete').click(this._onItemDelete.bind(this));
       }

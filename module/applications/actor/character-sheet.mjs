@@ -29,13 +29,47 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   async getData(options={}) {
     const context = await super.getData(options);
 
+    context.expandedData = {};
+    console.log(`getData ${this._expanded.size}`);
+    for (const id of this._expanded) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        switch (item.type) {
+          case "action":
+          case "feature":
+          case "gear-consumable": 
+          case "gear-equipment": 
+          case "gear-ingredient": 
+          case "gear-weapon": {
+            context.expandedData[id] = await TextEditor.enrichHTML(item.system.description, {
+              async: true,
+              relativeTo: item,
+              ...{}
+            });
+            break;
+          }
+        }
+      }
+      else {
+        const effect = this.actor.effects.get(id);
+        if (!effect) continue;
+        context.expandedData[id] = await TextEditor.enrichHTML(effect.description, {
+            async: true,
+            relativeTo: effect,
+            ...{}
+          });
+      }
+    }
+    console.log(`getData ${JSON.stringify(context.expandedData, null, 2)}`);
+
     return foundry.utils.mergeObject(context, {});
   }
 
   /* -------------------------------------------- */
 
   /** @override */
-  _prepareItems(context) {
+  async _prepareItems(context) {
+    await super._prepareItems(context);
     // Initialize containers.
     const actions = [];
     const features = [];
@@ -50,40 +84,41 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     for (let i of context.items) {
       // Append to actions.
       if (i.type === 'action') {
-        if (i.system.show_detail) {
-          i.display_value = 'display: inline-block';
-        }
-        else {
-          i.display_value = 'display: none';
-        }
         actions.push(i);
       }
       // Append to features.
       if (i.type === 'feature') {
-        if (i.system.show_detail) {
-          i.display_value = 'display: block';
-        }
-        else {
-          i.display_value = 'display: none';
-        }
         features.push(i);
       }
       // Append to features.
       if (i.type === 'gear-weapon') {
         let linked_skill_data = this.actor.system.skills["combat"][i.system.linked_combative_skill];
         i.system.success_value = linked_skill_data.success_value;
+
+        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        i.system.description_cleaned = parseHTML.body.textContent || '';
+
         gear_weapons.push(i);
       }
       // Append to features.
       if (i.type === 'gear-consumable') {
+        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        i.system.description_cleaned = parseHTML.body.textContent || '';
+
         gear_consumables.push(i);
       }
       // Append to features.
       if (i.type === 'gear-equipment') {
+        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        i.system.description_cleaned = parseHTML.body.textContent || '';
+
         gear_equipments.push(i);
       }
       // Append to features.
       if (i.type === 'gear-ingredient') {
+        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        i.system.description_cleaned = parseHTML.body.textContent || '';
+
         gear_ingredients.push(i);
       }
       // Append to features.

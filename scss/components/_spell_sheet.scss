@@ -188,12 +188,10 @@
 
     .effect {
         grid-column-end: span 2;
-        text-align: left;
-        resize: vertical;
-        white-space: pre-wrap;
-        word-break: break-word;
-        text-indent: 0;
-        text-justify: auto;
+
+        .editor {
+            min-height: 150px;
+        }
     }
 
     .spell-supp-title {

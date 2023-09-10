@@ -127,8 +127,10 @@
                 display: inline-block;
             }
         }
-    
-        .description.hidden {
+    }
+
+    .effect-row:not(.expanded) {
+        .description {
             display: none;
         }
     }

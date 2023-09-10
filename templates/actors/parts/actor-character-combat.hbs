@@ -23,7 +23,7 @@
         </div>
         <div class="grid-2col">
             {{#each actions as |action key|}}
-                <div class="action-row item flexcol" data-item-id="{{action._id}}">
+                <div class="action-row item flexcol {{#if action.isExpanded}}expanded{{/if}}" data-item-id="{{action._id}}">
                     <div class="flex0">
                         <div class="flexrow">
                             {{#if action.system.effect_roll}}
@@ -40,13 +40,19 @@
                             </a>
                         </div>
                     </div>
-                    <div class="flex0">
-                        <label class="description-label" data-id="{{action._id}}" style="{{action.display_value}}">{{action.system.description}}<a class="config-button item-config flex0" data-action="action-item" ><i class="fas fa-cog"></i></a></label>
+
+                    <div class="description" data-item-id="{{action._id}}">
+                        {{#if action.isExpanded}}
+                            <label class="item-description">{{{lookup @root.expandedData action._id}}}</label>
+                        {{else}}
+                            <label class="item-description"></label>
+                        {{/if}}
+                        <a class="config-button item-config flex0" data-action="action-item" ><i class="fas fa-cog"></i></a>
                     </div>
                 </div>
             {{/each}}
             {{#each gear_weapons as |weapon key|}}
-                <div class="action-row item flexcol" data-item-id="{{weapon._id}}">
+                <div class="action-row item flexcol {{#if weapon.isExpanded}}expanded{{/if}}" data-item-id="{{weapon._id}}">
                     <div class="flex0">
                         <div class="flexrow">
                             {{#if weapon.system.damage_roll}}
@@ -56,7 +62,18 @@
                                 <label class="longname-label flex0 rollable" data-type="gear-weapon" data-id="{{weapon._id}}" title="{{weapon.name}}">{{weapon.name}}</label>
                             {{/if}}
                             <label class="value-label flex0">{{weapon.system.success_value}}</label>
+                            <a class="detail-button item-detail flex0" data-action="weapon-item" data-id="{{weapon._id}}" >
+                                <i class="fas fa-circle-info"></i>
+                            </a>
                         </div>
+                    </div>
+                    <div class="description" data-item-id="{{weapon._id}}">
+                        {{#if weapon.isExpanded}}
+                            <label class="item-description">{{{lookup @root.expandedData weapon._id}}}</label>
+                        {{else}}
+                            <label class="item-description"></label>
+                        {{/if}}
+                        <a class="config-button item-config flex0" data-action="weapon-item" ><i class="fas fa-cog"></i></a>
                     </div>
                 </div>
             {{/each}}

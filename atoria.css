@@ -447,12 +447,9 @@
 }
 .atoria .spell-sheet .effect {
   grid-column-end: span 2;
-  text-align: left;
-  resize: vertical;
-  white-space: pre-wrap;
-  word-break: break-word;
-  text-indent: 0;
-  text-justify: auto;
+}
+.atoria .spell-sheet .effect .editor {
+  min-height: 150px;
 }
 .atoria .spell-sheet .spell-supp-title {
   grid-column-end: span 2;
@@ -515,6 +512,10 @@
   -ms-flex-align: center;
   align-items: center;
   vertical-align: middle;
+}
+.atoria .action-sheet .flexcol .description-area {
+  height: 300px;
+  min-height: 300px;
 }
 .atoria .skill-sheet .flexcol label, .atoria .skill-sheet .flexcol input {
   -webkit-box-flex: 0;
@@ -768,18 +769,19 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .combat .action-row .description-label {
-  display: none;
+.atoria .combat .action-row .description {
   text-align: left;
   line-height: var(--form-field-height);
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
-  white-space: pre-wrap;
-  word-break: break-word;
   position: relative;
 }
-.atoria .combat .action-row .description-label .config-button {
+.atoria .combat .action-row .description .item-description {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.atoria .combat .action-row .description .config-button {
   position: absolute;
   right: 0;
   top: 0;
@@ -790,7 +792,7 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .combat .action-row .description-label:hover .config-button {
+.atoria .combat .action-row .description:hover .config-button {
   display: inline-block;
 }
 .atoria .combat {
@@ -845,19 +847,22 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.atoria .combat .action-row .description-label {
+.atoria .combat .action-row .description {
   max-width: 280px;
   min-width: 280px;
   line-height: var(--form-field-height);
   min-height: var(--form-field-height);
 }
-.atoria .combat .action-row .description-label .config-button {
+.atoria .combat .action-row .description .config-button {
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   min-width: 20px;
   max-width: 20px;
   padding-left: 3px;
   padding-right: 3px;
+}
+.atoria .combat .action-row:not(.expanded) .description {
+  display: none;
 }
 .atoria .npc-sheet .combat .title-label {
   max-width: 280px;
@@ -958,17 +963,19 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .feature .feature-row .description-label {
-  display: none;
-  text-align: center;
+.atoria .feature .feature-row .description {
+  text-align: left;
+  line-height: var(--form-field-height);
   background-color: rgba(0, 0, 0, 0.05);
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
-  white-space: pre-wrap;
-  word-break: break-word;
   position: relative;
 }
-.atoria .feature .feature-row .description-label .config-button {
+.atoria .feature .feature-row .description .item-description {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.atoria .feature .feature-row .description .config-button {
   position: absolute;
   right: 0;
   top: 0;
@@ -979,8 +986,11 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .feature .feature-row .description-label:hover .config-button {
+.atoria .feature .feature-row .description:hover .config-button {
   display: inline-block;
+}
+.atoria .feature .feature-row:not(.expanded) .description {
+  display: none;
 }
 .atoria .npc-sheet .feature {
   width: -webkit-max-content;
@@ -1031,14 +1041,13 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.atoria .npc-sheet .feature .feature-row .description-label {
+.atoria .npc-sheet .feature .feature-row .description {
   max-width: 280px;
   min-width: 280px;
-  min-height: var(--form-field-height);
-  height: var(--form-field-height);
   line-height: var(--form-field-height);
+  min-height: var(--form-field-height);
 }
-.atoria .npc-sheet .feature .feature-row .description-label .config-button {
+.atoria .npc-sheet .feature .feature-row .description .config-button {
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   min-width: 20px;
@@ -1095,14 +1104,13 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.atoria .character-sheet .feature .feature-row .description-label {
+.atoria .character-sheet .feature .feature-row .description {
   max-width: 280px;
   min-width: 280px;
-  min-height: var(--form-field-height);
-  height: var(--form-field-height);
   line-height: var(--form-field-height);
+  min-height: var(--form-field-height);
 }
-.atoria .character-sheet .feature .feature-row .description-label .config-button {
+.atoria .character-sheet .feature .feature-row .description .config-button {
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   min-width: 20px;
@@ -1590,7 +1598,7 @@
 .atoria .effects .effect-row .description:hover .delete-button {
   display: inline-block;
 }
-.atoria .effects .effect-row .description.hidden {
+.atoria .effects .effect-row:not(.expanded) .description {
   display: none;
 }
 .atoria .inventory {
@@ -1753,6 +1761,9 @@
   text-overflow: ellipsis;
   line-height: var(--form-field-height);
   position: relative;
+}
+.atoria .inventory .flexrow .effect-value p, .atoria .inventory .flexrow .effect-value h1, .atoria .inventory .flexrow .effect-value h2, .atoria .inventory .flexrow .effect-value h3, .atoria .inventory .flexrow .effect-value h4, .atoria .inventory .flexrow .effect-value h5 {
+  margin: 0;
 }
 .atoria .inventory .flexrow .effect-value .config-button {
   position: absolute;
@@ -2092,16 +2103,13 @@
 .atoria .spell .spell-details .spell-detail .effect {
   grid-column-end: span 2;
   text-align: left;
-  resize: vertical;
   max-height: -webkit-fit-content;
   max-height: -moz-fit-content;
   max-height: fit-content;
   min-height: var(--form-field-height);
-  white-space: pre-wrap;
-  word-break: break-word;
-  text-indent: 0;
-  text-justify: auto;
-  padding: 0;
+}
+.atoria .spell .spell-details .spell-detail .effect p, .atoria .spell .spell-details .spell-detail .effect h1, .atoria .spell .spell-details .spell-detail .effect h2, .atoria .spell .spell-details .spell-detail .effect h3, .atoria .spell .spell-details .spell-detail .effect h4, .atoria .spell .spell-details .spell-detail .effect h5 {
+  margin: 0;
 }
 .atoria .spell .spell-details .spell-detail .spell-supp-title {
   grid-column-end: span 2;
@@ -2179,6 +2187,10 @@
 }
 .atoria .tanned-color {
   background-color: rgba(0, 0, 0, 0.05);
+}
+.atoria .editor {
+  height: 100%;
+  min-height: 300px;
 }
 
 .chat-message .perception {
@@ -2329,16 +2341,13 @@
 .chat-message .spell-detail .effect {
   grid-column-end: span 2;
   text-align: left;
-  resize: vertical;
   max-height: -webkit-fit-content;
   max-height: -moz-fit-content;
   max-height: fit-content;
   min-height: var(--form-field-height);
-  white-space: pre-wrap;
-  word-break: break-word;
-  text-indent: 0;
-  text-justify: auto;
-  padding: 0;
+}
+.chat-message .spell-detail .effect p, .chat-message .spell-detail .effect h1, .chat-message .spell-detail .effect h2, .chat-message .spell-detail .effect h3, .chat-message .spell-detail .effect h4, .chat-message .spell-detail .effect h5 {
+  margin: 0;
 }
 .chat-message .spell-detail .spell-supp-title {
   grid-column-end: span 2;

@@ -214,14 +214,12 @@
         .effect {
             grid-column-end: span 2;
             text-align: left;
-            resize: vertical;
             max-height: fit-content;
             min-height: var(--form-field-height);
-            white-space: pre-wrap;
-            word-break: break-word;
-            text-indent: 0;
-            text-justify: auto;
-            padding: 0;
+            
+            p, h1, h2, h3, h4, h5 {
+                margin: 0;
+            }
         }
 
         .spell-supp-title {

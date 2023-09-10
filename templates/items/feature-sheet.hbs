@@ -11,6 +11,9 @@
         <label>{{ localize "ATORIA.FeatureEffectTitle" }}</label>
         <input name="system.effect" type="text" value="{{item.system.effect}}" placeholder="{{ localize 'ATORIA.FeatureEffectTitle' }}"/>
         <label>{{ localize "ATORIA.FeatureDescriptionTitle" }}</label>
-        <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.FeatureDescriptionTitle' }}">{{item.system.description}}</textarea>
+        
+        <div class="description-area">
+            {{editor descriptionHTML target="system.description" button=false editable=true engine="prosemirror" collaborate=false}}
+        </div>
     </div>
 </form>

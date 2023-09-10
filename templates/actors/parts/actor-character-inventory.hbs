@@ -78,7 +78,7 @@
             <div class="item flexrow" data-item-id="{{weapon._id}}">
                 <label class="longname-value" title="{{weapon.name}}">{{weapon.name}}</label>
                 <label class="encumbrance-value">{{weapon.system.encumbrance}}</label>
-                <label class="effect-value" title="{{weapon.system.description}}">{{weapon.system.description}}
+                <label class="effect-value" title="{{weapon.system.description_cleaned}}">{{{weapon.system.description}}}
                 <a class="config-button item-config flex0" data-action="gear-weapon-item">
                     <i class="fas fa-cog"></i>
                 </a>
@@ -119,7 +119,7 @@
                 <label class="name-value" title="{{consumable.name}}">{{consumable.name}}</label>
                 <label class="quantity-value">{{consumable.system.quantity}}</label>
                 <label class="encumbrance-value">{{consumable.system.encumbrance}}</label>
-                <label class="effect-value" title="{{consumable.system.description}}">{{consumable.system.description}}
+                <label class="effect-value" title="{{consumable.system.description_cleaned}}">{{{consumable.system.description}}}
                     <a class="config-button item-config flex0" data-action="skill-item">
                         <i class="fas fa-cog"></i>
                     </a>
@@ -139,7 +139,7 @@
                 <label class="name-value" title="{{equipment.name}}">{{equipment.name}}</label>
                 <label class="quantity-value">{{equipment.system.quantity}}</label>
                 <label class="encumbrance-value">{{equipment.system.encumbrance}}</label>
-                <label class="effect-value" title="{{equipment.system.description}}">{{equipment.system.description}}
+                <label class="effect-value" title="{{equipment.system.description_cleaned}}">{{{equipment.system.description}}}
                     <a class="config-button item-config flex0" data-action="skill-item" >
                         <i class="fas fa-cog"></i>
                     </a>
@@ -158,7 +158,7 @@
                 <label class="name-value" title="{{ingredient.name}}">{{ingredient.name}}</label>
                 <label class="quantity-value">{{ingredient.system.quantity}}</label>
                 <label class="encumbrance-value">{{ingredient.system.encumbrance}}</label>
-                <label class="effect-value" title="{{ingredient.system.description}}">{{ingredient.system.description}}
+                <label class="effect-value" title="{{ingredient.system.description_cleaned}}">{{{ingredient.system.description}}}
                     <a class="config-button item-config flex0" data-action="skill-item">
                         <i class="fas fa-cog"></i>
                     </a>

@@ -46,15 +46,18 @@
             vertical-align: middle;
         }
 
-        .description-label {
-            display: none;
-            text-align: center;
+        .description {
+            text-align: left;
+            line-height: var(--form-field-height);
             background-color: $tanned-color;
             border-radius: 3px;
             border: 1px solid var(--color-border-light-tertiary);
-            white-space: pre-wrap;
-            word-break: break-word;
-            
+
+            .item-description {
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
+
             position: relative;
         
             .config-button {
@@ -70,7 +73,12 @@
                 display: inline-block;
             }
         }
-    
+        
+    }
+    .feature-row:not(.expanded) {
+        .description {
+            display: none;
+        }
     }
 }
   
@@ -124,12 +132,12 @@
                 padding-right: 3px;
             }
     
-            .description-label {
+            .description {
                 max-width: 280px;
                 min-width: 280px;
-                min-height: var(--form-field-height);
-                height: var(--form-field-height);
                 line-height: var(--form-field-height);
+                // max-height: fit-content;
+                min-height: var(--form-field-height);
             
                 .config-button {
                     height: var(--form-field-height);
@@ -197,12 +205,12 @@
                 padding-right: 3px;
             }
     
-            .description-label {
+            .description {
                 max-width: 280px;
                 min-width: 280px;
-                min-height: var(--form-field-height);
-                height: var(--form-field-height);
                 line-height: var(--form-field-height);
+                // max-height: fit-content;
+                min-height: var(--form-field-height);
             
                 .config-button {
                     height: var(--form-field-height);

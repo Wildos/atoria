@@ -30,6 +30,10 @@
         <label>{{ localize "ATORIA.ItemEncumbranceTitle" }}</label>
         <input name="system.encumbrance" type="text" value="{{item.system.encumbrance}}" placeholder="{{ localize 'ATORIA.Encumbrance' }}"/>
         <label>{{ localize "ATORIA.ItemDescriptionTitle" }}</label>
-        <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.Description' }}">{{item.system.description}}</textarea>
+        
+        <div class="description-area">
+            {{editor descriptionHTML target="system.description" button=false editable=true engine="prosemirror" collaborate=false}}
+        </div>
+        {{!-- <textarea name="system.description" type="text" placeholder="{{ localize 'ATORIA.Description' }}">{{item.system.description}}</textarea> --}}
     </div>
 </form>

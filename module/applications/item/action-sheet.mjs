@@ -8,11 +8,10 @@ export default class ItemAtoriaSheetAction extends ItemSheet {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      width: 270,
-      height: 385,
+      width: 470,
+      height: 560,
       classes: ["atoria", "sheet", "action"],
-      resizable: true,
-      tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "description"}],
+      resizable: true
     });
   }
 
@@ -36,6 +35,8 @@ export default class ItemAtoriaSheetAction extends ItemSheet {
     // Game system configuration
     context.config = CONFIG.ATORIA;
 
+    context.descriptionHTML = await TextEditor.enrichHTML(item.system.description, {async: true});
+
     // Item rendering data
     foundry.utils.mergeObject(context, {
       source: source.system,
@@ -43,15 +44,32 @@ export default class ItemAtoriaSheetAction extends ItemSheet {
       isOwned: !(this.actor === undefined || this.actor === null)
     });
 
+
     return context;
   }
 
   /** @inheritdoc */
   activateListeners(html) {
+    super.activateListeners(html);
     if ( this.isEditable ) {
       html.find('.item-delete').click(this._onItemDelete.bind(this));
     }
   }
+
+
+  // /** @inheritdoc */
+  // async activateEditor(name, options={}, initialContent="") {
+  //   options.relativeLinks = true;
+  //   options.plugins = {
+  //     menu: ProseMirror.ProseMirrorMenu.build(ProseMirror.defaultSchema, {
+  //       compact: true,
+  //       destroyOnSave: true,
+  //       onSave: () => this.saveEditor(name, {remove: true})
+  //     })
+  //   };
+  //   return super.activateEditor(name, options, initialContent);
+  // }
+
 
   async _onItemDelete(event) {
     const li = $(event.currentTarget);

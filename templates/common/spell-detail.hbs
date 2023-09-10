@@ -70,7 +70,7 @@
     </div>
 
     <label class="effect-title flex0">{{ localize "ATORIA.SpellEffectTitle" }}</label>
-    <label class="effect">{{spell.system.effect_description}}</label>
+    <label class="effect">{{{spell.system.effect_description}}}</label>
 
     <label class="spell-supp-title">{{ localize "ATORIA.SpellSuppTitle" }}</label>
     {{#each spell.system.spell_supps as |spell_supp key|}}
@@ -82,7 +82,7 @@
                 <label class="cost-input endurance">{{spell_supp.cost.endurance}}</label>
                 <label class="cost-input time">{{spell_supp.cost.time}}</label>
             </div>
-            <label class="effect">{{spell_supp.effect_description}}</label>
+            <label class="effect">{{{spell_supp.effect_description}}}</label>
         </div>
     {{/each}}
 </div>

@@ -58,12 +58,14 @@
     </div>
 
     <label class="effect-title">{{ localize "ATORIA.SpellEffectTitle" }}</label>
-    <textarea class="effect" name="system.effect_description" title="{{ localize 'ATORIA.SpellEffectTitle' }}">{{item.system.effect_description}}</textarea>
-
+    <div class="effect">
+        {{editor item.system.effect_description target="system.effect_description" button=false editable=true engine="prosemirror" collaborate=false}}
+    </div>
 
     <label class="effect-title">{{ localize "ATORIA.SpellCriticalEffectTitle" }}</label>
-    <textarea class="effect" name="system.critical_effect_description" title="{{ localize 'ATORIA.SpellCriticalEffectTitle' }}">{{item.system.critical_effect_description}}</textarea>
-
+    <div class="effect">
+        {{editor item.system.critical_effect_description target="system.critical_effect_description" button=false editable=true engine="prosemirror" collaborate=false}}
+    </div>
 
     <label class="spell-supp-title">{{ localize "ATORIA.SpellSuppTitle" }}
         <a class="add-button spell-supp-create flex0" data-type="spell_supp" data-action="spell-item" >
@@ -82,7 +84,11 @@
                     <i class="fas fa-trash"></i>
                 </a>
             </div>
-            <textarea class="effect" name="system.spell_supps.{{key}}.effect_description" title="{{ localize 'ATORIA.SpellEffectTitle' }}">{{spell_supp.effect_description}}</textarea>
+
+            <div class="effect">
+                {{editor (concat "system.spell_supps." key ".descriptionHTML") target=(concat "system.spell_supps." key ".effect_description") button=false editable=true engine="prosemirror" collaborate=false}}
+            </div>
         </div>
     {{/each}}
+    {{log item.system.spell_supps}}
 </form>

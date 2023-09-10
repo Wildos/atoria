@@ -43,6 +43,9 @@ export default class ItemAtoriaSheetGear extends ItemSheet {
       isBagItem: [ "gear-consumable", "gear-equipment", "gear-ingredient"].includes(item.type),
       isOwned: !(this.actor === undefined || this.actor === null)
     });
+    
+    context.descriptionHTML = await TextEditor.enrichHTML(item.system.effect_description, {async: true});
+
     return context;
   }
 
@@ -50,6 +53,7 @@ export default class ItemAtoriaSheetGear extends ItemSheet {
 
   /** @inheritdoc */
   activateListeners(html) {
+    super.activateListeners(html);
     if ( this.isEditable ) {
       html.find('.item-delete').click(this._onItemDelete.bind(this));
     }
