@@ -1332,7 +1332,7 @@
   display: inline-block;
   text-align: center;
   font-weight: bold;
-  background-color: #a4c2f4;
+  background-color: #a4b3f4;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
   position: relative;
@@ -1629,8 +1629,11 @@
 .atoria .inventory .flexrow .inventory-gear-bag {
   background-color: #b49d91;
 }
-.atoria .inventory .flexrow .gray-color {
-  background-color: #999999;
+.atoria .inventory .flexrow .subtitle-color {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.atoria .inventory .flexrow .rowdata-color {
+  background-color: rgba(255, 255, 255, 0.25);
 }
 .atoria .inventory .flexrow .title {
   text-align: center;
@@ -1760,16 +1763,6 @@
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
-.atoria .inventory .flexrow .dice-value {
-  background-color: #999999;
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 50px;
-  max-width: 50px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
 .atoria .inventory .flexrow .encumbrance-value {
   text-align: center;
   border-radius: 3px;
@@ -1817,6 +1810,15 @@
 .atoria .inventory .bag-area .name-value {
   min-width: 135px;
   max-width: 135px;
+}
+.atoria .inventory .bag-area .bag-area-consumable {
+  background-color: #f4cccc;
+}
+.atoria .inventory .bag-area .bag-area-equipment {
+  background-color: #d9d9d9;
+}
+.atoria .inventory .bag-area .bag-area-ingredient {
+  background-color: #d9d2e9;
 }
 .atoria .spell {
   width: -webkit-max-content;

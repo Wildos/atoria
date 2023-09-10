@@ -32,12 +32,18 @@ $encumbrance-stealth-bonus-color: #7dda70;
 $perception-color: #f1c232;
 
 $skill-color: #a4c2f4;
+$knowledge-color: #a4b3f4;
 
 
 $inventory-armor-color: #434343;
 $inventory-bag-color: #b49d91;
 
-$inventory-sub_armor-color: #999999;
+$inventory-bag-color-consumable: #f4cccc;
+$inventory-bag-color-equipment: #d9d9d9;
+$inventory-bag-color-ingredient: #d9d2e9;
+
+$inventory-subtitle-color: $tanned-color;
+$inventory-rowdata-color: $clear-color;
 
 $coin-copper-color: #f6b26b;
 $coin-silver-color: #d9d9d9;
