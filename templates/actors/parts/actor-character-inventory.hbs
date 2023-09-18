@@ -1,5 +1,5 @@
 <div class="inventory flexrow">
-    <div class="flexcol">
+    <div class="flexcol item-list">
         <div class="flexrow">
             <label class="title inventory-gear-armor">{{ localize "ATORIA.InventoryArmorTitle"}}</label>
             <label class="armor-value">{{system.armor}}</label>
@@ -12,43 +12,43 @@
         <div class="flexrow">
             <label class="type-value subtitle-color">{{ localize "ATORIA.ArmorTorso"}}</label>
             <input class="name-value" type="text" name="system.equipped_armor.torso.name" title="{{system.equipped_armor.torso.name}}" value="{{system.equipped_armor.torso.name}}"/>
-            <input class="encumbrance-value" type="number" name="system.equipped_armor.torso.encumbrance" value="{{system.equipped_armor.torso.encumbrance}}"/>
+            <input class="encumbrance-value" type="number" data-dtype="Number" name="system.equipped_armor.torso.encumbrance" value="{{system.equipped_armor.torso.encumbrance}}"/>
             <input class="effect-value" type="text" name="system.equipped_armor.torso.effect" title="{{system.equipped_armor.torso.effect}}" value="{{system.equipped_armor.torso.effect}}"/>
         </div>
         <div class="flexrow">
             <label class="type-value subtitle-color">{{ localize "ATORIA.ArmorShoulders"}}</label>
             <input class="name-value" type="text" name="system.equipped_armor.shoulders.name" title="{{system.equipped_armor.shoulders.name}}" value="{{system.equipped_armor.shoulders.name}}"/>
-            <input class="encumbrance-value" type="number" name="system.equipped_armor.shoulders.encumbrance" value="{{system.equipped_armor.shoulders.encumbrance}}"/>
+            <input class="encumbrance-value" type="number" data-dtype="Number" name="system.equipped_armor.shoulders.encumbrance" value="{{system.equipped_armor.shoulders.encumbrance}}"/>
             <input class="effect-value" type="text" name="system.equipped_armor.shoulders.effect" title="{{system.equipped_armor.shoulders.effect}}" value="{{system.equipped_armor.shoulders.effect}}"/>
         </div>
         <div class="flexrow">
             <label class="type-value subtitle-color">{{ localize "ATORIA.ArmorArms"}}</label>
             <input class="name-value" type="text" name="system.equipped_armor.arms.name" title="{{system.equipped_armor.arms.name}}" value="{{system.equipped_armor.arms.name}}"/>
-            <input class="encumbrance-value" type="number" name="system.equipped_armor.arms.encumbrance" value="{{system.equipped_armor.arms.encumbrance}}"/>
+            <input class="encumbrance-value" type="number" data-dtype="Number" name="system.equipped_armor.arms.encumbrance" value="{{system.equipped_armor.arms.encumbrance}}"/>
             <input class="effect-value" type="text" name="system.equipped_armor.arms.effect" title="{{system.equipped_armor.arms.effect}}" value="{{system.equipped_armor.arms.effect}}"/>
         </div>
         <div class="flexrow">
             <label class="type-value subtitle-color">{{ localize "ATORIA.ArmorHands"}}</label>
             <input class="name-value" type="text" name="system.equipped_armor.hands.name" title="{{system.equipped_armor.hands.name}}" value="{{system.equipped_armor.hands.name}}"/>
-            <input class="encumbrance-value" type="number" name="system.equipped_armor.hands.encumbrance" value="{{system.equipped_armor.hands.encumbrance}}"/>
+            <input class="encumbrance-value" type="number" data-dtype="Number" name="system.equipped_armor.hands.encumbrance" value="{{system.equipped_armor.hands.encumbrance}}"/>
             <input class="effect-value" type="text" name="system.equipped_armor.hands.effect" title="{{system.equipped_armor.hands.effect}}" value="{{system.equipped_armor.hands.effect}}"/>
         </div>
         <div class="flexrow">
             <label class="type-value subtitle-color">{{ localize "ATORIA.ArmorWaist"}}</label>
             <input class="name-value" type="text" name="system.equipped_armor.waist.name" title="{{system.equipped_armor.waist.name}}" value="{{system.equipped_armor.waist.name}}"/>
-            <input class="encumbrance-value" type="number" name="system.equipped_armor.waist.encumbrance" value="{{system.equipped_armor.waist.encumbrance}}"/>
+            <input class="encumbrance-value" type="number" data-dtype="Number" name="system.equipped_armor.waist.encumbrance" value="{{system.equipped_armor.waist.encumbrance}}"/>
             <input class="effect-value" type="text" name="system.equipped_armor.waist.effect" title="{{system.equipped_armor.waist.effect}}" value="{{system.equipped_armor.waist.effect}}"/>
         </div>
         <div class="flexrow">
             <label class="type-value subtitle-color">{{ localize "ATORIA.ArmorLegs"}}</label>
             <input class="name-value" type="text" name="system.equipped_armor.legs.name" title="{{system.equipped_armor.legs.name}}" value="{{system.equipped_armor.legs.name}}"/>
-            <input class="encumbrance-value" type="number" name="system.equipped_armor.legs.encumbrance" value="{{system.equipped_armor.legs.encumbrance}}"/>
+            <input class="encumbrance-value" type="number" data-dtype="Number" name="system.equipped_armor.legs.encumbrance" value="{{system.equipped_armor.legs.encumbrance}}"/>
             <input class="effect-value" type="text" name="system.equipped_armor.legs.effect" title="{{system.equipped_armor.legs.effect}}" value="{{system.equipped_armor.legs.effect}}"/>
         </div>
         <div class="flexrow">
             <label class="type-value subtitle-color">{{ localize "ATORIA.ArmorFeet"}}</label>
             <input class="name-value" type="text" name="system.equipped_armor.feet.name" title="{{system.equipped_armor.feet.name}}" value="{{system.equipped_armor.feet.name}}"/>
-            <input class="encumbrance-value" type="number" name="system.equipped_armor.feet.encumbrance" value="{{system.equipped_armor.feet.encumbrance}}"/>
+            <input class="encumbrance-value" type="number" data-dtype="Number" name="system.equipped_armor.feet.encumbrance" value="{{system.equipped_armor.feet.encumbrance}}"/>
             <input class="effect-value" type="text" name="system.equipped_armor.feet.effect" value="{{system.equipped_armor.feet.effect}}"/>
         </div>
         <div class="flexrow">
@@ -86,7 +86,7 @@
             </div>
         {{/each}}
     </div>
-    <div class="flexcol bag-area">
+    <div class="flexcol bag-area item-list">
         <div class="flexrow">
             <label class="longtitle inventory-gear-bag">{{ localize "ATORIA.InventoryGearTitle"}}</label>
         </div>
@@ -95,11 +95,11 @@
             <label class="resource-value {{encumbrance_level_display_class}}">{{system.encumbrance.value}}</label>
             <label class="resource-value encumbrance">{{system.encumbrance.max}}</label>
             <label class="resource-value coin-copper">{{ localize "ATORIA.CoinCopper"}}</label>
-            <input class="resource-value" type="number" name="system.coins.copper" value="{{system.coins.copper}}"/>
+            <input class="resource-value" type="number" data-dtype="Number" name="system.coins.copper" value="{{system.coins.copper}}"/>
             <label class="resource-value coin-silver">{{ localize "ATORIA.CoinSilver"}}</label>
-            <input class="resource-value" type="number" name="system.coins.silver" value="{{system.coins.silver}}"/>
+            <input class="resource-value" type="number" data-dtype="Number" name="system.coins.silver" value="{{system.coins.silver}}"/>
             <label class="resource-value coin-gold">{{ localize "ATORIA.CoinGold"}}</label>
-            <input class="resource-value" type="number" name="system.coins.gold" value="{{system.coins.gold}}"/>
+            <input class="resource-value" type="number" data-dtype="Number" name="system.coins.gold" value="{{system.coins.gold}}"/>
         </div>
         <div class="flexrow">
             <label class="name-value subtitle-color">{{ localize "ATORIA.NameTitle"}}</label>

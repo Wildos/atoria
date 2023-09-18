@@ -1,12 +1,13 @@
 <form class="flexcol npc-sheet" autocomplete="off">
   {{!-- Sheet Header --}}
   <header class="sheet-header">
-    <div class="header-fields">
+    <div class="header-fields flexrow">
       <h1 class="charname">{{actor.name}}
         <a class="config-sheet flex0" data-tooltip="ATORIA.BaseConfig">
           <i class="fas fa-cog"></i>
         </a>
       </h1>
+      <img class="img-sheet flex0" src="{{actor.img}}" data-tooltip="{{actor.name}}" alt="{{actor.name}}" data-edit="img">
     </div>
   </header>
 

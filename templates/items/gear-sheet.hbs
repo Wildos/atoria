@@ -9,8 +9,8 @@
         </label>
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.ItemName' }}"/>
         {{#if isWeapon}}
-            <label>{{ localize "ATORIA.ItemDiceTitle" }}</label>
-            <input name="system.damage_roll" type="text" value="{{item.system.damage_roll}}" placeholder="{{ localize 'ATORIA.DamageRoll' }}"/>
+            <label>{{ localize "ATORIA.EffectRoll" }}</label>
+            <input name="system.damage_roll" type="text" value="{{item.system.damage_roll}}" placeholder="{{ localize 'ATORIA.EffectRoll' }}"/>
             
             
             <label>{{ localize "ATORIA.Combative" }}</label>
@@ -28,7 +28,7 @@
             <input name="system.quantity" type="text" value="{{item.system.quantity}}" placeholder="{{ localize 'ATORIA.Quantity' }}"/>
         {{/if}}
         <label>{{ localize "ATORIA.ItemEncumbranceTitle" }}</label>
-        <input name="system.encumbrance" type="text" value="{{item.system.encumbrance}}" placeholder="{{ localize 'ATORIA.Encumbrance' }}"/>
+        <input name="system.encumbrance" type="number" data-dtype="Number" value="{{item.system.encumbrance}}" placeholder="{{ localize 'ATORIA.Encumbrance' }}"/>
         <label>{{ localize "ATORIA.ItemDescriptionTitle" }}</label>
         
         <div class="description-area">

@@ -400,7 +400,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   } 
   
 
-    /**
+  /**
   * @inheritdoc
   */
   async _onRoll(event) {
@@ -433,4 +433,5 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       }
     }
   }
+
 }

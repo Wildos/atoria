@@ -295,8 +295,14 @@ export default class ActorAtoriaSheet extends ActorSheet {
     }
     else {
       const item_desc_area = desc_area.children(".item-description");
-      const rendered_description = $(item.system.description || "<p></p>");
-      item_desc_area.html(rendered_description);
+      try {
+        const rendered_description = $(item.system.description || "<p></p>");
+        item_desc_area.html(rendered_description);
+      } catch {
+        console.log("_onItemDetail: WARNING: item description is not on the new format, it is recommended to resave it.");
+        const rendered_description = $("<p>" + item.system.description + "</p>" || "<p></p>");
+        item_desc_area.html(rendered_description);
+      }
       item_desc_area.slideDown(200);
       this._expanded.add(item.id);
     }
@@ -367,8 +373,14 @@ export default class ActorAtoriaSheet extends ActorSheet {
     }
     else {
       const effect_desc_area = desc_area.children(".effect-description");
-      const rendered_description = $(effect.description || "<p></p>");
-      effect_desc_area.html(rendered_description);
+      try {
+        const rendered_description = $(effect.description || "<p></p>");
+        effect_desc_area.html(rendered_description);
+      } catch {
+        console.log("_onEffectDetail: WARNING: effect description is not on the new format, it is recommended to resave it.");
+        const rendered_description = $("<p>" + effect.description + "</p>" || "<p></p>");
+        effect_desc_area.html(rendered_description);
+      }
       effect_desc_area.slideDown(200);
       this._expanded.add(id);
     }

@@ -211,6 +211,9 @@
   padding-right: 3px;
 }
 
+.atoria {
+  font-family: "Roboto", sans-serif;
+}
 .atoria .item-form {
   font-family: "Roboto", sans-serif;
 }
@@ -289,9 +292,13 @@
   -ms-flex-align: center;
   align-items: center;
   vertical-align: middle;
-  min-width: 20px;
-  max-width: 100px;
+  min-width: 30px;
+  max-width: 60px;
   padding: 8px 12px;
+}
+.atoria .character-sheet .img-sheet {
+  max-width: 36px;
+  max-height: 36px;
 }
 .atoria .spell-sheet {
   min-width: 250px;
@@ -2150,6 +2157,7 @@
   max-height: -moz-fit-content;
   max-height: fit-content;
   min-height: var(--form-field-height);
+  white-space: normal;
 }
 .atoria .spell .spell-details .spell-detail .effect p, .atoria .spell .spell-details .spell-detail .effect h1, .atoria .spell .spell-details .spell-detail .effect h2, .atoria .spell .spell-details .spell-detail .effect h3, .atoria .spell .spell-details .spell-detail .effect h4, .atoria .spell .spell-details .spell-detail .effect h5 {
   margin: 0;
