@@ -1,5 +1,4 @@
 <form class="flexcol" autocomplete="off">
-    <label class="title">Magics known:</label>
       {{#each magics as |magic key|}}
           <div class="flexrow">
               <input type="checkbox" id="{{key}}" name="magics.{{key}}.known" value="{{magic.known}}" data-dtype="Boolean" {{checked magic.known}}/>

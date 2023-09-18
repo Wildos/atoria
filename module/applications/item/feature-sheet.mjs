@@ -69,5 +69,11 @@ export default class ItemAtoriaSheetFeature extends ItemSheet {
       }
     }
   
+
+    /** @inheritdoc */
+    _onDrop(event) {
+      console.log("on_drop");
+    }
+
   }
   

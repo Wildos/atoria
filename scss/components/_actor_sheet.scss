@@ -17,8 +17,12 @@
         align-items: center;
         vertical-align: middle;
 
-        min-width: 20px;
-        max-width: 100px;
+        min-width: 30px;
+        max-width: 60px;
         padding: 8px 12px;
+    }
+    .img-sheet {
+        max-width: 36px;
+        max-height: 36px;
     }
 }

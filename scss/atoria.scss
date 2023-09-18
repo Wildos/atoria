@@ -12,6 +12,8 @@
 /* Styles limited to atoria sheets */
 @import 'components/configurators';
 .atoria {
+    font-family: $font-primary;
+
     @import 'components/forms';
     @import 'components/actor_sheet';
     @import 'components/spell_sheet';
