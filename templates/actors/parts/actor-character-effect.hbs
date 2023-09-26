@@ -5,7 +5,7 @@
         </a>
     </label>
     {{#each effects as |effect key|}}
-        <div class="effect-row effect flexcol {{#if effect.isExpanded}}expanded{{/if}}" data-effect-id="{{effect._id}}">
+        <div class="effect-row effect item flexcol {{#if effect.isExpanded}}expanded{{/if}}" data-effect-id="{{effect._id}}">
             <div class="flex0">
                 <div class="flexrow">
                     <label class="name-label flex0" title="{{effect.name}}">{{effect.name}}</label>
