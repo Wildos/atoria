@@ -189,7 +189,7 @@ export default class SkillRoll extends Roll {
         }
         
         this.marginOfSuccess = (this.targetValue - this.total) + this.success_modifier;
-        this.signedSL = this.signedSL ? this.signedSL : this.calculateSL(this.marginOfSuccess, this.SL_modifier);
+        this.signedSL = this.calculateSL(this.marginOfSuccess, this.SL_modifier);
 
         if (this.data.effect_roll) {
           const effect_roll_formula = (this.isCritical)? this.data.effect_roll.replace("d", "*") : this.data.effect_roll;
@@ -239,6 +239,7 @@ export default class SkillRoll extends Roll {
                 return `-${SL}`;
             }
         }
+        return '0';
     }
     /* -------------------------------------------- */
   

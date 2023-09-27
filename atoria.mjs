@@ -106,4 +106,12 @@ Hooks.once("i18nInit", () => localize_config());
 
 
 Hooks.once("ready", function() {
+  // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
+  Hooks.on("hotbarDrop", (bar, data, slot) => {
+    console.log(`HotbarDrop`, data);
+    if ( ["Item", "Actor"].includes(data.type) ) {
+      // documents.macro.create5eMacro(data, slot);
+      return false;
+    }
+  });
 });
