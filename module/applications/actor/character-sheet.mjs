@@ -113,6 +113,23 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.displayed_spells = displayed_spells;
   }
 
+
+  _sort_item_by_id(item_list, item_id_a, item_id_b) {
+    let pos_a = -1;
+    let pos_b = -1;
+    let cur_pos = 0;
+    for (let i of item_list) {
+      if (i._id == item_id_a){
+        pos_a = cur_pos;
+      }
+      if (i._id == item_id_b){
+        pos_b = cur_pos;
+      }
+      cur_pos += 1;
+    }
+    return pos_a - pos_b;
+  }
+
   /** @override */
   _prepareData(context) {
     const left_skills = [
@@ -170,9 +187,12 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     const formatted_knowledges = {};
     const knowledge_groups = context.system.knowledges;
 
+    let sorted_knowledges_cat = [];
     // console.log(`prepareData ${JSON.stringify(context.system.knowledges, null, 2)}`);
     for (const group_key in knowledge_groups) {
       const knowledge_cats = knowledge_groups[group_key];
+      sorted_knowledges_cat = sorted_knowledges_cat.concat(Object.keys(knowledge_cats));
+      
       for (const cat_key in knowledge_cats){
         const sub_skills = [];
         for (const sub_skill_key in knowledge_cats[cat_key].sub_skills) {
@@ -182,6 +202,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
             skill_item["full_id"] = `${group_key}.${cat_key}.${sub_skill_key}`;
             sub_skills.push(skill_item);
           }
+          sub_skills.sort((a, b) => {return this._sort_item_by_id(context.items, a.id, b.id);});
         }
         // console.log(`getData ${JSON.stringify(knowledge_cats[cat_key].sub_skills, null, 2)}`);
         formatted_knowledges[cat_key] = {
@@ -192,6 +213,12 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         };
       }
     }
+    sorted_knowledges_cat = sorted_knowledges_cat.filter((el) => {
+      return !!game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[el]);
+    });
+    sorted_knowledges_cat.sort((a, b) => {
+      return game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[a]).localeCompare(game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[b]));
+    });
 
     const formatted_magics = {};
     const magic_cats = context.system.magics;
@@ -200,10 +227,11 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       for (const sub_skill_key in magic_cats[cat_key].sub_skills) {
         const skill_item = this.actor.items.get(magic_cats[cat_key].sub_skills[sub_skill_key]);
         if (skill_item === undefined) console.log(`_prepareData:: Invalid item id found: ${magic_cats[cat_key].sub_skills[sub_skill_key]}`);
-          else {
-            skill_item["full_id"] = `${cat_key}.${sub_skill_key}`;
-            sub_skills.push(skill_item);
-          }
+        else {
+          skill_item["full_id"] = `${cat_key}.${sub_skill_key}`;
+          sub_skills.push(skill_item);
+        }
+        sub_skills.sort((a, b) => {return this._sort_item_by_id(context.items, a.id, b.id);});
       }
       formatted_magics[cat_key] = {
         id: cat_key,
@@ -212,9 +240,15 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         sub_skills: sub_skills
       };
     }
+    let sorted_magics_cat = Object.keys(magic_cats);
+    sorted_magics_cat.sort((a, b) => {
+      return game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[a]).localeCompare(game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[b]));
+    });
 
     context.formatted_skills = formatted_skills;
+    context.sorted_knowledges_cat = sorted_knowledges_cat;
     context.formatted_knowledges = formatted_knowledges;
+    context.sorted_magics_cat = sorted_magics_cat;
     context.formatted_magics = formatted_magics;
     // Endurance influence max mana and max stamina
     const endurance_ratio = context.system.endurance.value / context.system.endurance.max;
