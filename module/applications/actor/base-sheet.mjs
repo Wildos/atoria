@@ -225,25 +225,9 @@ export default class ActorAtoriaSheet extends ActorSheet {
   * @param {Event} event      The originating click event.
   * @private
   */
-  _onRoll(event) {
+  async _onRoll(event) {
     event.preventDefault();
-    switch (event.currentTarget.dataset.type) {
-      case 'perception': 
-        let perception_id = event.currentTarget.dataset.id;
-        this.actor.rollPerception(perception_id, {event});
-        break;
-      case 'action':
-        let action_id = event.currentTarget.dataset.id;
-        this.actor.rollAction(action_id, {event});
-        break;
-      case 'skill':
-        let skill_id = event.currentTarget.dataset.id;
-        this.actor.rollSkill(skill_id, {event});
-        break;
-      case 'initiative':
-        this.actor.rollInitiativeDialog({event});
-        break;
-    }
+    await this.actor._executeRoll(event.currentTarget.dataset.type, event.currentTarget.dataset.id);
   }
 
 

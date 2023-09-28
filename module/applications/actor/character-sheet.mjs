@@ -400,38 +400,4 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   } 
   
 
-  /**
-  * @inheritdoc
-  */
-  async _onRoll(event) {
-    super._onRoll(event);
-    switch (event.currentTarget.dataset.type) {
-      case 'spell':{
-        let spell_id = event.currentTarget.dataset.id;
-        this.actor.rollSpell(spell_id, {event});
-        break;
-      }
-      case 'spell-detail': {
-        let spell_id = event.currentTarget.dataset.id;
-        await this.actor.sendSpellDetail(spell_id, {event});
-        break;
-      }
-      case 'knowledge': {
-        let knowledge_id = event.currentTarget.dataset.id;
-        this.actor.rollKnowledge(knowledge_id, {event});
-        break;
-      }
-      case 'magic': {
-        let magic_id = event.currentTarget.dataset.id;
-        this.actor.rollMagic(magic_id, {event});
-        break;
-      }
-      case 'gear-weapon': {
-        let weapon_id = event.currentTarget.dataset.id;
-        this.actor.rollWeapon(weapon_id, {event});
-        break;
-      }
-    }
-  }
-
 }

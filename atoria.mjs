@@ -28,7 +28,8 @@ import * as documents from "./module/documents/_module.mjs";
 globalThis.atoria = {
   applications,
   config: ATORIA,
-  utils
+  utils,
+  macro: documents.macro,
 };
 
 /* -------------------------------------------- */
@@ -109,9 +110,13 @@ Hooks.once("ready", function() {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => {
     console.log(`HotbarDrop`, data);
-    if ( ["Item", "Actor"].includes(data.type) ) {
-      // documents.macro.create5eMacro(data, slot);
-      return false;
+    switch (data.type) {
+      case "Item":
+        documents.macro.createItemMacro(data, slot);
+        return false;
+      case "Actor":
+        documents.macro.createActorMacro(data, slot);
+        return false;
     }
   });
 });
