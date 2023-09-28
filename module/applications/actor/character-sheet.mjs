@@ -245,7 +245,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   getCurrentEncumbrance() {
     let encumbrance_total = 0;
     // equipped armor
-    for (let armor_part of ["torso", "shoulders", "arms", "hands", "waist", "legs", "feet"]) {
+    for (let armor_part of ["head", "torso", "shoulders", "arms", "hands", "waist", "legs", "feet"]) {
       encumbrance_total += Number(this.actor.system.equipped_armor[armor_part].encumbrance);
     }
     // weapons and bag
