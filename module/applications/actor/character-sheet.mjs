@@ -39,6 +39,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     await super._prepareItems(context);
     // Initialize containers.
     const actions = [];
+    const combat_items = [];
     const features = [];
     const gear_weapons = [];
     const gear_consumables = [];
@@ -52,6 +53,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       // Append to actions.
       if (i.type === 'action') {
         actions.push(i);
+        combat_items.push(i);
       }
       // Append to features.
       if (i.type === 'feature') {
@@ -66,6 +68,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         i.system.description_cleaned = parseHTML.body.textContent || '';
 
         gear_weapons.push(i);
+        combat_items.push(i);
       }
       // Append to features.
       if (i.type === 'gear-consumable') {
@@ -100,6 +103,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
     // Assign and return
     context.actions = actions;
+    context.combat_items = combat_items;
     context.features = features;
     context.gear_weapons = gear_weapons;
     context.gear_consumables = gear_consumables;
