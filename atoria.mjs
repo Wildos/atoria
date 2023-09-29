@@ -109,13 +109,18 @@ Hooks.once("i18nInit", () => localize_config());
 Hooks.once("ready", function() {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => {
-    console.log(`HotbarDrop`, data);
     switch (data.type) {
       case "Item":
         documents.macro.createItemMacro(data, slot);
         return false;
-      case "Actor":
-        documents.macro.createActorMacro(data, slot);
+      case "initiative":
+        documents.macro.createInitiativeMacro(data, slot);
+        return false;
+      case "skill":
+      case "perception":
+        documents.macro.createSkillMacro(data, slot);
+        return false;
+      default: 
         return false;
     }
   });

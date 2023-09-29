@@ -17,7 +17,11 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       classes: ["atoria", "sheet", "actor", "character"],
       tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "character"}],
       width: 1025,
-      height: 800
+      height: 800,
+      dragDrop: [
+        {dragSelector: ".item-list .item", dropSelector: null},
+        {dragSelector: ".hotbar-able", dropSelector: null},
+      ]
     });
   }
 
@@ -437,5 +441,48 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     });
   } 
   
+
+
+  _get_skill_name(full_skill_id) {
+    const [cat_id, skill_id] = full_skill_id.split('.');
+    const cat_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[cat_id])}`;
+    const skill_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[skill_id])}`;
+    return `${cat_name} - ${skill_name}`;
+  }
+
+
+  /** @inheritdoc */
+  _onDragStart(event) {
+    switch (event.target.dataset?.type)  {
+      case "initiative": {
+        const dragData = {
+          "type": "initiative",
+          "name": "Initiative"
+        };
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+        break
+      }
+      case "skill": {
+        const dragData = {
+          "type": "skill",
+          "name": this._get_skill_name(event.target.dataset?.id),
+          "id": event.target.dataset?.id
+        };
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+        break
+      }
+      case "perception": {
+        const dragData = {
+          "type": "perception",
+          "name":`Perception - ${game.i18n.localize(CONFIG.ATORIA.PERCEPTION_LABEL[event.target.dataset?.id])}`,
+          "id": event.target.dataset?.id
+        };
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+        break
+      }
+      default:
+        return super._onDragStart(event);
+    }
+  }
 
 }

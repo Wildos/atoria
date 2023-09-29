@@ -291,7 +291,11 @@
 
   "ATORIA.RollSL": "DR",
   "ATORIA.RollResult": "Résultat",
-  "ATORIA.RollMS": "Diff"
+  "ATORIA.RollMS": "Diff",
 
+  "MACRO.AtrMissingTargetWarn": "Votre personnage '{actor}' n'a pas de '{type}' avec le nom '{name}'.",
+  "MACRO.AtrMultipleTargetsWarn": "Votre personnage '{actor}' a plus d'un '{type}' avec le nom '{name}'. Le premier sera utilisé.",
+  "MACRO.AtrNoActorSelected": "Aucun personage selectionné ou assigné n'a pu être trouvé pour la macro.",
+  "MACRO.AtrUnownedWarn": "Vous ne pouvez créer de macro que pour des objects qui vous appartienne."
 
 }
