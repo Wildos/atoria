@@ -17,7 +17,11 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       classes: ["atoria", "sheet", "actor", "character"],
       tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "character"}],
       width: 1025,
-      height: 800
+      height: 800,
+      dragDrop: [
+        {dragSelector: ".item-list .item", dropSelector: null},
+        {dragSelector: ".hotbar-able", dropSelector: null},
+      ]
     });
   }
 
@@ -39,6 +43,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     await super._prepareItems(context);
     // Initialize containers.
     const actions = [];
+    const combat_items = [];
     const features = [];
     const gear_weapons = [];
     const gear_consumables = [];
@@ -52,6 +57,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       // Append to actions.
       if (i.type === 'action') {
         actions.push(i);
+        combat_items.push(i);
       }
       // Append to features.
       if (i.type === 'feature') {
@@ -66,6 +72,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         i.system.description_cleaned = parseHTML.body.textContent || '';
 
         gear_weapons.push(i);
+        combat_items.push(i);
       }
       // Append to features.
       if (i.type === 'gear-consumable') {
@@ -100,6 +107,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
     // Assign and return
     context.actions = actions;
+    context.combat_items = combat_items;
     context.features = features;
     context.gear_weapons = gear_weapons;
     context.gear_consumables = gear_consumables;
@@ -107,6 +115,23 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.gear_ingredients = gear_ingredients;
     context.spells = spells;
     context.displayed_spells = displayed_spells;
+  }
+
+
+  _sort_item_by_id(item_list, item_id_a, item_id_b) {
+    let pos_a = -1;
+    let pos_b = -1;
+    let cur_pos = 0;
+    for (let i of item_list) {
+      if (i._id == item_id_a){
+        pos_a = cur_pos;
+      }
+      if (i._id == item_id_b){
+        pos_b = cur_pos;
+      }
+      cur_pos += 1;
+    }
+    return pos_a - pos_b;
   }
 
   /** @override */
@@ -166,9 +191,12 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     const formatted_knowledges = {};
     const knowledge_groups = context.system.knowledges;
 
+    let sorted_knowledges_cat = [];
     // console.log(`prepareData ${JSON.stringify(context.system.knowledges, null, 2)}`);
     for (const group_key in knowledge_groups) {
       const knowledge_cats = knowledge_groups[group_key];
+      sorted_knowledges_cat = sorted_knowledges_cat.concat(Object.keys(knowledge_cats));
+      
       for (const cat_key in knowledge_cats){
         const sub_skills = [];
         for (const sub_skill_key in knowledge_cats[cat_key].sub_skills) {
@@ -178,6 +206,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
             skill_item["full_id"] = `${group_key}.${cat_key}.${sub_skill_key}`;
             sub_skills.push(skill_item);
           }
+          sub_skills.sort((a, b) => {return this._sort_item_by_id(context.items, a.id, b.id);});
         }
         // console.log(`getData ${JSON.stringify(knowledge_cats[cat_key].sub_skills, null, 2)}`);
         formatted_knowledges[cat_key] = {
@@ -188,6 +217,12 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         };
       }
     }
+    sorted_knowledges_cat = sorted_knowledges_cat.filter((el) => {
+      return !!game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[el]);
+    });
+    sorted_knowledges_cat.sort((a, b) => {
+      return game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[a]).localeCompare(game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[b]));
+    });
 
     const formatted_magics = {};
     const magic_cats = context.system.magics;
@@ -196,10 +231,11 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       for (const sub_skill_key in magic_cats[cat_key].sub_skills) {
         const skill_item = this.actor.items.get(magic_cats[cat_key].sub_skills[sub_skill_key]);
         if (skill_item === undefined) console.log(`_prepareData:: Invalid item id found: ${magic_cats[cat_key].sub_skills[sub_skill_key]}`);
-          else {
-            skill_item["full_id"] = `${cat_key}.${sub_skill_key}`;
-            sub_skills.push(skill_item);
-          }
+        else {
+          skill_item["full_id"] = `${cat_key}.${sub_skill_key}`;
+          sub_skills.push(skill_item);
+        }
+        sub_skills.sort((a, b) => {return this._sort_item_by_id(context.items, a.id, b.id);});
       }
       formatted_magics[cat_key] = {
         id: cat_key,
@@ -208,9 +244,15 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         sub_skills: sub_skills
       };
     }
+    let sorted_magics_cat = Object.keys(magic_cats);
+    sorted_magics_cat.sort((a, b) => {
+      return game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[a]).localeCompare(game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[b]));
+    });
 
     context.formatted_skills = formatted_skills;
+    context.sorted_knowledges_cat = sorted_knowledges_cat;
     context.formatted_knowledges = formatted_knowledges;
+    context.sorted_magics_cat = sorted_magics_cat;
     context.formatted_magics = formatted_magics;
     // Endurance influence max mana and max stamina
     const endurance_ratio = context.system.endurance.value / context.system.endurance.max;
@@ -245,7 +287,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   getCurrentEncumbrance() {
     let encumbrance_total = 0;
     // equipped armor
-    for (let armor_part of ["torso", "shoulders", "arms", "hands", "waist", "legs", "feet"]) {
+    for (let armor_part of ["head", "torso", "shoulders", "arms", "hands", "waist", "legs", "feet"]) {
       encumbrance_total += Number(this.actor.system.equipped_armor[armor_part].encumbrance);
     }
     // weapons and bag
@@ -400,37 +442,46 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   } 
   
 
-  /**
-  * @inheritdoc
-  */
-  async _onRoll(event) {
-    super._onRoll(event);
-    switch (event.currentTarget.dataset.type) {
-      case 'spell':{
-        let spell_id = event.currentTarget.dataset.id;
-        this.actor.rollSpell(spell_id, {event});
-        break;
+
+  _get_skill_name(full_skill_id) {
+    const [cat_id, skill_id] = full_skill_id.split('.');
+    const cat_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[cat_id])}`;
+    const skill_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[skill_id])}`;
+    return `${cat_name} - ${skill_name}`;
+  }
+
+
+  /** @inheritdoc */
+  _onDragStart(event) {
+    switch (event.target.dataset?.type)  {
+      case "initiative": {
+        const dragData = {
+          "type": "initiative",
+          "name": "Initiative"
+        };
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+        break
       }
-      case 'spell-detail': {
-        let spell_id = event.currentTarget.dataset.id;
-        await this.actor.sendSpellDetail(spell_id, {event});
-        break;
+      case "skill": {
+        const dragData = {
+          "type": "skill",
+          "name": this._get_skill_name(event.target.dataset?.id),
+          "id": event.target.dataset?.id
+        };
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+        break
       }
-      case 'knowledge': {
-        let knowledge_id = event.currentTarget.dataset.id;
-        this.actor.rollKnowledge(knowledge_id, {event});
-        break;
+      case "perception": {
+        const dragData = {
+          "type": "perception",
+          "name":`Perception - ${game.i18n.localize(CONFIG.ATORIA.PERCEPTION_LABEL[event.target.dataset?.id])}`,
+          "id": event.target.dataset?.id
+        };
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+        break
       }
-      case 'magic': {
-        let magic_id = event.currentTarget.dataset.id;
-        this.actor.rollMagic(magic_id, {event});
-        break;
-      }
-      case 'gear-weapon': {
-        let weapon_id = event.currentTarget.dataset.id;
-        this.actor.rollWeapon(weapon_id, {event});
-        break;
-      }
+      default:
+        return super._onDragStart(event);
     }
   }
 

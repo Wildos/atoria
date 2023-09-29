@@ -68,7 +68,7 @@
                         {{#each system.perceptionsListPair}}
                             <div class="perception-row flexrow">
                                 {{#each this}}
-                                    <label class="perception-label tanned-color rollable" data-type="perception" data-id="{{this.id}}">{{this.label}}</label>
+                                    <label class="perception-label tanned-color rollable hotbar-able" data-type="perception" data-id="{{this.id}}">{{this.label}}</label>
                                 {{/each}}
                             </div>
                             <div class="perception-row flexrow">
@@ -88,17 +88,21 @@
         {{!-- Second row --}}
         <div class="flex0">
             <div class="flexrow">
-                <div class="flexcol">
-                    <div class="flex0">
-                        {{> "systems/atoria/templates/actors/parts/actor-character-combat.hbs"}}
-                    </div>
-                    <div class="flexrow" style="min-width: 720px">
-                        <div>{{> "systems/atoria/templates/actors/parts/actor-character-skill.hbs"}}</div>
-                        <div>{{> "systems/atoria/templates/actors/parts/actor-character-knowledge.hbs"}}</div>
+                <div class="flex0">
+                    <div class="flexcol">
+                        <div class="flex0">
+                            {{> "systems/atoria/templates/actors/parts/actor-character-combat.hbs"}}
+                        </div>
+                        <div class="flexrow" style="min-width: 720px">
+                            <div>{{> "systems/atoria/templates/actors/parts/actor-character-skill.hbs"}}</div>
+                            <div>{{> "systems/atoria/templates/actors/parts/actor-character-knowledge.hbs"}}</div>
+                        </div>
                     </div>
                 </div>
-                <div class="flexcol">
-                    {{> "systems/atoria/templates/actors/parts/actor-character-feature.hbs"}}
+                <div class="flex0">
+                    <div class="flexcol">
+                        {{> "systems/atoria/templates/actors/parts/actor-character-feature.hbs"}}
+                    </div>
                 </div>
             </div>
         </div>

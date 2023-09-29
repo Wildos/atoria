@@ -117,6 +117,60 @@ export class AtoriaActor extends Actor {
 
 
 
+    async _executeRoll(data_type, data_id) {
+      switch (data_type) {
+        case 'perception': {
+          let perception_id = data_id;
+          this.rollPerception(perception_id, {});
+          break;
+        }
+        case 'action': {
+          let action_id = data_id;
+          this.rollAction(action_id, {});
+          break;
+        }
+        case 'skill': {
+          let skill_id = data_id;
+          this.rollSkill(skill_id, {});
+          break;
+        }
+        case 'initiative': {
+          this.rollInitiativeDialog({});
+          break;
+        }
+        case 'spell': {
+          let spell_id = data_id;
+          this.rollSpell(spell_id, {});
+          break;
+        }
+        case 'spell-detail': {
+          let spell_id = data_id;
+          await this.sendSpellDetail(spell_id, {});
+          break;
+        }
+        case 'knowledge': {
+          let knowledge_id = data_id;
+          this.rollKnowledge(knowledge_id, {});
+          break;
+        }
+        case 'magic': {
+          let magic_id = data_id;
+          this.rollMagic(magic_id, {});
+          break;
+        }
+        case 'gear-weapon': {
+          let weapon_id = data_id;
+          this.rollWeapon(weapon_id, {});
+          break;
+        }
+      }
+    }
+
+
+
+
+
+
   /**
    * Roll a perception check.
    * Prompt the user for input on which variety of roll they want to do.
@@ -201,23 +255,72 @@ export class AtoriaActor extends Actor {
         break;
       }
       case 'character': {
-        const [cat_id, skill_id] = skillId.split('.');
-        let skill_data = this.system.skills[cat_id][skill_id];
-    
+        let skill_item = this.items.get(skillId);
+        if (!skill_item) {
+          const [cat_id, skill_id] = skillId.split('.');
+          if (!cat_id || !skill_id) return ui.notifications.warn("This actor does not own this skill");
+          let skill_data = this.system.skills[cat_id][skill_id];
+
+          const roll_options = foundry.utils.mergeObject(options,  {
+            critical: get_critical_value(Number(skill_data.success_value), Number(skill_data.critical_mod)),
+            fumble: get_fumble_value(Number(skill_data.success_value), Number(skill_data.fumble_mod)),
+          });
+      
+          const cat_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[cat_id])}`;
+          const skill_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[skill_id])}`;
+          this._roll({
+            title: `${cat_name} - ${skill_name}`,
+            targetValue: skill_data.success_value
+          }, roll_options);
+          return;
+        }
+
         const roll_options = foundry.utils.mergeObject(options,  {
-          critical: get_critical_value(Number(skill_data.success_value), Number(skill_data.critical_mod)),
-          fumble: get_fumble_value(Number(skill_data.success_value), Number(skill_data.fumble_mod)),
+          critical: get_critical_value(Number(skill_item.system.success_value), Number(skill_item.system.critical_mod)),
+          fumble: get_fumble_value(Number(skill_item.system.success_value), Number(skill_item.system.fumble_mod)),
         });
     
-        const cat_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[cat_id])}`;
-        const skill_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[skill_id])}`;
+        const skill_item_cat_name = this.get_item_cat_from_knowledge(skillId) + this.get_item_cat_from_magic(skillId);
+
         this._roll({
-          title: `${cat_name} - ${skill_name}`,
-          targetValue: skill_data.success_value
+          title: `${skill_item_cat_name} - ${skill_item.name}`,
+          targetValue: skill_item.system.success_value
         }, roll_options);
         break;
       }
     }
+  }
+
+  get_item_cat_from_knowledge(item_id) {
+    for (const group_key in this.system.knowledges) {
+      const knowledge_cats = this.system.knowledges[group_key];
+      for (const cat_key in knowledge_cats){
+        const sub_skills = [];
+        for (const sub_skill_key in knowledge_cats[cat_key].sub_skills) {
+          const skill_item = this.items.get(knowledge_cats[cat_key].sub_skills[sub_skill_key]);
+          console.log( `get_item_cat_from_knowledge`, skill_item);
+          if (!skill_item) continue;
+          if (skill_item.id == item_id) {
+            return game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[cat_key]);
+          }
+        }
+      }
+    }
+    return "";
+  }
+
+  get_item_cat_from_magic(item_id) {
+    for (const cat_key in this.system.magics){
+      const sub_skills = [];
+      for (const sub_skill_key in this.system.magics[cat_key].sub_skills) {
+        const skill_item = this.items.get(this.system.magics[cat_key].sub_skills[sub_skill_key]);
+        if (!skill_item) continue;
+        if (skill_item && skill_item.id == item_id) {
+          return game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[cat_key]);
+        }
+      }
+    }
+    return "";
   }
 
   rollKnowledge(knowledge_id, options={}) {

@@ -11,7 +11,7 @@
                     <label class="resource-label armor">{{ localize "ATORIA.Armor"}}</label>
                     <label class="armor value-label">{{system.armor}}</label>
                 </div>
-                <div class="resource flexrow">
+                <div class="resource flexrow hotbar-able" data-type="initiative">
                     <label class="resource-label initiative rollable" data-type="initiative">{{ localize "ATORIA.Initiative"}}</label>
                     <label class="initiative value-label">{{system.initiative}}</label>
                 </div>
@@ -22,7 +22,41 @@
             </div>
         </div>
         <div class="grid-2col item-list">
-            {{#each actions as |action key|}}
+            {{#each combat_items as |combat_item key|}}
+                <div class="action-row item flexcol {{#if combat_item.isExpanded}}expanded{{/if}}" data-item-id="{{combat_item._id}}">
+                    <div class="flex0">
+                        <div class="flexrow">
+                            {{#if combat_item.system.effect_roll}}
+                                <label class="name-label flex0 rollable" data-type="{{combat_item.type}}" data-id="{{combat_item._id}}" title="{{combat_item.name}}">{{combat_item.name}}</label>
+                                <label class="roll-label flex0">{{combat_item.system.effect_roll}}</label>
+                            {{else if combat_item.system.damage_roll}}
+                                <label class="name-label flex0 rollable" data-type="{{combat_item.type}}" data-id="{{combat_item._id}}" title="{{combat_item.name}}">{{combat_item.name}}</label>
+                                <label class="roll-label flex0">{{combat_item.system.damage_roll}}</label>
+                            {{else}}
+                                <label class="longname-label flex0 rollable" data-type="{{combat_item.type}}" data-id="{{combat_item._id}}" title="{{combat_item.name}}">{{combat_item.name}}</label>
+                            {{/if}}
+
+                            <label class="value-label flex0">{{combat_item.system.success_value}}</label>
+
+                            <a class="detail-button item-detail flex0" data-action="{{combat_item.type}}-item" data-id="{{combat_item._id}}" >
+                                <i class="fas fa-circle-info"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="description" data-item-id="{{combat_item._id}}">
+                        {{#if combat_item.isExpanded}}
+                            <label class="item-description">{{{lookup @root.expandedData combat_item._id}}}</label>
+                        {{else}}
+                            <label class="item-description"></label>
+                        {{/if}}
+                        <a class="config-button item-config flex0" data-action="{{combat_item.type}}-item" ><i class="fas fa-cog"></i></a>
+                    </div>
+                </div>
+            {{/each}}
+
+
+            {{!-- {{#each actions as |action key|}}
                 <div class="action-row item flexcol {{#if action.isExpanded}}expanded{{/if}}" data-item-id="{{action._id}}">
                     <div class="flex0">
                         <div class="flexrow">
@@ -76,7 +110,7 @@
                         <a class="config-button item-config flex0" data-action="weapon-item" ><i class="fas fa-cog"></i></a>
                     </div>
                 </div>
-            {{/each}}
+            {{/each}} --}}
         </div>
     </div>
 </div>

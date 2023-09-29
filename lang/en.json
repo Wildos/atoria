@@ -288,7 +288,12 @@
 
   "ATORIA.RollSL": "SL",
   "ATORIA.RollResult": "Result",
-  "ATORIA.RollMS": "MS"
+  "ATORIA.RollMS": "MS",
 
+
+  "MACRO.AtrMissingTargetWarn": "Your controlled actor '{actor}' does not have an {type} with name '{name}'.",
+  "MACRO.AtrMultipleTargetsWarn": "Your controlled actor '{actor}' has more than one {type} with name '{name}'. The first match will be chosen.",
+  "MACRO.AtrNoActorSelected": "No selected or assigned actor could be found to target with macro.",
+  "MACRO.AtrUnownedWarn": "You can only create macro buttons for owned Items"
 
 }
