@@ -246,7 +246,9 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     }
     let sorted_magics_cat = Object.keys(magic_cats);
     sorted_magics_cat.sort((a, b) => {
-      return game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[a]).localeCompare(game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[b]));
+      if (a in CONFIG.ATORIA.MAGICS_LABEL && b in CONFIG.ATORIA.MAGICS_LABEL)
+        return game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[a]).localeCompare(game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[b]));
+      return 0;  
     });
 
     context.formatted_skills = formatted_skills;
