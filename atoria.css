@@ -40,7 +40,7 @@
   background-color: #e69138;
 }
 .atoria.actor-config .attributes .encumbrance {
-  background-color: #e6b8af;
+  background-color: #434343;
 }
 .atoria.actor-config .attributes .armor, .atoria.actor-config .attributes .initiative, .atoria.actor-config .attributes .movement {
   background-color: #cccccc;
@@ -931,7 +931,7 @@
   display: inline-block;
   text-align: center;
   font-weight: bold;
-  background-color: #cccccc;
+  background-color: #ebd2df;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
   position: relative;
@@ -1494,7 +1494,7 @@
   min-width: 590px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
-  background-color: #cccccc;
+  background-color: #b286be;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
   position: relative;
@@ -2210,7 +2210,8 @@
   background-color: #e69138;
 }
 .atoria .encumbrance {
-  background-color: #e6b8af;
+  background-color: #434343;
+  color: white;
 }
 .atoria .encumbrance-normal {
   background-color: rgba(0, 0, 0, 0.05);

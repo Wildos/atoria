@@ -34,6 +34,7 @@ export default class ActorAtoriaSheetNPC extends ActorAtoriaSheet {
     const actions = [];
     const features = [];
     const skills = [];
+    const knowledges = [];
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -47,7 +48,15 @@ export default class ActorAtoriaSheetNPC extends ActorAtoriaSheet {
       }
       // Append to skills.
       if (i.type === 'skill') {
-        skills.push(i);
+        //TODO: separate skill from knowledge
+        switch (i.system.action) {
+          case "skill-item":
+            skills.push(i);
+            break;
+          case "knowledge-item":
+            knowledges.push(i);
+            break;
+        }
       }
     }
 
@@ -55,6 +64,7 @@ export default class ActorAtoriaSheetNPC extends ActorAtoriaSheet {
     context.actions = actions;
     context.features = features;
     context.skills = skills;
+    context.knowledges = knowledges;
   }
 
   /* -------------------------------------------- */

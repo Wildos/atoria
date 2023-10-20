@@ -15,4 +15,20 @@
             </div>
         </div>
     {{/each}}
+    <label class="title">{{ localize "ATORIA.NPCKnowledgeTitle"}}
+        <a class="add-button item-create flex0" data-type="skill" data-action="knowledge-item" >
+            <i class="fas fa-plus"></i>
+        </a>
+    </label>
+    {{#each knowledges as |knowledge key|}}
+        <div class="skill-row item flexcol" data-item-id="{{knowledge._id}}">
+            <div class="flexrow">
+                <label class="name flex0 rollable" data-type="skill" data-id="{{knowledge._id}}" title="{{knowledge.name}}">{{knowledge.name}}</label>
+                <label class="value-label flex0">{{knowledge.system.success_value}}</label>
+                <a class="config-button item-config flex0" data-action="skill-item" >
+                    <i class="fas fa-cog"></i>
+                </a>
+            </div>
+        </div>
+    {{/each}}
 </div>
