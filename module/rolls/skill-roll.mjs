@@ -249,6 +249,14 @@ export default class SkillRoll extends Roll {
       // Evaluate the roll now so we have the results available to determine whether reliable talent came into play
       if ( !this._evaluated ) await this.evaluate({async: true});
   
+
+      if (!this.data.effect_roll && this.data.effect_description) {
+        let effect_roll_found = this.data.effect_description.match(/\[[0-9d+-]*\]/g);
+        if (effect_roll_found.length > 0) {
+          this.data.effect_roll = effect_roll_found[0].substr(1, effect_roll_found[0].length - 2);
+        }
+      }
+
       await this.computeResult();
 
       let adv_string = "";
@@ -270,10 +278,9 @@ export default class SkillRoll extends Roll {
         isFumble: this.isFumble,
         roll_obj: this.terms[0].results,
         adv_string,
-        critical_effect_description: this.critical_effect_description
+        critical_effect_description: await this._roll_string_effect(this.critical_effect_description)
       });
 
-      console.log(`tomessage ${this.critical_effect_description}`);
       messageData.content = content;
 
       // Add appropriate advantage mode message flavor and atoria roll flags
@@ -284,6 +291,38 @@ export default class SkillRoll extends Roll {
       return super.toMessage(messageData, options);
     }
   
+
+
+    async _roll_string_effect(string_to_parse){
+      let effect_results = [];
+
+      let roll_formulas = string_to_parse.match(/\[[0-9d+-]*\]/g);
+      for (let roll_formula of roll_formulas) {
+        console.log(`roll_formula: ${roll_formula}`)
+        let effect_roll = new Roll(roll_formula.substr(1, roll_formula.length - 2));
+        await effect_roll.evaluate();
+
+        let effect_detail = [];
+        for(let dice_result in effect_roll.terms[0].results) {
+          effect_detail.push(effect_roll.terms[0].results[dice_result].result);
+        }
+        effect_results.push(effect_detail.join(", "));
+        effect_results.push(effect_roll.total);
+        console.log(`roll_formula: ${effect_detail.join(", ")} == ${effect_roll.total}`);
+      }
+
+      let output_string = string_to_parse;
+      console.log(`effect_results: ${effect_results.length} : ${effect_results}`);
+      while (effect_results.length > 1) {
+        const roll_effect_detail = '<span class="skill-effect" title="' + effect_results.shift() + '">' + effect_results.shift() + '</span>'
+        output_string = output_string.replace(/\[[0-9d+-]*\]/, roll_effect_detail);
+      }
+
+      console.log(`output_string: ${output_string}`);
+      return output_string;
+    }
+
+
     /* -------------------------------------------- */
     /*  Configuration Dialog                        */
     /* -------------------------------------------- */

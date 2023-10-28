@@ -2397,6 +2397,7 @@
   max-height: -moz-fit-content;
   max-height: fit-content;
   min-height: var(--form-field-height);
+  white-space: normal;
 }
 .chat-message .spell-detail .effect p, .chat-message .spell-detail .effect h1, .chat-message .spell-detail .effect h2, .chat-message .spell-detail .effect h3, .chat-message .spell-detail .effect h4, .chat-message .spell-detail .effect h5 {
   margin: 0;
