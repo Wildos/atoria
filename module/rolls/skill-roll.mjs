@@ -194,7 +194,7 @@ export default class SkillRoll extends Roll {
         if (this.data.effect_roll) {
           const effect_roll_formula = (this.isCritical)? this.data.effect_roll.replace("d", "*") : this.data.effect_roll;
           let effect_roll = new Roll(effect_roll_formula);
-          if (effect_roll.validate) {
+          if (Roll.validate(effect_roll.formula)) {
             await effect_roll.evaluate();
             this.effect_result = effect_roll.total;
     
@@ -203,6 +203,9 @@ export default class SkillRoll extends Roll {
               this.effect_detail.push(effect_roll.terms[0].results[dice_result].result);
             }
             this.effect_detail = this.effect_detail.join(", ");
+          }else {
+            console.log("invalid ROLL");
+            console.log(effect_roll);
           }
         }
 
