@@ -301,7 +301,6 @@ export default class SkillRoll extends Roll {
 
       let roll_formulas = string_to_parse.match(/\[[0-9d+-]*\]/g);
       for (let roll_formula of roll_formulas) {
-        console.log(`roll_formula: ${roll_formula}`)
         let effect_roll = new Roll(roll_formula.substr(1, roll_formula.length - 2));
         await effect_roll.evaluate();
 
@@ -311,17 +310,14 @@ export default class SkillRoll extends Roll {
         }
         effect_results.push(effect_detail.join(", "));
         effect_results.push(effect_roll.total);
-        console.log(`roll_formula: ${effect_detail.join(", ")} == ${effect_roll.total}`);
       }
 
       let output_string = string_to_parse;
-      console.log(`effect_results: ${effect_results.length} : ${effect_results}`);
       while (effect_results.length > 1) {
         const roll_effect_detail = '<span class="skill-effect" title="' + effect_results.shift() + '">' + effect_results.shift() + '</span>'
         output_string = output_string.replace(/\[[0-9d+-]*\]/, roll_effect_detail);
       }
 
-      console.log(`output_string: ${output_string}`);
       return output_string;
     }
 
