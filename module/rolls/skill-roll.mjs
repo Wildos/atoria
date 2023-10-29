@@ -294,6 +294,9 @@ export default class SkillRoll extends Roll {
 
 
     async _roll_string_effect(string_to_parse){
+      if (!string_to_parse) {
+        return "";
+      }
       let effect_results = [];
 
       let roll_formulas = string_to_parse.match(/\[[0-9d+-]*\]/g);
