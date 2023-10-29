@@ -194,14 +194,16 @@ export default class SkillRoll extends Roll {
         if (this.data.effect_roll) {
           const effect_roll_formula = (this.isCritical)? this.data.effect_roll.replace("d", "*") : this.data.effect_roll;
           let effect_roll = new Roll(effect_roll_formula);
-          await effect_roll.evaluate();
-          this.effect_result = effect_roll.total;
-  
-          this.effect_detail = [];
-          for(let dice_result in effect_roll.terms[0].results) {
-            this.effect_detail.push(effect_roll.terms[0].results[dice_result].result);
+          if (effect_roll.validate) {
+            await effect_roll.evaluate();
+            this.effect_result = effect_roll.total;
+    
+            this.effect_detail = [];
+            for(let dice_result in effect_roll.terms[0].results) {
+              this.effect_detail.push(effect_roll.terms[0].results[dice_result].result);
+            }
+            this.effect_detail = this.effect_detail.join(", ");
           }
-          this.effect_detail = this.effect_detail.join(", ");
         }
 
         for(let dice_result in this.terms[0].results) {
@@ -252,7 +254,7 @@ export default class SkillRoll extends Roll {
 
       if (!this.data.effect_roll && this.data.effect_description) {
         let effect_roll_found = this.data.effect_description.match(/\[[0-9d+-]*\]/g);
-        if (effect_roll_found.length > 0) {
+        if (effect_roll_found && effect_roll_found.length > 0) {
           this.data.effect_roll = effect_roll_found[0].substr(1, effect_roll_found[0].length - 2);
         }
       }
