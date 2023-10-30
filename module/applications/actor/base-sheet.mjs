@@ -201,6 +201,8 @@ export default class ActorAtoriaSheet extends ActorSheet {
           }
         });
       });
+
+      html.find('.sort-items').click(this._onSortItems.bind(this));
     }
     // Handle default listeners last so system listeners are triggered first
     super.activateListeners(html);
@@ -382,6 +384,16 @@ export default class ActorAtoriaSheet extends ActorSheet {
     const li = event.currentTarget.closest(".effect");
     const effect = this.actor.effects.get(li.dataset.effectId);
     return effect.sheet.render(true);
+  }
+
+
+  _onSortItems(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    const type = header.dataset.type;
+    this.actor.onSortItems(type, {
+      "action" : header.dataset.action
+    });
   }
 
 }

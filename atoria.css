@@ -1163,6 +1163,17 @@
   align-items: center;
   vertical-align: middle;
 }
+.atoria .skill .title .sort-button {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+}
 .atoria .skill .skill-row {
   width: -webkit-max-content;
   width: -moz-max-content;
