@@ -256,7 +256,7 @@ export default class SkillRoll extends Roll {
   
 
       if (!this.data.effect_roll && this.data.effect_description) {
-        let effect_roll_found = this.data.effect_description.match(/\[[0-9d+-]*\]/g);
+        let effect_roll_found = this.data.effect_description.match(/\[[0-9dD+-]*\]/g);
         if (effect_roll_found && effect_roll_found.length > 0) {
           this.data.effect_roll = effect_roll_found[0].substr(1, effect_roll_found[0].length - 2);
         }
@@ -304,7 +304,11 @@ export default class SkillRoll extends Roll {
       }
       let effect_results = [];
 
-      let roll_formulas = string_to_parse.match(/\[[0-9d+-]*\]/g);
+      let roll_formulas = string_to_parse.match(/\[[0-9dD+-]*\]/g);
+      if (!roll_formulas) {
+        return string_to_parse;
+      }
+
       for (let roll_formula of roll_formulas) {
         let effect_roll = new Roll(roll_formula.substr(1, roll_formula.length - 2));
         await effect_roll.evaluate();
@@ -320,7 +324,7 @@ export default class SkillRoll extends Roll {
       let output_string = string_to_parse;
       while (effect_results.length > 1) {
         const roll_effect_detail = '<span class="skill-effect" title="' + effect_results.shift() + '">' + effect_results.shift() + '</span>'
-        output_string = output_string.replace(/\[[0-9d+-]*\]/, roll_effect_detail);
+        output_string = output_string.replace(/\[[0-9dD+-]*\]/, roll_effect_detail);
       }
 
       return output_string;
