@@ -504,5 +504,40 @@ export class AtoriaActor extends Actor {
     else this._spells_displayed.push(spellId);
   }
 
+  onSortItems(type, filters) {
+    let sort_values = [];
+    let valid_items_ids = [];
+
+    for (let [key, element] of this.items.entries()) {
+      if (element.type == type) {
+        let is_matching = true;
+
+        for (let filter_key in filters) {
+          if (filters[filter_key] != element.system[filter_key]) {
+            is_matching = false;
+            break;
+          }
+        }
+
+        if (is_matching) {
+          sort_values.push(element.sort);
+          valid_items_ids.push(key);
+        }
+      }
+    };
+
+    sort_values.sort((a, b) => {return b - a; });
+    valid_items_ids.sort((item_a, item_b) => {
+      return this.items.get(item_a).name.localeCompare(this.items.get(item_b).name);
+    })
+
+    for (let key of valid_items_ids) {
+      let new_sort_value = sort_values.pop();
+      let item = this.items.get(key)
+      item.update({
+        "sort": new_sort_value
+      });
+    }
+  }
 
 }
