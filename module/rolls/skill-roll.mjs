@@ -201,17 +201,23 @@ export default class SkillRoll extends Roll {
             this.effect_detail = "";
             for(let dice_nb in effect_roll.terms) {
               let dice_effect_detail = []
-              if (effect_roll.terms[dice_nb].results != undefined) {
-                for(let dice_result in effect_roll.terms[dice_nb].results) {
-                  dice_effect_detail.push(effect_roll.terms[dice_nb].results[dice_result].result);
-                }
-                this.effect_detail += "[" + (dice_effect_detail.join(", ")) + "]";
-              }
-              else if (effect_roll.terms[dice_nb].operator != undefined) {
+              console.log(`CLASS: ${effect_roll.terms[dice_nb].constructor.name}`);
+              switch (effect_roll.terms[dice_nb].constructor.name) {
+                case "Die":
+                  for(let dice_result in effect_roll.terms[dice_nb].results) {
+                    dice_effect_detail.push(effect_roll.terms[dice_nb].results[dice_result].result);
+                  }
+                  this.effect_detail += "[" + (dice_effect_detail.join(", ")) + "]";
+                  break;
+                case "OperatorTerm":
                   this.effect_detail += " " + effect_roll.terms[dice_nb].operator + " ";
-                }
-              else if (effect_roll.terms[dice_nb].number != undefined) {
+                  break;
+                case "NumericTerm":
                   this.effect_detail += effect_roll.terms[dice_nb].number;
+                  break;
+                default:
+                  console.log(`skill-roll.mjs::computeResult => Unknown class '${effect_roll.terms[dice_nb].constructor.name}'`);
+                  break;
               }
             }
           }else {
