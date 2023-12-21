@@ -200,14 +200,13 @@ export default class SkillRoll extends Roll {
     
             this.effect_detail = "";
             for(let dice_nb in effect_roll.terms) {
-              let dice_effect_detail = []
-              console.log(`CLASS: ${effect_roll.terms[dice_nb].constructor.name}`);
               switch (effect_roll.terms[dice_nb].constructor.name) {
                 case "Die":
+                  let dice_effect_detail = []
                   for(let dice_result in effect_roll.terms[dice_nb].results) {
                     dice_effect_detail.push(effect_roll.terms[dice_nb].results[dice_result].result);
                   }
-                  this.effect_detail += "[" + (dice_effect_detail.join(", ")) + "]";
+                  this.effect_detail += "{" + (dice_effect_detail.join(", ")) + "}";
                   break;
                 case "OperatorTerm":
                   this.effect_detail += " " + effect_roll.terms[dice_nb].operator + " ";
@@ -330,14 +329,38 @@ export default class SkillRoll extends Roll {
         let effect_roll = new Roll(roll_formula.substr(1, roll_formula.length - 2));
         await effect_roll.evaluate();
 
-        let effect_detail = [];
-        for(let dice_result in effect_roll.terms[0].results) {
-          effect_detail.push(effect_roll.terms[0].results[dice_result].result);
+        // let effect_detail = [];
+        // for(let dice_result in effect_roll.terms[0].results) {
+        //   effect_detail.push(effect_roll.terms[0].results[dice_result].result);
+        // }
+        // effect_results.push(effect_detail.join(", "));
+
+        let effect_detail = '';
+        for(let dice_nb in effect_roll.terms) {
+          switch (effect_roll.terms[dice_nb].constructor.name) {
+            case "Die":
+              let dice_effect_detail = []
+              for(let dice_result in effect_roll.terms[dice_nb].results) {
+                dice_effect_detail.push(effect_roll.terms[dice_nb].results[dice_result].result);
+              }
+              effect_detail += "{" + (dice_effect_detail.join(", ")) + "}";
+              break;
+            case "OperatorTerm":
+              effect_detail += " " + effect_roll.terms[dice_nb].operator + " ";
+              break;
+            case "NumericTerm":
+              effect_detail += effect_roll.terms[dice_nb].number;
+              break;
+            default:
+              console.log(`skill-roll.mjs::computeResult => Unknown class '${effect_roll.terms[dice_nb].constructor.name}'`);
+              break;
+          }
         }
-        effect_results.push(effect_detail.join(", "));
+        effect_results.push(effect_detail);
         effect_results.push(effect_roll.total);
       }
 
+      console.log(`effect_result: ${JSON.stringify(effect_results, null, 2)}`);
       let output_string = string_to_parse;
       while (effect_results.length > 1) {
         const roll_effect_detail = '<span class="skill-effect" title="' + effect_results.shift() + '">' + effect_results.shift() + '</span>'
