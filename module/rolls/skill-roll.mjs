@@ -192,17 +192,28 @@ export default class SkillRoll extends Roll {
         this.signedSL = this.calculateSL(this.marginOfSuccess, this.SL_modifier);
 
         if (this.data.effect_roll) {
-          const effect_roll_formula = (this.isCritical)? this.data.effect_roll.replace("d", "*") : this.data.effect_roll;
-          let effect_roll = new Roll(effect_roll_formula);
+          // const effect_roll_formula = (this.isCritical)? this.data.effect_roll.replace("d", "*") : this.data.effect_roll;
+          let effect_roll = new Roll(this.data.effect_roll);
           if (Roll.validate(effect_roll.formula)) {
-            await effect_roll.evaluate();
+            await effect_roll.evaluate({"maximize": this.isCritical});
             this.effect_result = effect_roll.total;
     
-            this.effect_detail = [];
-            for(let dice_result in effect_roll.terms[0].results) {
-              this.effect_detail.push(effect_roll.terms[0].results[dice_result].result);
+            this.effect_detail = "";
+            for(let dice_nb in effect_roll.terms) {
+              let dice_effect_detail = []
+              if (effect_roll.terms[dice_nb].results != undefined) {
+                for(let dice_result in effect_roll.terms[dice_nb].results) {
+                  dice_effect_detail.push(effect_roll.terms[dice_nb].results[dice_result].result);
+                }
+                this.effect_detail += "[" + (dice_effect_detail.join(", ")) + "]";
+              }
+              else if (effect_roll.terms[dice_nb].operator != undefined) {
+                  this.effect_detail += " " + effect_roll.terms[dice_nb].operator + " ";
+                }
+              else if (effect_roll.terms[dice_nb].number != undefined) {
+                  this.effect_detail += effect_roll.terms[dice_nb].number;
+              }
             }
-            this.effect_detail = this.effect_detail.join(", ");
           }else {
             console.log("invalid ROLL");
             console.log(effect_roll);
