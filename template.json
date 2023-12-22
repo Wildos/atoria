@@ -92,12 +92,7 @@
             "critical_mod": 0,
             "fumble_mod": 0
           },
-          "flexibility": {
-            "success_value": 10,
-            "critical_mod": 0,
-            "fumble_mod": 0
-          },
-          "acrobatics": {
+          "dexterity": {
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
@@ -166,20 +161,8 @@
             "fumble_mod": 0
           }
         },
-        "dressage": {
-          "taming": {
-            "success_value": 10,
-            "critical_mod": 0,
-            "fumble_mod": 0
-          },
-          "riding": {
-            "success_value": 10,
-            "critical_mod": 0,
-            "fumble_mod": 0
-          }
-        },
         "eloquence": {
-          "persusasion": {
+          "persuasion": {
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
@@ -189,7 +172,7 @@
             "critical_mod": 0,
             "fumble_mod": 0
           },
-          "provocation": {
+          "negotiation": {
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
@@ -234,11 +217,6 @@
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
-          },
-          "threat": {
-            "success_value": 10,
-            "critical_mod": 0,
-            "fumble_mod": 0
           }
         },
         "swiming": {
@@ -248,18 +226,6 @@
             "fumble_mod": 0
           },
           "breath-holding": {
-            "success_value": 10,
-            "critical_mod": 0,
-            "fumble_mod": 0
-          }
-        },
-        "negotiation": {
-          "diplomacy": {
-            "success_value": 10,
-            "critical_mod": 0,
-            "fumble_mod": 0
-          },
-          "bargaining": {
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
@@ -301,6 +267,11 @@
             "fumble_mod": 0
           },
           "lying": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
+          },
+          "provocation": {
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
@@ -496,28 +467,6 @@
             "sub_skills": []
           }
         },
-        "harvest": {
-          "farming": {
-            "known": false,
-            "sub_skills": []
-          },
-          "livestock": {
-            "known": false,
-            "sub_skills": []
-          },
-          "herbalist": {
-            "known": false,
-            "sub_skills": []
-          },
-          "mining": {
-            "known": false,
-            "sub_skills": []
-          },
-          "fishing": {
-            "known": false,
-            "sub_skills": []
-          }
-        },
         "utilitarian": {
           "hunting": {
             "known": false,
@@ -539,11 +488,23 @@
             "known": false,
             "sub_skills": []
           },
-          "vehicle": {
+          "transport": {
             "known": false,
             "sub_skills": []
           },
           "theft": {
+            "known": false,
+            "sub_skills": []
+          },
+          "dressage": {
+            "known": false,
+            "sub_skills": []
+          },
+          "nature": {
+            "known": false,
+            "sub_skills": []
+          },
+          "fishing": {
             "known": false,
             "sub_skills": []
           }

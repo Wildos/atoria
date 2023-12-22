@@ -23,6 +23,12 @@
   "TYPES.Item.skillPl": "Compétences",
 
 
+
+  "MIGRATION.Begin": "Une migration de données a commencé vers la version {version}",
+  "MIGRATION.Complete": "Une migration de données a terminé vers la version {version}\nIl y a eu {numberOfFailure} erreur lors de la migration",
+
+
+
   "ATORIA.TitleDeletionDialog": "Supression de {name}",
   "ATORIA.ContentDeletionDialog": "Confirmer la supression de {name}",
   "ATORIA.ConfirmDeletion": "Confirmer suppression",
@@ -100,8 +106,7 @@
 
   "ATORIA.Agility": "Agilité",
   "ATORIA.Balance": "Équilibre",
-  "ATORIA.Flexibility": "Souplesse",
-  "ATORIA.Acrobatics": "Acrobatie",
+  "ATORIA.Dexterity": "Dextérité",
   "ATORIA.Analyse": "Analyse",
   "ATORIA.Insight": "Perspicacité",
   "ATORIA.Identification": "Identification",
@@ -117,11 +122,8 @@
   "ATORIA.Silence": "Silence",
   "ATORIA.Stealth": "Furtivité",
   "ATORIA.Concealment": "Dissimulation",
-  "ATORIA.Dressage": "Dressage",
-  "ATORIA.Taming": "Domptage",
-  "ATORIA.Riding": "Monte",
   "ATORIA.Eloquence": "Éloquence",
-  "ATORIA.Persusasion": "Persuasion",
+  "ATORIA.Persuasion": "Persuasion",
   "ATORIA.Calming": "Apaisement",
   "ATORIA.Provocation": "Provocation",
   "ATORIA.Climbing": "Escalade",
@@ -134,12 +136,10 @@
   "ATORIA.Intimidation": "Intimidation",
   "ATORIA.Fear": "Peur",
   "ATORIA.Authority": "Autorité",
-  "ATORIA.Threat": "Menace",
   "ATORIA.Swiming": "Nage",
   "ATORIA.Ease": "Aisance",
   "ATORIA.Breath-Holding": "Apnée",
   "ATORIA.Negotiation": "Négociation",
-  "ATORIA.Diplomacy": "Diplomatie",
   "ATORIA.Bargaining": "Marchandage",
   "ATORIA.Reflex": "Réflexe",
   "ATORIA.Evasion": "Esquive",
@@ -189,8 +189,8 @@
   "ATORIA.Symbolism": "Symbolique",
   "ATORIA.Zoology": "Zoologie",
   "ATORIA.Farming": "Culture",
-  "ATORIA.Livestock": "Élevage",
-  "ATORIA.Herbalist": "Herboristerie",
+  "ATORIA.Dressage": "Dressage",
+  "ATORIA.Nature": "Nature",
   "ATORIA.Mining": "Minage",
   "ATORIA.Fishing": "Pêche",
   "ATORIA.Hunting": "Chasse",
@@ -198,7 +198,7 @@
   "ATORIA.Cuisine": "Cuisine",
   "ATORIA.Game": "Jeu",
   "ATORIA.Strategy": "Stratégie",
-  "ATORIA.Vehicle": "Véhicule",
+  "ATORIA.Transport": "Transport",
   "ATORIA.Theft": "Vol",
 
   "ATORIA.Mental": "Psychique",

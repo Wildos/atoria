@@ -142,7 +142,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       "athletic",
       "charisma",
       "slyness",
-      "dressage",
       "eloquence",
     ];
     const right_skills = [
@@ -150,7 +149,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       "spirit",
       "intimidation",
       "swiming",
-      "negotiation",
       "reflex",
       "sturdiness",
       "trickery",
