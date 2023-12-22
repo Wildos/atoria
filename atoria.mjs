@@ -21,6 +21,8 @@ import EffectRoll from "./module/rolls/effect-roll.mjs";
 import * as documents from "./module/documents/_module.mjs"; 
 
 
+const ATORIA_MIGRATION_SYSTEM_CREATION_VERSION = "0.1.10";
+
 /* -------------------------------------------- */
 /*  Define Module Structure                     */
 /* -------------------------------------------- */
@@ -50,6 +52,14 @@ Hooks.once("init", function() {
   CONFIG.Actor.documentClass = AtoriaActor;
   CONFIG.Item.documentClass = AtoriaItem;
 
+
+  game.settings.register("atoria", "systemMigrationVersion", {
+    name: "System Migration Version",
+    scope: "world",
+    config: false,
+    type: String,
+    default: ATORIA_MIGRATION_SYSTEM_CREATION_VERSION
+  });
 
   CONFIG.Dice.rolls.push(SkillRoll);
   CONFIG.Dice.rolls.push(EffectRoll);
