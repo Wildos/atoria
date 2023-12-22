@@ -199,7 +199,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         const sub_skills = [];
         for (const sub_skill_key in knowledge_cats[cat_key].sub_skills) {
           const skill_item = this.actor.items.get(knowledge_cats[cat_key].sub_skills[sub_skill_key]);
-          if (skill_item === undefined) console.log(`_prepareData:: Invalid item id found: ${knowledge_cats[cat_key].sub_skills[sub_skill_key]}`);
+          if (skill_item === undefined) console.error(`_prepareData:: Invalid item id found: ${cat_key}.${sub_skill_key} : ${JSON.stringify(knowledge_cats[cat_key].sub_skills, null, 2)}`);
           else {
             skill_item["full_id"] = `${group_key}.${cat_key}.${sub_skill_key}`;
             sub_skills.push(skill_item);
@@ -228,7 +228,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       const sub_skills = [];
       for (const sub_skill_key in magic_cats[cat_key].sub_skills) {
         const skill_item = this.actor.items.get(magic_cats[cat_key].sub_skills[sub_skill_key]);
-        if (skill_item === undefined) console.log(`_prepareData:: Invalid item id found: ${magic_cats[cat_key].sub_skills[sub_skill_key]}`);
+        if (skill_item === undefined) console.error(`_prepareData:: Invalid item id found: ${cat_key}.${sub_skill_key} : ${JSON.stringify(magic_cats[cat_key].sub_skills, null, 2)}`);
         else {
           skill_item["full_id"] = `${cat_key}.${sub_skill_key}`;
           sub_skills.push(skill_item);

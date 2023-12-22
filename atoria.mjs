@@ -139,6 +139,8 @@ Hooks.once("ready", function() {
     }
   });
 
+  // Determine whether a system migration is required
+  if ( !game.user.isGM ) return; // Only do migration with the GM
   if (game.settings.get("atoria", "systemMigrationVersion") || ATORIA_MIGRATION_SYSTEM_CREATION_VERSION) {
     migrateData();
   }

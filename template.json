@@ -200,11 +200,6 @@
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
-          },
-          "memory": {
-            "success_value": 10,
-            "critical_mod": 0,
-            "fumble_mod": 0
           }
         },
         "intimidation": {

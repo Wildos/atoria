@@ -4,15 +4,16 @@ export async function migrateData() {
     if (isNewerVersion(FIRST_BREAKING_CHANGE, game.settings.get("atoria", "systemMigrationVersion"))) {
         await _apply_first_change();
     }
+
+    game.settings.set("atoria", "systemMigrationVersion", game.system.version);
 }
 
 
-// /!\WARNING: I use shallow cloning, check everything is properly transfered (and not half deleted)
 async function _apply_first_change() {
     // Apply atoria version 0.3.5
     ui.notifications.info(game.i18n.format("MIGRATION.Begin", {version: FIRST_BREAKING_CHANGE}), {permanent: true});
 
-  // Migrate World Actors
+    // Migrate World Actors
     let migration_failed = 0;
 
     const actors = game.actors;
@@ -22,7 +23,7 @@ async function _apply_first_change() {
 
             if ( !foundry.utils.isEmpty(updateData) ) {
                 console.log(`Migrating Actor document ${actor.name}`);
-                await actor.update(updateData, {enforceTypes: false, diff: true});
+                await actor.update(updateData, {enforceTypes: false, diff: true, keepEmbeddedIds: true});
             }
         } catch(err) {
             err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
@@ -31,33 +32,13 @@ async function _apply_first_change() {
         }
     }
 
-
-    //Migrate Actor Override Tokens
-    for ( let s of game.scenes ) {
-        try {
-            const updateData = migrateSceneData(s);
-            if ( !foundry.utils.isEmpty(updateData) ) {
-                console.log(`Migrating Scene document ${s.name}`);
-                await s.update(updateData, {enforceTypes: false});
-                // If we do not do this, then synthetic token actors remain in cache
-                // with the un-updated actorData.
-                s.tokens.forEach(t => t._actor = null);
-            }
-        } catch(err) {
-            err.message = `Failed atoria system migration for Scene ${s.name}: ${err.message}`;
-            console.error(err);
-        }
-    }
-
     ui.notifications.info(game.i18n.format("MIGRATION.Complete", {version: FIRST_BREAKING_CHANGE, numberOfFailure: migration_failed}), {permanent: true});
 }
 
 
-
-
 function _update_actor(actor) {
     try {
-        if (actor == undefined) {
+        if (actor == undefined || (Object.keys(actor.system).length === 0 && actor.system.constructor === Object)) {
             return;
         }
         if (actor.type !== 'character') {
@@ -66,13 +47,13 @@ function _update_actor(actor) {
         const updateData = {};
 
         // Suppression de Menace, Diplomatie et Mémoire.
-        delete actor.system.skills.intimidation["threat"];
-        delete actor.system.skills.negotiation["diplomacy"];
-        delete actor.system.skills.spirit["memory"];
+        updateData["system.skills.intimidation.-=threat"] = null;
+        updateData["system.skills.negotiation.-=diplomacy"] = null;
+        updateData["system.skills.spirit.-=memory"] = null;
 
         // Souplesse fusionne avec Acrobatie et devient Adresse.
-        delete actor.system.skills.agility["flexibility"];
-        delete actor.system.skills.agility["acrobatics"];
+        updateData["system.skills.agility.-=flexibility"] = null;
+        updateData["system.skills.agility.-=acrobatics"] = null;
         updateData["system.skills.agility.dexterity"] = {
             "success_value": 10,
             "critical_mod": 0,
@@ -83,26 +64,26 @@ function _update_actor(actor) {
         // --- Change only reflected on the language pack, the name used in code is kept ---
 
         // Provocation va dans la catégorie Ruse.
-        updateData["system.skills.trickery.provocation"] = { ...actor.system.skills.eloquence.provocation };
-        delete actor.system.skills.eloquence["provocation"];
+        updateData["system.skills.trickery.provocation"] =  foundry.utils.deepClone(actor.system.skills.eloquence.provocation);
+        updateData["system.skills.eloquence.-=provocation"] = null;
         
 
         // Marchandage devient Négociation et va dans la catégorie Éloquence.
-        updateData["system.skills.eloquence.negotiation"] = { ...actor.system.skills.negotiation.bargaining };
-        delete actor.system.skills["negotiation"];
+        updateData["system.skills.eloquence.negotiation"] =  foundry.utils.deepClone(actor.system.skills.negotiation.bargaining);
+        updateData["system.skills.-=negotiation"] = null;
 
 
         // Suppression de Dressage.
-        delete actor.system.skills["dressage"];
+        updateData["system.skills.-=dressage"] = null;
 
 
         // La connaissance Véhicule devient Transport.
-        updateData["system.knowledges.utilitarian.transport"] = { ...actor.system.knowledges.utilitarian.vehicle };
-        delete actor.system.knowledges.utilitarian["vehicle"];
+        updateData["system.knowledges.utilitarian.transport"] = foundry.utils.deepClone(actor.system.knowledges.utilitarian.vehicle);
+        updateData["system.knowledges.utilitarian.-=vehicle"] = null;
 
         // La connaissance Élevage devient Dressage.
-        updateData["system.knowledges.harvest.dressage"] = { ...actor.system.knowledges.harvest.livestock };
-        delete actor.system.knowledges.harvest["livestock"];
+        updateData["system.knowledges.utilitarian.dressage"] = foundry.utils.deepClone(actor.system.knowledges.harvest.livestock);
+        updateData["system.knowledges.harvest.-=livestock"] = null;
 
 
         // Monte va dans la connaissance Transport.
@@ -116,86 +97,48 @@ function _update_actor(actor) {
 
         //  Herboristerie devient Nature. & Culture voit ses connaissances fusionner et va dans Nature.
         let new_nature_knowledge = {
-            "known": false,
+            "known": actor.system.knowledges.harvest.herbalist.known || actor.system.knowledges.harvest.farming.known,
             "sub_skills": []
         };
-        for (sub_s in actor.system.knowledges.harvest.herbalist.sub_skills) {
-            new_nature_knowledge.sub_skills.push({ ...sub_s });
+        for (let sub_s in actor.system.knowledges.harvest.herbalist.sub_skills) {
+            new_nature_knowledge.sub_skills.push( foundry.utils.deepClone(actor.system.knowledges.harvest.herbalist.sub_skills[sub_s]) );
         }
-        for (sub_s in actor.system.knowledges.harvest.farming.sub_skills) {
-            new_nature_knowledge.sub_skills.push({ ...sub_s });
+        for (let sub_s in actor.system.knowledges.harvest.farming.sub_skills) {
+            new_nature_knowledge.sub_skills.push( foundry.utils.deepClone(actor.system.knowledges.harvest.farming.sub_skills[sub_s]) );
         }
-        updateData["system.knowledges.harvest.nature"] = new_nature_knowledge;
-        delete actor.system.knowledges.harvest["farming"];
-        delete actor.system.knowledges.harvest["herbalist"];
+        updateData["system.knowledges.utilitarian.nature"] = new_nature_knowledge;
+        updateData["system.knowledges.harvest.-=farming"] = null;
+        updateData["system.knowledges.harvest.-=herbalist"] = null;
 
 
         // Plante devient Sauvage.
         // --- Nothing to do, sub_knowledge are entered by the user ---
 
         // Minage voit ses connaissances fusionner et va dans Construction.
-        let new_construction_knowledge = { ...actor.system.knowledges.utilitarian.construction }
-        for (sub_s in actor.system.knowledges.harvest.mining.sub_skills) {
-            new_construction_knowledge.sub_skills.push({ ...sub_s });
+        let new_construction_knowledge = foundry.utils.deepClone(actor.system.knowledges.utilitarian.construction);
+        for (let sub_s in actor.system.knowledges.harvest.mining.sub_skills) {
+            new_construction_knowledge.sub_skills.push( foundry.utils.deepClone(actor.system.knowledges.harvest.mining.sub_skills[sub_s]) );
         }
-        updateData["system.knowledges.utilitarian.construction"] = new_nature_knowledge;
-        delete actor.system.knowledges.harvest["mining"];
+        updateData["system.knowledges.utilitarian.construction"] = new_construction_knowledge;
+        updateData["system.knowledges.harvest.-=mining"] = null;
 
 
         // Dressage, Nature et Pêche vont dans la grande catégorie utilitaire.
-        updateData["system.knowledges.utilitarian.dressage"] = { ...actor.system.knowledges.harvest.dressage };
-        updateData["system.knowledges.utilitarian.nature"] = { ...actor.system.knowledges.harvest.nature };
-        updateData["system.knowledges.utilitarian.fishing"] = { ...actor.system.knowledges.harvest.fishing };
-        delete actor.system.knowledges.harvest["dressage"];
-        delete actor.system.knowledges.harvest["nature"];
-        delete actor.system.knowledges.harvest["fishing"];
+        updateData["system.knowledges.utilitarian.fishing"] = foundry.utils.deepClone(actor.system.knowledges.harvest.fishing );
+        updateData["system.knowledges.harvest.-=dressage"] = null;
+        updateData["system.knowledges.harvest.-=nature"] = null;
+        updateData["system.knowledges.harvest.-=fishing"] = null;
 
         // Suppression de la grande catégorie de connaissance Récolte.
-        delete actor.system.knowledges["harvest"];
+        updateData["system.knowledges.-=harvest"] = null;
 
 
         // Fix typo
-        updateData["system.skills.eloquence.persuasion"] = { ...actor.system.skills.eloquence.persusasion };
-        delete actor.system.skills.eloquence["persusasion"];
+        updateData["system.skills.eloquence.persuasion"] = foundry.utils.deepClone(actor.system.skills.eloquence.persusasion);
+        updateData["system.skills.eloquence.-=persusasion"] = null;
 
         return updateData;
     } catch (err) {
         throw new Error(`Error while updating actor ${actor.name}: ${err.message}`);
     }
 }
-
-
-
-/**
- * Migrate a single Scene document to incorporate changes to the data model of it's actor data overrides
- * Return an Object of updateData to be applied
- * @param {object} scene            The Scene data to Update
- * @returns {object}                The updateData to apply
- */
-function migrateSceneData(scene) {
-    try {
-        const tokens = scene.tokens.map(token => {
-            try {
-                const t = token instanceof foundry.abstract.DataModel ? token.toObject() : token;
-                const update = {};
-                if ( Object.keys(update).length ) foundry.utils.mergeObject(t, update);
-                if ( !game.actors.has(t.actorId) ) t.actorId = null;
-                if ( !t.actorId || t.actorLink ) t.actorData = {};
-                else if ( !t.actorLink ) {
-                    const actorData = token.delta?.toObject() ?? foundry.utils.deepClone(t.actorData);
-                    actorData.type = token.actor?.type;
-
-                    const update = _update_actor(actorData);
-                    t.delta = update;
-                }
-                return t;
-            } catch (err) {
-                throw err;
-            }
-        });
-        return {tokens};
-    } catch (err) {
-        console.error("LOL WTF");
-        throw err;
-    }
-  };
