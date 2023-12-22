@@ -22,6 +22,12 @@
   "TYPES.Item.skillPl": "Skills",
 
 
+
+  "MIGRATION.Begin": "A migration of data has started to version {version}",
+  "MIGRATION.Complete": "A migration of data has completed to version {version}\nThere has been {numberOfFailure} failure during the migration",
+
+
+
   "ATORIA.TitleDeletionDialog": "Deletion of {name}",
   "ATORIA.ContentDeletionDialog": "Do you confirm the deletion of {name}",
   "ATORIA.ConfirmDeletion": "Confirm deletion",
@@ -98,8 +104,7 @@
 
   "ATORIA.Agility": "Agility",
   "ATORIA.Balance": "Balance",
-  "ATORIA.Flexibility": "Flexibility",
-  "ATORIA.Acrobatics": "Acrobatics",
+  "ATORIA.Dexterity": "Dexterity",
   "ATORIA.Analyse": "Analyse",
   "ATORIA.Insight": "Insight",
   "ATORIA.Identification": "Identification",
@@ -115,11 +120,8 @@
   "ATORIA.Silence": "Silence",
   "ATORIA.Stealth": "Stealth",
   "ATORIA.Concealment": "Concealment",
-  "ATORIA.Dressage": "Dressage",
-  "ATORIA.Taming": "Taming",
-  "ATORIA.Riding": "Riding",
   "ATORIA.Eloquence": "Eloquence",
-  "ATORIA.Persusasion": "Persuasion",
+  "ATORIA.Persuasion": "Persuasion",
   "ATORIA.Calming": "Calming",
   "ATORIA.Provocation": "Provocation",
   "ATORIA.Climbing": "Climbing",
@@ -132,12 +134,10 @@
   "ATORIA.Intimidation": "Intimidation",
   "ATORIA.Fear": "Fear",
   "ATORIA.Authority": "Authority",
-  "ATORIA.Threat": "Threat",
   "ATORIA.Swiming": "Swiming",
   "ATORIA.Ease": "Ease",
   "ATORIA.Breath-Holding": "Breath-Holding",
   "ATORIA.Negotiation": "Negotiation",
-  "ATORIA.Diplomacy": "Diplomacy",
   "ATORIA.Bargaining": "Bargaining",
   "ATORIA.Reflex": "Reflex",
   "ATORIA.Evasion": "Evasion",
@@ -187,8 +187,8 @@
   "ATORIA.Symbolism": "Symbolism",
   "ATORIA.Zoology": "Zoology",
   "ATORIA.Farming": "Farming",
-  "ATORIA.Livestock": "Livestock",
-  "ATORIA.Herbalist": "Herbalist",
+  "ATORIA.Dressage": "Dressage",
+  "ATORIA.Nature": "Nature",
   "ATORIA.Mining": "Mining",
   "ATORIA.Fishing": "Fishing",
   "ATORIA.Hunting": "Hunting",
@@ -196,7 +196,7 @@
   "ATORIA.Cuisine": "Cuisine",
   "ATORIA.Game": "Game",
   "ATORIA.Strategy": "Strategy",
-  "ATORIA.Vehicle": "Vehicle",
+  "ATORIA.Transport": "Transport",
   "ATORIA.Theft": "Theft",
 
   "ATORIA.Mental": "Mental",

@@ -13,8 +13,7 @@ ATORIA.PERCEPTION_LABEL = {
 ATORIA.SKILLS_LABEL = {
     "agility": "ATORIA.Agility",
     "balance": "ATORIA.Balance",
-    "flexibility": "ATORIA.Flexibility",
-    "acrobatics": "ATORIA.Acrobatics",
+    "dexterity": "ATORIA.Dexterity",
     "analyse": "ATORIA.Analyse",
     "insight": "ATORIA.Insight",
     "identification": "ATORIA.Identification",
@@ -30,12 +29,10 @@ ATORIA.SKILLS_LABEL = {
     "silence": "ATORIA.Silence",
     "stealth": "ATORIA.Stealth",
     "concealment": "ATORIA.Concealment",
-    "dressage": "ATORIA.Dressage",
-    "taming": "ATORIA.Taming",
-    "riding": "ATORIA.Riding",
     "eloquence": "ATORIA.Eloquence",
-    "persusasion": "ATORIA.Persusasion",
+    "persuasion": "ATORIA.Persuasion",
     "calming": "ATORIA.Calming",
+    "negociation": "ATORIA.Negociation",
     "provocation": "ATORIA.Provocation",
     "climbing": "ATORIA.Climbing",
     "scale": "ATORIA.Scale",
@@ -43,16 +40,13 @@ ATORIA.SKILLS_LABEL = {
     "spirit": "ATORIA.Spirit",
     "will": "ATORIA.Will",
     "guarding": "ATORIA.Guarding",
-    "memory": "ATORIA.Memory",
     "intimidation": "ATORIA.Intimidation",
     "fear": "ATORIA.Fear",
     "authority": "ATORIA.Authority",
-    "threat": "ATORIA.Threat",
     "swiming": "ATORIA.Swiming",
     "ease": "ATORIA.Ease",
     "breath-holding": "ATORIA.Breath-Holding",
     "negotiation": "ATORIA.Negotiation",
-    "diplomacy": "ATORIA.Diplomacy",
     "bargaining": "ATORIA.Bargaining",
     "reflex": "ATORIA.Reflex",
     "evasion": "ATORIA.Evasion",
@@ -113,8 +107,8 @@ ATORIA.KNOWLEDGES_LABEL = {
     "symbolism": "ATORIA.Symbolism",
     "zoology": "ATORIA.Zoology",
     "farming": "ATORIA.Farming",
-    "livestock": "ATORIA.Livestock",
-    "herbalist": "ATORIA.Herbalist",
+    "dressage": "ATORIA.Dressage",
+    "nature": "ATORIA.Nature",
     "mining": "ATORIA.Mining",
     "fishing": "ATORIA.Fishing",
     "hunting": "ATORIA.Hunting",
@@ -122,7 +116,7 @@ ATORIA.KNOWLEDGES_LABEL = {
     "cuisine": "ATORIA.Cuisine",
     "game": "ATORIA.Game",
     "strategy": "ATORIA.Strategy",
-    "vehicle": "ATORIA.Vehicle",
+    "transport": "ATORIA.Transport",
     "theft": "ATORIA.Theft",
 }
 ATORIA.MAGICS_LABEL = {
@@ -141,7 +135,11 @@ ATORIA.MAGICS_LABEL = {
 
 export function localize_config() {
     for (let key in ATORIA.COMBAT_SKILL) {
-        ATORIA.COMBAT_SKILL[key] = game.i18n.localize(ATORIA.COMBAT_SKILL[key]);
+        if (key in ATORIA.COMBAT_SKILL) {
+            ATORIA.COMBAT_SKILL[key] = game.i18n.localize(ATORIA.COMBAT_SKILL[key]);
+        } else {
+            console.error(`Localisation error: Key not found in array: '${key}'`);
+        }
     }
 }
 

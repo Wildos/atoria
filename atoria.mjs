@@ -19,7 +19,7 @@ import SkillRoll from "./module/rolls/skill-roll.mjs";
 import EffectRoll from "./module/rolls/effect-roll.mjs";
 
 import * as documents from "./module/documents/_module.mjs"; 
-
+import { migrateData } from "./module/migrations/migration.mjs";
 
 const ATORIA_MIGRATION_SYSTEM_CREATION_VERSION = "0.1.10";
 
@@ -66,6 +66,9 @@ Hooks.once("init", function() {
 
   // Patch Core Functions
   Combatant.prototype.getInitiativeRoll = documents.combat.getInitiativeRoll;
+
+
+
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
@@ -117,6 +120,7 @@ Hooks.once("i18nInit", () => localize_config());
 
 
 Hooks.once("ready", function() {
+
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => {
     switch (data.type) {
@@ -134,4 +138,10 @@ Hooks.once("ready", function() {
         return false;
     }
   });
+
+  // Determine whether a system migration is required
+  if ( !game.user.isGM ) return; // Only do migration with the GM
+  if (game.settings.get("atoria", "systemMigrationVersion") || ATORIA_MIGRATION_SYSTEM_CREATION_VERSION) {
+    migrateData();
+  }
 });
