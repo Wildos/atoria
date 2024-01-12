@@ -629,7 +629,9 @@
     },
     "feature": {
       "effect": "",
-      "description": ""
+      "description": "",
+      "has_color": false,
+      "color": "ffffff"
     },
     "skill": {
       "success_value": 10,

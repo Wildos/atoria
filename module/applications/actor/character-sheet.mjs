@@ -61,6 +61,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       }
       // Append to features.
       if (i.type === 'feature') {
+        i.system.has_color = i.system.has_color === "TRUE" ? true : false;
         features.push(i);
       }
       // Append to features.

@@ -27,6 +27,8 @@
   "MIGRATION.Begin": "Une migration de données a commencé vers la version {version}",
   "MIGRATION.Complete": "Une migration de données a terminé vers la version {version}\nIl y a eu {numberOfFailure} erreur lors de la migration",
 
+  "ATORIA.Yes": "Oui",
+  "ATORIA.No": "Non",
 
 
   "ATORIA.TitleDeletionDialog": "Supression de {name}",
@@ -168,11 +170,15 @@
 
 
 
+  "ATORIA.Artistic": "Artistique",
+  "ATORIA.Craftmanship": "Artisanat",
+  "ATORIA.Erudition": "Érudition",
+  "ATORIA.Utilitarian": "Utilitaire",
 
-  "ATORIA.Alchemy": "Alchemie",
+  "ATORIA.Alchemy": "Alchimie",
   "ATORIA.Jewellery": "Bijouterie",
   "ATORIA.Sewing": "Couture",
-  "ATORIA.Cabinet-making": "Ébenisterie",
+  "ATORIA.Cabinet-making": "Ébénisterie",
   "ATORIA.Forge": "Forge",
   "ATORIA.Engineering": "Ingénierie",
   "ATORIA.Leatherworking": "Maroquinerie",
@@ -254,6 +260,7 @@
   "ATORIA.FeatureNameTitle": "Nom",
   "ATORIA.FeatureEffectTitle": "Charge(s)",
   "ATORIA.FeatureDescriptionTitle": "Description",
+  "ATORIA.FeatureColorTitle": "Couleur",
 
   "ATORIA.SkillNameTitle": "Nom",
 

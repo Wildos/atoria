@@ -20,5 +20,8 @@
                 vertical-align: middle;
             }
         }
+        .feature-color-value[value="#00000000"] ~ .feature-color-picker {
+            display: none;
+        }
     }
 }

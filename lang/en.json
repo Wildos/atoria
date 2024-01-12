@@ -28,6 +28,10 @@
 
 
 
+  "ATORIA.Yes": "Yes",
+  "ATORIA.No": "No",
+
+
   "ATORIA.TitleDeletionDialog": "Deletion of {name}",
   "ATORIA.ContentDeletionDialog": "Do you confirm the deletion of {name}",
   "ATORIA.ConfirmDeletion": "Confirm deletion",
@@ -166,6 +170,10 @@
 
 
 
+  "ATORIA.Artistic": "Artistic",
+  "ATORIA.Craftmanship": "Craftmanship",
+  "ATORIA.Erudition": "Erudition",
+  "ATORIA.Utilitarian": "Utilitarian",
 
   "ATORIA.Alchemy": "Alchemy",
   "ATORIA.Jewellery": "Jewellery",
@@ -251,6 +259,7 @@
   "ATORIA.FeatureNameTitle": "Name",
   "ATORIA.FeatureEffectTitle": "Effect",
   "ATORIA.FeatureDescriptionTitle": "Description",
+  "ATORIA.FeatureColorTitle": "Color",
 
   "ATORIA.SkillNameTitle": "Name",
 
