@@ -8,11 +8,15 @@
         <div class="effect-row effect item flexcol {{#if effect.isExpanded}}expanded{{/if}}" data-effect-id="{{effect._id}}">
             <div class="flex0">
                 <div class="flexrow">
+                    {{#if effect.isTemporary}}
                     <label class="name-label flex0" title="{{effect.name}}">{{effect.name}}</label>
-                    {{#if effect.duration.label}}
-                        <label class="duration-label flex0">{{effect.duration.label}}</label>
+                        {{#if effect.duration.label}}
+                            <label class="duration-label flex0">{{effect.duration.label}}</label>
+                        {{else}}
+                            <label class="duration-label flex0">{{effect.duration.rounds}} round(s)</label>
+                        {{/if}}
                     {{else}}
-                        <label class="duration-label flex0">{{effect.duration.rounds}} round(s)</label>
+                    <label class="longname-label flex0" title="{{effect.name}}">{{effect.name}}</label>
                     {{/if}}
 
                     <a class="detail-button effect-detail flex0" data-action="effect" data-effect-id="{{effect._id}}" >
