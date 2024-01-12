@@ -5,10 +5,18 @@
         </a>
     </label>
     {{#each features as |feature key|}}
+        {{#if feature.system.has_color}}
+        <div class="feature-row item flexcol {{#if feature.isExpanded}}expanded{{/if}}" data-item-id="{{feature._id}}" style="background-color:{{feature.system.color}};">
+        {{else}}
         <div class="feature-row item flexcol {{#if feature.isExpanded}}expanded{{/if}}" data-item-id="{{feature._id}}">
+        {{/if}}
             <div class="flexrow">
+                {{#if feature.system.effect}}
                 <label class="name-label flex0" title="{{feature.name}}">{{feature.name}}</label>
                 <label class="effect-label flex0">{{feature.system.effect}}</label>
+                {{else}}
+                <label class="longname-label flex0" title="{{feature.name}}">{{feature.name}}</label>
+                {{/if}}
                 <a class="detail-button item-detail flex0" data-action="feature-item" data-id="{{feature._id}}" >
                     <i class="fas fa-circle-info"></i>
                 </a>

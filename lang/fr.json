@@ -169,10 +169,10 @@
 
 
 
-  "ATORIA.Alchemy": "Alchemie",
+  "ATORIA.Alchemy": "Alchimie",
   "ATORIA.Jewellery": "Bijouterie",
   "ATORIA.Sewing": "Couture",
-  "ATORIA.Cabinet-making": "Ébenisterie",
+  "ATORIA.Cabinet-making": "Ébénisterie",
   "ATORIA.Forge": "Forge",
   "ATORIA.Engineering": "Ingénierie",
   "ATORIA.Leatherworking": "Maroquinerie",
@@ -254,6 +254,7 @@
   "ATORIA.FeatureNameTitle": "Nom",
   "ATORIA.FeatureEffectTitle": "Charge(s)",
   "ATORIA.FeatureDescriptionTitle": "Description",
+  "ATORIA.FeatureColorTitle": "Couleur",
 
   "ATORIA.SkillNameTitle": "Nom",
 

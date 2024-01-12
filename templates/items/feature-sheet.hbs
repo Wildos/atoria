@@ -10,6 +10,19 @@
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.FeatureNameTitle' }}"/>
         <label>{{ localize "ATORIA.FeatureEffectTitle" }}</label>
         <input name="system.effect" type="text" value="{{item.system.effect}}" placeholder="{{ localize 'ATORIA.FeatureEffectTitle' }}"/>
+
+    
+
+        <label for="system.has_color">{{ localize "ATORIA.FeatureColorTitle" }}</label>
+        <select name="system.has_color">
+            {{#select item.system.has_color}}
+                <option value="FALSE">None</option>
+                <option value="TRUE">Yes</option>
+            {{/select}}
+        </select>
+
+        <input id="feature-color-picker" name="system.color" type="color" value="{{item.system.color}}" placeholder="{{ localize 'ATORIA.FeatureColorTitle' }}"/>
+
         <label>{{ localize "ATORIA.FeatureDescriptionTitle" }}</label>
         
         <div class="description-area">
