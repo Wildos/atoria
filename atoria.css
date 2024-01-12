@@ -211,6 +211,10 @@
   padding-right: 3px;
 }
 
+.atoria.actor-knowledge-config #catname {
+  font-weight: bold;
+}
+
 .atoria {
   font-family: "Roboto", sans-serif;
 }

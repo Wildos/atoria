@@ -87,6 +87,11 @@ ATORIA.COMBAT_SKILL = {
 
 
 ATORIA.KNOWLEDGES_LABEL = {
+    "artistic": "ATORIA.Artistic",
+    "craftmanship": "ATORIA.Craftmanship",
+    "erudition": "ATORIA.Erudition",
+    "utilitarian": "ATORIA.Utilitarian",
+
     "alchemy": "ATORIA.Alchemy",
     "jewellery": "ATORIA.Jewellery",
     "sewing": "ATORIA.Sewing",

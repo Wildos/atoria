@@ -36,6 +36,41 @@ export default class ActorKnowledgeConfig extends BaseConfigSheet {
 
   /* -------------------------------------------- */
 
+  _character_data_to_handlebar(character_knowledges) {
+    let handlebar_knowledges = {};
+    for (let group_key in character_knowledges){
+        const knowledge_group = character_knowledges[group_key];
+        handlebar_knowledges[group_key] = {
+          "name": game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[group_key]),
+          "sub_knowledges": {}
+        };
+        let sorted_knowledges_cat = [];
+        for (let cat_key in knowledge_group) {
+          sorted_knowledges_cat.push(cat_key);
+          handlebar_knowledges[group_key]["sub_knowledges"][cat_key] = knowledge_group[cat_key];
+          handlebar_knowledges[group_key]["sub_knowledges"][cat_key]["name"] = game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[cat_key]);
+        }
+        sorted_knowledges_cat.sort((a, b) => {
+          return game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[a]).localeCompare(game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[b]));
+        });
+        handlebar_knowledges[group_key]["sorted_knowledges_cat"] = sorted_knowledges_cat
+    }
+    console.log(`${JSON.stringify(handlebar_knowledges, null, 2)}`);
+    return handlebar_knowledges;
+  }
+
+  _form_to_character_data(form_knowledges) {
+    var character_knowledges = {};
+    for (let group_key in form_knowledges){
+        character_knowledges[group_key] = form_knowledges[group_key]["sub_knowledges"];
+    }
+    return character_knowledges;
+  }
+
+
+
+
+
   /** @inheritdoc */
   getData(options) {
     const knowledges_names = {};
@@ -47,7 +82,7 @@ export default class ActorKnowledgeConfig extends BaseConfigSheet {
         }
     }
     return {
-        knowledges: this.clone.system.knowledges
+        knowledges: this._character_data_to_handlebar(this.clone.system.knowledges)
     };
   }
 
@@ -64,7 +99,7 @@ export default class ActorKnowledgeConfig extends BaseConfigSheet {
   async _updateObject(event, formData) {
     const form_var = foundry.utils.expandObject(formData);
     return this.document.update({
-        "system.knowledges": form_var.knowledges
+        "system.knowledges": this._form_to_character_data(form_var.knowledges)
     });
   }
 
