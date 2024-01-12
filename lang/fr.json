@@ -27,6 +27,8 @@
   "MIGRATION.Begin": "Une migration de données a commencé vers la version {version}",
   "MIGRATION.Complete": "Une migration de données a terminé vers la version {version}\nIl y a eu {numberOfFailure} erreur lors de la migration",
 
+  "ATORIA.Yes": "Oui",
+  "ATORIA.No": "Non",
 
 
   "ATORIA.TitleDeletionDialog": "Supression de {name}",

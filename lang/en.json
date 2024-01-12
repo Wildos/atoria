@@ -28,6 +28,10 @@
 
 
 
+  "ATORIA.Yes": "Yes",
+  "ATORIA.No": "No",
+
+
   "ATORIA.TitleDeletionDialog": "Deletion of {name}",
   "ATORIA.ContentDeletionDialog": "Do you confirm the deletion of {name}",
   "ATORIA.ConfirmDeletion": "Confirm deletion",
