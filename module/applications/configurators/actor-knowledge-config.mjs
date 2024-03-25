@@ -55,14 +55,13 @@ export default class ActorKnowledgeConfig extends BaseConfigSheet {
         });
         handlebar_knowledges[group_key]["sorted_knowledges_cat"] = sorted_knowledges_cat
     }
-    console.log(`${JSON.stringify(handlebar_knowledges, null, 2)}`);
     return handlebar_knowledges;
   }
 
   _form_to_character_data(form_knowledges) {
     var character_knowledges = {};
     for (let group_key in form_knowledges){
-        character_knowledges[group_key] = form_knowledges[group_key]["sub_knowledges"];
+        character_knowledges[group_key] = form_knowledges[group_key];
     }
     return character_knowledges;
   }
@@ -76,11 +75,11 @@ export default class ActorKnowledgeConfig extends BaseConfigSheet {
     const knowledges_names = {};
     for (let group_key in this.clone.system.knowledges){
         const knowledge_group = this.clone.system.knowledges[group_key];
-        // console.log(`getData ${JSON.stringify(knowledge_group, null, 2)}`);
         for (let cat_key in knowledge_group) {
             knowledge_group[cat_key]["name"] = game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[cat_key])
         }
     }
+    // console.log(`getData ${JSON.stringify(this.clone.system.knowledges, null, 2)}`);
     return {
         knowledges: this._character_data_to_handlebar(this.clone.system.knowledges)
     };
@@ -98,6 +97,9 @@ export default class ActorKnowledgeConfig extends BaseConfigSheet {
   /** @inheritdoc */
   async _updateObject(event, formData) {
     const form_var = foundry.utils.expandObject(formData);
+    // console.log(`${JSON.stringify(form_var.knowledges, null, 2)}`);
+    // console.log(`${JSON.stringify(this._form_to_character_data(form_var.knowledges), null, 2)}`);
+    
     return this.document.update({
         "system.knowledges": this._form_to_character_data(form_var.knowledges)
     });

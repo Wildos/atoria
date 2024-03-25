@@ -5,7 +5,7 @@
         {{#each knowledge_cats.sorted_knowledges_cat as |knowledge_key key|}}
             {{#with (lookup ../sub_knowledges [knowledge_key]) as |knowledge|}}
             <div class="flexrow">
-                <input type="checkbox" id="{{key}}" name="knowledges.{{g_key}}.{{key}}.known" value="{{knowledge.known}}" data-dtype="Boolean" {{checked knowledge.known}}/>
+                <input type="checkbox" id="{{key}}" name="knowledges.{{g_key}}.{{knowledge_key}}.known" value="{{knowledge.known}}" data-dtype="Boolean" {{checked knowledge.known}}/>
                 <label class="name" for="{{key}}">{{knowledge.name}}</label>
             </div>
             {{/with}}
