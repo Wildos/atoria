@@ -256,7 +256,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.sorted_magics_cat = sorted_magics_cat;
     context.formatted_magics = formatted_magics;
     // Endurance influence max mana and max stamina
-    const endurance_ratio = context.system.endurance.value / context.system.endurance.max;
+    const endurance_ratio = Math.min(context.system.endurance.value, 100.0) / 100.0;
     context.system.stamina.current_max = Math.floor(context.system.stamina.max * endurance_ratio);
     context.system.mana.current_max = Math.floor(context.system.mana.max * endurance_ratio);
     // Encumbrance
