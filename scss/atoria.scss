@@ -97,6 +97,13 @@
     height: 100%;
     min-height: 300px;
   }
+
+  .elip_text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
 }
 
 @import 'components/chat_message';
