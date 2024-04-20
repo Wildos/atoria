@@ -2288,6 +2288,11 @@
   height: 100%;
   min-height: 300px;
 }
+.atoria .elip_text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
 .chat-message .perception {
   background-color: #f1c232;
@@ -2489,10 +2494,13 @@
   display: inline-block;
   min-width: 70px;
 }
+.chat-message .skill-roll .skill-effect-list {
+  min-width: 75px;
+}
 .chat-message .skill-roll .skill-effect {
-  min-width: 50px;
+  min-width: 75px;
   max-height: var(--form-field-height);
-  text-align: center;
+  text-align: right;
 }
 .chat-message .skill-roll .skill-result {
   border-top: solid 1px black;

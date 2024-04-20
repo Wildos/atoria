@@ -28,10 +28,10 @@
                         <div class="flexrow">
                             {{#if combat_item.system.effect_roll}}
                                 <label class="name-label flex0 rollable" data-type="{{combat_item.type}}" data-id="{{combat_item._id}}" title="{{combat_item.name}}">{{combat_item.name}}</label>
-                                <label class="roll-label flex0">{{combat_item.system.effect_roll}}</label>
+                                <label class="roll-label flex0 elip_text" title="{{combat_item.system.effect_roll}}">{{combat_item.system.effect_roll}}</label>
                             {{else if combat_item.system.damage_roll}}
                                 <label class="name-label flex0 rollable" data-type="{{combat_item.type}}" data-id="{{combat_item._id}}" title="{{combat_item.name}}">{{combat_item.name}}</label>
-                                <label class="roll-label flex0">{{combat_item.system.damage_roll}}</label>
+                                <label class="roll-label flex0 elip_text" title="{{combat_item.system.damage_roll}}">{{combat_item.system.damage_roll}}</label>
                             {{else}}
                                 <label class="longname-label flex0 rollable" data-type="{{combat_item.type}}" data-id="{{combat_item._id}}" title="{{combat_item.name}}">{{combat_item.name}}</label>
                             {{/if}}

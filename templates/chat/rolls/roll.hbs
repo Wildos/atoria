@@ -1,5 +1,5 @@
 <div class="skill-roll">
-    {{#if effect_result}}
+    {{#if effects_array}}
         <div class="flexrow">
             <div class="skill-attribute flexcol">
                 <label>
@@ -14,7 +14,11 @@
                     {{/if}}
                 </label>
             </div>
-            <div class="skill-effect flex0" title="{{effect_detail}}">{{{effect_result}}}</div>
+            <div class="skill-effect-list flex0">
+            {{#each effects_array as |effect key|}}
+                <div class="skill-effect flex0" title="{{effect.detail}}">{{{effect.result}}}</div>
+            {{/each}}
+            </div>
         </div>
     {{else}}
         <div class="skill-attribute flexcol">

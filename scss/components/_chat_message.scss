@@ -271,10 +271,14 @@
             }
         }
 
+        .skill-effect-list {
+            min-width: 75px;
+        }
+
         .skill-effect {
-            min-width: 50px;
+            min-width: 75px;
             max-height: var(--form-field-height);
-            text-align: center;
+            text-align: right;
         }
         .skill-result {
             border-top: solid 1px black;
