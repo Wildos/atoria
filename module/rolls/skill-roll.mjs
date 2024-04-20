@@ -300,6 +300,10 @@ export default class SkillRoll extends Roll {
     }
 
 
+    _extract_all_rolls(string) {
+      return string.match(/\[[a-zA-Z ]*:? *[0-9dD+-]*\]/g)
+    }
+
 
     /** @inheritdoc */
     async toMessage(messageData={}, options={}) {
@@ -311,7 +315,7 @@ export default class SkillRoll extends Roll {
       console.log(this.data.effect_roll);
       console.log(this.data.effect_description);
       if (!this.data.effect_roll && this.data.effect_description) {
-        let effect_rolls_found = this.data.effect_description.match(/\[[a-zA-Z ]*:? *[0-9dD+-]*\]/g);
+        let effect_rolls_found = this._extract_all_rolls(this.data.effect_description);
         if (effect_rolls_found && effect_rolls_found.length > 0) {
           this.data.effect_rolls = effect_rolls_found.map((x) => this._effect_string_to_effect_roll(x));
         }
@@ -370,13 +374,13 @@ export default class SkillRoll extends Roll {
       }
       let effect_results = [];
 
-      let roll_formulas = string_to_parse.match(/\[[0-9dD+-]*\]/g);
+      let roll_formulas = this._extract_all_rolls(string_to_parse);
       if (!roll_formulas) {
         return string_to_parse;
       }
 
       for (let roll_formula of roll_formulas) {
-        let effect_roll = new Roll(roll_formula.substr(1, roll_formula.length - 2));
+        let effect_roll = new Roll(this._effect_string_to_effect_roll(roll_formula)["roll_dice_formula"]);
         await effect_roll.evaluate();
 
         // let effect_detail = [];
@@ -410,11 +414,10 @@ export default class SkillRoll extends Roll {
         effect_results.push(effect_roll.total);
       }
 
-      console.log(`effect_result: ${JSON.stringify(effect_results, null, 2)}`);
       let output_string = string_to_parse;
       while (effect_results.length > 1) {
-        const roll_effect_detail = '<span class="skill-effect" title="' + effect_results.shift() + '">' + effect_results.shift() + '</span>'
-        output_string = output_string.replace(/\[[0-9dD+-]*\]/, roll_effect_detail);
+        const roll_effect_detail = '<span class="skill-effect" title="' + effect_results.shift() + '">' + effect_results.shift() + '</span>';
+        output_string = output_string.replace(/\[[a-zA-Z ]*:? *[0-9dD+-]*\]/, roll_effect_detail);
       }
 
       return output_string;

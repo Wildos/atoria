@@ -2495,10 +2495,10 @@
   min-width: 70px;
 }
 .chat-message .skill-roll .skill-effect-list {
-  min-width: 100px;
+  min-width: 75px;
 }
 .chat-message .skill-roll .skill-effect {
-  min-width: 100px;
+  min-width: 75px;
   max-height: var(--form-field-height);
   text-align: right;
 }
