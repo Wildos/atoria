@@ -80,6 +80,11 @@
         "min": 0,
         "max": 20
       },
+      "sanity_regain_inactive": false,
+      "endurance_regain_inactive": false,
+      "health_regain_inactive": 0,
+      "healing_herbs_used": false,
+      "medical_healing_used": false,
       "coins": {
         "copper": 0,
         "silver": 0,
@@ -236,6 +241,11 @@
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
+          },
+          "parade": {
+            "success_value": 10,
+            "critical_mod": 0,
+            "fumble_mod": 0
           }
         },
         "sturdiness": {
@@ -298,7 +308,7 @@
             "critical_mod": 0,
             "fumble_mod": 0
           },
-          "parade": {
+          "shield": {
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0

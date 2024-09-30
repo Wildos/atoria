@@ -139,19 +139,18 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   _prepareData(context) {
     const left_skills = [
       "agility",
-      "analyse",
       "athletic",
-      "charisma",
       "slyness",
-      "eloquence",
+      "climbing",
+      "swiming",
+      "sturdiness",
     ];
     const right_skills = [
-      "climbing",
+      "analyse",
+      "charisma",
+      "eloquence",
       "spirit",
       "intimidation",
-      "swiming",
-      "reflex",
-      "sturdiness",
       "trickery",
     ];
 
@@ -186,6 +185,23 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         });
       }
     }
+
+    const tmp_sub_skill = [];
+    for (const sub_skill_key in skill_cats["reflex"]) {
+        const skill_data = skill_cats["reflex"][sub_skill_key];
+        tmp_sub_skill.push({
+          id: `reflex.${sub_skill_key}`,
+          name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[sub_skill_key]),
+          success_value: skill_data.success_value,
+          critical_mod: skill_data.critical_mod,
+          fumble_mod: skill_data.fumble_mod,
+        });
+      }
+    context.formatted_skill_reflex = {
+      name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL["reflex"]),
+      sub_skills: tmp_sub_skill
+    }
+
 
     const formatted_knowledges = {};
     const knowledge_groups = context.system.knowledges;
@@ -282,6 +298,19 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         context.encumbrance_level_display_class = "encumbrance-stealth-bonus";
       }
     }
+
+    context.health_regain_inactive_data = [];
+    let usable_health_regen_number = Math.min(context.system.endurance.value, 100) / 25 + 1;
+    const MAX_INACTIVE_HEALTH_REGAIN = 6;
+    console.log(`usable_health_regen_number ${usable_health_regen_number} // context.system.health_regain_inactive ${context.system.health_regain_inactive}`);
+    for(let step = MAX_INACTIVE_HEALTH_REGAIN - 1; step >= 0; step--) {
+      context.health_regain_inactive_data.push({
+        "is_usable": step < usable_health_regen_number,
+        "is_checked": step < context.system.health_regain_inactive,
+        "idx": step,
+      })
+    }
+
   }
 
 
@@ -322,6 +351,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       html.find(".config-skill").click(this._onConfigSkill.bind(this));
       html.find(".config-knowledge").click(this._onConfigKnowledge.bind(this));
       html.find(".config-magic").click(this._onConfigMagic.bind(this));
+      html.find(".tickable-image").click(this._onTickableImage.bind(this));
     }
   }
 
@@ -365,6 +395,37 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     let app = new ActorMagicConfig(this.actor);
     app?.render(true);
   }
+
+
+
+  _onTickableImage(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const header = event.currentTarget;
+    const tickvalue = header.dataset.tickvalue;
+    
+    console.log(`dataset : ${JSON.stringify(header.dataset)}`);
+    const associated_value = header.dataset.value || "unknown";
+    switch (associated_value) {
+        case "healing_herbs":
+          this.actor.update({
+              "system.healing_herbs_used": !this.actor.system.healing_herbs_used
+          });
+          break;
+        case "healing_medecine":
+          this.actor.update({
+              "system.medical_healing_used": !this.actor.system.medical_healing_used
+          });
+          break;
+        case "health_regain_inactive":
+          console.log("clicked on " + tickvalue);
+          this.actor.update({
+              "system.health_regain_inactive": Number(tickvalue) + 1
+          });
+          break;
+    }
+  }
+
 
 
   _onSpellDisplayDetail(event) {

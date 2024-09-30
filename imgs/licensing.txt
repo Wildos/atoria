@@ -1,0 +1,9 @@
+CC BY 3.0 : https://creativecommons.org/licenses/by/3.0/
+
+chained-heart.svg : https://game-icons.net/1x1/lorc/chained-heart.html, by Lorc under CC BY 3.0
+hearts.svg : https://game-icons.net/1x1/skoll/hearts.html, by Skoll under CC BY 3.0
+death-juice.svg : https://game-icons.net/1x1/darkzaitzev/death-juice.html, by DarkZaitzev under CC BY 3.0
+skull-with-syringe.svg : https://game-icons.net/1x1/zajkonur/skull-with-syringe.html, by Zajkonur under CC BY 3.0
+herbs-bundle.svg : https://game-icons.net/1x1/delapouite/herbs-bundle.html, by Delapouite under CC BY 3.0
+medical-pack.svg : https://game-icons.net/1x1/sbed/medical-pack.html, by sbed under CC BY 3.0
+heart-drop.svg : https://game-icons.net/1x1/lorc/heart-drop.html, by Lorc under CC BY 3.0

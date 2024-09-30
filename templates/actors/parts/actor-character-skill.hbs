@@ -6,7 +6,8 @@
     </label>
     <div class="flexrow">
         <div class="flex0">
-            <div class="skill-row">
+            <div class="skill-row item-list">
+                <label class="subtitle">Physiques</label>
                 {{#each formatted_skills.left as |skill_cat key|}}
                     <div class="category-area" style="grid-row-end: span {{skill_cat.sub_skills.length}}">
                         <label class="category-title">{{skill_cat.name}}</label>
@@ -22,6 +23,7 @@
         </div>
         <div class="flex0">
             <div class="skill-row item-list">
+                <label class="subtitle">Sociales</label>
                 {{#each formatted_skills.right as |skill_cat key|}}
                     <div class="category-area" style="grid-row-end: span {{skill_cat.sub_skills.length}}">
                         <label class="category-title">{{skill_cat.name}}</label>

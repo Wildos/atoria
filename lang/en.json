@@ -46,6 +46,9 @@
   "ATORIA.SheetClassFeature": "AtoriaFeatureSheet",
   "ATORIA.SheetClassSkill": "AtoriaSkillSheet",
 
+
+  "ATORIA.Healing": "Healing",
+
   "ATORIA.NewItem": "New Item",
   "ATORIA.NewEffect": "New Effect",
 
@@ -78,6 +81,7 @@
   "ATORIA.Name": "Name",
   "ATORIA.Health": "Health",
   "ATORIA.HealthMax": "Health Max",
+  "ATORIA.Absorption": "Absorption",
   "ATORIA.Stamina": "Stamina",
   "ATORIA.StaminaMax": "Stamina Max",
   "ATORIA.Mana": "Mana",
@@ -146,6 +150,7 @@
   "ATORIA.Reflex": "Reflex",
   "ATORIA.Evasion": "Evasion",
   "ATORIA.Opportuneness": "Opportuneness",
+  "ATORIA.Parade": "Parade",
   "ATORIA.Sturdiness": "Sturdiness",
   "ATORIA.Force": "Force",
   "ATORIA.Tenacity": "Tenacity",
@@ -162,7 +167,7 @@
   "ATORIA.Polearm": "Polearm",
   "ATORIA.Haft-slashing-piercing": "Haft-slashing-piercing",
   "ATORIA.Haft-bludgeonning": "Haft-bludgeonning",
-  "ATORIA.Parade": "Parade",
+  "ATORIA.Shield": "Shield",
   "ATORIA.Shooting": "Shooting",
   "ATORIA.Throw": "Throw",
   "ATORIA.Focus": "Focus",

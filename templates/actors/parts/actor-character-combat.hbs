@@ -21,6 +21,19 @@
                 </div>
             </div>
         </div>
+        <div class="flex0 skill">
+            <div class="skill-row item-list">
+                <div class="category-area" style="grid-row-end: span 3">
+                    <label class="category-title">{{formatted_skill_reflex.name}}</label>
+                </div>
+                {{#each formatted_skill_reflex.sub_skills as |skill subkey|}}
+                    <div class="flexrow hotbar-able" data-type="skill" data-id="{{skill.id}}">
+                        <label class="name rollable" data-type="skill" data-id="{{skill.id}}">{{skill.name}}</label>
+                        <label class="value-label">{{skill.success_value}}</label>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
         <div class="grid-2col item-list">
             {{#each combat_items as |combat_item key|}}
                 <div class="action-row item flexcol {{#if combat_item.isExpanded}}expanded{{/if}}" data-item-id="{{combat_item._id}}">

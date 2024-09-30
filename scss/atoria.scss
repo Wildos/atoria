@@ -36,7 +36,7 @@
 
     @import 'dialogs/test_dialog';
 
-  input, textarea{
+  input:not([type='image']), textarea{
     background-color: $clear-color;
   }
 
@@ -45,6 +45,9 @@
   }
   .health {
     background-color: $health-color;
+  }
+  .healing {
+    background-color: $healing-color;
   }
   .stamina {
     background-color: $stamina-color;

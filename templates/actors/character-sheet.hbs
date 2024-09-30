@@ -19,48 +19,78 @@
                 {{!-- Resource --}}
                 <div class="flex0">
                     <div class="resources flexcol">
-                        <div class="flexrow flex0">
+                        <div class="flex0">
                             <div class="resource flexrow">
                                 <label class="resource-label health">{{ localize "ATORIA.Health"}}</label>
-                                <label class="resource-label sanity">{{ localize "ATORIA.Sanity"}}</label>
-                            </div>
-                            <div class="resource flexrow">
-                                <input type="number" name="system.health.value" value="{{system.health.value}}"/>
-                                <label class="health value-label">{{system.health.max}}</label>
-                                <input type="number" name="system.sanity.value" value="{{system.sanity.value}}"/>
-                                <label class="sanity value-label">{{system.sanity.max}}</label>
+                                <label class="resource-label healing">{{ localize "ATORIA.Healing"}}</label>
                             </div>
                         </div>
-                        <div class="flexrow flex0">
-                            <div class="resource flexrow">
-                                <label class="resource-label stamina">{{ localize "ATORIA.Stamina"}}</label>
-                                <label class="resource-label mana">{{ localize "ATORIA.Mana"}}</label>
+                        <div class="flex0">
+                            <div class="flexrow">
+                                <div class="flex0">
+                                    <div class="flexcol">
+                                        <div class="flex0">
+                                            <div class="resource flexrow">
+                                                <input type="number" name="system.health.value" value="{{system.health.value}}"/>
+                                                <label class="health value-label">{{system.health.max}}</label>
+                                                <input type="number" name="system.absorption" value="{{system.absorption}}"/>
+                                                
+                                                <input class="hidden" type="checkbox" name="healing_herbs_used" value="{{system.healing_herbs_used}}"></label>
+                                                <img class="tickable-image" data-value="healing_herbs" src="systems/atoria/imgs/herbs-bundle{{#if system.healing_herbs_used}}-checked{{/if}}.svg"/>
+                                                
+                                                <input class="hidden" type="checkbox" name="medical_healing_used" value="{{system.medical_healing_used}}"></label>
+                                                <img class="tickable-image" data-value="healing_medecine" src="systems/atoria/imgs/medical-pack{{#if system.medical_healing_used}}-checked{{/if}}.svg"/>
+                                            </div>
+                                        </div>
+                                        <div class="flex0">
+                                            <div class="resource flexrow">
+                                                <label class="resource-label mana">{{ localize "ATORIA.Mana"}}</label>
+                                                <label class="resource-label stamina">{{ localize "ATORIA.Stamina"}}</label>
+                                            </div>
+                                            <div class="resource flexrow">
+                                                <input type="number" name="system.mana.value" value="{{system.mana.value}}"/>
+                                                <label class="mana value-label">{{system.mana.current_max}}</label>
+                                                <input type="number" name="system.stamina.value" value="{{system.stamina.value}}"/>
+                                                <label class="stamina value-label">{{system.stamina.current_max}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="flex0">
+                                            <div class="resource flexrow">
+                                                <div class="resource-checkbox sanity flexrow">
+                                                    <label>{{ localize "ATORIA.Sanity"}}</label>
+                                                    <input type="checkbox" name="system.sanity_regain_inactive" data-dtype="Boolean" {{checked system.sanity_regain_inactive}}/>
+                                                </div>
+                                                <div class="resource-checkbox endurance flexrow">
+                                                    <label>{{ localize "ATORIA.Endurance"}}</label>
+                                                    <input type="checkbox" name="system.endurance_regain_inactive" data-dtype="Boolean" {{checked system.endurance_regain_inactive}}/>
+                                                </div>
+                                            </div>
+                                            <div class="resource flexrow">
+                                                <input type="number" name="system.sanity.value" value="{{system.sanity.value}}"/>
+                                                <label class="sanity value-label">{{system.sanity.max}}</label>
+                                                <input type="number" name="system.endurance.value" value="{{system.endurance.value}}"/>
+                                                <label class="endurance value-label">{{system.endurance.max}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="resource flexrow">
+                                            <label class="resource-label">{{ localize "ATORIA.Luck"}}</label>
+                                            <input class="resource-label" type="number" name="system.luck" value="{{system.luck}}"/>  
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex0">
+                                    <div class="inactive-area flexcol">
+                                        <input class="hidden" type="number" name="health_regain_inactive_data" value="{{system.health_regain_inactive_data}}"></label>
+                                        {{#each health_regain_inactive_data }}
+                                        <img class="tickable-image" data-value="health_regain_inactive" data-tickvalue="{{this.idx}}" src="systems/atoria/imgs/{{#if this.is_usable}}heart-drop{{else}}death-juice{{/if}}{{#if this.is_checked}}-checked{{/if}}.svg"/>
+                                        {{/each}}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="resource flexrow">
-                                <input type="number" name="system.stamina.value" value="{{system.stamina.value}}"/>
-                                <label class="stamina value-label">{{system.stamina.current_max}}</label>
-                                <input type="number" name="system.mana.value" value="{{system.mana.value}}"/>
-                                <label class="mana value-label">{{system.mana.current_max}}</label>
-                            </div>
-                        </div>
-                        <div class="flexrow flex0">
-                            <div class="resource flexrow">
-                                <label class="resource-label endurance">{{ localize "ATORIA.Endurance"}}</label>
-                                <label class="resource-label encumbrance">{{ localize "ATORIA.Encumbrance"}}</label>
-                            </div>
-                            <div class="resource flexrow">
-                                <input type="number" name="system.endurance.value" value="{{system.endurance.value}}"/>
-                                <label class="endurance value-label">{{system.endurance.max}}</label>
-                                <label class="value-label {{encumbrance_level_display_class}}">{{system.encumbrance.value}}</label>
-                                <label class="encumbrance value-label">{{system.encumbrance.max}}</label>
-                            </div>
-                        </div>
-                        <div class="resource flexrow">
-                            <label class="resource-label">{{ localize "ATORIA.Luck"}}</label>
-                            <input class="resource-label" type="number" name="system.luck" value="{{system.luck}}"/>  
                         </div>
                     </div>
                 </div>
+
                 {{!-- Perceptions --}}
                 <div class="flex0">
                     <div class="perceptions flexcol">
@@ -94,8 +124,8 @@
                             {{> "systems/atoria/templates/actors/parts/actor-character-combat.hbs"}}
                         </div>
                         <div class="flexrow" style="min-width: 720px">
-                            <div>{{> "systems/atoria/templates/actors/parts/actor-character-skill.hbs"}}</div>
-                            <div>{{> "systems/atoria/templates/actors/parts/actor-character-knowledge.hbs"}}</div>
+                            <div class="flex0">{{> "systems/atoria/templates/actors/parts/actor-character-skill.hbs"}}</div>
+                            <div class="flex0">{{> "systems/atoria/templates/actors/parts/actor-character-knowledge.hbs"}}</div>
                         </div>
                     </div>
                 </div>

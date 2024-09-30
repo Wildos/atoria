@@ -206,7 +206,6 @@ export default class SkillRoll extends Roll {
             let effect_roll = new Roll(roll_data["roll_dice_formula"]);
             if (Roll.validate(effect_roll.formula)) {
               await effect_roll.evaluate({"maximize": this.isCritical});
-              tmp_effect_result = effect_roll.total;
       
               tmp_roll_name = roll_data["roll_name"];
               if (tmp_roll_name.length !== 0) {
@@ -238,7 +237,7 @@ export default class SkillRoll extends Roll {
             }
 
             tmp_full_effect_array.push({
-              "result": `${tmp_roll_name}${tmp_effect_result}`,
+              "result": `${tmp_roll_name}${effect_roll.total}`,
               "detail": tmp_effect_detail
             });
           }
