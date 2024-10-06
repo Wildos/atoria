@@ -2404,13 +2404,6 @@
 .chat-message .spell-detail {
   min-width: 250px;
   max-width: 250px;
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: 60px 1fr;
-  grid-template-rows: repeat(auto-fill, auto);
-  gap: 0;
-  margin: 0;
-  padding: 0;
 }
 .chat-message .spell-detail .flexrow, .chat-message .spell-detail .flexcol {
   height: -webkit-fit-content;
@@ -2460,18 +2453,10 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.chat-message .spell-detail .category-title {
-  min-width: 60px;
-  max-width: 60px;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
 .chat-message .spell-detail .success-value-title {
   height: var(--form-field-height);
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .success-value {
   min-width: 30px;
@@ -2487,18 +2472,20 @@
 }
 .chat-message .spell-detail .cost-title {
   height: var(--form-field-height);
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .time-title {
   height: calc(2 * var(--form-field-height));
   max-height: calc(2 * var(--form-field-height));
 }
 .chat-message .spell-detail .time-preparation-title {
-  min-width: 90px;
-  max-width: 90px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .time-duration-title {
-  min-width: 70px;
-  max-width: 70px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .time-modifier {
   min-width: 20px;
@@ -2509,24 +2496,32 @@
   max-height: calc(5 * var(--form-field-height));
 }
 .chat-message .spell-detail .components-verbal-title {
-  min-width: 90px;
-  max-width: 90px;
+  min-width: 80px;
+  max-width: 80px;
+}
+.chat-message .spell-detail .components-somatic-title {
+  min-width: 80px;
+  max-width: 80px;
+}
+.chat-message .spell-detail .components-material-title {
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .targeting-title {
   height: calc(3 * var(--form-field-height));
   max-height: calc(3 * var(--form-field-height));
 }
 .chat-message .spell-detail .targeting-target-title {
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .targeting-range-title {
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .targeting-area-title {
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .effect-title {
   grid-column-end: span 2;
