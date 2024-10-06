@@ -42,7 +42,7 @@ export async function skillRoll({
     parts=[], data={}, event,
     advantage, disadvantage, critical=0, fumble=101, targetValue=0,
     fastForward, template, title, dialogOptions,
-    chatMessage=true, messageData={}, rollMode, flavor
+    chatMessage=true, messageData={}, rollMode, flavor, related_actor
   }={}) {
     // Handle input arguments
     const formula = ["1d100"].concat(parts).join(" + ");
@@ -75,6 +75,11 @@ export async function skillRoll({
   
     // Evaluate the configured roll
     await roll.evaluate({async: true});
+
+    // take luck away from the actor
+    related_actor.update({
+      "system.luck": related_actor.system.luck - roll.success_modifier
+    });
 
     // Create a Chat Message
     if ( roll && chatMessage ) await roll.toMessage(messageData);

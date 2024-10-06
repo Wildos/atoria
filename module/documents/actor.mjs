@@ -414,7 +414,8 @@ export class AtoriaActor extends Actor {
       flavor: `${data.title}`,
       messageData: {
         speaker: options.speaker || ChatMessage.getSpeaker({actor: this})
-      }
+      },
+      related_actor: this,
     }, options);
     let skill_roll = await skillRoll(rollData);
 
