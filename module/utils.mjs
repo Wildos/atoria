@@ -116,7 +116,7 @@ export function get_critical_value(success_value=0, critical_mod=0) {
  * @returns {int}     fumble value.
  */
 export function get_fumble_value(success_value=0, fumble_mod=0) {
-  return 91 + Math.floor(success_value / 10) - fumble_mod;
+  return 101 - 5 - fumble_mod;
 }
 
 
