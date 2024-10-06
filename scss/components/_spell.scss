@@ -191,13 +191,6 @@
         .spell-detail {
             min-width: 250px;
             max-width: 250px;
-
-            display: grid;
-            grid-column: span 2/span 2;
-            grid-template-columns: 60px 1fr;
-            gap: 0;
-            margin: 0;
-            padding: 0;
         
             .flexrow, .flexcol{
                 height: fit-content;
@@ -246,15 +239,10 @@
                 padding-right: 3px;
             }
         
-            .category-title {
-                min-width: 60px;
-                max-width: 60px;
-                align-items: center;
-                display: flex;
-            }
-        
             .success-value-title {
                 height: var(--form-field-height);
+                min-width: 90px;
+                max-width: 90px;
             }
         
             .success-value {
@@ -282,10 +270,12 @@
         
             .cost-title {
                 height: var(--form-field-height);
+                min-width: 90px;
+                max-width: 90px;
             }
         
             .cost-input {
-        
+                min-width: 20px;
             }
         
             .time-title {
@@ -302,8 +292,8 @@
             }
         
             .time-duration-title {
-                min-width: 70px;
-                max-width: 70px;
+                min-width: 90px;
+                max-width: 90px;
             }
         
             .time-duration {
@@ -311,8 +301,8 @@
             }
         
             .time-modifier {
-                min-width: 20px;
-                max-width: 20px;
+                min-width: 30px;
+                max-width: 30px;
             }
         
             .components-title {
@@ -329,7 +319,8 @@
             }
         
             .components-somatic-title {
-        
+                min-width: 90px;
+                max-width: 90px;
             }
         
             .components-somatic {
@@ -337,7 +328,8 @@
             }
         
             .components-material-title {
-        
+                min-width: 90px;
+                max-width: 90px;
             }
         
             .components-material {
@@ -411,16 +403,16 @@
         
             .spell-supp {
                 grid-column-end: span 2;
+
+                .cost-input {
+                    max-width: 50px;
+                }
+                .cost-input.time {
+                    flex: 5;
+                    max-width: none;
+                }
             }
         
-            .cost-input {
-                min-width: 35px;
-                max-width: 50px;
-            }
-            .cost-input.time {
-                flex: 5;
-                max-width: none;
-            }
         
         }
     }

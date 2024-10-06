@@ -318,15 +318,6 @@
   max-height: -webkit-fit-content;
   max-height: -moz-fit-content;
   max-height: fit-content;
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: 60px 1fr;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
 }
 .atoria .spell-sheet .flexrow, .atoria .spell-sheet .flexcol {
   height: -webkit-fit-content;
@@ -354,18 +345,10 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.atoria .spell-sheet .category-title {
-  min-width: 60px;
-  max-width: 60px;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
 .atoria .spell-sheet .success-value-title {
   height: var(--form-field-height);
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell-sheet .success-value {
   min-width: 30px;
@@ -381,6 +364,11 @@
 }
 .atoria .spell-sheet .cost-title {
   height: var(--form-field-height);
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell-sheet .cost-input {
+  min-width: 35px;
 }
 .atoria .spell-sheet .time-title {
   height: calc(2 * var(--form-field-height));
@@ -396,8 +384,8 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .time-duration-title {
-  min-width: 70px;
-  max-width: 70px;
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell-sheet .time-duration {
   overflow: hidden;
@@ -405,8 +393,8 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .time-modifier {
-  min-width: 20px;
-  max-width: 20px;
+  min-width: 30px;
+  max-width: 30px;
 }
 .atoria .spell-sheet .components-title {
   height: calc(5 * var(--form-field-height));
@@ -421,10 +409,18 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.atoria .spell-sheet .components-somatic-title {
+  min-width: 90px;
+  max-width: 90px;
+}
 .atoria .spell-sheet .components-somatic {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.atoria .spell-sheet .components-material-title {
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell-sheet .components-material {
   overflow: hidden;
@@ -512,11 +508,10 @@
 .atoria .spell-sheet .spell-supp .flexrow:hover .delete-button {
   display: inline-block;
 }
-.atoria .spell-sheet .cost-input {
-  min-width: 35px;
+.atoria .spell-sheet .spell-supp .cost-input {
   max-width: 50px;
 }
-.atoria .spell-sheet .cost-input.time {
+.atoria .spell-sheet .spell-supp .cost-input.time {
   -webkit-box-flex: 5;
   -ms-flex: 5;
   flex: 5;
@@ -2159,12 +2154,6 @@
 .atoria .spell .spell-details .spell-detail {
   min-width: 250px;
   max-width: 250px;
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: 60px 1fr;
-  gap: 0;
-  margin: 0;
-  padding: 0;
 }
 .atoria .spell .spell-details .spell-detail .flexrow, .atoria .spell .spell-details .spell-detail .flexcol {
   height: -webkit-fit-content;
@@ -2214,18 +2203,10 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.atoria .spell .spell-details .spell-detail .category-title {
-  min-width: 60px;
-  max-width: 60px;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
 .atoria .spell .spell-details .spell-detail .success-value-title {
   height: var(--form-field-height);
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .success-value {
   min-width: 30px;
@@ -2241,6 +2222,11 @@
 }
 .atoria .spell .spell-details .spell-detail .cost-title {
   height: var(--form-field-height);
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell .spell-details .spell-detail .cost-input {
+  min-width: 20px;
 }
 .atoria .spell .spell-details .spell-detail .time-title {
   height: calc(2 * var(--form-field-height));
@@ -2251,18 +2237,26 @@
   max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .time-duration-title {
-  min-width: 70px;
-  max-width: 70px;
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .time-modifier {
-  min-width: 20px;
-  max-width: 20px;
+  min-width: 30px;
+  max-width: 30px;
 }
 .atoria .spell .spell-details .spell-detail .components-title {
   height: calc(5 * var(--form-field-height));
   max-height: calc(5 * var(--form-field-height));
 }
 .atoria .spell .spell-details .spell-detail .components-verbal-title {
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell .spell-details .spell-detail .components-somatic-title {
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell .spell-details .spell-detail .components-material-title {
   min-width: 90px;
   max-width: 90px;
 }
@@ -2315,11 +2309,10 @@
 .atoria .spell .spell-details .spell-detail .spell-supp {
   grid-column-end: span 2;
 }
-.atoria .spell .spell-details .spell-detail .cost-input {
-  min-width: 35px;
+.atoria .spell .spell-details .spell-detail .spell-supp .cost-input {
   max-width: 50px;
 }
-.atoria .spell .spell-details .spell-detail .cost-input.time {
+.atoria .spell .spell-details .spell-detail .spell-supp .cost-input.time {
   -webkit-box-flex: 5;
   -ms-flex: 5;
   flex: 5;

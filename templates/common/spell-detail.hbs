@@ -1,4 +1,4 @@
-<div class="spell-detail item" data-item-id="{{spell._id}}">
+<div class="spell-detail item flexcol" data-item-id="{{spell._id}}">
     <div class="name-area flexrow">
         {{#if isChatMessage}}
             <label class="name" data-type="spell-detail" data-id="{{spell._id}}" title="{{spell.name}}">{{spell.name}}</label>
@@ -13,8 +13,8 @@
         {{/if}}
     </div>
 
-    <label class="success-value-title">{{ localize "ATORIA.SpellSuccessValueTitle" }}</label>
-    <div class="flexrow flex0">
+    <div class="flexrow">
+        <label class="success-value-title">{{ localize "ATORIA.SpellSuccessValueTitle" }}</label>
         <label class="success-value" >{{spell.system.success_value}}</label>
         <label class="critical-title">{{ localize "ATORIA.SpellCriticalValueTitle" }}</label>
         <label class="critical" >{{spell.system.critical_value}}</label>
@@ -22,8 +22,8 @@
         <label class="fumble" >{{spell.system.fumble_value}}</label>
     </div>
 
-    <label class="cost-title">{{ localize "ATORIA.SpellCostTitle" }}</label>
-    <div class="flexrow flex0">
+    <div class="flexrow">
+        <label class="cost-title">{{ localize "ATORIA.SpellCostTitle" }}</label>
         <label class="cost-input health" >{{spell.system.cost.health}}</label>
         <label class="cost-input mana" >{{spell.system.cost.mana}}</label>
         <label class="cost-input stamina" >{{spell.system.cost.stamina}}</label>
@@ -38,8 +38,8 @@
     </div>
     <div class="flexrow" style="grid-column-end: span 2">
         <label class="time-duration-title">{{ localize "ATORIA.SpellTimeDurationTitle" }}</label>
-        <label class="time-modifier">{{spell.system.time.modifier}}</label>
         <label class="time-duration" title="{{spell.system.time.duration}}">{{spell.system.time.duration}}</label>
+        <label class="time-modifier">{{spell.system.time.modifier}}</label>
     </div>
 
     {{!-- <label class="components-title flex0 category-title" style="grid-row-end: span 5">{{ localize "ATORIA.SpellComponentsTitle" }}</label> --}}
@@ -48,10 +48,17 @@
         <label class="components-verbal-title">{{ localize "ATORIA.SpellComponentsVerbalTitle" }}</label>
         <label class="components-verbal" title="{{spell.system.components.verbal}}">{{spell.system.components.verbal}}</label>
     </div>
-    <label class="components-somatic-title" style="grid-column-end: span 2">{{ localize "ATORIA.SpellComponentsSomaticTitle" }}</label>
-    <label class="components-somatic" style="grid-column-end: span 2" title="{{spell.system.components.somatic}}">{{spell.system.components.somatic}}</label>
-    <label class="components-material-title" style="grid-column-end: span 2">{{ localize "ATORIA.SpellComponentsMaterialTitle" }}</label>
-    <label class="components-material" style="grid-column-end: span 2" title="{{spell.system.components.material}}">{{spell.system.components.material}}</label>
+
+
+    <div class="flexrow" style="grid-column-end: span 2">
+        <label class="components-somatic-title">{{ localize "ATORIA.SpellComponentsSomaticTitle" }}</label>
+        <label class="components-somatic" title="{{spell.system.components.somatic}}">{{spell.system.components.somatic}}</label>
+    </div>
+
+    <div class="flexrow" style="grid-column-end: span 2">
+        <label class="components-material-title">{{ localize "ATORIA.SpellComponentsMaterialTitle" }}</label>
+        <label class="components-material" title="{{spell.system.components.material}}">{{spell.system.components.material}}</label>
+    </div>
 
 
     {{!-- <label class="targeting-title flex0 category-title" style="grid-row-end: span 3">{{ localize "ATORIA.SpellTargetingTitle" }}</label> --}}
