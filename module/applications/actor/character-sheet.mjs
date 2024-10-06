@@ -343,8 +343,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   /** @inheritDoc */
   activateListeners(html) {
-    super.activateListeners(html);
-    
     html.find(".spell-display-detail").click(this._onSpellDisplayDetail.bind(this));
 
     if ( this.isEditable ) {
@@ -353,6 +351,9 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       html.find(".config-magic").click(this._onConfigMagic.bind(this));
       html.find(".tickable-image").click(this._onTickableImage.bind(this));
     }
+  
+    // Handle default listeners last so system listeners are triggered first
+    super.activateListeners(html);
   }
 
 
@@ -404,7 +405,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     const header = event.currentTarget;
     const tickvalue = header.dataset.tickvalue;
     
-    console.log(`dataset : ${JSON.stringify(header.dataset)}`);
     const associated_value = header.dataset.value || "unknown";
     switch (associated_value) {
         case "healing_herbs":
@@ -418,9 +418,12 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
           });
           break;
         case "health_regain_inactive":
-          console.log("clicked on " + tickvalue);
+          let new_value = Number(tickvalue) + 1
+          if (this.actor.system.health_regain_inactive == new_value) { // If click on the already level, disable the click level
+            new_value -= 1;
+          }
           this.actor.update({
-              "system.health_regain_inactive": Number(tickvalue) + 1
+              "system.health_regain_inactive": new_value
           });
           break;
     }
