@@ -21,6 +21,18 @@
                     </select>
                 </div>
             </div>
+            <div class="flexcol">
+            {{#each action_modifiers}}
+                <div class="flexrow">
+                    <input type="checkbox" name="action_modifiers_{{@key}}_used" data-dtype="Boolean" {{checked this.used}}/>
+                    <div class="flexcol">
+                        <label>{{this.restriction}}</label>
+                        <label>{{this.cost}}</label>
+                        <label>{{this.effect}}</label>
+                    </div>
+                </div>
+            {{/each}}
+            </div>
         </div>
     </div>
 </form>

@@ -445,13 +445,29 @@ export default class SkillRoll extends Roll {
         available_rollmodes = {};
         available_rollmodes[options.forced_rollmode] = CONFIG.Dice.rollModes[options.forced_rollmode];
       }
+
       // Render the Dialog inner HTML
-      const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, {
+      let dialog_roll_data = {
         modifier: 0,
         SL: 0,
         defaultRollMode,
-        rollModes: available_rollmodes
-      });
+        rollModes: available_rollmodes,
+        action_modifiers: {
+          "0": {
+            used: false,
+            restriction: "Max: 3",
+            cost: "Pas cher",
+            effect: "Ca fait bim bam boum!"
+          },
+          "1": {
+            used: false,
+            restriction: "Requiert 3 cibles",
+            cost: "Très cher",
+            effect: "Ca fait Kadabra!"
+          }
+        }
+      };
+      const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, dialog_roll_data);
   
       let defaultButton = "normal";
       switch ( defaultAction ) {
@@ -496,11 +512,21 @@ export default class SkillRoll extends Roll {
     _onDialogSubmit(html, advantageMode) {
       const form = html[0].querySelector("form");
     
+
       // Apply advantage or disadvantage
       this.options.advantageMode = advantageMode;
       this.success_modifier = Number(form.modifier.value);
       this.SL_modifier = Number(form.SL.value);
       this.options.rollMode = form.rollMode.value;
+
+      this.action_modifiers_used = []
+      let selected_action_modifiers = {}
+      selected_action_modifiers["0"] = form.action_modifiers_0_used.checked;
+      selected_action_modifiers["1"] = form.action_modifiers_1_used.checked;
+
+      console.log(`selected_action_modifiers ${JSON.stringify(selected_action_modifiers, null, 2)}`);
+
+
       this.configureModifiers();
       return this;
     }
