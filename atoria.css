@@ -502,13 +502,25 @@
   -ms-flex-align: center;
   align-items: center;
   vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 .atoria .spell-sheet .spell-supp .flexrow:hover .delete-button {
   display: inline-block;
 }
+.atoria .spell-sheet .cost-input {
+  min-width: 35px;
+  max-width: 50px;
+}
 .atoria .spell-sheet .cost-input.time {
-  min-width: 100px;
-  max-width: 100px;
+  -webkit-box-flex: 5;
+  -ms-flex: 5;
+  flex: 5;
+  max-width: none;
 }
 .atoria .action-sheet .flexcol label, .atoria .action-sheet .flexcol input {
   -webkit-box-flex: 0;
@@ -2202,20 +2214,6 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.atoria .spell .spell-details .spell-detail .config-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
 .atoria .spell .spell-details .spell-detail .category-title {
   min-width: 60px;
   max-width: 60px;
@@ -2317,9 +2315,15 @@
 .atoria .spell .spell-details .spell-detail .spell-supp {
   grid-column-end: span 2;
 }
+.atoria .spell .spell-details .spell-detail .cost-input {
+  min-width: 35px;
+  max-width: 50px;
+}
 .atoria .spell .spell-details .spell-detail .cost-input.time {
-  min-width: 100px;
-  max-width: 100px;
+  -webkit-box-flex: 5;
+  -ms-flex: 5;
+  flex: 5;
+  max-width: none;
 }
 .atoria .test-dialog .adv-dis {
   margin-top: 10px;
@@ -2331,22 +2335,22 @@
 .atoria .perception {
   background-color: #f1c232;
 }
-.atoria .health {
+.atoria .health.health {
   background-color: #cc0000;
 }
 .atoria .healing {
   background-color: #d76fac;
 }
-.atoria .stamina {
+.atoria .stamina.stamina {
   background-color: #6aa84f;
 }
-.atoria .mana {
+.atoria .mana.mana {
   background-color: #3c78d8;
 }
-.atoria .sanity {
+.atoria .sanity.sanity {
   background-color: #8e7cc3;
 }
-.atoria .endurance {
+.atoria .endurance.endurance {
   background-color: #e69138;
 }
 .atoria .encumbrance {

@@ -223,6 +223,13 @@
                 text-align: center;
                 align-items: center;
                 vertical-align: middle;
+                
+                height: var(--form-field-height);
+                line-height: var(--form-field-height);
+                min-width: 20px;
+                max-width: 20px;
+                padding-left: 3px;
+                padding-right: 3px;
             }
             &:hover .delete-button {
                 display: inline-block;
@@ -230,9 +237,13 @@
         }
     }
 
+    .cost-input {
+        min-width: 35px;
+        max-width: 50px;
+    }
     .cost-input.time {
-        min-width: 100px;
-        max-width: 100px;
+        flex: 5;
+        max-width: none;
     }
 
 }
