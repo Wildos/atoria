@@ -203,7 +203,6 @@ export default class SkillRoll extends Roll {
             let tmp_effect_result = "";
             let tmp_effect_detail = "";
 
-            console.log("Roll dice formula %j", roll_data);
             // const effect_roll_formula = (this.isCritical)? this.data.effect_roll.replace("d", "*") : this.data.effect_roll;
             let effect_roll = new Roll(roll_data["roll_dice_formula"]);
             if (Roll.validate(effect_roll.formula)) {
@@ -234,8 +233,6 @@ export default class SkillRoll extends Roll {
                     break;
                 }
               }
-            }else {
-              console.log(effect_roll);
             }
 
             tmp_full_effect_array.push({
@@ -313,8 +310,6 @@ export default class SkillRoll extends Roll {
       if ( !this._evaluated ) await this.evaluate({async: true});
   
 
-      console.log(` effect_roll: ${this.data.effect_roll}`);
-      console.log(this.data.effect_description);
       if (!this.data.effect_roll && this.data.effect_description) {
         let effect_rolls_found = this._extract_all_rolls(this.data.effect_description);
         console.dir(effect_rolls_found);
