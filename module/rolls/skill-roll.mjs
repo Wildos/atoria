@@ -288,7 +288,7 @@ export default class SkillRoll extends Roll {
     /* -------------------------------------------- */
   
     _effect_string_to_effect_roll(effect_string) {
-      var result = effect_string.matchAll(/\[([a-zA-Z ]*):? *([0-9dD+-]*)\]/g);
+      var result = effect_string.matchAll(/\[([a-zA-ZÀ-ÖØ-öø-ʯ ]*):? *([0-9dD+-]*)\]/g);
       var result_data = [];
       for (let match of result) {
         let [full, roll_name, roll_dice_formula] = match;
@@ -302,7 +302,7 @@ export default class SkillRoll extends Roll {
 
 
     _extract_all_rolls(string) {
-      return string.match(/\[[a-zA-Z ]*:? *[0-9dD+-]*\]/g)
+      return string.match(/\[[a-zA-ZÀ-ÖØ-öø-ʯ ]*:? *[0-9dD+-]*\]/g)
     }
 
 
@@ -317,6 +317,7 @@ export default class SkillRoll extends Roll {
       console.log(this.data.effect_description);
       if (!this.data.effect_roll && this.data.effect_description) {
         let effect_rolls_found = this._extract_all_rolls(this.data.effect_description);
+        console.dir(effect_rolls_found);
         if (effect_rolls_found && effect_rolls_found.length > 0) {
           this.data.effect_rolls = effect_rolls_found.map((x) => this._effect_string_to_effect_roll(x));
         }
