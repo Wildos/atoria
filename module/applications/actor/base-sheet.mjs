@@ -153,6 +153,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
     // Iterate over active effects, classifying them into categories
     for ( let e of effects ) {
       e.isExpanded = this._expanded.has(e.id);
+      e.duration.is_none = (e.duration.type == "none");
       effects_sorted.push(e);
       // if ( e.disabled ) continue;
       // else if ( e.isTemporary ) effects_sorted.temporary.push(e);
@@ -383,6 +384,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
     event.preventDefault();
     const li = event.currentTarget.closest(".effect");
     const effect = this.actor.effects.get(li.dataset.effectId);
+    console.dir(effect);
     return effect.sheet.render(true);
   }
 

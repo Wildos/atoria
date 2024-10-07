@@ -139,6 +139,20 @@ Hooks.once("ready", function() {
     }
   });
 
+  // Change status effect list
+  CONFIG.statusEffects = [
+    {
+      id: "chained-heart",
+      name: "Coeur chainé",
+      icon: "systems/atoria/imgs/chained-heart-red.svg",
+      description: "C'est quand le coeur il est en prison",
+      duration: {
+        rounds: 0
+      } 
+    }
+  ]
+  console.dir(CONFIG.statusEffects);
+
   // Determine whether a system migration is required
   if ( !game.user.isGM ) return; // Only do migration with the GM
   if (game.settings.get("atoria", "systemMigrationVersion") || ATORIA_MIGRATION_SYSTEM_CREATION_VERSION) {
