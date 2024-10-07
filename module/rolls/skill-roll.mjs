@@ -19,6 +19,11 @@ export default class SkillRoll extends Roll {
       this.critical_effect_description = data?.critical_effect_description;
       if ( this.data.effect_roll == undefined ) this.data.effect_roll = false;
       if ( this.data.effect_description == undefined ) this.data.effect_description = "";
+      if ( this.data.action_modifiers == undefined ) {
+        this.action_modifiers = {};
+      } else {
+        this.action_modifiers = this.data.action_modifiers;
+      }
     }
   
     /* -------------------------------------------- */
@@ -73,6 +78,14 @@ export default class SkillRoll extends Roll {
      * @type {string}
      */
     static EVALUATION_TEMPLATE = "systems/atoria/templates/apps/test-dialogs/test-dialog.hbs";
+
+
+    /**
+     * The HTML template path used to display action modifiers of this Roll
+     * @type {string}
+     */
+    static ACTION_MODIFIER_TEMPLATE = "systems/atoria/templates/common/action_modifiers.hbs";
+
     /**
      * The HTML template path used to display roll of this Roll
      * @type {string}
@@ -193,63 +206,77 @@ export default class SkillRoll extends Roll {
         this.marginOfSuccess = (this.targetValue - this.total) + this.success_modifier;
         this.signedSL = this.calculateSL(this.marginOfSuccess, this.SL_modifier);
 
+        this.effects_array = await this._calculate_roll(this.data.effect_rolls);
 
-        let tmp_full_effect_array = [];
+        this.critical_effects_array = this.isCritical ? await this._calculate_roll(this.data.critical_effect_rolls) : ""; //await this._roll_string_effect(this.critical_effect_description),
 
-        if (this.data.effect_rolls) {
-          for (let i in this.data.effect_rolls) {
-            let roll_data = this.data.effect_rolls[i];
-            let tmp_roll_name = "";
-            let tmp_effect_result = "";
-            let tmp_effect_detail = "";
-
-            // const effect_roll_formula = (this.isCritical)? this.data.effect_roll.replace("d", "*") : this.data.effect_roll;
-            let effect_roll = new Roll(roll_data["roll_dice_formula"]);
-            if (Roll.validate(effect_roll.formula)) {
-              await effect_roll.evaluate({"maximize": this.isCritical});
-      
-              tmp_roll_name = roll_data["roll_name"];
-              if (tmp_roll_name.length !== 0) {
-                tmp_roll_name += ": ";
-              }
-
-              for(let dice_nb in effect_roll.terms) {
-                switch (effect_roll.terms[dice_nb].constructor.name) {
-                  case "Die":
-                    let dice_effect_detail = []
-                    for(let dice_result in effect_roll.terms[dice_nb].results) {
-                      dice_effect_detail.push(effect_roll.terms[dice_nb].results[dice_result].result);
-                    }
-                    tmp_effect_detail += "{" + (dice_effect_detail.join(", ")) + "}";
-                    break;
-                  case "OperatorTerm":
-                    tmp_effect_detail += " " + effect_roll.terms[dice_nb].operator + " ";
-                    break;
-                  case "NumericTerm":
-                    tmp_effect_detail += effect_roll.terms[dice_nb].number;
-                    break;
-                  default:
-                    console.log(`skill-roll.mjs::computeResult => Unknown class '${effect_roll.terms[dice_nb].constructor.name}'`);
-                    break;
-                }
-              }
-            }
-
-            tmp_full_effect_array.push({
-              "result": `${tmp_roll_name}${effect_roll.total}`,
-              "detail": tmp_effect_detail
-            });
-          }
+        this.action_modifiers_effects_arrays = {};
+        for (const [key, value] of Object.entries(this.action_modifiers)) {
+          this.action_modifiers_effects_arrays[key] = {};
+          this.action_modifiers_effects_arrays[key].name = value.name;
+          this.action_modifiers_effects_arrays[key].effects_array = await this._calculate_roll(value.effect_rolls);
         }
-
-        this.effects_array = tmp_full_effect_array;
-
 
         for(let dice_result in this.terms[0].results) {
           this.terms[0].results[dice_result].isCritical = this.terms[0].results[dice_result].result <= this.options.critical;
           this.terms[0].results[dice_result].isFumble = this.terms[0].results[dice_result].result >= this.options.fumble;
         }
     }
+
+
+    /* ------ */
+    async _calculate_roll(effect_rolls) {
+        let tmp_full_effect_array = [];
+
+        for (let i in effect_rolls) {
+          let roll_data = effect_rolls[i];
+          let tmp_roll_name = "";
+          let tmp_effect_result = "";
+          let tmp_effect_detail = "";
+
+          // const effect_roll_formula = (this.isCritical)? this.data.effect_roll.replace("d", "*") : this.data.effect_roll;
+          let effect_roll = new Roll(roll_data["roll_dice_formula"]);
+          if (Roll.validate(effect_roll.formula)) {
+            await effect_roll.evaluate({"maximize": this.isCritical});
+    
+            tmp_roll_name = roll_data["roll_name"];
+            if (tmp_roll_name.length !== 0) {
+              tmp_roll_name += ": ";
+            }
+
+            for(let dice_nb in effect_roll.terms) {
+              switch (effect_roll.terms[dice_nb].constructor.name) {
+                case "Die":
+                  let dice_effect_detail = []
+                  for(let dice_result in effect_roll.terms[dice_nb].results) {
+                    dice_effect_detail.push(effect_roll.terms[dice_nb].results[dice_result].result);
+                  }
+                  tmp_effect_detail += "{" + (dice_effect_detail.join(", ")) + "}";
+                  break;
+                case "OperatorTerm":
+                  tmp_effect_detail += " " + effect_roll.terms[dice_nb].operator + " ";
+                  break;
+                case "NumericTerm":
+                  tmp_effect_detail += effect_roll.terms[dice_nb].number;
+                  break;
+                default:
+                  console.log(`skill-roll.mjs::computeResult => Unknown class '${effect_roll.terms[dice_nb].constructor.name}'`);
+                  break;
+              }
+            }
+          }
+
+          tmp_full_effect_array.push({
+            "result": `${tmp_roll_name}${effect_roll.total}`,
+            "detail": tmp_effect_detail
+          });
+        }
+
+        return tmp_full_effect_array;
+      }
+
+
+
 
     /* -------------------------------------------- */
 
@@ -299,7 +326,10 @@ export default class SkillRoll extends Roll {
 
 
     _extract_all_rolls(string) {
-      return string.match(/\[[a-zA-ZÀ-ÖØ-öø-ʯ ]*:? *[0-9dD+-]*\]/g)
+      if (string == undefined) {
+        return [];
+      }
+      return string.match(/\[[a-zA-ZÀ-ÖØ-öø-ʯ ]*:? *[0-9dD+-]*\]/g);
     }
 
 
@@ -312,7 +342,6 @@ export default class SkillRoll extends Roll {
 
       if (!this.data.effect_roll && this.data.effect_description) {
         let effect_rolls_found = this._extract_all_rolls(this.data.effect_description);
-        console.dir(effect_rolls_found);
         if (effect_rolls_found && effect_rolls_found.length > 0) {
           this.data.effect_rolls = effect_rolls_found.map((x) => this._effect_string_to_effect_roll(x));
         }
@@ -322,6 +351,20 @@ export default class SkillRoll extends Roll {
           "roll_dice_formula": this.data.effect_roll
         }]
       }
+
+      // Prepare critical effect
+      let critical_effect_rolls_found = this._extract_all_rolls(this.data.critical_effect_description);
+      if (critical_effect_rolls_found && critical_effect_rolls_found.length > 0) {
+        this.data.critical_effect_rolls = critical_effect_rolls_found.map((x) => this._effect_string_to_effect_roll(x));
+      }
+      // Prepare action modifier effect
+      for (const [_, value] of Object.entries(this.action_modifiers)) {
+        let action_modifier_effect_rolls_found = this._extract_all_rolls(value.effect);
+        if (action_modifier_effect_rolls_found && action_modifier_effect_rolls_found.length > 0) {
+          value.effect_rolls = action_modifier_effect_rolls_found.map((x) => this._effect_string_to_effect_roll(x));
+        }
+      }
+
 
       await this.computeResult();
 
@@ -339,18 +382,18 @@ export default class SkillRoll extends Roll {
         success_modifier: (this.success_modifier > 0) ? `+${this.success_modifier}`: `${this.success_modifier}`,
         SL_modifier: (this.SL_modifier > 0) ? `+${this.SL_modifier}`: `${this.SL_modifier}`,
 
-
         effects_array : this.effects_array,
 
         effect_detail: `${this.data.effect_roll} = ${this.effect_detail}`,
         effect_result: this.effect_result,
 
-
         isCritical: this.isCritical,
         isFumble: this.isFumble,
         roll_obj: this.terms[0].results,
         adv_string,
-        critical_effect_description: await this._roll_string_effect(this.critical_effect_description)
+        critical_effects_array: this.critical_effects_array, //await this._roll_string_effect(this.critical_effect_description),
+
+        action_modifiers_effects_arrays: this.action_modifiers_effects_arrays,
       });
 
       messageData.content = content;
@@ -416,6 +459,10 @@ export default class SkillRoll extends Roll {
         const roll_effect_detail = '<span class="skill-effect" title="' + effect_results.shift() + '">' + effect_results.shift() + '</span>';
         output_string = output_string.replace(/\[([a-zA-ZÀ-ÖØ-öø-ʯ ]*:? *)[0-9dD+-]*\]/, `$1${roll_effect_detail}`);
       }
+      // output_string = "";
+      // while (effect_results.length > 1) {
+      //   output_string += '<div class="skill-effect flex0" title="' + effect_results.shift() + '">' + effect_results.shift() + '</div>';
+      // }
 
       return output_string;
     }
@@ -452,20 +499,8 @@ export default class SkillRoll extends Roll {
         SL: 0,
         defaultRollMode,
         rollModes: available_rollmodes,
-        action_modifiers: {
-          "0": {
-            used: false,
-            restriction: "Max: 3",
-            cost: "Pas cher",
-            effect: "Ca fait bim bam boum!"
-          },
-          "1": {
-            used: false,
-            restriction: "Requiert 3 cibles",
-            cost: "Très cher",
-            effect: "Ca fait Kadabra!"
-          }
-        }
+        action_modifiers: this.action_modifiers,
+        hide_effect: true,
       };
       const content = await renderTemplate(template ?? this.constructor.EVALUATION_TEMPLATE, dialog_roll_data);
   
@@ -519,13 +554,15 @@ export default class SkillRoll extends Roll {
       this.SL_modifier = Number(form.SL.value);
       this.options.rollMode = form.rollMode.value;
 
-      this.action_modifiers_used = []
-      let selected_action_modifiers = {}
-      selected_action_modifiers["0"] = form.action_modifiers_0_used.checked;
-      selected_action_modifiers["1"] = form.action_modifiers_1_used.checked;
+      Object.entries(this.action_modifiers).forEach(([k,v]) => {
+        v.used = form[`action_modifiers_${k}_used`].checked;
+      });
 
-      console.log(`selected_action_modifiers ${JSON.stringify(selected_action_modifiers, null, 2)}`);
+      console.dir(this.action_modifiers);
 
+      var filtered_action_modifiers = Object.fromEntries(Object.entries(this.action_modifiers).filter(([k,v]) => v.used));
+
+      this.action_modifiers = filtered_action_modifiers;
 
       this.configureModifiers();
       return this;

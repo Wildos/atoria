@@ -72,7 +72,7 @@ export async function skillRoll({
       }, dialogOptions);
       if ( configured === null ) return null;
     } else roll.options.rollMode ??= defaultRollMode;
-  
+
     // Evaluate the configured roll
     await roll.evaluate({async: true});
 

@@ -235,7 +235,7 @@
             grid-column-end: span 2;
         }
 
-        .cost-input.time {
+        .cost-input.restriction {
             min-width: 100px;
             max-width: 100px;
         }
@@ -262,12 +262,23 @@
             }
         }
 
+        .action-modifier-name {
+            font-weight: bold;
+        }
+
+        .additional-effect {
+            min-width: 100px;
+            max-height: var(--form-field-height);
+            text-align: left;
+        }
+
+
         .skill-effect-list {
-            min-width: 75px;
+            min-width: 100px;
         }
 
         .skill-effect {
-            min-width: 75px;
+            min-width: 100px;
             max-height: var(--form-field-height);
             text-align: right;
         }

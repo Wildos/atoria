@@ -79,7 +79,7 @@ export class AtoriaItem extends Item {
           mana: 0,
           stamina: 0,
           endurance: 0,
-          time: ""
+          restriction: ""
         },
         effect_description: ""
       };

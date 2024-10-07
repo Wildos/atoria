@@ -362,14 +362,33 @@ export class AtoriaActor extends Actor {
 
 
 
+  _spell_supp_to_action_modifier(spell_supp_name, spell_supp) {
+    return {
+      used: false,
+      name: spell_supp_name,
+      cost:  spell_supp.cost,
+      effect: spell_supp.effect_description,
+    }
+  }
+
   rollSpell(spellId, options={}) {
     if (this.type !== "character") return;
     
     let spell_data = this.items.get(spellId);
 
+    console.dir(spell_data.system.spell_supps);
+
+    let action_modifiers = {};
+    Object.entries(spell_data.system.spell_supps).forEach(([k,v]) => {
+      action_modifiers[k] = this._spell_supp_to_action_modifier(game.i18n.format(game.i18n.localize("ATORIA.SuppNaming"), {index: k}), v);
+    });
+
     const roll_options = foundry.utils.mergeObject(options,  {
       critical: spell_data.system.critical_value,
       fumble: 101 - spell_data.system.fumble_value,
+      data: {
+        action_modifiers: action_modifiers,
+      },
     });
 
     this._roll({
@@ -379,6 +398,30 @@ export class AtoriaActor extends Actor {
       critical_effect_description: spell_data.system.critical_effect_description,
     }, roll_options);
   }
+  // {
+  //         "maxi": {
+  //           used: false,
+  //           cost:  {
+  //             health: 1,
+  //             mana: 0,
+  //             stamina: 0,
+  //             endurance: 5,
+  //             restriction: "max 3",
+  //           },
+  //           effect: "Ca fait [bim: 1d2] [bam:2d4] [boum:12d12] !"
+  //         },
+  //         "target": {
+  //           used: false,
+  //           cost:  {
+  //             health: 0,
+  //             mana: 2,
+  //             stamina: 1,
+  //             endurance: 0,
+  //             restriction: "Requiert 3 cibles",
+  //           },
+  //           effect: "Ca fait [Kadabra: 2d4-2]!"
+  //         }
+  //       }
 
 
   async sendSpellDetail(spellId, options={}) {

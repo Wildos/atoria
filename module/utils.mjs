@@ -12,6 +12,7 @@ export async function preloadHandlebarsTemplates() {
     const partials = [
       // Shared Partials
       "systems/atoria/templates/common/spell-detail.hbs",
+      "systems/atoria/templates/common/action_modifiers.hbs",
       // Actor Sheet Partials
       "systems/atoria/templates/actors/parts/actor-npc-combat.hbs",
       "systems/atoria/templates/actors/parts/actor-npc-feature.hbs",

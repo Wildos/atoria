@@ -38,6 +38,9 @@
   "ATORIA.CancelDeletion": "Cancel deletion",
   
 
+  "ATORIA.SuppNaming": "Supp. {index}",
+
+
   "ATORIA.SheetClassCharacter": "AtoriaCharacterSheet",
   "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
   "ATORIA.SheetClassGear": "AtoriaGearSheet",

@@ -11,6 +11,10 @@
 
 /* Styles limited to atoria sheets */
 @import 'components/configurators';
+
+/* Styles working in sheet and chat*/
+@import 'components/action_modifier';
+
 .atoria {
     font-family: $font-primary;
 
