@@ -419,7 +419,7 @@ export default class SkillRoll extends Roll {
       let output_string = string_to_parse;
       while (effect_results.length > 1) {
         const roll_effect_detail = '<span class="skill-effect" title="' + effect_results.shift() + '">' + effect_results.shift() + '</span>';
-        output_string = output_string.replace(/\[[a-zA-Z ]*:? *[0-9dD+-]*\]/, roll_effect_detail);
+        output_string = output_string.replace(/\[([a-zA-ZÀ-ÖØ-öø-ʯ ]*:? *)[0-9dD+-]*\]/, `$1${roll_effect_detail}`);
       }
 
       return output_string;
