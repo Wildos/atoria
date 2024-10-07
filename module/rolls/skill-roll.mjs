@@ -17,6 +17,8 @@ export default class SkillRoll extends Roll {
       this.targetValue = Number(data?.targetValue);
       this.effect_description = data?.effect_description;
       this.critical_effect_description = data?.critical_effect_description;
+      if ( this.data.effect_roll == undefined ) this.data.effect_roll = false;
+      if ( this.data.effect_description == undefined ) this.data.effect_description = "";
     }
   
     /* -------------------------------------------- */
@@ -311,14 +313,14 @@ export default class SkillRoll extends Roll {
       if ( !this._evaluated ) await this.evaluate({async: true});
   
 
-      console.log(this.data.effect_roll);
+      console.log(` effect_roll: ${this.data.effect_roll}`);
       console.log(this.data.effect_description);
       if (!this.data.effect_roll && this.data.effect_description) {
         let effect_rolls_found = this._extract_all_rolls(this.data.effect_description);
         if (effect_rolls_found && effect_rolls_found.length > 0) {
           this.data.effect_rolls = effect_rolls_found.map((x) => this._effect_string_to_effect_roll(x));
         }
-      } else {
+      } else if (this.data.effect_roll) {
         this.data.effect_rolls = [{
           "roll_name": "",
           "roll_dice_formula": this.data.effect_roll
