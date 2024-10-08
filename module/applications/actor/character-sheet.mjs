@@ -50,6 +50,8 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     const gear_equipments = [];
     const gear_ingredients = [];
     const spells = [];
+    const technique_known = [];
+    const incantatory_known = [];
     const displayed_spells = [];
 
     // Iterate through items, allocating to containers
@@ -96,6 +98,23 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
         gear_ingredients.push(i);
       }
+
+      // Append to action_modifiers.
+      if (i.type === 'action-modifier') {
+        const parseHTML= new DOMParser().parseFromString(i.system.effect, 'text/html');
+        i.system.effect_cleaned = parseHTML.body.textContent || '';
+        switch (i.system.subtype) {
+          case "technique":
+            technique_known.push(i);
+            break;
+          case "incantatory_addition":
+            incantatory_known.push(i);
+            break;
+          default:
+            console.error(`Unknown action modifier subtype found in ${i._id}`);
+        }
+      }
+
       // Append to features.
       if (i.type === 'spell') {
         if (this.actor._spells_displayed.includes(i._id)) {
@@ -114,6 +133,8 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.gear_consumables = gear_consumables;
     context.gear_equipments = gear_equipments;
     context.gear_ingredients = gear_ingredients;
+    context.technique_known = technique_known;
+    context.incantatory_known = incantatory_known;
     context.spells = spells;
     context.displayed_spells = displayed_spells;
   }
@@ -302,7 +323,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.health_regain_inactive_data = [];
     let usable_health_regen_number = Math.min(context.system.endurance.value, 100) / 25 + 1;
     const MAX_INACTIVE_HEALTH_REGAIN = 6;
-    console.log(`usable_health_regen_number ${usable_health_regen_number} // context.system.health_regain_inactive ${context.system.health_regain_inactive}`);
     for(let step = MAX_INACTIVE_HEALTH_REGAIN - 1; step >= 0; step--) {
       context.health_regain_inactive_data.push({
         "is_usable": step < usable_health_regen_number,
@@ -399,7 +419,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
 
 
-  _onTickableImage(event) {
+  async _onTickableImage(event) {
     event.preventDefault();
     event.stopPropagation();
     const header = event.currentTarget;
@@ -408,12 +428,12 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     const associated_value = header.dataset.value || "unknown";
     switch (associated_value) {
         case "healing_herbs":
-          this.actor.update({
+          await this.actor.update({
               "system.healing_herbs_used": !this.actor.system.healing_herbs_used
           });
           break;
         case "healing_medecine":
-          this.actor.update({
+          await this.actor.update({
               "system.medical_healing_used": !this.actor.system.medical_healing_used
           });
           break;
@@ -422,7 +442,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
           if (this.actor.system.health_regain_inactive == new_value) { // If click on the already level, disable the click level
             new_value -= 1;
           }
-          this.actor.update({
+          await this.actor.update({
               "system.health_regain_inactive": new_value
           });
           break;

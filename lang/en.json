@@ -20,7 +20,17 @@
   "TYPES.Item.featurePl": "Features",
   "TYPES.Item.skill": "Skill",
   "TYPES.Item.skillPl": "Skills",
+  "TYPES.Item.action-modifier": "Technique/Incantatory addition",
+  "TYPES.Item.action-modifierPl": "Techniques/Incantatory additions",
 
+
+  "ATORIA.Type": "Type",
+  "ATORIA.Technique": "Technique",
+  "ATORIA.IncantatoryAddition": "Incantatory Addition",
+
+  "ATORIA.UsableTechniques": "Usable Techniques",
+  "ATORIA.UsableIncantatoryAddition": "Usable Incantatory Addition",
+  
 
 
   "MIGRATION.Begin": "A migration of data has started to version {version}",
@@ -45,6 +55,7 @@
   "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
   "ATORIA.SheetClassGear": "AtoriaGearSheet",
   "ATORIA.SheetClassAction": "AtoriaActionSheet",
+  "ATORIA.SheetClassActionModifier": "AtoriaActionModifierSheet",
   "ATORIA.SheetClassSpell": "AtoriaSpellSheet",
   "ATORIA.SheetClassFeature": "AtoriaFeatureSheet",
   "ATORIA.SheetClassSkill": "AtoriaSkillSheet",
@@ -72,6 +83,8 @@
   "ATORIA.CharacterPage": "Character",
   "ATORIA.InventoryPage": "Inventory",
   "ATORIA.SpellPage": "Spells",
+  "ATORIA.ActionModifierPage": "Techniques & Incantatory additions",
+
 
   "ATORIA.PerceptionTitle": "Perception",
   "ATORIA.Perception.Sight": "Sight",
@@ -98,6 +111,9 @@
   "ATORIA.Armor": "Armor",
   "ATORIA.Initiative": "Initiative",
   "ATORIA.Movement": "Movement",
+
+  "ATORIA.Time": "Time",
+  "ATORIA.Restriction": "Restriction",
 
   "ATORIA.Luck": "Luck",
 
@@ -262,6 +278,7 @@
 
   "ATORIA.ActionNameTitle": "Name",
   "ATORIA.ActionEffectRollTitle": "Effect formula",
+  "ATORIA.ActionEffectTitle" : "Effect",
   "ATORIA.ActionDescriptionTitle": "Description",
 
   "ATORIA.FeatureNameTitle": "Name",
@@ -302,6 +319,10 @@
   "ATORIA.SpellEffectTitle": "Effect",
   "ATORIA.SpellCriticalEffectTitle": "Critical Bonus Effect",
   "ATORIA.SpellSuppTitle": "Supp",
+
+
+  "ATORIA.Techniques": "Techniques",
+  "ATORIA.IncantatoryAdditions": "Incantatory Additions",
 
 
   "ATORIA.RollSL": "SL",

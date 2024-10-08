@@ -94,6 +94,11 @@ Hooks.once("init", function() {
     makeDefault: true,
     label: "ATORIA.SheetClassAction"
   });
+  Items.registerSheet("atoria", applications.item.ItemAtoriaSheetActionModifier, {
+    types: ["action-modifier"],
+    makeDefault: true,
+    label: "ATORIA.SheetClassActionModifier"
+  });
   Items.registerSheet("atoria", applications.item.ItemAtoriaSheetSpell, {
     types: ["spell", "spell-supp"],
     makeDefault: true,
@@ -151,7 +156,6 @@ Hooks.once("ready", function() {
       } 
     }
   ]
-  console.dir(CONFIG.statusEffects);
 
   // Determine whether a system migration is required
   if ( !game.user.isGM ) return; // Only do migration with the GM

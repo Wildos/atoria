@@ -23,12 +23,9 @@ export async function preloadHandlebarsTemplates() {
       "systems/atoria/templates/actors/parts/actor-character-knowledge.hbs",
       "systems/atoria/templates/actors/parts/actor-character-feature.hbs",
       "systems/atoria/templates/actors/parts/actor-character-inventory.hbs",
-      "systems/atoria/templates/actors/parts/actor-character-spell.hbs"
+      "systems/atoria/templates/actors/parts/actor-character-spell.hbs",
+      "systems/atoria/templates/actors/parts/actor-character-action-modifier.hbs",
       // Item Sheet Partials
-  
-      // Journal Partials
-  
-      // Advancement Partials
     ];
   
     const paths = {};

@@ -1,0 +1,33 @@
+<div class="action-modifier-page flexcol item-list">
+    <label class="title-label">{{ localize "ATORIA.ActionModifierPage"}}</label>
+    <label class="title-label">{{ localize "ATORIA.Techniques"}}
+        <a class="add-button item-create flex0" data-type="action-modifier" data-action="action-modifier-item" data-subtype="technique">
+            <i class="fas fa-plus"></i>
+        </a>
+    </label>
+    {{#each technique_known as |action_mod key|}}
+        <label title="{{action_mod.name}}" class="item" data-item-id="{{action_mod._id}}">{{action_mod.name}}
+            <a class="config-button item-config" data-action="action-modifier-item">
+                <i class="fas fa-cog"></i>
+            </a>
+            <a class="delete-button item-delete" data-action="action-modifier-item">
+                <i class="fas fa-trash"></i>
+            </a>
+        </label>
+    {{/each}}
+    <label class="title-label">{{ localize "ATORIA.IncantatoryAdditions"}}
+        <a class="add-button item-create flex0" data-type="action-modifier" data-action="action-modifier-item" data-subtype="incantatory_addition">
+            <i class="fas fa-plus"></i>
+        </a>
+    </label>
+    {{#each incantatory_known as |action_mod key|}}
+        <label title="{{action_mod.name}}" class="item" data-item-id="{{action_mod._id}}">{{action_mod.name}}
+            <a class="config-button item-config" data-action="action-modifier-item">
+                <i class="fas fa-cog"></i>
+            </a>
+            <a class="delete-button item-delete" data-action="action-modifier-item">
+                <i class="fas fa-trash"></i>
+            </a>
+        </label>
+    {{/each}}
+</div>

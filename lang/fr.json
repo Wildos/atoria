@@ -21,8 +21,17 @@
   "TYPES.Item.featurePl": "Traits",
   "TYPES.Item.skill": "Compétence",
   "TYPES.Item.skillPl": "Compétences",
+  "TYPES.Item.action-modifier": "Technique/Ajout incantatoire",
+  "TYPES.Item.action-modifierPl": "Techniques/Ajouts incantatoires",
 
 
+  "ATORIA.Type": "Type",
+  "ATORIA.Technique": "Technique",
+  "ATORIA.IncantatoryAddition": "Ajout Incantatoire",
+
+  "ATORIA.UsableTechniques": "Techniques utilisables",
+  "ATORIA.UsableIncantatoryAddition": "Ajouts incantatoires utilisables",
+  
 
   "MIGRATION.Begin": "Une migration de données a commencé vers la version {version}",
   "MIGRATION.Complete": "Une migration de données a terminé vers la version {version}\nIl y a eu {numberOfFailure} erreur lors de la migration",
@@ -42,6 +51,7 @@
   "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
   "ATORIA.SheetClassGear": "AtoriaGearSheet",
   "ATORIA.SheetClassAction": "AtoriaActionSheet",
+  "ATORIA.SheetClassActionModifier": "AtoriaActionModifierSheet",
   "ATORIA.SheetClassSpell": "AtoriaSpellSheet",
   "ATORIA.SheetClassFeature": "AtoriaFeatureSheet",
   "ATORIA.SheetClassSkill": "AtoriaSkillSheet",
@@ -68,6 +78,7 @@
   "ATORIA.CharacterPage": "Personnage",
   "ATORIA.InventoryPage": "Inventaire",
   "ATORIA.SpellPage": "Sorts",
+  "ATORIA.ActionModifierPage": "Techniques et Ajouts incantatoires",
 
   "ATORIA.PerceptionTitle": "Perception",
   "ATORIA.Perception.Sight": "Vue",
@@ -94,6 +105,9 @@
   "ATORIA.Armor": "Armure",
   "ATORIA.Initiative": "Initiative",
   "ATORIA.Movement": "Mouvement",
+
+  "ATORIA.Time": "Temps",
+  "ATORIA.Restriction": "Restriction",
 
   "ATORIA.Luck": "Chance",
 
@@ -259,6 +273,7 @@
 
   "ATORIA.ActionNameTitle": "Nom",
   "ATORIA.ActionEffectRollTitle": "Formule d'effet",
+  "ATORIA.ActionEffectTitle" : "Effet",
   "ATORIA.ActionDescriptionTitle": "Description",
 
   "ATORIA.FeatureNameTitle": "Nom",
@@ -299,6 +314,11 @@
   "ATORIA.SpellEffectTitle": "Effets", 
   "ATORIA.SpellCriticalEffectTitle": "Effet Critique Supplémentaire",
   "ATORIA.SpellSuppTitle": "Supplémentaire",
+
+
+
+  "ATORIA.Techniques": "Techniques",
+  "ATORIA.IncantatoryAdditions": "Ajout Incantatoires",
 
 
   "ATORIA.RollSL": "DR",

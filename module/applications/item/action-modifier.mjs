@@ -1,26 +1,25 @@
 import {confirm_deletion} from "../../utils.mjs"
 
-
 /**
  * Override and extend the core ItemSheet implementation to handle specific item types.
  */
-export default class ItemAtoriaSheetGear extends ItemSheet {
+export default class ItemAtoriaSheetActionModifier extends ItemSheet {
 
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      width: 300,
-      height: 600,
-      classes: ["atoria", "sheet", "gear"],
-      resizable: true,
-      tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "description"}],
+      width: 470,
+      height: 560,
+      classes: ["atoria", "sheet", "action-modifier"],
+      resizable: true
     });
   }
+
   /* -------------------------------------------- */
 
   /** @inheritdoc */
   get template() {
-    return `systems/atoria/templates/items/gear-sheet.hbs`;
+    return `systems/atoria/templates/items/action-modifier.hbs`;
   }
 
   /* -------------------------------------------- */
@@ -36,29 +35,18 @@ export default class ItemAtoriaSheetGear extends ItemSheet {
     // Game system configuration
     context.config = CONFIG.ATORIA;
 
+    context.effectHTML = await TextEditor.enrichHTML(item.system.effect, {async: true});
+
     // Item rendering data
     foundry.utils.mergeObject(context, {
       source: source.system,
       system: item.system,
-      isWeapon: item.type === "gear-weapon",
-      isBagItem: [ "gear-consumable", "gear-equipment", "gear-ingredient"].includes(item.type),
       isOwned: !(this.actor === undefined || this.actor === null)
     });
-    
-    if (context.isWeapon) { // Have data for related technique
-      const action_modifier = this.actor.get_action_modifiers();
-      context.technique_list = action_modifier["technique"];
-      action_modifier["technique"].forEach((element) => {
-        item.system.related_techniques[element._id] = item.system.related_techniques[element._id] || false;
-      });
-    }
 
-    context.descriptionHTML = await TextEditor.enrichHTML(item.system.effect_description, {async: true});
 
     return context;
   }
-
-
 
   /** @inheritdoc */
   activateListeners(html) {
@@ -67,6 +55,21 @@ export default class ItemAtoriaSheetGear extends ItemSheet {
       html.find('.item-delete').click(this._onItemDelete.bind(this));
     }
   }
+
+
+  // /** @inheritdoc */
+  // async activateEditor(name, options={}, initialContent="") {
+  //   options.relativeLinks = true;
+  //   options.plugins = {
+  //     menu: ProseMirror.ProseMirrorMenu.build(ProseMirror.defaultSchema, {
+  //       compact: true,
+  //       destroyOnSave: true,
+  //       onSave: () => this.saveEditor(name, {remove: true})
+  //     })
+  //   };
+  //   return super.activateEditor(name, options, initialContent);
+  // }
+
 
   async _onItemDelete(event) {
     const li = $(event.currentTarget);
@@ -80,7 +83,6 @@ export default class ItemAtoriaSheetGear extends ItemSheet {
         }
       });
     }
-
   }
 
 }

@@ -86,6 +86,10 @@ ATORIA.COMBAT_SKILL = {
     "instrument": "ATORIA.Instrument",
 };
 
+ATORIA.ACTION_MODIFIER_TYPE = {
+    "technique": "ATORIA.Technique",
+    "incantatory_addition": "ATORIA.IncantatoryAddition",
+};
 
 ATORIA.KNOWLEDGES_LABEL = {
     "artistic": "ATORIA.Artistic",
@@ -143,6 +147,13 @@ export function localize_config() {
     for (let key in ATORIA.COMBAT_SKILL) {
         if (key in ATORIA.COMBAT_SKILL) {
             ATORIA.COMBAT_SKILL[key] = game.i18n.localize(ATORIA.COMBAT_SKILL[key]);
+        } else {
+            console.error(`Localisation error: Key not found in array: '${key}'`);
+        }
+    }
+    for (let key in ATORIA.ACTION_MODIFIER_TYPE) {
+        if (key in ATORIA.ACTION_MODIFIER_TYPE) {
+            ATORIA.ACTION_MODIFIER_TYPE[key] = game.i18n.localize(ATORIA.ACTION_MODIFIER_TYPE[key]);
         } else {
             console.error(`Localisation error: Key not found in array: '${key}'`);
         }

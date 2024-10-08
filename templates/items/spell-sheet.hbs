@@ -71,6 +71,19 @@
         {{editor item.system.critical_effect_description target="system.critical_effect_description" button=false editable=true engine="prosemirror" collaborate=false}}
     </div>
 
+
+    <div class="flexcol">
+        <label>{{ localize 'ATORIA.UsableIncantatoryAddition'}}</label>
+        {{#each incantatory_addition_list as |incantatory_addition key|}}
+        <div class="flexrow action-modifier">
+            <input type="checkbox" name="system.related_incantatory_additions.{{incantatory_addition._id}}" data-dtype="Boolean" {{checked (lookup ../system.related_incantatory_additions incantatory_addition._id)}}/>
+            <div class="flexcol">
+                <label class="incantatory-addition-name">{{{incantatory_addition.name}}}</label>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
     <label class="spell-supp-title">{{ localize "ATORIA.SpellSuppTitle" }}
         <a class="add-button spell-supp-create flex0" data-type="spell_supp" data-action="spell-item" >
             <i class="fas fa-plus"></i>

@@ -547,7 +547,6 @@ export default class SkillRoll extends Roll {
     _onDialogSubmit(html, advantageMode) {
       const form = html[0].querySelector("form");
     
-
       // Apply advantage or disadvantage
       this.options.advantageMode = advantageMode;
       this.success_modifier = Number(form.modifier.value);
@@ -557,8 +556,6 @@ export default class SkillRoll extends Roll {
       Object.entries(this.action_modifiers).forEach(([k,v]) => {
         v.used = form[`action_modifiers_${k}_used`].checked;
       });
-
-      console.dir(this.action_modifiers);
 
       var filtered_action_modifiers = Object.fromEntries(Object.entries(this.action_modifiers).filter(([k,v]) => v.used));
 

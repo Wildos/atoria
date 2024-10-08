@@ -215,19 +215,49 @@ export class AtoriaActor extends Actor {
     }, roll_options);
   }
 
+  _get_element_with_matching_id_from_list(element_list, wanted_id) {
+    let found_element = null;
+    Object.entries(element_list).forEach(([k,v]) => {
+      if (v._id === wanted_id) {
+        found_element = v;
+        return
+      }
+    });
+    return found_element;
+  }
+
   rollWeapon(weaponId, options={}) {
     let weapon_item = this.items.get(weaponId);
     let linked_skill_data = this.system.skills["combat"][weapon_item.system.linked_combative_skill];
 
+    let action_modifiers = {};
+    let known_action_modifier = this.get_action_modifiers();
+    Object.entries(weapon_item.system.related_techniques).forEach(([k,v]) => {
+      if (v) {
+        let found_technique = this._get_element_with_matching_id_from_list(known_action_modifier["technique"], k);
+        if (found_technique != null) {
+          action_modifiers[k] = {
+            used: false,
+            name: found_technique.name,
+            cost: found_technique.system.cost,
+            effect: found_technique.system.effect
+          }
+        }
+      }
+    });
+
     const roll_options = foundry.utils.mergeObject(options,  {
       critical: get_critical_value(Number(linked_skill_data.success_value), Number(linked_skill_data.critical_mod) + Number(weapon_item.system.critical_mod)),
       fumble: get_fumble_value(Number(linked_skill_data.success_value), Number(linked_skill_data.fumble_mod) + Number(weapon_item.system.fumble_mod)),
+      data: {
+        action_modifiers: action_modifiers,
+      },
     });
 
     this._roll({
       title: `${weapon_item.name}`,
       targetValue: linked_skill_data.success_value,
-      effect_roll: weapon_item.system.damage_roll
+      effect_roll: weapon_item.system.damage_roll,
     }, roll_options);
   }
 
@@ -371,17 +401,32 @@ export class AtoriaActor extends Actor {
     }
   }
 
+
   rollSpell(spellId, options={}) {
     if (this.type !== "character") return;
     
     let spell_data = this.items.get(spellId);
 
-    console.dir(spell_data.system.spell_supps);
-
     let action_modifiers = {};
     Object.entries(spell_data.system.spell_supps).forEach(([k,v]) => {
       action_modifiers[k] = this._spell_supp_to_action_modifier(game.i18n.format(game.i18n.localize("ATORIA.SuppNaming"), {index: k}), v);
     });
+
+    let known_action_modifier = this.get_action_modifiers();
+    Object.entries(spell_data.system.related_incantatory_additions).forEach(([k,v]) => {
+      if (v) {
+        let found_incantatory_addition = this._get_element_with_matching_id_from_list(known_action_modifier["incantatory_addition"], k);
+        if (found_incantatory_addition != null) {
+          action_modifiers[k] = {
+            used: false,
+            name: found_incantatory_addition.name,
+            cost: found_incantatory_addition.system.cost,
+            effect: found_incantatory_addition.system.effect
+          }
+        }
+      }
+    });
+
 
     const roll_options = foundry.utils.mergeObject(options,  {
       critical: spell_data.system.critical_value,
@@ -470,11 +515,11 @@ export class AtoriaActor extends Actor {
   /* -------------------------------------------- */
 
   /**
-   * Get an un-evaluated D20Roll instance used to roll initiative for this Actor.
+   * Get an un-evaluated EffectRoll instance used to roll initiative for this Actor.
    * @param {object} [options]                        Options which modify the roll
-   * @param {D20Roll.ADV_MODE} [options.advantageMode]    A specific advantage mode to apply
+   * @param {EffectRoll.ADV_MODE} [options.advantageMode]    A specific advantage mode to apply
    * @param {string} [options.flavor]                     Special flavor text to apply
-   * @returns {D20Roll}                               The constructed but unevaluated D20Roll
+   * @returns {EffectRoll}                               The constructed but unevaluated D20Roll
    */
   getInitiativeRoll(options={}) {
     // Use a temporarily cached initiative roll
@@ -586,4 +631,30 @@ export class AtoriaActor extends Actor {
     }
   }
 
+
+  get_action_modifiers() {
+    const action_modifiers = {
+      "technique": [],
+      "incantatory_addition": []
+    };
+    // Iterate through items, allocating to containers
+    for (let i of this.items) {
+      // Append to action_modifiers.
+      if (i.type === 'action-modifier') {
+        const parseHTML= new DOMParser().parseFromString(i.system.effect, 'text/html');
+        i.system.effect_cleaned = parseHTML.body.textContent || '';
+        switch (i.system.subtype) {
+          case "technique":
+            action_modifiers["technique"].push(i);
+            break;
+          case "incantatory_addition":
+            action_modifiers["incantatory_addition"].push(i);
+            break;
+          default:
+            console.error(`Unknown action modifier subtype found in ${i._id}`);
+        }
+      }
+    }
+    return action_modifiers;
+  }
 }

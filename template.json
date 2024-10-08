@@ -574,7 +574,8 @@
       "action",
       "spell",
       "feature",
-      "skill"
+      "skill",
+      "action-modifier"
     ],
     "templates": {
       "gear": {
@@ -599,7 +600,8 @@
       "linked_combative_skill": "brawl",
       "critical_mod": 0,
       "fumble_mod": 0,
-      "damage_roll": ""
+      "damage_roll": "",
+      "related_techniques": []
     },
     "action": {
       "success_value": 10,
@@ -635,6 +637,7 @@
       },
       "effect_description": "",
       "critical_effect_description": "",
+      "related_incantatory_additions": [],
       "spell_supps": {}
     },
     "feature": {
@@ -647,6 +650,18 @@
       "success_value": 10,
       "critical_mod": 0,
       "fumble_mod": 0
+    },
+    "action-modifier": {
+      "subtype": "technique",
+      "cost": {
+        "time": 0,
+        "health": 0,
+        "mana": 0,
+        "stamina": 0,
+        "endurance": 0,
+        "restriction": ""
+      },
+      "effect": ""
     }
   }
 }

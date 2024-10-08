@@ -1,0 +1,66 @@
+.action-modifier-page {
+    .title-label {
+        background-color: $neutral-color;
+        text-align: center;
+        border-radius: 3px;
+        font-weight: bold;
+        border: 1px solid var(--color-border-light-tertiary);
+        height: var(--form-field-height);
+        line-height: var(--form-field-height);
+    }
+
+    .item {
+        width: 100%;
+        position: relative;
+        height: var(--form-field-height);
+        line-height: var(--form-field-height);
+    }
+
+    .add-button {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-align: right;
+        align-items: center;
+        vertical-align: middle;
+        height: var(--form-field-height);
+        line-height: var(--form-field-height);
+        min-width: 20px;
+        max-width: 20px;
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+    .config-button {
+        display: inline-block;
+        position: absolute;
+        right: 20px;
+        top: 0;
+        text-align: right;
+        align-items: center;
+        vertical-align: middle;
+        height: var(--form-field-height);
+        line-height: var(--form-field-height);
+        min-width: 20px;
+        max-width: 20px;
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+    .delete-button {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-align: right;
+        align-items: center;
+        vertical-align: middle;
+        height: var(--form-field-height);
+        line-height: var(--form-field-height);
+        min-width: 20px;
+        max-width: 20px;
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+}

@@ -33,7 +33,11 @@
         min-width: 35px;
         max-width: 50px;
     }
-    .cost-restriction {
+    .cost-resource.time {
+        min-width: 100px;
+        max-width: 120px;
+    }
+    .cost-restriction.restriction {
         flex: 5;
         max-width: none;
     }

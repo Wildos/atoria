@@ -4,6 +4,7 @@
         <a class="item" data-tab="character">{{ localize "ATORIA.CharacterPage" }}</a>
         <a class="item" data-tab="inventory">{{ localize "ATORIA.InventoryPage" }}</a>
         <a class="item" data-tab="spells">{{ localize "ATORIA.SpellPage" }}</a>
+        <a class="item" data-tab="action-mod">{{ localize "ATORIA.ActionModifierPage" }}</a>
         <a class="config-sheet" data-tooltip="ATORIA.BaseConfig">
             <i class="fas fa-cog"></i>
         </a>
@@ -142,6 +143,9 @@
     </div>
     <div class="tab" data-group="primary" data-tab="spells">
         {{> "systems/atoria/templates/actors/parts/actor-character-spell.hbs"}}
+    </div>
+    <div class="tab" data-group="primary" data-tab="action-mod">
+        {{> "systems/atoria/templates/actors/parts/actor-character-action-modifier.hbs"}}
     </div>
   </section>
 </form>
