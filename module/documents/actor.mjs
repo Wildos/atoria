@@ -451,12 +451,14 @@ export class AtoriaActor extends Actor {
    */
   async _roll(data, options={})
   {
+    let speaker = ChatMessage.getSpeaker({actor: this});
+    speaker.alias = this.name;
     const rollData = foundry.utils.mergeObject({
       data: data,
       title: `${data.title}`,
       flavor: `${data.title}`,
       messageData: {
-        speaker: options.speaker || ChatMessage.getSpeaker({actor: this})
+        speaker: speaker
       },
       related_actor: this,
     }, options);
