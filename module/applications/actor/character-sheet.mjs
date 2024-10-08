@@ -74,8 +74,10 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
         i.system.description_cleaned = parseHTML.body.textContent || '';
 
-        gear_weapons.push(i);
-        combat_items.push(i);
+        if (i._id !== this.actor.system.related_pugilat_item) {
+          gear_weapons.push(i);
+          combat_items.push(i);
+        }
       }
       // Append to features.
       if (i.type === 'gear-consumable') {
@@ -157,7 +159,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   }
 
   /** @override */
-  _prepareData(context) {
+  async _prepareData(context) {
     const left_skills = [
       "agility",
       "athletic",
@@ -331,6 +333,38 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       })
     }
 
+    // handle pugilat item
+    let pugilat_item = this.actor.items.get(context.system.related_pugilat_item);
+    if (pugilat_item === undefined || pugilat_item === null) {
+      const type = "gear-weapon";
+      const name = game.i18n.format(game.i18n.localize("ATORIA.NewItem"), {itemType: type.capitalize()});
+      const itemData = {
+        name: game.i18n.localize("ATORIA.Brawl"),
+        type: type,
+        system: {
+          "encumbrance": 0,
+          "description": "",
+          "linked_combative_skill": "brawl",
+          "critical_mod": 0,
+          "fumble_mod": 0,
+          "damage_roll": "1d4",
+          "related_techniques": []
+        }
+      };
+      pugilat_item = await Item.create(itemData, {parent: this.actor});
+
+      this.actor.update({
+        "system.related_pugilat_item": pugilat_item._id
+      });
+    }
+
+      let linked_skill_data = this.actor.system.skills["combat"][pugilat_item.system.linked_combative_skill];
+      pugilat_item.system.success_value = linked_skill_data.success_value;
+
+      const parseHTML= new DOMParser().parseFromString(pugilat_item.system.description, 'text/html');
+      pugilat_item.system.description_cleaned = parseHTML.body.textContent || '';
+
+    context.pugilat_item = pugilat_item;
   }
 
 

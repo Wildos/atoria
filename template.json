@@ -90,6 +90,9 @@
         "silver": 0,
         "gold": 0
       },
+      "related_pugilat_item": null,
+      "offense": "",
+      "defense": "",
       "skills": {
         "agility": {
           "balance": {

@@ -320,6 +320,9 @@
   "ATORIA.SpellCriticalEffectTitle": "Critical Bonus Effect",
   "ATORIA.SpellSuppTitle": "Supp",
 
+  "ATORIA.Offense": "Offense",
+  "ATORIA.Defense": "Defense",
+
 
   "ATORIA.Techniques": "Techniques",
   "ATORIA.IncantatoryAdditions": "Incantatory Additions",

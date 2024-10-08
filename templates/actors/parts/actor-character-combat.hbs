@@ -5,36 +5,76 @@
         </a>
     </label>
     <div class="flexrow">
-        <div class="flex0 ">
-            <div class="resources flexcol">
-                <div class="resource flexrow">
-                    <label class="resource-label armor">{{ localize "ATORIA.Armor"}}</label>
-                    <label class="armor value-label">{{system.armor}}</label>
+        <div class="flexcol"> <!-- Area + Offense/Defense -->
+            <div class="combat-resources-n-skills flexrow"> <!-- Armor + Reflexe -->
+                <div class="combat-resources resources flexcol">
+                    <div class="resource flexrow">
+                        <label class="resource-label armor">{{ localize "ATORIA.Armor"}}</label>
+                        <label class="armor value-label">{{system.armor}}</label>
+                    </div>
+                    <div class="resource flexrow hotbar-able" data-type="initiative">
+                        <label class="resource-label initiative rollable" data-type="initiative">{{ localize "ATORIA.Initiative"}}</label>
+                        <label class="initiative value-label" title="{{system.initiative}}">{{system.initiative}}</label>
+                    </div>
+                    <div class="resource flexrow">
+                        <label class="resource-label movement">{{ localize "ATORIA.Movement"}}</label>
+                        <label class="movement value-label">{{system.movement}}</label>
+                    </div>
                 </div>
-                <div class="resource flexrow hotbar-able" data-type="initiative">
-                    <label class="resource-label initiative rollable" data-type="initiative">{{ localize "ATORIA.Initiative"}}</label>
-                    <label class="initiative value-label" title="{{system.initiative}}">{{system.initiative}}</label>
-                </div>
-                <div class="resource flexrow">
-                    <label class="resource-label movement">{{ localize "ATORIA.Movement"}}</label>
-                    <label class="movement value-label">{{system.movement}}</label>
+                <div class="combat-skills skill">
+                    <div class="skill-row item-list">
+                        <div class="category-area" style="grid-row-end: span 3">
+                            <label class="category-title">{{formatted_skill_reflex.name}}</label>
+                        </div>
+                        {{#each formatted_skill_reflex.sub_skills as |skill subkey|}}
+                            <div class="flexrow hotbar-able" data-type="skill" data-id="{{skill.id}}">
+                                <label class="name rollable" data-type="skill" data-id="{{skill.id}}">{{skill.name}}</label>
+                                <label class="value-label">{{skill.success_value}}</label>
+                            </div>
+                        {{/each}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="flex0 skill">
-            <div class="skill-row item-list">
-                <div class="category-area" style="grid-row-end: span 3">
-                    <label class="category-title">{{formatted_skill_reflex.name}}</label>
-                </div>
-                {{#each formatted_skill_reflex.sub_skills as |skill subkey|}}
-                    <div class="flexrow hotbar-able" data-type="skill" data-id="{{skill.id}}">
-                        <label class="name rollable" data-type="skill" data-id="{{skill.id}}">{{skill.name}}</label>
-                        <label class="value-label">{{skill.success_value}}</label>
-                    </div>
-                {{/each}}
+            <div class="flexrow">
+                <label class="offense-title">{{ localize "ATORIA.Offense"}}</label>
+                <input class="offense" type="text" name="system.offense" title="{{system.offense}}" value="{{system.offense}}"/>
+            </div>
+            <div class="flexrow">
+                <label class="defense-title">{{ localize "ATORIA.Defense"}}</label>
+                <input class="defense" type="text" name="system.defense" title="{{system.defense}}" value="{{system.defense}}"/>
             </div>
         </div>
         <div class="flexcol item-list">
+            <div class="action-row item flexcol {{#if pugilat_item.isExpanded}}expanded{{/if}}" data-item-id="{{pugilat_item._id}}">
+                <div class="flex0">
+                    <div class="flexrow">
+                        {{#if pugilat_item.system.effect_roll}}
+                            <label class="name-label flex0 rollable" data-type="{{pugilat_item.type}}" data-id="{{pugilat_item._id}}" title="{{pugilat_item.name}}">{{pugilat_item.name}}</label>
+                            <label class="roll-label flex0 elip_text" title="{{pugilat_item.system.effect_roll}}">{{pugilat_item.system.effect_roll}}</label>
+                        {{else if pugilat_item.system.damage_roll}}
+                            <label class="name-label flex0 rollable" data-type="{{pugilat_item.type}}" data-id="{{pugilat_item._id}}" title="{{pugilat_item.name}}">{{pugilat_item.name}}</label>
+                            <label class="roll-label flex0 elip_text" title="{{pugilat_item.system.damage_roll}}">{{pugilat_item.system.damage_roll}}</label>
+                        {{else}}
+                            <label class="longname-label flex0 rollable" data-type="{{pugilat_item.type}}" data-id="{{pugilat_item._id}}" title="{{pugilat_item.name}}">{{pugilat_item.name}}</label>
+                        {{/if}}
+
+                        <label class="value-label flex0">{{pugilat_item.system.success_value}}</label>
+
+                        <a class="detail-button item-detail flex0" data-action="{{pugilat_item.type}}-item" data-id="{{pugilat_item._id}}" >
+                            <i class="fas fa-circle-info"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="description" data-item-id="{{pugilat_item._id}}">
+                    {{#if pugilat_item.isExpanded}}
+                        <label class="item-description">{{{lookup @root.expandedData pugilat_item._id}}}</label>
+                    {{else}}
+                        <label class="item-description"></label>
+                    {{/if}}
+                    <a class="config-button item-config flex0" data-action="{{pugilat_item.type}}-item" ><i class="fas fa-cog"></i></a>
+                </div>
+            </div>
             {{#each combat_items as |combat_item key|}}
                 <div class="action-row item flexcol {{#if combat_item.isExpanded}}expanded{{/if}}" data-item-id="{{combat_item._id}}">
                     <div class="flex0">
