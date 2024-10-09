@@ -358,13 +358,19 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       });
     }
 
-      let linked_skill_data = this.actor.system.skills["combat"][pugilat_item.system.linked_combative_skill];
-      pugilat_item.system.success_value = linked_skill_data.success_value;
+    let linked_skill_data = this.actor.system.skills["combat"][pugilat_item.system.linked_combative_skill];
+    pugilat_item.system.success_value = linked_skill_data.success_value;
 
-      const parseHTML= new DOMParser().parseFromString(pugilat_item.system.description, 'text/html');
-      pugilat_item.system.description_cleaned = parseHTML.body.textContent || '';
+    const parseHTML= new DOMParser().parseFromString(pugilat_item.system.description, 'text/html');
+    pugilat_item.system.description_cleaned = parseHTML.body.textContent || '';
 
     context.pugilat_item = pugilat_item;
+
+
+    const offenseHTML= new DOMParser().parseFromString(this.actor.system.offense, 'text/html');
+    context.offenseHTML = offenseHTML.body.textContent || '';
+    const defenseHTML= new DOMParser().parseFromString(this.actor.system.defense, 'text/html');
+    context.defenseHTML = defenseHTML.body.textContent || '';
   }
 
 

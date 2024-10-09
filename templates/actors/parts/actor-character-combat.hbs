@@ -36,12 +36,22 @@
                 </div>
             </div>
             <div class="flexrow">
-                <label class="offense-title">{{ localize "ATORIA.Offense"}}</label>
-                <input class="offense" type="text" name="system.offense" title="{{system.offense}}" value="{{system.offense}}"/>
+                <div class="offense-title-box">
+                    <label class="offense-title">{{ localize "ATORIA.Offense"}}</label>
+                </div>
+                {{!-- <input class="offense" type="text" name="system.offense" title="{{system.offense}}" value="{{system.offense}}"/> --}}
+                <div class="offense-area">
+                    {{editor (concat "offenseHTML") target=(concat "system.offense") button=false editable=true engine="prosemirror" collaborate=false}}
+                </div>
             </div>
             <div class="flexrow">
-                <label class="defense-title">{{ localize "ATORIA.Defense"}}</label>
-                <input class="defense" type="text" name="system.defense" title="{{system.defense}}" value="{{system.defense}}"/>
+                <div class="defense-title-box">
+                    <label class="defense-title">{{ localize "ATORIA.Defense"}}</label>
+                </div>
+                {{!-- <input class="defense" type="text" name="system.defense" title="{{system.defense}}" value="{{system.defense}}"/> --}}
+                <div class="defense-area">
+                    {{editor (concat "defenseHTML") target=(concat "system.defense") button=false editable=true engine="prosemirror" collaborate=false}}
+                </div>
             </div>
         </div>
         <div class="flexcol item-list">

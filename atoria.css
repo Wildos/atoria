@@ -901,15 +901,22 @@
   align-items: center;
   vertical-align: middle;
 }
-.atoria .combat .offense-title, .atoria .combat .defense-title {
+.atoria .combat .offense-title-box, .atoria .combat .defense-title-box {
   max-width: 120px;
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   background-color: #cccccc;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
-  height: var(--form-field-height);
+}
+.atoria .combat .offense-title-box .offense-title, .atoria .combat .offense-title-box .defense-title, .atoria .combat .defense-title-box .offense-title, .atoria .combat .defense-title-box .defense-title {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
   line-height: var(--form-field-height);
   overflow: hidden;
   white-space: nowrap;
@@ -917,8 +924,25 @@
   padding-left: 4px;
   padding-right: 4px;
 }
-.atoria .combat .offense, .atoria .combat .defense {
-  white-space: pre;
+.atoria .combat .offense-area .editor, .atoria .combat .defense-area .editor {
+  min-height: var(--form-field-height);
+}
+.atoria .combat .offense-area .editor-menu, .atoria .combat .defense-area .editor-menu {
+  display: none;
+}
+.atoria .combat .offense-area .editor-container, .atoria .combat .defense-area .editor-container {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  margin: 0;
+  padding: 0;
+  min-height: var(--form-field-height);
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.atoria .combat .offense-area .editor-container .editor-content, .atoria .combat .defense-area .editor-container .editor-content {
+  position: unset;
 }
 .atoria .combat .combat-resources-n-skills {
   width: -webkit-fit-content;
