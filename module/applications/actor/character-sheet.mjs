@@ -339,7 +339,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     const current_encumbrance = this.getCurrentEncumbrance();
     context.system.encumbrance.value = parseFloat(current_encumbrance.toFixed(2));
     if (current_encumbrance >= (context.system.encumbrance.max - 4.0)) {
-      if (current_encumbrance >= context.system.encumbrance.max) {
+      if (current_encumbrance > context.system.encumbrance.max) {
         // above max
         context.encumbrance_level_display_class = "encumbrance-above-max";
       }
