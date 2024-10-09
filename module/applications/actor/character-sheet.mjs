@@ -158,6 +158,42 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     return pos_a - pos_b;
   }
 
+
+  _get_special_css_class_for_sub_skill(sub_skill_key) {
+    // console.log(`_get_special_css_class_for_sub_skill : ${sub_skill_key}`);
+    if (["silence", "stealth"].includes(sub_skill_key)) {
+      console.log(`entered if for : ${sub_skill_key}`);
+      const current_encumbrance = this.getCurrentEncumbrance();
+      if (current_encumbrance >= (this.actor.system.encumbrance.max - 4.0)) {
+        if (current_encumbrance > this.actor.system.encumbrance.max) {
+          // above max
+          console.log(`return above-max : ${sub_skill_key}`);
+          return "encumbrance-above-max";
+        }
+        else {
+          // stealth malus 
+          console.log(`return stealth-malus : ${sub_skill_key}`);
+          return "encumbrance-stealth-malus";
+        }
+      }
+      else {
+        if (current_encumbrance >= 7) {
+          // normal
+          console.log(`return normal : ${sub_skill_key}`);
+          return "encumbrance-normal";
+        }
+        else {
+          // stealth bonus 
+          console.log(`return stealth-bonus : ${sub_skill_key}`);
+          return "encumbrance-stealth-bonus";
+        }
+      }
+    }
+
+    return ""
+  }
+
+
   /** @override */
   async _prepareData(context) {
     const left_skills = [
@@ -193,6 +229,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
           success_value: skill_data.success_value,
           critical_mod: skill_data.critical_mod,
           fumble_mod: skill_data.fumble_mod,
+          special_css_class: this._get_special_css_class_for_sub_skill(sub_skill_key),
         });
       }
       if (left_skills.includes(cat_key)) {

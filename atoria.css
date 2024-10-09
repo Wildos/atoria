@@ -18,6 +18,11 @@
   height: 20px;
   margin: 3px 5px;
 }
+.tickable-image:hover, .tickable-image:focus {
+  -webkit-filter: invert(30%) drop-shadow(0px 0px 3px red);
+  filter: invert(30%) drop-shadow(0px 0px 3px red);
+  cursor: pointer;
+}
 
 .grid-2col {
   display: grid;
@@ -411,6 +416,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .success-value-title {
+  background-color: #cccccc;
   height: var(--form-field-height);
   min-width: 90px;
   max-width: 90px;
@@ -419,15 +425,22 @@
   min-width: 30px;
   max-width: 30px;
 }
+.atoria .spell-sheet .critical-title {
+  background-color: #cccccc;
+}
 .atoria .spell-sheet .critical {
   min-width: 30px;
   max-width: 30px;
+}
+.atoria .spell-sheet .fumble-title {
+  background-color: #cccccc;
 }
 .atoria .spell-sheet .fumble {
   min-width: 30px;
   max-width: 30px;
 }
 .atoria .spell-sheet .cost-title {
+  background-color: #cccccc;
   height: var(--form-field-height);
   min-width: 90px;
   max-width: 90px;
@@ -436,10 +449,12 @@
   min-width: 35px;
 }
 .atoria .spell-sheet .time-title {
+  background-color: #cccccc;
   height: calc(2 * var(--form-field-height));
   max-height: calc(2 * var(--form-field-height));
 }
 .atoria .spell-sheet .time-preparation-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
@@ -449,6 +464,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .time-duration-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
@@ -462,10 +478,12 @@
   max-width: 30px;
 }
 .atoria .spell-sheet .components-title {
+  background-color: #cccccc;
   height: calc(5 * var(--form-field-height));
   max-height: calc(5 * var(--form-field-height));
 }
 .atoria .spell-sheet .components-verbal-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
@@ -475,6 +493,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .components-somatic-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
@@ -484,6 +503,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .components-material-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
@@ -493,10 +513,12 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .targeting-title {
+  background-color: #cccccc;
   height: calc(3 * var(--form-field-height));
   max-height: calc(3 * var(--form-field-height));
 }
 .atoria .spell-sheet .targeting-target-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
@@ -506,6 +528,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .targeting-range-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
@@ -515,6 +538,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .targeting-area-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
@@ -524,6 +548,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .effect-title {
+  background-color: #cccccc;
   grid-column-end: span 2;
 }
 .atoria .spell-sheet .effect {
@@ -532,7 +557,11 @@
 .atoria .spell-sheet .effect .editor {
   min-height: 150px;
 }
+.atoria .spell-sheet .usable-incantatory-title {
+  background-color: #cccccc;
+}
 .atoria .spell-sheet .spell-supp-title {
+  background-color: #cccccc;
   grid-column-end: span 2;
   position: relative;
 }
@@ -2309,6 +2338,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell .spell-details .spell-detail .name-area {
+  background-color: #cccccc;
   grid-column-end: span 2;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
@@ -2334,6 +2364,7 @@
   padding-right: 3px;
 }
 .atoria .spell .spell-details .spell-detail .success-value-title {
+  background-color: #cccccc;
   height: var(--form-field-height);
   min-width: 90px;
   max-width: 90px;
@@ -2342,15 +2373,22 @@
   min-width: 30px;
   max-width: 30px;
 }
+.atoria .spell .spell-details .spell-detail .critical-title {
+  background-color: #cccccc;
+}
 .atoria .spell .spell-details .spell-detail .critical {
   min-width: 30px;
   max-width: 30px;
+}
+.atoria .spell .spell-details .spell-detail .fumble-title {
+  background-color: #cccccc;
 }
 .atoria .spell .spell-details .spell-detail .fumble {
   min-width: 30px;
   max-width: 30px;
 }
 .atoria .spell .spell-details .spell-detail .cost-title {
+  background-color: #cccccc;
   height: var(--form-field-height);
   min-width: 90px;
   max-width: 90px;
@@ -2359,14 +2397,17 @@
   min-width: 20px;
 }
 .atoria .spell .spell-details .spell-detail .time-title {
+  background-color: #cccccc;
   height: calc(2 * var(--form-field-height));
   max-height: calc(2 * var(--form-field-height));
 }
 .atoria .spell .spell-details .spell-detail .time-preparation-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .time-duration-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
@@ -2375,38 +2416,47 @@
   max-width: 30px;
 }
 .atoria .spell .spell-details .spell-detail .components-title {
+  background-color: #cccccc;
   height: calc(5 * var(--form-field-height));
   max-height: calc(5 * var(--form-field-height));
 }
 .atoria .spell .spell-details .spell-detail .components-verbal-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .components-somatic-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .components-material-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .targeting-title {
+  background-color: #cccccc;
   height: calc(3 * var(--form-field-height));
   max-height: calc(3 * var(--form-field-height));
 }
 .atoria .spell .spell-details .spell-detail .targeting-target-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
 .atoria .spell .spell-details .spell-detail .targeting-range-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
 .atoria .spell .spell-details .spell-detail .targeting-area-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
 .atoria .spell .spell-details .spell-detail .effect-title {
+  background-color: #cccccc;
   grid-column-end: span 2;
 }
 .atoria .spell .spell-details .spell-detail .effect {
@@ -2422,6 +2472,7 @@
   margin: 0;
 }
 .atoria .spell .spell-details .spell-detail .spell-supp-title {
+  background-color: #cccccc;
   grid-column-end: span 2;
   position: relative;
 }
@@ -2550,13 +2601,13 @@
   background-color: rgba(0, 0, 0, 0.05);
 }
 .atoria .encumbrance-above-max {
-  background-color: #d65151;
+  background-color: #d65151 !important;
 }
 .atoria .encumbrance-stealth-malus {
-  background-color: #da904c;
+  background-color: #da904c !important;
 }
 .atoria .encumbrance-stealth-bonus {
-  background-color: #7dda70;
+  background-color: #7dda70 !important;
 }
 .atoria .armor, .atoria .initiative, .atoria .movement {
   background-color: #cccccc;

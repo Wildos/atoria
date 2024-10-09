@@ -214,6 +214,7 @@
             }
 
             .name-area {
+                background-color: $neutral-color;
                 grid-column-end: span 2;
                 border-radius: 3px;
                 border: 1px solid var(--color-border-light-tertiary);
@@ -240,6 +241,7 @@
             }
         
             .success-value-title {
+                background-color: $neutral-color;
                 height: var(--form-field-height);
                 min-width: 90px;
                 max-width: 90px;
@@ -251,7 +253,7 @@
             }
         
             .critical-title {
-        
+                background-color: $neutral-color;
             }
         
             .critical {
@@ -260,6 +262,7 @@
             }
         
             .fumble-title {
+                background-color: $neutral-color;
         
             }
         
@@ -269,6 +272,7 @@
             }
         
             .cost-title {
+                background-color: $neutral-color;
                 height: var(--form-field-height);
                 min-width: 90px;
                 max-width: 90px;
@@ -279,11 +283,13 @@
             }
         
             .time-title {
+                background-color: $neutral-color;
                 height: calc(2*var(--form-field-height));
                 max-height: calc(2*var(--form-field-height));
             }
         
             .time-preparation-title {
+                background-color: $neutral-color;
                 min-width: 90px;
                 max-width: 90px;
             }
@@ -292,6 +298,7 @@
             }
         
             .time-duration-title {
+                background-color: $neutral-color;
                 min-width: 90px;
                 max-width: 90px;
             }
@@ -306,11 +313,13 @@
             }
         
             .components-title {
+                background-color: $neutral-color;
                 height: calc(5*var(--form-field-height));
                 max-height: calc(5*var(--form-field-height));
             }
         
             .components-verbal-title {
+                background-color: $neutral-color;
                 min-width: 90px;
                 max-width: 90px;
             }
@@ -319,6 +328,7 @@
             }
         
             .components-somatic-title {
+                background-color: $neutral-color;
                 min-width: 90px;
                 max-width: 90px;
             }
@@ -328,6 +338,7 @@
             }
         
             .components-material-title {
+                background-color: $neutral-color;
                 min-width: 90px;
                 max-width: 90px;
             }
@@ -337,11 +348,13 @@
             }
         
             .targeting-title {
+                background-color: $neutral-color;
                 height: calc(3*var(--form-field-height));
                 max-height: calc(3*var(--form-field-height));
             }
         
             .targeting-target-title {
+                background-color: $neutral-color;
                 min-width: 50px;
                 max-width: 50px;
             }
@@ -351,6 +364,7 @@
             }
         
             .targeting-range-title {
+                background-color: $neutral-color;
                 min-width: 50px;
                 max-width: 50px;
             }
@@ -360,6 +374,7 @@
             }
         
             .targeting-area-title {
+                background-color: $neutral-color;
                 min-width: 50px;
                 max-width: 50px;
             }
@@ -369,6 +384,7 @@
             }
         
             .effect-title {
+                background-color: $neutral-color;
                 grid-column-end: span 2;
             }
         
@@ -386,6 +402,7 @@
             }
 
             .spell-supp-title {
+                background-color: $neutral-color;
                 grid-column-end: span 2;
         
                 position: relative;

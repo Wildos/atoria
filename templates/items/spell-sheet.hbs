@@ -73,7 +73,7 @@
 
 
     <div class="flexcol">
-        <label>{{ localize 'ATORIA.UsableIncantatoryAddition'}}</label>
+        <label class="usable-incantatory-title">{{ localize 'ATORIA.UsableIncantatoryAddition'}}</label>
         {{#each incantatory_addition_list as |incantatory_addition key|}}
         <div class="flexrow action-modifier">
             <input type="checkbox" name="system.related_incantatory_additions.{{incantatory_addition._id}}" data-dtype="Boolean" {{checked (lookup ../system.related_incantatory_additions incantatory_addition._id)}}/>

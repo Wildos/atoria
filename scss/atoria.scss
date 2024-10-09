@@ -75,13 +75,13 @@
     background-color: $encumbrance-normal-color;
   }
   .encumbrance-above-max {
-    background-color: $encumbrance-above-max-color;
+    background-color: $encumbrance-above-max-color !important;
   }
   .encumbrance-stealth-malus {
-    background-color: $encumbrance-stealth-malus-color;
+    background-color: $encumbrance-stealth-malus-color !important;
   }
   .encumbrance-stealth-bonus {
-    background-color: $encumbrance-stealth-bonus-color;
+    background-color: $encumbrance-stealth-bonus-color !important;
   }
   .armor, .initiative, .movement {
     background-color: $neutral-color;
