@@ -16,7 +16,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["atoria", "sheet", "actor", "character"],
       tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "character"}],
-      width: 1025,
+      width: 1026+16,
       height: 800,
       dragDrop: [
         {dragSelector: ".item-list .item", dropSelector: null},

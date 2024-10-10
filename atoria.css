@@ -977,7 +977,7 @@
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  min-width: 405px;
+  min-width: 430px;
 }
 .atoria .combat .combat-resources, .atoria .combat .combat-skills {
   width: -webkit-fit-content;
@@ -1080,8 +1080,8 @@
   padding-right: 4px;
 }
 .atoria .combat .action-row .longname-label {
-  max-width: 220px;
-  min-width: 220px;
+  max-width: 230px;
+  min-width: 230px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
@@ -1097,8 +1097,8 @@
   line-height: var(--form-field-height);
 }
 .atoria .combat .action-row .roll-label {
-  max-width: 60px;
-  min-width: 60px;
+  max-width: 65px;
+  min-width: 65px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -1111,8 +1111,8 @@
   padding-right: 3px;
 }
 .atoria .combat .action-row .description {
-  max-width: 280px;
-  min-width: 280px;
+  max-width: 285px;
+  min-width: 285px;
   line-height: var(--form-field-height);
   min-height: var(--form-field-height);
 }
@@ -1141,6 +1141,22 @@
   padding-left: 3px;
   padding-right: 3px;
 }
+.atoria .npc-sheet .combat .name-label {
+  max-width: 160px;
+  min-width: 160px;
+}
+.atoria .npc-sheet .combat .roll-label {
+  max-width: 60px;
+  min-width: 60px;
+}
+.atoria .npc-sheet .combat .longname-label {
+  max-width: 220px;
+  min-width: 220px;
+}
+.atoria .npc-sheet .combat .description {
+  max-width: 280px;
+  min-width: 280px;
+}
 .atoria .character-sheet .combat .title-label {
   max-width: 720px;
   min-width: 720px;
@@ -1167,8 +1183,6 @@
   padding-right: 4px;
 }
 .atoria .character-sheet .combat .longname-label {
-  max-width: 225px;
-  min-width: 225px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
@@ -1176,6 +1190,14 @@
   text-overflow: ellipsis;
   padding-left: 4px;
   padding-right: 4px;
+}
+.atoria .character-sheet .combat .combat-resources .resource .resource-label {
+  max-width: 120px;
+  min-width: 120px;
+}
+.atoria .character-sheet .combat .combat-resources .resource .value-label {
+  max-width: 85px;
+  min-width: 85px;
 }
 .atoria .feature {
   width: -webkit-max-content;
@@ -1325,8 +1347,8 @@
   width: max-content;
 }
 .atoria .character-sheet .feature .title-label {
-  max-width: 280px;
-  min-width: 280px;
+  max-width: 300px;
+  min-width: 300px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -1344,8 +1366,8 @@
   width: max-content;
 }
 .atoria .character-sheet .feature .feature-row .name-label {
-  max-width: 200px;
-  min-width: 200px;
+  max-width: 220px;
+  min-width: 220px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
@@ -1355,8 +1377,8 @@
   padding-right: 4px;
 }
 .atoria .character-sheet .feature .feature-row .longname-label {
-  max-width: 260px;
-  min-width: 260px;
+  max-width: 280px;
+  min-width: 280px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
@@ -1380,8 +1402,8 @@
   padding-right: 3px;
 }
 .atoria .character-sheet .feature .feature-row .description {
-  max-width: 280px;
-  min-width: 280px;
+  max-width: 300px;
+  min-width: 300px;
   line-height: var(--form-field-height);
   min-height: var(--form-field-height);
 }

@@ -14,7 +14,7 @@
                     </div>
                     {{#each skill_cat.sub_skills as |skill subkey|}}
                         <div class="flexrow hotbar-able" data-type="skill" data-id="{{skill.id}}">
-                            <label class="name rollable {{skill.special_css_class}}" data-type="skill" data-id="{{skill.id}}">{{skill.name}} - {{skill.special_css_class}}</label>
+                            <label class="name rollable {{skill.special_css_class}}" data-type="skill" data-id="{{skill.id}}">{{skill.name}}</label>
                             <label class="value-label">{{skill.success_value}}</label>
                         </div>
                     {{/each}}
