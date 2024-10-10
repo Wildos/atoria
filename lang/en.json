@@ -20,16 +20,16 @@
   "TYPES.Item.featurePl": "Features",
   "TYPES.Item.skill": "Skill",
   "TYPES.Item.skillPl": "Skills",
-  "TYPES.Item.action-modifier": "Technique/Incantatory addition",
-  "TYPES.Item.action-modifierPl": "Techniques/Incantatory additions",
+  "TYPES.Item.action-modifier": "Technique/Addition",
+  "TYPES.Item.action-modifierPl": "Techniques/Additions",
 
 
   "ATORIA.Type": "Type",
   "ATORIA.Technique": "Technique",
-  "ATORIA.IncantatoryAddition": "Incantatory Addition",
+  "ATORIA.IncantatoryAddition": "Addition",
 
   "ATORIA.UsableTechniques": "Usable Techniques",
-  "ATORIA.UsableIncantatoryAddition": "Usable Incantatory Addition",
+  "ATORIA.UsableIncantatoryAddition": "Usable Additions",
   
 
 
@@ -83,7 +83,7 @@
   "ATORIA.CharacterPage": "Character",
   "ATORIA.InventoryPage": "Inventory",
   "ATORIA.SpellPage": "Spells",
-  "ATORIA.ActionModifierPage": "Techniques & Incantatory additions",
+  "ATORIA.ActionModifierPage": "Techniques & Additions",
 
 
   "ATORIA.PerceptionTitle": "Perception",
@@ -325,7 +325,7 @@
 
 
   "ATORIA.Techniques": "Techniques",
-  "ATORIA.IncantatoryAdditions": "Incantatory Additions",
+  "ATORIA.IncantatoryAdditions": "Additions",
 
 
   "ATORIA.RollSL": "SL",

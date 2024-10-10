@@ -167,25 +167,21 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       if (current_encumbrance >= (this.actor.system.encumbrance.max - 4.0)) {
         if (current_encumbrance > this.actor.system.encumbrance.max) {
           // above max
-          console.log(`return above-max : ${sub_skill_key}`);
           return "encumbrance-above-max";
         }
         else {
           // stealth malus 
-          console.log(`return stealth-malus : ${sub_skill_key}`);
           return "encumbrance-stealth-malus";
         }
       }
       else {
-        if (current_encumbrance >= 7) {
-          // normal
-          console.log(`return normal : ${sub_skill_key}`);
-          return "encumbrance-normal";
+        if (current_encumbrance < 9) {
+          // stealth bonus 
+          return "encumbrance-stealth-bonus";
         }
         else {
-          // stealth bonus 
-          console.log(`return stealth-bonus : ${sub_skill_key}`);
-          return "encumbrance-stealth-bonus";
+          // normal
+          return "encumbrance-normal";
         }
       }
     }
@@ -338,26 +334,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     // Encumbrance
     const current_encumbrance = this.getCurrentEncumbrance();
     context.system.encumbrance.value = parseFloat(current_encumbrance.toFixed(2));
-    if (current_encumbrance >= (context.system.encumbrance.max - 4.0)) {
-      if (current_encumbrance > context.system.encumbrance.max) {
-        // above max
-        context.encumbrance_level_display_class = "encumbrance-above-max";
-      }
-      else {
-        // stealth malus 
-        context.encumbrance_level_display_class = "encumbrance-stealth-malus";
-      }
-    }
-    else {
-      if (current_encumbrance >= 7) {
-        // normal
-        context.encumbrance_level_display_class = "encumbrance-normal";
-      }
-      else {
-        // stealth bonus 
-        context.encumbrance_level_display_class = "encumbrance-stealth-bonus";
-      }
-    }
 
     context.health_regain_inactive_data = [];
     let usable_health_regen_number = Math.min(context.system.endurance.value, 100) / 25 + 1;

@@ -21,16 +21,16 @@
   "TYPES.Item.featurePl": "Traits",
   "TYPES.Item.skill": "Compétence",
   "TYPES.Item.skillPl": "Compétences",
-  "TYPES.Item.action-modifier": "Technique/Ajout incantatoire",
-  "TYPES.Item.action-modifierPl": "Techniques/Ajouts incantatoires",
+  "TYPES.Item.action-modifier": "Technique/Ajout",
+  "TYPES.Item.action-modifierPl": "Techniques/Ajouts",
 
 
   "ATORIA.Type": "Type",
   "ATORIA.Technique": "Technique",
-  "ATORIA.IncantatoryAddition": "Ajout Incantatoire",
+  "ATORIA.IncantatoryAddition": "Ajout",
 
   "ATORIA.UsableTechniques": "Techniques utilisables",
-  "ATORIA.UsableIncantatoryAddition": "Ajouts incantatoires utilisables",
+  "ATORIA.UsableIncantatoryAddition": "Ajouts utilisables",
   
 
   "MIGRATION.Begin": "Une migration de données a commencé vers la version {version}",
@@ -78,7 +78,7 @@
   "ATORIA.CharacterPage": "Personnage",
   "ATORIA.InventoryPage": "Inventaire",
   "ATORIA.SpellPage": "Sorts",
-  "ATORIA.ActionModifierPage": "Techniques et Ajouts incantatoires",
+  "ATORIA.ActionModifierPage": "Techniques et Ajouts",
 
   "ATORIA.PerceptionTitle": "Perception",
   "ATORIA.Perception.Sight": "Vue",
@@ -320,7 +320,7 @@
   "ATORIA.Defense": "Défense",
 
   "ATORIA.Techniques": "Techniques",
-  "ATORIA.IncantatoryAdditions": "Ajout Incantatoires",
+  "ATORIA.IncantatoryAdditions": "Ajouts",
 
 
   "ATORIA.RollSL": "DR",
