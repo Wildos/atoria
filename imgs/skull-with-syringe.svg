@@ -32,7 +32,7 @@
      inkscape:current-layer="svg1" />
   <g
      class=""
-     style="fill:#4d4d4d"
+     style="fill:#fff"
      transform="translate(0,0)"
      id="g1">
     <path
@@ -40,6 +40,6 @@
        fill="#fff"
        fill-opacity="1"
        id="path1"
-       style="fill:#4d4d4d" />
+       style="fill:#fff" />
   </g>
 </svg>
