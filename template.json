@@ -83,6 +83,7 @@
       "sanity_regain_inactive": false,
       "endurance_regain_inactive": false,
       "health_regain_inactive": 0,
+      "resurrection_inactive": false,
       "healing_herbs_used": false,
       "medical_healing_used": false,
       "coins": {

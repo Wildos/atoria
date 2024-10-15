@@ -23,7 +23,13 @@
                         <div class="flex0">
                             <div class="resource flexrow">
                                 <label class="resource-label health">{{ localize "ATORIA.Health"}}</label>
-                                <label class="resource-label healing">{{ localize "ATORIA.Healing"}}</label>
+                                {{!-- <label class="resource-label healing">{{ localize "ATORIA.Healing"}}</label> --}}
+
+                                <div class="resource-label resource-checkbox healing flexrow">
+                                    <label>{{ localize "ATORIA.Healing"}}</label>
+                                    <input type="checkbox" name="system.resurrection_inactive" data-dtype="Boolean" {{checked system.resurrection_inactive}}/>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="flex0">
