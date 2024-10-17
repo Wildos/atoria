@@ -148,7 +148,7 @@ Hooks.once("ready", function () {
   CONFIG.statusEffects = [
     {
       "id": "preparing",
-      "name": "ATORIA.Preparation",
+      "name": "ATORIA.Preparing",
       "icon": "systems/atoria/imgs/gift-of-knowledge.svg",
       "description": "Vous préparez un sort.",
       "duration": {
