@@ -560,6 +560,12 @@
           "known": false,
           "sub_skills": []
         }
+      },
+      "feature_categories": {
+        "combat": [],
+        "skill": [],
+        "magic": [],
+        "knowledge": []
       }
     },
     "npc": {
@@ -577,6 +583,7 @@
       "gear-weapon",
       "action",
       "spell",
+      "feature-list",
       "feature",
       "skill",
       "action-modifier"
@@ -643,6 +650,11 @@
       "critical_effect_description": "",
       "related_incantatory_additions": [],
       "spell_supps": {}
+    },
+    "feature-list": {
+      "has_color": false,
+      "color": "ffffff",
+      "features": []
     },
     "feature": {
       "effect": "",

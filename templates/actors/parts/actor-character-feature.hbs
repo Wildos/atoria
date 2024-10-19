@@ -1,34 +1,40 @@
-<div class="feature item-list">
-    <label class="title-label">{{ localize "ATORIA.CharacterFeatureTitle"}}
-        <a class="add-button item-create flex0" data-type="feature" data-action="feature-item" >
+<div class="feature flexcol">
+    <label class="title-label">{{ localize "ATORIA.CharacterFeatureTitle"}}</label>
+
+    <h2>Combative
+        <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="combat" >
             <i class="fas fa-plus"></i>
         </a>
-    </label>
-    {{#each features as |feature key|}}
-        {{#if feature.system.has_color}}
-        <div class="feature-row item flexcol {{#if feature.isExpanded}}expanded{{/if}}" data-item-id="{{feature._id}}" style="background-color:{{feature.system.color}};">
-        {{else}}
-        <div class="feature-row item flexcol {{#if feature.isExpanded}}expanded{{/if}}" data-item-id="{{feature._id}}">
-        {{/if}}
-            <div class="flexrow">
-                {{#if feature.system.effect}}
-                <label class="name-label flex0" title="{{feature.name}}">{{feature.name}}</label>
-                <label class="effect-label flex0">{{feature.system.effect}}</label>
-                {{else}}
-                <label class="longname-label flex0" title="{{feature.name}}">{{feature.name}}</label>
-                {{/if}}
-                <a class="detail-button item-detail flex0" data-action="feature-item" data-id="{{feature._id}}" >
-                    <i class="fas fa-circle-info"></i>
-                </a>
-            </div>
-            <div class="description" data-item-id="{{feature._id}}">
-                {{#if feature.isExpanded}}
-                    <label class="item-description">{{{lookup @root.expandedData feature._id}}}</label>
-                {{else}}
-                    <label class="item-description"></label>
-                {{/if}}
-                <a class="config-button item-config flex0" data-action="feature-item" ><i class="fas fa-cog"></i></a>
-            </div>
-        </div>
+    </h2>
+    {{#each combat_features as |feature key|}}
+        {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature}}
     {{/each}}
+
+    <h2>Compétence
+        <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="skill" >
+            <i class="fas fa-plus"></i>
+        </a>
+    </h2>
+    {{#each skill_features as |feature key|}}
+        {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature}}
+    {{/each}}
+
+    <h2>Magie
+        <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="magic" >
+            <i class="fas fa-plus"></i>
+        </a>
+    </h2>
+    {{#each magic_features as |feature key|}}
+        {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature}}
+    {{/each}}
+
+    <h2>Connaissance
+        <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="knowledge" >
+            <i class="fas fa-plus"></i>
+        </a>
+    </h2>
+    {{#each knowledge_features as |feature key|}}
+        {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature}}
+    {{/each}}
+
 </div>

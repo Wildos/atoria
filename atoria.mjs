@@ -109,6 +109,11 @@ Hooks.once("init", function () {
     makeDefault: true,
     label: "ATORIA.SheetClassFeature"
   });
+  Items.registerSheet("atoria", applications.item.ItemAtoriaSheetFeatureList, {
+    types: ["feature-list"],
+    makeDefault: true,
+    label: "ATORIA.SheetClassFeatureList"
+  });
   Items.registerSheet("atoria", applications.item.ItemAtoriaSheetSkill, {
     types: ["skill", "skill-category"],
     makeDefault: true,

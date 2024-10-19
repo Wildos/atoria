@@ -14,12 +14,7 @@
     
 
         <label for="system.has_color">{{ localize "ATORIA.FeatureColorTitle" }}</label>
-        <select name="system.has_color">
-            {{#select item.system.has_color}}
-                <option value="FALSE">{{localize 'ATORIA.No'}}</option>
-                <option value="TRUE">{{localize 'ATORIA.Yes'}}</option>
-            {{/select}}
-        </select>
+        <input type="checkbox" name="system.has_color" data-dtype="Boolean" {{checked item.system.has_color}}/>
 
         <input id="feature-color-picker" name="system.color" type="color" value="{{item.system.color}}" placeholder="{{ localize 'ATORIA.FeatureColorTitle' }}"/>
 

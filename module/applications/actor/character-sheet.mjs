@@ -4,7 +4,7 @@ import ActorSkillConfig from "../configurators/actor-skill-config.mjs"
 import ActorKnowledgeConfig from "../configurators/actor-knowledge-config.mjs";
 import ActorMagicConfig from "../configurators/actor-magic-config.mjs";
 
-import {confirm_deletion} from "../../utils.mjs"
+import { confirm_deletion } from "../../utils.mjs"
 
 /**
  * An Actor sheet for player character type actors.
@@ -15,12 +15,12 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["atoria", "sheet", "actor", "character"],
-      tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "character"}],
-      width: 1026+16,
+      tabs: [{ navSelector: ".tabs", contentSelector: ".sheet-body", initial: "character" }],
+      width: 1026 + 16,
       height: 800,
       dragDrop: [
-        {dragSelector: ".item-list .item", dropSelector: null},
-        {dragSelector: ".hotbar-able", dropSelector: null},
+        { dragSelector: ".item-list .item", dropSelector: ".item-list" },
+        { dragSelector: ".hotbar-able", dropSelector: null },
       ]
     });
   }
@@ -30,7 +30,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  async getData(options={}) {
+  async getData(options = {}) {
     const context = await super.getData(options);
 
     return foundry.utils.mergeObject(context, {});
@@ -44,7 +44,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     // Initialize containers.
     const actions = [];
     const combat_items = [];
-    const features = [];
+    // const features = [];
     const gear_weapons = [];
     const gear_consumables = [];
     const gear_equipments = [];
@@ -62,16 +62,16 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         combat_items.push(i);
       }
       // Append to features.
-      if (i.type === 'feature') {
-        i.system.has_color = i.system.has_color === "TRUE" ? true : false;
-        features.push(i);
-      }
-      // Append to features.
+      // if (i.type === 'feature') {
+      //   i.system.has_color = i.system.has_color === "TRUE" ? true : false;
+      //   features.push(i);
+      // }
+      // Append to weapon & combat_items.
       if (i.type === 'gear-weapon') {
         let linked_skill_data = this.actor.system.skills["combat"][i.system.linked_combative_skill];
         i.system.success_value = linked_skill_data.success_value;
 
-        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        const parseHTML = new DOMParser().parseFromString(i.system.description, 'text/html');
         i.system.description_cleaned = parseHTML.body.textContent || '';
 
         if (i._id !== this.actor.system.related_pugilat_item) {
@@ -79,23 +79,23 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
           combat_items.push(i);
         }
       }
-      // Append to features.
+      // Append to gear_consumable.
       if (i.type === 'gear-consumable') {
-        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        const parseHTML = new DOMParser().parseFromString(i.system.description, 'text/html');
         i.system.description_cleaned = parseHTML.body.textContent || '';
 
         gear_consumables.push(i);
       }
-      // Append to features.
+      // Append to gear_equipment.
       if (i.type === 'gear-equipment') {
-        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        const parseHTML = new DOMParser().parseFromString(i.system.description, 'text/html');
         i.system.description_cleaned = parseHTML.body.textContent || '';
 
         gear_equipments.push(i);
       }
-      // Append to features.
+      // Append to gear_ingredient.
       if (i.type === 'gear-ingredient') {
-        const parseHTML= new DOMParser().parseFromString(i.system.description, 'text/html');
+        const parseHTML = new DOMParser().parseFromString(i.system.description, 'text/html');
         i.system.description_cleaned = parseHTML.body.textContent || '';
 
         gear_ingredients.push(i);
@@ -103,7 +103,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
       // Append to action_modifiers.
       if (i.type === 'action-modifier') {
-        const parseHTML= new DOMParser().parseFromString(i.system.effect, 'text/html');
+        const parseHTML = new DOMParser().parseFromString(i.system.effect, 'text/html');
         i.system.effect_cleaned = parseHTML.body.textContent || '';
         switch (i.system.subtype) {
           case "technique":
@@ -117,7 +117,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         }
       }
 
-      // Append to features.
+      // Append to spells.
       if (i.type === 'spell') {
         if (this.actor._spells_displayed.includes(i._id)) {
           displayed_spells.push(i);
@@ -130,7 +130,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     // Assign and return
     context.actions = actions;
     context.combat_items = combat_items;
-    context.features = features;
+    // context.features = features;
     context.gear_weapons = gear_weapons;
     context.gear_consumables = gear_consumables;
     context.gear_equipments = gear_equipments;
@@ -147,10 +147,10 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     let pos_b = -1;
     let cur_pos = 0;
     for (let i of item_list) {
-      if (i._id == item_id_a){
+      if (i._id == item_id_a) {
         pos_a = cur_pos;
       }
-      if (i._id == item_id_b){
+      if (i._id == item_id_b) {
         pos_b = cur_pos;
       }
       cur_pos += 1;
@@ -162,7 +162,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   _get_special_css_class_for_sub_skill(sub_skill_key) {
     // console.log(`_get_special_css_class_for_sub_skill : ${sub_skill_key}`);
     if (["silence", "stealth"].includes(sub_skill_key)) {
-      console.log(`entered if for : ${sub_skill_key}`);
       const current_encumbrance = this.getCurrentEncumbrance();
       if (current_encumbrance >= (this.actor.system.encumbrance.max - 4.0)) {
         if (current_encumbrance > this.actor.system.encumbrance.max) {
@@ -215,7 +214,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       right: []
     };
     const skill_cats = context.system.skills;
-    for (const cat_key in skill_cats){
+    for (const cat_key in skill_cats) {
       const sub_skills = [];
       for (const sub_skill_key in skill_cats[cat_key]) {
         const skill_data = skill_cats[cat_key][sub_skill_key];
@@ -244,15 +243,15 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
     const tmp_sub_skill = [];
     for (const sub_skill_key in skill_cats["reflex"]) {
-        const skill_data = skill_cats["reflex"][sub_skill_key];
-        tmp_sub_skill.push({
-          id: `reflex.${sub_skill_key}`,
-          name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[sub_skill_key]),
-          success_value: skill_data.success_value,
-          critical_mod: skill_data.critical_mod,
-          fumble_mod: skill_data.fumble_mod,
-        });
-      }
+      const skill_data = skill_cats["reflex"][sub_skill_key];
+      tmp_sub_skill.push({
+        id: `reflex.${sub_skill_key}`,
+        name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[sub_skill_key]),
+        success_value: skill_data.success_value,
+        critical_mod: skill_data.critical_mod,
+        fumble_mod: skill_data.fumble_mod,
+      });
+    }
     context.formatted_skill_reflex = {
       name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL["reflex"]),
       sub_skills: tmp_sub_skill
@@ -267,8 +266,8 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     for (const group_key in knowledge_groups) {
       const knowledge_cats = knowledge_groups[group_key];
       sorted_knowledges_cat = sorted_knowledges_cat.concat(Object.keys(knowledge_cats));
-      
-      for (const cat_key in knowledge_cats){
+
+      for (const cat_key in knowledge_cats) {
         const sub_skills = [];
         for (const sub_skill_key in knowledge_cats[cat_key].sub_skills) {
           const skill_item = this.actor.items.get(knowledge_cats[cat_key].sub_skills[sub_skill_key]);
@@ -277,7 +276,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
             skill_item["full_id"] = `${group_key}.${cat_key}.${sub_skill_key}`;
             sub_skills.push(skill_item);
           }
-          sub_skills.sort((a, b) => {return this._sort_item_by_id(context.items, a.id, b.id);});
+          sub_skills.sort((a, b) => { return this._sort_item_by_id(context.items, a.id, b.id); });
         }
         // console.log(`getData ${JSON.stringify(knowledge_cats[cat_key].sub_skills, null, 2)}`);
         formatted_knowledges[cat_key] = {
@@ -297,7 +296,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
     const formatted_magics = {};
     const magic_cats = context.system.magics;
-    for (const cat_key in magic_cats){
+    for (const cat_key in magic_cats) {
       const sub_skills = [];
       for (const sub_skill_key in magic_cats[cat_key].sub_skills) {
         const skill_item = this.actor.items.get(magic_cats[cat_key].sub_skills[sub_skill_key]);
@@ -306,7 +305,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
           skill_item["full_id"] = `${cat_key}.${sub_skill_key}`;
           sub_skills.push(skill_item);
         }
-        sub_skills.sort((a, b) => {return this._sort_item_by_id(context.items, a.id, b.id);});
+        sub_skills.sort((a, b) => { return this._sort_item_by_id(context.items, a.id, b.id); });
       }
       formatted_magics[cat_key] = {
         id: cat_key,
@@ -319,14 +318,49 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     sorted_magics_cat.sort((a, b) => {
       if (a in CONFIG.ATORIA.MAGICS_LABEL && b in CONFIG.ATORIA.MAGICS_LABEL)
         return game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[a]).localeCompare(game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[b]));
-      return 0;  
+      return 0;
     });
+
+
+    // Create features categories
+    const map_feature_cat_func = (feature_top_category) => {
+      let top_category_formatted = [];
+      for (const feature_list_id in feature_top_category) {
+        const item = this.actor.items.get(feature_top_category[feature_list_id]);
+        top_category_formatted.push(item);
+      }
+      return top_category_formatted;
+    };
+
+    const features_category_combat = context.system.feature_categories.combat;
+    const combat_features = map_feature_cat_func(features_category_combat)
+    combat_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+
+    const features_category_skill = context.system.feature_categories.skill;
+    const skill_features = map_feature_cat_func(features_category_skill)
+    skill_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+
+    const features_category_magic = context.system.feature_categories.magic;
+    const magic_features = map_feature_cat_func(features_category_magic)
+    magic_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+
+    const features_category_knowledge = context.system.feature_categories.knowledge;
+    const knowledge_features = map_feature_cat_func(features_category_knowledge)
+    knowledge_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+
+
 
     context.formatted_skills = formatted_skills;
     context.sorted_knowledges_cat = sorted_knowledges_cat;
     context.formatted_knowledges = formatted_knowledges;
     context.sorted_magics_cat = sorted_magics_cat;
     context.formatted_magics = formatted_magics;
+
+    context.combat_features = combat_features;
+    context.skill_features = skill_features;
+    context.magic_features = magic_features;
+    context.knowledge_features = knowledge_features;
+
     // Endurance influence max mana and max stamina
     const endurance_ratio = Math.min(context.system.endurance.value, 100.0) / 100.0;
     context.system.stamina.current_max = Math.floor(context.system.stamina.max * endurance_ratio);
@@ -338,7 +372,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.health_regain_inactive_data = [];
     let usable_health_regen_number = Math.min(context.system.endurance.value, 100) / 25 + 1;
     const MAX_INACTIVE_HEALTH_REGAIN = 6;
-    for(let step = MAX_INACTIVE_HEALTH_REGAIN - 1; step >= 0; step--) {
+    for (let step = MAX_INACTIVE_HEALTH_REGAIN - 1; step >= 0; step--) {
       context.health_regain_inactive_data.push({
         "is_usable": step < usable_health_regen_number,
         "is_checked": step < context.system.health_regain_inactive,
@@ -350,7 +384,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     let pugilat_item = this.actor.items.get(context.system.related_pugilat_item);
     if (pugilat_item === undefined || pugilat_item === null) {
       const type = "gear-weapon";
-      const name = game.i18n.format(game.i18n.localize("ATORIA.NewItem"), {itemType: type.capitalize()});
+      const name = game.i18n.format(game.i18n.localize("ATORIA.NewItem"), { itemType: type.capitalize() });
       const itemData = {
         name: game.i18n.localize("ATORIA.Brawl"),
         type: type,
@@ -364,7 +398,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
           "related_techniques": []
         }
       };
-      pugilat_item = await Item.create(itemData, {parent: this.actor});
+      pugilat_item = await Item.create(itemData, { parent: this.actor });
 
       this.actor.update({
         "system.related_pugilat_item": pugilat_item._id
@@ -374,15 +408,15 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     let linked_skill_data = this.actor.system.skills["combat"][pugilat_item.system.linked_combative_skill];
     pugilat_item.system.success_value = linked_skill_data.success_value;
 
-    const parseHTML= new DOMParser().parseFromString(pugilat_item.system.description, 'text/html');
+    const parseHTML = new DOMParser().parseFromString(pugilat_item.system.description, 'text/html');
     pugilat_item.system.description_cleaned = parseHTML.body.textContent || '';
 
     context.pugilat_item = pugilat_item;
 
 
-    const offenseHTML= new DOMParser().parseFromString(this.actor.system.offense, 'text/html');
+    const offenseHTML = new DOMParser().parseFromString(this.actor.system.offense, 'text/html');
     context.offenseHTML = offenseHTML.body.textContent || '';
-    const defenseHTML= new DOMParser().parseFromString(this.actor.system.defense, 'text/html');
+    const defenseHTML = new DOMParser().parseFromString(this.actor.system.defense, 'text/html');
     context.defenseHTML = defenseHTML.body.textContent || '';
   }
 
@@ -418,16 +452,30 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   activateListeners(html) {
     html.find(".spell-display-detail").click(this._onSpellDisplayDetail.bind(this));
 
-    if ( this.isEditable ) {
+    if (this.isEditable) {
       html.find(".config-skill").click(this._onConfigSkill.bind(this));
       html.find(".config-knowledge").click(this._onConfigKnowledge.bind(this));
       html.find(".config-magic").click(this._onConfigMagic.bind(this));
       html.find(".tickable-image").click(this._onTickableImage.bind(this));
+
+      html.find('input[data-update-item]').change(this._onUpdateItem.bind(this))
     }
-  
+
     // Handle default listeners last so system listeners are triggered first
     super.activateListeners(html);
   }
+
+
+  /**
+   * Handle update of item from character sheet
+   * 
+   */
+  _onUpdateItem(event) {
+    const { itemId, updateItem } = event.currentTarget.dataset;
+    const item = this.actor.items.get(itemId);
+    item.update({ [updateItem]: event.target.value });
+  }
+
 
 
   /**
@@ -477,28 +525,28 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     event.stopPropagation();
     const header = event.currentTarget;
     const tickvalue = header.dataset.tickvalue;
-    
+
     const associated_value = header.dataset.value || "unknown";
     switch (associated_value) {
-        case "healing_herbs":
-          await this.actor.update({
-              "system.healing_herbs_used": !this.actor.system.healing_herbs_used
-          });
-          break;
-        case "healing_medecine":
-          await this.actor.update({
-              "system.medical_healing_used": !this.actor.system.medical_healing_used
-          });
-          break;
-        case "health_regain_inactive":
-          let new_value = Number(tickvalue) + 1
-          if (this.actor.system.health_regain_inactive == new_value) { // If click on the already level, disable the click level
-            new_value -= 1;
-          }
-          await this.actor.update({
-              "system.health_regain_inactive": new_value
-          });
-          break;
+      case "healing_herbs":
+        await this.actor.update({
+          "system.healing_herbs_used": !this.actor.system.healing_herbs_used
+        });
+        break;
+      case "healing_medecine":
+        await this.actor.update({
+          "system.medical_healing_used": !this.actor.system.medical_healing_used
+        });
+        break;
+      case "health_regain_inactive":
+        let new_value = Number(tickvalue) + 1
+        if (this.actor.system.health_regain_inactive == new_value) { // If click on the already level, disable the click level
+          new_value -= 1;
+        }
+        await this.actor.update({
+          "system.health_regain_inactive": new_value
+        });
+        break;
     }
   }
 
@@ -540,6 +588,15 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         });
         break;
       }
+      case 'feature-list-item': {
+        const parent_id = header.dataset.parent;
+        const new_feature_categories = this.actor.system.feature_categories;
+        new_feature_categories[parent_id].push(item._id);
+        this.actor.update({
+          "system.feature_categories": new_feature_categories
+        });
+        break;
+      }
     }
     return item;
   }
@@ -556,7 +613,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
             const parent_id = header.dataset.parent;
             const parent_ids = parent_id.split('.');
             const new_knowledges = this.actor.system.knowledges;
-            new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills = new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills.filter(el => {return el !== item._id});
+            new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills = new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills.filter(el => { return el !== item._id });
             await this.actor.update({
               "system.knowledges": new_knowledges
             });
@@ -565,7 +622,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
           case 'magic-skill-item': {
             const parent_id = header.dataset.parent;
             const new_magics = this.actor.system.magics;
-            new_magics[parent_id].sub_skills = new_magics[parent_id].sub_skills.filter(el => {return el !== item._id});
+            new_magics[parent_id].sub_skills = new_magics[parent_id].sub_skills.filter(el => { return el !== item._id });
             await this.actor.update({
               "system.magics": new_magics
             });
@@ -577,8 +634,8 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         li.slideUp(200, () => this.render(false));
       }
     });
-  } 
-  
+  }
+
 
 
   _get_skill_name(full_skill_id) {
@@ -591,7 +648,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   /** @inheritdoc */
   _onDragStart(event) {
-    switch (event.target.dataset?.type)  {
+    switch (event.target.dataset?.type) {
       case "initiative": {
         const dragData = {
           "type": "initiative",
@@ -612,7 +669,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       case "perception": {
         const dragData = {
           "type": "perception",
-          "name":`Perception - ${game.i18n.localize(CONFIG.ATORIA.PERCEPTION_LABEL[event.target.dataset?.id])}`,
+          "name": `Perception - ${game.i18n.localize(CONFIG.ATORIA.PERCEPTION_LABEL[event.target.dataset?.id])}`,
           "id": event.target.dataset?.id
         };
         event.dataTransfer.setData("text/plain", JSON.stringify(dragData));

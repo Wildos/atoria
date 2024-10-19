@@ -143,6 +143,26 @@ ATORIA.MAGICS_LABEL = {
 }
 
 
+ATORIA.TIME_PHASES_PERMANENT = "permanent"
+
+ATORIA.TIME_PHASES = [
+    "permanent",
+    "combat",
+    "rest",
+    "sleep",
+    "short-moon",
+    "long-moon"
+]
+
+ATORIA.TIME_PHASES_LABEL = {
+    "permanent": "ATORIA.Permanent",
+    "combat": "ATORIA.Combat",
+    "rest": "ATORIA.Rest",
+    "sleep": "ATORIA.Sleep",
+    "short-moon": "ATORIA.ShortMoon",
+    "long-moon": "ATORIA.LongMoon"
+}
+
 export function localize_config() {
     for (let key in ATORIA.COMBAT_SKILL) {
         if (key in ATORIA.COMBAT_SKILL) {
@@ -154,6 +174,13 @@ export function localize_config() {
     for (let key in ATORIA.ACTION_MODIFIER_TYPE) {
         if (key in ATORIA.ACTION_MODIFIER_TYPE) {
             ATORIA.ACTION_MODIFIER_TYPE[key] = game.i18n.localize(ATORIA.ACTION_MODIFIER_TYPE[key]);
+        } else {
+            console.error(`Localisation error: Key not found in array: '${key}'`);
+        }
+    }
+    for (let key in ATORIA.TIME_PHASES_LABEL) {
+        if (key in ATORIA.TIME_PHASES_LABEL) {
+            ATORIA.TIME_PHASES_LABEL[key] = game.i18n.localize(ATORIA.TIME_PHASES_LABEL[key]);
         } else {
             console.error(`Localisation error: Key not found in array: '${key}'`);
         }

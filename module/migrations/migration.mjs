@@ -11,28 +11,28 @@ export async function migrateData() {
 
 async function _apply_first_change() {
     // Apply atoria version 0.3.5
-    ui.notifications.info(game.i18n.format("MIGRATION.Begin", {version: FIRST_BREAKING_CHANGE}), {permanent: true});
+    ui.notifications.info(game.i18n.format("MIGRATION.Begin", { version: FIRST_BREAKING_CHANGE }), { permanent: true });
 
     // Migrate World Actors
     let migration_failed = 0;
 
     const actors = game.actors;
-    for ( const actor of actors ) {
+    for (const actor of actors) {
         try {
             var updateData = _update_actor(actor);
 
-            if ( !foundry.utils.isEmpty(updateData) ) {
+            if (!foundry.utils.isEmpty(updateData)) {
                 console.log(`Migrating Actor document ${actor.name}`);
-                await actor.update(updateData, {enforceTypes: false, diff: true, keepEmbeddedIds: true});
+                await actor.update(updateData, { enforceTypes: false, diff: true, keepEmbeddedIds: true });
             }
-        } catch(err) {
+        } catch (err) {
             err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
             console.error(err);
             migration_failed += 1;
         }
     }
 
-    ui.notifications.info(game.i18n.format("MIGRATION.Complete", {version: FIRST_BREAKING_CHANGE, numberOfFailure: migration_failed}), {permanent: true});
+    ui.notifications.info(game.i18n.format("MIGRATION.Complete", { version: FIRST_BREAKING_CHANGE, numberOfFailure: migration_failed }), { permanent: true });
 }
 
 
@@ -64,12 +64,12 @@ function _update_actor(actor) {
         // --- Change only reflected on the language pack, the name used in code is kept ---
 
         // Provocation va dans la catégorie Ruse.
-        updateData["system.skills.trickery.provocation"] =  foundry.utils.deepClone(actor.system.skills.eloquence.provocation);
+        updateData["system.skills.trickery.provocation"] = foundry.utils.deepClone(actor.system.skills.eloquence.provocation);
         updateData["system.skills.eloquence.-=provocation"] = null;
-        
+
 
         // Marchandage devient Négociation et va dans la catégorie Éloquence.
-        updateData["system.skills.eloquence.negotiation"] =  foundry.utils.deepClone(actor.system.skills.negotiation.bargaining);
+        updateData["system.skills.eloquence.negotiation"] = foundry.utils.deepClone(actor.system.skills.negotiation.bargaining);
         updateData["system.skills.-=negotiation"] = null;
 
 
@@ -101,10 +101,10 @@ function _update_actor(actor) {
             "sub_skills": []
         };
         for (let sub_s in actor.system.knowledges.harvest.herbalist.sub_skills) {
-            new_nature_knowledge.sub_skills.push( foundry.utils.deepClone(actor.system.knowledges.harvest.herbalist.sub_skills[sub_s]) );
+            new_nature_knowledge.sub_skills.push(foundry.utils.deepClone(actor.system.knowledges.harvest.herbalist.sub_skills[sub_s]));
         }
         for (let sub_s in actor.system.knowledges.harvest.farming.sub_skills) {
-            new_nature_knowledge.sub_skills.push( foundry.utils.deepClone(actor.system.knowledges.harvest.farming.sub_skills[sub_s]) );
+            new_nature_knowledge.sub_skills.push(foundry.utils.deepClone(actor.system.knowledges.harvest.farming.sub_skills[sub_s]));
         }
         updateData["system.knowledges.utilitarian.nature"] = new_nature_knowledge;
         updateData["system.knowledges.harvest.-=farming"] = null;
@@ -117,14 +117,14 @@ function _update_actor(actor) {
         // Minage voit ses connaissances fusionner et va dans Construction.
         let new_construction_knowledge = foundry.utils.deepClone(actor.system.knowledges.utilitarian.construction);
         for (let sub_s in actor.system.knowledges.harvest.mining.sub_skills) {
-            new_construction_knowledge.sub_skills.push( foundry.utils.deepClone(actor.system.knowledges.harvest.mining.sub_skills[sub_s]) );
+            new_construction_knowledge.sub_skills.push(foundry.utils.deepClone(actor.system.knowledges.harvest.mining.sub_skills[sub_s]));
         }
         updateData["system.knowledges.utilitarian.construction"] = new_construction_knowledge;
         updateData["system.knowledges.harvest.-=mining"] = null;
 
 
         // Dressage, Nature et Pêche vont dans la grande catégorie utilitaire.
-        updateData["system.knowledges.utilitarian.fishing"] = foundry.utils.deepClone(actor.system.knowledges.harvest.fishing );
+        updateData["system.knowledges.utilitarian.fishing"] = foundry.utils.deepClone(actor.system.knowledges.harvest.fishing);
         updateData["system.knowledges.harvest.-=dressage"] = null;
         updateData["system.knowledges.harvest.-=nature"] = null;
         updateData["system.knowledges.harvest.-=fishing"] = null;
