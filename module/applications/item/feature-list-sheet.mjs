@@ -9,8 +9,8 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      width: 575,
-      height: 330,
+      width: 400,
+      height: 350,
       classes: ["atoria", "sheet", "feature-list"],
       resizable: true
     });
@@ -68,8 +68,10 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
       html.find(".subfeature-create").click(this._onSubFeatureCreate.bind(this));
       html.find(".subfeature-delete").click(this._onSubFeatureDelete.bind(this));
       html.find(".data-expand").on('input', this.updateSize.bind(this));
+      html.find('.item-delete').click(this._onItemDelete.bind(this));
     }
   }
+
 
   updateSize(event) {
     const cur = $(event.currentTarget);
@@ -124,8 +126,9 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
     if (this.actor) {
       const item = this.actor.items.get(li.data("id"));
 
-      confirm_deletion(item.name, user_confirmed => {
+      confirm_deletion(item.name, async user_confirmed => {
         if (user_confirmed) {
+          await this.actor.remove_item_link("feature-list-item", li.data("id"));
           item.delete();
         }
       });

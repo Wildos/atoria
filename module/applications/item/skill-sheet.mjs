@@ -59,10 +59,10 @@ export default class ItemAtoriaSheetSkill extends ItemSheet {
     if (this.actor) {
       const item = this.actor.items.get(li.data("id"));
 
-      confirm_deletion(item.name, user_confirmed => {
+      confirm_deletion(item.name, async user_confirmed => {
         if (user_confirmed) {
+          await this.actor.remove_item_link("skill-item", li.data("id"));
           item.delete();
-          this.parent.on_item_deleted(this);
         }
       });
     }

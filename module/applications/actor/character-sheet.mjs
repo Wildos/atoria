@@ -608,28 +608,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
     confirm_deletion(item.name, async user_confirmed => {
       if (user_confirmed) {
-        switch (header.dataset.action) {
-          case 'knowledge-skill-item': {
-            const parent_id = header.dataset.parent;
-            const parent_ids = parent_id.split('.');
-            const new_knowledges = this.actor.system.knowledges;
-            new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills = new_knowledges[parent_ids[0]][parent_ids[1]].sub_skills.filter(el => { return el !== item._id });
-            await this.actor.update({
-              "system.knowledges": new_knowledges
-            });
-            break;
-          }
-          case 'magic-skill-item': {
-            const parent_id = header.dataset.parent;
-            const new_magics = this.actor.system.magics;
-            new_magics[parent_id].sub_skills = new_magics[parent_id].sub_skills.filter(el => { return el !== item._id });
-            await this.actor.update({
-              "system.magics": new_magics
-            });
-            break;
-          }
-        }
-
         item.delete();
         li.slideUp(200, () => this.render(false));
       }
@@ -680,4 +658,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     }
   }
 
+
 }
+

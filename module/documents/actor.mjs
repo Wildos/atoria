@@ -657,4 +657,36 @@ export class AtoriaActor extends Actor {
     }
     return action_modifiers;
   }
+
+
+  async remove_item_link(item_type, item_id) {
+    if (this.type !== "character") return;
+    switch (item_type) {
+      case "feature-list-item":
+        for (const [cat, features] of Object.entries(this.system.feature_categories)) {
+          this.system.feature_categories[cat] = features.filter(el => { return el !== item_id });
+        }
+        await this.update({
+          "system.feature_categories": this.system.feature_categories
+        });
+        break;
+      case 'skill-item': {
+        const new_knowledges = this.system.knowledges;
+        for (const [key, subknowledge] of Object.entries(new_knowledges)) {
+          for (const [subkey, knowledge] of Object.entries(subknowledge)) {
+            knowledge.sub_skills = knowledge.sub_skills.filter(el => { return el !== item_id });
+          }
+        }
+        const new_magics = this.system.magics;
+        for (const [key, magic] of Object.entries(new_magics)) {
+          magic.sub_skills = magic.sub_skills.filter(el => { return el !== item_id });
+        }
+        await this.update({
+          "system.knowledges": new_knowledges,
+          "system.magics": new_magics
+        });
+        break;
+      }
+    }
+  }
 }
