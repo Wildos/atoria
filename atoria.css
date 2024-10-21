@@ -695,13 +695,39 @@
   line-height: var(--form-field-height);
   min-height: var(--form-field-height);
 }
-.atoria .feature-list-sheet .flexcol .feature-color-value[value="#00000000"] ~ .feature-color-picker {
+.atoria .feature-list-sheet .flexcol .name-title .delete-button {
+  position: absolute;
+  right: 0;
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  line-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.atoria .feature-list-sheet .flexcol .color-choice-area {
+  margin-top: 3px;
+}
+.atoria .feature-list-sheet .flexcol .color-choice-area input[type=checkbox] {
+  margin: 0;
+  margin-right: 5px;
+}
+.atoria .feature-list-sheet .flexcol .color-choice-area .feature-color-value[value="#00000000"] ~ .feature-color-picker {
   display: none;
 }
 .atoria .feature-list-sheet .flexcol .subfeature {
   padding-bottom: 10px;
   border-bottom: 5px solid black;
   margin-bottom: 10px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature > * {
+  margin-bottom: 3px;
 }
 .atoria .feature-list-sheet .flexcol .subfeature .delete-button {
   -webkit-box-flex: 0;
@@ -716,8 +742,24 @@
   align-items: center;
   vertical-align: middle;
   margin-left: 3px;
+  margin-right: 3px;
 }
-.atoria .feature-list-sheet .flexcol .subfeature .usage-input {
+.atoria .feature-list-sheet .flexcol .subfeature .regain-area {
+  -webkit-column-gap: 5px;
+  -moz-column-gap: 5px;
+  column-gap: 5px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .regain-area .regain-type-select {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .regain-area .usage-area {
+  -webkit-column-gap: 5px;
+  -moz-column-gap: 5px;
+  column-gap: 5px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .regain-area .usage-area .usage-input {
   min-width: 35px;
 }
 .atoria .feature-list-sheet .flexcol .subfeature .description-area {
@@ -1490,84 +1532,136 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.atoria .feature-list {
+.atoria .feature-list-area {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
-.atoria .feature-list .title-label {
+.atoria .feature-list-area .title-label {
   display: inline-block;
   text-align: center;
   font-weight: bold;
   background-color: #ebd2df;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .feature-list .title-label .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .feature-list .feature-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .feature-list .feature-row .name-label, .atoria .feature-list .feature-row .longname-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .feature-list .feature-row .effect-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .feature-list .feature-row .detail-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .feature-list .feature-row .description {
-  text-align: left;
+  max-width: 300px;
+  min-width: 300px;
+  height: var(--form-field-height);
   line-height: var(--form-field-height);
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .feature-list-area .feature-list-category .feature-list-label {
   position: relative;
 }
-.atoria .feature-list .feature-row .description .item-description {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.atoria .feature-list .feature-row .description .config-button {
+.atoria .feature-list-area .feature-list-category .feature-list-label .add-button, .atoria .feature-list-area .feature-list-category .feature-list-label .detail-button {
   position: absolute;
-  right: 0;
-  top: 0;
-  display: none;
+  display: inline-block;
   text-align: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
   vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-height: 20px;
+  max-height: 20px;
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-size: 18px;
 }
-.atoria .feature-list .feature-row .description:hover .config-button {
-  display: inline-block;
+.atoria .feature-list-area .feature-list-category .feature-list-label .add-button {
+  right: 20px;
+  top: 0;
 }
-.atoria .feature-list .feature-row:not(.expanded) .description {
+.atoria .feature-list-area .feature-list-category .feature-list-label .detail-button {
+  right: 0;
+  top: 0;
+}
+.atoria .feature-list-area .feature-list-category:not(.expanded) > *:not(.feature-list-label) {
   display: none;
+}
+.atoria .feature-list-area .feature-list-category .feature-list {
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 3px;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .name {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  border: none;
+  margin: 0;
+  position: relative;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .name .config-button, .atoria .feature-list-area .feature-list-category .feature-list .name .detail-button {
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-size: 18px;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .name .config-button {
+  right: 20px;
+  top: 0;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .name .detail-button {
+  right: 0;
+  top: 0;
+}
+.atoria .feature-list-area .feature-list-category .feature-list:not(.expanded) > .description {
+  display: none;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description {
+  row-gap: 3px;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row {
+  border-top: 1px solid black;
+  padding-top: 3px;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .subfeature-name {
+  font-weight: bold;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .usage-input {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  min-width: 30px;
+  max-width: 30px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .regain-max {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  min-width: 30px;
+  max-width: 30px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .regain-type-icon {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  min-width: 20px;
+  max-width: 20px;
+  margin-right: 3px;
+  border: none;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .subfeature-description {
+  white-space: pre-wrap;
+  max-width: 300px;
 }
 .atoria .skill {
   width: -webkit-max-content;

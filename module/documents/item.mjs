@@ -10,6 +10,12 @@ export class AtoriaItem extends Item {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
+
+    if (this.type == "feature-list") {
+      for (const [key, element] of Object.entries(this.system.features)) {
+        this.system.features[key].show_usage_limits = element.regain_type !== CONFIG.ATORIA.TIME_PHASES_PERMANENT;
+      }
+    }
   }
 
   /**

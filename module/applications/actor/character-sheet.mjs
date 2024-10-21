@@ -11,6 +11,8 @@ import { confirm_deletion } from "../../utils.mjs"
  */
 export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
+  _feature_list_cat_expended = new Set();
+
   /** @inheritDoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -126,6 +128,42 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         spells.push(i);
       }
     }
+
+    // Create features categories
+    const map_feature_cat_func = (feature_top_category) => {
+      let top_category_formatted = [];
+      for (const feature_list_id in feature_top_category) {
+        const item = this.actor.items.get(feature_top_category[feature_list_id]);
+        if (item === undefined)
+          continue
+        item.isExpanded = this._expanded.has(item._id);
+        top_category_formatted.push(item);
+      }
+      return top_category_formatted;
+    };
+
+    const features_category_combat = context.system.feature_categories.combat;
+    const combat_features = map_feature_cat_func(features_category_combat)
+    combat_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+
+    const features_category_skill = context.system.feature_categories.skill;
+    const skill_features = map_feature_cat_func(features_category_skill)
+    skill_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+
+    const features_category_magic = context.system.feature_categories.magic;
+    const magic_features = map_feature_cat_func(features_category_magic)
+    magic_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+
+    const features_category_knowledge = context.system.feature_categories.knowledge;
+    const knowledge_features = map_feature_cat_func(features_category_knowledge)
+    knowledge_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+
+
+    context.combat_features = combat_features;
+    context.skill_features = skill_features;
+    context.magic_features = magic_features;
+    context.knowledge_features = knowledge_features;
+
 
     // Assign and return
     context.actions = actions;
@@ -322,33 +360,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     });
 
 
-    // Create features categories
-    const map_feature_cat_func = (feature_top_category) => {
-      let top_category_formatted = [];
-      for (const feature_list_id in feature_top_category) {
-        const item = this.actor.items.get(feature_top_category[feature_list_id]);
-        top_category_formatted.push(item);
-      }
-      return top_category_formatted;
-    };
-
-    const features_category_combat = context.system.feature_categories.combat;
-    const combat_features = map_feature_cat_func(features_category_combat)
-    combat_features.sort((a, b) => { return a.name.localeCompare(b.name); });
-
-    const features_category_skill = context.system.feature_categories.skill;
-    const skill_features = map_feature_cat_func(features_category_skill)
-    skill_features.sort((a, b) => { return a.name.localeCompare(b.name); });
-
-    const features_category_magic = context.system.feature_categories.magic;
-    const magic_features = map_feature_cat_func(features_category_magic)
-    magic_features.sort((a, b) => { return a.name.localeCompare(b.name); });
-
-    const features_category_knowledge = context.system.feature_categories.knowledge;
-    const knowledge_features = map_feature_cat_func(features_category_knowledge)
-    knowledge_features.sort((a, b) => { return a.name.localeCompare(b.name); });
-
-
 
     context.formatted_skills = formatted_skills;
     context.sorted_knowledges_cat = sorted_knowledges_cat;
@@ -356,10 +367,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.sorted_magics_cat = sorted_magics_cat;
     context.formatted_magics = formatted_magics;
 
-    context.combat_features = combat_features;
-    context.skill_features = skill_features;
-    context.magic_features = magic_features;
-    context.knowledge_features = knowledge_features;
 
     // Endurance influence max mana and max stamina
     const endurance_ratio = Math.min(context.system.endurance.value, 100.0) / 100.0;
@@ -418,6 +425,21 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.offenseHTML = offenseHTML.body.textContent || '';
     const defenseHTML = new DOMParser().parseFromString(this.actor.system.defense, 'text/html');
     context.defenseHTML = defenseHTML.body.textContent || '';
+
+    context.feature_list_cat_expandlist = {};
+    context.feature_list_cat_expandlist["combat"] = {
+      isExpanded: this._feature_list_cat_expended.has("combat")
+    };
+    context.feature_list_cat_expandlist["skill"] = {
+      isExpanded: this._feature_list_cat_expended.has("skill")
+    };
+    context.feature_list_cat_expandlist["magic"] = {
+      isExpanded: this._feature_list_cat_expended.has("magic")
+    };
+    context.feature_list_cat_expandlist["knowledge"] = {
+      isExpanded: this._feature_list_cat_expended.has("knowledge")
+    };
+
   }
 
 
@@ -451,6 +473,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   /** @inheritDoc */
   activateListeners(html) {
     html.find(".spell-display-detail").click(this._onSpellDisplayDetail.bind(this));
+    html.find(".toggle-feature-list-category-visibility").click(this._toggleFeatureListCategoryVisibility.bind(this));
 
     if (this.isEditable) {
       html.find(".config-skill").click(this._onConfigSkill.bind(this));
@@ -476,6 +499,20 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     item.update({ [updateItem]: event.target.value });
   }
 
+
+  _toggleFeatureListCategoryVisibility(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    const li = $(header).closest(".feature-list-category");
+    const cat_name = li.data("catName");
+    if (li.hasClass("expanded")) {
+      this._feature_list_cat_expended.delete(cat_name);
+    }
+    else {
+      this._feature_list_cat_expended.add(cat_name);
+    }
+    li.toggleClass("expanded");
+  }
 
 
   /**

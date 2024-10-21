@@ -51,11 +51,6 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
       });
     }
 
-
-    for (const [key, element] of Object.entries(this.item.system.features)) {
-      this.item.system.features[key].show_usage_limits = element.regain_type !== CONFIG.ATORIA.TIME_PHASES_PERMANENT;
-    }
-
     return context;
   }
 

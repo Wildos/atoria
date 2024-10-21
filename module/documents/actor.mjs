@@ -328,7 +328,6 @@ export class AtoriaActor extends Actor {
         const sub_skills = [];
         for (const sub_skill_key in knowledge_cats[cat_key].sub_skills) {
           const skill_item = this.items.get(knowledge_cats[cat_key].sub_skills[sub_skill_key]);
-          console.log(`get_item_cat_from_knowledge`, skill_item);
           if (!skill_item) continue;
           if (skill_item.id == item_id) {
             return game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[cat_key]);
@@ -595,7 +594,6 @@ export class AtoriaActor extends Actor {
   }
 
   onSortItems(type, filters) {
-    console.log("Used function onSortItems from actor.mjs");
     let sort_values = [];
     let valid_items_ids = [];
 

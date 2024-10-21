@@ -1,4 +1,5 @@
 CC BY 3.0 : https://creativecommons.org/licenses/by/3.0/
+CC0 PDD : https://creativecommons.org/publicdomain/zero/1.0/
 
 chained-heart.svg : https://game-icons.net/1x1/lorc/chained-heart.html, by Lorc under CC BY 3.0
 hearts.svg : https://game-icons.net/1x1/skoll/hearts.html, by Skoll under CC BY 3.0
@@ -37,8 +38,9 @@ brainstorm.svg : https://game-icons.net/1x1/lorc/brainstorm.html, by Lorc under 
 chopped-skull.svg : https://game-icons.net/1x1/lorc/chopped-skull.html, by Lorc under CC BY 3.0
 portal.svg : https://game-icons.net/1x1/lorc/portal.html, by Lorc under CC BY 3.0
 
-
-
-
-
-
+regain-type-permanent.svg : https://game-icons.net/1x1/various-artists/infinity.html, by Various artists under CC0 PDD
+regain-type-combat.svg : https://game-icons.net/1x1/cathelineau/swordwoman.html, by Cathelineau under CC BY 3.0
+regain-type-rest.svg : https://game-icons.net/1x1/delapouite/camp-cooking-pot.html, by Delapouite under CC BY 3.0
+regain-type-sleep.svg : https://game-icons.net/1x1/delapouite/sleeping-bag.html, by Delapouite under CC BY 3.0
+regain-type-short-moon.svg : https://game-icons.net/1x1/lorc/moon.html, by Lorc under CC BY 3.0
+regain-type-long-moon.svg : https://game-icons.net/1x1/delapouite/moon-orbit.html, by Delapouite under CC BY 3.0

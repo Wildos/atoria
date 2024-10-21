@@ -1,40 +1,60 @@
-<div class="feature flexcol">
+<div class="feature-list-area flexcol" >
     <label class="title-label">{{ localize "ATORIA.CharacterFeatureTitle"}}</label>
 
-    <h2>Combative
-        <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="combat" >
-            <i class="fas fa-plus"></i>
-        </a>
-    </h2>
-    {{#each combat_features as |feature key|}}
-        {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature}}
-    {{/each}}
+    <div class="feature-list-category {{#if feature_list_cat_expandlist.combat.isExpanded}}expanded{{/if}}" data-cat-name="combat">
+        <h2 class="feature-list-label">Combative
+            <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="combat" >
+                <i class="fas fa-plus"></i>
+            </a>
+            <a class="detail-button toggle-feature-list-category-visibility">
+                <i class="fas fa-circle-info"></i>
+            </a>
+        </h2>
+        {{#each combat_features as |feature key|}}
+            {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="combat"}}
+        {{/each}}
+    </div>
 
-    <h2>Compétence
-        <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="skill" >
-            <i class="fas fa-plus"></i>
-        </a>
-    </h2>
-    {{#each skill_features as |feature key|}}
-        {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature}}
-    {{/each}}
+    <div class="feature-list-category {{#if feature_list_cat_expandlist.skill.isExpanded}}expanded{{/if}}" data-cat-name="skill">
+        <h2 class="feature-list-label">Compétence
+            <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="skill" >
+                <i class="fas fa-plus"></i>
+            </a>
+            <a class="detail-button toggle-feature-list-category-visibility">
+                <i class="fas fa-circle-info"></i>
+            </a>
+        </h2>
+        {{#each skill_features as |feature key|}}
+            {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="skill"}}
+        {{/each}}
+    </div>
 
-    <h2>Magie
-        <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="magic" >
-            <i class="fas fa-plus"></i>
-        </a>
-    </h2>
-    {{#each magic_features as |feature key|}}
-        {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature}}
-    {{/each}}
+    <div class="feature-list-category {{#if feature_list_cat_expandlist.magic.isExpanded}}expanded{{/if}}" data-cat-name="magic">
+        <h2 class="feature-list-label">Magie
+            <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="magic" >
+                <i class="fas fa-plus"></i>
+            </a>
+            <a class="detail-button toggle-feature-list-category-visibility">
+                <i class="fas fa-circle-info"></i>
+            </a>
+        </h2>
+        {{#each magic_features as |feature key|}}
+            {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="magic"}}
+        {{/each}}
+    </div>
 
-    <h2>Connaissance
-        <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="knowledge" >
-            <i class="fas fa-plus"></i>
-        </a>
-    </h2>
-    {{#each knowledge_features as |feature key|}}
-        {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature}}
-    {{/each}}
+    <div class="feature-list-category {{#if feature_list_cat_expandlist.knowledge.isExpanded}}expanded{{/if}}" data-cat-name="knowledge">
+        <h2 class="feature-list-label">Connaissance
+            <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="knowledge" >
+                <i class="fas fa-plus"></i>
+            </a>
+            <a class="detail-button toggle-feature-list-category-visibility">
+                <i class="fas fa-circle-info"></i>
+            </a>
+        </h2>
+        {{#each knowledge_features as |feature key|}}
+            {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="knowledge"}}
+        {{/each}}
+    </div>
 
 </div>

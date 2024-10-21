@@ -9,10 +9,11 @@
         </label>
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.FeatureNameTitle' }}"/>
     
-        <label for="system.has_color">{{ localize "ATORIA.FeatureColorTitle" }}</label>
-        <input type="checkbox" name="system.has_color" data-dtype="Boolean" {{checked item.system.has_color}}/>
-
-        <input id="feature-color-picker" name="system.color" type="color" value="{{item.system.color}}" placeholder="{{ localize 'ATORIA.FeatureColorTitle' }}"/>
+        <div class="flexrow color-choice-area">
+            <label for="system.has_color">{{ localize "ATORIA.FeatureColorTitle" }}</label>
+            <input type="checkbox" name="system.has_color" data-dtype="Boolean" {{checked item.system.has_color}}/>
+            <input id="feature-color-picker" name="system.color" type="color" value="{{item.system.color}}" placeholder="{{ localize 'ATORIA.FeatureColorTitle' }}"/>
+        </div>
 
         <!-- Feature list -->
         <div class="subfeature-list">
@@ -30,7 +31,7 @@
                         </a>
                     </div>
 
-                    <div class="flexrow">
+                    <div class="flexrow regain-area">
                         <select class="regain-type-select" name="system.features.{{key}}.regain_type">
                             {{#select feature.regain_type}}
                                 {{#each ../feature_usage_regain_types}}
@@ -39,9 +40,9 @@
                             {{/select}}
                         </select>
                         {{#if feature.show_usage_limits}}
-                            <div class="flexrow">
-                                <label for="system.features.{{key}}.usage_left">Current:</label>
-                                <input class="usage-input" name="system.features.{{key}}.usage_left" type="number" value="{{feature.usage_left}}" placeholder="{{ localize 'ATORIA.FeatureEffectTitle' }}"/>
+                            <div class="flexrow usage-area">
+                                {{!-- <label for="system.features.{{key}}.usage_left">Current:</label>
+                                <input class="usage-input" name="system.features.{{key}}.usage_left" type="number" value="{{feature.usage_left}}" placeholder="{{ localize 'ATORIA.FeatureEffectTitle' }}"/> --}}
                                 <label for="system.features.{{key}}.usage_max">Max:</label>
                                 <input class="usage-input" name="system.features.{{key}}.usage_max" type="number" value="{{feature.usage_max}}" placeholder="{{ localize 'ATORIA.FeatureEffectTitle' }}"/>
                             
@@ -49,8 +50,6 @@
                         {{/if}}
                     </div>
 
-                    <label>{{ localize "ATORIA.FeatureDescriptionTitle" }}</label>
-                    
                     <label class="description-area stacked" data-expandvalue="{{feature.description}}">
                         <textarea class="data-expand" rows="1" name="system.features.{{key}}.description" value="{{feature.description}}" translate="no">{{feature.description}}</textarea>
                     </label>

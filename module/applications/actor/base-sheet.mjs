@@ -177,6 +177,8 @@ export default class ActorAtoriaSheet extends ActorSheet {
     html.find('.item-detail').click(this._onItemDetail.bind(this));
     // Display Detail
     html.find('.effect-detail').click(this._onEffectDetail.bind(this));
+    // Display Detail
+    html.find('.feature-list-detail').click(this._onFeatureListDetail.bind(this));
 
     if (this.isEditable) {
       // Add Item
@@ -278,7 +280,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
 
     const desc_area = li.children(".description")
     if (li.hasClass("expanded")) {
-      this._expanded.delete(item.id);
+      this._expanded.delete(item._id);
     }
     else {
       const item_desc_area = desc_area.children(".item-description");
@@ -291,7 +293,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
         item_desc_area.html(rendered_description);
       }
       item_desc_area.slideDown(200);
-      this._expanded.add(item.id);
+      this._expanded.add(item._id);
     }
     li.toggleClass("expanded");
   }
@@ -384,10 +386,25 @@ export default class ActorAtoriaSheet extends ActorSheet {
     event.preventDefault();
     const li = event.currentTarget.closest(".effect");
     const effect = this.actor.effects.get(li.dataset.effectId);
-    console.dir(effect);
     return effect.sheet.render(true);
   }
 
+
+
+  _onFeatureListDetail(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    const id = header.dataset.id;
+    const item = this.actor.items.get(id);
+    const li = $(header).closest(".feature-list");
+    if (li.hasClass("expanded")) {
+      this._expanded.delete(item._id);
+    }
+    else {
+      this._expanded.add(item._id);
+    }
+    li.toggleClass("expanded");
+  }
 
   _onSortItems(event) {
     event.preventDefault();
