@@ -99,4 +99,22 @@ export class AtoriaItem extends Item {
     await this.update({ [`system.spell_supps.-=${key_id}`]: null });
   }
 
+
+  async apply_feature_regain(time_phase_type, log) {
+    if (this.type !== "feature-list") return
+
+    let modification = {};
+    console.log(`apply_feature_regain ${time_phase_type}`);
+    for (const [key, subfeature] of Object.entries(this.system.features)) {
+      if (subfeature.regain_type === time_phase_type) {
+        const old_amount = subfeature.usage_left;
+        const new_amount = subfeature.usage_max;
+        if (old_amount !== new_amount) {
+          log.push(game.i18n.format(game.i18n.localize("ATORIA.FeatureRegained"), { name: subfeature.name, amount: new_amount - old_amount }));
+          modification[`system.features.${key}.usage_left`] = subfeature.usage_max;
+        }
+      }
+    }
+    await this.update(modification);
+  }
 }

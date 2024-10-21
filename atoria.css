@@ -369,17 +369,58 @@
   background-color: #6db088;
 }
 .atoria .character-sheet .config-sheet {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
   display: inline-block;
   text-align: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
   vertical-align: middle;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  min-width: 50px;
+  max-width: 50px;
+  padding: 5px 5px;
+  padding-top: 8px;
+  overflow: hidden;
+}
+.atoria .character-sheet .config-sheet i {
+  font-size: 16px;
   min-width: 30px;
-  max-width: 60px;
-  padding: 8px 12px;
+  min-height: 30px;
+  max-width: 30px;
+  max-height: 30px;
+}
+.atoria .character-sheet .time-phase {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  padding: 3px;
+}
+.atoria .character-sheet .time-phase img {
+  border: none;
+  min-width: 30px;
+  min-height: 30px;
+  max-width: 30px;
+  max-height: 30px;
 }
 .atoria .character-sheet .img-sheet {
+  min-width: 36px;
+  min-height: 36px;
   max-width: 36px;
   max-height: 36px;
 }

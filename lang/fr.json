@@ -379,6 +379,28 @@
   "ATORIA.Invisible": "Invisible",
   "ATORIA.Slowed": "Ralenti",
   "ATORIA.Immobilised": "Immobilisé",
-  "ATORIA.Disability": "Incapacité"
+  "ATORIA.Disability": "Incapacité",
+
+
+
+  "ATORIA.Permanent" : "Permanent",
+  "ATORIA.Combat": "Combat",
+  "ATORIA.Rest": "Repos",
+  "ATORIA.Sleep": "Sommeil",
+  "ATORIA.ShortMoon": "Lune courte",
+  "ATORIA.LongMoon": "Lune longue",
+
+  "ATORIA.TIME_PHASE_PASSED": "Phase {time_phase} appliqué.",
+
+  "ATORIA.FeatureRegained": "{name} a regagné {amount} utilisation(s)",
+  "ATORIA.MedicalHealingRegained": "Medecine inactive a été perdu",
+  "ATORIA.HerbsHealingRegained": "Herbes inactive a été perdu",
+  "ATORIA.HealthRegainRegained": "Santé inactive a regagné {amount} utilisation(s)",
+  "ATORIA.EnduranceRegained": "Endurance inactive a été perdu",
+  "ATORIA.SanityRegained": "Sanité inactive a été perdu",
+  "ATORIA.ResurectionRegained": "Résurection inactive a été perdu",
+
+  "ATORIA.ConfirmTitle": "Confirmation nécessaire",
+  "ATORIA.ApplyRegainPhase": "Appliquer phase: {subject}"
 
 }

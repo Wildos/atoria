@@ -687,4 +687,97 @@ export class AtoriaActor extends Actor {
       }
     }
   }
+
+
+  async _apply_feature_regain(time_phase_type, log) {
+    for (const feature_list_cat in this.system.feature_categories) {
+      for (const feature_list_id in this.system.feature_categories[feature_list_cat]) {
+        const item = this.items.get(this.system.feature_categories[feature_list_cat][feature_list_id]);
+        if (item === undefined)
+          continue
+        await item.apply_feature_regain(time_phase_type, log);
+      }
+    }
+  }
+
+  async _apply_combat_regain(modification, log) {
+    await this._apply_feature_regain("combat", log);
+
+  }
+  async _apply_rest_regain(modification, log) {
+    await this._apply_feature_regain("rest", log);
+
+  }
+  async _apply_sleep_regain(modification, log) {
+    await this._apply_feature_regain("sleep", log);
+    if (this.system.medical_healing_used) {
+      log.push(game.i18n.localize("ATORIA.MedicalHealingRegained"));
+      modification["system.medical_healing_used"] = false;
+    }
+
+    if (this.system.medical_healing_used) {
+      log.push(game.i18n.localize("ATORIA.HerbsHealingRegained"));
+      modification["system.healing_herbs_used"] = false;
+    }
+
+    const old_amount = this.system.health_regain_inactive;
+    const new_amount = Math.max(0, this.system.health_regain_inactive - 2);
+    if (old_amount !== new_amount) {
+      modification["system.health_regain_inactive"] = new_amount;
+      log.push(game.i18n.format(game.i18n.localize("ATORIA.HealthRegainRegained"), { amount: old_amount - new_amount }));
+    }
+
+  }
+  async _apply_short_moon_regain(modification, log) {
+    await this._apply_feature_regain("short-moon", log);
+    if (this.system.endurance_regain_inactive) {
+      log.push(game.i18n.localize("ATORIA.EnduranceRegained"));
+      modification["system.endurance_regain_inactive"] = false;
+    }
+
+  }
+  async _apply_long_moon_regain(modification, log) {
+    await this._apply_feature_regain("long-moon", log);
+    if (this.system.sanity_regain_inactive) {
+      log.push(game.i18n.localize("ATORIA.SanityRegained"));
+      modification["system.sanity_regain_inactive"] = false;
+    }
+    if (this.system.resurrection_inactive) {
+      log.push(game.i18n.localize("ATORIA.ResurectionRegained"));
+      modification["system.resurrection_inactive"] = false;
+    }
+  }
+
+
+  async apply_regain_phase(time_phase_type) {
+    let mod_list = {};
+    let change_log = [game.i18n.format(game.i18n.localize("ATORIA.TIME_PHASE_PASSED"), { time_phase: CONFIG.ATORIA.TIME_PHASES_LABEL[time_phase_type] })];
+    switch (time_phase_type) {
+      case "combat":
+        await this._apply_combat_regain(mod_list, change_log);
+        break;
+      case "rest":
+        await this._apply_rest_regain(mod_list, change_log);
+        break;
+      case "sleep":// also a rest
+        await this._apply_rest_regain(mod_list, change_log);
+        await this._apply_sleep_regain(mod_list, change_log);
+        break;
+      case "short-moon":
+        await this._apply_short_moon_regain(mod_list, change_log);
+        break;
+      case "long-moon": // also a short-moon
+        await this._apply_short_moon_regain(mod_list, change_log);
+        await this._apply_long_moon_regain(mod_list, change_log);
+        break;
+    }
+    this.update(mod_list);
+    const speaker = ChatMessage.getSpeaker({ actor: this })
+    ChatMessage.create({
+      speaker: speaker,
+      whisper: game.users.filter(u => u.isGM),
+      blind: false,
+      content: change_log.join("<br>")
+    });
+  }
 }

@@ -138,14 +138,42 @@ export async function confirm_deletion(name, callback) {
     buttons: {
       confirm: {
         label: game.i18n.localize("ATORIA.ConfirmDeletion"),
-        callback: html => { console.log("chose confim"); callback(true) }
+        callback: html => { callback(true) }
       },
       cancel: {
         label: game.i18n.localize("ATORIA.CancelDeletion"),
-        callback: html => { console.log("chose cancel"); callback(false) }
+        callback: html => { callback(false) }
       }
     },
     default: "cancel",
-    close: () => { console.log("Closed"); callback(false) }
+    close: () => { callback(false) }
+  }, {}).render(true);
+}
+
+
+/**
+ * Confirm dialog
+ * Ask for confirmation for something
+ * @param {String} title Title to display
+ * @param {String} name Message to display
+ * @return {boolean} Has the user confirmed the action
+ */
+export async function confirm_dialog(title, message, callback) {
+  const content = message;
+  await new Dialog({
+    title,
+    content,
+    buttons: {
+      confirm: {
+        label: game.i18n.localize("ATORIA.Confirm"),
+        callback: html => { callback(true) }
+      },
+      cancel: {
+        label: game.i18n.localize("ATORIA.Cancel"),
+        callback: html => { callback(false) }
+      }
+    },
+    default: "cancel",
+    close: () => { callback(false) }
   }, {}).render(true);
 }

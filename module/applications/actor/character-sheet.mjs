@@ -4,7 +4,7 @@ import ActorSkillConfig from "../configurators/actor-skill-config.mjs"
 import ActorKnowledgeConfig from "../configurators/actor-knowledge-config.mjs";
 import ActorMagicConfig from "../configurators/actor-magic-config.mjs";
 
-import { confirm_deletion } from "../../utils.mjs"
+import { confirm_deletion, confirm_dialog } from "../../utils.mjs"
 
 /**
  * An Actor sheet for player character type actors.
@@ -481,7 +481,8 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       html.find(".config-magic").click(this._onConfigMagic.bind(this));
       html.find(".tickable-image").click(this._onTickableImage.bind(this));
 
-      html.find('input[data-update-item]').change(this._onUpdateItem.bind(this))
+      html.find('input[data-update-item]').change(this._onUpdateItem.bind(this));
+      html.find('.time-phase').click(this._onTimePhase.bind(this));
     }
 
     // Handle default listeners last so system listeners are triggered first
@@ -494,11 +495,25 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
    * 
    */
   _onUpdateItem(event) {
+    event.preventDefault();
     const { itemId, updateItem } = event.currentTarget.dataset;
     const item = this.actor.items.get(itemId);
     item.update({ [updateItem]: event.target.value });
   }
 
+
+
+  _onTimePhase(event) {
+    event.preventDefault();
+    const time_phase_type = event.currentTarget.dataset.regainType;
+    const title = game.i18n.localize("ATORIA.ConfirmTitle");
+    const message = game.i18n.format(game.i18n.localize("ATORIA.ApplyRegainPhase"), { subject: CONFIG.ATORIA.TIME_PHASES_LABEL[time_phase_type] });
+    confirm_dialog(title, message, async user_confirmed => {
+      if (user_confirmed) {
+        this.actor.apply_regain_phase(time_phase_type);
+      }
+    });
+  }
 
   _toggleFeatureListCategoryVisibility(event) {
     event.preventDefault();
