@@ -410,6 +410,11 @@
   "ATORIA.ApplyRegainPhase": "Apply phase: {subject}",
 
   "ATORIA.Confirm": "Confirm",
-  "ATORIA.Cancel": "Cancel"
+  "ATORIA.Cancel": "Cancel",
+
+  "ATORIA.FeatureCombat": "Combat",
+  "ATORIA.FeatureSkill": "Skill",
+  "ATORIA.FeatureMagic": "Magic",
+  "ATORIA.FeatureKnowledge": "Knowledge"
 
 }
