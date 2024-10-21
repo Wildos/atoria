@@ -401,6 +401,9 @@
   "ATORIA.ResurectionRegained": "Résurection inactive a été perdu",
 
   "ATORIA.ConfirmTitle": "Confirmation nécessaire",
-  "ATORIA.ApplyRegainPhase": "Appliquer phase: {subject}"
+  "ATORIA.ApplyRegainPhase": "Appliquer phase: {subject}",
+
+  "ATORIA.Confirm": "Confirmer",
+  "ATORIA.Cancel": "Annuler"
 
 }

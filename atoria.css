@@ -1677,8 +1677,8 @@
   -webkit-box-flex: 0;
   -ms-flex: 0;
   flex: 0;
-  min-width: 30px;
-  max-width: 30px;
+  min-width: 20px;
+  max-width: 20px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
