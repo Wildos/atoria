@@ -158,11 +158,17 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     const knowledge_features = map_feature_cat_func(features_category_knowledge)
     knowledge_features.sort((a, b) => { return a.name.localeCompare(b.name); });
 
+    const features_category_other = context.system.feature_categories.other;
+    const other_features = map_feature_cat_func(features_category_other)
+    other_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+
+
 
     context.combat_features = combat_features;
     context.skill_features = skill_features;
     context.magic_features = magic_features;
     context.knowledge_features = knowledge_features;
+    context.other_features = other_features;
 
 
     // Assign and return

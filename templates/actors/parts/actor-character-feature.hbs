@@ -57,4 +57,17 @@
         {{/each}}
     </div>
 
+    <div class="feature-list-category {{#if feature_list_cat_expandlist.other.isExpanded}}expanded{{/if}}" data-cat-name="other">
+        <h2 class="feature-list-label">{{localize "ATORIA.FeatureOther"}}
+            <a class="add-button item-create" data-type="feature-list" data-action="feature-list-item" data-parent="other" >
+                <i class="fas fa-plus"></i>
+            </a>
+            <a class="detail-button toggle-feature-list-category-visibility">
+                <i class="fas fa-circle-info"></i>
+            </a>
+        </h2>
+        {{#each other_features as |feature key|}}
+            {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="other"}}
+        {{/each}}
+    </div>
 </div>

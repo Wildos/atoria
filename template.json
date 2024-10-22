@@ -565,7 +565,8 @@
         "combat": [],
         "skill": [],
         "magic": [],
-        "knowledge": []
+        "knowledge": [],
+        "other": []
       }
     },
     "npc": {

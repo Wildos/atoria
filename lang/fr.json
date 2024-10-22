@@ -250,8 +250,8 @@
   
   "ATORIA.NameTitle": "Nom",
   "ATORIA.ArmorQuantityTitle": "Qté.",
-  "ATORIA.ArmorEncumbranceTitle": "Encmb.",
-  "ATORIA.ArmorEffectTitle": "Bonus et enchantement",
+  "ATORIA.ArmorEncumbranceTitle": "Encbr.",
+  "ATORIA.ArmorEffectTitle": "Effets",
   "ATORIA.ItemEffectTitle": "Effets",
 
   "ATORIA.ArmorHead": "Tête",
@@ -291,7 +291,7 @@
   "ATORIA.ItemDescriptionTitle": "Description",
 
 
-  "ATORIA.SpellTitle": "Liste de sorts",
+  "ATORIA.SpellTitle": "Liste des sorts",
   "ATORIA.SpellDetailTitle": "Détails des sorts",
 
   "ATORIA.SpellNameTitle": "Nom", 
@@ -409,6 +409,7 @@
   "ATORIA.FeatureCombat": "Combat",
   "ATORIA.FeatureSkill": "Compétence",
   "ATORIA.FeatureMagic": "Magie",
-  "ATORIA.FeatureKnowledge": "Connaissance"
+  "ATORIA.FeatureKnowledge": "Connaissance",
+  "ATORIA.FeatureOther": "Autre"
 
 }

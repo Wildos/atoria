@@ -415,6 +415,7 @@
   "ATORIA.FeatureCombat": "Combat",
   "ATORIA.FeatureSkill": "Skill",
   "ATORIA.FeatureMagic": "Magic",
-  "ATORIA.FeatureKnowledge": "Knowledge"
+  "ATORIA.FeatureKnowledge": "Knowledge",
+  "ATORIA.FeatureOther": "Other"
 
 }
