@@ -21,8 +21,17 @@
   "TYPES.Item.featurePl": "Traits",
   "TYPES.Item.skill": "Compétence",
   "TYPES.Item.skillPl": "Compétences",
+  "TYPES.Item.action-modifier": "Technique/Ajout",
+  "TYPES.Item.action-modifierPl": "Techniques/Ajouts",
 
 
+  "ATORIA.Type": "Type",
+  "ATORIA.Technique": "Technique",
+  "ATORIA.IncantatoryAddition": "Ajout",
+
+  "ATORIA.UsableTechniques": "Techniques utilisables",
+  "ATORIA.UsableIncantatoryAddition": "Ajouts utilisables",
+  
 
   "MIGRATION.Begin": "Une migration de données a commencé vers la version {version}",
   "MIGRATION.Complete": "Une migration de données a terminé vers la version {version}\nIl y a eu {numberOfFailure} erreur lors de la migration",
@@ -36,18 +45,21 @@
   "ATORIA.ConfirmDeletion": "Confirmer suppression",
   "ATORIA.CancelDeletion": "Annuler suppression",
 
-
+  "ATORIA.SuppNaming": "Supp. {index}",
 
   "ATORIA.SheetClassCharacter": "AtoriaCharacterSheet",
   "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
   "ATORIA.SheetClassGear": "AtoriaGearSheet",
   "ATORIA.SheetClassAction": "AtoriaActionSheet",
+  "ATORIA.SheetClassActionModifier": "AtoriaActionModifierSheet",
   "ATORIA.SheetClassSpell": "AtoriaSpellSheet",
   "ATORIA.SheetClassFeature": "AtoriaFeatureSheet",
   "ATORIA.SheetClassSkill": "AtoriaSkillSheet",
 
+  "ATORIA.Healing": "Soins",
+
   "ATORIA.NewItem": "Sans nom",
-  "ATORIA.NewEffect": "Nouvel Effect",
+  "ATORIA.NewEffect": "Nouvel Effet",
 
   "ATORIA.ActiveEffectOverrideWarning": "You are about to override data",
 
@@ -66,6 +78,7 @@
   "ATORIA.CharacterPage": "Personnage",
   "ATORIA.InventoryPage": "Inventaire",
   "ATORIA.SpellPage": "Sorts",
+  "ATORIA.ActionModifierPage": "Techniques et Ajouts",
 
   "ATORIA.PerceptionTitle": "Perception",
   "ATORIA.Perception.Sight": "Vue",
@@ -78,6 +91,7 @@
   "ATORIA.Name": "Nom",
   "ATORIA.Health": "Santé",
   "ATORIA.HealthMax": "Santé Max.",
+  "ATORIA.Absorption": "Absorption",
   "ATORIA.Stamina": "Vigueur",
   "ATORIA.StaminaMax": "Vigueur Max.",
   "ATORIA.Mana": "Mana",
@@ -91,6 +105,9 @@
   "ATORIA.Armor": "Armure",
   "ATORIA.Initiative": "Initiative",
   "ATORIA.Movement": "Mouvement",
+
+  "ATORIA.Time": "Temps",
+  "ATORIA.Restriction": "Restriction",
 
   "ATORIA.Luck": "Chance",
 
@@ -146,6 +163,7 @@
   "ATORIA.Reflex": "Réflexe",
   "ATORIA.Evasion": "Esquive",
   "ATORIA.Opportuneness": "Opportunité",
+  "ATORIA.Parade": "Parade",
   "ATORIA.Sturdiness": "Robustesse",
   "ATORIA.Force": "Force",
   "ATORIA.Tenacity": "Ténacité",
@@ -162,7 +180,7 @@
   "ATORIA.Polearm": "Hast",
   "ATORIA.Haft-slashing-piercing": "Emmanchée - Tranchant et Perforant",
   "ATORIA.Haft-bludgeonning": "Emmanchée - Contondant",
-  "ATORIA.Parade": "Parade",
+  "ATORIA.Shield": "Bouclier",
   "ATORIA.Shooting": "Tir",
   "ATORIA.Throw": "Jet",
   "ATORIA.Focus": "Focalisateur",
@@ -232,8 +250,8 @@
   
   "ATORIA.NameTitle": "Nom",
   "ATORIA.ArmorQuantityTitle": "Qté.",
-  "ATORIA.ArmorEncumbranceTitle": "Encmb.",
-  "ATORIA.ArmorEffectTitle": "Bonus et enchantement",
+  "ATORIA.ArmorEncumbranceTitle": "Encbr.",
+  "ATORIA.ArmorEffectTitle": "Effets",
   "ATORIA.ItemEffectTitle": "Effets",
 
   "ATORIA.ArmorHead": "Tête",
@@ -255,6 +273,7 @@
 
   "ATORIA.ActionNameTitle": "Nom",
   "ATORIA.ActionEffectRollTitle": "Formule d'effet",
+  "ATORIA.ActionEffectTitle" : "Effet",
   "ATORIA.ActionDescriptionTitle": "Description",
 
   "ATORIA.FeatureNameTitle": "Nom",
@@ -272,7 +291,7 @@
   "ATORIA.ItemDescriptionTitle": "Description",
 
 
-  "ATORIA.SpellTitle": "Liste de sorts",
+  "ATORIA.SpellTitle": "Liste des sorts",
   "ATORIA.SpellDetailTitle": "Détails des sorts",
 
   "ATORIA.SpellNameTitle": "Nom", 
@@ -297,6 +316,13 @@
   "ATORIA.SpellSuppTitle": "Supplémentaire",
 
 
+  "ATORIA.Offense": "Offense",
+  "ATORIA.Defense": "Défense",
+
+  "ATORIA.Techniques": "Techniques",
+  "ATORIA.IncantatoryAdditions": "Ajouts",
+
+
   "ATORIA.RollSL": "DR",
   "ATORIA.RollResult": "Résultat",
   "ATORIA.RollMS": "Diff",
@@ -304,6 +330,86 @@
   "MACRO.AtrMissingTargetWarn": "Votre personnage '{actor}' n'a pas de '{type}' avec le nom '{name}'.",
   "MACRO.AtrMultipleTargetsWarn": "Votre personnage '{actor}' a plus d'un '{type}' avec le nom '{name}'. Le premier sera utilisé.",
   "MACRO.AtrNoActorSelected": "Aucun personage selectionné ou assigné n'a pu être trouvé pour la macro.",
-  "MACRO.AtrUnownedWarn": "Vous ne pouvez créer de macro que pour des objects qui vous appartienne."
+  "MACRO.AtrUnownedWarn": "Vous ne pouvez créer de macro que pour des objects qui vous appartienne.",
+
+
+  "ATORIA.Concentration": "Concentration",
+  "ATORIA.Preparing": "Préparation",
+  "ATORIA.Evocation": "Évocation",
+  "ATORIA.Channelling": "Canalisation",
+  "ATORIA.Bleeding": "Saignement",
+  "ATORIA.Abused": "Brutalisé",
+  "ATORIA.Abused+": "Brutalisé+",
+  "ATORIA.Prone": "Renversé",
+  "ATORIA.Burning": "Enflammé",
+  "ATORIA.Burning+": "Enflammé+",
+  "ATORIA.Moist": "Humide",
+  "ATORIA.Frostbite": "Gelure",
+  "ATORIA.Unconscious": "Inconscient",
+  "ATORIA.Dead": "Mort",
+  "ATORIA.Stunned": "Étourdi",
+  "ATORIA.Banished": "Banni",
+  "ATORIA.Afraid": "Effrayé",
+  "ATORIA.Panic": "Paniqué",
+  "ATORIA.Terrified": "Terrifié",
+  "ATORIA.Dazed": "Hébété",
+  "ATORIA.Seduced": "Séduit",
+  "ATORIA.Charmed": "Charmé",
+  "ATORIA.Captivated": "Subjugué",
+  "ATORIA.Control": "Contrôlé",
+  "ATORIA.Provoked": "Provoqué",
+  "ATORIA.Provoked+": "Provoqué+",
+  "ATORIA.Enraged": "Enragé",
+  "ATORIA.Radiate": "Irradié",
+  "ATORIA.Conductive": "Conducteur",
+  "ATORIA.Shocked": "Choqué",
+  "ATORIA.Numb": "Engourdi",
+  "ATORIA.Numb+": "Engourdi+",
+  "ATORIA.Hungry": "Affamé",
+  "ATORIA.Dehydrated": "Déshydrater",
+  "ATORIA.Drunk": "Ébriété",
+  "ATORIA.Hangover": "Gueule de bois",
+  "ATORIA.Tired": "Fatigué",
+  "ATORIA.Rested": "Reposé",
+  "ATORIA.Incurable": "Incurable",
+  "ATORIA.Incurable+": "Incurable+",
+  "ATORIA.Blindness": "Cécité",
+  "ATORIA.Deaf": "Surdité",
+  "ATORIA.Silenced": "Silence",
+  "ATORIA.Invisible": "Invisible",
+  "ATORIA.Slowed": "Ralenti",
+  "ATORIA.Immobilised": "Immobilisé",
+  "ATORIA.Disability": "Incapacité",
+
+
+
+  "ATORIA.Permanent" : "Permanent",
+  "ATORIA.Combat": "Combat",
+  "ATORIA.Rest": "Repos",
+  "ATORIA.Sleep": "Sommeil",
+  "ATORIA.ShortMoon": "Lune courte",
+  "ATORIA.LongMoon": "Lune longue",
+
+  "ATORIA.TIME_PHASE_PASSED": "Phase {time_phase} appliqué.",
+
+  "ATORIA.FeatureRegained": "{name} a regagné {amount} utilisation(s)",
+  "ATORIA.MedicalHealingRegained": "Medecine inactive a été perdu",
+  "ATORIA.HerbsHealingRegained": "Herbes inactive a été perdu",
+  "ATORIA.HealthRegainRegained": "Santé inactive a regagné {amount} utilisation(s)",
+  "ATORIA.EnduranceRegained": "Endurance inactive a été perdu",
+  "ATORIA.SanityRegained": "Sanité inactive a été perdu",
+  "ATORIA.ResurectionRegained": "Résurection inactive a été perdu",
+
+  "ATORIA.ConfirmTitle": "Confirmation nécessaire",
+  "ATORIA.ApplyRegainPhase": "Appliquer phase: {subject}",
+
+  "ATORIA.Confirm": "Confirmer",
+  "ATORIA.Cancel": "Annuler",
+
+  "ATORIA.FeatureCombat": "Combat",
+  "ATORIA.FeatureSkill": "Compétence",
+  "ATORIA.FeatureMagic": "Magie",
+  "ATORIA.FeatureKnowledge": "Connaissance",
+  "ATORIA.FeatureOther": "Autre"
 
 }

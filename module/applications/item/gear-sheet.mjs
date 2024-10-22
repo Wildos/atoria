@@ -45,6 +45,14 @@ export default class ItemAtoriaSheetGear extends ItemSheet {
       isOwned: !(this.actor === undefined || this.actor === null)
     });
     
+    if (context.isWeapon) { // Have data for related technique
+      const action_modifier = this.actor.get_action_modifiers();
+      context.technique_list = action_modifier["technique"];
+      action_modifier["technique"].forEach((element) => {
+        item.system.related_techniques[element._id] = item.system.related_techniques[element._id] || false;
+      });
+    }
+
     context.descriptionHTML = await TextEditor.enrichHTML(item.system.effect_description, {async: true});
 
     return context;

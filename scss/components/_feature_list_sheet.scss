@@ -1,0 +1,122 @@
+.feature-list-sheet {
+    .flexcol {
+
+        label, input, textarea {
+            line-height: var(--form-field-height);
+            // max-height: var(--form-field-height);
+            min-height: var(--form-field-height);
+        }
+
+        .name-title {
+            .delete-button {
+                position: absolute;
+                right: 0;
+                flex: 0;
+                line-height: var(--form-field-height);
+                min-height: var(--form-field-height);
+                display: inline-block;
+                text-align: center;
+                align-items: center;
+                vertical-align: middle;
+                margin-right: 10px;
+            }
+        }
+
+        .color-choice-area {
+            margin-top: 3px;
+
+            input[type=checkbox] {
+                margin: 0;
+                margin-right: 5px;
+            }
+            .feature-color-value[value="#00000000"] ~ .feature-color-picker {
+                display: none;
+            }
+        }
+
+        .subfeature {
+            padding-bottom: 10px;
+            border-bottom: 5px solid black;
+            margin-bottom: 10px;
+
+            & > * {
+                margin-bottom: 3px;
+            }
+
+            .delete-button {
+                flex: 0;
+                line-height: var(--form-field-height);
+                min-height: var(--form-field-height);
+                display: inline-block;
+                text-align: center;
+                align-items: center;
+                vertical-align: middle;
+                margin-left: 3px;
+                margin-right: 3px;
+            }
+
+            .regain-area {
+                column-gap: 5px;
+                .regain-type-select {
+                    flex: 2;
+                }
+                .usage-area {
+                    column-gap: 5px;
+                    .usage-input {
+                        min-width: 35px;
+                    }
+                }
+            }
+
+            .description-area  {
+                display: inline-grid;
+                vertical-align: top;
+                align-items: center;
+                position: relative;
+                border: solid 1px;
+                padding: 0;
+                margin: 0px;
+                
+                &.stacked {
+                    align-items: stretch;
+                    
+                    &::after,
+                    input,
+                    textarea {
+                    grid-area: 2 / 1;
+                    }
+                }
+                
+                &::after,
+                input,
+                textarea {
+                    width: auto;
+                    min-width: 3px;
+                    grid-area: 1 / 2;
+                    font: inherit;
+                    padding: 0;
+                    margin: 0;
+                    resize: none;
+                    background: none;
+                    appearance: none;
+                    border: none;
+                }
+                
+                
+                &::after {
+                    content: attr(data-expandvalue) ' ';
+                    visibility: hidden;
+                    white-space: pre-wrap;
+                }
+                
+                &:focus-within {
+                    textarea:focus,
+                    input:focus {
+                    outline: none;
+                    }
+                }
+            }
+                
+        }
+    }
+}

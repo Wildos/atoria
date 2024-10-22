@@ -22,14 +22,6 @@
         min-width: 250px;
         max-width: 250px;
 
-        display: grid;
-        grid-column: span 2/span 2;
-        grid-template-columns: 60px 1fr;
-        grid-template-rows: repeat(auto-fill, auto);
-        gap: 0;
-        margin: 0;
-        padding: 0;
-
         .flexrow, .flexcol{
             height: fit-content;
         }
@@ -77,15 +69,10 @@
             padding-right: 3px;
         }
 
-        .category-title {
-            min-width: 60px;
-            max-width: 60px;
-            align-items: center;
-            display: flex;
-        }
-
         .success-value-title {
             height: var(--form-field-height);
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .success-value {
@@ -113,6 +100,8 @@
 
         .cost-title {
             height: var(--form-field-height);
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .cost-input {
@@ -125,16 +114,16 @@
         }
 
         .time-preparation-title {
-            min-width: 90px;
-            max-width: 90px;
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .time-preparation {
         }
 
         .time-duration-title {
-            min-width: 70px;
-            max-width: 70px;
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .time-duration {
@@ -152,15 +141,16 @@
         }
 
         .components-verbal-title {
-            min-width: 90px;
-            max-width: 90px;
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .components-verbal {
         }
 
         .components-somatic-title {
-
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .components-somatic {
@@ -168,7 +158,8 @@
         }
 
         .components-material-title {
-
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .components-material {
@@ -181,8 +172,8 @@
         }
 
         .targeting-target-title {
-            min-width: 50px;
-            max-width: 50px;
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .targeting-target {
@@ -190,8 +181,8 @@
         }
 
         .targeting-range-title {
-            min-width: 50px;
-            max-width: 50px;
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .targeting-range {
@@ -199,8 +190,8 @@
         }
 
         .targeting-area-title {
-            min-width: 50px;
-            max-width: 50px;
+            min-width: 80px;
+            max-width: 80px;
         }
 
         .targeting-area {
@@ -244,7 +235,7 @@
             grid-column-end: span 2;
         }
 
-        .cost-input.time {
+        .cost-input.restriction {
             min-width: 100px;
             max-width: 100px;
         }
@@ -271,12 +262,23 @@
             }
         }
 
+        .action-modifier-name {
+            font-weight: bold;
+        }
+
+        .additional-effect {
+            min-width: 100px;
+            max-height: var(--form-field-height);
+            text-align: left;
+        }
+
+
         .skill-effect-list {
-            min-width: 75px;
+            min-width: 100px;
         }
 
         .skill-effect {
-            min-width: 75px;
+            min-width: 100px;
             max-height: var(--form-field-height);
             text-align: right;
         }

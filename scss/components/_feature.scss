@@ -161,8 +161,8 @@
         width: max-content;
     
         .title-label {
-            max-width: 280px;
-            min-width: 280px;
+            max-width: 300px;
+            min-width: 300px;
             height: var(--form-field-height);
             line-height: var(--form-field-height);
             
@@ -180,8 +180,8 @@
             width: max-content;
     
             .name-label {
-                max-width: 200px;
-                min-width: 200px;
+                max-width: 220px;
+                min-width: 220px;
                 height: var(--form-field-height);
                 line-height: var(--form-field-height);overflow: hidden;
                 white-space: nowrap;
@@ -190,8 +190,8 @@
                 padding-right: 4px;
             }
             .longname-label {
-                max-width: 260px;
-                min-width: 260px;
+                max-width: 280px;
+                min-width: 280px;
                 height: var(--form-field-height);
                 line-height: var(--form-field-height);overflow: hidden;
                 white-space: nowrap;
@@ -216,8 +216,8 @@
             }
     
             .description {
-                max-width: 280px;
-                min-width: 280px;
+                max-width: 300px;
+                min-width: 300px;
                 line-height: var(--form-field-height);
                 // max-height: fit-content;
                 min-height: var(--form-field-height);

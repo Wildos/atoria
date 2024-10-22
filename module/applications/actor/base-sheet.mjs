@@ -1,6 +1,6 @@
 import ActorConfig from "../configurators/actor-config.mjs"
 
-import {confirm_deletion} from "../../utils.mjs"
+import { confirm_deletion } from "../../utils.mjs"
 
 /**
  * Extend the basic ActorSheet class to suppose system-specific logic and functionality.
@@ -52,7 +52,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
       isNPC: this.actor.type === "npc",
       isCharacter: this.actor.type === "character"
     });
-    
+
 
     // Use a safe clone of the actor data for further operations.
     const actorData = this.actor.toObject(false);
@@ -68,10 +68,10 @@ export default class ActorAtoriaSheet extends ActorSheet {
 
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
-    
+
     const console_data = foundry.utils.mergeObject(this.actor, {});
     context.effects = this._prepareEffects(this.actor.effects);
-    
+
     await this.fillExpandedData(context);
 
     return context;
@@ -86,9 +86,9 @@ export default class ActorAtoriaSheet extends ActorSheet {
         switch (item.type) {
           case "action":
           case "feature":
-          case "gear-consumable": 
-          case "gear-equipment": 
-          case "gear-ingredient": 
+          case "gear-consumable":
+          case "gear-equipment":
+          case "gear-ingredient":
           case "gear-weapon": {
             context.expandedData[id] = await TextEditor.enrichHTML(item.system.description, {
               async: true,
@@ -103,10 +103,10 @@ export default class ActorAtoriaSheet extends ActorSheet {
         const effect = this.actor.effects.get(id);
         if (!effect) continue;
         context.expandedData[id] = await TextEditor.enrichHTML(effect.description, {
-            async: true,
-            relativeTo: effect,
-            ...{}
-          });
+          async: true,
+          relativeTo: effect,
+          ...{}
+        });
       }
     }
   }
@@ -118,7 +118,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
   /* -------------------------------------------- */
 
   /** @inheritdoc */
-  async activateEditor(name, options={}, initialContent="") {
+  async activateEditor(name, options = {}, initialContent = "") {
     options.relativeLinks = true;
     return super.activateEditor(name, options, initialContent);
   }
@@ -143,16 +143,17 @@ export default class ActorAtoriaSheet extends ActorSheet {
    * Each subclass overrides this method to implement type-specific logic.
    * @protected
    */
-  _prepareData(context) {}
-  
+  _prepareData(context) { }
+
 
 
 
   _prepareEffects(effects) {
-    const effects_sorted = [];    
+    const effects_sorted = [];
     // Iterate over active effects, classifying them into categories
-    for ( let e of effects ) {
+    for (let e of effects) {
       e.isExpanded = this._expanded.has(e.id);
+      e.duration.is_none = (e.duration.type == "none");
       effects_sorted.push(e);
       // if ( e.disabled ) continue;
       // else if ( e.isTemporary ) effects_sorted.temporary.push(e);
@@ -176,8 +177,10 @@ export default class ActorAtoriaSheet extends ActorSheet {
     html.find('.item-detail').click(this._onItemDetail.bind(this));
     // Display Detail
     html.find('.effect-detail').click(this._onEffectDetail.bind(this));
+    // Display Detail
+    html.find('.feature-list-detail').click(this._onFeatureListDetail.bind(this));
 
-    if ( this.isEditable ) {
+    if (this.isEditable) {
       // Add Item
       html.find('.item-create').click(this._onItemCreate.bind(this));
       // Config Item
@@ -247,7 +250,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
     // Grab any data associated with this control.
     const data = duplicate(header.dataset);
     // Initialize a default name.
-    const name = game.i18n.format(game.i18n.localize("ATORIA.NewItem"), {itemType: type.capitalize()});
+    const name = game.i18n.format(game.i18n.localize("ATORIA.NewItem"), { itemType: type.capitalize() });
     // Prepare the item object.
     const itemData = {
       name: name,
@@ -258,7 +261,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
     delete itemData.system["type"];
 
     // Finally, create the item!
-    return await Item.create(itemData, {parent: this.actor});
+    return await Item.create(itemData, { parent: this.actor });
   }
 
 
@@ -276,8 +279,8 @@ export default class ActorAtoriaSheet extends ActorSheet {
     const li = $(header).closest(".item");
 
     const desc_area = li.children(".description")
-    if ( li.hasClass("expanded") ) {
-      this._expanded.delete(item.id);
+    if (li.hasClass("expanded")) {
+      this._expanded.delete(item._id);
     }
     else {
       const item_desc_area = desc_area.children(".item-description");
@@ -290,7 +293,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
         item_desc_area.html(rendered_description);
       }
       item_desc_area.slideDown(200);
-      this._expanded.add(item.id);
+      this._expanded.add(item._id);
     }
     li.toggleClass("expanded");
   }
@@ -307,7 +310,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
     const item = this.actor.items.get(li.dataset.itemId);
     return item.sheet.render(true);
   }
-  
+
 
   async _onItemDelete(event) {
     const li = $(event.currentTarget).parents(".item");
@@ -354,7 +357,7 @@ export default class ActorAtoriaSheet extends ActorSheet {
 
 
     const desc_area = li.children(".description")
-    if ( li.hasClass("expanded") ) {
+    if (li.hasClass("expanded")) {
       this._expanded.delete(id);
     }
     else {
@@ -387,12 +390,28 @@ export default class ActorAtoriaSheet extends ActorSheet {
   }
 
 
+
+  _onFeatureListDetail(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    const id = header.dataset.id;
+    const item = this.actor.items.get(id);
+    const li = $(header).closest(".feature-list");
+    if (li.hasClass("expanded")) {
+      this._expanded.delete(item._id);
+    }
+    else {
+      this._expanded.add(item._id);
+    }
+    li.toggleClass("expanded");
+  }
+
   _onSortItems(event) {
     event.preventDefault();
     const header = event.currentTarget;
     const type = header.dataset.type;
     this.actor.onSortItems(type, {
-      "action" : header.dataset.action
+      "action": header.dataset.action
     });
   }
 

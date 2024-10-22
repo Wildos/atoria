@@ -51,6 +51,7 @@ ATORIA.SKILLS_LABEL = {
     "reflex": "ATORIA.Reflex",
     "evasion": "ATORIA.Evasion",
     "opportuneness": "ATORIA.Opportuneness",
+    "parade": "ATORIA.Parade",
     "sturdiness": "ATORIA.Sturdiness",
     "force": "ATORIA.Force",
     "tenacity": "ATORIA.Tenacity",
@@ -65,7 +66,7 @@ ATORIA.SKILLS_LABEL = {
     "polearm": "ATORIA.Polearm",
     "haft-slashing-piercing": "ATORIA.Haft-slashing-piercing",
     "haft-bludgeonning": "ATORIA.Haft-bludgeonning",
-    "parade": "ATORIA.Parade",
+    "shield": "ATORIA.Shield",
     "shooting": "ATORIA.Shooting",
     "throw": "ATORIA.Throw",
     "focus": "ATORIA.Focus",
@@ -78,13 +79,17 @@ ATORIA.COMBAT_SKILL = {
     "polearm": "ATORIA.Polearm",
     "haft-slashing-piercing": "ATORIA.Haft-slashing-piercing",
     "haft-bludgeonning": "ATORIA.Haft-bludgeonning",
-    "parade": "ATORIA.Parade",
+    "shield": "ATORIA.Shield",
     "shooting": "ATORIA.Shooting",
     "throw": "ATORIA.Throw",
     "focus": "ATORIA.Focus",
     "instrument": "ATORIA.Instrument",
 };
 
+ATORIA.ACTION_MODIFIER_TYPE = {
+    "technique": "ATORIA.Technique",
+    "incantatory_addition": "ATORIA.IncantatoryAddition",
+};
 
 ATORIA.KNOWLEDGES_LABEL = {
     "artistic": "ATORIA.Artistic",
@@ -138,10 +143,44 @@ ATORIA.MAGICS_LABEL = {
 }
 
 
+ATORIA.TIME_PHASES_PERMANENT = "permanent"
+
+ATORIA.TIME_PHASES = [
+    "permanent",
+    "combat",
+    "rest",
+    "sleep",
+    "short-moon",
+    "long-moon"
+]
+
+ATORIA.TIME_PHASES_LABEL = {
+    "permanent": "ATORIA.Permanent",
+    "combat": "ATORIA.Combat",
+    "rest": "ATORIA.Rest",
+    "sleep": "ATORIA.Sleep",
+    "short-moon": "ATORIA.ShortMoon",
+    "long-moon": "ATORIA.LongMoon"
+}
+
 export function localize_config() {
     for (let key in ATORIA.COMBAT_SKILL) {
         if (key in ATORIA.COMBAT_SKILL) {
             ATORIA.COMBAT_SKILL[key] = game.i18n.localize(ATORIA.COMBAT_SKILL[key]);
+        } else {
+            console.error(`Localisation error: Key not found in array: '${key}'`);
+        }
+    }
+    for (let key in ATORIA.ACTION_MODIFIER_TYPE) {
+        if (key in ATORIA.ACTION_MODIFIER_TYPE) {
+            ATORIA.ACTION_MODIFIER_TYPE[key] = game.i18n.localize(ATORIA.ACTION_MODIFIER_TYPE[key]);
+        } else {
+            console.error(`Localisation error: Key not found in array: '${key}'`);
+        }
+    }
+    for (let key in ATORIA.TIME_PHASES_LABEL) {
+        if (key in ATORIA.TIME_PHASES_LABEL) {
+            ATORIA.TIME_PHASES_LABEL[key] = game.i18n.localize(ATORIA.TIME_PHASES_LABEL[key]);
         } else {
             console.error(`Localisation error: Key not found in array: '${key}'`);
         }

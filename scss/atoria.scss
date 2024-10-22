@@ -11,6 +11,10 @@
 
 /* Styles limited to atoria sheets */
 @import 'components/configurators';
+
+/* Styles working in sheet and chat*/
+@import 'components/action_modifier';
+
 .atoria {
     font-family: $font-primary;
 
@@ -20,6 +24,7 @@
     @import 'components/action_sheet';
     @import 'components/skill_sheet';
     @import 'components/feature_sheet';
+    @import 'components/feature_list_sheet';
     @import 'components/gear_sheet';
 
 
@@ -28,35 +33,40 @@
     @import 'components/perceptions';
     @import 'components/combat';
     @import 'components/feature';
+    @import 'components/feature_list';
     @import 'components/skill';
     @import 'components/knowledge';
     @import 'components/effects';
     @import 'components/inventory';
     @import 'components/spell';
+    @import 'components/action_mod_page';
 
     @import 'dialogs/test_dialog';
 
-  input, textarea{
+  input:not([type='image']), textarea{
     background-color: $clear-color;
   }
 
   .perception {
     background-color: $perception-color;
   }
-  .health {
+  .health.health {
     background-color: $health-color;
   }
-  .stamina {
+  .healing {
+    background-color: $healing-color;
+  }
+  .stamina.stamina {
     background-color: $stamina-color;
   }
-  .mana {
+  .mana.mana {
     background-color: $mana-color;
   }
 
-  .sanity {
+  .sanity.sanity {
     background-color: $sanity-color;
   }
-  .endurance {
+  .endurance.endurance {
     background-color: $endurance-color;
   }
   .encumbrance {
@@ -67,13 +77,13 @@
     background-color: $encumbrance-normal-color;
   }
   .encumbrance-above-max {
-    background-color: $encumbrance-above-max-color;
+    background-color: $encumbrance-above-max-color !important;
   }
   .encumbrance-stealth-malus {
-    background-color: $encumbrance-stealth-malus-color;
+    background-color: $encumbrance-stealth-malus-color !important;
   }
   .encumbrance-stealth-bonus {
-    background-color: $encumbrance-stealth-bonus-color;
+    background-color: $encumbrance-stealth-bonus-color !important;
   }
   .armor, .initiative, .movement {
     background-color: $neutral-color;

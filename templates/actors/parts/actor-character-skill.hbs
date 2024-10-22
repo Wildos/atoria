@@ -6,14 +6,15 @@
     </label>
     <div class="flexrow">
         <div class="flex0">
-            <div class="skill-row">
+            <div class="skill-row item-list">
+                <label class="subtitle">Physiques</label>
                 {{#each formatted_skills.left as |skill_cat key|}}
                     <div class="category-area" style="grid-row-end: span {{skill_cat.sub_skills.length}}">
                         <label class="category-title">{{skill_cat.name}}</label>
                     </div>
                     {{#each skill_cat.sub_skills as |skill subkey|}}
                         <div class="flexrow hotbar-able" data-type="skill" data-id="{{skill.id}}">
-                            <label class="name rollable" data-type="skill" data-id="{{skill.id}}">{{skill.name}}</label>
+                            <label class="name rollable {{skill.special_css_class}}" data-type="skill" data-id="{{skill.id}}">{{skill.name}}</label>
                             <label class="value-label">{{skill.success_value}}</label>
                         </div>
                     {{/each}}
@@ -22,6 +23,7 @@
         </div>
         <div class="flex0">
             <div class="skill-row item-list">
+                <label class="subtitle">Sociales</label>
                 {{#each formatted_skills.right as |skill_cat key|}}
                     <div class="category-area" style="grid-row-end: span {{skill_cat.sub_skills.length}}">
                         <label class="category-title">{{skill_cat.name}}</label>

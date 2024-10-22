@@ -31,6 +31,20 @@
         <input name="system.encumbrance" type="number" data-dtype="Number" value="{{item.system.encumbrance}}" placeholder="{{ localize 'ATORIA.Encumbrance' }}"/>
         <label>{{ localize "ATORIA.ItemDescriptionTitle" }}</label>
         
+        {{#if isWeapon}}
+        <div class="flexcol">
+            <label>{{ localize 'ATORIA.UsableTechniques'}}</label>
+            {{#each technique_list as |technique key|}}
+            <div class="flexrow action-modifier">
+                <input type="checkbox" name="system.related_techniques.{{technique._id}}" data-dtype="Boolean" {{checked (lookup ../system.related_techniques technique._id)}}/>
+                <div class="flexcol">
+                    <label class="name">{{{technique.name}}}</label>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+
         <div class="description-area">
             {{editor descriptionHTML target="system.description" button=false editable=true engine="prosemirror" collaborate=false}}
         </div>

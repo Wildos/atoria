@@ -1,0 +1,46 @@
+CC BY 3.0 : https://creativecommons.org/licenses/by/3.0/
+CC0 PDD : https://creativecommons.org/publicdomain/zero/1.0/
+
+chained-heart.svg : https://game-icons.net/1x1/lorc/chained-heart.html, by Lorc under CC BY 3.0
+hearts.svg : https://game-icons.net/1x1/skoll/hearts.html, by Skoll under CC BY 3.0
+death-juice.svg : https://game-icons.net/1x1/darkzaitzev/death-juice.html, by DarkZaitzev under CC BY 3.0
+skull-with-syringe.svg : https://game-icons.net/1x1/zajkonur/skull-with-syringe.html, by Zajkonur under CC BY 3.0
+herbs-bundle.svg : https://game-icons.net/1x1/delapouite/herbs-bundle.html, by Delapouite under CC BY 3.0
+medical-pack.svg : https://game-icons.net/1x1/sbed/medical-pack.html, by sbed under CC BY 3.0
+heart-drop.svg : https://game-icons.net/1x1/lorc/heart-drop.html, by Lorc under CC BY 3.0
+meat.svg : https://game-icons.net/1x1/lorc/meat.html, by Lorc under CC BY 3.0
+waterskin.svg : https://game-icons.net/1x1/delapouite/waterskin.html, by Delapouite under CC BY 3.0
+wrapped-heart.svg : https://game-icons.net/1x1/lorc/wrapped-heart.html, by Lorc under CC BY 3.0
+lovers.svg : https://game-icons.net/1x1/delapouite/lovers.html, by Delapouite under CC BY 3.0
+hearts.svg : https://game-icons.net/1x1/skoll/hearts.html, by Skoll under CC BY 3.0
+bleeding-wound.svg : https://game-icons.net/1x1/lorc/bleeding-wound.html, by Lorc under CC BY 3.0
+sticky-boot.svg : https://game-icons.net/1x1/delapouite/sticky-boot.html, by Delapouite under CC BY 3.0
+angry-eyes.svg : https://game-icons.net/1x1/delapouite/angry-eyes.html, by Delapouite under CC BY 3.0
+gift-of-knowledge.svg : https://game-icons.net/1x1/lorc/gift-of-knowledge.html, by Lorc under CC BY 3.0
+run.svg : https://game-icons.net/1x1/lorc/run.html, by Lorc under CC BY 3.0
+imprisoned.svg : https://game-icons.net/1x1/lorc/imprisoned.html, by Lorc under CC BY 3.0
+water-drop.svg : https://game-icons.net/1x1/sbed/water-drop.html, by sbed under CC BY 3.0
+electric.svg : https://game-icons.net/1x1/sbed/electric.html, by sbed under CC BY 3.0
+snowflake-1.svg : https://game-icons.net/1x1/lorc/snowflake-1.html, by Lorc under CC BY 3.0
+tired-eye.svg : https://game-icons.net/1x1/delapouite/tired-eye.html, by Delapouite under CC BY 3.0
+bolt-spell-cast.svg : https://game-icons.net/1x1/delapouite/bolt-spell-cast.html, by Delapouite under CC BY 3.0
+knocked-out-stars.svg : https://game-icons.net/1x1/delapouite/knocked-out-stars.html, by Delapouite under CC BY 3.0
+enrage.svg : https://game-icons.net/1x1/delapouite/enrage.html, by Delapouite under CC BY 3.0
+hand-bandage.svg : https://game-icons.net/1x1/delapouite/hand-bandage.html, by Delapouite under CC BY 3.0
+flame.svg : https://game-icons.net/1x1/carl-olsen/flame.html, by Carl Olsen under CC BY 3.0
+dread.svg : https://game-icons.net/1x1/cathelineau/dread.html, by Cathelineau under CC BY 3.0
+beer-stein.svg : https://game-icons.net/1x1/lorc/beer-stein.html, by Lorc under CC BY 3.0
+lightning-arc.svg : https://game-icons.net/1x1/lorc/lightning-arc.html, by Lorc under CC BY 3.0
+puppet.svg : https://game-icons.net/1x1/lorc/puppet.html, by Lorc under CC BY 3.0
+brain.svg : https://game-icons.net/1x1/lorc/brain.html, by Lorc under CC BY 3.0
+charm.svg : https://game-icons.net/1x1/lorc/charm.html, by Lorc under CC BY 3.0
+brainstorm.svg : https://game-icons.net/1x1/lorc/brainstorm.html, by Lorc under CC BY 3.0
+chopped-skull.svg : https://game-icons.net/1x1/lorc/chopped-skull.html, by Lorc under CC BY 3.0
+portal.svg : https://game-icons.net/1x1/lorc/portal.html, by Lorc under CC BY 3.0
+
+regain-type-permanent.svg : https://game-icons.net/1x1/various-artists/infinity.html, by Various artists under CC0 PDD
+regain-type-combat.svg : https://game-icons.net/1x1/cathelineau/swordwoman.html, by Cathelineau under CC BY 3.0
+regain-type-rest.svg : https://game-icons.net/1x1/delapouite/camp-cooking-pot.html, by Delapouite under CC BY 3.0
+regain-type-sleep.svg : https://game-icons.net/1x1/delapouite/sleeping-bag.html, by Delapouite under CC BY 3.0
+regain-type-short-moon.svg : https://game-icons.net/1x1/lorc/moon.html, by Lorc under CC BY 3.0
+regain-type-long-moon.svg : https://game-icons.net/1x1/delapouite/moon-orbit.html, by Delapouite under CC BY 3.0

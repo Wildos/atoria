@@ -20,7 +20,17 @@
   "TYPES.Item.featurePl": "Features",
   "TYPES.Item.skill": "Skill",
   "TYPES.Item.skillPl": "Skills",
+  "TYPES.Item.action-modifier": "Technique/Addition",
+  "TYPES.Item.action-modifierPl": "Techniques/Additions",
 
+
+  "ATORIA.Type": "Type",
+  "ATORIA.Technique": "Technique",
+  "ATORIA.IncantatoryAddition": "Addition",
+
+  "ATORIA.UsableTechniques": "Usable Techniques",
+  "ATORIA.UsableIncantatoryAddition": "Usable Additions",
+  
 
 
   "MIGRATION.Begin": "A migration of data has started to version {version}",
@@ -38,13 +48,20 @@
   "ATORIA.CancelDeletion": "Cancel deletion",
   
 
+  "ATORIA.SuppNaming": "Supp. {index}",
+
+
   "ATORIA.SheetClassCharacter": "AtoriaCharacterSheet",
   "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
   "ATORIA.SheetClassGear": "AtoriaGearSheet",
   "ATORIA.SheetClassAction": "AtoriaActionSheet",
+  "ATORIA.SheetClassActionModifier": "AtoriaActionModifierSheet",
   "ATORIA.SheetClassSpell": "AtoriaSpellSheet",
   "ATORIA.SheetClassFeature": "AtoriaFeatureSheet",
   "ATORIA.SheetClassSkill": "AtoriaSkillSheet",
+
+
+  "ATORIA.Healing": "Healing",
 
   "ATORIA.NewItem": "New Item",
   "ATORIA.NewEffect": "New Effect",
@@ -66,6 +83,8 @@
   "ATORIA.CharacterPage": "Character",
   "ATORIA.InventoryPage": "Inventory",
   "ATORIA.SpellPage": "Spells",
+  "ATORIA.ActionModifierPage": "Techniques & Additions",
+
 
   "ATORIA.PerceptionTitle": "Perception",
   "ATORIA.Perception.Sight": "Sight",
@@ -78,6 +97,7 @@
   "ATORIA.Name": "Name",
   "ATORIA.Health": "Health",
   "ATORIA.HealthMax": "Health Max",
+  "ATORIA.Absorption": "Absorption",
   "ATORIA.Stamina": "Stamina",
   "ATORIA.StaminaMax": "Stamina Max",
   "ATORIA.Mana": "Mana",
@@ -91,6 +111,9 @@
   "ATORIA.Armor": "Armor",
   "ATORIA.Initiative": "Initiative",
   "ATORIA.Movement": "Movement",
+
+  "ATORIA.Time": "Time",
+  "ATORIA.Restriction": "Restriction",
 
   "ATORIA.Luck": "Luck",
 
@@ -146,6 +169,7 @@
   "ATORIA.Reflex": "Reflex",
   "ATORIA.Evasion": "Evasion",
   "ATORIA.Opportuneness": "Opportuneness",
+  "ATORIA.Parade": "Parade",
   "ATORIA.Sturdiness": "Sturdiness",
   "ATORIA.Force": "Force",
   "ATORIA.Tenacity": "Tenacity",
@@ -162,7 +186,7 @@
   "ATORIA.Polearm": "Polearm",
   "ATORIA.Haft-slashing-piercing": "Haft-slashing-piercing",
   "ATORIA.Haft-bludgeonning": "Haft-bludgeonning",
-  "ATORIA.Parade": "Parade",
+  "ATORIA.Shield": "Shield",
   "ATORIA.Shooting": "Shooting",
   "ATORIA.Throw": "Throw",
   "ATORIA.Focus": "Focus",
@@ -254,6 +278,7 @@
 
   "ATORIA.ActionNameTitle": "Name",
   "ATORIA.ActionEffectRollTitle": "Effect formula",
+  "ATORIA.ActionEffectTitle" : "Effect",
   "ATORIA.ActionDescriptionTitle": "Description",
 
   "ATORIA.FeatureNameTitle": "Name",
@@ -295,6 +320,13 @@
   "ATORIA.SpellCriticalEffectTitle": "Critical Bonus Effect",
   "ATORIA.SpellSuppTitle": "Supp",
 
+  "ATORIA.Offense": "Offense",
+  "ATORIA.Defense": "Defense",
+
+
+  "ATORIA.Techniques": "Techniques",
+  "ATORIA.IncantatoryAdditions": "Additions",
+
 
   "ATORIA.RollSL": "SL",
   "ATORIA.RollResult": "Result",
@@ -304,6 +336,86 @@
   "MACRO.AtrMissingTargetWarn": "Your controlled actor '{actor}' does not have an {type} with name '{name}'.",
   "MACRO.AtrMultipleTargetsWarn": "Your controlled actor '{actor}' has more than one {type} with name '{name}'. The first match will be chosen.",
   "MACRO.AtrNoActorSelected": "No selected or assigned actor could be found to target with macro.",
-  "MACRO.AtrUnownedWarn": "You can only create macro buttons for owned Items"
+  "MACRO.AtrUnownedWarn": "You can only create macro buttons for owned Items",
+
+
+  "ATORIA.Concentration": "Concentration",
+  "ATORIA.Preparing": "Preparing",
+  "ATORIA.Evocation": "Evocation",
+  "ATORIA.Channelling": "Channelling",
+  "ATORIA.Bleeding": "Bleeding",
+  "ATORIA.Abused": "Abused",
+  "ATORIA.Abused+": "Abused+",
+  "ATORIA.Prone": "Prone",
+  "ATORIA.Burning": "Burning",
+  "ATORIA.Burning+": "Burning+",
+  "ATORIA.Moist": "Moist",
+  "ATORIA.Frostbite": "Frostbite",
+  "ATORIA.Unconscious": "Unconscious",
+  "ATORIA.Dead": "Dead",
+  "ATORIA.Stunned": "Stunned",
+  "ATORIA.Banished": "Banished",
+  "ATORIA.Afraid": "Afraid",
+  "ATORIA.Panic": "Panic",
+  "ATORIA.Terrified": "Terrified",
+  "ATORIA.Dazed": "Dazed",
+  "ATORIA.Seduced": "Seduced",
+  "ATORIA.Charmed": "Charmed",
+  "ATORIA.Captivated": "Captivated",
+  "ATORIA.Control": "Control",
+  "ATORIA.Provoked": "Provoked",
+  "ATORIA.Provoked+": "Provoked+",
+  "ATORIA.Enraged": "Enraged",
+  "ATORIA.Radiate": "Radiate",
+  "ATORIA.Conductive": "Conductive",
+  "ATORIA.Shocked": "Shocked",
+  "ATORIA.Numb": "Numb",
+  "ATORIA.Numb+": "Numb+",
+  "ATORIA.Hungry": "Hungry",
+  "ATORIA.Dehydrated": "Dehydrated",
+  "ATORIA.Drunk": "Drunk",
+  "ATORIA.Hangover": "Hangover",
+  "ATORIA.Tired": "Tired",
+  "ATORIA.Rested": "Rested",
+  "ATORIA.Incurable": "Incurable",
+  "ATORIA.Incurable+": "Incurable+",
+  "ATORIA.Blindness": "Blindness",
+  "ATORIA.Deaf": "Deaf",
+  "ATORIA.Silenced": "Silenced",
+  "ATORIA.Invisible": "Invisible",
+  "ATORIA.Slowed": "Slowed",
+  "ATORIA.Immobilised": "Immobilised",
+  "ATORIA.Disability": "Disability",
+
+
+
+  "ATORIA.Permanent" : "Permanent",
+  "ATORIA.Combat": "Combat",
+  "ATORIA.Rest": "Rest",
+  "ATORIA.Sleep": "Sleep",
+  "ATORIA.ShortMoon": "Short moon",
+  "ATORIA.LongMoon": "Long moon",
+
+  "ATORIA.TIME_PHASE_PASSED": "Time phase {time_phase} applied.",
+
+  "ATORIA.FeatureRegained": "{name} regained {amount} use(s)",
+  "ATORIA.MedicalHealingRegained": "Medecal inactive was lost",
+  "ATORIA.HerbsHealingRegained": "Herbs inactive was lost",
+  "ATORIA.HealthRegainRegained": "Health inactive regained {amount} use(s)",
+  "ATORIA.EnduranceRegained": "Endurance inactive was lost",
+  "ATORIA.SanityRegained": "Sanity inactive was lost",
+  "ATORIA.ResurectionRegained": "Resurection inactive was lost" ,
+
+  "ATORIA.ConfirmTitle": "Confirmation needed",
+  "ATORIA.ApplyRegainPhase": "Apply phase: {subject}",
+
+  "ATORIA.Confirm": "Confirm",
+  "ATORIA.Cancel": "Cancel",
+
+  "ATORIA.FeatureCombat": "Combat",
+  "ATORIA.FeatureSkill": "Skill",
+  "ATORIA.FeatureMagic": "Magic",
+  "ATORIA.FeatureKnowledge": "Knowledge",
+  "ATORIA.FeatureOther": "Other"
 
 }

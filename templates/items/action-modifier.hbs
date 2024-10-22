@@ -1,0 +1,35 @@
+<form class="action-modifier-sheet" autocomplete="off">
+    <div class="flexcol">
+        <label class="name-title">{{ localize "ATORIA.ActionNameTitle" }}
+            {{#if isOwned}}
+                <a class="delete-button item-delete flex0" data-action="action-item" data-id="{{item._id}}" >
+                    <i class="fas fa-trash"></i>
+                </a>
+            {{/if}}
+        </label>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.ActionNameTitle' }}"/>
+
+        {{!-- type --}}
+        <label class="cost-title">{{ localize "ATORIA.Type" }}</label>
+        <select name="system.type">
+            {{selectOptions config.ACTION_MODIFIER_TYPE selected=item.system.type}}
+        </select>
+
+        {{!-- cost --}}
+        <label class="cost-title">{{ localize "ATORIA.SpellCostTitle" }}</label>
+        <div class="flexrow">
+            <input class="cost-resource time" name="system.cost.time" type="text" value="{{item.system.cost.time}}" title="{{ localize 'ATORIA.Time' }}"/>
+            <input class="cost-resource health" name="system.cost.health" type="number" value="{{item.system.cost.health}}" title="{{ localize 'ATORIA.Health' }}"/>
+            <input class="cost-resource mana" name="system.cost.mana" type="number" value="{{item.system.cost.mana}}" title="{{ localize 'ATORIA.Mana' }}"/>
+            <input class="cost-resource stamina" name="system.cost.stamina" type="number" value="{{item.system.cost.stamina}}" title="{{ localize 'ATORIA.Stamina' }}"/>
+            <input class="cost-resource endurance" name="system.cost.endurance" type="number" value="{{item.system.cost.endurance}}" title="{{ localize 'ATORIA.Endurance' }}"/>
+            <input class="cost-restriction restriction" name="system.cost.restriction" type="text" value="{{item.system.cost.restriction}}" title="{{ localize 'ATORIA.Restriction' }}"/>
+        </div>
+        
+        {{!-- effect --}}
+        <label>{{ localize "ATORIA.ActionEffectTitle" }}</label>    
+        <div class="effect-area">
+            {{editor effectHTML target="system.effect" button=false editable=true engine="prosemirror" collaborate=false}}
+        </div>
+    </div>
+</form>

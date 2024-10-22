@@ -1,0 +1,61 @@
+<form class="feature-list-sheet" autocomplete="off">
+    <div class="flexcol">
+        <label class="name-title">{{ localize "ATORIA.FeatureNameTitle" }}
+            {{#if isOwned}}
+                <a class="delete-button item-delete flex0" data-action="feature-list-item" data-id="{{item._id}}" >
+                    <i class="fas fa-trash"></i>
+                </a>
+            {{/if}}
+        </label>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.FeatureNameTitle' }}"/>
+    
+        <div class="flexrow color-choice-area">
+            <label for="system.has_color">{{ localize "ATORIA.FeatureColorTitle" }}</label>
+            <input type="checkbox" name="system.has_color" data-dtype="Boolean" {{checked item.system.has_color}}/>
+            <input id="feature-color-picker" name="system.color" type="color" value="{{item.system.color}}" placeholder="{{ localize 'ATORIA.FeatureColorTitle' }}"/>
+        </div>
+
+        <!-- Feature list -->
+        <div class="subfeature-list">
+            <label>Feature list
+                <a class="add-button subfeature-create flex0" data-type="subfeature" data-action="feature-list-item" >
+                    <i class="fas fa-plus"></i>
+                </a>
+            </label>
+            {{#each item.system.features as |feature key|}}
+                <div class="subfeature flexcol" data-id="{{key}}">
+                    <div class="flexrow">
+                        <input name="system.features.{{key}}.name" type="text" value="{{feature.name}}" placeholder="{{ localize 'ATORIA.FeatureNameTitle' }}"/>
+                        <a class="delete-button subfeature-delete" data-type="subfeature" data-action="feature-list-item" >
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+
+                    <div class="flexrow regain-area">
+                        <select class="regain-type-select" name="system.features.{{key}}.regain_type">
+                            {{#select feature.regain_type}}
+                                {{#each ../feature_usage_regain_types}}
+                                    <option value="{{this.value}}">{{localize this.name}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                        {{#if feature.show_usage_limits}}
+                            <div class="flexrow usage-area">
+                                {{!-- <label for="system.features.{{key}}.usage_left">Current:</label>
+                                <input class="usage-input" name="system.features.{{key}}.usage_left" type="number" value="{{feature.usage_left}}" placeholder="{{ localize 'ATORIA.FeatureEffectTitle' }}"/> --}}
+                                <label for="system.features.{{key}}.usage_max">Max:</label>
+                                <input class="usage-input" name="system.features.{{key}}.usage_max" type="number" value="{{feature.usage_max}}" placeholder="{{ localize 'ATORIA.FeatureEffectTitle' }}"/>
+                            
+                            </div>
+                        {{/if}}
+                    </div>
+
+                    <label class="description-area stacked" data-expandvalue="{{feature.description}}">
+                        <textarea class="data-expand" rows="1" name="system.features.{{key}}.description" value="{{feature.description}}" translate="no">{{feature.description}}</textarea>
+                    </label>
+                    
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</form>

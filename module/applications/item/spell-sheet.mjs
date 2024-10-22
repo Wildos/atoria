@@ -39,6 +39,12 @@ export default class ItemAtoriaSheetSpell extends ItemSheet {
         system: item.system,
       });
 
+      const action_modifier = this.actor.get_action_modifiers();
+      context.incantatory_addition_list = action_modifier["incantatory_addition"];
+      action_modifier["incantatory_addition"].forEach((element) => {
+        item.system.related_incantatory_additions[element._id] = item.system.related_incantatory_additions[element._id] || false;
+      });
+
       for( let key in item.system.spell_supps) {
         context.system.spell_supps[key].descriptionHTML = await TextEditor.enrichHTML(item.system.spell_supps[key].description, {async: true});
       }

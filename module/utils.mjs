@@ -9,34 +9,33 @@
  * @returns {Promise}
  */
 export async function preloadHandlebarsTemplates() {
-    const partials = [
-      // Shared Partials
-      "systems/atoria/templates/common/spell-detail.hbs",
-      // Actor Sheet Partials
-      "systems/atoria/templates/actors/parts/actor-npc-combat.hbs",
-      "systems/atoria/templates/actors/parts/actor-npc-feature.hbs",
-      "systems/atoria/templates/actors/parts/actor-npc-skill.hbs",
-      "systems/atoria/templates/actors/parts/actor-character-effect.hbs",
-      "systems/atoria/templates/actors/parts/actor-character-combat.hbs",
-      "systems/atoria/templates/actors/parts/actor-character-skill.hbs",
-      "systems/atoria/templates/actors/parts/actor-character-knowledge.hbs",
-      "systems/atoria/templates/actors/parts/actor-character-feature.hbs",
-      "systems/atoria/templates/actors/parts/actor-character-inventory.hbs",
-      "systems/atoria/templates/actors/parts/actor-character-spell.hbs"
-      // Item Sheet Partials
-  
-      // Journal Partials
-  
-      // Advancement Partials
-    ];
-  
-    const paths = {};
-    for ( const path of partials ) {
-      paths[path] = path;
-      paths[`atoria.${path.split("/").pop().replace(".hbs", "")}`] = path;
-    }
-  
-    return loadTemplates(paths);
+  const partials = [
+    // Shared Partials
+    "systems/atoria/templates/common/spell-detail.hbs",
+    "systems/atoria/templates/common/action_modifiers.hbs",
+    // Actor Sheet Partials
+    "systems/atoria/templates/actors/parts/actor-npc-combat.hbs",
+    "systems/atoria/templates/actors/parts/actor-npc-feature.hbs",
+    "systems/atoria/templates/actors/parts/actor-npc-skill.hbs",
+    "systems/atoria/templates/actors/parts/actor-character-effect.hbs",
+    "systems/atoria/templates/actors/parts/actor-character-combat.hbs",
+    "systems/atoria/templates/actors/parts/actor-character-skill.hbs",
+    "systems/atoria/templates/actors/parts/actor-character-knowledge.hbs",
+    "systems/atoria/templates/actors/parts/actor-character-feature.hbs",
+    "systems/atoria/templates/actors/parts/actor-character-inventory.hbs",
+    "systems/atoria/templates/actors/parts/actor-character-spell.hbs",
+    "systems/atoria/templates/actors/parts/actor-character-action-modifier.hbs",
+    "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs",
+    // Item Sheet Partials
+  ];
+
+  const paths = {};
+  for (const path of partials) {
+    paths[path] = path;
+    paths[`atoria.${path.split("/").pop().replace(".hbs", "")}`] = path;
+  }
+
+  return loadTemplates(paths);
 }
 
 /* -------------------------------------------- */
@@ -88,11 +87,11 @@ export function dictLength(dict) {
  * Register custom Handlebars helpers used by Atoria.
  */
 export function registerHandlebarsHelpers() {
-    Handlebars.registerHelper({
-      getProperty: foundry.utils.getProperty,
-      "atoria-get-style-display-value": getStyleDisplayValue,
-      "dict_length": dictLength
-    });
+  Handlebars.registerHelper({
+    getProperty: foundry.utils.getProperty,
+    "atoria-get-style-display-value": getStyleDisplayValue,
+    "dict_length": dictLength
+  });
 }
 
 
@@ -105,7 +104,7 @@ export function registerHandlebarsHelpers() {
  * @param {int} critical_mod Critical modifier value for which to produce the critical number.
  * @returns {int}     critical value.
  */
-export function get_critical_value(success_value=0, critical_mod=0) {
+export function get_critical_value(success_value = 0, critical_mod = 0) {
   return Math.floor(success_value / 10) + critical_mod;
 }
 
@@ -115,8 +114,8 @@ export function get_critical_value(success_value=0, critical_mod=0) {
  * @param {int} fumble_mod Fumble modifier value for which to produce the fumble number.
  * @returns {int}     fumble value.
  */
-export function get_fumble_value(success_value=0, fumble_mod=0) {
-  return 91 + Math.floor(success_value / 10) - fumble_mod;
+export function get_fumble_value(success_value = 0, fumble_mod = 0) {
+  return 101 - 5 - fumble_mod;
 }
 
 
@@ -131,22 +130,50 @@ export function get_fumble_value(success_value=0, fumble_mod=0) {
  * @return {boolean} Has the user confirmed the deletion
  */
 export async function confirm_deletion(name, callback) {
-  const title = game.i18n.format(game.i18n.localize("ATORIA.TitleDeletionDialog"), {name: name});
-  const content = game.i18n.format(game.i18n.localize("ATORIA.ContentDeletionDialog"), {name: name});
+  const title = game.i18n.format(game.i18n.localize("ATORIA.TitleDeletionDialog"), { name: name });
+  const content = game.i18n.format(game.i18n.localize("ATORIA.ContentDeletionDialog"), { name: name });
   await new Dialog({
     title,
     content,
     buttons: {
       confirm: {
-      label: game.i18n.localize("ATORIA.ConfirmDeletion"),
-        callback: html => {console.log("chose confim");callback(true)}
+        label: game.i18n.localize("ATORIA.ConfirmDeletion"),
+        callback: html => { callback(true) }
       },
       cancel: {
         label: game.i18n.localize("ATORIA.CancelDeletion"),
-        callback: html => {console.log("chose cancel");callback(false)}
+        callback: html => { callback(false) }
       }
     },
     default: "cancel",
-    close: () => {console.log("Closed");callback(false)}
+    close: () => { callback(false) }
+  }, {}).render(true);
+}
+
+
+/**
+ * Confirm dialog
+ * Ask for confirmation for something
+ * @param {String} title Title to display
+ * @param {String} name Message to display
+ * @return {boolean} Has the user confirmed the action
+ */
+export async function confirm_dialog(title, message, callback) {
+  const content = message;
+  await new Dialog({
+    title,
+    content,
+    buttons: {
+      confirm: {
+        label: game.i18n.localize("ATORIA.Confirm"),
+        callback: html => { callback(true) }
+      },
+      cancel: {
+        label: game.i18n.localize("ATORIA.Cancel"),
+        callback: html => { callback(false) }
+      }
+    },
+    default: "cancel",
+    close: () => { callback(false) }
   }, {}).render(true);
 }

@@ -1,13 +1,6 @@
 .spell-sheet {
     min-width: 250px;
     max-height: fit-content;
-    display: grid;
-    grid-column: span 2/span 2;
-    grid-template-columns: 60px 1fr;
-    gap: 0;
-    margin: 0;
-    padding: 0;
-    flex: 0;
 
     .flexrow, .flexcol{
         height: fit-content;
@@ -34,15 +27,11 @@
         text-overflow: ellipsis;
     }
 
-    .category-title {
-        min-width: 60px;
-        max-width: 60px;
-        align-items: center;
-        display: flex;
-    }
-
     .success-value-title {
+        background-color: $neutral-color;
         height: var(--form-field-height);
+        min-width: 90px;
+        max-width: 90px;
     }
 
     .success-value {
@@ -51,6 +40,7 @@
     }
 
     .critical-title {
+        background-color: $neutral-color;
 
     }
 
@@ -60,6 +50,7 @@
     }
 
     .fumble-title {
+        background-color: $neutral-color;
 
     }
 
@@ -69,19 +60,24 @@
     }
 
     .cost-title {
+        background-color: $neutral-color;
         height: var(--form-field-height);
+        min-width: 90px;
+        max-width: 90px;
     }
 
     .cost-input {
-
+        min-width: 35px;
     }
 
     .time-title {
+        background-color: $neutral-color;
         height: calc(2*var(--form-field-height));
         max-height: calc(2*var(--form-field-height));
     }
 
     .time-preparation-title {
+        background-color: $neutral-color;
         min-width: 90px;
         max-width: 90px;
     }
@@ -93,8 +89,9 @@
     }
 
     .time-duration-title {
-        min-width: 70px;
-        max-width: 70px;
+        background-color: $neutral-color;
+        min-width: 90px;
+        max-width: 90px;
     }
 
     .time-duration {
@@ -104,16 +101,18 @@
     }
 
     .time-modifier {
-        min-width: 20px;
-        max-width: 20px;
+        min-width: 30px;
+        max-width: 30px;
     }
 
     .components-title {
+        background-color: $neutral-color;
         height: calc(5*var(--form-field-height));
         max-height: calc(5*var(--form-field-height));
     }
 
     .components-verbal-title {
+        background-color: $neutral-color;
         min-width: 90px;
         max-width: 90px;
     }
@@ -125,7 +124,9 @@
     }
 
     .components-somatic-title {
-
+        background-color: $neutral-color;
+        min-width: 90px;
+        max-width: 90px;
     }
 
     .components-somatic {
@@ -135,7 +136,9 @@
     }
 
     .components-material-title {
-
+        background-color: $neutral-color;
+        min-width: 90px;
+        max-width: 90px;
     }
 
     .components-material {
@@ -145,11 +148,13 @@
     }
 
     .targeting-title {
+        background-color: $neutral-color;
         height: calc(3*var(--form-field-height));
         max-height: calc(3*var(--form-field-height));
     }
 
     .targeting-target-title {
+        background-color: $neutral-color;
         min-width: 50px;
         max-width: 50px;
     }
@@ -161,6 +166,7 @@
     }
 
     .targeting-range-title {
+        background-color: $neutral-color;
         min-width: 50px;
         max-width: 50px;
     }
@@ -172,6 +178,7 @@
     }
 
     .targeting-area-title {
+        background-color: $neutral-color;
         min-width: 50px;
         max-width: 50px;
     }
@@ -183,6 +190,7 @@
     }
 
     .effect-title {
+        background-color: $neutral-color;
         grid-column-end: span 2;
     }
 
@@ -194,7 +202,12 @@
         }
     }
 
+    .usable-incantatory-title {
+        background-color: $neutral-color;
+    }
+
     .spell-supp-title {
+        background-color: $neutral-color;
         grid-column-end: span 2;
 
         position: relative;
@@ -210,6 +223,11 @@
         }
     }
 
+    .incantatory-addition-name {
+        text-align: left;
+        border: none;
+    }
+
     .spell-supp {
         grid-column-end: span 2;
 
@@ -223,16 +241,27 @@
                 text-align: center;
                 align-items: center;
                 vertical-align: middle;
+                
+                height: var(--form-field-height);
+                line-height: var(--form-field-height);
+                min-width: 20px;
+                max-width: 20px;
+                padding-left: 3px;
+                padding-right: 3px;
             }
             &:hover .delete-button {
                 display: inline-block;
             }
         }
+
+        .cost-input {
+            max-width: 50px;
+        }
+        .cost-input.restriction {
+            flex: 5;
+            max-width: none;
+        }
     }
 
-    .cost-input.time {
-        min-width: 100px;
-        max-width: 100px;
-    }
 
 }

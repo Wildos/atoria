@@ -10,6 +10,20 @@
   cursor: pointer;
 }
 
+.tickable-image {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 20px;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin: 3px 5px;
+}
+.tickable-image:hover, .tickable-image:focus {
+  -webkit-filter: invert(30%) drop-shadow(0px 0px 3px red);
+  filter: invert(30%) drop-shadow(0px 0px 3px red);
+  cursor: pointer;
+}
+
 .grid-2col {
   display: grid;
   grid-column: span 2/span 2;
@@ -215,6 +229,64 @@
   font-weight: bold;
 }
 
+/* Styles working in sheet and chat*/
+.action-modifier {
+  margin: 3px 0;
+}
+.action-modifier .flexrow, .action-modifier .flexcol {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.action-modifier label, .action-modifier input {
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  line-height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+  padding: 0;
+  width: 100%;
+}
+.action-modifier label.bordered, .action-modifier input.bordered {
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.action-modifier input[type=checkbox] {
+  margin: 0 5px;
+}
+.action-modifier .name {
+  text-align: left;
+}
+.action-modifier .cost-resource {
+  min-width: 35px;
+  max-width: 50px;
+}
+.action-modifier .cost-resource.time {
+  min-width: 100px;
+  max-width: 120px;
+}
+.action-modifier .cost-restriction.restriction {
+  -webkit-box-flex: 5;
+  -ms-flex: 5;
+  flex: 5;
+  max-width: none;
+}
+.action-modifier .effect {
+  text-align: left;
+  max-height: -webkit-fit-content;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+  min-height: var(--form-field-height);
+  white-space: normal;
+}
+.action-modifier .effect p, .action-modifier .effect h1, .action-modifier .effect h2, .action-modifier .effect h3, .action-modifier .effect h4, .action-modifier .effect h5 {
+  margin: 0;
+}
+
 .atoria {
   font-family: "Roboto", sans-serif;
 }
@@ -274,6 +346,13 @@
   -ms-flex: 0;
   flex: 0;
 }
+.atoria .sheet-tabs .item {
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .atoria .sheet-body,
 .atoria .sheet-body .tab,
 .atoria .sheet-body .tab .editor {
@@ -290,17 +369,58 @@
   background-color: #6db088;
 }
 .atoria .character-sheet .config-sheet {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
   display: inline-block;
   text-align: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
   vertical-align: middle;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  min-width: 50px;
+  max-width: 50px;
+  padding: 5px 5px;
+  padding-top: 8px;
+  overflow: hidden;
+}
+.atoria .character-sheet .config-sheet i {
+  font-size: 16px;
   min-width: 30px;
-  max-width: 60px;
-  padding: 8px 12px;
+  min-height: 30px;
+  max-width: 30px;
+  max-height: 30px;
+}
+.atoria .character-sheet .time-phase {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  padding: 3px;
+}
+.atoria .character-sheet .time-phase img {
+  border: none;
+  min-width: 30px;
+  min-height: 30px;
+  max-width: 30px;
+  max-height: 30px;
 }
 .atoria .character-sheet .img-sheet {
+  min-width: 36px;
+  min-height: 36px;
   max-width: 36px;
   max-height: 36px;
 }
@@ -309,15 +429,6 @@
   max-height: -webkit-fit-content;
   max-height: -moz-fit-content;
   max-height: fit-content;
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: 60px 1fr;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
 }
 .atoria .spell-sheet .flexrow, .atoria .spell-sheet .flexcol {
   height: -webkit-fit-content;
@@ -345,39 +456,46 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-.atoria .spell-sheet .category-title {
-  min-width: 60px;
-  max-width: 60px;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
 .atoria .spell-sheet .success-value-title {
+  background-color: #cccccc;
   height: var(--form-field-height);
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell-sheet .success-value {
   min-width: 30px;
   max-width: 30px;
 }
+.atoria .spell-sheet .critical-title {
+  background-color: #cccccc;
+}
 .atoria .spell-sheet .critical {
   min-width: 30px;
   max-width: 30px;
+}
+.atoria .spell-sheet .fumble-title {
+  background-color: #cccccc;
 }
 .atoria .spell-sheet .fumble {
   min-width: 30px;
   max-width: 30px;
 }
 .atoria .spell-sheet .cost-title {
+  background-color: #cccccc;
   height: var(--form-field-height);
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell-sheet .cost-input {
+  min-width: 35px;
 }
 .atoria .spell-sheet .time-title {
+  background-color: #cccccc;
   height: calc(2 * var(--form-field-height));
   max-height: calc(2 * var(--form-field-height));
 }
 .atoria .spell-sheet .time-preparation-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
@@ -387,8 +505,9 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .time-duration-title {
-  min-width: 70px;
-  max-width: 70px;
+  background-color: #cccccc;
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell-sheet .time-duration {
   overflow: hidden;
@@ -396,14 +515,16 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .time-modifier {
-  min-width: 20px;
-  max-width: 20px;
+  min-width: 30px;
+  max-width: 30px;
 }
 .atoria .spell-sheet .components-title {
+  background-color: #cccccc;
   height: calc(5 * var(--form-field-height));
   max-height: calc(5 * var(--form-field-height));
 }
 .atoria .spell-sheet .components-verbal-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
@@ -412,10 +533,20 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.atoria .spell-sheet .components-somatic-title {
+  background-color: #cccccc;
+  min-width: 90px;
+  max-width: 90px;
+}
 .atoria .spell-sheet .components-somatic {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.atoria .spell-sheet .components-material-title {
+  background-color: #cccccc;
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell-sheet .components-material {
   overflow: hidden;
@@ -423,10 +554,12 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .targeting-title {
+  background-color: #cccccc;
   height: calc(3 * var(--form-field-height));
   max-height: calc(3 * var(--form-field-height));
 }
 .atoria .spell-sheet .targeting-target-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
@@ -436,6 +569,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .targeting-range-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
@@ -445,6 +579,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .targeting-area-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
@@ -454,6 +589,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell-sheet .effect-title {
+  background-color: #cccccc;
   grid-column-end: span 2;
 }
 .atoria .spell-sheet .effect {
@@ -462,7 +598,11 @@
 .atoria .spell-sheet .effect .editor {
   min-height: 150px;
 }
+.atoria .spell-sheet .usable-incantatory-title {
+  background-color: #cccccc;
+}
 .atoria .spell-sheet .spell-supp-title {
+  background-color: #cccccc;
   grid-column-end: span 2;
   position: relative;
 }
@@ -476,6 +616,10 @@
   -ms-flex-align: center;
   align-items: center;
   vertical-align: middle;
+}
+.atoria .spell-sheet .incantatory-addition-name {
+  text-align: left;
+  border: none;
 }
 .atoria .spell-sheet .spell-supp {
   grid-column-end: span 2;
@@ -493,13 +637,24 @@
   -ms-flex-align: center;
   align-items: center;
   vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 .atoria .spell-sheet .spell-supp .flexrow:hover .delete-button {
   display: inline-block;
 }
-.atoria .spell-sheet .cost-input.time {
-  min-width: 100px;
-  max-width: 100px;
+.atoria .spell-sheet .spell-supp .cost-input {
+  max-width: 50px;
+}
+.atoria .spell-sheet .spell-supp .cost-input.restriction {
+  -webkit-box-flex: 5;
+  -ms-flex: 5;
+  flex: 5;
+  max-width: none;
 }
 .atoria .action-sheet .flexcol label, .atoria .action-sheet .flexcol input {
   -webkit-box-flex: 0;
@@ -577,19 +732,133 @@
 .atoria .feature-sheet .flexcol .feature-color-value[value="#00000000"] ~ .feature-color-picker {
   display: none;
 }
-.atoria .gear-sheet .flexcol label, .atoria .gear-sheet .flexcol input {
+.atoria .feature-list-sheet .flexcol label, .atoria .feature-list-sheet .flexcol input, .atoria .feature-list-sheet .flexcol textarea {
+  line-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+}
+.atoria .feature-list-sheet .flexcol .name-title .delete-button {
+  position: absolute;
+  right: 0;
   -webkit-box-flex: 0;
   -ms-flex: 0;
   flex: 0;
   line-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.atoria .feature-list-sheet .flexcol .color-choice-area {
+  margin-top: 3px;
+}
+.atoria .feature-list-sheet .flexcol .color-choice-area input[type=checkbox] {
+  margin: 0;
+  margin-right: 5px;
+}
+.atoria .feature-list-sheet .flexcol .color-choice-area .feature-color-value[value="#00000000"] ~ .feature-color-picker {
+  display: none;
+}
+.atoria .feature-list-sheet .flexcol .subfeature {
+  padding-bottom: 10px;
+  border-bottom: 5px solid black;
+  margin-bottom: 10px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature > * {
+  margin-bottom: 3px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .delete-button {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  line-height: var(--form-field-height);
+  min-height: var(--form-field-height);
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .regain-area {
+  -webkit-column-gap: 5px;
+  -moz-column-gap: 5px;
+  column-gap: 5px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .regain-area .regain-type-select {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .regain-area .usage-area {
+  -webkit-column-gap: 5px;
+  -moz-column-gap: 5px;
+  column-gap: 5px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .regain-area .usage-area .usage-input {
+  min-width: 35px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .description-area {
+  display: inline-grid;
+  vertical-align: top;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  border: solid 1px;
+  padding: 0;
+  margin: 0px;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .description-area.stacked {
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .description-area.stacked::after,
+.atoria .feature-list-sheet .flexcol .subfeature .description-area.stacked input,
+.atoria .feature-list-sheet .flexcol .subfeature .description-area.stacked textarea {
+  grid-area: 2/1;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .description-area::after,
+.atoria .feature-list-sheet .flexcol .subfeature .description-area input,
+.atoria .feature-list-sheet .flexcol .subfeature .description-area textarea {
+  width: auto;
+  min-width: 3px;
+  grid-area: 1/2;
+  font: inherit;
+  padding: 0;
+  margin: 0;
+  resize: none;
+  background: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .description-area::after {
+  content: attr(data-expandvalue) " ";
+  visibility: hidden;
+  white-space: pre-wrap;
+}
+.atoria .feature-list-sheet .flexcol .subfeature .description-area:focus-within textarea:focus,
+.atoria .feature-list-sheet .flexcol .subfeature .description-area:focus-within input:focus {
+  outline: none;
+}
+.atoria .gear-sheet label, .atoria .gear-sheet input {
+  line-height: var(--form-field-height);
   max-height: var(--form-field-height);
   min-height: var(--form-field-height);
 }
-.atoria .gear-sheet .flexcol .name-title {
+.atoria .gear-sheet .name-title {
   width: 100%;
   position: relative;
 }
-.atoria .gear-sheet .flexcol .name-title .delete-button {
+.atoria .gear-sheet .name-title .delete-button {
   position: absolute;
   right: 0;
   top: 0;
@@ -620,29 +889,102 @@
 .atoria .resources input {
   text-align: center;
 }
+.atoria .character-sheet .tickable-image {
+  border: none;
+  max-width: 20px;
+  min-width: 20px;
+}
 .atoria .character-sheet .resources .charname {
   max-width: 200px;
   min-width: 200px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
-.atoria .character-sheet .resources .resource label, .atoria .character-sheet .resources .resource .resource-label {
-  max-width: 100px;
-  min-width: 100px;
+.atoria .character-sheet .resources .resource input:not([type=checkbox]) {
+  max-width: 60px;
+  min-width: 60px;
+}
+.atoria .character-sheet .resources .resource label, .atoria .character-sheet .resources .resource .resource-label, .atoria .character-sheet .resources .resource input.resource-label {
+  max-width: 120px;
+  min-width: 120px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
-.atoria .character-sheet .resources .resource .value-label {
-  max-width: 50px;
-  min-width: 50px;
+.atoria .character-sheet .resources .resource label.luck {
+  max-width: 60px;
+  min-width: 60px;
 }
-.atoria .character-sheet .resources .resource input {
-  max-width: 50px;
-  min-width: 50px;
+.atoria .character-sheet .resources .resource .value-label {
+  max-width: 60px;
+  min-width: 60px;
+}
+.atoria .character-sheet .resources .resource .resource-checkbox {
+  max-width: 120px;
+  min-width: 120px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .character-sheet .resources .resource .resource-checkbox label {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  max-width: 120px;
+  font-weight: bold;
+  border: none;
+}
+.atoria .character-sheet .resources .resource .resource-checkbox input[type=checkbox] {
+  min-height: 16px;
+  max-height: 16px;
+  margin: 5px;
+  margin-top: 4px;
+  margin-right: 1px;
+}
+.atoria .character-sheet .resources .resource .resource-label.health {
+  max-width: 180px;
+  min-width: 180px;
+}
+.atoria .character-sheet .resources .resource .resource-label.healing {
+  max-width: 90px;
+  min-width: 90px;
 }
 .atoria .character-sheet .resources .resource .resource-label.armor, .atoria .character-sheet .resources .resource .resource-label.initiative, .atoria .character-sheet .resources .resource .resource-label.movement {
-  max-width: 100px;
-  min-width: 100px;
+  max-width: 120px;
+  min-width: 120px;
+}
+.atoria .character-sheet .inactive-area {
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.atoria .character-sheet .inactive-area .inactive-label {
+  max-width: -webkit-max-content;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-weight: bold;
+  vertical-align: auto;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  height: var(--form-field-height);
+  max-height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  padding: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .atoria .npc-sheet .resources .resource label {
   max-width: 60px;
@@ -665,7 +1007,6 @@
 .atoria .sheet-body .perceptions label.title {
   text-align: center;
   font-weight: bold;
-  text-align: center;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
 }
@@ -692,21 +1033,21 @@
   border: 1px solid var(--color-border-light-tertiary);
 }
 .atoria .character-sheet .sheet-body .perceptions label.title {
-  max-width: 200px;
-  min-width: 200px;
+  max-width: 160px;
+  min-width: 160px;
   height: var(--form-field-height);
   max-height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
 .atoria .character-sheet .sheet-body .perceptions .perception-row label.perception-label {
-  max-width: 100px;
-  min-width: 100px;
+  max-width: 80px;
+  min-width: 80px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
 .atoria .character-sheet .sheet-body .perceptions .perception-row label.value-label {
-  max-width: 100px;
-  min-width: 100px;
+  max-width: 80px;
+  min-width: 80px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -746,6 +1087,71 @@
   -ms-flex-align: center;
   align-items: center;
   vertical-align: middle;
+}
+.atoria .combat .offense-title-box, .atoria .combat .defense-title-box {
+  max-width: 120px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #cccccc;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+}
+.atoria .combat .offense-title-box .offense-title, .atoria .combat .offense-title-box .defense-title, .atoria .combat .defense-title-box .offense-title, .atoria .combat .defense-title-box .defense-title {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  line-height: var(--form-field-height);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.atoria .combat .offense-area .editor, .atoria .combat .defense-area .editor {
+  min-height: var(--form-field-height);
+}
+.atoria .combat .offense-area .editor-menu, .atoria .combat .defense-area .editor-menu {
+  display: none;
+}
+.atoria .combat .offense-area .editor-container, .atoria .combat .defense-area .editor-container {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  margin: 0;
+  padding: 0;
+  min-height: var(--form-field-height);
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.atoria .combat .offense-area .editor-container .editor-content, .atoria .combat .defense-area .editor-container .editor-content {
+  position: unset;
+}
+.atoria .combat .combat-resources-n-skills {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 430px;
+}
+.atoria .combat .combat-resources, .atoria .combat .combat-skills {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+}
+.atoria .combat .item-list {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 .atoria .combat .action-row {
   width: -webkit-max-content;
@@ -832,8 +1238,8 @@
   padding-right: 4px;
 }
 .atoria .combat .action-row .longname-label {
-  max-width: 220px;
-  min-width: 220px;
+  max-width: 230px;
+  min-width: 230px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
@@ -849,8 +1255,8 @@
   line-height: var(--form-field-height);
 }
 .atoria .combat .action-row .roll-label {
-  max-width: 60px;
-  min-width: 60px;
+  max-width: 65px;
+  min-width: 65px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -863,8 +1269,8 @@
   padding-right: 3px;
 }
 .atoria .combat .action-row .description {
-  max-width: 280px;
-  min-width: 280px;
+  max-width: 285px;
+  min-width: 285px;
   line-height: var(--form-field-height);
   min-height: var(--form-field-height);
 }
@@ -893,6 +1299,22 @@
   padding-left: 3px;
   padding-right: 3px;
 }
+.atoria .npc-sheet .combat .name-label {
+  max-width: 160px;
+  min-width: 160px;
+}
+.atoria .npc-sheet .combat .roll-label {
+  max-width: 60px;
+  min-width: 60px;
+}
+.atoria .npc-sheet .combat .longname-label {
+  max-width: 220px;
+  min-width: 220px;
+}
+.atoria .npc-sheet .combat .description {
+  max-width: 280px;
+  min-width: 280px;
+}
 .atoria .character-sheet .combat .title-label {
   max-width: 720px;
   min-width: 720px;
@@ -919,8 +1341,6 @@
   padding-right: 4px;
 }
 .atoria .character-sheet .combat .longname-label {
-  max-width: 225px;
-  min-width: 225px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
@@ -928,6 +1348,14 @@
   text-overflow: ellipsis;
   padding-left: 4px;
   padding-right: 4px;
+}
+.atoria .character-sheet .combat .combat-resources .resource .resource-label {
+  max-width: 120px;
+  min-width: 120px;
+}
+.atoria .character-sheet .combat .combat-resources .resource .value-label {
+  max-width: 85px;
+  min-width: 85px;
 }
 .atoria .feature {
   width: -webkit-max-content;
@@ -1077,8 +1505,8 @@
   width: max-content;
 }
 .atoria .character-sheet .feature .title-label {
-  max-width: 280px;
-  min-width: 280px;
+  max-width: 300px;
+  min-width: 300px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -1096,8 +1524,8 @@
   width: max-content;
 }
 .atoria .character-sheet .feature .feature-row .name-label {
-  max-width: 200px;
-  min-width: 200px;
+  max-width: 220px;
+  min-width: 220px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
@@ -1107,8 +1535,8 @@
   padding-right: 4px;
 }
 .atoria .character-sheet .feature .feature-row .longname-label {
-  max-width: 260px;
-  min-width: 260px;
+  max-width: 280px;
+  min-width: 280px;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
   overflow: hidden;
@@ -1132,8 +1560,8 @@
   padding-right: 3px;
 }
 .atoria .character-sheet .feature .feature-row .description {
-  max-width: 280px;
-  min-width: 280px;
+  max-width: 300px;
+  min-width: 300px;
   line-height: var(--form-field-height);
   min-height: var(--form-field-height);
 }
@@ -1144,6 +1572,137 @@
   max-width: 20px;
   padding-left: 3px;
   padding-right: 3px;
+}
+.atoria .feature-list-area {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+.atoria .feature-list-area .title-label {
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+  background-color: #ebd2df;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
+  max-width: 300px;
+  min-width: 300px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .feature-list-area .feature-list-category .feature-list-label {
+  position: relative;
+}
+.atoria .feature-list-area .feature-list-category .feature-list-label .add-button, .atoria .feature-list-area .feature-list-category .feature-list-label .detail-button {
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-height: 20px;
+  max-height: 20px;
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-size: 18px;
+}
+.atoria .feature-list-area .feature-list-category .feature-list-label .add-button {
+  right: 20px;
+  top: 0;
+}
+.atoria .feature-list-area .feature-list-category .feature-list-label .detail-button {
+  right: 0;
+  top: 0;
+}
+.atoria .feature-list-area .feature-list-category:not(.expanded) > *:not(.feature-list-label) {
+  display: none;
+}
+.atoria .feature-list-area .feature-list-category .feature-list {
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 3px;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .name {
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  border: none;
+  margin: 0;
+  position: relative;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .name .config-button, .atoria .feature-list-area .feature-list-category .feature-list .name .detail-button {
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+  font-size: 18px;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .name .config-button {
+  right: 20px;
+  top: 0;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .name .detail-button {
+  right: 0;
+  top: 0;
+}
+.atoria .feature-list-area .feature-list-category .feature-list:not(.expanded) > .description {
+  display: none;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description {
+  row-gap: 3px;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row {
+  border-top: 1px solid black;
+  padding-top: 3px;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .subfeature-name {
+  font-weight: bold;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .usage-input {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  min-width: 20px;
+  max-width: 20px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .regain-max {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  min-width: 30px;
+  max-width: 30px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .regain-type-icon {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  min-width: 20px;
+  max-width: 20px;
+  margin-right: 3px;
+  border: none;
+}
+.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .subfeature-description {
+  white-space: pre-wrap;
+  max-width: 300px;
 }
 .atoria .skill {
   width: -webkit-max-content;
@@ -1302,6 +1861,18 @@
   gap: 0;
   margin: 0;
   padding: 0;
+}
+.atoria .character-sheet .skill .skill-row .subtitle {
+  font-weight: bold;
+  text-align: center;
+  max-width: 225px;
+  min-width: 225px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  grid-column: span 2;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light-tertiary);
 }
 .atoria .character-sheet .skill .skill-row .category-area {
   -webkit-box-align: center;
@@ -1658,7 +2229,6 @@
   display: none;
 }
 .atoria .inventory {
-  min-width: 1010px;
   max-width: 1010px;
 }
 .atoria .inventory .flexrow {
@@ -2054,12 +2624,6 @@
 .atoria .spell .spell-details .spell-detail {
   min-width: 250px;
   max-width: 250px;
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: 60px 1fr;
-  gap: 0;
-  margin: 0;
-  padding: 0;
 }
 .atoria .spell .spell-details .spell-detail .flexrow, .atoria .spell .spell-details .spell-detail .flexcol {
   height: -webkit-fit-content;
@@ -2085,6 +2649,7 @@
   text-overflow: ellipsis;
 }
 .atoria .spell .spell-details .spell-detail .name-area {
+  background-color: #cccccc;
   grid-column-end: span 2;
   border-radius: 3px;
   border: 1px solid var(--color-border-light-tertiary);
@@ -2109,89 +2674,100 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.atoria .spell .spell-details .spell-detail .config-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .spell .spell-details .spell-detail .category-title {
-  min-width: 60px;
-  max-width: 60px;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
 .atoria .spell .spell-details .spell-detail .success-value-title {
+  background-color: #cccccc;
   height: var(--form-field-height);
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .success-value {
   min-width: 30px;
   max-width: 30px;
 }
+.atoria .spell .spell-details .spell-detail .critical-title {
+  background-color: #cccccc;
+}
 .atoria .spell .spell-details .spell-detail .critical {
   min-width: 30px;
   max-width: 30px;
+}
+.atoria .spell .spell-details .spell-detail .fumble-title {
+  background-color: #cccccc;
 }
 .atoria .spell .spell-details .spell-detail .fumble {
   min-width: 30px;
   max-width: 30px;
 }
 .atoria .spell .spell-details .spell-detail .cost-title {
+  background-color: #cccccc;
   height: var(--form-field-height);
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell .spell-details .spell-detail .cost-input {
+  min-width: 20px;
 }
 .atoria .spell .spell-details .spell-detail .time-title {
+  background-color: #cccccc;
   height: calc(2 * var(--form-field-height));
   max-height: calc(2 * var(--form-field-height));
 }
 .atoria .spell .spell-details .spell-detail .time-preparation-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .time-duration-title {
-  min-width: 70px;
-  max-width: 70px;
+  background-color: #cccccc;
+  min-width: 90px;
+  max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .time-modifier {
-  min-width: 20px;
-  max-width: 20px;
+  min-width: 30px;
+  max-width: 30px;
 }
 .atoria .spell .spell-details .spell-detail .components-title {
+  background-color: #cccccc;
   height: calc(5 * var(--form-field-height));
   max-height: calc(5 * var(--form-field-height));
 }
 .atoria .spell .spell-details .spell-detail .components-verbal-title {
+  background-color: #cccccc;
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell .spell-details .spell-detail .components-somatic-title {
+  background-color: #cccccc;
+  min-width: 90px;
+  max-width: 90px;
+}
+.atoria .spell .spell-details .spell-detail .components-material-title {
+  background-color: #cccccc;
   min-width: 90px;
   max-width: 90px;
 }
 .atoria .spell .spell-details .spell-detail .targeting-title {
+  background-color: #cccccc;
   height: calc(3 * var(--form-field-height));
   max-height: calc(3 * var(--form-field-height));
 }
 .atoria .spell .spell-details .spell-detail .targeting-target-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
 .atoria .spell .spell-details .spell-detail .targeting-range-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
 .atoria .spell .spell-details .spell-detail .targeting-area-title {
+  background-color: #cccccc;
   min-width: 50px;
   max-width: 50px;
 }
 .atoria .spell .spell-details .spell-detail .effect-title {
+  background-color: #cccccc;
   grid-column-end: span 2;
 }
 .atoria .spell .spell-details .spell-detail .effect {
@@ -2207,6 +2783,7 @@
   margin: 0;
 }
 .atoria .spell .spell-details .spell-detail .spell-supp-title {
+  background-color: #cccccc;
   grid-column-end: span 2;
   position: relative;
 }
@@ -2224,33 +2801,108 @@
 .atoria .spell .spell-details .spell-detail .spell-supp {
   grid-column-end: span 2;
 }
-.atoria .spell .spell-details .spell-detail .cost-input.time {
-  min-width: 100px;
-  max-width: 100px;
+.atoria .spell .spell-details .spell-detail .spell-supp .cost-input {
+  max-width: 50px;
+}
+.atoria .spell .spell-details .spell-detail .spell-supp .cost-input.restriction {
+  -webkit-box-flex: 5;
+  -ms-flex: 5;
+  flex: 5;
+  max-width: none;
+}
+.atoria .action-modifier-page .title-label {
+  background-color: #cccccc;
+  text-align: center;
+  border-radius: 3px;
+  font-weight: bold;
+  border: 1px solid var(--color-border-light-tertiary);
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  position: relative;
+}
+.atoria .action-modifier-page .item {
+  width: 100%;
+  position: relative;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+}
+.atoria .action-modifier-page .add-button {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: right;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .action-modifier-page .config-button {
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+  top: 0;
+  text-align: right;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.atoria .action-modifier-page .delete-button {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: right;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  vertical-align: middle;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
+  min-width: 20px;
+  max-width: 20px;
+  padding-left: 3px;
+  padding-right: 3px;
 }
 .atoria .test-dialog .adv-dis {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.atoria input, .atoria textarea {
+.atoria input:not([type=image]), .atoria textarea {
   background-color: rgba(255, 255, 255, 0.25);
 }
 .atoria .perception {
   background-color: #f1c232;
 }
-.atoria .health {
+.atoria .health.health {
   background-color: #cc0000;
 }
-.atoria .stamina {
+.atoria .healing {
+  background-color: #d76fac;
+}
+.atoria .stamina.stamina {
   background-color: #6aa84f;
 }
-.atoria .mana {
+.atoria .mana.mana {
   background-color: #3c78d8;
 }
-.atoria .sanity {
+.atoria .sanity.sanity {
   background-color: #8e7cc3;
 }
-.atoria .endurance {
+.atoria .endurance.endurance {
   background-color: #e69138;
 }
 .atoria .encumbrance {
@@ -2261,13 +2913,13 @@
   background-color: rgba(0, 0, 0, 0.05);
 }
 .atoria .encumbrance-above-max {
-  background-color: #d65151;
+  background-color: #d65151 !important;
 }
 .atoria .encumbrance-stealth-malus {
-  background-color: #da904c;
+  background-color: #da904c !important;
 }
 .atoria .encumbrance-stealth-bonus {
-  background-color: #7dda70;
+  background-color: #7dda70 !important;
 }
 .atoria .armor, .atoria .initiative, .atoria .movement {
   background-color: #cccccc;
@@ -2312,13 +2964,6 @@
 .chat-message .spell-detail {
   min-width: 250px;
   max-width: 250px;
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: 60px 1fr;
-  grid-template-rows: repeat(auto-fill, auto);
-  gap: 0;
-  margin: 0;
-  padding: 0;
 }
 .chat-message .spell-detail .flexrow, .chat-message .spell-detail .flexcol {
   height: -webkit-fit-content;
@@ -2368,18 +3013,10 @@
   padding-left: 3px;
   padding-right: 3px;
 }
-.chat-message .spell-detail .category-title {
-  min-width: 60px;
-  max-width: 60px;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
 .chat-message .spell-detail .success-value-title {
   height: var(--form-field-height);
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .success-value {
   min-width: 30px;
@@ -2395,18 +3032,20 @@
 }
 .chat-message .spell-detail .cost-title {
   height: var(--form-field-height);
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .time-title {
   height: calc(2 * var(--form-field-height));
   max-height: calc(2 * var(--form-field-height));
 }
 .chat-message .spell-detail .time-preparation-title {
-  min-width: 90px;
-  max-width: 90px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .time-duration-title {
-  min-width: 70px;
-  max-width: 70px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .time-modifier {
   min-width: 20px;
@@ -2417,24 +3056,32 @@
   max-height: calc(5 * var(--form-field-height));
 }
 .chat-message .spell-detail .components-verbal-title {
-  min-width: 90px;
-  max-width: 90px;
+  min-width: 80px;
+  max-width: 80px;
+}
+.chat-message .spell-detail .components-somatic-title {
+  min-width: 80px;
+  max-width: 80px;
+}
+.chat-message .spell-detail .components-material-title {
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .targeting-title {
   height: calc(3 * var(--form-field-height));
   max-height: calc(3 * var(--form-field-height));
 }
 .chat-message .spell-detail .targeting-target-title {
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .targeting-range-title {
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .targeting-area-title {
-  min-width: 50px;
-  max-width: 50px;
+  min-width: 80px;
+  max-width: 80px;
 }
 .chat-message .spell-detail .effect-title {
   grid-column-end: span 2;
@@ -2469,7 +3116,7 @@
 .chat-message .spell-detail .spell-supp {
   grid-column-end: span 2;
 }
-.chat-message .spell-detail .cost-input.time {
+.chat-message .spell-detail .cost-input.restriction {
   min-width: 100px;
   max-width: 100px;
 }
@@ -2494,11 +3141,19 @@
   display: inline-block;
   min-width: 70px;
 }
+.chat-message .skill-roll .action-modifier-name {
+  font-weight: bold;
+}
+.chat-message .skill-roll .additional-effect {
+  min-width: 100px;
+  max-height: var(--form-field-height);
+  text-align: left;
+}
 .chat-message .skill-roll .skill-effect-list {
-  min-width: 75px;
+  min-width: 100px;
 }
 .chat-message .skill-roll .skill-effect {
-  min-width: 75px;
+  min-width: 100px;
   max-height: var(--form-field-height);
   text-align: right;
 }

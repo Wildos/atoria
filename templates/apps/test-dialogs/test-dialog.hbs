@@ -1,4 +1,4 @@
-<form class="test-dialog">
+<form class="test-dialog atoria">
     <div class="dialog-sections flexcol">
         <div class="dialog-fields flex2">
             <div class="form-group">
@@ -20,6 +20,11 @@
                         {{selectOptions rollModes selected=defaultRollMode localize=true}}
                     </select>
                 </div>
+            </div>
+            <div class="flexcol">
+                {{#each action_modifiers}}
+                    {{> "systems/atoria/templates/common/action_modifiers.hbs" hide_effect=../hide_effect need_selection=true  action_mod_id=@key action_mod=this}}
+                {{/each}}
             </div>
         </div>
     </div>
