@@ -235,23 +235,29 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   /** @override */
   async _prepareData(context) {
-    const left_skills = [
-      "agility",
-      "athletic",
-      "slyness",
-      "climbing",
-      "swiming",
-      "sturdiness",
-    ];
-    const right_skills = [
-      "analyse",
-      "charisma",
-      "eloquence",
-      "spirit",
-      "intimidation",
-      "trickery",
-    ];
+    const left_skills = {
+      "agility": ["balance", "dexterity"],
+      "athletic": ["hiking", "running", "jump"],
+      "slyness": ["silence", "stealth", "concealment"],
+      "climbing": ["scale", "fall"],
+      "swiming": ["ease", "breath-holding"],
+      "sturdiness": ["force", "tenacity", "fortitude"],
+    };
+    const right_skills = {
+      "analyse": ["insight", "identification", "investigation"],
+      "charisma": ["presence", "seduction"],
+      "eloquence": ["persuasion", "calming", "negotiation"],
+      "spirit": ["will", "guarding"],
+      "intimidation": ["fear", "authority"],
+      "trickery": ["acting", "lying", "provocation"],
+    };
 
+    const sorting_subskill = function (proper_order_array, elem_a, elem_b) {
+      return proper_order_array.indexOf(elem_a.sub_skill_key) < proper_order_array.indexOf(elem_b.sub_skill_key);
+    };
+
+
+    const reflex = ["evasion", "parade", "opportuneness"];
 
     const formatted_skills = {
       left: [],
@@ -264,6 +270,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         const skill_data = skill_cats[cat_key][sub_skill_key];
         sub_skills.push({
           id: `${cat_key}.${sub_skill_key}`,
+          sub_skill_key: sub_skill_key,
           name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[sub_skill_key]),
           success_value: skill_data.success_value,
           critical_mod: skill_data.critical_mod,
@@ -271,16 +278,18 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
           special_css_class: this._get_special_css_class_for_sub_skill(sub_skill_key),
         });
       }
-      if (left_skills.includes(cat_key)) {
+      if (Object.keys(left_skills).includes(cat_key)) {
+        let tmp_sorting_subskill = sorting_subskill.bind(null, left_skills[cat_key]);
         formatted_skills.left.push({
           name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[cat_key]),
-          sub_skills: sub_skills
+          sub_skills: sub_skills.sort(tmp_sorting_subskill)
         });
       }
-      if (right_skills.includes(cat_key)) {
+      if (Object.keys(right_skills).includes(cat_key)) {
+        let tmp_sorting_subskill = sorting_subskill.bind(null, right_skills[cat_key]);
         formatted_skills.right.push({
           name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[cat_key]),
-          sub_skills: sub_skills
+          sub_skills: sub_skills.sort(tmp_sorting_subskill)
         });
       }
     }
@@ -290,15 +299,17 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       const skill_data = skill_cats["reflex"][sub_skill_key];
       tmp_sub_skill.push({
         id: `reflex.${sub_skill_key}`,
+        sub_skill_key: sub_skill_key,
         name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[sub_skill_key]),
         success_value: skill_data.success_value,
         critical_mod: skill_data.critical_mod,
         fumble_mod: skill_data.fumble_mod,
       });
     }
+    let reflex_sorting_subskill = sorting_subskill.bind(null, reflex);
     context.formatted_skill_reflex = {
       name: game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL["reflex"]),
-      sub_skills: tmp_sub_skill
+      sub_skills: tmp_sub_skill.sort(reflex_sorting_subskill)
     }
 
 

@@ -241,12 +241,12 @@
             "critical_mod": 0,
             "fumble_mod": 0
           },
-          "opportuneness": {
+          "parade": {
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
           },
-          "parade": {
+          "opportuneness": {
             "success_value": 10,
             "critical_mod": 0,
             "fumble_mod": 0
