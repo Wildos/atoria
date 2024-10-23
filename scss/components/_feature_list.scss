@@ -49,6 +49,12 @@
         &:not(.expanded) > *:not(.feature-list-label) {
             display: none;
         }
+        &:not(.expanded) .fa-circle-info {
+            color: #999999;
+        }
+        &.expanded .fa-circle-info {
+            color: black;
+        }
 
         .feature-list {
             border-radius: 3px;
@@ -90,6 +96,14 @@
             
             &:not(.expanded) > .description {
                 display: none;
+            }
+
+
+            &:not(.expanded) .fa-circle-info {
+                color: #999999;
+            }
+            &.expanded .fa-circle-info {
+                color: black;
             }
 
             .description {

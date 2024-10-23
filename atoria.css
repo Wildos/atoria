@@ -1158,6 +1158,12 @@
   width: -moz-max-content;
   width: max-content;
 }
+.atoria .combat .action-row:not(.expanded) .fa-circle-info {
+  color: #999999;
+}
+.atoria .combat .action-row.expanded .fa-circle-info {
+  color: black;
+}
 .atoria .combat .action-row .name-label {
   text-align: center;
   background-color: rgba(255, 255, 255, 0);
@@ -1622,6 +1628,12 @@
 .atoria .feature-list-area .feature-list-category:not(.expanded) > *:not(.feature-list-label) {
   display: none;
 }
+.atoria .feature-list-area .feature-list-category:not(.expanded) .fa-circle-info {
+  color: #999999;
+}
+.atoria .feature-list-area .feature-list-category.expanded .fa-circle-info {
+  color: black;
+}
 .atoria .feature-list-area .feature-list-category .feature-list {
   border-radius: 3px;
   border: 1px solid black;
@@ -1660,6 +1672,12 @@
 }
 .atoria .feature-list-area .feature-list-category .feature-list:not(.expanded) > .description {
   display: none;
+}
+.atoria .feature-list-area .feature-list-category .feature-list:not(.expanded) .fa-circle-info {
+  color: #999999;
+}
+.atoria .feature-list-area .feature-list-category .feature-list.expanded .fa-circle-info {
+  color: black;
 }
 .atoria .feature-list-area .feature-list-category .feature-list .description {
   row-gap: 3px;
@@ -2120,6 +2138,12 @@
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+}
+.atoria .effects .effect-row:not(.expanded) .fa-circle-info {
+  color: #999999;
+}
+.atoria .effects .effect-row.expanded .fa-circle-info {
+  color: black;
 }
 .atoria .effects .effect-row .name-label {
   text-align: center;

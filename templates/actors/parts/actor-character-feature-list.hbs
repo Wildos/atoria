@@ -2,7 +2,11 @@
     <h3 class="name" title="{{feature.name}}">{{feature.name}}
         <a class="config-button item-config flex0" data-action="feature-list-item" ><i class="fas fa-cog"></i></a>
         <a class="detail-button feature-list-detail flex0" data-action="feature-list-item" data-id="{{feature._id}}" >
-            <i class="fas fa-circle-info"></i>
+            {{#if feature.isExpanded}}
+                <i class="fas fa-circle-info"></i>
+            {{else}}
+                <i class="fas fa-circle-info"></i>
+            {{/if}}
         </a>
     </h3>
     <div class="description flexcol" data-item-id="{{feature._id}}">

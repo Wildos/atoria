@@ -82,6 +82,14 @@
     .action-row {
         width: max-content;
         
+
+        &:not(.expanded) .fa-circle-info {
+            color: #999999;
+        }
+        &.expanded .fa-circle-info {
+            color: black;
+        }
+
         .name-label {
             text-align: center;
             background-color: $transparent-color;
