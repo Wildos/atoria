@@ -97,7 +97,8 @@
 }
   
 .spell {
-    width: max-content;
+    // width: max-content;
+    width: 100%;
 
     .title-label {
         max-width: 250px;
@@ -116,8 +117,9 @@
     }
 
     .shorttitle-label {
-        max-width: 700px;
-        min-width: 700px;
+        // max-width: 700px;
+        // min-width: 700px;
+        width: 100%;
         height: var(--form-field-height);
         line-height: var(--form-field-height);
     }
@@ -186,8 +188,8 @@
     }
 
     .spell-details {
-        min-width: 750px;
-        max-width: 750px;
+        // min-width: 750px;
+        // max-width: 750px;
         .spell-detail {
             min-width: 250px;
             max-width: 250px;

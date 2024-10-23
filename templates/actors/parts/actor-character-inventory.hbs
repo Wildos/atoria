@@ -123,7 +123,7 @@
         {{#each gear_consumables as |consumable key|}}
             <div class="flexrow item" data-item-id="{{consumable._id}}">
                 <label class="name-value rowdata-color" title="{{consumable.name}}">{{consumable.name}}</label>
-                <label class="quantity-value rowdata-color">{{consumable.system.quantity}}</label>
+                <input class="quantity-value rowdata-color" data-item-id="{{consumable._id}}" data-update-item="system.quantity" type="number" value="{{consumable.system.quantity}}"/>
                 <label class="encumbrance-value rowdata-color">{{consumable.system.encumbrance}}</label>
                 <label class="effect-value rowdata-color" title="{{consumable.system.description_cleaned}}">{{{consumable.system.description}}}
                     <a class="config-button item-config flex0" data-action="skill-item">
@@ -142,7 +142,7 @@
         {{#each gear_equipments as |equipment key|}}
             <div class="flexrow item" data-item-id="{{equipment._id}}">
                 <label class="name-value rowdata-color" title="{{equipment.name}}">{{equipment.name}}</label>
-                <label class="quantity-value rowdata-color">{{equipment.system.quantity}}</label>
+                <input class="quantity-value rowdata-color" data-item-id="{{equipment._id}}" data-update-item="system.quantity" type="number" value="{{equipment.system.quantity}}"/>
                 <label class="encumbrance-value rowdata-color">{{equipment.system.encumbrance}}</label>
                 <label class="effect-value rowdata-color" title="{{equipment.system.description_cleaned}}">{{{equipment.system.description}}}
                     <a class="config-button item-config flex0" data-action="skill-item" >
@@ -161,7 +161,7 @@
         {{#each gear_ingredients as |ingredient key|}}
             <div class="flexrow item" data-item-id="{{ingredient._id}}">
                 <label class="name-value rowdata-color" title="{{ingredient.name}}">{{ingredient.name}}</label>
-                <label class="quantity-value rowdata-color">{{ingredient.system.quantity}}</label>
+                <input class="quantity-value rowdata-color" data-item-id="{{ingredient._id}}" data-update-item="system.quantity" type="number" value="{{ingredient.system.quantity}}"/>
                 <label class="encumbrance-value rowdata-color">{{ingredient.system.encumbrance}}</label>
                 <label class="effect-value rowdata-color" title="{{ingredient.system.description_cleaned}}">{{{ingredient.system.description}}}
                     <a class="config-button item-config flex0" data-action="skill-item">

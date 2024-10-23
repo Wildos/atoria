@@ -7,7 +7,11 @@
                 <i class="fas fa-plus"></i>
             </a>
             <a class="detail-button toggle-feature-list-category-visibility">
-                <i class="fas fa-circle-info"></i>
+                {{#if feature_list_cat_expandlist.combat.isExpanded}}
+                    <i class="fas fa-circle-info"></i>
+                {{else}}
+                    <i class="fas fa-circle-info"></i>
+                {{/if}}
             </a>
         </h2>
         {{#each combat_features as |feature key|}}
@@ -21,7 +25,11 @@
                 <i class="fas fa-plus"></i>
             </a>
             <a class="detail-button toggle-feature-list-category-visibility">
-                <i class="fas fa-circle-info"></i>
+                {{#if feature_list_cat_expandlist.skill.isExpanded}}
+                    <i class="fas fa-circle-info"></i>
+                {{else}}
+                    <i class="fas fa-circle-info"></i>
+                {{/if}}
             </a>
         </h2>
         {{#each skill_features as |feature key|}}
@@ -35,7 +43,11 @@
                 <i class="fas fa-plus"></i>
             </a>
             <a class="detail-button toggle-feature-list-category-visibility">
-                <i class="fas fa-circle-info"></i>
+                {{#if feature_list_cat_expandlist.magic.isExpanded}}
+                    <i class="fas fa-circle-info"></i>
+                {{else}}
+                    <i class="fas fa-circle-info"></i>
+                {{/if}}
             </a>
         </h2>
         {{#each magic_features as |feature key|}}
@@ -49,7 +61,11 @@
                 <i class="fas fa-plus"></i>
             </a>
             <a class="detail-button toggle-feature-list-category-visibility">
-                <i class="fas fa-circle-info"></i>
+                {{#if feature_list_cat_expandlist.knowledge.isExpanded}}
+                    <i class="fas fa-circle-info"></i>
+                {{else}}
+                    <i class="fas fa-circle-info"></i>
+                {{/if}}
             </a>
         </h2>
         {{#each knowledge_features as |feature key|}}
@@ -63,7 +79,11 @@
                 <i class="fas fa-plus"></i>
             </a>
             <a class="detail-button toggle-feature-list-category-visibility">
-                <i class="fas fa-circle-info"></i>
+                {{#if feature_list_cat_expandlist.other.isExpanded}}
+                    <i class="fas fa-circle-info"></i>
+                {{else}}
+                    <i class="fas fa-circle-info"></i>
+                {{/if}}
             </a>
         </h2>
         {{#each other_features as |feature key|}}

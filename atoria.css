@@ -1111,6 +1111,9 @@
   padding-left: 4px;
   padding-right: 4px;
 }
+.atoria .combat .offense-area, .atoria .combat .defense-area {
+  max-width: 430px;
+}
 .atoria .combat .offense-area .editor, .atoria .combat .defense-area .editor {
   min-height: var(--form-field-height);
 }
@@ -1157,6 +1160,12 @@
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+}
+.atoria .combat .action-row:not(.expanded) .fa-circle-info {
+  color: #999999;
+}
+.atoria .combat .action-row.expanded .fa-circle-info {
+  color: black;
 }
 .atoria .combat .action-row .name-label {
   text-align: center;
@@ -1592,6 +1601,9 @@
 }
 .atoria .feature-list-area .feature-list-category .feature-list-label {
   position: relative;
+  font-size: 16px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
 }
 .atoria .feature-list-area .feature-list-category .feature-list-label .add-button, .atoria .feature-list-area .feature-list-category .feature-list-label .detail-button {
   position: absolute;
@@ -1603,13 +1615,13 @@
   vertical-align: middle;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
-  min-height: 20px;
-  max-height: 20px;
+  min-height: 16px;
+  max-height: 16px;
   min-width: 20px;
   max-width: 20px;
   padding-left: 3px;
   padding-right: 3px;
-  font-size: 18px;
+  font-size: 15px;
 }
 .atoria .feature-list-area .feature-list-category .feature-list-label .add-button {
   right: 20px;
@@ -1622,6 +1634,12 @@
 .atoria .feature-list-area .feature-list-category:not(.expanded) > *:not(.feature-list-label) {
   display: none;
 }
+.atoria .feature-list-area .feature-list-category:not(.expanded) .fa-circle-info {
+  color: #999999;
+}
+.atoria .feature-list-area .feature-list-category.expanded .fa-circle-info {
+  color: black;
+}
 .atoria .feature-list-area .feature-list-category .feature-list {
   border-radius: 3px;
   border: 1px solid black;
@@ -1633,6 +1651,7 @@
   border: none;
   margin: 0;
   position: relative;
+  font-size: 15px;
 }
 .atoria .feature-list-area .feature-list-category .feature-list .name .config-button, .atoria .feature-list-area .feature-list-category .feature-list .name .detail-button {
   position: absolute;
@@ -1648,7 +1667,7 @@
   max-width: 20px;
   padding-left: 3px;
   padding-right: 3px;
-  font-size: 18px;
+  font-size: 15px;
 }
 .atoria .feature-list-area .feature-list-category .feature-list .name .config-button {
   right: 20px;
@@ -1660,6 +1679,12 @@
 }
 .atoria .feature-list-area .feature-list-category .feature-list:not(.expanded) > .description {
   display: none;
+}
+.atoria .feature-list-area .feature-list-category .feature-list:not(.expanded) .fa-circle-info {
+  color: #999999;
+}
+.atoria .feature-list-area .feature-list-category .feature-list.expanded .fa-circle-info {
+  color: black;
 }
 .atoria .feature-list-area .feature-list-category .feature-list .description {
   row-gap: 3px;
@@ -2121,6 +2146,12 @@
   width: -moz-max-content;
   width: max-content;
 }
+.atoria .effects .effect-row:not(.expanded) .fa-circle-info {
+  color: #999999;
+}
+.atoria .effects .effect-row.expanded .fa-circle-info {
+  color: black;
+}
 .atoria .effects .effect-row .name-label {
   text-align: center;
   max-width: 135px;
@@ -2537,9 +2568,7 @@
   display: inline-block;
 }
 .atoria .spell {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: 100%;
 }
 .atoria .spell .title-label {
   max-width: 250px;
@@ -2556,8 +2585,7 @@
   padding-right: 3px;
 }
 .atoria .spell .shorttitle-label {
-  max-width: 700px;
-  min-width: 700px;
+  width: 100%;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -2616,10 +2644,6 @@
   max-width: 20px;
   padding-left: 3px;
   padding-right: 3px;
-}
-.atoria .spell .spell-details {
-  min-width: 750px;
-  max-width: 750px;
 }
 .atoria .spell .spell-details .spell-detail {
   min-width: 250px;

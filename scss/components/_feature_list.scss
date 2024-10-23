@@ -18,6 +18,10 @@
 
         .feature-list-label {
             position: relative;
+
+            font-size: 16px;
+            height: var(--form-field-height);
+            line-height: var(--form-field-height);
             
             .add-button, .detail-button {
                 position: absolute;
@@ -27,14 +31,14 @@
                 vertical-align: middle;
                 height: var(--form-field-height);
                 line-height: var(--form-field-height);
-                min-height: 20px;
-                max-height: 20px;
+                min-height: 16px;
+                max-height: 16px;
                 min-width: 20px;
                 max-width: 20px;
                 padding-left: 3px;
                 padding-right: 3px;
 
-                font-size: 18px;
+                font-size: 15px;
             }
             .add-button {
                 right: 20px;
@@ -49,6 +53,12 @@
         &:not(.expanded) > *:not(.feature-list-label) {
             display: none;
         }
+        &:not(.expanded) .fa-circle-info {
+            color: #999999;
+        }
+        &.expanded .fa-circle-info {
+            color: black;
+        }
 
         .feature-list {
             border-radius: 3px;
@@ -61,6 +71,8 @@
                 border: none;
                 margin: 0;
                 position: relative;
+
+                font-size: 15px;
                 
                 .config-button, .detail-button {
                     position: absolute;
@@ -75,7 +87,7 @@
                     padding-left: 3px;
                     padding-right: 3px;
 
-                    font-size: 18px;
+                    font-size: 15px;
                 }
                 .config-button {
                     right: 20px;
@@ -90,6 +102,14 @@
             
             &:not(.expanded) > .description {
                 display: none;
+            }
+
+
+            &:not(.expanded) .fa-circle-info {
+                color: #999999;
+            }
+            &.expanded .fa-circle-info {
+                color: black;
             }
 
             .description {
