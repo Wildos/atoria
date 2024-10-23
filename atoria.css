@@ -2565,9 +2565,7 @@
   display: inline-block;
 }
 .atoria .spell {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: 100%;
 }
 .atoria .spell .title-label {
   max-width: 250px;
@@ -2584,8 +2582,7 @@
   padding-right: 3px;
 }
 .atoria .spell .shorttitle-label {
-  max-width: 700px;
-  min-width: 700px;
+  width: 100%;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
@@ -2644,10 +2641,6 @@
   max-width: 20px;
   padding-left: 3px;
   padding-right: 3px;
-}
-.atoria .spell .spell-details {
-  min-width: 750px;
-  max-width: 750px;
 }
 .atoria .spell .spell-details .spell-detail {
   min-width: 250px;
