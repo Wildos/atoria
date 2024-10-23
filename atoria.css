@@ -1598,6 +1598,9 @@
 }
 .atoria .feature-list-area .feature-list-category .feature-list-label {
   position: relative;
+  font-size: 16px;
+  height: var(--form-field-height);
+  line-height: var(--form-field-height);
 }
 .atoria .feature-list-area .feature-list-category .feature-list-label .add-button, .atoria .feature-list-area .feature-list-category .feature-list-label .detail-button {
   position: absolute;
@@ -1609,13 +1612,13 @@
   vertical-align: middle;
   height: var(--form-field-height);
   line-height: var(--form-field-height);
-  min-height: 20px;
-  max-height: 20px;
+  min-height: 16px;
+  max-height: 16px;
   min-width: 20px;
   max-width: 20px;
   padding-left: 3px;
   padding-right: 3px;
-  font-size: 18px;
+  font-size: 15px;
 }
 .atoria .feature-list-area .feature-list-category .feature-list-label .add-button {
   right: 20px;
@@ -1645,6 +1648,7 @@
   border: none;
   margin: 0;
   position: relative;
+  font-size: 15px;
 }
 .atoria .feature-list-area .feature-list-category .feature-list .name .config-button, .atoria .feature-list-area .feature-list-category .feature-list .name .detail-button {
   position: absolute;
@@ -1660,7 +1664,7 @@
   max-width: 20px;
   padding-left: 3px;
   padding-right: 3px;
-  font-size: 18px;
+  font-size: 15px;
 }
 .atoria .feature-list-area .feature-list-category .feature-list .name .config-button {
   right: 20px;
