@@ -1111,6 +1111,9 @@
   padding-left: 4px;
   padding-right: 4px;
 }
+.atoria .combat .offense-area, .atoria .combat .defense-area {
+  max-width: 430px;
+}
 .atoria .combat .offense-area .editor, .atoria .combat .defense-area .editor {
   min-height: var(--form-field-height);
 }
