@@ -56,7 +56,7 @@ export default class ActorSkillConfig extends BaseConfigSheet {
     };
 
     const sorting_subskill = function (proper_order_array, elem_a, elem_b) {
-      return proper_order_array.indexOf(elem_a.id) < proper_order_array.indexOf(elem_b.id);
+      return proper_order_array.indexOf(elem_a.id) - proper_order_array.indexOf(elem_b.id);
     };
 
 

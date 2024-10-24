@@ -255,7 +255,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     };
 
     const sorting_subskill = function (proper_order_array, elem_a, elem_b) {
-      return proper_order_array.indexOf(elem_a.sub_skill_key) < proper_order_array.indexOf(elem_b.sub_skill_key);
+      return proper_order_array.indexOf(elem_a.sub_skill_key) - proper_order_array.indexOf(elem_b.sub_skill_key);
     };
 
 
