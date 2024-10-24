@@ -184,8 +184,8 @@
   "ATORIA.Brawl": "Brawl",
   "ATORIA.Blade": "Blade",
   "ATORIA.Polearm": "Polearm",
-  "ATORIA.Haft-slashing-piercing": "Haft-slashing-piercing",
-  "ATORIA.Haft-bludgeonning": "Haft-bludgeonning",
+  "ATORIA.Haft-slashing-piercing": "Haft-slashing",
+  "ATORIA.Haft-bludgeonning": "Haft-bludgeonning-piercing",
   "ATORIA.Shield": "Shield",
   "ATORIA.Shooting": "Shooting",
   "ATORIA.Throw": "Throw",
@@ -230,6 +230,7 @@
   "ATORIA.Strategy": "Strategy",
   "ATORIA.Transport": "Transport",
   "ATORIA.Theft": "Theft",
+  "ATORIA.Runic": "Runic",
 
   "ATORIA.Mental": "Mental",
   "ATORIA.Holy": "Holy",
@@ -245,6 +246,7 @@
 
   "ATORIA.CoinCopper": "CP",
   "ATORIA.CoinSilver": "SP",
+  "ATORIA.CoinElectrum": "EP",
   "ATORIA.CoinGold": "GP",
 
   "ATORIA.InventoryArmorTitle": "Armor",

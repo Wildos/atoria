@@ -1111,6 +1111,15 @@
   padding-left: 4px;
   padding-right: 4px;
 }
+.atoria .combat .amount-input {
+  -webkit-box-flex: 0;
+  -ms-flex: 0;
+  flex: 0;
+  text-align: center;
+  min-width: 30px;
+  max-width: 30px;
+  height: unset;
+}
 .atoria .combat .offense-area, .atoria .combat .defense-area {
   max-width: 430px;
 }
@@ -1651,6 +1660,7 @@
   border: none;
   margin: 0;
   position: relative;
+  max-width: 290px;
   font-size: 15px;
 }
 .atoria .feature-list-area .feature-list-category .feature-list .name .config-button, .atoria .feature-list-area .feature-list-category .feature-list .name .detail-button {
@@ -1692,11 +1702,12 @@
 .atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row {
   border-top: 1px solid black;
   padding-top: 3px;
+  max-width: 290px;
 }
 .atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .subfeature-name {
   font-weight: bold;
-  height: var(--form-field-height);
   line-height: var(--form-field-height);
+  max-width: 250px;
 }
 .atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .usage-input {
   -webkit-box-flex: 0;
@@ -2415,6 +2426,14 @@
   height: var(--form-field-height);
   line-height: var(--form-field-height);
 }
+.atoria .inventory .flexrow .resource-value.coin-label {
+  min-width: 40px;
+  max-width: 40px;
+}
+.atoria .inventory .flexrow .resource-value.coin-number {
+  min-width: 35px;
+  max-width: 35px;
+}
 .atoria .inventory .flexrow .encumbrance-value {
   text-align: center;
   border-radius: 3px;
@@ -2949,13 +2968,16 @@
   background-color: #cccccc;
 }
 .atoria .coin-copper {
-  background-color: #f6b26b;
+  background-color: #C36500;
 }
 .atoria .coin-silver {
-  background-color: #d9d9d9;
+  background-color: #A7A7A7;
+}
+.atoria .coin-electrum {
+  background-color: #BDA834;
 }
 .atoria .coin-gold {
-  background-color: #ffd966;
+  background-color: #FFD800;
 }
 .atoria .tanned-color {
   background-color: rgba(0, 0, 0, 0.05);

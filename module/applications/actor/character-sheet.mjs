@@ -21,8 +21,9 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       width: 1026 + 16,
       height: 800,
       dragDrop: [
-        { dragSelector: ".item-list .item", dropSelector: ".item-list" },
-        { dragSelector: ".hotbar-able", dropSelector: null },
+        { dragSelector: ".item-list .item", dropSelector: null },
+        { dragSelector: ".custom-item-list .custom-item", dropSelector: null },
+        { dragSelector: ".hotbar-able", dropSelector: null }
       ]
     });
   }
@@ -137,30 +138,31 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         if (item === undefined)
           continue
         item.isExpanded = this._expanded.has(item._id);
-        top_category_formatted.push(item);
+        item.description_formatted =
+          top_category_formatted.push(item);
       }
       return top_category_formatted;
     };
 
     const features_category_combat = context.system.feature_categories.combat;
     const combat_features = map_feature_cat_func(features_category_combat)
-    combat_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+    combat_features.sort((a, b) => { return this._sort_item_by_id(context.items, a.id, b.id); });
 
     const features_category_skill = context.system.feature_categories.skill;
     const skill_features = map_feature_cat_func(features_category_skill)
-    skill_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+    skill_features.sort((a, b) => { return this._sort_item_by_id(context.items, a.id, b.id); });
 
     const features_category_magic = context.system.feature_categories.magic;
     const magic_features = map_feature_cat_func(features_category_magic)
-    magic_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+    magic_features.sort((a, b) => { return this._sort_item_by_id(context.items, a.id, b.id); });
 
     const features_category_knowledge = context.system.feature_categories.knowledge;
     const knowledge_features = map_feature_cat_func(features_category_knowledge)
-    knowledge_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+    knowledge_features.sort((a, b) => { return this._sort_item_by_id(context.items, a.id, b.id); });
 
     const features_category_other = context.system.feature_categories.other;
     const other_features = map_feature_cat_func(features_category_other)
-    other_features.sort((a, b) => { return a.name.localeCompare(b.name); });
+    other_features.sort((a, b) => { return this._sort_item_by_id(context.items, a.id, b.id); });
 
 
 
@@ -684,7 +686,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   }
 
 
-
   _get_skill_name(full_skill_id) {
     const [cat_id, skill_id] = full_skill_id.split('.');
     const cat_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[cat_id])}`;
@@ -695,6 +696,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   /** @inheritdoc */
   _onDragStart(event) {
+    console.log("DragStart");
     switch (event.target.dataset?.type) {
       case "initiative": {
         const dragData = {
@@ -723,8 +725,51 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         break
       }
       default:
+        const target = event.target;
+
+        if (target.className.includes("custom-item")) {
+          const custom_item_list = $(target).parents(".custom-item-list");
+          const custom_item_list_item_id = custom_item_list.data("itemId");
+          const custom_item_list_item_variable = custom_item_list.data("variable");
+          const custom_item_id = $(target).data("key");
+          const dragData = {
+            "item_id": custom_item_list_item_id,
+            "item_variable": custom_item_list_item_variable,
+            "previous_id": custom_item_id
+          };
+          event.dataTransfer.setData("custom_data", JSON.stringify(dragData));
+          return;
+        }
         return super._onDragStart(event);
     }
+  }
+
+  async _onDrop(event) {
+    if (!this.actor.isOwner) return false;
+    console.log("onDrop");
+
+    const target = event.target;
+    if (target.className.includes("custom-item")) { // Handle custom-items
+      const custom_drag_data = JSON.parse(event.dataTransfer.getData("custom_data"));
+      const main_item = this.actor.items.get(custom_drag_data.item_id);
+      const main_item_variable = custom_drag_data.item_variable;
+      const old_item_id = custom_drag_data.previous_id;
+      const desired_item_id = $(target).data("key");
+
+      const access = (path, object) => {
+        return path.split('.').reduce((o, i) => o[i], object)
+      }
+
+      let new_variable = access(main_item_variable, main_item);
+      let tmp_value = new_variable[desired_item_id];
+      new_variable[desired_item_id] = new_variable[old_item_id];
+      new_variable[old_item_id] = tmp_value;
+      await main_item.update({
+        [`${main_item_variable}`]: new_variable
+      });
+    }
+
+    return await super._onDrop(event);
   }
 
 

@@ -43,6 +43,13 @@
             padding-right: 4px;
         }
     }
+    .amount-input {
+        flex: 0;
+        text-align: center;
+        min-width: 30px;
+        max-width: 30px;
+        height: unset;
+    }
     .offense-area, .defense-area {
         max-width: 430px;
         .editor {
