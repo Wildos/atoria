@@ -9,11 +9,13 @@
         </label>
         <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'ATORIA.ActionNameTitle' }}"/>
 
-        {{!-- type --}}
-        <label class="cost-title">{{ localize "ATORIA.Type" }}</label>
-        <select name="system.type">
-            {{selectOptions config.ACTION_MODIFIER_TYPE selected=item.system.type}}
-        </select>
+        {{#unless isOwned}}
+            {{!-- type --}}
+            <label class="cost-title">{{ localize "ATORIA.Type" }}</label>
+            <select name="system.subtype">
+                {{selectOptions config.ACTION_MODIFIER_TYPE selected=item.system.subtype}}
+            </select>
+        {{/unless}}
 
         {{!-- cost --}}
         <label class="cost-title">{{ localize "ATORIA.SpellCostTitle" }}</label>

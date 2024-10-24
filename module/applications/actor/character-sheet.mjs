@@ -110,9 +110,11 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         i.system.effect_cleaned = parseHTML.body.textContent || '';
         switch (i.system.subtype) {
           case "technique":
+            console.log(`technique ${i.name}`);
             technique_known.push(i);
             break;
           case "incantatory_addition":
+            console.log(`ajout ${i.name}`);
             incantatory_known.push(i);
             break;
           default:
@@ -684,7 +686,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       }
     });
   }
-
 
 
   _get_skill_name(full_skill_id) {
