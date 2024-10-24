@@ -21,9 +21,9 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       width: 1026 + 16,
       height: 800,
       dragDrop: [
-        { dragSelector: ".item-list .item", dropSelector: ".item-list" },
-        { dragSelector: ".custom-item-list .custom-item", dropSelector: ".custom-item-list" },
-        { dragSelector: ".hotbar-able", dropSelector: null },
+        { dragSelector: ".item-list .item", dropSelector: null },
+        { dragSelector: ".custom-item-list .custom-item", dropSelector: null },
+        { dragSelector: ".hotbar-able", dropSelector: null }
       ]
     });
   }
@@ -110,11 +110,9 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
         i.system.effect_cleaned = parseHTML.body.textContent || '';
         switch (i.system.subtype) {
           case "technique":
-            console.log(`technique ${i.name}`);
             technique_known.push(i);
             break;
           case "incantatory_addition":
-            console.log(`ajout ${i.name}`);
             incantatory_known.push(i);
             break;
           default:
@@ -698,6 +696,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   /** @inheritdoc */
   _onDragStart(event) {
+    console.log("DragStart");
     switch (event.target.dataset?.type) {
       case "initiative": {
         const dragData = {
@@ -747,6 +746,7 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   async _onDrop(event) {
     if (!this.actor.isOwner) return false;
+    console.log("onDrop");
 
     const target = event.target;
     if (target.className.includes("custom-item")) { // Handle custom-items
