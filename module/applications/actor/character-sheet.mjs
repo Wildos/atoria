@@ -755,11 +755,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
       const old_item_id = custom_drag_data.previous_id;
       const desired_item_id = $(target).data("key");
 
-      console.log(`
-        old_item_id: ${old_item_id}
-        desired_item_id: ${desired_item_id}
-      `);
-
       const access = (path, object) => {
         return path.split('.').reduce((o, i) => o[i], object)
       }

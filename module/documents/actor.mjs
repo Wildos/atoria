@@ -715,7 +715,7 @@ export class AtoriaActor extends Actor {
       modification["system.medical_healing_used"] = false;
     }
 
-    if (this.system.medical_healing_used) {
+    if (this.system.healing_herbs_used) {
       log.push(game.i18n.localize("ATORIA.HerbsHealingRegained"));
       modification["system.healing_herbs_used"] = false;
     }
