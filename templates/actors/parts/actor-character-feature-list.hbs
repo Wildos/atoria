@@ -1,5 +1,5 @@
-<div class="feature-list item flexcol {{#if feature.isExpanded}}expanded{{/if}}" data-item-id="{{feature._id}}" {{#if feature.system.has_color}}style="background-color:{{feature.system.color}};"{{/if}}>
-    <h3 class="name" title="{{feature.name}}">{{feature.name}}
+<div class="feature-list flexcol {{#if feature.isExpanded}}expanded{{/if}}" data-item-id="{{feature._id}}" {{#if feature.system.has_color}}style="background-color:{{feature.system.color}};"{{/if}}>
+    <h3 class="name item" data-item-id="{{feature._id}}" title="{{feature.name}}">{{feature.name}}
         <a class="config-button item-config flex0" data-action="feature-list-item" ><i class="fas fa-cog"></i></a>
         <a class="detail-button feature-list-detail flex0" data-action="feature-list-item" data-id="{{feature._id}}" >
             {{#if feature.isExpanded}}
@@ -9,9 +9,9 @@
             {{/if}}
         </a>
     </h3>
-    <div class="description flexcol" data-item-id="{{feature._id}}">
+    <div class="description flexcol custom-item-list" data-item-id="{{feature._id}}" data-variable="system.features" >
         {{#each feature.system.features as |subfeature key|}}
-        <div class="subfeature-row">
+        <div class="subfeature-row custom-item" data-key="{{key}}">
             <div class="flexrow">
                 <label class="subfeature-name">{{subfeature.name}}</label>
                 {{#if subfeature.show_usage_limits}}
@@ -20,7 +20,7 @@
                 <img class="regain-type-icon" src="systems/atoria/imgs/regain-type-{{subfeature.regain_type}}.svg"/>
                 {{/if}}
             </div>
-            <label class="subfeature-description">{{subfeature.description}}</label>
+            <label class="subfeature-description">{{breaklines subfeature.description}}</label>
         </div>
         {{/each}}
     </div>

@@ -81,6 +81,12 @@ export function dictLength(dict) {
   return Object.keys(dict).length;
 }
 
+export function breaklines(text) {
+  text = Handlebars.Utils.escapeExpression(text);
+  text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
+  return new Handlebars.SafeString(text);
+}
+
 /* -------------------------------------------- */
 
 /**
@@ -90,7 +96,8 @@ export function registerHandlebarsHelpers() {
   Handlebars.registerHelper({
     getProperty: foundry.utils.getProperty,
     "atoria-get-style-display-value": getStyleDisplayValue,
-    "dict_length": dictLength
+    "dict_length": dictLength,
+    "breaklines": breaklines
   });
 }
 

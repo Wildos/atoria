@@ -71,6 +71,7 @@
                 border: none;
                 margin: 0;
                 position: relative;
+                max-width: 290px;
 
                 font-size: 15px;
                 
@@ -118,11 +119,13 @@
                 .subfeature-row {
                     border-top: 1px solid black;
                     padding-top: 3px;
+                    max-width: 290px;
 
                     .subfeature-name {
                         font-weight: bold;
-                        height: var(--form-field-height);
+                        // height: var(--form-field-height);
                         line-height: var(--form-field-height);
+                        max-width: 250px;
                     }
                     .usage-input{
                         flex: 0;

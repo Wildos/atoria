@@ -100,12 +100,14 @@
             <label class="shortname-value encumbrance">{{ localize "ATORIA.Encumbrance"}}</label>
             <label class="resource-value {{encumbrance_level_display_class}}">{{system.encumbrance.value}}</label>
             <label class="resource-value encumbrance">{{system.encumbrance.max}}</label>
-            <label class="resource-value coin-copper">{{ localize "ATORIA.CoinCopper"}}</label>
-            <input class="resource-value" type="number" data-dtype="Number" name="system.coins.copper" value="{{system.coins.copper}}"/>
-            <label class="resource-value coin-silver">{{ localize "ATORIA.CoinSilver"}}</label>
-            <input class="resource-value" type="number" data-dtype="Number" name="system.coins.silver" value="{{system.coins.silver}}"/>
-            <label class="resource-value coin-gold">{{ localize "ATORIA.CoinGold"}}</label>
-            <input class="resource-value" type="number" data-dtype="Number" name="system.coins.gold" value="{{system.coins.gold}}"/>
+            <label class="resource-value coin-label coin-copper">{{ localize "ATORIA.CoinCopper"}}</label>
+            <input class="resource-value coin-number" type="number" data-dtype="Number" name="system.coins.copper" value="{{system.coins.copper}}"/>
+            <label class="resource-value coin-label coin-silver">{{ localize "ATORIA.CoinSilver"}}</label>
+            <input class="resource-value coin-number" type="number" data-dtype="Number" name="system.coins.silver" value="{{system.coins.silver}}"/>
+            <label class="resource-value coin-label coin-electrum">{{ localize "ATORIA.CoinElectrum"}}</label>
+            <input class="resource-value coin-number" type="number" data-dtype="Number" name="system.coins.electrum" value="{{system.coins.electrum}}"/>
+            <label class="resource-value coin-label coin-gold">{{ localize "ATORIA.CoinGold"}}</label>
+            <input class="resource-value coin-number" type="number" data-dtype="Number" name="system.coins.gold" value="{{system.coins.gold}}"/>
         </div>
         <div class="flexrow">
             <label class="name-value subtitle-color">{{ localize "ATORIA.NameTitle"}}</label>

@@ -14,9 +14,11 @@
                 {{/if}}
             </a>
         </h2>
+        <div class="item-list">
         {{#each combat_features as |feature key|}}
             {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="combat"}}
         {{/each}}
+        </div>
     </div>
 
     <div class="feature-list-category {{#if feature_list_cat_expandlist.skill.isExpanded}}expanded{{/if}}" data-cat-name="skill">
@@ -32,9 +34,11 @@
                 {{/if}}
             </a>
         </h2>
+        <div class="item-list">
         {{#each skill_features as |feature key|}}
             {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="skill"}}
         {{/each}}
+        </div>
     </div>
 
     <div class="feature-list-category {{#if feature_list_cat_expandlist.magic.isExpanded}}expanded{{/if}}" data-cat-name="magic">
@@ -50,9 +54,11 @@
                 {{/if}}
             </a>
         </h2>
+        <div class="item-list">
         {{#each magic_features as |feature key|}}
             {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="magic"}}
         {{/each}}
+        </div>
     </div>
 
     <div class="feature-list-category {{#if feature_list_cat_expandlist.knowledge.isExpanded}}expanded{{/if}}" data-cat-name="knowledge">
@@ -68,9 +74,11 @@
                 {{/if}}
             </a>
         </h2>
+        <div class="item-list">
         {{#each knowledge_features as |feature key|}}
             {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="knowledge"}}
         {{/each}}
+        </div>
     </div>
 
     <div class="feature-list-category {{#if feature_list_cat_expandlist.other.isExpanded}}expanded{{/if}}" data-cat-name="other">
@@ -86,8 +94,10 @@
                 {{/if}}
             </a>
         </h2>
+        <div class="item-list">
         {{#each other_features as |feature key|}}
             {{> "systems/atoria/templates/actors/parts/actor-character-feature-list.hbs" feature=feature feature_cat="other"}}
         {{/each}}
+        </div>
     </div>
 </div>

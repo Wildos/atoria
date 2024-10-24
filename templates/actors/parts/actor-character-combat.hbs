@@ -39,7 +39,7 @@
                 <div class="offense-title-box">
                     <label class="offense-title">{{ localize "ATORIA.Offense"}}</label>
                 </div>
-                {{!-- <input class="offense" type="text" name="system.offense" title="{{system.offense}}" value="{{system.offense}}"/> --}}
+                <input class="amount-input" type="number" name="system.offense_amount" value="{{system.offense_amount}}"/>
                 <div class="offense-area">
                     {{editor (concat "offenseHTML") target=(concat "system.offense") button=false editable=true engine="prosemirror" collaborate=false}}
                 </div>
@@ -48,7 +48,7 @@
                 <div class="defense-title-box">
                     <label class="defense-title">{{ localize "ATORIA.Defense"}}</label>
                 </div>
-                {{!-- <input class="defense" type="text" name="system.defense" title="{{system.defense}}" value="{{system.defense}}"/> --}}
+                <input class="amount-input" type="number" name="system.defense_amount" value="{{system.defense_amount}}"/>
                 <div class="defense-area">
                     {{editor (concat "defenseHTML") target=(concat "system.defense") button=false editable=true engine="prosemirror" collaborate=false}}
                 </div>

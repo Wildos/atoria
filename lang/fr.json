@@ -239,6 +239,7 @@
 
   "ATORIA.CoinCopper": "PC",
   "ATORIA.CoinSilver": "PA",
+  "ATORIA.CoinElectrum": "PE",
   "ATORIA.CoinGold": "PO",
 
   "ATORIA.InventoryArmorTitle": "Armure",

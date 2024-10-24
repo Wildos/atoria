@@ -245,6 +245,7 @@
 
   "ATORIA.CoinCopper": "CP",
   "ATORIA.CoinSilver": "SP",
+  "ATORIA.CoinElectrum": "EP",
   "ATORIA.CoinGold": "GP",
 
   "ATORIA.InventoryArmorTitle": "Armor",

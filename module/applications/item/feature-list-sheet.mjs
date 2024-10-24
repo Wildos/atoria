@@ -80,20 +80,24 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
     event.preventDefault();
 
     console.log("SubFeatureCreate");
-
-    let key_id = "0";
-    while (Object.keys(this.item.system.features).includes(key_id)) {
-      key_id = String(Number(key_id) + 1);
+    let new_features = this.item.system.features;
+    if (!Array.isArray(new_features)) {
+      new_features = [];
+      for (const [key, value] of Object.entries(this.item.system.features)) {
+        new_features.push(value);
+      }
     }
-    this.item.system.features[key_id] = {
+
+    new_features.push({
       name: "",
       regain_type: CONFIG.ATORIA.TIME_PHASES_PERMANENT,
       usage_left: 0,
       usage_max: 0,
       description: ""
-    };
+    });
+
     await this.item.update({
-      "system.features": this.item.system.features
+      "system.features": new_features
     });
   }
 
@@ -108,9 +112,12 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
     console.dir(this.item.system.features);
     console.dir(key_id);
 
+
     confirm_deletion(this.item.system.features[key_id].name, async user_confirmed => {
       if (user_confirmed) {
-        await this.item.update({ [`system.features.-=${key_id}`]: null }, { enforceTypes: false, diff: true });
+        let new_features = this.item.system.features
+        new_features.splice(key_id, 1);
+        await this.item.update({ "system.features": new_features }, { enforceTypes: false, diff: true });
       }
     });
   }

@@ -89,11 +89,14 @@
       "coins": {
         "copper": 0,
         "silver": 0,
+        "electrum": 0,
         "gold": 0
       },
       "related_pugilat_item": null,
       "offense": "",
+      "offense_amount": 0,
       "defense": "",
+      "defense_amount": 0,
       "skills": {
         "agility": {
           "balance": {
