@@ -128,6 +128,7 @@ ATORIA.KNOWLEDGES_LABEL = {
     "strategy": "ATORIA.Strategy",
     "transport": "ATORIA.Transport",
     "theft": "ATORIA.Theft",
+    "runic": "ATORIA.Runic",
 }
 ATORIA.MAGICS_LABEL = {
     "mental": "ATORIA.Mental",
