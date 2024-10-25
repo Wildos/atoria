@@ -64,9 +64,37 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
       html.find(".subfeature-delete").click(this._onSubFeatureDelete.bind(this));
       html.find(".data-expand").on('input', this.updateSize.bind(this));
       html.find('.item-delete').click(this._onItemDelete.bind(this));
+
+      html.find('input[data-update-features-index]').change(this._onUpdateFeatures.bind(this));
+      html.find('textarea[data-update-features-index]').change(this._onUpdateFeatures.bind(this));
+      html.find('select[data-update-features-index]').change(this._onUpdateFeatures.bind(this));
     }
   }
 
+  /**
+   * Handle update of item from character sheet
+   * 
+   */
+  async _onUpdateFeatures(event) {
+    event.preventDefault();
+    const { updateFeaturesIndex, insideArrayKey } = event.currentTarget.dataset;
+
+    const access = (path, object) => {
+      return path.split('.').reduce((o, i) => o[i], object)
+    }
+
+    let new_array = this.item.system.features;
+
+    console.log(`UpdateFeatures: ${insideArrayKey} -> ${event.target.value}`);
+
+    let new_array_element = new_array[updateFeaturesIndex];
+    new_array_element[insideArrayKey] = event.target.value;
+
+    new_array[updateFeaturesIndex] = new_array_element;
+
+
+    this.item.update({ "system.features": new_array });
+  }
 
   updateSize(event) {
     const cur = $(event.currentTarget);
@@ -99,6 +127,8 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
     await this.item.update({
       "system.features": new_features
     });
+    console.log("onSubFeatureCreate");
+    console.dir(this.item.system.features);
   }
 
   async _onSubFeatureDelete(event) {
@@ -109,9 +139,8 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
     const li = $(header).parents(".subfeature");
     const key_id = li.data("id");
 
+    console.log("onSubFeatureDelete - M");
     console.dir(this.item.system.features);
-    console.dir(key_id);
-
 
     confirm_deletion(this.item.system.features[key_id].name, async user_confirmed => {
       if (user_confirmed) {
