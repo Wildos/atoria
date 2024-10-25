@@ -85,8 +85,6 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
 
     let new_array = this.item.system.features;
 
-    console.log(`UpdateFeatures: ${insideArrayKey} -> ${event.target.value}`);
-
     let new_array_element = new_array[updateFeaturesIndex];
     new_array_element[insideArrayKey] = event.target.value;
 
@@ -107,7 +105,6 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
   async _onSubFeatureCreate(event) {
     event.preventDefault();
 
-    console.log("SubFeatureCreate");
     let new_features = this.item.system.features;
     if (!Array.isArray(new_features)) {
       new_features = [];
@@ -127,20 +124,14 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
     await this.item.update({
       "system.features": new_features
     });
-    console.log("onSubFeatureCreate");
-    console.dir(this.item.system.features);
   }
 
   async _onSubFeatureDelete(event) {
     event.preventDefault();
-    console.log("SubFeatureDelete");
 
     const header = event.currentTarget;
     const li = $(header).parents(".subfeature");
     const key_id = li.data("id");
-
-    console.log("onSubFeatureDelete - M");
-    console.dir(this.item.system.features);
 
     confirm_deletion(this.item.system.features[key_id].name, async user_confirmed => {
       if (user_confirmed) {

@@ -715,7 +715,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   /** @inheritdoc */
   _onDragStart(event) {
-    console.log("DragStart");
     switch (event.target.dataset?.type) {
       case "initiative": {
         const dragData = {
@@ -765,7 +764,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   async _onDrop(event) {
     if (!this.actor.isOwner) return false;
-    console.log("onDrop");
 
     const target = event.target;
     if (target.className.includes("custom-item")) { // Handle custom-items
