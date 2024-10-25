@@ -3,10 +3,10 @@
   "id": "atoria",
   "title": "Atoria",
   "description": "The Atoria 0.5 system for FoundryVTT",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "url": "https://github.com/Wildos/atoria/",
   "manifest": "https://raw.githubusercontent.com/Wildos/atoria/main/system.json",
-  "download": "https://github.com/Wildos/atoria/releases/download/v0.2.3/atoria-0.2.3.zip",
+  "download": "https://github.com/Wildos/atoria/releases/download/v0.2.4/atoria-0.2.4.zip",
   "minimumCoreVersion": "11",
   "compatibleCoreVersion": "11",
   "compatibility": {
