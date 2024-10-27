@@ -15,7 +15,7 @@
             <div class="flexrow">
                 <label class="subfeature-name">{{subfeature.name}}</label>
                 {{#if subfeature.show_usage_limits}}
-                <input class="usage-input"  data-item-id="{{../feature._id}}" data-update-item="system.features.{{key}}.usage_left" type="number" value="{{subfeature.usage_left}}"/>
+                <input class="usage-input"  data-item-id="{{../feature._id}}" data-update-item="system.features" data-array-index="{{key}}" data-inside-array-key="usage_left" type="number" value="{{subfeature.usage_left}}"/>
                 <label class="regain-max">/ {{subfeature.usage_max}}</label>
                 <img class="regain-type-icon" src="systems/atoria/imgs/regain-type-{{subfeature.regain_type}}.svg"/>
                 {{/if}}

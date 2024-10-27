@@ -1,8 +1,12 @@
 const FIRST_BREAKING_CHANGE = "0.1.11";
+const SECOND_BREAKING_CHANGE = "0.2.4";
 
 export async function migrateData() {
     if (isNewerVersion(FIRST_BREAKING_CHANGE, game.settings.get("atoria", "systemMigrationVersion"))) {
         await _apply_first_change();
+    }
+    if (isNewerVersion(SECOND_BREAKING_CHANGE, game.settings.get("atoria", "systemMigrationVersion"))) {
+        await _apply_second_change();
     }
 
     game.settings.set("atoria", "systemMigrationVersion", game.system.version);
@@ -141,4 +145,67 @@ function _update_actor(actor) {
     } catch (err) {
         throw new Error(`Error while updating actor ${actor.name}: ${err.message}`);
     }
+}
+
+
+async function _apply_second_change() {
+    ui.notifications.info(game.i18n.format("MIGRATION.Begin", { version: SECOND_BREAKING_CHANGE }), { permanent: true });
+
+    // Migrate World Actors
+    let migration_failed = 0;
+
+    const actors = game.actors;
+    for (const actor of actors) {
+        migration_failed += await _fix_feature_list(actor);
+    }
+
+    ui.notifications.info(game.i18n.format("MIGRATION.Complete", { version: SECOND_BREAKING_CHANGE, numberOfFailure: migration_failed }), { permanent: true });
+}
+
+async function _fix_feature_list(actor) {
+    if (actor == undefined || (Object.keys(actor.system).length === 0 && actor.system.constructor === Object)) {
+        return 0;
+    }
+    if (actor.type !== 'character') {
+        return 0;
+    }
+    let migration_failed = 0;
+    try {
+        console.log(`Migrating Actor document ${actor.name}`);
+
+        const fix_feature_category_items = async function (feature_top_category) {
+            for (const feature_list_id in feature_top_category) {
+                const item = actor.items.get(feature_top_category[feature_list_id]);
+                if (item === undefined)
+                    continue
+
+                let new_features = item.system.features;
+                if (!Array.isArray(new_features)) {
+                    new_features = [];
+                    for (const [key, value] of Object.entries(item.system.features)) {
+                        new_features.push(value);
+                    }
+                    await item.update({
+                        "system.features": new_features
+                    });
+                }
+            }
+        };
+
+        await fix_feature_category_items(actor.system.feature_categories.combat);
+        await fix_feature_category_items(actor.system.feature_categories.skill);
+        await fix_feature_category_items(actor.system.feature_categories.magic);
+        await fix_feature_category_items(actor.system.feature_categories.knowledge);
+        await fix_feature_category_items(actor.system.feature_categories.other);
+
+        await actor.update({
+            "system.feature_categories": actor.system.feature_categories
+        });
+
+    } catch (err) {
+        err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
+        console.error(err);
+        migration_failed += 1;
+    }
+    return migration_failed;
 }

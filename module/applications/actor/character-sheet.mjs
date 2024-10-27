@@ -458,6 +458,9 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
     context.feature_list_cat_expandlist["knowledge"] = {
       isExpanded: this._feature_list_cat_expended.has("knowledge")
     };
+    context.feature_list_cat_expandlist["other"] = {
+      isExpanded: this._feature_list_cat_expended.has("other")
+    };
 
   }
 
@@ -513,11 +516,27 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
    * Handle update of item from character sheet
    * 
    */
-  _onUpdateItem(event) {
+  async _onUpdateItem(event) {
     event.preventDefault();
-    const { itemId, updateItem } = event.currentTarget.dataset;
+    const { itemId, updateItem, arrayIndex, insideArrayKey } = event.currentTarget.dataset;
     const item = this.actor.items.get(itemId);
-    item.update({ [updateItem]: event.target.value });
+
+    let new_value = event.target.value;
+    // setup if array, and if true handle it
+    if (insideArrayKey !== undefined) {
+      const access = (path, object) => {
+        return path.split('.').reduce((o, i) => o[i], object)
+      }
+
+      let new_array = access(updateItem, item);
+
+      let new_array_element = new_array[arrayIndex];
+      new_array_element[insideArrayKey] = new_value;
+
+      new_array[arrayIndex] = new_array_element;
+      new_value = new_array;
+    }
+    item.update({ [updateItem]: new_value });
   }
 
 
@@ -696,7 +715,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   /** @inheritdoc */
   _onDragStart(event) {
-    console.log("DragStart");
     switch (event.target.dataset?.type) {
       case "initiative": {
         const dragData = {
@@ -746,7 +764,6 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
 
   async _onDrop(event) {
     if (!this.actor.isOwner) return false;
-    console.log("onDrop");
 
     const target = event.target;
     if (target.className.includes("custom-item")) { // Handle custom-items
