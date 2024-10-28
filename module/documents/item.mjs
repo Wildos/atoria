@@ -12,8 +12,8 @@ export class AtoriaItem extends Item {
     super.prepareData();
 
     if (this.type == "feature-list") {
-      for (const [key, element] of Object.entries(this.system.features)) {
-        this.system.features[key].show_usage_limits = element.regain_type !== CONFIG.ATORIA.TIME_PHASES_PERMANENT;
+      for (let element of this.system.features) {
+        element.show_usage_limits = element.regain_type !== CONFIG.ATORIA.TIME_PHASES_PERMANENT;
       }
     }
   }
@@ -106,10 +106,11 @@ export class AtoriaItem extends Item {
     let modification = {};
 
     let new_features = this.system.features;
-    for (const [key, subfeature] of Object.entries(this.system.features)) {
+    for (let key in this.system.features) {
+      let subfeature = this.system.features[key];
       if (subfeature.regain_type === time_phase_type) {
-        const old_amount = subfeature.usage_left;
-        const new_amount = subfeature.usage_max;
+        const old_amount = subfeature.usage_left || 0;
+        const new_amount = subfeature.usage_max || 0;
         if (old_amount !== new_amount) {
           log.push(game.i18n.format(game.i18n.localize("ATORIA.FeatureRegained"), { name: subfeature.name, amount: new_amount - old_amount }));
           new_features[key].usage_left = subfeature.usage_max;

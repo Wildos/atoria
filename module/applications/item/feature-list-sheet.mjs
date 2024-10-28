@@ -106,12 +106,6 @@ export default class ItemAtoriaSheetFeatureList extends ItemSheet {
     event.preventDefault();
 
     let new_features = this.item.system.features;
-    if (!Array.isArray(new_features)) {
-      new_features = [];
-      for (const [key, value] of Object.entries(this.item.system.features)) {
-        new_features.push(value);
-      }
-    }
 
     new_features.push({
       name: "",

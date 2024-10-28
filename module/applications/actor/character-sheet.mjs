@@ -765,25 +765,38 @@ export default class ActorAtoriaSheetCharacter extends ActorAtoriaSheet {
   async _onDrop(event) {
     if (!this.actor.isOwner) return false;
 
-    const target = event.target;
-    if (target.className.includes("custom-item")) { // Handle custom-items
-      const custom_drag_data = JSON.parse(event.dataTransfer.getData("custom_data"));
-      const main_item = this.actor.items.get(custom_drag_data.item_id);
-      const main_item_variable = custom_drag_data.item_variable;
-      const old_item_id = custom_drag_data.previous_id;
-      const desired_item_id = $(target).data("key");
+    const target = event.target.closest(".custom-item");
 
-      const access = (path, object) => {
-        return path.split('.').reduce((o, i) => o[i], object)
+
+    if (target !== undefined) {
+      if (target.className.includes("custom-item")) { // Handle custom-items
+        const custom_drag_data = JSON.parse(event.dataTransfer.getData("custom_data"));
+        const main_item = this.actor.items.get(custom_drag_data.item_id);
+        const main_item_variable = custom_drag_data.item_variable;
+        const old_item_id = custom_drag_data.previous_id;
+        const desired_item_id = $(target).data("key");
+
+
+        const access = (path, object) => {
+          return path.split('.').reduce((o, i) => o[i], object)
+        }
+
+
+        let new_variable = access(main_item_variable, main_item);
+
+        if (old_item_id === undefined || old_item_id < 0 || old_item_id >= new_variable.length)
+          return;
+        if (desired_item_id === undefined || desired_item_id < 0 || desired_item_id >= new_variable.length) {
+          return;
+        }
+
+        let tmp_value = new_variable[desired_item_id];
+        new_variable[desired_item_id] = new_variable[old_item_id];
+        new_variable[old_item_id] = tmp_value;
+        await main_item.update({
+          [`${main_item_variable}`]: new_variable
+        });
       }
-
-      let new_variable = access(main_item_variable, main_item);
-      let tmp_value = new_variable[desired_item_id];
-      new_variable[desired_item_id] = new_variable[old_item_id];
-      new_variable[old_item_id] = tmp_value;
-      await main_item.update({
-        [`${main_item_variable}`]: new_variable
-      });
     }
 
     return await super._onDrop(event);

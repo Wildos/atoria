@@ -1,12 +1,17 @@
 const FIRST_BREAKING_CHANGE = "0.1.11";
 const SECOND_BREAKING_CHANGE = "0.2.4";
 
+const FIRST_CLEANUP = "0.2.5";
+
 export async function migrateData() {
     if (isNewerVersion(FIRST_BREAKING_CHANGE, game.settings.get("atoria", "systemMigrationVersion"))) {
         await _apply_first_change();
     }
     if (isNewerVersion(SECOND_BREAKING_CHANGE, game.settings.get("atoria", "systemMigrationVersion"))) {
         await _apply_second_change();
+    }
+    if (isNewerVersion(FIRST_CLEANUP, game.settings.get("atoria", "systemMigrationVersion"))) {
+        await _apply_first_cleanup();
     }
 
     game.settings.set("atoria", "systemMigrationVersion", game.system.version);
@@ -183,12 +188,16 @@ async function _fix_feature_list(actor) {
                 if (!Array.isArray(new_features)) {
                     new_features = [];
                     for (const [key, value] of Object.entries(item.system.features)) {
-                        new_features.push(value);
+                        if (value !== undefined || value !== null) {
+                            new_features.push(value);
+                        }
                     }
-                    await item.update({
-                        "system.features": new_features
-                    });
+                } else {
+                    new_features = item.system.features.filter((element) => (element !== null && element !== undefined));
                 }
+                await item.update({
+                    "system.features": new_features
+                });
             }
         };
 
@@ -208,4 +217,19 @@ async function _fix_feature_list(actor) {
         migration_failed += 1;
     }
     return migration_failed;
+}
+
+
+async function _apply_first_cleanup() {
+    ui.notifications.info(game.i18n.format("MIGRATION.Begin", { version: FIRST_CLEANUP }), { permanent: true });
+
+    // Migrate World Actors
+    let migration_failed = 0;
+
+    const actors = game.actors;
+    for (const actor of actors) {
+        migration_failed += await _fix_feature_list(actor);
+    }
+
+    ui.notifications.info(game.i18n.format("MIGRATION.Complete", { version: FIRST_CLEANUP, numberOfFailure: migration_failed }), { permanent: true });
 }
