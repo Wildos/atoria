@@ -69,7 +69,6 @@ Hooks.once("init", function () {
 
 
 
-
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("atoria", applications.actor.ActorAtoriaSheetCharacter, {
