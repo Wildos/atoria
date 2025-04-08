@@ -20,12 +20,12 @@
 
     <label>{{localize systemFields.is_magic.label}}</label>
     {{ formInput systemFields.is_magic value=item.system.is_magic disabled=(not @root.editable)}}
-    
+
     {{#unless item.system.is_magic}}
         <label>{{localize systemFields.associated_skill.label}}</label>
-        <select name="system.associated_skill"  
+        <select name="system.associated_skill"
         data-tooltip="{{localize systemFields.associated_skill.label}}">
-            {{selectOptions associated_skills selected=item.system.associated_skill localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
+            {{selectOptions associated_skills selected=item.system.associated_skill sort=true localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
         </select>
     {{/unless}}
 </div>
