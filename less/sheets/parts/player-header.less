@@ -1,0 +1,173 @@
+@atoria-attribute-area-width: 22em;
+@atoria-time-phase-buttons-width: 8em;
+
+
+@mini-skill-label-width: 7em;
+
+& {
+    --atoria-mini-skill-width: calc(@mini-skill-label-width + var(--atoria-input-width));
+    --atoria-img-filter: invert(100%);
+}
+.editing-mode {
+    --atoria-mini-skill-width: calc(@mini-skill-label-width + var(--atoria-input-width) * 3 + var(--checkbox-size));
+}
+
+&.theme-light .atoria-player-header img {
+    --atoria-img-filter: none;
+}
+
+.atoria-player-header {
+    --atoria-document-img-size: calc(7 * var(--atoria-skill-height));
+    --atoria-header-area-width: calc(@atoria-attribute-area-width
+    + var(--atoria-mini-skill-width)
+    + var(--atoria-mini-skill-width)
+    + var(--atoria-document-img-size)
+    + 3*var(--atoria-columns-gap)
+    );
+    grid-area: char-hdr;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    min-width: var(--atoria-header-area-width);
+    max-width: var(--atoria-header-area-width);
+    // max-width: fit-content;
+
+    gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+
+    > * {
+        flex: 1;
+    }
+
+    > .attribute-area {
+        min-width: @atoria-attribute-area-width;
+        max-width: fit-content;
+        > div, & {
+            > div, & {
+                > div, & {
+                    > input:not([type=checkbox]), > label, > h5 {
+                        min-height: var(--atoria-skill-height);
+                        max-height: var(--atoria-skill-height);
+                    }
+                    > input[type=checkbox] {
+                        --checkbox-size: var(--atoria-skill-height);
+                    }
+                }
+            }
+        }
+
+        > .atoria-time-phase-buttons {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+
+            > input[name="name"] {
+                --atoria-input-width: 5fr;
+            }
+            > h6 {
+                display: flex;
+                justify-content: center;
+                white-space: wrap;
+                height: calc(2* var(--atoria-base-line-block-height));
+                display: flex;
+                align-items: center;
+            }
+
+            > button {
+                max-height: var(--atoria-skill-height);
+                align-items: stretch;
+                > img {
+                    flex: 0;
+                    max-width: var(--atoria-base-line-block-height);
+                    max-height: var(--atoria-base-line-block-height);
+                    border: none;
+                    filter: var(--atoria-img-filter);
+                }
+
+                > * {
+                    flex: 1;
+                }
+            }
+
+
+        }
+
+        .atoria-initiative {
+            input {
+                --atoria-input-width: var(--atoria-formula-input-width);
+            }
+        }
+
+        .atoria-healing-inactive {
+            --checkbox-size: var(--atoria-base-line-block-height);
+            text-align: center;
+            > div {
+                border: var(--atoria-border-style);
+                border-radius: var(--atoria-border-style-radius);
+            }
+
+            img[data-action=editHealingInactive],
+            img[data-action=toggleAttribute],
+            input[type=checkbox] {
+                border: none;
+                margin: auto;
+                min-height: calc(var(--checkbox-size) - 2px);
+                max-height: calc(var(--checkbox-size) - 2px);
+            }
+
+            img {
+                min-height: calc(var(--checkbox-size) - 2px);
+                max-height: calc(var(--checkbox-size) - 2px);
+                min-width: var(--checkbox-size);
+                max-width: var(--checkbox-size);
+            }
+            img.checked{
+                color: var(--atoria-color-checkbox-checked);
+            }
+
+            input[type=checkbox].resurrection::after{
+                --checkbox-content: "\f714" !important;
+            }
+        }
+        .atoria-armor-n-resistance{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+
+            > * {
+                flex: 1;
+            }
+        }
+    }
+
+    > .atoria-encumbrance-n-coins {
+        min-width: var(--atoria-mini-skill-width);
+        max-width: var(--atoria-mini-skill-width);
+        > .atoria-coins-display {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+            .coins {
+                padding: 0;
+            }
+            * {
+                gap: 0;
+            }
+            > h5 {
+                max-height: var(--atoria-base-line-block-height) !important;
+                padding: 2px;
+                width: 100%;
+            }
+        }
+    }
+
+    > .atoria-perceptions-block {
+        .atoria-skill-display, .atoria-skill-cat-display {
+            min-width: var(--atoria-mini-skill-width);
+            max-width: var(--atoria-mini-skill-width);
+        }
+    }
+
+}

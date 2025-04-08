@@ -1,0 +1,92 @@
+@ofde-fense-label-area-width: 5em;
+@ofde-fense-text-area-width: 15em;
+
+@action-n-feature-width: 20em;
+
+.atoria-player-character-page {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    > .first-col {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .flexrow {
+            align-items: flex-start;
+        }
+
+        .atoria-character-skill-n-knowledge {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+
+            > * {
+                flex: 0;
+            }
+
+            .atoria-skill-area {
+                > h5 {
+                    border-bottom: var(--atoria-border-blending-style);
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+                .atoria-skill-group-area {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+
+
+                    .atoria-skill-group-display {
+                        > h5 {
+                            border-top-left-radius: 0;
+                            border-top-right-radius: 0;
+                            border-top: none;
+                        }
+                    }
+
+                    > * {
+                        flex: 0;
+                    }
+
+                }
+            }
+        }
+    }
+    > .second-col {
+        min-width: @action-n-feature-width;
+
+        .atoria-offense-defense {
+            /* display: grid; */
+            /* grid-template-columns: min-content auto @ofde-fense-text-area-width; */
+
+            display: flex;
+            flex-direction: column;
+
+            flex: 0;
+
+            > div.flexrow {
+                min-height: calc(2px + var(--atoria-base-line-block-height));
+                max-height: calc(2px + var(--atoria-base-line-block-height));
+                /* border: var(--atoria-border-style); */
+            }
+            > label {
+                min-width: @ofde-fense-label-area-width;
+                padding: 0 5px;
+
+                border: var(--atoria-border-style);
+                border-radius: var(--atoria-border-style-radius);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
+
+            > textarea {
+                // line-height: var(--atoria-base-line-block-height);
+                min-height: 1lh;
+            }
+        }
+    }
+}

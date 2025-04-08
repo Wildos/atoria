@@ -1,0 +1,58 @@
+<div class="atoria-item-weapon-parts grid-2col">
+
+    <label>{{localize systemFields.associated_skill.label}}</label>
+    <select name="system.associated_skill"
+    data-tooltip="{{localize systemFields.associated_skill.label}}">
+        {{selectOptions associated_skills selected=item.system.associated_skill localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
+    </select>
+
+    <fieldset class="double-col-field">
+        <legend>{{localize systemFields.damage_roll.label}}</legend>
+        {{>"atoria.v2.commons_partials.rollfield-input" rollfield=item.system.damage_roll systemFields=systemFields.damage_roll.fields
+        data_path="system.damage_roll" hide_name=true disabled=(not @root.editable)}}
+    </fieldset>
+
+
+    <label>{{localize systemFields.is_focuser.label}}</label>
+    {{ formInput systemFields.is_focuser value=item.system.is_focuser disabled=(not @root.editable)}}
+    {{#if item.system.is_focuser}}
+    <fieldset class="double-col-field">
+        <legend>{{localize systemFields.focuser_damage_roll.label}}</legend>
+        {{>"atoria.v2.commons_partials.rollfield-input" rollfield=item.system.focuser_damage_roll systemFields=systemFields.focuser_damage_roll.fields
+        data_path="system.focuser_damage_roll" hide_name=true disabled=(not @root.editable)}}
+    </fieldset>
+    {{/if}}
+
+    <fieldset class="double-col-field">
+        <legend>{{localize systemFields.modificators.label}}</legend>
+
+        <label>{{localize systemFields.modificators.fields.success.label}}</label>
+        {{ formInput systemFields.modificators.fields.success value=item.system.modificators.success disabled=(not @root.editable)}}
+        <label>{{localize systemFields.modificators.fields.critical_success.label}}</label>
+        {{ formInput systemFields.modificators.fields.critical_success value=item.system.modificators.critical_success disabled=(not @root.editable)}}
+        <label>{{localize systemFields.modificators.fields.critical_fumble.label}}</label>
+        {{ formInput systemFields.modificators.fields.critical_fumble value=item.system.modificators.critical_fumble disabled=(not @root.editable)}}
+    </fieldset>
+
+
+    <fieldset class="double-col-field">
+        <legend>{{localize systemFields.usable_actable_modifiers.label}}</legend>
+        {{#if item.actor}}
+            <ul class="actable-mod-list">
+                {{#each available_actable_modifiers as |actable_mod idx|}}
+                    <li class="flexrow">
+                        <h5>{{actable_mod.name}}</h5>
+                        <input class="actable-modifier-toggle" type="checkbox" data-dtype="Boolean"
+                        data-action="handleUsableActableModifier"
+                        data-actable-modifier-id="{{actable_mod._id}}"
+                        {{checked (includes ../item.system.usable_actable_modifiers actable_mod._id)}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers.element.label}}"/>
+                    </li>
+                {{/each}}
+            </ul>
+        {{else}}
+                <label class="atoria-error double-col-field">{{localize "ATORIA.Sheet.Actable.Require_actor"}}</label>
+        {{/if}}
+    </fieldset>
+
+</div>

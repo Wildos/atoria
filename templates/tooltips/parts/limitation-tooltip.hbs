@@ -1,0 +1,6 @@
+{{#if (ne item.system.limitation.regain_type 'permanent')}}
+    <label>
+        {{item.system.limitation.usage_left}}/{{item.system.limitation.usage_max}}
+        {{item.system.limitation.regain_type}}
+    </label>
+{{/if}}

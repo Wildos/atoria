@@ -1,0 +1,15 @@
+<div class="atoria-character-simple-skill-n-knowledge">
+    {{>"atoria.v2.actors_partials.skill-group-display"
+        skill_group_data=actor.system.skills
+        data_path="system.skills"
+        model=systemFields.skills
+        cssClass="atoria-skill-area"
+    }}
+
+    {{>"atoria.v2.actors_partials.skill-group-display"
+        skill_group_data=actor.system.knowledges
+        data_path="system.knowledges"
+        model=systemFields.knowledges
+        cssClass="atoria-knowledge-area"
+    }}
+</div>

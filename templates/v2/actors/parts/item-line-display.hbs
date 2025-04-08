@@ -1,0 +1,17 @@
+{{#if (eq item.type "feature")}}
+{{>"atoria.v2.actors_partials.item-feature-line-display" item=item compact=compact}}
+{{else}}
+    {{#if (oneOf item.type "technique" "incantatory-addition")}}
+    {{>"atoria.v2.actors_partials.item-actable-modifier-line-display" item=item compact=compact}}
+    {{else}}
+        {{#if (or (oneOf item.type "spell" "action" "opportunity") (and (eq item.type "weapon") (eq as "actable")))}}
+        {{>"atoria.v2.actors_partials.item-actable-line-display" item=item compact=compact}}
+        {{else}}
+            {{#if (oneOf item.type "kit" "armor" "weapon")}}
+            {{>"atoria.v2.actors_partials.item-inventory-line-display" item=item compact=compact}}
+            {{else}}
+            <label>Unknown item type: {{item.type}}</label>
+            {{/if}}
+        {{/if}}
+    {{/if}}
+{{/if}}

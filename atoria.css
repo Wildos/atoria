@@ -1,3208 +1,1518 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
-/* Global styles */
-.window-app {
-  font-family: "Roboto", sans-serif;
-}
-
-.rollable:hover, .rollable:focus {
-  color: #000;
-  text-shadow: 0 0 10px red;
-  cursor: pointer;
-}
-
-.tickable-image {
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 20px;
-  flex: 0 0 20px;
-  width: 20px;
-  height: 20px;
-  margin: 3px 5px;
-}
-.tickable-image:hover, .tickable-image:focus {
-  -webkit-filter: invert(30%) drop-shadow(0px 0px 3px red);
-  filter: invert(30%) drop-shadow(0px 0px 3px red);
-  cursor: pointer;
-}
-
-.grid-2col {
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0;
-  margin: 0;
-  padding: 0;
-}
-
-/* Styles limited to atoria sheets */
-.atoria.actor-config .attributes input, .atoria.actor-config .attributes label {
-  min-width: 225px;
-  max-width: 225px;
-}
-.atoria.actor-config .attributes .health {
-  background-color: #cc0000;
-}
-.atoria.actor-config .attributes .stamina {
-  background-color: #6aa84f;
-}
-.atoria.actor-config .attributes .mana {
-  background-color: #3c78d8;
-}
-.atoria.actor-config .attributes .sanity {
-  background-color: #8e7cc3;
-}
-.atoria.actor-config .attributes .endurance {
-  background-color: #e69138;
-}
-.atoria.actor-config .attributes .encumbrance {
-  background-color: #434343;
-}
-.atoria.actor-config .attributes .armor, .atoria.actor-config .attributes .initiative, .atoria.actor-config .attributes .movement {
-  background-color: #cccccc;
-}
-.atoria.actor-config .perceptions .perception label.perception-label {
-  font-weight: bold;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  text-align: center;
-  min-width: 75px;
-  max-width: 75px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  background-color: #f1c232;
-}
-.atoria.actor-config .perceptions .perception input {
-  text-align: center;
-  min-width: 50px;
-  max-width: 50px;
-}
-
-.atoria.actor-skill-config .skill {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria.actor-skill-config .skill .title {
-  display: inline-block;
-  text-align: center;
-  background-color: #a4c2f4;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria.actor-skill-config .skill .title .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria.actor-skill-config .skill .skill-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria.actor-skill-config .skill .skill-row .category-title {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria.actor-skill-config .skill .skill-row .name {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria.actor-skill-config .skill .skill-row .value-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria.actor-skill-config .skill .skill-row .config-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria.actor-skill-config .skill .skill-row .delete-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria.actor-skill-config .skill {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria.actor-skill-config .skill .title {
-  max-width: 440px;
-  min-width: 440px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria.actor-skill-config .skill .skill-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: repeat(2, minmax(0, -webkit-max-content));
-  grid-template-columns: repeat(2, minmax(0, max-content));
-  gap: 0;
-  margin: 0;
-  padding: 0;
-}
-.atoria.actor-skill-config .skill .skill-row .category-area {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  max-width: 90px;
-  min-width: 90px;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria.actor-skill-config .skill .skill-row .category-title {
-  -webkit-box-ordinal-group: 3;
-  -ms-flex-order: 2;
-  order: 2;
-  max-width: 90px;
-  min-width: 90px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-  border-radius: 0;
-  border: none;
-}
-.atoria.actor-skill-config .skill .skill-row .name {
-  max-width: 100px;
-  min-width: 100px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria.actor-skill-config .skill .skill-row .value-label {
-  max-width: 30px;
-  min-width: 30px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria.actor-skill-config .skill .skill-row .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria.actor-skill-config .skill .skill-row .delete-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-.atoria.actor-knowledge-config #catname {
-  font-weight: bold;
-}
-
-/* Styles working in sheet and chat*/
-.action-modifier {
-  margin: 3px 0;
-}
-.action-modifier .flexrow, .action-modifier .flexcol {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
-.action-modifier label, .action-modifier input {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  line-height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-  padding: 0;
-  width: 100%;
-}
-.action-modifier label.bordered, .action-modifier input.bordered {
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.action-modifier input[type=checkbox] {
-  margin: 0 5px;
-}
-.action-modifier .name {
-  text-align: left;
-}
-.action-modifier .cost-resource {
-  min-width: 35px;
-  max-width: 50px;
-}
-.action-modifier .cost-resource.time {
-  min-width: 100px;
-  max-width: 120px;
-}
-.action-modifier .cost-restriction.restriction {
-  -webkit-box-flex: 5;
-  -ms-flex: 5;
-  flex: 5;
-  max-width: none;
-}
-.action-modifier .effect {
-  text-align: left;
-  max-height: -webkit-fit-content;
-  max-height: -moz-fit-content;
-  max-height: fit-content;
-  min-height: var(--form-field-height);
-  white-space: normal;
-}
-.action-modifier .effect p, .action-modifier .effect h1, .action-modifier .effect h2, .action-modifier .effect h3, .action-modifier .effect h4, .action-modifier .effect h5 {
-  margin: 0;
-}
-
-.atoria {
-  font-family: "Roboto", sans-serif;
-}
-.atoria .item-form {
-  font-family: "Roboto", sans-serif;
-}
-.atoria .sheet-header {
-  -webkit-box-flex: 0;
-  -ms-flex: 0 auto;
-  flex: 0 auto;
-  overflow: hidden;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
-.atoria .sheet-header .profile-img {
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 100px;
-  flex: 0 0 100px;
-  height: 100px;
-  margin-right: 10px;
-}
-.atoria .sheet-header .header-fields {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-.atoria .sheet-header h1.charname {
-  height: 50px;
-  padding: 0px;
-  margin: 5px 0;
-  border-bottom: 0;
-  position: relative;
-}
-.atoria .sheet-header h1.charname .config-sheet {
-  position: absolute;
-  padding: 4px;
-  right: 0;
-  top: 0;
-  display: none;
-}
-.atoria .sheet-header h1.charname:hover .config-sheet {
-  display: block;
-}
-.atoria .sheet-tabs {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-}
-.atoria .sheet-tabs .item {
-  min-width: -webkit-fit-content;
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.atoria .sheet-body,
-.atoria .sheet-body .tab,
-.atoria .sheet-body .tab .editor {
-  height: 100%;
-}
-.atoria .character-sheet nav.sheet-tabs {
-  margin-bottom: 8px;
-}
-.atoria .character-sheet nav.sheet-tabs a {
-  border: solid 1px black;
-}
-.atoria .character-sheet nav.sheet-tabs a.active {
-  text-shadow: none;
-  background-color: #6db088;
-}
-.atoria .character-sheet .config-sheet {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  min-width: 36px;
-  min-height: 36px;
-  max-width: 36px;
-  max-height: 36px;
-  min-width: 50px;
-  max-width: 50px;
-  padding: 5px 5px;
-  padding-top: 8px;
-  overflow: hidden;
-}
-.atoria .character-sheet .config-sheet i {
-  font-size: 16px;
-  min-width: 30px;
-  min-height: 30px;
-  max-width: 30px;
-  max-height: 30px;
-}
-.atoria .character-sheet .time-phase {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  min-width: 36px;
-  min-height: 36px;
-  max-width: 36px;
-  max-height: 36px;
-  padding: 3px;
-}
-.atoria .character-sheet .time-phase img {
-  border: none;
-  min-width: 30px;
-  min-height: 30px;
-  max-width: 30px;
-  max-height: 30px;
-}
-.atoria .character-sheet .img-sheet {
-  min-width: 36px;
-  min-height: 36px;
-  max-width: 36px;
-  max-height: 36px;
-}
-.atoria .spell-sheet {
-  min-width: 250px;
-  max-height: -webkit-fit-content;
-  max-height: -moz-fit-content;
-  max-height: fit-content;
-}
-.atoria .spell-sheet .flexrow, .atoria .spell-sheet .flexcol {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
-.atoria .spell-sheet label, .atoria .spell-sheet input {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  line-height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-  padding: 0;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  width: 100%;
-}
-.atoria .spell-sheet .name {
-  grid-column-end: span 2;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell-sheet .success-value-title {
-  background-color: #cccccc;
-  height: var(--form-field-height);
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell-sheet .success-value {
-  min-width: 30px;
-  max-width: 30px;
-}
-.atoria .spell-sheet .critical-title {
-  background-color: #cccccc;
-}
-.atoria .spell-sheet .critical {
-  min-width: 30px;
-  max-width: 30px;
-}
-.atoria .spell-sheet .fumble-title {
-  background-color: #cccccc;
-}
-.atoria .spell-sheet .fumble {
-  min-width: 30px;
-  max-width: 30px;
-}
-.atoria .spell-sheet .cost-title {
-  background-color: #cccccc;
-  height: var(--form-field-height);
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell-sheet .cost-input {
-  min-width: 35px;
-}
-.atoria .spell-sheet .time-title {
-  background-color: #cccccc;
-  height: calc(2 * var(--form-field-height));
-  max-height: calc(2 * var(--form-field-height));
-}
-.atoria .spell-sheet .time-preparation-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell-sheet .time-preparation {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell-sheet .time-duration-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell-sheet .time-duration {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell-sheet .time-modifier {
-  min-width: 30px;
-  max-width: 30px;
-}
-.atoria .spell-sheet .components-title {
-  background-color: #cccccc;
-  height: calc(5 * var(--form-field-height));
-  max-height: calc(5 * var(--form-field-height));
-}
-.atoria .spell-sheet .components-verbal-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell-sheet .components-verbal {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell-sheet .components-somatic-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell-sheet .components-somatic {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell-sheet .components-material-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell-sheet .components-material {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell-sheet .targeting-title {
-  background-color: #cccccc;
-  height: calc(3 * var(--form-field-height));
-  max-height: calc(3 * var(--form-field-height));
-}
-.atoria .spell-sheet .targeting-target-title {
-  background-color: #cccccc;
-  min-width: 50px;
-  max-width: 50px;
-}
-.atoria .spell-sheet .targeting-target {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell-sheet .targeting-range-title {
-  background-color: #cccccc;
-  min-width: 50px;
-  max-width: 50px;
-}
-.atoria .spell-sheet .targeting-range {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell-sheet .targeting-area-title {
-  background-color: #cccccc;
-  min-width: 50px;
-  max-width: 50px;
-}
-.atoria .spell-sheet .targeting-area {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell-sheet .effect-title {
-  background-color: #cccccc;
-  grid-column-end: span 2;
-}
-.atoria .spell-sheet .effect {
-  grid-column-end: span 2;
-}
-.atoria .spell-sheet .effect .editor {
-  min-height: 150px;
-}
-.atoria .spell-sheet .usable-incantatory-title {
-  background-color: #cccccc;
-}
-.atoria .spell-sheet .spell-supp-title {
-  background-color: #cccccc;
-  grid-column-end: span 2;
-  position: relative;
-}
-.atoria .spell-sheet .spell-supp-title .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .spell-sheet .incantatory-addition-name {
-  text-align: left;
-  border: none;
-}
-.atoria .spell-sheet .spell-supp {
-  grid-column-end: span 2;
-}
-.atoria .spell-sheet .spell-supp .flexrow {
-  position: relative;
-}
-.atoria .spell-sheet .spell-supp .flexrow .delete-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: none;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .spell-sheet .spell-supp .flexrow:hover .delete-button {
-  display: inline-block;
-}
-.atoria .spell-sheet .spell-supp .cost-input {
-  max-width: 50px;
-}
-.atoria .spell-sheet .spell-supp .cost-input.restriction {
-  -webkit-box-flex: 5;
-  -ms-flex: 5;
-  flex: 5;
-  max-width: none;
-}
-.atoria .action-sheet .flexcol label, .atoria .action-sheet .flexcol input {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  line-height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-}
-.atoria .action-sheet .flexcol .name-title {
-  width: 100%;
-  position: relative;
-}
-.atoria .action-sheet .flexcol .name-title .delete-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .action-sheet .flexcol .description-area {
-  height: 300px;
-  min-height: 300px;
-}
-.atoria .skill-sheet .flexcol label, .atoria .skill-sheet .flexcol input {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  line-height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-}
-.atoria .skill-sheet .flexcol .name-title {
-  width: 100%;
-  position: relative;
-}
-.atoria .skill-sheet .flexcol .name-title .delete-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .feature-sheet .flexcol label, .atoria .feature-sheet .flexcol input {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  line-height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-}
-.atoria .feature-sheet .flexcol .name-title {
-  width: 100%;
-  position: relative;
-}
-.atoria .feature-sheet .flexcol .name-title .delete-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .feature-sheet .flexcol .feature-color-value[value="#00000000"] ~ .feature-color-picker {
-  display: none;
-}
-.atoria .feature-list-sheet .flexcol label, .atoria .feature-list-sheet .flexcol input, .atoria .feature-list-sheet .flexcol textarea {
-  line-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-}
-.atoria .feature-list-sheet .flexcol .name-title .delete-button {
-  position: absolute;
-  right: 0;
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  line-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  margin-right: 10px;
-}
-.atoria .feature-list-sheet .flexcol .color-choice-area {
-  margin-top: 3px;
-}
-.atoria .feature-list-sheet .flexcol .color-choice-area input[type=checkbox] {
-  margin: 0;
-  margin-right: 5px;
-}
-.atoria .feature-list-sheet .flexcol .color-choice-area .feature-color-value[value="#00000000"] ~ .feature-color-picker {
-  display: none;
-}
-.atoria .feature-list-sheet .flexcol .subfeature {
-  padding-bottom: 10px;
-  border-bottom: 5px solid black;
-  margin-bottom: 10px;
-}
-.atoria .feature-list-sheet .flexcol .subfeature > * {
-  margin-bottom: 3px;
-}
-.atoria .feature-list-sheet .flexcol .subfeature .delete-button {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  line-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  margin-left: 3px;
-  margin-right: 3px;
-}
-.atoria .feature-list-sheet .flexcol .subfeature .regain-area {
-  -webkit-column-gap: 5px;
-  -moz-column-gap: 5px;
-  column-gap: 5px;
-}
-.atoria .feature-list-sheet .flexcol .subfeature .regain-area .regain-type-select {
-  -webkit-box-flex: 2;
-  -ms-flex: 2;
-  flex: 2;
-}
-.atoria .feature-list-sheet .flexcol .subfeature .regain-area .usage-area {
-  -webkit-column-gap: 5px;
-  -moz-column-gap: 5px;
-  column-gap: 5px;
-}
-.atoria .feature-list-sheet .flexcol .subfeature .regain-area .usage-area .usage-input {
-  min-width: 35px;
-}
-.atoria .feature-list-sheet .flexcol .subfeature .description-area {
-  display: inline-grid;
-  vertical-align: top;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  position: relative;
-  border: solid 1px;
-  padding: 0;
-  margin: 0px;
-}
-.atoria .feature-list-sheet .flexcol .subfeature .description-area.stacked {
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-}
-.atoria .feature-list-sheet .flexcol .subfeature .description-area.stacked::after,
-.atoria .feature-list-sheet .flexcol .subfeature .description-area.stacked input,
-.atoria .feature-list-sheet .flexcol .subfeature .description-area.stacked textarea {
-  grid-area: 2/1;
-}
-.atoria .feature-list-sheet .flexcol .subfeature .description-area::after,
-.atoria .feature-list-sheet .flexcol .subfeature .description-area input,
-.atoria .feature-list-sheet .flexcol .subfeature .description-area textarea {
-  width: auto;
-  min-width: 3px;
-  grid-area: 1/2;
-  font: inherit;
+.system-atoria {
+  --atoria-color-health: #cc0000;
+  --atoria-color-healing-inactive: #d76fac;
+  --atoria-color-mana: #3c78d8;
+  --atoria-color-stamina: #6aa84f;
+  --atoria-color-endurance: #e69138;
+  --atoria-color-sanity: #8e7cc3;
+  --atoria-color-armor: #636363;
+  --atoria-color-resistance: #636363;
+  --atoria-color-encumbrance: #434343;
+  --atoria-font-color-encumbrance: white;
+  --atoria-color-luck: #577e32;
+  --atoria-color-inventory-title: #76a580;
+  --atoria-color-modifiable-value: #fef2e0;
+  --atoria-color-disabled-value: lightgray;
+  --atoria-color-checkbox-checked: #cc0000;
+  --atoria-color-checkbox-unchecked: #aaaaaa;
+  --atoria-2dgt-input-width: 2em;
+  --atoria-3dgt-input-width: 2.5em;
+  --atoria-4dgt-input-width: 3em;
+  --atoria-5dgt-input-width: 3.5em;
+  --atoria-formula-input-width: 4em;
+  --atoria-base-line-block-height: 20px;
+  --atoria-input-width: var(--atoria-2dgt-input-width);
+  --atoria-columns-gap: 0.5em;
+  --atoria-rows-gap: 0.5em;
+  --atoria-border-style: 1px solid #383838;
+  --atoria-border-blending-style: 1px dotted #383838;
+  --atoria-border-style-radius: 4px;
+  --atoria-fieldset-border-style: 2px solid #c0c0c0;
+  --atoria-document-img-size: 100%;
+  --bar-percentage: 0%;
+  --bar-color-background: black;
+  --atoria-color-error: red;
+  --atoria-skill-height: calc(2px + var(--atoria-base-line-block-height));
+  --atoria-skill-title-width: 6em;
+  --atoria-skill-width: calc(8em + var(--atoria-input-width));
+  --atoria-mini-skill-width: calc(7em + var(--atoria-input-width));
+  --atoria-img-filter: invert(100%);
+  --atoria-character-simple-skill-n-knowledge-width: fit-content;
+  --atoria-item-line-width: 100%;
+  --atoria-item-line-vertical-padding: 1px;
+  --atoria-item-line-height: calc(1lh + var(--atoria-item-line-vertical-padding) + var(--atoria-item-line-vertical-padding));
+  --atoria-item-line-border-style: var(--atoria-border-style);
+}
+.system-atoria.theme-light {
+  --atoria-color-checkbox-unchecked: black;
+}
+.system-atoria.theme-light .application textarea {
+  --input-text-color: var(--color-dark-2);
+  --background: rgba(0, 0, 0, 0.1);
+  --color-text-selection-bg: var(--color-dark-6);
+  --input-focus-outline-color: var(--color-warm-2);
+}
+.system-atoria.theme-light .application textarea:read-only {
+  --input-text-color: var(--color-dark-4);
+  --background: rgba(0, 0, 0, 0.2);
+  color: var(--input-text-color);
+}
+.system-atoria .application textarea {
+  --input-text-color: var(--color-light-3);
+  --background: var(--color-cool-4);
+  --input-focus-outline-color: var(--color-cool-3);
+  background: var(--background);
+  padding: 2px 0.5em;
+  outline: 2px solid transparent;
+  transition: outline-color 0.5s;
+  font-family: var(--font-primary);
+}
+.system-atoria .application textarea:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  outline: 2px solid var(--input-focus-outline-color);
+}
+.system-atoria .atoria .atoria-health {
+  --atoria-color-disabled-value: var(--atoria-color-health);
+  --disabled-background-color: var(--atoria-color-health);
+}
+.system-atoria .atoria .atoria-healing-inactive {
+  --atoria-color-disabled-value: var(--atoria-color-healing-inactive);
+  --disabled-background-color: var(--atoria-color-healing-inactive);
+}
+.system-atoria .atoria .atoria-mana {
+  --atoria-color-disabled-value: var(--atoria-color-mana);
+  --disabled-background-color: var(--atoria-color-mana);
+}
+.system-atoria .atoria .atoria-stamina {
+  --atoria-color-disabled-value: var(--atoria-color-stamina);
+  --disabled-background-color: var(--atoria-color-stamina);
+}
+.system-atoria .atoria .atoria-endurance {
+  --atoria-color-disabled-value: var(--atoria-color-endurance);
+  --disabled-background-color: var(--atoria-color-endurance);
+}
+.system-atoria .atoria .atoria-sanity {
+  --atoria-color-disabled-value: var(--atoria-color-sanity);
+  --disabled-background-color: var(--atoria-color-sanity);
+}
+.system-atoria .atoria .atoria-luck {
+  --atoria-color-disabled-value: var(--atoria-color-luck);
+  --disabled-background-color: var(--atoria-color-luck);
+}
+.system-atoria .atoria .atoria-encumbrance {
+  --atoria-color-disabled-value: var(--atoria-color-encumbrance);
+  --disabled-background-color: var(--atoria-color-encumbrance);
+  --color-text-primary: var(--atoria-font-color-encumbrance);
+  color: var(--color-text-primary);
+}
+.system-atoria .atoria .atoria-encumbrance * {
+  --input-text-color: var(--atoria-font-color-encumbrance);
+}
+.system-atoria .atoria .atoria-armor {
+  --atoria-color-disabled-value: var(--atoria-color-armor);
+  --disabled-background-color: var(--atoria-color-armor);
+}
+.system-atoria .atoria .atoria-resistance {
+  --atoria-color-disabled-value: var(--atoria-color-resistance);
+  --disabled-background-color: var(--atoria-color-resistance);
+}
+.system-atoria label,
+.system-atoria h5,
+.system-atoria h6,
+.system-atoria input:disabled,
+.system-atoria input.colored,
+.system-atoria .colored,
+.system-atoria input[type=checkbox],
+.system-atoria img {
+  background-color: var(--disabled-background-color);
+}
+.system-atoria .atoria.sheet .window-content {
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+  overflow: auto;
+  padding-top: var(--atoria-rows-gap);
+}
+.system-atoria .atoria.sheet .window-content input[data-action=toggleEditingMode]::after {
+  font-weight: 900;
+  content: "\f044";
+}
+.system-atoria .atoria {
+  --font-size: var(--font-size-15);
+  --font-h1-size: var(--font-size-15);
+  --font-h2-size: var(--font-size-15);
+  --font-h3-size: var(--font-size-15);
+  --font-h4-size: var(--font-size-15);
+  --font-h5-size: var(--font-size-15);
+  --font-h6-size: var(--font-size-15);
+  --checkbox-size: var(--atoria-base-line-block-height);
+  --checkbox-content: "";
+}
+.system-atoria .atoria * {
+  font-size: var(--font-size);
+}
+.system-atoria .atoria h6 {
+  font-family: var(--font-h5);
+}
+.system-atoria .atoria .item-list {
+  list-style-type: none;
   padding: 0;
   margin: 0;
-  resize: none;
-  background: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: none;
 }
-.atoria .feature-list-sheet .flexcol .subfeature .description-area::after {
-  content: attr(data-expandvalue) " ";
-  visibility: hidden;
-  white-space: pre-wrap;
+.system-atoria .atoria .item-list .item {
+  margin: 0;
 }
-.atoria .feature-list-sheet .flexcol .subfeature .description-area:focus-within textarea:focus,
-.atoria .feature-list-sheet .flexcol .subfeature .description-area:focus-within input:focus {
-  outline: none;
+.system-atoria .atoria fieldset {
+  border: var(--atoria-fieldset-border-style);
+  border-radius: var(--atoria-border-style-radius);
 }
-.atoria .gear-sheet label, .atoria .gear-sheet input {
-  line-height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-}
-.atoria .gear-sheet .name-title {
-  width: 100%;
-  position: relative;
-}
-.atoria .gear-sheet .name-title .delete-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .resource-label {
-  font-weight: bold;
-}
-.atoria .resources .resource {
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .resources label {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .resources input {
-  text-align: center;
-}
-.atoria .character-sheet .tickable-image {
-  border: none;
-  max-width: 20px;
-  min-width: 20px;
-}
-.atoria .character-sheet .resources .charname {
-  max-width: 200px;
-  min-width: 200px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .resources .resource input:not([type=checkbox]) {
-  max-width: 60px;
-  min-width: 60px;
-}
-.atoria .character-sheet .resources .resource label, .atoria .character-sheet .resources .resource .resource-label, .atoria .character-sheet .resources .resource input.resource-label {
-  max-width: 120px;
-  min-width: 120px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .resources .resource label.luck {
-  max-width: 60px;
-  min-width: 60px;
-}
-.atoria .character-sheet .resources .resource .value-label {
-  max-width: 60px;
-  min-width: 60px;
-}
-.atoria .character-sheet .resources .resource .resource-checkbox {
-  max-width: 120px;
-  min-width: 120px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .character-sheet .resources .resource .resource-checkbox label {
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
-  max-width: 120px;
-  font-weight: bold;
-  border: none;
-}
-.atoria .character-sheet .resources .resource .resource-checkbox input[type=checkbox] {
-  min-height: 16px;
-  max-height: 16px;
-  margin: 5px;
-  margin-top: 4px;
-  margin-right: 1px;
-}
-.atoria .character-sheet .resources .resource .resource-label.health {
-  max-width: 180px;
-  min-width: 180px;
-}
-.atoria .character-sheet .resources .resource .resource-label.healing {
-  max-width: 90px;
-  min-width: 90px;
-}
-.atoria .character-sheet .resources .resource .resource-label.armor, .atoria .character-sheet .resources .resource .resource-label.initiative, .atoria .character-sheet .resources .resource .resource-label.movement {
-  max-width: 120px;
-  min-width: 120px;
-}
-.atoria .character-sheet .inactive-area {
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-.atoria .character-sheet .inactive-area .inactive-label {
-  max-width: -webkit-max-content;
-  max-width: -moz-max-content;
-  max-width: max-content;
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  font-weight: bold;
-  vertical-align: auto;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  padding: 0px;
+.system-atoria .atoria h1,
+.system-atoria .atoria h2,
+.system-atoria .atoria h3,
+.system-atoria .atoria h4,
+.system-atoria .atoria h5,
+.system-atoria .atoria h6,
+.system-atoria .atoria button,
+.system-atoria .atoria label {
   padding-left: 5px;
   padding-right: 5px;
+  height: auto;
 }
-.atoria .npc-sheet .resources .resource label {
-  max-width: 60px;
-  min-width: 60px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .npc-sheet .resources .resource .value-label {
-  max-width: 50px;
-  min-width: 50px;
-}
-.atoria .npc-sheet .resources .resource input {
-  max-width: 50px;
-  min-width: 50px;
-}
-.atoria .npc-sheet .resources .resource .resource-label.armor, .atoria .npc-sheet .resources .resource .resource-label.initiative, .atoria .npc-sheet .resources .resource .resource-label.movement {
-  max-width: 110px;
-  min-width: 110px;
-}
-.atoria .sheet-body .perceptions label.title {
+.system-atoria .atoria h1,
+.system-atoria .atoria h2,
+.system-atoria .atoria h3,
+.system-atoria .atoria h4,
+.system-atoria .atoria h5,
+.system-atoria .atoria h6,
+.system-atoria .atoria input,
+.system-atoria .atoria select,
+.system-atoria .atoria button {
   text-align: center;
-  font-weight: bold;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .sheet-body .perceptions .perception-row {
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .sheet-body .perceptions .perception-row label.perception-label {
-  font-weight: bold;
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .sheet-body .perceptions .perception-row label.value-label {
-  font-weight: bold;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .character-sheet .sheet-body .perceptions label.title {
-  max-width: 160px;
-  min-width: 160px;
-  height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .sheet-body .perceptions .perception-row label.perception-label {
-  max-width: 80px;
-  min-width: 80px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .sheet-body .perceptions .perception-row label.value-label {
-  max-width: 80px;
-  min-width: 80px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .npc-sheet .sheet-body .perceptions .perception-row label.perception-label {
-  max-width: 70px;
-  min-width: 70px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .npc-sheet .sheet-body .perceptions .perception-row label.value-label {
-  max-width: 50px;
-  min-width: 50px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .combat {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .combat .title-label {
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
-  background-color: #cccccc;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .combat .title-label .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   vertical-align: middle;
+  margin: 0;
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+  line-height: 1lh;
+  white-space: nowrap;
+  height: auto;
 }
-.atoria .combat .offense-title-box, .atoria .combat .defense-title-box {
-  max-width: 120px;
-  display: -webkit-box;
-  display: -ms-flexbox;
+.system-atoria .atoria button {
+  line-height: 1.5em;
+}
+.system-atoria .atoria label,
+.system-atoria .atoria .colored,
+.system-atoria .atoria img,
+.system-atoria .atoria input[type=checkbox] {
+  border-radius: var(--atoria-border-style-radius);
+}
+.system-atoria .atoria textarea {
+  margin: 0;
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+  min-height: calc(1lh + 6px);
+}
+.system-atoria .atoria textarea:disabled {
+  background-color: color-mix(in lab, var(--background) 50%, transparent);
+}
+.system-atoria .atoria input:not([type=checkbox]) {
+  min-width: var(--atoria-input-width);
+  max-width: var(--atoria-input-width);
+  padding: 0px 2px;
+}
+.system-atoria .atoria input[type=checkbox] {
+  --checkbox-size: var(--atoria-base-line-block-height);
+  display: inline-block;
+  position: relative;
+  appearance: none;
+  content: none;
+  min-width: var(--checkbox-size);
+  max-width: var(--checkbox-size);
+  min-height: var(--checkbox-size);
+  max-height: var(--checkbox-size);
+}
+.system-atoria .atoria input[type=checkbox]::before {
+  display: none;
+  content: "";
+}
+.system-atoria .atoria input[type=checkbox]::after {
+  overflow: hidden;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
+  justify-content: center;
   align-items: center;
-  background-color: #cccccc;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
+  font-family: var(--font-awesome);
+  font-size: 1em;
+  content: var(--checkbox-content);
+  color: var(--atoria-color-checkbox-unchecked);
+  min-width: calc(var(--checkbox-size) - 2px);
+  max-width: calc(var(--checkbox-size) - 2px);
+  min-height: var(--checkbox-size);
+  max-height: var(--checkbox-size);
 }
-.atoria .combat .offense-title-box .offense-title, .atoria .combat .offense-title-box .defense-title, .atoria .combat .defense-title-box .offense-title, .atoria .combat .defense-title-box .defense-title {
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
+.system-atoria .atoria input[type=checkbox]:checked::after {
+  --checkbox-content: "\f00c";
+  color: var(--atoria-color-checkbox-checked);
 }
-.atoria .combat .amount-input {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
+.system-atoria .sheet {
+  min-width: min-content;
+}
+.system-atoria .context-menu {
+  z-index: var(--index-tooltip);
+}
+.system-atoria .atoria-document-img {
+  min-height: var(--atoria-document-img-size);
+  max-height: var(--atoria-document-img-size);
+  min-width: var(--atoria-document-img-size);
+  max-width: var(--atoria-document-img-size);
+  border-radius: var(--atoria-border-style-radius);
+}
+.system-atoria .atoria-create-button,
+.system-atoria .atoria-edit-button,
+.system-atoria .atoria-delete-button {
   flex: 0;
-  text-align: center;
-  min-width: 30px;
-  max-width: 30px;
-  height: unset;
-}
-.atoria .combat .offense-area, .atoria .combat .defense-area {
-  max-width: 430px;
-}
-.atoria .combat .offense-area .editor, .atoria .combat .defense-area .editor {
-  min-height: var(--form-field-height);
-}
-.atoria .combat .offense-area .editor-menu, .atoria .combat .defense-area .editor-menu {
-  display: none;
-}
-.atoria .combat .offense-area .editor-container, .atoria .combat .defense-area .editor-container {
-  background-color: rgba(255, 255, 255, 0.25);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  margin: 0;
-  padding: 0;
-  min-height: var(--form-field-height);
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
-.atoria .combat .offense-area .editor-container .editor-content, .atoria .combat .defense-area .editor-container .editor-content {
-  position: unset;
-}
-.atoria .combat .combat-resources-n-skills {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  min-width: 430px;
-}
-.atoria .combat .combat-resources, .atoria .combat .combat-skills {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
-  min-width: -webkit-fit-content;
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-  max-width: -webkit-fit-content;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-}
-.atoria .combat .item-list {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
-.atoria .combat .action-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .combat .action-row:not(.expanded) .fa-circle-info {
-  color: #999999;
-}
-.atoria .combat .action-row.expanded .fa-circle-info {
-  color: black;
-}
-.atoria .combat .action-row .name-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .combat .action-row .longname-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .combat .action-row .value-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .combat .action-row .roll-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .combat .action-row .detail-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   vertical-align: middle;
-}
-.atoria .combat .action-row .description {
-  text-align: left;
-  line-height: var(--form-field-height);
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .combat .action-row .description .item-description {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.atoria .combat .action-row .description .config-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: none;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .combat .action-row .description:hover .config-button {
-  display: inline-block;
-}
-.atoria .combat {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .combat .action-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .combat .action-row .name-label {
-  max-width: 160px;
-  min-width: 160px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .combat .action-row .longname-label {
-  max-width: 230px;
-  min-width: 230px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .combat .action-row .value-label {
-  max-width: 40px;
-  min-width: 40px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .combat .action-row .roll-label {
-  max-width: 65px;
-  min-width: 65px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .combat .action-row .detail-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .combat .action-row .description {
-  max-width: 285px;
-  min-width: 285px;
-  line-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-}
-.atoria .combat .action-row .description .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .combat .action-row:not(.expanded) .description {
-  display: none;
-}
-.atoria .npc-sheet .combat .title-label {
-  max-width: 280px;
-  min-width: 280px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .npc-sheet .combat .title-label .add-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .npc-sheet .combat .name-label {
-  max-width: 160px;
-  min-width: 160px;
-}
-.atoria .npc-sheet .combat .roll-label {
-  max-width: 60px;
-  min-width: 60px;
-}
-.atoria .npc-sheet .combat .longname-label {
-  max-width: 220px;
-  min-width: 220px;
-}
-.atoria .npc-sheet .combat .description {
-  max-width: 280px;
-  min-width: 280px;
-}
-.atoria .character-sheet .combat .title-label {
-  max-width: 720px;
-  min-width: 720px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .combat .title-label .add-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .character-sheet .combat .name-label {
-  max-width: 165px;
-  min-width: 165px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .character-sheet .combat .longname-label {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .character-sheet .combat .combat-resources .resource .resource-label {
-  max-width: 120px;
-  min-width: 120px;
-}
-.atoria .character-sheet .combat .combat-resources .resource .value-label {
-  max-width: 85px;
-  min-width: 85px;
-}
-.atoria .feature {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .feature .title-label {
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
-  background-color: #ebd2df;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .feature .title-label .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .feature .feature-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .feature .feature-row .name-label, .atoria .feature .feature-row .longname-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .feature .feature-row .effect-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .feature .feature-row .detail-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .feature .feature-row .description {
-  text-align: left;
-  line-height: var(--form-field-height);
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .feature .feature-row .description .item-description {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.atoria .feature .feature-row .description .config-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: none;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .feature .feature-row .description:hover .config-button {
-  display: inline-block;
-}
-.atoria .feature .feature-row:not(.expanded) .description {
-  display: none;
-}
-.atoria .npc-sheet .feature {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .npc-sheet .feature .title-label {
-  max-width: 280px;
-  min-width: 280px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .npc-sheet .feature .title-label .add-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .npc-sheet .feature .feature-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .npc-sheet .feature .feature-row .name-label {
-  max-width: 120px;
-  min-width: 120px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .npc-sheet .feature .feature-row .effect-label {
-  max-width: 140px;
-  min-width: 140px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .npc-sheet .feature .feature-row .detail-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .npc-sheet .feature .feature-row .description {
-  max-width: 280px;
-  min-width: 280px;
-  line-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-}
-.atoria .npc-sheet .feature .feature-row .description .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .character-sheet .feature {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .character-sheet .feature .title-label {
-  max-width: 300px;
-  min-width: 300px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .feature .title-label .add-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .character-sheet .feature .feature-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .character-sheet .feature .feature-row .name-label {
-  max-width: 220px;
-  min-width: 220px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .character-sheet .feature .feature-row .longname-label {
-  max-width: 280px;
-  min-width: 280px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .character-sheet .feature .feature-row .effect-label {
-  max-width: 60px;
-  min-width: 60px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .feature .feature-row .detail-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .character-sheet .feature .feature-row .description {
-  max-width: 300px;
-  min-width: 300px;
-  line-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-}
-.atoria .character-sheet .feature .feature-row .description .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .feature-list-area {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .feature-list-area .title-label {
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
-  background-color: #ebd2df;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  max-width: 300px;
-  min-width: 300px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .feature-list-area .feature-list-category .feature-list-label {
-  position: relative;
-  font-size: 16px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .feature-list-area .feature-list-category .feature-list-label .add-button, .atoria .feature-list-area .feature-list-category .feature-list-label .detail-button {
-  position: absolute;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-height: 16px;
-  max-height: 16px;
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-  font-size: 15px;
-}
-.atoria .feature-list-area .feature-list-category .feature-list-label .add-button {
-  right: 20px;
-  top: 0;
-}
-.atoria .feature-list-area .feature-list-category .feature-list-label .detail-button {
-  right: 0;
-  top: 0;
-}
-.atoria .feature-list-area .feature-list-category:not(.expanded) > *:not(.feature-list-label) {
-  display: none;
-}
-.atoria .feature-list-area .feature-list-category:not(.expanded) .fa-circle-info {
-  color: #999999;
-}
-.atoria .feature-list-area .feature-list-category.expanded .fa-circle-info {
-  color: black;
-}
-.atoria .feature-list-area .feature-list-category .feature-list {
-  border-radius: 3px;
-  border: 1px solid black;
-  padding: 3px;
-}
-.atoria .feature-list-area .feature-list-category .feature-list .name {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  border: none;
-  margin: 0;
-  position: relative;
-  max-width: 290px;
-  font-size: 15px;
-}
-.atoria .feature-list-area .feature-list-category .feature-list .name .config-button, .atoria .feature-list-area .feature-list-category .feature-list .name .detail-button {
-  position: absolute;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-  font-size: 15px;
-}
-.atoria .feature-list-area .feature-list-category .feature-list .name .config-button {
-  right: 20px;
-  top: 0;
-}
-.atoria .feature-list-area .feature-list-category .feature-list .name .detail-button {
-  right: 0;
-  top: 0;
-}
-.atoria .feature-list-area .feature-list-category .feature-list:not(.expanded) > .description {
-  display: none;
-}
-.atoria .feature-list-area .feature-list-category .feature-list:not(.expanded) .fa-circle-info {
-  color: #999999;
-}
-.atoria .feature-list-area .feature-list-category .feature-list.expanded .fa-circle-info {
-  color: black;
-}
-.atoria .feature-list-area .feature-list-category .feature-list .description {
-  row-gap: 3px;
-}
-.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row {
-  border-top: 1px solid black;
-  padding-top: 3px;
-  max-width: 290px;
-}
-.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .subfeature-name {
-  font-weight: bold;
-  line-height: var(--form-field-height);
-  max-width: 250px;
-}
-.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .usage-input {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  min-width: 20px;
-  max-width: 20px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .regain-max {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  min-width: 30px;
-  max-width: 30px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .regain-type-icon {
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-  min-width: 20px;
-  max-width: 20px;
-  margin-right: 3px;
-  border: none;
-}
-.atoria .feature-list-area .feature-list-category .feature-list .description .subfeature-row .subfeature-description {
-  white-space: pre-wrap;
-  max-width: 300px;
-}
-.atoria .skill {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .skill .title {
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
-  background-color: #a4c2f4;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .skill .title .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .skill .title .config-button {
-  position: absolute;
-  right: 2px;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .skill .title .sort-button {
-  position: absolute;
-  right: 20px;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .skill .skill-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .skill .skill-row .category-title {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .skill .skill-row .name {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .skill .skill-row .value-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .skill .skill-row .config-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .npc-sheet .skill {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .npc-sheet .skill .title {
-  max-width: 190px;
-  min-width: 190px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .npc-sheet .skill .title .add-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .npc-sheet .skill .skill-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .npc-sheet .skill .skill-row .name {
-  max-width: 120px;
-  min-width: 120px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .npc-sheet .skill .skill-row .value-label {
-  max-width: 50px;
-  min-width: 50px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .npc-sheet .skill .skill-row .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .npc-sheet .skill .skill-row .delete-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .character-sheet .skill {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .character-sheet .skill .title {
-  max-width: 450px;
-  min-width: 450px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .skill .skill-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: repeat(2, minmax(0, -webkit-max-content));
-  grid-template-columns: repeat(2, minmax(0, max-content));
-  gap: 0;
-  margin: 0;
-  padding: 0;
-}
-.atoria .character-sheet .skill .skill-row .subtitle {
-  font-weight: bold;
-  text-align: center;
-  max-width: 225px;
-  min-width: 225px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  grid-column: span 2;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .character-sheet .skill .skill-row .category-area {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  max-width: 90px;
-  min-width: 90px;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .character-sheet .skill .skill-row .category-title {
-  -webkit-box-ordinal-group: 3;
-  -ms-flex-order: 2;
-  order: 2;
-  max-width: 90px;
-  min-width: 90px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-  border-radius: 0;
-  border: none;
-}
-.atoria .character-sheet .skill .skill-row .name {
-  max-width: 105px;
-  min-width: 105px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .character-sheet .skill .skill-row .value-label {
-  max-width: 30px;
-  min-width: 30px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .skill .skill-row .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .character-sheet .skill .skill-row .delete-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .knowledge .title {
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
-  background-color: #a4b3f4;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .knowledge .title .config-button {
-  position: absolute;
-  right: 2px;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .knowledge .knowledge-row .category-title {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .knowledge .knowledge-row .category-title .add-button {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .knowledge .knowledge-row .category-title:hover .add-button {
-  display: inline-block;
-}
-.atoria .knowledge .knowledge-row .name {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .knowledge .knowledge-row .value-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .knowledge .knowledge-row .config-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .character-sheet .knowledge {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .character-sheet .knowledge .title {
-  max-width: 270px;
-  min-width: 270px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .knowledge .knowledge-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  display: grid;
-  grid-column: span 2/span 2;
-  grid-template-columns: repeat(2, minmax(0, -webkit-max-content));
-  grid-template-columns: repeat(2, minmax(0, max-content));
-  gap: 0;
-  margin: 0;
-  padding: 0;
-}
-.atoria .character-sheet .knowledge .knowledge-row .category-area {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  max-width: 90px;
-  min-width: 90px;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .character-sheet .knowledge .knowledge-row .category-title {
-  -webkit-box-ordinal-group: 3;
-  -ms-flex-order: 2;
-  order: 2;
-  max-width: 90px;
-  min-width: 90px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-  border-radius: 0;
-  border: none;
-}
-.atoria .character-sheet .knowledge .knowledge-row .category-title .add-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .character-sheet .knowledge .knowledge-row .name {
-  max-width: 130px;
-  min-width: 130px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .character-sheet .knowledge .knowledge-row .value-label {
-  max-width: 30px;
-  min-width: 30px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .character-sheet .knowledge .knowledge-row .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .effects {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .effects .title-label {
-  grid-column-end: span 2;
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
-  max-width: 590px;
-  min-width: 590px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  background-color: #b286be;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .effects .title-label .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .effects .effect-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .effects .effect-row:not(.expanded) .fa-circle-info {
-  color: #999999;
-}
-.atoria .effects .effect-row.expanded .fa-circle-info {
-  color: black;
-}
-.atoria .effects .effect-row .name-label {
-  text-align: center;
-  max-width: 135px;
-  min-width: 135px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .effects .effect-row .longname-label {
-  text-align: center;
-  max-width: 275px;
-  min-width: 275px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .effects .effect-row .duration-label {
-  text-align: center;
-  max-width: 140px;
-  min-width: 140px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .effects .effect-row .detail-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .effects .effect-row .description {
-  text-align: center;
-  max-width: 295px;
-  min-width: 295px;
-  line-height: var(--form-field-height);
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .effects .effect-row .description .config-button {
-  position: absolute;
-  right: 20px;
-  top: 0;
-  display: none;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .effects .effect-row .description:hover .config-button {
-  display: inline-block;
-}
-.atoria .effects .effect-row .description .delete-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: none;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .effects .effect-row .description:hover .delete-button {
-  display: inline-block;
-}
-.atoria .effects .effect-row:not(.expanded) .description {
-  display: none;
-}
-.atoria .inventory {
-  max-width: 1010px;
-}
-.atoria .inventory .flexrow {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  -webkit-box-flex: 0;
-  -ms-flex: 0;
-  flex: 0;
-}
-.atoria .inventory .flexrow .inventory-gear-armor {
-  background-color: #434343;
-  color: white;
-}
-.atoria .inventory .flexrow .inventory-gear-weapon {
-  background-color: #434343;
-  color: white;
-}
-.atoria .inventory .flexrow .inventory-gear-bag {
-  background-color: #b49d91;
-}
-.atoria .inventory .flexrow .subtitle-color {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-.atoria .inventory .flexrow .rowdata-color {
-  background-color: rgba(255, 255, 255, 0.25);
-}
-.atoria .inventory .flexrow .title {
-  text-align: center;
-  border-radius: 3px;
-  font-weight: bold;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 455px;
-  max-width: 455px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .longtitle {
-  text-align: center;
-  border-radius: 3px;
-  font-weight: bold;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 505px;
-  max-width: 505px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  position: relative;
-}
-.atoria .inventory .flexrow .longtitle .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .inventory .flexrow .armor-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 50px;
-  max-width: 50px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .type-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 55px;
-  max-width: 55px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .quantity-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 50px;
-  max-width: 50px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .shortname-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 100px;
-  max-width: 100px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .name-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 130px;
-  max-width: 130px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .longname-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 180px;
-  max-width: 180px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .weapon-longname-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 185px;
-  max-width: 185px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .title-longname-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 185px;
-  max-width: 185px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .resource-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 50px;
-  max-width: 50px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .resource-value.coin-label {
-  min-width: 40px;
-  max-width: 40px;
-}
-.atoria .inventory .flexrow .resource-value.coin-number {
-  min-width: 35px;
-  max-width: 35px;
-}
-.atoria .inventory .flexrow .encumbrance-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 50px;
-  max-width: 50px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .inventory .flexrow .effect-value {
-  text-align: center;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  min-width: 270px;
-  max-width: 270px;
-  min-height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  line-height: var(--form-field-height);
-  position: relative;
-}
-.atoria .inventory .flexrow .effect-value p, .atoria .inventory .flexrow .effect-value h1, .atoria .inventory .flexrow .effect-value h2, .atoria .inventory .flexrow .effect-value h3, .atoria .inventory .flexrow .effect-value h4, .atoria .inventory .flexrow .effect-value h5 {
-  margin: 0;
-}
-.atoria .inventory .flexrow .effect-value .config-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: none;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .inventory .flexrow .effect-value:hover .config-button {
-  display: inline-block;
-}
-.atoria .inventory .bag-area .shortname-value {
-  min-width: 105px;
-  max-width: 105px;
-}
-.atoria .inventory .bag-area .name-value {
-  min-width: 135px;
-  max-width: 135px;
-}
-.atoria .inventory .bag-area .bag-area-consumable {
-  background-color: #f4cccc;
-}
-.atoria .inventory .bag-area .bag-area-equipment {
-  background-color: #d9d9d9;
-}
-.atoria .inventory .bag-area .bag-area-ingredient {
-  background-color: #d9d2e9;
-}
-.atoria .spell {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .spell .title-label {
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
-  background-color: #cccccc;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .spell .title-label .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .spell .shorttitle-label {
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
-  background-color: #cccccc;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .spell .spell-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .spell .spell-row .name-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .spell .spell-row .value-label {
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .spell .spell-row .detail-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .spell .spell-row .description-label {
-  display: none;
-  text-align: center;
-  line-height: var(--form-field-height);
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  position: relative;
-}
-.atoria .spell .spell-row .description-label .config-button {
-  position: absolute;
-  right: 20px;
-  top: 0;
-  display: none;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .spell .spell-row .description-label:hover .config-button {
-  display: inline-block;
-}
-.atoria .spell .spell-row .description-label .delete-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: none;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .spell .spell-row .description-label:hover .delete-button {
-  display: inline-block;
-}
-.atoria .spell {
-  width: 100%;
-}
-.atoria .spell .title-label {
-  max-width: 250px;
-  min-width: 250px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .spell .title-label .add-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .spell .shorttitle-label {
-  width: 100%;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .spell .spell-row {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-}
-.atoria .spell .spell-row .name-label {
-  max-width: 190px;
-  min-width: 190px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-.atoria .spell .spell-row .value-label {
-  max-width: 40px;
-  min-width: 40px;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell .spell-row .detail-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .spell .spell-row .description-label {
-  max-width: 280px;
-  min-width: 280px;
-  min-height: var(--form-field-height);
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .spell .spell-row .description-label .config-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .spell .spell-row .description-label .delete-button {
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .spell .spell-details .spell-detail {
-  min-width: 250px;
-  max-width: 250px;
-}
-.atoria .spell .spell-details .spell-detail .flexrow, .atoria .spell .spell-details .spell-detail .flexcol {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
-.atoria .spell .spell-details .spell-detail label, .atoria .spell .spell-details .spell-detail input, .atoria .spell .spell-details .spell-detail span {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  line-height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-  padding: 0;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.atoria .spell .spell-details .spell-detail .name-area {
-  background-color: #cccccc;
-  grid-column-end: span 2;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.atoria .spell .spell-details .spell-detail .name {
-  min-width: 208px;
-  max-width: 208px;
-  border-radius: 0px;
-  border: none;
-}
-.atoria .spell .spell-details .spell-detail .config-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.atoria .spell .spell-details .spell-detail .success-value-title {
-  background-color: #cccccc;
-  height: var(--form-field-height);
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell .spell-details .spell-detail .success-value {
-  min-width: 30px;
-  max-width: 30px;
-}
-.atoria .spell .spell-details .spell-detail .critical-title {
-  background-color: #cccccc;
-}
-.atoria .spell .spell-details .spell-detail .critical {
-  min-width: 30px;
-  max-width: 30px;
-}
-.atoria .spell .spell-details .spell-detail .fumble-title {
-  background-color: #cccccc;
-}
-.atoria .spell .spell-details .spell-detail .fumble {
-  min-width: 30px;
-  max-width: 30px;
-}
-.atoria .spell .spell-details .spell-detail .cost-title {
-  background-color: #cccccc;
-  height: var(--form-field-height);
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell .spell-details .spell-detail .cost-input {
-  min-width: 20px;
-}
-.atoria .spell .spell-details .spell-detail .time-title {
-  background-color: #cccccc;
-  height: calc(2 * var(--form-field-height));
-  max-height: calc(2 * var(--form-field-height));
-}
-.atoria .spell .spell-details .spell-detail .time-preparation-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell .spell-details .spell-detail .time-duration-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell .spell-details .spell-detail .time-modifier {
-  min-width: 30px;
-  max-width: 30px;
-}
-.atoria .spell .spell-details .spell-detail .components-title {
-  background-color: #cccccc;
-  height: calc(5 * var(--form-field-height));
-  max-height: calc(5 * var(--form-field-height));
-}
-.atoria .spell .spell-details .spell-detail .components-verbal-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell .spell-details .spell-detail .components-somatic-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell .spell-details .spell-detail .components-material-title {
-  background-color: #cccccc;
-  min-width: 90px;
-  max-width: 90px;
-}
-.atoria .spell .spell-details .spell-detail .targeting-title {
-  background-color: #cccccc;
-  height: calc(3 * var(--form-field-height));
-  max-height: calc(3 * var(--form-field-height));
-}
-.atoria .spell .spell-details .spell-detail .targeting-target-title {
-  background-color: #cccccc;
-  min-width: 50px;
-  max-width: 50px;
-}
-.atoria .spell .spell-details .spell-detail .targeting-range-title {
-  background-color: #cccccc;
-  min-width: 50px;
-  max-width: 50px;
-}
-.atoria .spell .spell-details .spell-detail .targeting-area-title {
-  background-color: #cccccc;
-  min-width: 50px;
-  max-width: 50px;
-}
-.atoria .spell .spell-details .spell-detail .effect-title {
-  background-color: #cccccc;
-  grid-column-end: span 2;
-}
-.atoria .spell .spell-details .spell-detail .effect {
-  grid-column-end: span 2;
-  text-align: left;
-  max-height: -webkit-fit-content;
-  max-height: -moz-fit-content;
-  max-height: fit-content;
-  min-height: var(--form-field-height);
-  white-space: normal;
-}
-.atoria .spell .spell-details .spell-detail .effect p, .atoria .spell .spell-details .spell-detail .effect h1, .atoria .spell .spell-details .spell-detail .effect h2, .atoria .spell .spell-details .spell-detail .effect h3, .atoria .spell .spell-details .spell-detail .effect h4, .atoria .spell .spell-details .spell-detail .effect h5 {
-  margin: 0;
-}
-.atoria .spell .spell-details .spell-detail .spell-supp-title {
-  background-color: #cccccc;
-  grid-column-end: span 2;
-  position: relative;
-}
-.atoria .spell .spell-details .spell-detail .spell-supp-title .add-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-}
-.atoria .spell .spell-details .spell-detail .spell-supp {
-  grid-column-end: span 2;
-}
-.atoria .spell .spell-details .spell-detail .spell-supp .cost-input {
-  max-width: 50px;
-}
-.atoria .spell .spell-details .spell-detail .spell-supp .cost-input.restriction {
-  -webkit-box-flex: 5;
-  -ms-flex: 5;
-  flex: 5;
-  max-width: none;
-}
-.atoria .action-modifier-page .title-label {
-  background-color: #cccccc;
-  text-align: center;
-  border-radius: 3px;
-  font-weight: bold;
-  border: 1px solid var(--color-border-light-tertiary);
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  position: relative;
-}
-.atoria .action-modifier-page .item {
-  width: 100%;
-  position: relative;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-}
-.atoria .action-modifier-page .add-button {
-  display: inline-block;
-  position: absolute;
-  right: 0;
-  top: 0;
+  display: inline-grid;
   text-align: right;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
+  align-content: center;
 }
-.atoria .action-modifier-page .config-button {
-  display: inline-block;
-  position: absolute;
-  right: 20px;
-  top: 0;
-  text-align: right;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
+.system-atoria .atoria-create-button i,
+.system-atoria .atoria-edit-button i,
+.system-atoria .atoria-delete-button i {
+  font-size: 100%;
 }
-.atoria .action-modifier-page .delete-button {
-  display: inline-block;
-  position: absolute;
-  right: 0;
-  top: 0;
-  text-align: right;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
+.system-atoria .atoria-horizontal-bar {
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
 }
-.atoria .test-dialog .adv-dis {
-  margin-top: 10px;
-  margin-bottom: 10px;
+.system-atoria .atoria-horizontal-bar > *,
+.system-atoria .atoria-horizontal-bar > h5 {
+  border: none;
 }
-.atoria input:not([type=image]), .atoria textarea {
-  background-color: rgba(255, 255, 255, 0.25);
+.system-atoria .atoria-horizontal-bar > hr {
+  margin: 0;
+  height: calc(var(--atoria-base-line-block-height) / 2);
+  min-width: 1px;
+  border-left: var(--atoria-item-line-border-style);
 }
-.atoria .perception {
-  background-color: #f1c232;
+.system-atoria .atoria-horizontal-bar > *.atoria-create-button,
+.system-atoria .atoria-horizontal-bar .atoria-create-button-group > *.atoria-create-button,
+.system-atoria .atoria-horizontal-bar > *.atoria-edit-button,
+.system-atoria .atoria-horizontal-bar .atoria-create-button-group > *.atoria-edit-button,
+.system-atoria .atoria-horizontal-bar > *.atoria-delete-button,
+.system-atoria .atoria-horizontal-bar .atoria-create-button-group > *.atoria-delete-button {
+  border: none;
+  margin: 0 3px;
 }
-.atoria .health.health {
-  background-color: #cc0000;
+.system-atoria .atoria-progress-bar {
+  background: var(--bar-color-background);
+  width: auto;
+  position: relative;
+  height: max-content;
 }
-.atoria .healing {
-  background-color: #d76fac;
-}
-.atoria .stamina.stamina {
-  background-color: #6aa84f;
-}
-.atoria .mana.mana {
-  background-color: #3c78d8;
-}
-.atoria .sanity.sanity {
-  background-color: #8e7cc3;
-}
-.atoria .endurance.endurance {
-  background-color: #e69138;
-}
-.atoria .encumbrance {
-  background-color: #434343;
-  color: white;
-}
-.atoria .encumbrance-normal {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-.atoria .encumbrance-above-max {
-  background-color: #d65151 !important;
-}
-.atoria .encumbrance-stealth-malus {
-  background-color: #da904c !important;
-}
-.atoria .encumbrance-stealth-bonus {
-  background-color: #7dda70 !important;
-}
-.atoria .armor, .atoria .initiative, .atoria .movement {
-  background-color: #cccccc;
-}
-.atoria .coin-copper {
-  background-color: #C36500;
-}
-.atoria .coin-silver {
-  background-color: #A7A7A7;
-}
-.atoria .coin-electrum {
-  background-color: #BDA834;
-}
-.atoria .coin-gold {
-  background-color: #FFD800;
-}
-.atoria .tanned-color {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-.atoria .editor {
+.system-atoria .atoria-progress-bar > .progress {
+  --bar-color-bar: var(--atoria-color-disabled-value);
   height: 100%;
-  min-height: 300px;
-}
-.atoria .elip_text {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.chat-message .perception {
-  background-color: #f1c232;
-}
-.chat-message .health {
-  background-color: #cc0000;
-}
-.chat-message .stamina {
-  background-color: #6aa84f;
-}
-.chat-message .mana {
-  background-color: #3c78d8;
-}
-.chat-message .endurance {
-  background-color: #e69138;
-}
-.chat-message .spell-detail {
-  min-width: 250px;
-  max-width: 250px;
-}
-.chat-message .spell-detail .flexrow, .chat-message .spell-detail .flexcol {
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-}
-.chat-message .spell-detail label, .chat-message .spell-detail input, .chat-message .spell-detail span {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  line-height: var(--form-field-height);
-  max-height: var(--form-field-height);
-  min-height: var(--form-field-height);
-  padding: 0;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.chat-message .spell-detail .name-area {
-  grid-column-end: span 2;
-  border-radius: 3px;
-  border: 1px solid var(--color-border-light-tertiary);
-}
-.chat-message .spell-detail .name {
-  min-width: 228px;
-  max-width: 228px;
-  border-radius: 0px;
-  border: none;
-}
-.chat-message .spell-detail .config-button {
-  display: inline-block;
-  text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  vertical-align: middle;
-  height: var(--form-field-height);
-  line-height: var(--form-field-height);
-  min-width: 20px;
-  max-width: 20px;
-  padding-left: 3px;
-  padding-right: 3px;
-}
-.chat-message .spell-detail .success-value-title {
-  height: var(--form-field-height);
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .success-value {
-  min-width: 30px;
-  max-width: 30px;
-}
-.chat-message .spell-detail .critical {
-  min-width: 30px;
-  max-width: 30px;
-}
-.chat-message .spell-detail .fumble {
-  min-width: 30px;
-  max-width: 30px;
-}
-.chat-message .spell-detail .cost-title {
-  height: var(--form-field-height);
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .time-title {
-  height: calc(2 * var(--form-field-height));
-  max-height: calc(2 * var(--form-field-height));
-}
-.chat-message .spell-detail .time-preparation-title {
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .time-duration-title {
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .time-modifier {
-  min-width: 20px;
-  max-width: 20px;
-}
-.chat-message .spell-detail .components-title {
-  height: calc(5 * var(--form-field-height));
-  max-height: calc(5 * var(--form-field-height));
-}
-.chat-message .spell-detail .components-verbal-title {
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .components-somatic-title {
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .components-material-title {
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .targeting-title {
-  height: calc(3 * var(--form-field-height));
-  max-height: calc(3 * var(--form-field-height));
-}
-.chat-message .spell-detail .targeting-target-title {
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .targeting-range-title {
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .targeting-area-title {
-  min-width: 80px;
-  max-width: 80px;
-}
-.chat-message .spell-detail .effect-title {
-  grid-column-end: span 2;
-}
-.chat-message .spell-detail .effect {
-  grid-column-end: span 2;
-  text-align: left;
-  max-height: -webkit-fit-content;
-  max-height: -moz-fit-content;
-  max-height: fit-content;
-  min-height: var(--form-field-height);
-  white-space: normal;
-}
-.chat-message .spell-detail .effect p, .chat-message .spell-detail .effect h1, .chat-message .spell-detail .effect h2, .chat-message .spell-detail .effect h3, .chat-message .spell-detail .effect h4, .chat-message .spell-detail .effect h5 {
-  margin: 0;
-}
-.chat-message .spell-detail .spell-supp-title {
-  grid-column-end: span 2;
-  position: relative;
-}
-.chat-message .spell-detail .spell-supp-title .add-button {
+  width: var(--bar-percentage);
+  background: var(--bar-color-bar);
   position: absolute;
+  left: 0;
   right: 0;
   top: 0;
-  display: inline-block;
+  bottom: 0;
+  margin: 0;
+}
+.system-atoria .atoria-progress-bar > .title {
+  position: relative;
+  background-color: transparent;
+  z-index: 1;
+  color: var(--atoria-color-disabled-value);
+  mix-blend-mode: difference;
+}
+.system-atoria [data-action]:hover {
+  cursor: pointer;
+  text-shadow: 0 0 8px var(--color-shadow-primary);
+}
+.system-atoria .atoria-expand-control:not(.expanded) ~ .atoria-expand-following-data,
+.system-atoria .atoria-expand-control:not(.expanded) + .atoria-expand-direct-data {
+  height: 0;
+  min-height: 0;
+  max-height: 0;
+  overflow: hidden;
+  border: none;
+}
+.system-atoria .atoria-expand-control.expanded:has(+ .atoria-expand-direct-data) {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.system-atoria .atoria-expand-control.expanded + .atoria-expand-direct-data {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.system-atoria .atoria-error {
+  color: var(--atoria-color-error) !important;
+}
+.system-atoria .atoria-resize-ta {
+  resize: none;
+  height: auto;
+}
+.system-atoria fieldset > legend.atoria-expand-control::before {
+  font-family: var(--font-awesome);
+  font-size: 1em;
+  content: "\f105";
+}
+.system-atoria fieldset > legend.atoria-expand-control.expanded::before {
+  content: "\f107";
+}
+.system-atoria .atoria-details > summary::before {
+  font-family: var(--font-awesome);
+  font-size: 1em;
+  content: "\f105";
+}
+.system-atoria .atoria-details[open] > summary::before {
+  content: "\f107";
+}
+.system-atoria .grid-2col {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+}
+.system-atoria .grid-2col .double-col-field {
+  grid-column: 1 / span 2;
+}
+.system-atoria .flex0 {
+  flex: 0;
+  min-width: fit-content;
+  min-height: fit-content;
+}
+.system-atoria .atoria-cost-input,
+.system-atoria .atoria-cost-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.system-atoria .atoria-cost-input > *,
+.system-atoria .atoria-cost-display > * {
+  flex: 1;
+  min-width: fit-content;
+}
+.system-atoria .atoria-cost-input > label,
+.system-atoria .atoria-cost-display > label {
+  flex: 0;
+}
+.system-atoria .atoria-time-limitation-input,
+.system-atoria .atoria-time-limitation-display {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.system-atoria .atoria-time-limitation-input > *,
+.system-atoria .atoria-time-limitation-display > * {
+  flex: 1;
+}
+.system-atoria .atoria-time-limitation-input > label,
+.system-atoria .atoria-time-limitation-display > label {
   text-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
+}
+.system-atoria .atoria-time-limitation-input > img,
+.system-atoria .atoria-time-limitation-display > img {
+  min-height: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-base-line-block-height);
+  min-width: var(--atoria-base-line-block-height);
+  max-width: var(--atoria-base-line-block-height);
+  border: none;
+}
+.system-atoria .atoria-time-limitation-input > input,
+.system-atoria .atoria-time-limitation-display > input {
+  flex: 0;
+}
+.system-atoria .atoria-skill-alteration-input {
+  grid-template-columns: subgrid;
+}
+.system-atoria .atoria-rollfield-display.name-hidden .name,
+.system-atoria .atoria-rollfield-input.name-hidden .name {
+  display: none;
+}
+.system-atoria .atoria-rollfield-display .atoria-expand-control:has(+ .atoria-damage-type-area)::before,
+.system-atoria .atoria-rollfield-input .atoria-expand-control:has(+ .atoria-damage-type-area)::before {
+  font-family: var(--font-awesome);
+  font-size: 1em;
+  content: "\f105";
+}
+.system-atoria .atoria-rollfield-display .atoria-expand-control:has(+ .atoria-damage-type-area).expanded::before,
+.system-atoria .atoria-rollfield-input .atoria-expand-control:has(+ .atoria-damage-type-area).expanded::before {
+  content: "\f107";
+}
+.system-atoria .atoria-rollfield-display .atoria-damage-type-area,
+.system-atoria .atoria-rollfield-input .atoria-damage-type-area {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.system-atoria .atoria-rollfield-display {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.system-atoria .editing-mode {
+  --atoria-skill-width: calc(8em + var(--atoria-input-width) * 3 + var(--checkbox-size));
+}
+.system-atoria .atoria-skill-display {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+  flex: 0 1 auto;
+  border: none;
+}
+.system-atoria .atoria-skill-display > label {
+  padding: 0px 3px;
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+  display: flex;
   align-items: center;
-  vertical-align: middle;
-}
-.chat-message .spell-detail .spell-supp {
-  grid-column-end: span 2;
-}
-.chat-message .spell-detail .cost-input.restriction {
-  min-width: 100px;
-  max-width: 100px;
-}
-.chat-message .skill-roll {
-  vertical-align: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
 }
-.chat-message .skill-roll .skill-attribute .adv-span {
-  display: inline-block;
-  min-width: 100px;
+.system-atoria .atoria-skill-display,
+.system-atoria .atoria-skill-cat-display {
+  min-width: var(--atoria-skill-width);
+  max-width: var(--atoria-skill-width);
+  /* &:hover {
+        max-width: min-content;
+    } */
+  /* > *:hover {
+        max-width: min(var(--atoria-skill-width), min-content);
+    } */
 }
-.chat-message .skill-roll .skill-attribute .sl-span {
-  display: inline-block;
-  min-width: 40px;
+.system-atoria .atoria-skill-display > label,
+.system-atoria .atoria-skill-cat-display > label,
+.system-atoria .atoria-skill-display > input,
+.system-atoria .atoria-skill-cat-display > input,
+.system-atoria .atoria-skill-display > h5,
+.system-atoria .atoria-skill-cat-display > h5 {
+  height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
 }
-.chat-message .skill-roll .skill-attribute .luck-span {
-  display: inline-block;
-  min-width: 70px;
+.system-atoria .atoria-skill-group-display > label,
+.system-atoria .atoria-skill-type-display > label,
+.system-atoria .atoria-skill-group-display > input,
+.system-atoria .atoria-skill-type-display > input,
+.system-atoria .atoria-skill-group-display > h5,
+.system-atoria .atoria-skill-type-display > h5 {
+  height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
 }
-.chat-message .skill-roll .action-modifier-name {
-  font-weight: bold;
+.system-atoria .atoria-skill-display input[type=checkbox].atoria-skill-shown-control:checked::after,
+.system-atoria .atoria-skill-cat-display input[type=checkbox].atoria-skill-shown-control:checked::after,
+.system-atoria .atoria-skill-group-display input[type=checkbox].atoria-skill-shown-control:checked::after,
+.system-atoria .atoria-skill-type-display input[type=checkbox].atoria-skill-shown-control:checked::after {
+  --checkbox-content: "\f06e" !important;
 }
-.chat-message .skill-roll .additional-effect {
-  min-width: 100px;
-  max-height: var(--form-field-height);
+.system-atoria .atoria-skill-display input[type=checkbox].atoria-skill-shown-control::after,
+.system-atoria .atoria-skill-cat-display input[type=checkbox].atoria-skill-shown-control::after,
+.system-atoria .atoria-skill-group-display input[type=checkbox].atoria-skill-shown-control::after,
+.system-atoria .atoria-skill-type-display input[type=checkbox].atoria-skill-shown-control::after {
+  --checkbox-content: "\f070" !important;
+}
+.system-atoria .atoria-skill-display h5 > input[type=checkbox].atoria-skill-shown-control,
+.system-atoria .atoria-skill-cat-display h5 > input[type=checkbox].atoria-skill-shown-control,
+.system-atoria .atoria-skill-group-display h5 > input[type=checkbox].atoria-skill-shown-control,
+.system-atoria .atoria-skill-type-display h5 > input[type=checkbox].atoria-skill-shown-control {
+  float: right;
+}
+.system-atoria .is_forced_horizontally .atoria-skill-group-display {
+  max-width: fit-content;
+}
+.system-atoria .is_forced_horizontally .atoria-skill-group-display > h5 {
+  max-width: 100%;
+}
+.system-atoria .is_forced_horizontally .atoria-skill-group-display > .atoria-skill-cat-area > .atoria-skill-cat-display {
+  display: flex;
+  flex-direction: row;
+  max-width: fit-content;
+}
+.system-atoria .is_forced_horizontally .atoria-skill-group-display > .atoria-skill-cat-area > .atoria-skill-cat-display > h6 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 100% !important;
+  min-width: var(--atoria-skill-title-width);
+  max-width: var(--atoria-skill-title-width);
+}
+.system-atoria .atoria-simple-header {
+  display: grid;
+  grid-template-areas: "img name" "img desc";
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: min-content 1fr;
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+}
+.system-atoria .atoria-simple-header > .atoria-document-img {
+  --atoria-document-img-size: 12em;
+  grid-area: img;
+  margin: auto;
+}
+.system-atoria .atoria-simple-header.small-image > .atoria-document-img {
+  --atoria-document-img-size: 6em;
+}
+.system-atoria .atoria-simple-header > input[name="name"] {
+  --atoria-input-width: 100%;
+  grid-area: name;
   text-align: left;
 }
-.chat-message .skill-roll .skill-effect-list {
-  min-width: 100px;
+.system-atoria .atoria-simple-header > .atoria-description {
+  grid-area: desc;
+  min-width: 15em;
 }
-.chat-message .skill-roll .skill-effect {
-  min-width: 100px;
-  max-height: var(--form-field-height);
-  text-align: right;
+.system-atoria .atoria-simple-header > .atoria-description label {
+  display: inline-block;
+  flex: 0 1 auto;
 }
-.chat-message .skill-roll .skill-result {
-  border-top: solid 1px black;
+.system-atoria .atoria-armor-display,
+.system-atoria .atoria-resistance-display {
+  display: grid;
+  grid-template-columns: 1fr min-content min-content;
+}
+.system-atoria .atoria-armor-display > h5,
+.system-atoria .atoria-resistance-display > h5 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 1 / span 2;
+  background-color: var(--disabled-background-color) !important;
+}
+.system-atoria .atoria-armor-display > .atoria-expand-following-data,
+.system-atoria .atoria-resistance-display > .atoria-expand-following-data {
+  display: grid;
+  grid-column: 1 / span 3;
+  grid-template-columns: subgrid;
+}
+.system-atoria .atoria-character-header {
+  --atoria-document-img-size: calc(7 * var(--atoria-skill-height));
+  --atoria-header-area-width: calc(16em + var(--atoria-document-img-size) + var(--atoria-skill-width) + 2*var(--atoria-columns-gap));
+  grid-area: char-hdr;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  min-width: var(--atoria-header-area-width);
+  max-width: var(--atoria-header-area-width);
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+}
+.system-atoria .atoria-character-header > * {
+  flex: 1;
+}
+.system-atoria .atoria-character-header > .attribute-area > div > div > input,
+.system-atoria .atoria-character-header > .attribute-area > div > input,
+.system-atoria .atoria-character-header > .attribute-area > div > input,
+.system-atoria .atoria-character-header > .attribute-area > input,
+.system-atoria .atoria-character-header > .attribute-area > div > div > label,
+.system-atoria .atoria-character-header > .attribute-area > div > label,
+.system-atoria .atoria-character-header > .attribute-area > div > label,
+.system-atoria .atoria-character-header > .attribute-area > label,
+.system-atoria .atoria-character-header > .attribute-area > div > div > h5,
+.system-atoria .atoria-character-header > .attribute-area > div > h5,
+.system-atoria .atoria-character-header > .attribute-area > div > h5,
+.system-atoria .atoria-character-header > .attribute-area > h5 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .atoria-character-header > .attribute-area > .name-area {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.system-atoria .atoria-character-header > .attribute-area > .name-area > input[name="name"] {
+  --atoria-input-width: 1fr;
+}
+.system-atoria .atoria-character-header > .attribute-area > .atoria-initiative input {
+  --atoria-input-width: var(--atoria-formula-input-width);
+}
+.system-atoria .atoria-attribute-display {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.system-atoria .atoria-attribute-display > label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: ttl;
+  text-align: center;
+  width: 100%;
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+}
+.system-atoria .atoria-attribute-display > input {
+  line-height: 1lh;
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .atoria-attribute-display > input:first-of-type {
+  grid-area: val;
+}
+.system-atoria .atoria-attribute-display > input:last-of-type {
+  grid-area: max;
+}
+.system-atoria .atoria-attribute-display.two-rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "ttl ttl" "val max";
+}
+.system-atoria .atoria-attribute-display.two-rows > input:first-of-type,
+.system-atoria .atoria-attribute-display.two-rows > input:last-of-type {
+  --atoria-input-width: 100%;
+}
+.system-atoria .editing-mode {
+  --atoria-mini-skill-width: calc(7em + var(--atoria-input-width) * 3 + var(--checkbox-size));
+}
+.system-atoria.theme-light .atoria-player-header img {
+  --atoria-img-filter: none;
+}
+.system-atoria .atoria-player-header {
+  --atoria-document-img-size: calc(7 * var(--atoria-skill-height));
+  --atoria-header-area-width: calc(22em + var(--atoria-mini-skill-width) + var(--atoria-mini-skill-width) + var(--atoria-document-img-size) + 3*var(--atoria-columns-gap));
+  grid-area: char-hdr;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  min-width: var(--atoria-header-area-width);
+  max-width: var(--atoria-header-area-width);
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+}
+.system-atoria .atoria-player-header > * {
+  flex: 1;
+}
+.system-atoria .atoria-player-header > .attribute-area {
+  min-width: 22em;
+  max-width: fit-content;
+}
+.system-atoria .atoria-player-header > .attribute-area > div > div > div > input:not([type=checkbox]),
+.system-atoria .atoria-player-header > .attribute-area > div > div > input:not([type=checkbox]),
+.system-atoria .atoria-player-header > .attribute-area > div > div > input:not([type=checkbox]),
+.system-atoria .atoria-player-header > .attribute-area > div > input:not([type=checkbox]),
+.system-atoria .atoria-player-header > .attribute-area > div > div > input:not([type=checkbox]),
+.system-atoria .atoria-player-header > .attribute-area > div > input:not([type=checkbox]),
+.system-atoria .atoria-player-header > .attribute-area > div > input:not([type=checkbox]),
+.system-atoria .atoria-player-header > .attribute-area > input:not([type=checkbox]),
+.system-atoria .atoria-player-header > .attribute-area > div > div > div > label,
+.system-atoria .atoria-player-header > .attribute-area > div > div > label,
+.system-atoria .atoria-player-header > .attribute-area > div > div > label,
+.system-atoria .atoria-player-header > .attribute-area > div > label,
+.system-atoria .atoria-player-header > .attribute-area > div > div > label,
+.system-atoria .atoria-player-header > .attribute-area > div > label,
+.system-atoria .atoria-player-header > .attribute-area > div > label,
+.system-atoria .atoria-player-header > .attribute-area > label,
+.system-atoria .atoria-player-header > .attribute-area > div > div > div > h5,
+.system-atoria .atoria-player-header > .attribute-area > div > div > h5,
+.system-atoria .atoria-player-header > .attribute-area > div > div > h5,
+.system-atoria .atoria-player-header > .attribute-area > div > h5,
+.system-atoria .atoria-player-header > .attribute-area > div > div > h5,
+.system-atoria .atoria-player-header > .attribute-area > div > h5,
+.system-atoria .atoria-player-header > .attribute-area > div > h5,
+.system-atoria .atoria-player-header > .attribute-area > h5 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .atoria-player-header > .attribute-area > div > div > div > input[type=checkbox],
+.system-atoria .atoria-player-header > .attribute-area > div > div > input[type=checkbox],
+.system-atoria .atoria-player-header > .attribute-area > div > div > input[type=checkbox],
+.system-atoria .atoria-player-header > .attribute-area > div > input[type=checkbox],
+.system-atoria .atoria-player-header > .attribute-area > div > div > input[type=checkbox],
+.system-atoria .atoria-player-header > .attribute-area > div > input[type=checkbox],
+.system-atoria .atoria-player-header > .attribute-area > div > input[type=checkbox],
+.system-atoria .atoria-player-header > .attribute-area > input[type=checkbox] {
+  --checkbox-size: var(--atoria-skill-height);
+}
+.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > input[name="name"] {
+  --atoria-input-width: 5fr;
+}
+.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > h6 {
+  justify-content: center;
+  white-space: wrap;
+  height: calc(2*var(--atoria-base-line-block-height));
+  display: flex;
+  align-items: center;
+}
+.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > button {
+  max-height: var(--atoria-skill-height);
+  align-items: stretch;
+}
+.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > button > img {
+  flex: 0;
+  max-width: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-base-line-block-height);
+  border: none;
+  filter: var(--atoria-img-filter);
+}
+.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > button > * {
+  flex: 1;
+}
+.system-atoria .atoria-player-header > .attribute-area .atoria-initiative input {
+  --atoria-input-width: var(--atoria-formula-input-width);
+}
+.system-atoria .atoria-player-header > .attribute-area .atoria-healing-inactive {
+  --checkbox-size: var(--atoria-base-line-block-height);
+  text-align: center;
+}
+.system-atoria .atoria-player-header > .attribute-area .atoria-healing-inactive > div {
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+}
+.system-atoria .atoria-player-header > .attribute-area .atoria-healing-inactive img[data-action=editHealingInactive],
+.system-atoria .atoria-player-header > .attribute-area .atoria-healing-inactive img[data-action=toggleAttribute],
+.system-atoria .atoria-player-header > .attribute-area .atoria-healing-inactive input[type=checkbox] {
+  border: none;
+  margin: auto;
+  min-height: calc(var(--checkbox-size) - 2px);
+  max-height: calc(var(--checkbox-size) - 2px);
+}
+.system-atoria .atoria-player-header > .attribute-area .atoria-healing-inactive img {
+  min-height: calc(var(--checkbox-size) - 2px);
+  max-height: calc(var(--checkbox-size) - 2px);
+  min-width: var(--checkbox-size);
+  max-width: var(--checkbox-size);
+}
+.system-atoria .atoria-player-header > .attribute-area .atoria-healing-inactive img.checked {
+  color: var(--atoria-color-checkbox-checked);
+}
+.system-atoria .atoria-player-header > .attribute-area .atoria-healing-inactive input[type=checkbox].resurrection::after {
+  --checkbox-content: "\f714" !important;
+}
+.system-atoria .atoria-player-header > .attribute-area .atoria-armor-n-resistance {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.system-atoria .atoria-player-header > .attribute-area .atoria-armor-n-resistance > * {
+  flex: 1;
+}
+.system-atoria .atoria-player-header > .atoria-encumbrance-n-coins {
+  min-width: var(--atoria-mini-skill-width);
+  max-width: var(--atoria-mini-skill-width);
+}
+.system-atoria .atoria-player-header > .atoria-encumbrance-n-coins > .atoria-coins-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+}
+.system-atoria .atoria-player-header > .atoria-encumbrance-n-coins > .atoria-coins-display .coins {
+  padding: 0;
+}
+.system-atoria .atoria-player-header > .atoria-encumbrance-n-coins > .atoria-coins-display * {
+  gap: 0;
+}
+.system-atoria .atoria-player-header > .atoria-encumbrance-n-coins > .atoria-coins-display > h5 {
+  max-height: var(--atoria-base-line-block-height) !important;
+  padding: 2px;
+  width: 100%;
+}
+.system-atoria .atoria-player-header > .atoria-perceptions-block .atoria-skill-display,
+.system-atoria .atoria-player-header > .atoria-perceptions-block .atoria-skill-cat-display {
+  min-width: var(--atoria-mini-skill-width);
+  max-width: var(--atoria-mini-skill-width);
+}
+.system-atoria .atoria-character-simple-skill-n-knowledge {
+  grid-area: char-smpl-skl-knw;
+  min-width: var(--atoria-character-simple-skill-n-knowledge-width);
+  max-width: var(--atoria-character-simple-skill-n-knowledge-width);
+}
+.system-atoria .atoria-character-simple-skill-n-knowledge .atoria-skill-group-display {
+  min-width: var(--atoria-skill-width);
+  max-width: var(--atoria-skill-width);
+}
+.system-atoria .atoria-coins-display {
+  --atoria-coins-line-vertical-padding: 1px;
+  --atoria-coins-line-height: 1lh + var(--atoria-coins-line-vertical-padding) + var(--atoria-coins-line-vertical-padding);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+  line-height: var(--atoria-coins-line-height);
+  padding: var(--atoria-coins-line-vertical-padding);
+}
+.system-atoria .atoria-coins-display > * {
+  flex: 1;
+}
+.system-atoria .atoria-coins-display > h5 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.system-atoria .atoria-coins-display > .coins {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+  flex: 4;
+  line-height: var(--atoria-coins-line-height);
+  padding: var(--atoria-coins-line-vertical-padding);
+}
+.system-atoria .atoria-coins-display > .coins > * {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+  /* height: var(--atoria-base-line-block-height); */
+  height: var(--atoria-skill-height);
+  flex: 1;
+}
+.system-atoria .atoria-coins-display > .coins > * > label {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.system-atoria .atoria-coins-display > .coins > * > input {
+  --atoria-input-width: var(--atoria-3dgt-input-width);
+  line-height: var(--atoria-coins-line-height);
+  flex: 0;
+}
+.system-atoria .atoria-inventory-bar {
+  position: relative;
+}
+.system-atoria .atoria-inventory-bar > *.atoria-create-button,
+.system-atoria .atoria-inventory-bar .atoria-create-button-group > *.atoria-create-button {
+  min-height: calc(1lh - 2px);
+  max-height: calc(1lh - 2px);
+}
+.system-atoria .atoria-inventory-bar .atoria-create-button-group {
+  display: inline-block;
+  position: absolute;
+  right: 0px;
+  left: auto;
+  min-width: fit-content;
+}
+.system-atoria .atoria-item-line-display {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+  min-height: var(--atoria-skill-height);
+  max-height: fit-content;
+  min-width: var(--atoria-item-line-width);
+  max-width: var(--atoria-item-line-width);
+  border: var(--atoria-item-line-border-style);
+  border-radius: var(--atoria-border-style-radius);
+  padding: 0;
+}
+.system-atoria .atoria-item-line-display > i[data-action="toggleEffect"] {
+  margin-left: 5px;
+}
+.system-atoria .atoria-item-line-display > .name {
+  flex: auto;
+}
+.system-atoria .atoria-item-line-display > input {
+  height: 100%;
+}
+.system-atoria .atoria-item-line-display > .flexcol:has(.atoria-cost-display) {
+  gap: 2px;
+}
+.system-atoria .atoria-item-line-display > hr {
+  margin: 0;
+  height: calc(var(--atoria-base-line-block-height) / 2);
+  min-width: 1px;
+  border-left: var(--atoria-item-line-border-style);
+}
+.system-atoria .atoria-item-line-display > .equip-toggle {
+  --atoria-border-style: none;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.system-atoria .atoria-item-line-display > .equip-toggle::after {
+  --checkbox-content: "\f3ed" !important;
+}
+.system-atoria .atoria-item-line-display > .atoria-spell-marker {
+  border: none;
+  pointer-events: none;
+}
+.system-atoria .atoria-item-line-display > .target {
+  flex: auto;
+}
+.system-atoria .atoria-item-line-display + .atoria-expand-direct-data {
+  margin: 0;
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+  padding: 0;
+  padding-left: var(--atoria-columns-gap);
+  padding-right: var(--atoria-columns-gap);
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+}
+.system-atoria .atoria-item-line-display + .atoria-expand-direct-data > .flexrow {
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+}
+.system-atoria .atoria-character-simple-inventory {
+  grid-area: char-smpl-inv;
+  max-width: 30em;
+}
+.system-atoria .atoria-character-simple-inventory > .atoria-inventory-bar {
+  --atoria-input-width: var(--atoria-4dgt-input-width);
+}
+.system-atoria .atoria-spell-marker::after {
+  --checkbox-content: attr(data-letter) !important;
+}
+.system-atoria > .item.sheet .grid-2col {
+  grid-template-columns: 10em auto;
+}
+.system-atoria > .item.sheet .grid-2col input:not([type=checkbox]) {
+  max-width: 100%;
+}
+.system-atoria > .item.sheet .sub-element-category > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.system-atoria > .item.sheet .sub-element-category > ul li {
+  margin: 0;
+}
+.system-atoria > .item.sheet .sub-element-category > ul li:not(:first-child) {
+  margin-top: var(--atoria-rows-gap);
+}
+.system-atoria > .item.sheet .atoria-supplementaries-area ul li:not(:first-child) {
+  margin-top: calc(2 * var(--atoria-rows-gap));
+}
+.system-atoria > .item.sheet .atoria-supplementaries-area ul li.hr {
+  border-top: var(--atoria-fieldset-border-style);
+  border-bottom: var(--atoria-fieldset-border-style);
+}
+.system-atoria > .item.sheet .atoria-supplementaries-area ul li:last-child {
+  visibility: hidden;
+  display: none;
+}
+.system-atoria > .item.sheet ul.actable-mod-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.system-atoria > .item.sheet ul.actable-mod-list li {
+  margin: 0;
+}
+.system-atoria > .item.sheet ul.actable-mod-list li:not(:first-child) {
+  margin-top: var(--atoria-rows-gap);
+}
+.system-atoria > .item.sheet .atoria-keywords-area input[type=checkbox]:not(:checked) + input[type=checkbox].more {
+  display: none;
+}
+.system-atoria > .item.sheet .atoria-keywords-area input[type=checkbox].more::after {
+  --checkbox-content: "\2b" !important;
+}
+.system-atoria > .item.sheet .atoria-keywords-area .boolean-area {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.system-atoria .atoria-player-character-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.system-atoria .atoria-player-character-page > .first-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.system-atoria .atoria-player-character-page > .first-col .flexrow {
+  align-items: flex-start;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-character-skill-n-knowledge {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-character-skill-n-knowledge > * {
+  flex: 0;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-character-skill-n-knowledge .atoria-skill-area > h5 {
+  border-bottom: var(--atoria-border-blending-style);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-character-skill-n-knowledge .atoria-skill-area .atoria-skill-group-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-character-skill-n-knowledge .atoria-skill-area .atoria-skill-group-area .atoria-skill-group-display > h5 {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-character-skill-n-knowledge .atoria-skill-area .atoria-skill-group-area > * {
+  flex: 0;
+}
+.system-atoria .atoria-player-character-page > .second-col {
+  min-width: 20em;
+}
+.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense {
+  /* display: grid; */
+  /* grid-template-columns: min-content auto @ofde-fense-text-area-width; */
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+}
+.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense > div.flexrow {
+  min-height: calc(2px + var(--atoria-base-line-block-height));
+  max-height: calc(2px + var(--atoria-base-line-block-height));
+  /* border: var(--atoria-border-style); */
+}
+.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense > label {
+  min-width: 5em;
+  padding: 0 5px;
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense > textarea {
+  min-height: 1lh;
+}
+.system-atoria .atoria-player-inventory-page > .flexrow {
+  align-items: flex-start;
+}
+.system-atoria .atoria-player-inventory-page .armor-list {
+  display: grid;
+  grid-template-columns: 75px 1fr;
+  align-items: center;
+}
+.system-atoria .atoria-player-inventory-page .armor-list .title {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+  max-height: max-content !important;
+}
+.system-atoria .atoria-player-inventory-page .armor-list .title > h5 {
+  background-color: transparent !important;
+  border: none;
+}
+.system-atoria .atoria-player-action-page > div:not(:first-child) {
+  margin-top: var(--atoria-rows-gap);
+}
+.system-atoria .sheet.chest > .window-content div:not(.colored) > h5,
+.system-atoria .sheet.chest > .window-content ul:not(.colored) > h5,
+.system-atoria .sheet.chest > .window-content div.colored:has(h5) {
+  background-color: #0000ff55;
+}
+.system-atoria .sheet.chest > .window-content div:not(.colored) > h6,
+.system-atoria .sheet.chest > .window-content div.colored:has(h6) {
+  background-color: #3333aa55;
+  font-weight: 400;
+}
+.system-atoria .sheet.chest > .window-content div:not(.colored) > h5 {
+  min-height: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.chest > .window-content div:not(.colored) > h6 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.chest > .window-content div.colored:has(h5),
+.system-atoria .sheet.chest > .window-content ul:not(.colored) > h5 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.chest .atoria-inventory-bar {
+  --atoria-input-width: var(--atoria-4dgt-input-width);
+  /* .atoria-attribute-display.atoria-encumbrance {
+            display: grid;
+            grid-template-areas:
+            "ttl ttl"
+            "val max";
+            grid-template-columns: min-content min-content;
+            flex: 0;
+            border-left: var(--atoria-border-style);
+            label {
+                border: none;
+            }
+
+            input {
+                border: none;
+                border-top: var(--atoria-border-style);
+            }
+            input:first-of-type {
+                --atoria-input-width: var(--atoria-5dgt-input-width);
+                border-right: var(--atoria-border-style);
+            }
+            input:last-of-type {
+                border-left: var(--atoria-border-style);
+            }
+        } */
+}
+.system-atoria .sheet.chest .atoria-inventory-bar > h5 {
+  border: none;
+}
+.system-atoria .editing-mode.sheet.hero > .window-content > .body > .top-block {
+  grid-template-rows: calc(9 * var(--atoria-skill-height));
+}
+.system-atoria .sheet.hero {
+  --atoria-document-img-size: calc(7 * var(--atoria-skill-height));
+}
+.system-atoria .sheet.hero > .window-content div:not(.colored) > h5,
+.system-atoria .sheet.hero > .window-content ul:not(.colored) > h5,
+.system-atoria .sheet.hero > .window-content div.colored:has(h5) {
+  background-color: #0000ff55;
+}
+.system-atoria .sheet.hero > .window-content div:not(.colored) > h6,
+.system-atoria .sheet.hero > .window-content div.colored:has(h6) {
+  background-color: #3333aa55;
+  font-weight: 400;
+}
+.system-atoria .sheet.hero > .window-content div:not(.colored) > h5 {
+  min-height: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.hero > .window-content div:not(.colored) > h6 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.hero > .window-content div.colored:has(h5),
+.system-atoria .sheet.hero > .window-content ul:not(.colored) > h5 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.hero > .window-content > .body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.system-atoria .sheet.hero > .window-content > .body > * {
+  flex: auto;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block {
+  display: grid;
+  grid-template-areas: "hdr skl ha" "hdr knw ha";
+  grid-template-columns: var(--atoria-document-img-size) min-content;
+  grid-template-rows: calc(5 * var(--atoria-skill-height));
+  flex: 0;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .header-area {
+  grid-area: hdr;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .header-area > :not(.atoria-document-img) {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .header-area > :not(.atoria-document-img) > * {
+  height: 100%;
+  max-height: 100%;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .header-area > .name-area {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .header-area > .name-area > input[name="name"] {
+  --atoria-input-width: 1fr;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .atoria-skill-area {
+  grid-area: skl;
+  max-height: fit-content;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .atoria-skill-area > h5 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+  flex: 0 1 auto;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .atoria-knowledge-area {
+  grid-area: knw;
+  max-height: fit-content;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .atoria-knowledge-area > h5 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+  flex: 0 1 auto;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .atoria-hero-attribute {
+  grid-area: ha;
+  display: flex;
+  flex-direction: column;
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .atoria-hero-attribute > h5,
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .atoria-hero-attribute > input {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.hero > .window-content > .body > .top-block > .atoria-hero-attribute > input {
+  --atoria-input-width: 1fr;
+  min-width: var(--atoria-skill-width);
+  max-width: var(--atoria-skill-width);
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area {
+  grid-area: itm;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area > .atoria-hero-ration-n-coins {
+  display: flex;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area > .atoria-hero-ration-n-coins > .atoria-hero-ration {
+  display: flex;
+  align-items: center;
+  padding: 3px;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area > .atoria-hero-ration-n-coins > .atoria-coins-display {
+  flex: 4;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area > .atoria-inventory-bar {
+  --atoria-input-width: var(--atoria-4dgt-input-width);
+  /* .atoria-attribute-display.atoria-encumbrance {
+                    display: grid;
+                    grid-template-areas:
+                    "ttl ttl"
+                    "val max";
+                    grid-template-columns: min-content min-content;
+                    flex: 0;
+                    border-left: var(--atoria-border-style);
+                    label {
+                        border: none;
+                    }
+
+                    input {
+                        border: none;
+                        border-top: var(--atoria-border-style);
+                    }
+                    input:first-of-type {
+                        --atoria-input-width: 1fr;
+                        border-right: var(--atoria-border-style);
+                    }
+                    input:last-of-type {
+                        --atoria-input-width: 1fr;
+                        border-left: var(--atoria-border-style);
+                    }
+                } */
+}
+.system-atoria .sheet.non-player-character .window-content {
+  display: grid;
+  grid-template-areas: "char-hdr char-hdr " "char-smpl-skl-knw char-smpl-inv ";
+  grid-template-columns: var(--atoria-skill-width) max-content;
+}
+.system-atoria .sheet.non-player-character .window-content div:not(.colored) > h5,
+.system-atoria .sheet.non-player-character .window-content ul:not(.colored) > h5,
+.system-atoria .sheet.non-player-character .window-content div.colored:has(h5) {
+  background-color: #0000ff55;
+}
+.system-atoria .sheet.non-player-character .window-content div:not(.colored) > h6,
+.system-atoria .sheet.non-player-character .window-content div.colored:has(h6) {
+  background-color: #3333aa55;
+  font-weight: 400;
+}
+.system-atoria .sheet.non-player-character .window-content div:not(.colored) > h5 {
+  min-height: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.non-player-character .window-content div:not(.colored) > h6 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.non-player-character .window-content div.colored:has(h5),
+.system-atoria .sheet.non-player-character .window-content ul:not(.colored) > h5 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.non-player-character .window-content .atoria-inventory-bar {
+  --atoria-input-width: var(--atoria-4dgt-input-width);
+  /* .atoria-attribute-display.atoria-encumbrance {
+                display: grid;
+                grid-template-areas:
+                "ttl ttl"
+                "val max";
+                grid-template-columns: min-content min-content;
+                flex: 0;
+                border-left: var(--atoria-border-style);
+
+                label {
+                    border: none;
+                }
+
+                input {
+                    border: none;
+                    border-top: var(--atoria-border-style);
+                }
+                input:first-of-type {
+                    --atoria-input-width: var(--atoria-5dgt-input-width);
+                    border-right: var(--atoria-border-style);
+                }
+                input:last-of-type {
+                    border-left: var(--atoria-border-style);
+                }
+            } */
+}
+.system-atoria .sheet.non-player-character .window-content .atoria-inventory-bar > h5 {
+  border: none;
+}
+.system-atoria .sheet.non-player-character.editing-mode .window-content {
+  grid-template-columns: var(--atoria-skill-width) max-content;
+}
+.system-atoria .sheet.player-character .window-content div:not(.colored) > h5,
+.system-atoria .sheet.player-character .window-content ul:not(.colored) > h5,
+.system-atoria .sheet.player-character .window-content div.colored:has(h5) {
+  background-color: #0000ff55;
+}
+.system-atoria .sheet.player-character .window-content div:not(.colored) > h6,
+.system-atoria .sheet.player-character .window-content ul:not(.colored) > h6,
+.system-atoria .sheet.player-character .window-content div.colored:has(h6) {
+  background-color: #3333aa55;
+  font-weight: 400;
+}
+.system-atoria .sheet.player-character .window-content div:not(.colored) > h5 {
+  min-height: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.player-character .window-content div:not(.colored) > h6 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.player-character .window-content div.colored:has(h5),
+.system-atoria .sheet.player-character .window-content ul:not(.colored) > h5,
+.system-atoria .sheet.player-character .window-content div.colored:has(h6),
+.system-atoria .sheet.player-character .window-content ul:not(.colored) > h6 {
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .sheet.player-character .window-content input[data-action="toggleEditingMode"] {
+  border: none;
+  font-size: calc(1.3 * var(--font-size));
+  --checkbox-size: calc(1.3 * var(--atoria-base-line-block-height));
+}
+.system-atoria .sheet.player-character .window-content input[data-action="toggleEditingMode"]::after {
+  color: var(--color-text-primary);
+}
+.system-atoria .sheet.player-character .window-content .atoria-inventory-bar {
+  --atoria-input-width: var(--atoria-4dgt-input-width);
+  /* .atoria-attribute-display.atoria-encumbrance {
+                display: grid;
+                grid-template-areas:
+                "ttl ttl"
+                "val max";
+                grid-template-columns: min-content min-content;
+                flex: 0;
+                border-left: var(--atoria-border-style);
+
+                label {
+                    border: none;
+                }
+
+                input {
+                    border: none;
+                    border-top: var(--atoria-border-style);
+                }
+                input:first-of-type {
+                    --atoria-input-width: var(--atoria-5dgt-input-width);
+                    border-right: var(--atoria-border-style);
+                }
+                input:last-of-type {
+                    border-left: var(--atoria-border-style);
+                }
+            } */
+}
+.system-atoria .sheet.player-character .window-content .atoria-inventory-bar > h5 {
+  border: none;
+  background-color: transparent;
+}
+.system-atoria .atoria.dialog .atoria-cost-display.atoria-secondary {
+  display: none;
+  visibility: hidden;
+}
+.system-atoria .atoria.dialog > select:has( option:checked:not([value="main_skill_data"])) ~ .available-features ul[data-related-skill="main"] {
+  display: none;
+  visibility: hidden;
+}
+.system-atoria .atoria.dialog > select:has( option:checked:not([value="main_skill_data"])) ~ .atoria-cost-display.atoria-main {
+  display: none;
+  visibility: hidden;
+}
+.system-atoria .atoria.dialog > select:has( option:checked:not([value="secondary_skill_data"])) ~ .available-features ul[data-related-skill="secondary"] {
+  display: none;
+  visibility: hidden;
+}
+.system-atoria .atoria.dialog > select:has( option:checked[value="secondary_skill_data"] ) ~ .atoria-cost-display.atoria-secondary {
+  display: initial;
+  visibility: visible;
+}
+.system-atoria .atoria.dialog ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.system-atoria .atoria.dialog ul li {
+  margin: 0;
+}
+.system-atoria .atoria.dialog ul li:not(:first-child) {
+  margin-top: var(--atoria-rows-gap);
+}
+.system-atoria .atoria.dialog.atoria-skill-creation-dialog input {
+  --atoria-input-width: 100%;
+}
+.system-atoria .atoria.chat-message ul.used_supplementaries,
+.system-atoria .atoria.chat-message ul.used_features,
+.system-atoria .atoria.chat-message ul.used_actable_modifiers,
+.system-atoria .atoria.chat-message ul.saves_asked {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.system-atoria .atoria.chat-message ul.used_supplementaries li,
+.system-atoria .atoria.chat-message ul.used_features li,
+.system-atoria .atoria.chat-message ul.used_actable_modifiers li,
+.system-atoria .atoria.chat-message ul.saves_asked li {
+  margin: 0;
+}
+.system-atoria .atoria.chat-message .critial_success-title {
+  color: green;
+}
+.system-atoria .atoria.chat-message .success-title {
+  color: color-mix(in srgb, green 40%, var(--color-text-dark-primary));
+}
+.system-atoria .atoria.chat-message .failure-title {
+  color: color-mix(in srgb, red 40%, var(--color-text-dark-primary));
+}
+.system-atoria .atoria.chat-message .critial_failure-title {
+  color: red;
+}
+.system-atoria .atoria.chat-message .alteration-label {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+.system-atoria .atoria.chat-message hr {
+  height: 1px;
+  border-top: 1px solid black;
+  width: 100%;
+  margin: 2px;
+}
+.system-atoria .atoria.chat-message .message-content .inline-roll {
+  white-space: normal;
+  word-break: normal;
+  background: none;
+  border: none;
+}
+.system-atoria .atoria.chat-message ul.saves_asked {
+  /* display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center; */
+}
+.system-atoria .atoria.chat-message ul.saves_asked li {
+  padding: 0 0.5em;
+}
+.system-atoria .cost-tooltip {
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.system-atoria .cost-tooltip > label {
+  max-width: fit-content;
+  padding: 0 5px;
 }

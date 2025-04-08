@@ -1,0 +1,15 @@
+<!--
+limitation
+systemFields
+cssClasses
+-->
+<div class="atoria-time-limitation-display {{cssClasses}}">
+    {{#if (ne limitation.regain_type "permanent")}}
+    {{!-- <input type="text" inputmode="numeric" data-dtype="Number"  value="{{}}"
+        data-tooltip="{{localize systemFields.usage_left.label}}" disabled >
+    <input type="text" inputmode="numeric" data-dtype="Number"  value="{{}}"
+        data-tooltip="{{localize systemFields.usage_max.label}}" disabled > --}}
+    <label>{{limitation.usage_left}}/{{limitation.usage_max}}</label>
+    <img src="systems/atoria/imgs/regain-type-{{limitation.regain_type}}.svg" title="{{localize (lookup systemFields.regain_type.choices limitation.regain_type)}}"/>
+    {{/if}}
+</div>

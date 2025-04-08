@@ -1,0 +1,17 @@
+<div class="atoria-item-kit-parts grid-2col">
+
+    <label>{{localize systemFields.quantity.label}}</label>
+    {{ formInput systemFields.quantity value=item.system.quantity disabled=(not @root.editable)}}
+
+
+    <label>{{localize systemFields.has_usage_limit.label}}</label>
+    {{ formInput systemFields.has_usage_limit value=item.system.has_usage_limit disabled=(not @root.editable)}}
+
+    {{#if item.system.has_usage_limit}}
+    <label>{{localize systemFields.usage_left.label}}</label>
+    {{ formInput systemFields.usage_left value=item.system.usage_left disabled=(not @root.editable)}}
+    <label>{{localize systemFields.usage_max.label}}</label>
+    {{ formInput systemFields.usage_max value=item.system.usage_max disabled=(not @root.editable)}}
+    {{/if}}
+
+</div>

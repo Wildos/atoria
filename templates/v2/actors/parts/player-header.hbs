@@ -1,0 +1,126 @@
+<div class="atoria-player-header">
+
+    <div class="attribute-area flexcol">
+
+        <div class="atoria-time-phase-buttons">
+            <!--{{ formInput fields.name value=actor.name disabled=(not (and @root.isEditingMode @root.editable))}}-->
+            <button data-action="applyTimePhase" data-time-phase="combat"
+            data-tooltip="{{localize "ATORIA.Ruleset.Time_phase.Combat"}}">
+                <img src="systems/atoria/imgs/regain-type-combat.svg"/>
+            </button>
+            <button data-action="applyTimePhase" data-time-phase="rest"
+            data-tooltip="{{localize "ATORIA.Ruleset.Time_phase.Rest"}}">
+                <img src="systems/atoria/imgs/regain-type-rest.svg"/>
+            </button>
+            <button data-action="applyTimePhase" data-time-phase="sleep"
+            data-tooltip="{{localize "ATORIA.Ruleset.Time_phase.Sleep"}}">
+                <img src="systems/atoria/imgs/regain-type-sleep.svg"/>
+            </button>
+            <button data-action="applyTimePhase" data-time-phase="short-moon"
+            data-tooltip="{{localize "ATORIA.Ruleset.Time_phase.Short_moon"}}">
+                <img src="systems/atoria/imgs/regain-type-short-moon.svg"/>
+            </button>
+            <button data-action="applyTimePhase" data-time-phase="long-moon"
+            data-tooltip="{{localize "ATORIA.Ruleset.Time_phase.Long_moon"}}">
+                <img src="systems/atoria/imgs/regain-type-long-moon.svg"/>
+            </button>
+        </div>
+
+        <div class="flexrow">
+            <div class="flexcol">
+                {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-health" attribute_model=systemFields.health attribute=actor.system.health}}
+
+                <div class="atoria-attribute-display atoria-health">
+                    <label>{{localize systemFields.absorption.label}}</label>
+                    <input type="text" data-dtype="Number" name="system.absorption" value="{{actor.system.absorption}}"
+                    data-tooltip="{{systemFields.absorption.label}}" {{disabled (not editable)}}/>
+                </div>
+            </div>
+            <div class="flexcol atoria-healing-inactive">
+                <div class="flexrow colored">
+                    <label>{{localize systemFields.healing_inactive.label}}</label>
+                    <img class="resurrection" data-action="toggleAttribute" data-name="system.healing_inactive.resurrection"
+                    data-tooltip="{{localize systemFields.healing_inactive.fields.resurrection.label}}"
+                    src="systems/atoria/imgs/telefrag{{#if system.healing_inactive.resurrection}}-checked{{/if}}.svg" /><!--Res-->
+
+                    <img class="medical" data-action="toggleAttribute" data-name="system.healing_inactive.medical"
+                    data-tooltip="{{localize systemFields.healing_inactive.fields.medical.label}}"
+                    src="systems/atoria/imgs/medical-pack{{#if system.healing_inactive.medical}}-checked{{/if}}.svg" /><!--Medic-->
+                    <img class="herbs" data-action="toggleAttribute" data-name="system.healing_inactive.herbs"
+                    data-tooltip="{{localize systemFields.healing_inactive.fields.herbs.label}}"
+                    src="systems/atoria/imgs/herbs-bundle{{#if system.healing_inactive.herbs}}-checked{{/if}}.svg" /><!--Herbs-->
+                </div>
+                <div class="flexrow colored">
+                    <img class="amount" data-action="editHealingInactive" data-amount="1"
+                    src="systems/atoria/imgs/{{#if (gte 1 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 1)}}-checked{{/if}}.svg"
+                    /><!--Healing inactive control-->
+                    <img class="amount" data-action="editHealingInactive" data-amount="2"
+                    src="systems/atoria/imgs/{{#if (gte 2 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 2)}}-checked{{/if}}.svg"
+                    /><!--Healing inactive control-->
+                    <img class="amount" data-action="editHealingInactive" data-amount="3"
+                    src="systems/atoria/imgs/{{#if (gte 3 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 3)}}-checked{{/if}}.svg"
+                    /><!--Healing inactive control-->
+                    <img class="amount" data-action="editHealingInactive" data-amount="4"
+                    src="systems/atoria/imgs/{{#if (gte 4 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 4)}}-checked{{/if}}.svg"
+                    /><!--Healing inactive control-->
+                    <img class="amount" data-action="editHealingInactive" data-amount="5"
+                    src="systems/atoria/imgs/{{#if (gte 5 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 5)}}-checked{{/if}}.svg"
+                    /><!--Healing inactive control-->
+                    <img class="amount" data-action="editHealingInactive" data-amount="6"
+                    src="systems/atoria/imgs/{{#if (gte 6 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 6)}}-checked{{/if}}.svg"
+                    /><!--Healing inactive control-->
+                </div>
+            </div>
+        </div>
+        <div class="flexrow">
+            {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-mana" attribute_model=systemFields.mana attribute=actor.system.mana max=max_override.mana}}
+            {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-sanity" attribute_model=systemFields.sanity attribute=actor.system.sanity}}
+        </div>
+        <div class="flexrow">
+            {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-stamina" attribute_model=systemFields.stamina attribute=actor.system.stamina max=max_override.stamina}}
+            {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-endurance" attribute_model=systemFields.endurance attribute=actor.system.endurance}}
+        </div>
+        <div class="flexrow">
+            <div class="atoria-attribute-display atoria-luck">
+                <label>{{localize "ATORIA.Ruleset.Luck"}}</label>
+                <input type="text" data-dtype="Number" name="system.luck" value="{{actor.system.luck}}"
+                data-tooltip="{{localize "ATORIA.Ruleset.Luck"}}"/>
+            </div>
+            <div class="atoria-attribute-display atoria-initiative">
+                <label>{{localize systemFields.initiative.label}}</label>
+                <input type="text" data-dtype="String" name="system.initiative" value="{{actor.system.initiative}}"
+                data-tooltip="{{systemFields.initiative.label}}" {{disabled (or (not editable) (not isEditingMode))}}/>
+            </div>
+        </div>
+        <div class="atoria-armor-n-resistance">
+            {{>"atoria.v2.actors_partials.armor-display"
+                armor=actor.system.armor
+                model=system.armor_fields
+                data_path="system.armor"
+                readonly=true
+            }}
+            {{>"atoria.v2.actors_partials.resistance-display"
+                resistance=actor.system.resistance
+                model=system.resistance_fields
+                data_path="system.resistance"
+                readonly=true
+            }}
+        </div>
+    </div>
+
+    <div class="atoria-encumbrance-n-coins" >
+        {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-encumbrance two-rows"
+        attribute_model=systemFields.encumbrance attribute=actor.system.encumbrance}}
+        {{>"atoria.v2.actors_partials.coins-display" coins_model=systemFields.coins coins=actor.system.coins}}
+    </div>
+    <div class="atoria-perceptions-block">
+        {{>"atoria.v2.actors_partials.skill-cat-display"
+        skill_cat_skills=actor.system.perceptions
+        data_path="system.perceptions"
+        model=systemFields.perceptions
+        cssClass="perception-area"
+        }}
+    </div>
+
+    <img class="atoria-document-img" data-action="onEditImage" src="{{actor.img}}" data-tooltip="{{actor.name}}" alt="{{actor.name}}" data-edit="img">
+</div>

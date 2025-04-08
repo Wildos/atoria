@@ -1,0 +1,5 @@
+<section class='atoria tooltip flexcol'>
+    <h5>{{item.name}}{{>"atoria.v2.tooltips_partials.time-limitation-tooltip" limitation=item.system.limitation}}</h5>
+    {{>"atoria.v2.tooltips_partials.cost-tooltip" cost=item.system.cost systemFields=systemFields.cost.fields}}
+    <p>Description: {{item.system.description}}</p>
+</section>

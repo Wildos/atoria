@@ -1,0 +1,35 @@
+.atoria-simple-header {
+    display: grid;
+    grid-template-areas:
+    "img name"
+    "img desc";
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: min-content 1fr;
+
+    gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+
+    > .atoria-document-img {
+        --atoria-document-img-size: 12em;
+        grid-area: img;
+        margin: auto;
+    }
+    &.small-image > .atoria-document-img {
+        --atoria-document-img-size: 6em;
+    }
+    > input[name="name"] {
+        --atoria-input-width: 100%;
+        grid-area: name;
+        
+        text-align: left;
+    }
+    > .atoria-description {
+        grid-area: desc;
+
+        min-width: 15em;
+
+        label {
+            display:inline-block;
+            flex: 0 1 auto;
+        }
+    }
+}

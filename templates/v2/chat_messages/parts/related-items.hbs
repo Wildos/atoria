@@ -1,0 +1,9 @@
+{{#if (eq item_type "feature")}}
+    {{>"atoria.v2.chat_messages_partials.used-features" used_features=items}}
+{{/if}}
+{{#if (eq item_type "actable-modifier")}}
+    {{>"atoria.v2.chat_messages_partials.used-actable-modifiers" used_actable_modifiers=items}}
+{{/if}}
+{{#if (eq item_type "supplementary")}}
+    {{>"atoria.v2.chat_messages_partials.used-supplementaries" used_supplementaries=items}}
+{{/if}}

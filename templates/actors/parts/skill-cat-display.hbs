@@ -1,0 +1,16 @@
+{{#if (or @root.isEditingMode (getProperty @root.flags (concat "atoria." data_path)))}}
+<div class="skill-cat-display">
+    <h5>{{localize model.label}}
+    {{#if (and @root.editable @root.isEditingMode)}}
+        <input class="skill-shown-control" type="checkbox" data-dtype="Boolean" data-skill-path="{{data_path}}"
+        {{checked (getProperty @root.flags (concat "atoria." data_path))}}
+        {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+    {{/if}}</h5>
+    {{#each skill_cat_skills as |skill key|}}
+        {{>"atoria.actors_partials.skill-display"
+        skill=skill
+        data_path=(concat ../data_path "." key)
+        systemFields=../model.sub_element.fields}}
+    {{/each}}
+</div>
+{{/if}}

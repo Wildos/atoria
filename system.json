@@ -1,38 +1,62 @@
 {
-  "name": "atoria",
   "id": "atoria",
-  "title": "Atoria",
-  "description": "The Atoria 0.5 system for FoundryVTT",
-  "version": "0.2.6",
+  "title": "Atoria 0.5.1",
+  "description": "The Atoria 0.5.1 system for FoundryVTT!",
+  "authors": [
+    {
+      "name": "Wildos",
+      "discord": "wildos"
+    }
+  ],
   "url": "https://github.com/Wildos/atoria/",
   "manifest": "https://raw.githubusercontent.com/Wildos/atoria/main/system.json",
-  "download": "https://github.com/Wildos/atoria/releases/download/v0.2.6/atoria-0.2.6.zip",
-  "minimumCoreVersion": "11",
-  "compatibleCoreVersion": "11",
+  "download": "https://github.com/Wildos/atoria/releases/download/v0.3.0/atoria-0.3.0.zip",
+  "bugs": "",
+  "media": [],
+  "version": "0.3.0",
   "compatibility": {
-    "minimum": 11,
-    "verified": 11
+    "minimum": "12.331",
+    "verified": "12.331"
   },
-  "author": "Wildos",
-  "esmodules": ["atoria.mjs"],
+  "esmodules": ["module/atoria.mjs"],
   "styles": ["atoria.css"],
-  "scripts": [],
-  "packs": [],
   "languages": [
     {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    },
-    {
       "lang": "fr",
-      "name": "French",
+      "name": "Français",
       "path": "lang/fr.json"
     }
   ],
-  "gridDistance": 1,
-  "gridUnits": "m",
+  "documentTypes": {
+    "Actor": {
+      "player-character": {},
+      "non-player-character": {},
+      "hero": {},
+      "chest": {}
+    },
+    "Item": {
+      "feature": {},
+      "kit": {},
+      "armor": {},
+      "weapon": {},
+      "action": {},
+      "opportunity": {},
+      "spell": {},
+      "technique": {},
+      "incantatory-addition": {}
+    },
+    "ChatMessage": {
+      "interactable": {}
+    }
+  },
+  "packs": [],
+  "packFolders": [],
+  "socket": false,
+  "grid": {
+    "distance": 1,
+    "units": "m"
+  },
+  "initiative": "@initiative",
   "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "stamina",
-  "license": "LICENSE.txt"
+  "secondaryTokenAttribute": "stamina"
 }

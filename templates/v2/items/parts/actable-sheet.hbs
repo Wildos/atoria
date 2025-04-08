@@ -1,0 +1,75 @@
+<div class="atoria-item-actable-parts grid-2col">
+    <label>{{localize systemFields.duration.label}}</label>
+    {{ formInput systemFields.duration value=item.system.duration disabled=(not @root.editable)}}
+
+    <label>{{localize systemFields.require_verbal.label}}</label>
+    {{ formInput systemFields.require_verbal value=item.system.require_verbal disabled=(not @root.editable)}}
+
+    <label>{{localize systemFields.require_immobile.label}}</label>
+    {{ formInput systemFields.require_immobile value=item.system.require_immobile disabled=(not @root.editable)}}
+
+    <label>{{localize systemFields.somatic.label}}</label>
+    <select name="system.somatic">
+      {{selectOptions systemFields.somatic.choices selected=item.system.somatic localize=true}}
+    </select>
+
+    <label>{{localize systemFields.material.label}}</label>
+    {{ formInput systemFields.material value=item.system.material disabled=(not @root.editable)}}
+
+
+    <label>{{localize systemFields.target.label}}</label>
+    {{ formInput systemFields.target value=item.system.target disabled=(not @root.editable)}}
+    <label>{{localize systemFields.range.label}}</label>
+    {{ formInput systemFields.range value=item.system.range disabled=(not @root.editable)}}
+    <label>{{localize systemFields.area.label}}</label>
+    {{ formInput systemFields.area value=item.system.area disabled=(not @root.editable)}}
+
+    <label class="double-col-field">{{localize systemFields.effect.label}}</label>
+    <textarea class="atoria-resize-ta double-col-field" data-name="effect" data-dtype="String" name="system.effect" {{disabled (not editable)}}
+    >{{cleanLines item.system.effect}}</textarea>
+
+    <fieldset class="atoria-saves-area double-col-field sub-element-category">
+        <legend>{{localize systemFields.saves_asked.label}}
+            <a class="atoria-create-button" data-action="createSubItem" data-sub-element-path="saves_asked" data-tooltip="{{localize systemFields.saves_asked.label}}">
+                <i class="fas fa-plus"></i>
+            </a>
+        </legend>
+        <ul>
+        {{#each item.system.saves_asked as |save_data idx|}}
+            <li class="flexrow">
+                <select name="system.saves_asked.{{idx}}"
+                data-tooltip="{{localize ../systemFields.saves_asked.element.label}}">
+                    {{selectOptions ../associated_saves_skills selected=(lookup ../item.system.saves_asked idx) localize=true}}
+                </select>
+                <a class="atoria-delete-button" data-action="deleteSubItem" data-sub-element-path="saves_asked" data-sub-element-index="{{idx}}"
+                data-tooltip="{{localize 'ATORIA.Sheet.Actable.Saves_asked.Delete'}}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </li>
+        {{/each}}
+        </ul>
+    </fieldset>
+
+    {{#unless hide_actable_modifiers }}
+    <fieldset class="double-col-field">
+        <legend>{{localize systemFields.usable_actable_modifiers.label}}</legend>
+        {{#if item.actor}}
+            <ul class="actable-mod-list">
+                {{#each available_actable_modifiers as |actable_mod idx|}}
+                    <li class="flexrow">
+                        <h5>{{actable_mod.name}}</h5>
+                        <input class="actable-modifier-toggle" type="checkbox" data-dtype="Boolean"
+                        data-action="handleUsableActableModifier"
+                        data-actable-modifier-id="{{actable_mod._id}}"
+                        {{checked (includes ../item.system.usable_actable_modifiers actable_mod._id)}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers.element.label}}"/>
+                    </li>
+                {{/each}}
+            </ul>
+        {{else}}
+                <label class="atoria-error double-col-field">{{localize "ATORIA.Sheet.Actable.Require_actor"}}</label>
+        {{/if}}
+    </fieldset>
+    {{/unless}}
+
+</div>

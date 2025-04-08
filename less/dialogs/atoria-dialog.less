@@ -1,0 +1,44 @@
+.atoria.dialog  {
+
+    .atoria-cost-display.atoria-secondary {
+        display: none;
+        visibility: hidden;
+    }
+
+    > select:has( option:checked:not([value="main_skill_data"])) ~ .available-features ul[data-related-skill="main"] {
+        display: none;
+        visibility: hidden;
+    }
+    > select:has( option:checked:not([value="main_skill_data"])) ~ .atoria-cost-display.atoria-main {
+        display: none;
+        visibility: hidden;
+    }
+    > select:has( option:checked:not([value="secondary_skill_data"])) ~ .available-features ul[data-related-skill="secondary"] {
+        display: none;
+        visibility: hidden;
+    }
+    > select:has( option:checked[value="secondary_skill_data"] ) ~ .atoria-cost-display.atoria-secondary {
+        display: initial;
+        visibility: visible;
+    }
+
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            margin: 0;
+        }
+        li:not(:first-child) {
+            margin-top: var(--atoria-rows-gap);
+        }
+    }
+
+    &.atoria-skill-creation-dialog {
+        input {
+            --atoria-input-width: 100%;
+        }
+    }
+}

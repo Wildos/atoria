@@ -1,423 +1,1399 @@
-{ 
-  "TYPES.Actor.character": "Player Character",
-  "TYPES.Actor.characterPl": "Player Characters",
-  "TYPES.Actor.npc": "Non Player Character",
-  "TYPES.Actor.npcPl": "Non Player Characters",
-
-  "TYPES.Item.gear-consumable": "Consumable Object",
-  "TYPES.Item.gear-consumablePl": "Consumable Objects",
-  "TYPES.Item.gear-equipment": "Equipment Object",
-  "TYPES.Item.gear-equipmentPl": "Equipment Objects",
-  "TYPES.Item.gear-ingredient": "Ingredient/Material Object",
-  "TYPES.Item.gear-ingredientPl": "Ingredient/Material Objects",
-  "TYPES.Item.gear-weapon": "Weapon",
-  "TYPES.Item.gear-weaponPl": "Weapons",
-  "TYPES.Item.action": "Action",
-  "TYPES.Item.actionPl": "Actions",
-  "TYPES.Item.spell": "Spell",
-  "TYPES.Item.spellPl": "Spells",
-  "TYPES.Item.feature": "Feature",
-  "TYPES.Item.featurePl": "Features",
-  "TYPES.Item.skill": "Skill",
-  "TYPES.Item.skillPl": "Skills",
-  "TYPES.Item.action-modifier": "Technique/Addition",
-  "TYPES.Item.action-modifierPl": "Techniques/Additions",
-
-
-  "ATORIA.Type": "Type",
-  "ATORIA.Technique": "Technique",
-  "ATORIA.IncantatoryAddition": "Addition",
-
-  "ATORIA.UsableTechniques": "Usable Techniques",
-  "ATORIA.UsableIncantatoryAddition": "Usable Additions",
-  
-
-
-  "MIGRATION.Begin": "A migration of data has started to version {version}",
-  "MIGRATION.Complete": "A migration of data has completed to version {version}\nThere has been {numberOfFailure} failure during the migration",
-
-
-
-  "ATORIA.Yes": "Yes",
-  "ATORIA.No": "No",
-
-
-  "ATORIA.TitleDeletionDialog": "Deletion of {name}",
-  "ATORIA.ContentDeletionDialog": "Do you confirm the deletion of {name}",
-  "ATORIA.ConfirmDeletion": "Confirm deletion",
-  "ATORIA.CancelDeletion": "Cancel deletion",
-  
-
-  "ATORIA.SuppNaming": "Supp. {index}",
-
-
-  "ATORIA.SheetClassCharacter": "AtoriaCharacterSheet",
-  "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
-  "ATORIA.SheetClassGear": "AtoriaGearSheet",
-  "ATORIA.SheetClassAction": "AtoriaActionSheet",
-  "ATORIA.SheetClassActionModifier": "AtoriaActionModifierSheet",
-  "ATORIA.SheetClassSpell": "AtoriaSpellSheet",
-  "ATORIA.SheetClassFeature": "AtoriaFeatureSheet",
-  "ATORIA.SheetClassSkill": "AtoriaSkillSheet",
-
-
-  "ATORIA.Healing": "Healing",
-
-  "ATORIA.NewItem": "New Item",
-  "ATORIA.NewEffect": "New Effect",
-
-  "ATORIA.ActiveEffectOverrideWarning": "You are about to override data",
-
-
-  "ATORIA.BaseConfig": "Configuration of the actor",
-
-
-  "ATORIA.SL_Modifier": "SL modificator",
-
-  "ATORIA.Advantage": "Advantage",
-  "ATORIA.Normal": "Normal",
-  "ATORIA.Disadvantage": "Disadvantage",
-
-  "ATORIA.RollMode": "Roll visibility",
-
-  "ATORIA.CharacterPage": "Character",
-  "ATORIA.InventoryPage": "Inventory",
-  "ATORIA.SpellPage": "Spells",
-  "ATORIA.ActionModifierPage": "Techniques & Additions",
-
-
-  "ATORIA.PerceptionTitle": "Perception",
-  "ATORIA.Perception.Sight": "Sight",
-  "ATORIA.Perception.Taste": "Taste",
-  "ATORIA.Perception.Hearing": "Hearing",
-  "ATORIA.Perception.Smell": "Smell",
-  "ATORIA.Perception.Magice": "Magice",
-  "ATORIA.Perception.Instinct": "Instinct",
-
-  "ATORIA.Name": "Name",
-  "ATORIA.Health": "Health",
-  "ATORIA.HealthMax": "Health Max",
-  "ATORIA.Absorption": "Absorption",
-  "ATORIA.Stamina": "Stamina",
-  "ATORIA.StaminaMax": "Stamina Max",
-  "ATORIA.Mana": "Mana",
-  "ATORIA.ManaMax": "Mana Max",
-  "ATORIA.Sanity": "Sanity",
-  "ATORIA.SanityMax": "Sanity Max",
-  "ATORIA.Endurance": "Endurance",
-  "ATORIA.EnduranceMax": "Endurance Max",
-  "ATORIA.Encumbrance": "Encumbrance",
-  "ATORIA.EncumbranceMax": "Encumbrance Max",
-  "ATORIA.Armor": "Armor",
-  "ATORIA.Initiative": "Initiative",
-  "ATORIA.Movement": "Movement",
-
-  "ATORIA.Time": "Time",
-  "ATORIA.Restriction": "Restriction",
-
-  "ATORIA.Luck": "Luck",
-
-
-  "ATORIA.CombatTitle": "Combat",
-  "ATORIA.NPCFeatureTitle": "Features",
-  "ATORIA.CharacterFeatureTitle": "Features",
-  "ATORIA.NPCSkillTitle": "Skill",
-  "ATORIA.NPCKnowledgeTitle": "Knowledge",
-  "ATORIA.CharacterSkillTitle": "Skills",
-  "ATORIA.EffectTitle": "Effects",
-  "ATORIA.CharacterKnowledgeTitle": "Knowledge",
-  "ATORIA.CharacterMagicTitle": "Magic",
-
-
-  "ATORIA.Agility": "Agility",
-  "ATORIA.Balance": "Balance",
-  "ATORIA.Dexterity": "Dexterity",
-  "ATORIA.Analyse": "Analyse",
-  "ATORIA.Insight": "Insight",
-  "ATORIA.Identification": "Identification",
-  "ATORIA.Investigation": "Investigation",
-  "ATORIA.Athletic": "Athletic",
-  "ATORIA.Hiking": "Hiking",
-  "ATORIA.Running": "Running",
-  "ATORIA.Jump": "Jump",
-  "ATORIA.Charisma": "Charisma",
-  "ATORIA.Presence": "Presence",
-  "ATORIA.Seduction": "Seduction",
-  "ATORIA.Slyness": "Slyness",
-  "ATORIA.Silence": "Silence",
-  "ATORIA.Stealth": "Stealth",
-  "ATORIA.Concealment": "Concealment",
-  "ATORIA.Eloquence": "Eloquence",
-  "ATORIA.Persuasion": "Persuasion",
-  "ATORIA.Calming": "Calming",
-  "ATORIA.Provocation": "Provocation",
-  "ATORIA.Climbing": "Climbing",
-  "ATORIA.Scale": "Scale",
-  "ATORIA.Fall": "Fall",
-  "ATORIA.Spirit": "Spirit",
-  "ATORIA.Will": "Will",
-  "ATORIA.Guarding": "Guarding",
-  "ATORIA.Memory": "Memory",
-  "ATORIA.Intimidation": "Intimidation",
-  "ATORIA.Fear": "Fear",
-  "ATORIA.Authority": "Authority",
-  "ATORIA.Swiming": "Swiming",
-  "ATORIA.Ease": "Ease",
-  "ATORIA.Breath-Holding": "Breath-Holding",
-  "ATORIA.Negotiation": "Negotiation",
-  "ATORIA.Bargaining": "Bargaining",
-  "ATORIA.Reflex": "Reflex",
-  "ATORIA.Evasion": "Evasion",
-  "ATORIA.Opportuneness": "Opportuneness",
-  "ATORIA.Parade": "Parade",
-  "ATORIA.Sturdiness": "Sturdiness",
-  "ATORIA.Force": "Force",
-  "ATORIA.Tenacity": "Tenacity",
-  "ATORIA.Fortitude": "Fortitude",
-  "ATORIA.Trickery": "Trickery",
-  "ATORIA.Acting": "Acting",
-  "ATORIA.Lying": "Lying",
-
-
-
-  "ATORIA.Combative": "Combative",
-  "ATORIA.Brawl": "Brawl",
-  "ATORIA.Blade": "Blade",
-  "ATORIA.Polearm": "Polearm",
-  "ATORIA.Haft-slashing-piercing": "Haft-slashing",
-  "ATORIA.Haft-bludgeonning": "Haft-bludgeonning-piercing",
-  "ATORIA.Shield": "Shield",
-  "ATORIA.Shooting": "Shooting",
-  "ATORIA.Throw": "Throw",
-  "ATORIA.Focus": "Focus",
-  "ATORIA.Instrument": "Instrument",
-
-
-
-  "ATORIA.Artistic": "Artistic",
-  "ATORIA.Craftmanship": "Craftmanship",
-  "ATORIA.Erudition": "Erudition",
-  "ATORIA.Utilitarian": "Utilitarian",
-
-  "ATORIA.Alchemy": "Alchemy",
-  "ATORIA.Jewellery": "Jewellery",
-  "ATORIA.Sewing": "Sewing",
-  "ATORIA.Cabinet-making": "Cabinet-making",
-  "ATORIA.Forge": "Forge",
-  "ATORIA.Engineering": "Engineering",
-  "ATORIA.Leatherworking": "Leatherworking",
-  "ATORIA.Song": "Song",
-  "ATORIA.Dance": "Dance",
-  "ATORIA.Graphic": "Graphic",
-  "ATORIA.Music": "Music",
-  "ATORIA.Sculpture": "Sculpture",
-  "ATORIA.Civilisation": "Civilisation",
-  "ATORIA.Language": "Language",
-  "ATORIA.Medecine": "Medecine",
-  "ATORIA.Monstrology": "Monstrology",
-  "ATORIA.Science": "Science",
-  "ATORIA.Symbolism": "Symbolism",
-  "ATORIA.Zoology": "Zoology",
-  "ATORIA.Farming": "Farming",
-  "ATORIA.Dressage": "Dressage",
-  "ATORIA.Nature": "Nature",
-  "ATORIA.Mining": "Mining",
-  "ATORIA.Fishing": "Fishing",
-  "ATORIA.Hunting": "Hunting",
-  "ATORIA.Construction": "Construction",
-  "ATORIA.Cuisine": "Cuisine",
-  "ATORIA.Game": "Game",
-  "ATORIA.Strategy": "Strategy",
-  "ATORIA.Transport": "Transport",
-  "ATORIA.Theft": "Theft",
-  "ATORIA.Runic": "Runic",
-
-  "ATORIA.Mental": "Mental",
-  "ATORIA.Holy": "Holy",
-  "ATORIA.Fire": "Fire",
-  "ATORIA.Water": "Water",
-  "ATORIA.Air": "Air",
-  "ATORIA.Earth": "Earth",
-  "ATORIA.Blood": "Blood",
-  "ATORIA.Occult": "Occult",
-  "ATORIA.Druidic": "Druidic",
-  "ATORIA.Invoker": "Invoker",
-
-
-  "ATORIA.CoinCopper": "CP",
-  "ATORIA.CoinSilver": "SP",
-  "ATORIA.CoinElectrum": "EP",
-  "ATORIA.CoinGold": "GP",
-
-  "ATORIA.InventoryArmorTitle": "Armor",
-  "ATORIA.InventoryGearWeaponTitle": "Weapons",
-  "ATORIA.InventoryGearTitle": "Bag",
-  "ATORIA.InventoryGearConsumableTitle": "Consumables",
-  "ATORIA.InventoryGearEquipmentTitle": "Equipments",
-  "ATORIA.InventoryGearIngredientMaterialTitle": "Materials & Ingredients",
-  
-  "ATORIA.NameTitle": "Name",
-  "ATORIA.ArmorQuantityTitle": "Qty.",
-  "ATORIA.ArmorEncumbranceTitle": "Encmb.",
-  "ATORIA.ArmorEffectTitle": "Effect",
-
-  "ATORIA.ArmorHead": "Head",
-  "ATORIA.ArmorTorso": "Torso",
-  "ATORIA.ArmorShoulders": "Should.",
-  "ATORIA.ArmorArms": "Arms",
-  "ATORIA.ArmorHands": "Hands",
-  "ATORIA.ArmorWaist": "Waist",
-  "ATORIA.ArmorLegs": "Legs",
-  "ATORIA.ArmorFeet": "Feet",
-  "ATORIA.ArmorCollar": "Collar",
-  "ATORIA.ArmorRing": "Ring",
-
-
-
-  "ATORIA.SuccessValue": "Success Value",
-  "ATORIA.CriticalModifier": "Critical Modifier",
-  "ATORIA.FumbleModifier": "Fumble Modifier",
-
-  "ATORIA.ActionNameTitle": "Name",
-  "ATORIA.ActionEffectRollTitle": "Effect formula",
-  "ATORIA.ActionEffectTitle" : "Effect",
-  "ATORIA.ActionDescriptionTitle": "Description",
-
-  "ATORIA.FeatureNameTitle": "Name",
-  "ATORIA.FeatureEffectTitle": "Effect",
-  "ATORIA.FeatureDescriptionTitle": "Description",
-  "ATORIA.FeatureColorTitle": "Color",
-
-  "ATORIA.SkillNameTitle": "Name",
-
-  "ATORIA.EffectRoll": "Effect roll",
-
-  "ATORIA.ItemNameTitle": "Name",
-  "ATORIA.ItemQuantityTitle": "Quantity",
-  "ATORIA.ItemEncumbranceTitle": "Encumbrance",
-  "ATORIA.ItemDescriptionTitle": "Description",
-
-
-  "ATORIA.SpellTitle": "Spell list",
-  "ATORIA.SpellDetailTitle": "Spells details",
-
-  "ATORIA.SpellNameTitle": "Name", 
-  "ATORIA.SpellSuccessValueTitle": "Success", 
-  "ATORIA.SpellCriticalValueTitle": "Crit.", 
-  "ATORIA.SpellFumbleValueTitle": "Fmbl.", 
-  "ATORIA.SpellCostTitle": "Cost", 
-  "ATORIA.SpellTimeTitle": "Time", 
-  "ATORIA.SpellTimePreparationTitle": "Preparation", 
-  "ATORIA.SpellTimeDurationTitle": "Duration", 
-  "ATORIA.SpellTimeModifierTitle": "C/E", 
-  "ATORIA.SpellComponentsTitle": "Components", 
-  "ATORIA.SpellComponentsVerbalTitle": "Verbal", 
-  "ATORIA.SpellComponentsSomaticTitle": "Somatic", 
-  "ATORIA.SpellComponentsMaterialTitle": "Material", 
-  "ATORIA.SpellTargetingTitle": "Targeting", 
-  "ATORIA.SpellTargetingTargetTitle": "Target", 
-  "ATORIA.SpellTargetingRangeTitle": "Range", 
-  "ATORIA.SpellTargetingAreaTitle": "Area", 
-  "ATORIA.SpellEffectTitle": "Effect",
-  "ATORIA.SpellCriticalEffectTitle": "Critical Bonus Effect",
-  "ATORIA.SpellSuppTitle": "Supp",
-
-  "ATORIA.Offense": "Offense",
-  "ATORIA.Defense": "Defense",
-
-
-  "ATORIA.Techniques": "Techniques",
-  "ATORIA.IncantatoryAdditions": "Additions",
-
-
-  "ATORIA.RollSL": "SL",
-  "ATORIA.RollResult": "Result",
-  "ATORIA.RollMS": "MS",
-
-
-  "MACRO.AtrMissingTargetWarn": "Your controlled actor '{actor}' does not have an {type} with name '{name}'.",
-  "MACRO.AtrMultipleTargetsWarn": "Your controlled actor '{actor}' has more than one {type} with name '{name}'. The first match will be chosen.",
-  "MACRO.AtrNoActorSelected": "No selected or assigned actor could be found to target with macro.",
-  "MACRO.AtrUnownedWarn": "You can only create macro buttons for owned Items",
-
-
-  "ATORIA.Concentration": "Concentration",
-  "ATORIA.Preparing": "Preparing",
-  "ATORIA.Evocation": "Evocation",
-  "ATORIA.Channelling": "Channelling",
-  "ATORIA.Bleeding": "Bleeding",
-  "ATORIA.Abused": "Abused",
-  "ATORIA.Abused+": "Abused+",
-  "ATORIA.Prone": "Prone",
-  "ATORIA.Burning": "Burning",
-  "ATORIA.Burning+": "Burning+",
-  "ATORIA.Moist": "Moist",
-  "ATORIA.Frostbite": "Frostbite",
-  "ATORIA.Unconscious": "Unconscious",
-  "ATORIA.Dead": "Dead",
-  "ATORIA.Stunned": "Stunned",
-  "ATORIA.Banished": "Banished",
-  "ATORIA.Afraid": "Afraid",
-  "ATORIA.Panic": "Panic",
-  "ATORIA.Terrified": "Terrified",
-  "ATORIA.Dazed": "Dazed",
-  "ATORIA.Seduced": "Seduced",
-  "ATORIA.Charmed": "Charmed",
-  "ATORIA.Captivated": "Captivated",
-  "ATORIA.Control": "Control",
-  "ATORIA.Provoked": "Provoked",
-  "ATORIA.Provoked+": "Provoked+",
-  "ATORIA.Enraged": "Enraged",
-  "ATORIA.Radiate": "Radiate",
-  "ATORIA.Conductive": "Conductive",
-  "ATORIA.Shocked": "Shocked",
-  "ATORIA.Numb": "Numb",
-  "ATORIA.Numb+": "Numb+",
-  "ATORIA.Hungry": "Hungry",
-  "ATORIA.Dehydrated": "Dehydrated",
-  "ATORIA.Drunk": "Drunk",
-  "ATORIA.Hangover": "Hangover",
-  "ATORIA.Tired": "Tired",
-  "ATORIA.Rested": "Rested",
-  "ATORIA.Incurable": "Incurable",
-  "ATORIA.Incurable+": "Incurable+",
-  "ATORIA.Blindness": "Blindness",
-  "ATORIA.Deaf": "Deaf",
-  "ATORIA.Silenced": "Silenced",
-  "ATORIA.Invisible": "Invisible",
-  "ATORIA.Slowed": "Slowed",
-  "ATORIA.Immobilised": "Immobilised",
-  "ATORIA.Disability": "Disability",
-
-
-
-  "ATORIA.Permanent" : "Permanent",
-  "ATORIA.Combat": "Combat",
-  "ATORIA.Rest": "Rest",
-  "ATORIA.Sleep": "Sleep",
-  "ATORIA.ShortMoon": "Short moon",
-  "ATORIA.LongMoon": "Long moon",
-
-  "ATORIA.TIME_PHASE_PASSED": "Time phase {time_phase} applied.",
-
-  "ATORIA.FeatureRegained": "{name} regained {amount} use(s)",
-  "ATORIA.MedicalHealingRegained": "Medecal inactive was lost",
-  "ATORIA.HerbsHealingRegained": "Herbs inactive was lost",
-  "ATORIA.HealthRegainRegained": "Health inactive regained {amount} use(s)",
-  "ATORIA.EnduranceRegained": "Endurance inactive was lost",
-  "ATORIA.SanityRegained": "Sanity inactive was lost",
-  "ATORIA.ResurectionRegained": "Resurection inactive was lost" ,
-
-  "ATORIA.ConfirmTitle": "Confirmation needed",
-  "ATORIA.ApplyRegainPhase": "Apply phase: {subject}",
-
-  "ATORIA.Confirm": "Confirm",
-  "ATORIA.Cancel": "Cancel",
-
-  "ATORIA.FeatureCombat": "Combat",
-  "ATORIA.FeatureSkill": "Skill",
-  "ATORIA.FeatureMagic": "Magic",
-  "ATORIA.FeatureKnowledge": "Knowledge",
-  "ATORIA.FeatureOther": "Other"
-
+{
+  "ATORIA": {
+    "Settings": {
+      "DisplayPlayerSheetHorizontally": "Force horizontally on player sheet",
+      "DisplayPlayerSheetHorizontallyHint": "Make the skill area horizontally"
+    },
+    "Error": {
+      "Require_selected_actor": "This action require a selected actor"
+    },
+    "Model": {
+      "New_name": "New Name",
+      "Invalid_name": "Invalid name",
+      "Description": "Description",
+      "Quantity": "Quantity",
+      "Effect": "Effect",
+      "Additional_css_class": "Additional CSS class(es)",
+      "Color": {
+        "Label": "Color",
+        "Use_color": "Use color"
+      },
+      "Skill_alteration": {
+        "Label": "Skill alteration",
+        "Has_skill_alteration": "Has skill alteration",
+        "Skill_associated": "Skill associated",
+        "Type": "Alteration type",
+        "One_degree_of_success_gain": "+1 DoS",
+        "One_degree_of_success_loss": "-1 DoS",
+        "Advantage": "Advantage",
+        "Disadvantage": "Disadvantage",
+        "Hand_handled": "Hand-handled"
+      },
+      "Health": {
+        "Value": "Health value",
+        "Max": "Health max"
+      },
+      "Stamina": {
+        "Value": "Stamina value",
+        "Max": "Stamina max"
+      },
+      "Mana": {
+        "Value": "Mana value",
+        "Max": "Mana max"
+      },
+      "Sanity": {
+        "Value": "Sanity value",
+        "Max": "Sanity max",
+        "Regain_inactive": "Sanity regain inactive"
+      },
+      "Endurance": {
+        "Value": "Endurance value",
+        "Max": "Endurance max",
+        "Regain_inactive": "Endurance regain inactive"
+      },
+      "Encumbrance": {
+        "Value": "Encumbrance value",
+        "Max": "Encumbrance max"
+      },
+      "Offense": {
+        "Amount": "Offense amount",
+        "Description": "Offense description"
+      },
+      "Defense": {
+        "Amount": "Defense amount",
+        "Description": "Defense description"
+      },
+      "Healing_inactive": "Healing",
+      "Coins": "Coins",
+
+      "Unit_type": "Unit type",
+      "Language": "Language",
+      "Favorite_god": "Favorite god",
+
+      "Ration": "Ration",
+
+      "Perception": "Perception",
+      "Skills": "Skills",
+      "Knowledges": "Knowledges",
+      "Skill": {
+        "Label": "Skill",
+        "Success": "Success",
+        "Modifier": {
+          "Success": "Success modifier",
+          "Critical_success": "Critical success modifier",
+          "Critical_fumble": "Critical fumble modifier"
+        }
+      },
+      "Time_phase_limitation": {
+        "Label": "Time phase limitation",
+        "Regain_type": "Regain type",
+        "Usage_left": "Usage left",
+        "Usage_max": "Usage max"
+      },
+      "Cost": {
+        "Label": "Cost",
+        "Time": {
+          "Label": "Time",
+          "Main_amount": "Main amount",
+          "Main_type": "Main type"
+        }
+      },
+      "Roll_field": {
+        "Label": "Roll field",
+        "Name": "Roll name",
+        "Formula": "Roll Formula",
+        "Types": "Roll types",
+        "Table": "Roll table"
+      },
+      "Usage_limitation": {
+        "Has_usage_limit": "Has usage limit",
+        "Usage_left": "Usage left",
+        "Usage_max": "Usage max"
+      },
+      "Weapon": {
+        "Associated_skill": "Associated skill",
+        "Damage_formula": "Damage formula",
+        "Damage_name": "Damage",
+        "Is_focuser": "Is focuser",
+        "Focuser_damage_formula": "Focuser damage formula",
+        "Focuser_damage_name": "Focuser Damage",
+        "Modificators": "Modificators"
+      },
+      "Actable": {
+        "Usable_actable_modifiers": "Usable actable modifiers",
+        "Actable_modifiers": "Actable modifiers",
+        "Actable_modifiers_types": "Actable modifiers types",
+        "Rolls_asked": "Rolls asked",
+        "Roll_asked": "Roll asked"
+      },
+      "Action": {
+        "Associated_skill": "Associated skill",
+        "Cost_list": "Available cost"
+      },
+      "Spell": {
+        "Success": "Success",
+        "Critical_success": "Critical success",
+        "Critical_fumble": "Critical fumble",
+        "Critical_effect": "Critical effect",
+        "Markers": "Markers",
+        "Supplementaries_list": "Supplementaries",
+        "Supplementaries": {
+          "Label": "Supplementary",
+          "Cost_list": "Available cost",
+          "Cumul_max": "Cumul max",
+          "Description": "Effect"
+        }
+      },
+      "Magic": {
+        "Save_asked": "Save asked",
+        "Saves_asked": "Saves asked",
+        "Save_data": {
+          "Label": "Save data",
+          "Skill_path": "Skill path"
+        }
+      },
+      "Chat_message": {
+        "Related_item": "Related item",
+        "Related_item_data": {
+          "Label": "Related item data",
+          "Type": "Type",
+          "Items": "items",
+          "Item": "item",
+          "Items_id": "items' id",
+          "Item_id": "item's id"
+        }
+      },
+      "Actable_modifier": "Actable modifier"
+    },
+    "Sheet": {
+      "New_name": "New {type}",
+      "Disabled_by_active_effect": "Input disabled by an active effect.<br>{tooltip}",
+      "Item": {
+        "Create": "Create {type}",
+        "Edit": "Edit",
+        "Delete": "Delete"
+      },
+      "Effect": {
+        "Title": "Effect",
+        "Create": "Create effect",
+        "Edit": "Edit",
+        "Delete": "Delete"
+      },
+      "Skill": {
+        "Create": "Create skill",
+        "Delete": "Delete"
+      },
+      "Action": {
+        "Title": "Action"
+      },
+      "Attack": {
+        "Title": "Attack"
+      },
+      "Spell": {
+        "Title": "Spell"
+      },
+      "Opportunity": {
+        "Title": "Opportunity"
+      },
+      "Limitation": "Limitation",
+      "Feature": {
+        "Title": "Feature",
+        "Require_actor": "Configuration of this part require that an actor own the feature"
+      },
+      "Weapon": {
+        "Require_actor": "Configuration of this part require that an actor own the weapon"
+      },
+      "Actable": {
+        "Cost_list": {
+          "Delete": "Delete cost"
+        },
+        "Saves_asked": {
+          "Delete": "Delete cost"
+        },
+        "Require_actor": "Configuration of this part require that an actor own the action/opportunity/spell"
+      },
+      "Actable_modifier": {
+        "Title": "Actable modifiers"
+      },
+      "Associated_skill_blank": "No associated skill",
+      "Inventory": {
+        "Title": "Inventory",
+        "Worn": "Wear/Dispose"
+      },
+      "Player": {
+        "Pages": {
+          "Character": "Character Page",
+          "Inventory": "Inventory Page",
+          "Action": "Action Page"
+        },
+        "Time_phase_buttons": "Time phase buttons",
+        "Features": {
+          "Combat": {
+            "Label": "Combat",
+            "Combatives": "Combatives",
+            "Armors": "Armors",
+            "Amplificators": "Amplificators",
+            "Other": "Other"
+          },
+          "Skills": {
+            "Label": "Skills"
+          },
+          "Magic": {
+            "Label": "Magic"
+          },
+          "Knowledges": {
+            "Label": "Knowledges"
+          },
+          "Other": {
+            "Label": "Other"
+          }
+        },
+        "Inventory": {
+          "Title": "Inventory",
+          "Equipement": {
+            "Label": "Equipement",
+            "Armor": "Armor",
+            "Weapon": "Weapon"
+          },
+          "Combat_gears": "Combat gears",
+          "Consummables": "Consummables",
+          "Materials_ingredients": "Materials & ingredients",
+          "Gear": "Gear",
+          "Other": "Other"
+        },
+        "Action_area": {
+          "Title": "Actions & Such",
+          "Action": {
+            "Title": "Action"
+          },
+          "Spell": {
+            "Title": "Spell"
+          },
+          "Opportunity": {
+            "Title": "Opportunity"
+          },
+          "Actable_modifier": {
+            "Title": "Actable modifiers",
+            "Technique": "Technique",
+            "Incantatory_addition": "Incantatory addition"
+          }
+        }
+      }
+    },
+    "Chat_message": {
+      "Changelog": {
+        "Time_phase_passed": "Application of the {time_phase} phase",
+        "Regain": "Regain of {type}: {previous} -> {new}"
+      },
+      "Spell": {
+        "Failed": "Spell has failed",
+        "Supplementary_name": "Supp. {key}",
+        "Used_supplementaries": "Supplementaries used",
+        "No_used_supplementaries": "No used supplementaries."
+      },
+      "Dice": {
+        "Disadvantage": "Disadvantage",
+        "Disadvantages": "{amount} disadvantages",
+        "Advantage": "Advantage",
+        "Advantages": "{amount} advantages",
+        "Failure": "Failure",
+        "Critical_failure": "Critical_failure",
+        "Success": "Success",
+        "Critical_success": "Critical_success",
+        "Dos": "DoS"
+      },
+      "Skill": {
+        "Used_features": "Features used",
+        "No_used_features": "No used features."
+      },
+      "Actable": {
+        "Used_actable_modifiers": "Actable modifiers used",
+        "No_used_actable_modifiers": "No used actable modifiers",
+        "Saves_asked": "Save(s) asked"
+      }
+    },
+    "Dialog": {
+      "Selected_element": "Selected element",
+      "Confirm": "Confirm",
+      "Cancel": "Cancel",
+      "Launch": "Launch",
+      "Delete": {
+        "Title": "Deletion of {element_name}",
+        "Content": "Do you confirm the deletion of: '{element_name}'?"
+      },
+      "Roll": {
+        "Advantage_amount": "Advantage amount",
+        "Disadvantage_amount": "Disadvantage amount",
+        "Luck_applied": "Luck applied",
+        "DoS_mod": "DoS mod",
+        "Roll_visibility": {
+          "Label": "Roll visibility",
+          "Self": "Self",
+          "Public": "Public",
+          "Private": "Private",
+          "Blind": "Blind"
+        }
+      },
+      "Item_roll": {
+        "Title": "Roll of {element_name}",
+        "Available_supplementaries": "Supplementaries",
+        "Spell_supplementary": "Spell supp. {idx}",
+        "Available_actable_modifiers": "Technique(s) & Incantatory addition(s)"
+      },
+      "Skill_roll": {
+        "Title": "Roll for {actor_name}",
+        "Associated_features": "Associated feature(s)"
+      },
+      "Skill_creation": {
+        "Title": "Create skill in {skill_cat}",
+        "Name_selection": "Name:"
+      }
+    },
+    "Ruleset": {
+      "Health": "Health",
+      "Absorption": "Absorption",
+      "Stamina": "Stamina",
+      "Mana": "Mana",
+      "Sanity": "Sanity",
+      "Endurance": "Endurance",
+      "Initiative": "Initiative",
+      "Movement": "Movement",
+      "Offense": "Offense",
+      "Defense": "Defense",
+      "Healing_inactive": {
+        "Amount": "Healing inactive amount",
+        "Herbs": "Healing inactive herbs",
+        "Medical": "Healing inactive medical",
+        "Resurrection": "Healing inactive resurrection"
+      },
+      "Encumbrance": "Encumbrance",
+      "Luck": "Luck",
+      "Coins": {
+        "Copper": "Copper",
+        "Silver": "Silver",
+        "Electrum": "Electrum",
+        "Gold": "Gold"
+      },
+      "Armor": {
+        "Main": "Armor",
+        "Bludgeoning": "Armor Bludgeoning",
+        "Piercing": "Armor Piercing",
+        "Slashing": "Armor Slashing",
+        "Position": {
+          "Label": "Armor's position",
+          "Head": "Head",
+          "Neck": "Neck",
+          "Torso": "Torso",
+          "Shoulders": "Shoulders",
+          "Arms": "Arms",
+          "Hands": "Hands",
+          "Waist": "Waist",
+          "Legs": "Legs",
+          "Feet": "Feet",
+          "Rings": "Rings"
+        },
+        "Type": {
+          "Label": "Armor's type",
+          "Without": "Without",
+          "Light": "Light",
+          "Medium": "Medium",
+          "Heavy": "Heavy"
+        }
+      },
+      "Resistance": {
+        "Main": "Resistance",
+        "Acid": "Resistance Acid",
+        "Arcanic": "Resistance Arcanic",
+        "Fire": "Resistance Fire",
+        "Lightning": "Resistance Lightning",
+        "Cold": "Resistance Cold",
+        "Necrotic": "Resistance Necrotic",
+        "Poison": "Resistance Poison",
+        "Psychic": "Resistance Psychic",
+        "Radiant": "Resistance Radiant"
+      },
+      "Damage_type": {
+        "Bludgeoning": "Bludgeoning",
+        "Piercing": "Piercing",
+        "Slashing": "Slashing",
+        "Acid": "Acid",
+        "Arcanic": "Arcanic",
+        "Fire": "Fire",
+        "Lightning": "Lightning",
+        "Cold": "Cold",
+        "Necrotic": "Necrotic",
+        "Poison": "Poison",
+        "Psychic": "Psychic",
+        "Radiant": "Radiant",
+        "Health": "Santé",
+        "Absorption": "Absorption",
+        "Stamina": "Vigueur",
+        "Mana": "Mana",
+        "Sanity": "Sanité",
+        "Endurance": "Endurance",
+        "Table": "Table"
+      },
+      "Perception": "Perception",
+      "Perceptions": {
+        "Label": "Perceptions",
+        "Sight": "Sight",
+        "Earing": "Earing",
+        "Smell": "Smell",
+        "Taste": "Taste",
+        "Instinct": "Instinct",
+        "Magice": "Magice"
+      },
+      "Skills": {
+        "Label": "Skills",
+        "Physical": {
+          "Label": "Physical",
+          "Agility": {
+            "Label": "Agility",
+            "Balance": {
+              "Label": "Balance"
+            },
+            "Dexterity": {
+              "Label": "Dexterity"
+            }
+          },
+          "Athletic": {
+            "Label": "Athletic",
+            "Hiking": {
+              "Label": "Hiking"
+            },
+            "Running": {
+              "Label": "Running"
+            },
+            "Jump": {
+              "Label": "Jump"
+            }
+          },
+          "Slyness": {
+            "Label": "Slyness",
+            "Silence": {
+              "Label": "Silence"
+            },
+            "Stealth": {
+              "Label": "Stealth"
+            },
+            "Concealment": {
+              "Label": "Concealment"
+            }
+          },
+          "Climbing": {
+            "Label": "Climbing",
+            "Scale": {
+              "Label": "Scale"
+            },
+            "Fall": {
+              "Label": "Fall"
+            }
+          },
+          "Swiming": {
+            "Label": "Swiming",
+            "Ease": {
+              "Label": "Ease"
+            },
+            "Breath-holding": {
+              "Label": "Breath-holding"
+            }
+          },
+          "Sturdiness": {
+            "Label": "Sturdiness",
+            "Force": {
+              "Label": "Force"
+            },
+            "Tenacity": {
+              "Label": "Tenacity"
+            },
+            "Fortitude": {
+              "Label": "Fortitude"
+            }
+          }
+        },
+        "Social": {
+          "Label": "Social",
+          "Analyse": {
+            "Label": "Analyse",
+            "Insight": {
+              "Label": "Insight"
+            },
+            "Identification": {
+              "Label": "Identification"
+            },
+            "Investigation": {
+              "Label": "Investigation"
+            }
+          },
+          "Charisma": {
+            "Label": "Charisma",
+            "Presence": {
+              "Label": "Presence"
+            },
+            "Seduction": {
+              "Label": "Seduction"
+            }
+          },
+          "Eloquence": {
+            "Label": "Eloquence",
+            "Persuasion": {
+              "Label": "Persuasion"
+            },
+            "Calming": {
+              "Label": "Calming"
+            },
+            "Negotiation": {
+              "Label": "Negotiation"
+            }
+          },
+          "Spirit": {
+            "Label": "Spirit",
+            "Will": {
+              "Label": "Will"
+            },
+            "Guarding": {
+              "Label": "Guarding"
+            }
+          },
+          "Intimidation": {
+            "Label": "Intimidation",
+            "Fear": {
+              "Label": "Fear"
+            },
+            "Authority": {
+              "Label": "Authority"
+            }
+          },
+          "Trickery": {
+            "Label": "Trickery",
+            "Acting": {
+              "Label": "Acting"
+            },
+            "Lying": {
+              "Label": "Lying"
+            },
+            "Provocation": {
+              "Label": "Provocation"
+            }
+          }
+        },
+        "Combative": {
+          "Label": "Combative",
+          "Reflex": {
+            "Label": "Reflex",
+            "Dodge": {
+              "Label": "Dodge"
+            },
+            "Parry": {
+              "Label": "Parry"
+            },
+            "Opportuneness": {
+              "Label": "Opportuneness"
+            }
+          },
+          "Weapon": {
+            "Label": "Weapon",
+            "Brawl": {
+              "Label": "Brawl"
+            },
+            "Blade": {
+              "Label": "Blade"
+            },
+            "Polearm": {
+              "Label": "Polearm"
+            },
+            "Haft-slashing": {
+              "Label": "Haft-slashing"
+            },
+            "Haft-bludgeonning-piercing": {
+              "Label": "Haft-bludgeonning-piercing"
+            },
+            "Shield": {
+              "Label": "Shield"
+            },
+            "Shooting": {
+              "Label": "Shooting"
+            },
+            "Throw": {
+              "Label": "Throw"
+            },
+            "Focuser": {
+              "Label": "Focuser"
+            },
+            "Instrument": {
+              "Label": "Instrument"
+            }
+          }
+        }
+      },
+      "Knowledges": {
+        "Label": "Knowledges",
+        "Craftmanship": {
+          "Label": "Craftmanship",
+          "Jewellery": {
+            "Label": "Jewellery",
+            "Finery": {
+              "Label": "Finery"
+            },
+            "Seaming": {
+              "Label": "Seaming"
+            }
+          },
+          "Sewing": {
+            "Label": "Sewing",
+            "Fashion": {
+              "Label": "Fashion"
+            },
+            "Domestic": {
+              "Label": "Domestic"
+            }
+          },
+          "Cabinet-making": {
+            "Label": "Cabinet-making",
+            "Gear": {
+              "Label": "Gear"
+            },
+            "Woodworking": {
+              "Label": "Woodworking"
+            }
+          },
+          "Leatherworking": {
+            "Label": "Leatherworking",
+            "Tanning": {
+              "Label": "Tanning"
+            },
+            "Clothing": {
+              "Label": "Clothing"
+            }
+          },
+          "Alchemy": {
+            "Label": "Alchemy",
+            "Potion": {
+              "Label": "Potion"
+            },
+            "Poison": {
+              "Label": "Poison"
+            },
+            "Transformation": {
+              "Label": "Transformation"
+            }
+          },
+          "Cuisine": {
+            "Label": "Cuisine",
+            "Meal": {
+              "Label": "Meal"
+            },
+            "Baking": {
+              "Label": "Baking"
+            },
+            "Licor": {
+              "Label": "Licor"
+            }
+          },
+          "Forge": {
+            "Label": "Forge",
+            "Weaponry": {
+              "Label": "Weaponry"
+            },
+            "Armoury": {
+              "Label": "Armoury"
+            },
+            "Goldsmithery": {
+              "Label": "Goldsmithery"
+            }
+          },
+          "Engineering": {
+            "Label": "Engineering",
+            "Mechanism": {
+              "Label": "Mechanism"
+            },
+            "Siege": {
+              "Label": "Siege"
+            },
+            "Glassware": {
+              "Label": "Glassware"
+            }
+          }
+        },
+        "Artistic": {
+          "Label": "Artistic",
+          "Song": {
+            "Label": "Song",
+            "Entertaining": {
+              "Label": "Entertaining"
+            },
+            "Battle": {
+              "Label": "Battle"
+            }
+          },
+          "Graphic": {
+            "Label": "Graphic",
+            "Work": {
+              "Label": "Work"
+            },
+            "Tattoo": {
+              "Label": "Tattoo"
+            }
+          },
+          "Music": {
+            "Label": "Music",
+            "Repertoire": {
+              "Label": "Repertoire"
+            },
+            "Theory": {
+              "Label": "Theory"
+            }
+          },
+          "Sculpture": {
+            "Label": "Sculpture",
+            "Ceramic": {
+              "Label": "Ceramic"
+            },
+            "Decoration": {
+              "Label": "Decoration"
+            }
+          },
+          "Dance": {
+            "Label": "Dance",
+            "Aesthetics": {
+              "Label": "Aesthetics"
+            },
+            "Combat": {
+              "Label": "Combat"
+            },
+            "Spiritual": {
+              "Label": "Spiritual"
+            }
+          }
+        },
+        "Erudition": {
+          "Label": "Erudition",
+          "Language": {
+            "Label": "Language"
+          },
+          "Monstrology": {
+            "Label": "Monstrology"
+          },
+          "Zoology": {
+            "Label": "Zoology"
+          },
+          "Civilisation": {
+            "Label": "Civilisation"
+          },
+          "Medecine": {
+            "Label": "Medecine",
+            "Treatment": {
+              "Label": "Treatment"
+            },
+            "Mortuary": {
+              "Label": "Mortuary"
+            }
+          },
+          "Runic": {
+            "Label": "Runic",
+            "Enchantment": {
+              "Label": "Enchantment"
+            },
+            "Inscription": {
+              "Label": "Inscription"
+            }
+          },
+          "Symbolism": {
+            "Label": "Symbolism",
+            "Heraldry": {
+              "Label": "Heraldry"
+            },
+            "Cryptography": {
+              "Label": "Cryptography"
+            }
+          },
+          "Science": {
+            "Label": "Science",
+            "Mathematic": {
+              "Label": "Mathematic"
+            },
+            "Astronomy": {
+              "Label": "Astronomy"
+            },
+            "Geology": {
+              "Label": "Geology"
+            }
+          }
+        },
+        "Utilitarian": {
+          "Label": "Utilitarian",
+          "Hunting": {
+            "Label": "Hunting",
+            "Tracking": {
+              "Label": "Tracking"
+            },
+            "Cutting": {
+              "Label": "Cutting"
+            }
+          },
+          "Construction": {
+            "Label": "Construction",
+            "Masonry": {
+              "Label": "Masonry"
+            },
+            "Carpentry": {
+              "Label": "Carpentry"
+            }
+          },
+          "Dressage": {
+            "Label": "Dressage",
+            "Taming": {
+              "Label": "Taming"
+            },
+            "War": {
+              "Label": "War"
+            }
+          },
+          "Fishing": {
+            "Label": "Fishing",
+            "Bank": {
+              "Label": "Bank"
+            },
+            "High-sea": {
+              "Label": "High-sea"
+            }
+          },
+          "Theft": {
+            "Label": "Theft",
+            "Pickpocketing": {
+              "Label": "Pickpocketing"
+            },
+            "Lock-picking": {
+              "Label": "Lock-picking"
+            }
+          },
+          "Nature": {
+            "Label": "Nature",
+            "Farming": {
+              "Label": "Farming"
+            },
+            "Herbalist": {
+              "Label": "Herbalist"
+            },
+            "Fungus": {
+              "Label": "Fungus"
+            }
+          },
+          "Strategy": {
+            "Label": "Strategy",
+            "Tactics": {
+              "Label": "Tactics"
+            },
+            "Logistics": {
+              "Label": "Logistics"
+            },
+            "Cartography": {
+              "Label": "Cartography"
+            }
+          },
+          "Transport": {
+            "Label": "Transport",
+            "Mounting": {
+              "Label": "Mounting"
+            },
+            "Land": {
+              "Label": "Land"
+            },
+            "Sea": {
+              "Label": "Sea"
+            }
+          }
+        },
+        "Magic": {
+          "Label": "Magic",
+          "Air": {
+            "Label": "Air",
+            "Dazzling": {
+              "Label": "Dazzling"
+            },
+            "Breeze": {
+              "Label": "Breeze"
+            },
+            "Lightning": {
+              "Label": "Lightning"
+            }
+          },
+          "Water": {
+            "Label": "Water",
+            "Ablution": {
+              "Label": "Ablution"
+            },
+            "Source": {
+              "Label": "Source"
+            },
+            "Ice": {
+              "Label": "Ice"
+            }
+          },
+          "Fire": {
+            "Label": "Fire",
+            "Torch": {
+              "Label": "Torch"
+            },
+            "Ignition": {
+              "Label": "Ignition"
+            },
+            "Destruction": {
+              "Label": "Destruction"
+            }
+          },
+          "Occult": {
+            "Label": "Occult",
+            "Toxic": {
+              "Label": "Toxic"
+            },
+            "Curse": {
+              "Label": "Curse"
+            },
+            "Ethereal": {
+              "Label": "Ethereal"
+            },
+            "Necromancy": {
+              "Label": "Necromancy"
+            }
+          },
+          "Blood": {
+            "Label": "Blood",
+            "Sacrifice": {
+              "Label": "Sacrifice"
+            },
+            "Puncture": {
+              "Label": "Puncture"
+            },
+            "Drain": {
+              "Label": "Drain"
+            }
+          },
+          "Earth": {
+            "Label": "Earth",
+            "Bastion": {
+              "Label": "Bastion"
+            },
+            "Telluric": {
+              "Label": "Telluric"
+            },
+            "Metallic": {
+              "Label": "Metallic"
+            }
+          },
+          "Druidic": {
+            "Label": "Druidic",
+            "Astral": {
+              "Label": "Astral"
+            },
+            "Solicitude": {
+              "Label": "Solicitude"
+            },
+            "Changeforme": {
+              "Label": "Changeforme"
+            },
+            "Mutation": {
+              "Label": "Mutation"
+            }
+          },
+          "Mental": {
+            "Label": "Mental",
+            "Kinetic": {
+              "Label": "Kinetic"
+            },
+            "Illusion": {
+              "Label": "Illusion"
+            },
+            "Power": {
+              "Label": "Power"
+            },
+            "Enchanted": {
+              "Label": "Enchanted"
+            }
+          },
+          "Holy": {
+            "Label": "Holy",
+            "Blessing": {
+              "Label": "Blessing"
+            },
+            "Piety": {
+              "Label": "Piety"
+            },
+            "Glory": {
+              "Label": "Glory"
+            },
+            "Purification": {
+              "Label": "Purification"
+            }
+          }
+        }
+      },
+      "Time_phase": {
+        "Permanent": "Permanent",
+        "Combat": "Combat",
+        "Rest": "Rest",
+        "Sleep": "Sleep",
+        "Short_moon": "ShortMoon",
+        "Long_moon": "LongMoon"
+      },
+      "Time_unit": {
+        "Hours_pl": "Hours",
+        "Hours": "Hour",
+        "Minutes_pl": "Minutes",
+        "Minutes": "Minute",
+        "Rounds_pl": "Rounds",
+        "Rounds": "Round",
+        "Turns_pl": "Turns",
+        "Turns": "Turn",
+        "Seconds_pl": "Seconds",
+        "Seconds": "Second"
+      },
+      "Keywords": {
+        "Label": "Keywords",
+        "Noisy": "Noisy",
+        "Noisy_more": "Noisy+",
+        "Obstruct": "Obstruct",
+        "Obstruct_more": "Obstruct+",
+        "Preserve": {
+          "Label": "Preserve",
+          "Recap": "Preserve {amount} {type} {increment}",
+          "Max_amount": "Max amount",
+          "Type": "Type",
+          "Increment": "Increment"
+        },
+        "Equip": "Equip",
+        "Two_handed": "Two-handed",
+        "Two_handed_more": "Two-handed+",
+        "Light": "Light",
+        "Heavy": "Heavy",
+        "Heavy_more": "Heavy+",
+        "Quick": "Quick",
+        "Quick_more": "Quick+",
+        "Somatic": "Somatic",
+        "Gruff": "Gruff",
+        "Gruff_more": "Gruff+",
+        "Tough": "Tough",
+        "Tough_more": "Tough+",
+        "Sturdy": "Sturdy",
+        "Sturdy_more": "Sturdy+",
+        "Guard": "Guard",
+        "Guard_more": "Guard+",
+        "Protect": "Protect",
+        "Protect_more": "Protect+",
+        "Protection": "Protection",
+        "Protection_more": "Protection+",
+        "Brutal": "Brutal",
+        "Brutal_more": "Brutal+",
+        "Smash": "Smash",
+        "Smash_more": "Smash+",
+        "Penetrating": "Penetrating",
+        "Penetrating_more": "Penetrating+",
+        "Sly": "Sly",
+        "Direct": "Direct",
+        "Direct_more": "Direct+",
+        "Versatile": "Versatile",
+        "Reach": "Reach",
+        "Reach_more": "Reach+",
+        "Throwable": "Throwable",
+        "Throwable_more": "Throwable+",
+        "Recharge": "Recharge"
+      },
+      "Keywords_description": {
+        "Label": "Keywords description",
+        "Noisy": "Noisy",
+        "Noisy_more": "Noisy+",
+        "Obstruct": "Obstruct",
+        "Obstruct_more": "Obstruct+",
+        "Preserve": {
+          "Label": "Preserve",
+          "Max_amount": "Max amount",
+          "Type": "Type",
+          "Increment": "Increment"
+        },
+        "Equip": "Equip",
+        "Two_handed": "Two-handed",
+        "Two_handed_more": "Two-handed+",
+        "Light": "Light",
+        "Heavy": "Heavy",
+        "Heavy_more": "Heavy+",
+        "Quick": "Quick",
+        "Quick_more": "Quick+",
+        "Somatic": "Somatic",
+        "Gruff": "Gruff",
+        "Gruff_more": "Gruff+",
+        "Tough": "Tough",
+        "Tough_more": "Tough+",
+        "Sturdy": "Sturdy",
+        "Sturdy_more": "Sturdy+",
+        "Guard": "Guard",
+        "Guard_more": "Guard+",
+        "Protect": "Protect",
+        "Protect_more": "Protect+",
+        "Protection": "Protection",
+        "Protection_more": "Protection+",
+        "Brutal": "Brutal",
+        "Brutal_more": "Brutal+",
+        "Smash": "Smash",
+        "Smash_more": "Smash+",
+        "Penetrating": "Penetrating",
+        "Penetrating_more": "Penetrating+",
+        "Sly": "Sly",
+        "Direct": "Direct",
+        "Direct_more": "Direct+",
+        "Versatile": "Versatile",
+        "Reach": "Reach",
+        "Reach_more": "Reach+",
+        "Throwable": "Throwable",
+        "Throwable_more": "Throwable+",
+        "Recharge": "Recharge"
+      },
+      "Actable": {
+        "Require_immobile": "Require immobile",
+        "Require_verbal": "Require verbal",
+        "Somatic": "Somatic",
+        "Material": "Material",
+        "Duration": "Duration",
+        "Range": "Range",
+        "Target": "Target",
+        "Area": "Area"
+      },
+      "Somatic": {
+        "None": "None",
+        "Gesture": "Gesture",
+        "One_hand": "One hand",
+        "Two_hands": "Two hands"
+      },
+      "Actable_modifier": {
+        "Technique": "Technique",
+        "Incantatory_addition": "Incantatory_addition"
+      },
+      "Action": {
+        "Is_magic": "Is magic",
+        "Is_opportunity": "Is opportunity"
+      },
+      "Spell": {
+        "Markers": {
+          "Is_canalisation": "Is canalisation",
+          "Is_evocation": "Is evocation",
+          "Is_attack": "Is attack",
+          "Is_trap": "Is trap",
+          "Canalisation": "C",
+          "Evocation": "E",
+          "Attack": "A",
+          "Trap": "T"
+        }
+      },
+      "Status_effect": {
+        "Preparing": {
+          "Label": "Preparing",
+          "Description": "You prepare a spell"
+        },
+        "Evocation": {
+          "Label": "Evocation",
+          "Description": "You evocate a spell"
+        },
+        "Channelling": {
+          "Label": "Channelling",
+          "Description": "You channel a spell"
+        },
+        "Concentration": {
+          "Label": "Concentration",
+          "Description": "You concentrate on a spell"
+        },
+        "Unconscious": {
+          "Label": "Unconscious",
+          "Description": "You're unconscious"
+        },
+        "Bleeding": {
+          "Label": "Bleeding",
+          "Description": "You're bleedind"
+        },
+        "Abused": {
+          "Label": "Abused",
+          "Description": "You're abused"
+        },
+        "Abused+": {
+          "Label": "Abused+",
+          "Description": "You're abused+"
+        },
+        "Slowed": {
+          "Label": "Slowed",
+          "Description": "You're Slowed"
+        },
+        "Prone": {
+          "Label": "Prone",
+          "Description": "You're Prone"
+        },
+        "Immobilised": {
+          "Label": "Immobilised",
+          "Description": "You're Immobilised"
+        },
+        "Disability": {
+          "Label": "Disability",
+          "Description": "You're Disability"
+        },
+        "Moist": {
+          "Label": "Moist",
+          "Description": "You're Moist"
+        },
+        "Frostbite": {
+          "Label": "Frostbite",
+          "Description": "You're Frostbite"
+        },
+        "Burning": {
+          "Label": "Burning",
+          "Description": "You're Burning"
+        },
+        "Burning+": {
+          "Label": "Burning+",
+          "Description": "You're Burning+"
+        },
+        "Radiate": {
+          "Label": "Radiate",
+          "Description": "You're Radiate"
+        },
+        "Conductive": {
+          "Label": "Conductive",
+          "Description": "You're Conductive"
+        },
+        "Dazed": {
+          "Label": "Dazed",
+          "Description": "You're Dazed"
+        },
+        "Shocked": {
+          "Label": "Shocked",
+          "Description": "You're Shocked"
+        },
+        "Stunned": {
+          "Label": "Stunned",
+          "Description": "You're Stunned"
+        },
+        "Banished": {
+          "Label": "Banished",
+          "Description": "You're Banished"
+        },
+        "Drunk": {
+          "Label": "Drunk",
+          "Description": "You're Drunk"
+        },
+        "Hangover": {
+          "Label": "Hangover",
+          "Description": "You're Hangover"
+        },
+        "Tired": {
+          "Label": "Tired",
+          "Description": "You're Tired"
+        },
+        "Hungry": {
+          "Label": "Hungry",
+          "Description": "You're Hungry"
+        },
+        "Dehydrated": {
+          "Label": "Dehydrated",
+          "Description": "You're Dehydrated"
+        },
+        "Rested": {
+          "Label": "Rested",
+          "Description": "You're Rested"
+        },
+        "Deaf": {
+          "Label": "Deaf",
+          "Description": "You're Deaf"
+        },
+        "Silenced": {
+          "Label": "Silenced",
+          "Description": "You're Silenced"
+        },
+        "Numb": {
+          "Label": "Numb",
+          "Description": "You're Numb"
+        },
+        "Numb+": {
+          "Label": "Numb+",
+          "Description": "You're Numb+"
+        },
+        "Blindness": {
+          "Label": "Blindness",
+          "Description": "You're Blindness"
+        },
+        "Invisible": {
+          "Label": "Invisible",
+          "Description": "You're Invisible"
+        },
+        "Incurable": {
+          "Label": "Incurable",
+          "Description": "You're Incurable"
+        },
+        "Incurable+": {
+          "Label": "Incurable+",
+          "Description": "You're Incurable+"
+        },
+        "Afraid": {
+          "Label": "Afraid",
+          "Description": "You're Afraid"
+        },
+        "Panic": {
+          "Label": "Panic",
+          "Description": "You're Panic"
+        },
+        "Terrified": {
+          "Label": "Terrified",
+          "Description": "You're Terrified"
+        },
+        "Dead": {
+          "Label": "Dead",
+          "Description": "You're Dead"
+        },
+        "Seduced": {
+          "Label": "Seduced",
+          "Description": "You're Seduced"
+        },
+        "Charmed": {
+          "Label": "Charmed",
+          "Description": "You're Charmed"
+        },
+        "Captivated": {
+          "Label": "Captivated",
+          "Description": "You're Captivated"
+        },
+        "Control": {
+          "Label": "Control",
+          "Description": "You're Control"
+        },
+        "Enraged": {
+          "Label": "Enraged",
+          "Description": "You're Enraged"
+        },
+        "Provoked": {
+          "Label": "Provoked",
+          "Description": "You're Provoked"
+        },
+        "Provoked+": {
+          "Label": "Provoked+",
+          "Description": "You're Provoked+"
+        }
+      }
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "player-character": "PC",
+      "non-player-character": "NPC",
+      "hero": "hero",
+      "chest": "chest"
+    },
+    "Item": {
+      "feature": "feature",
+      "kit": "kit",
+      "armor": "armor",
+      "weapon": "weapon",
+      "action": "action",
+      "opportunity": "opportunity",
+      "spell": "spell",
+      "technique": "technique",
+      "incantatory-addition": "incantatory addition",
+      "effect": "effect"
+    },
+    "Effect": "effect"
+  }
 }

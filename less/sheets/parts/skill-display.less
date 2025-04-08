@@ -1,0 +1,100 @@
+@skill-label-width: 8em;
+
+& {
+    --atoria-skill-height: calc(2px + var(--atoria-base-line-block-height));
+    --atoria-skill-title-width: 6em;
+    --atoria-skill-width: calc(@skill-label-width + var(--atoria-input-width));
+}
+.editing-mode {
+    --atoria-skill-width: calc(@skill-label-width + var(--atoria-input-width) * 3 + var(--checkbox-size));
+}
+
+.atoria-skill-display {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    min-height: var(--atoria-skill-height);
+    max-height: var(--atoria-skill-height);
+
+    flex: 0 1 auto;
+    border: none;
+
+    > label {
+        padding: 0px 3px;
+        border: var(--atoria-border-style);
+        border-radius: var(--atoria-border-style-radius);
+
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        flex: 1;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.atoria-skill-display, .atoria-skill-cat-display {
+    min-width: var(--atoria-skill-width);
+    max-width: var(--atoria-skill-width);
+
+    /* &:hover {
+        max-width: min-content;
+    } */
+    /* > *:hover {
+        max-width: min(var(--atoria-skill-width), min-content);
+    } */
+    > label, > input, > h5 {
+        height: var(--atoria-skill-height);
+        max-height: var(--atoria-skill-height);
+    }
+
+}
+
+.atoria-skill-group-display, .atoria-skill-type-display {
+
+    > label, > input, > h5 {
+        height: var(--atoria-skill-height);
+        max-height: var(--atoria-skill-height);
+    }
+
+}
+
+
+.atoria-skill-display, .atoria-skill-cat-display, .atoria-skill-group-display, .atoria-skill-type-display {
+    input[type=checkbox].atoria-skill-shown-control:checked::after {
+        --checkbox-content: "\f06e" !important;
+    }
+    input[type=checkbox].atoria-skill-shown-control::after {
+        --checkbox-content: "\f070" !important;
+    }
+    h5 > input[type=checkbox].atoria-skill-shown-control {
+        float: right;
+    }
+}
+
+
+.is_forced_horizontally .atoria-skill-group-display {
+    max-width: fit-content;
+    > h5 {
+        max-width: 100%;
+    }
+    > .atoria-skill-cat-area > .atoria-skill-cat-display {
+        display: flex;
+        flex-direction: row;
+        max-width: fit-content;
+        > h6 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-height: 100% !important;
+            min-width: var(--atoria-skill-title-width);
+            max-width: var(--atoria-skill-title-width);
+        }
+    }
+}

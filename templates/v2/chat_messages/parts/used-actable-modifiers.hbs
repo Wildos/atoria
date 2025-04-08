@@ -1,0 +1,17 @@
+{{#if used_actable_modifiers}}
+{{#if (or (eq @root.user @root.author) @root.isGM)}}
+<fieldset>
+    <legend class="atoria-expand-control"
+    onclick="if(window.event.button === 0){this.classList.toggle('expanded');window.event.stopPropagation();return false;}"
+    oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');window.event.stopPropagation();return false;}">
+    {{localize "ATORIA.Chat_message.Actable.Used_actable_modifiers" }}</legend>
+    <ul class="used_actable_modifiers atoria-expand-direct-data">
+        {{#each used_actable_modifiers as |actable_modifier key|}}
+        <li>
+            <label data-tooltip="{{actable_modifier.descriptive_tooltip}}">{{localize actable_modifier.name}}</label>
+        </li>
+        {{/each}}
+    </ul>
+</fieldset>
+{{/if}}
+{{/if}}

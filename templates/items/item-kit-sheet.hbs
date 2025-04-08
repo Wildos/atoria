@@ -1,0 +1,38 @@
+<form class="{{cssClass}} {{item.type}}" autocomplete="off">
+    {{>"atoria.commons.simple-header" object=item big_image=false}}
+
+    <section class="content">
+        <div class="book">
+            <div class="left-page">
+                <label>{{localize systemFields.encumbrance.label}}</label>
+                <input class="float-input" type="text" inputmode="numeric" data-dtype="Number" 
+                name="system.encumbrance" value="{{item.system.encumbrance}}"
+                data-tooltip="{{systemFields.encumbrance.label}}"/>
+
+                <label>{{localize systemFields.quantity.label}}</label>
+                <input class="float-input" type="text" inputmode="numeric" data-dtype="Number" 
+                name="system.quantity" value="{{item.system.quantity}}"
+                data-tooltip="{{systemFields.quantity.label}}"/>
+            </div>
+            <div class="right-page">
+                <label>{{localize systemFields.has_usage_limit.label}}:</label>
+                <input type="checkbox" data-dtype="Boolean" name="system.has_usage_limit" {{checked item.system.has_usage_limit}}
+                data-tooltip="{{localize systemFields.has_usage_limit.label}}"/>
+                {{#if item.system.has_usage_limit}}
+                    <label>{{localize systemFields.usage_left.label}}</label>
+                    <input type="text" inputmode="numeric" data-dtype="Number" 
+                    name="system.usage_left" value="{{item.system.usage_left}}"
+                    data-tooltip="{{systemFields.usage_left.label}}"/>
+
+                    <label>{{localize systemFields.usage_max.label}}</label>
+                    <input type="text" inputmode="numeric" data-dtype="Number" 
+                    name="system.usage_max" value="{{item.system.usage_max}}"
+                    data-tooltip="{{systemFields.usage_max.label}}"/>
+                {{/if}}
+            </div>
+        </div>
+
+        {{>"atoria.items_partials.keywords-input" cssClass="double-col-field"
+        data_path="system.keywords" keywords=item.system.keywords systemFields=systemFields.keywords.fields}}
+    </section>
+</form>

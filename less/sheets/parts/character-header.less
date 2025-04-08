@@ -1,0 +1,42 @@
+.atoria-character-header {
+    --atoria-document-img-size: calc(7 * var(--atoria-skill-height));
+    --atoria-header-area-width: calc(16em + var(--atoria-document-img-size) + var(--atoria-skill-width) + 2*var(--atoria-columns-gap));
+    grid-area: char-hdr;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    min-width: var(--atoria-header-area-width);
+    max-width: var(--atoria-header-area-width);
+
+    gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+
+    > * {
+        flex: 1;
+    }
+
+    > .attribute-area {
+        > div, & {
+            > div, & {
+                > input, > label, > h5 {
+                    min-height: var(--atoria-skill-height);
+                    max-height: var(--atoria-skill-height);
+                }
+            }
+        }
+        > .name-area {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            > input[name="name"] {
+                --atoria-input-width: 1fr;
+            }
+        }
+        > .atoria-initiative {
+            input {
+                --atoria-input-width: var(--atoria-formula-input-width);
+            }
+        }
+    }
+}

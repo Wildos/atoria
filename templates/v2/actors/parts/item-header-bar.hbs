@@ -1,0 +1,13 @@
+<div class="atoria-horizontal-bar flexrow colored">
+    <h5 class="title">
+        {{localize title}}
+    </h5>
+    {{#if @root.editable}}
+    {{#each item_types as |type key|}}
+        <a class="atoria-create-button" data-action="createItem" data-type="{{type}}"
+        data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize (concat "TYPES.Item." type ))}}">
+            <i class="fas fa-plus"></i>
+        </a>
+    {{/each}}
+    {{/if}}
+</div>

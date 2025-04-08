@@ -1,0 +1,27 @@
+<!--
+skill_alteration
+systemFields
+data_path
+associated_skills
+-->
+<div class="atoria-skill-alteration-input grid-2col {{cssClasses}}">
+    <label>{{localize systemFields.has_skill_alteration.label}}</label>
+    {{ formInput systemFields.has_skill_alteration value=skill_alteration.has_skill_alteration disabled=(not @root.editable)}}
+
+    {{#if skill_alteration.has_skill_alteration}}
+        {{#if item_actor}}
+            <select name="{{data_path}}.skill_alteration_type"
+            data-tooltip="{{localize systemFields.skill_alteration_type.label}}">
+                {{selectOptions systemFields.skill_alteration_type.choices selected=skill_alteration.skill_alteration_type localize=true}}
+            </select>
+            {{#if associated_skills}}
+                <select name="{{data_path}}.associated_skill"
+                data-tooltip="{{localize systemFields.associated_skill.label}}">
+                    {{selectOptions associated_skills selected=skill_alteration.associated_skill sort=true localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
+                </select>
+            {{/if}}
+        {{else}}
+            <label class="error double-col-field">{{localize "ATORIA.Sheet.Feature.Require_actor"}}</label>
+        {{/if}}
+    {{/if}}
+</div>

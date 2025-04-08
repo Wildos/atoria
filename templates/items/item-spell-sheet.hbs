@@ -1,0 +1,150 @@
+<form class="{{cssClass}} {{item.type}}" autocomplete="off">
+    {{>"atoria.commons.simple-header" object=item big_image=false}}
+
+    <section class="content">
+        
+        <div class="effect flexcol double-col-field">
+            <label for="system.effect">{{localize systemFields.effect.label}}:</label>
+            <textarea class="resize-ta" data-name="effect" data-dtype="String" name="system.effect"
+            >{{cleanLines item.system.effect}}</textarea>
+        </div>
+
+
+        <div class="critical-description flexcol double-col-field">
+            <label for="system.critical_effect">{{localize systemFields.critical_effect.label}}:</label>
+            <textarea class="resize-ta" data-name="critical_effect" data-dtype="String" name="system.critical_effect"
+            >{{cleanLines item.system.critical_effect}}</textarea>
+        </div>
+
+        <div class="double-col-field flexcol">
+            <label>{{localize systemFields.cost.label}}</label>
+            {{>"atoria.items_partials.cost-input" cost=item.system.cost systemFields=systemFields.cost.fields data_path="system.cost" }}
+        </div>
+    
+
+        <label>{{localize systemFields.success.label}}</label>
+        <input type="text" inputmode="numeric" data-dtype="Number"
+        name="system.success" value="{{item.system.success}}"
+        data-tooltip="{{systemFields.success.label}}"/>
+
+        <label>{{localize systemFields.critical_success.label}}</label>
+        <input type="text" inputmode="numeric" data-dtype="Number"
+        name="system.critical_success" value="{{item.system.critical_success}}"
+        data-tooltip="{{systemFields.critical_success.label}}"/>
+
+        <label>{{localize systemFields.critical_fumble.label}}</label>
+        <input type="text" inputmode="numeric" data-dtype="Number"
+        name="system.critical_fumble" value="{{item.system.critical_fumble}}"
+        data-tooltip="{{systemFields.critical_fumble.label}}"/>
+
+        <label>{{localize systemFields.markers.label}}:</label>
+        <div class="markers flexrow">
+            <input class="marker-canalisation" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Canalisation"}}" type="checkbox" data-dtype="Boolean" name="system.markers.is_canalisation" {{checked item.system.markers.is_canalisation}}
+            data-tooltip="{{localize systemFields.markers.is_canalisation.label}}"/>
+            <input class="marker-evocation" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Evocation"}}" type="checkbox" data-dtype="Boolean" name="system.markers.is_evocation" {{checked item.system.markers.is_evocation}}
+            data-tooltip="{{localize systemFields.markers.is_evocation.label}}"/>
+            <input class="marker-attack" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Attack"}}" type="checkbox" data-dtype="Boolean" name="system.markers.is_attack" {{checked item.system.markers.is_attack}}
+            data-tooltip="{{localize systemFields.markers.is_attack.label}}"/>
+            <input class="marker-trap" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Trap"}}" type="checkbox" data-dtype="Boolean" name="system.markers.is_trap" {{checked item.system.markers.is_trap}}
+            data-tooltip="{{localize systemFields.markers.is_trap.label}}"/>
+        </div>
+        <label>
+        <input type="checkbox" data-dtype="Boolean" name="system.require_immobile" {{checked item.system.require_immobile}}
+        data-tooltip="{{localize systemFields.require_immobile.label}}"/>
+        {{localize systemFields.require_immobile.label}}
+        </label>
+
+        <label>
+        <input type="checkbox" data-dtype="Boolean" name="system.require_verbal" {{checked item.system.require_verbal}}
+        data-tooltip="{{localize systemFields.require_verbal.label}}"/>
+        {{localize systemFields.require_verbal.label}}
+        </label>
+
+        <label>{{localize systemFields.somatic.label}}</label>
+        <select name="system.somatic"
+        data-tooltip="{{localize systemFields.somatic.label}}">
+            {{selectOptions systemFields.somatic.choices selected=item.system.somatic localize=true}}
+        </select>
+
+        <label>{{localize systemFields.material.label}}</label>
+        <input type="text" data-dtype="String" name="system.material" value="{{item.system.material}}"
+        data-tooltip="{{localize systemFields.material.label}}"/>
+
+        <label>{{localize systemFields.duration.label}}</label>
+        <input type="text" data-dtype="String" name="system.duration" value="{{item.system.duration}}"
+        data-tooltip="{{localize systemFields.duration.label}}"/>
+
+        <label>{{localize systemFields.range.label}}</label>
+        <input type="text" data-dtype="String" name="system.range" value="{{item.system.range}}"
+        data-tooltip="{{localize systemFields.range.label}}"/>
+
+        <label>{{localize systemFields.target.label}}</label>
+        <input type="text" data-dtype="String" name="system.target" value="{{item.system.target}}"
+        data-tooltip="{{localize systemFields.target.label}}"/>
+
+        <label>{{localize systemFields.area.label}}</label>
+        <input type="text" data-dtype="String" name="system.area" value="{{item.system.area}}"
+        data-tooltip="{{localize systemFields.area.label}}"/>
+
+        <section class="saves-area double-col-field sub-element-category" data-path="saves_asked">
+            <h2>{{localize systemFields.saves_asked.label}}
+                <a class="sub-element-control create-button" data-action="create" data-tooltip="{{localize systemFields.saves_asked.label}}">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </h2>
+            <ul>
+            {{#each item.system.saves_asked as |cost idx|}}
+                <li class="flexrow">
+                    <select name="system.saves_asked.{{idx}}"  
+                    data-tooltip="{{localize ../systemFields.saves_asked.element.label}}
+                    {{#unless item.actor}}<br><label class='atoria error'>{{localize "ATORIA.Sheet.Actable.Require_actor"}}</label>{{/unless}}
+                    ">
+                        {{selectOptions ../associated_saves_skills selected=(lookup item.system.saves_asked idx) localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
+                    </select>
+                    <a class="sub-element-control delete-button" data-action="delete" data-sub-element-index="{{idx}}" data-tooltip="{{localize 'ATORIA.Sheet.Actable.Saves_asked.Delete'}}">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </li>
+            {{/each}}
+            </ul>
+        </section>
+
+        <section class="actable-mod-area double-col-field">
+            <h2 >{{localize systemFields.usable_actable_modifiers.label}}</h2>
+            {{#if item.actor}}
+                <ul>
+                    {{#each available_actable_modifiers as |actable_mod idx|}}
+                        <li>
+                            <input class="actable-modifier-toggle" type="checkbox" data-dtype="Boolean" 
+                            data-actable-modifier-id="{{actable_mod._id}}"
+                            {{checked (includes ../item.system.usable_actable_modifiers actable_mod._id)}}/>
+                            <label data-tooltip="{{actable_mod.system.tooltip}}">{{actable_mod.name}}</label>
+                        </li>
+                    {{/each}}
+                </ul>
+            {{else}}
+                <label class="error double-col-field">{{localize "ATORIA.Sheet.Actable.Require_actor"}}</label>
+            {{/if}}
+        </section>
+
+
+
+        <section class="supplementary-area double-col-field sub-element-category" data-path="supplementaries_list">
+            <h2>{{localize systemFields.supplementaries_list.label}}
+                <a class="sub-element-control create-button" data-action="create" data-tooltip="{{localize systemFields.supplementaries_list.label}}">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </h2>
+            <ul>
+            {{#each item.system.supplementaries_list as |supplementary idx|}}
+                <li class="flexcol">
+                    {{>"atoria.items_partials.supplementary-input" supplementary=supplementary
+                    systemFields=../systemFields.supplementaries_list.element.fields
+                    data_path=(concat "system.supplementaries_list." idx) deletable=true idx=idx }}
+                </li>
+            {{/each}}
+            </ul>
+        </section>
+
+    </section>
+</form>

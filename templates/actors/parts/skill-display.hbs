@@ -1,0 +1,26 @@
+{{#if (or force_display @root.isEditingMode (getProperty @root.flags (concat "atoria." data_path)))}}
+<div class="skill-display">
+    <h5 class="rollable" data-skill-path="{{data_path}}">{{localize skill.label}}</h5>
+    <input type="text" data-dtype="Number" name="{{data_path}}.success" 
+    value="{{skill.success}}"
+    data-tooltip="{{localize systemFields.success.label}}"
+    {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+    {{#if (and (not force_display) @root.editable @root.isEditingMode)}}
+        <input class="skill-shown-control" type="checkbox" data-dtype="Boolean" data-skill-path="{{data_path}}"
+        {{checked (getProperty @root.flags (concat "atoria." data_path))}}
+        {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+    {{/if}}
+</div>
+{{#unless limited}}
+    <div class="skill-display">
+        <input type="text" data-dtype="Number" name="{{data_path}}.critical_success_modifier" 
+        value="{{skill.critical_success_modifier}}"
+        data-tooltip="{{localize systemFields.critical_success_modifier.label}}"
+        {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+        <input type="text" data-dtype="Number" name="{{data_path}}.critical_fumble_modifier" 
+        value="{{skill.critical_fumble_modifier}}"
+        data-tooltip="{{localize systemFields.critical_fumble_modifier.label}}"
+        {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+    </div>
+{{/unless}}
+{{/if}}

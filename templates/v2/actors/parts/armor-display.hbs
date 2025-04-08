@@ -1,0 +1,39 @@
+<div class="atoria-armor-display flexcol">
+    <h5 class="atoria-expand-control atoria-armor" data-action="expandSection" data-expand-id="{{data_path}}">{{localize model.fields.main.label}}</h5>
+    <input type="text" data-dtype="Number" name="{{data_path}}.main" value="{{armor.main}}"
+    data-tooltip="{{localize model.fields.main.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    <div class="atoria-expand-following-data">
+        <label>
+            {{localize model.fields.bludgeoning.label}}
+        </label>
+        {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+        <input type="text" value="{{enhancedNumberFormat armor.bludgeoning sign=true}}" disabled/>
+        {{else}}
+        <input type="text" data-dtype="Number" name="{{data_path}}.bludgeoning" value="{{armor.bludgeoning}}"
+        data-tooltip="{{localize model.fields.bludgeoning.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+        {{/if}}
+        <input type="text" value="{{sum armor.main  armor.bludgeoning}}" disabled/>
+
+        <label>
+            {{localize model.fields.piercing.label}}
+        </label>
+        {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+        <input type="text" value="{{enhancedNumberFormat armor.piercing sign=true}}" disabled/>
+        {{else}}
+        <input type="text" data-dtype="Number" name="{{data_path}}.piercing" value="{{armor.piercing}}"
+        data-tooltip="{{localize model.fields.piercing.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+        {{/if}}
+        <input type="text" value="{{sum armor.main  armor.piercing}}" disabled/>
+
+        <label>
+            {{localize model.fields.slashing.label}}
+        </label>
+        {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+        <input type="text" value="{{enhancedNumberFormat armor.slashing sign=true}}" disabled/>
+        {{else}}
+        <input type="text" data-dtype="Number" name="{{data_path}}.slashing" value="{{armor.slashing}}"
+        data-tooltip="{{localize model.fields.slashing.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+        {{/if}}
+        <input type="text" value="{{sum armor.main  armor.slashing}}" disabled/>
+    </div>
+</div>

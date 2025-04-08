@@ -1,0 +1,11 @@
+<li class="item atoria-item-line-display {{effect.type}} atoria-horizontal-bar" data-drag="Effect" data-effect-id="{{effect._id}}">
+    <label class="name" data-tooltip="{{{effect.descriptive_tooltip}}}" >{{effect.name}}</label>
+    {{#if @root.editable}}
+    <a class="atoria-edit-button" data-action="editItem" data-effect-id="{{effect._id}}" data-tooltip="{{localize "ATORIA.Sheet.Effect.Edit"}}">
+        <i class="fas fa-edit"></i>
+    </a>
+    <a class="atoria-delete-button" data-action="deleteItem" data-effect-id="{{effect._id}}" data-tooltip="{{localize "ATORIA.Sheet.Effect.Delete"}}">
+        <i class="fas fa-trash"></i>
+    </a>
+    {{/if}}
+</li>

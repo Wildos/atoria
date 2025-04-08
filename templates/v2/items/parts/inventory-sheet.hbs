@@ -1,0 +1,214 @@
+<div class="atoria-item-inventory-parts grid-2col">
+    <fieldset class="double-col-field">
+        <legend class="atoria-expand-control" data-action="expandSection" data-expand-id="system.keywords">{{localize systemFields.keywords.label}}</legend>
+        <div class="atoria-expand-direct-data atoria-keywords-area">
+            <div class="boolean-area">
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.two_handed" {{checked item.system.keywords.two_handed}}
+                data-tooltip="{{localize systemFields.keywords.fields.two_handed.label}}"/>
+                {{localize systemFields.keywords.fields.two_handed.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.two_handed_more" {{checked item.system.keywords.two_handed_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.two_handed_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.noisy" {{checked item.system.keywords.noisy}}
+                data-tooltip="{{localize systemFields.keywords.fields.noisy.label}}"/>
+                {{localize systemFields.keywords.fields.noisy.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.noisy_more" {{checked item.system.keywords.noisy_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.noisy_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.equip" {{checked item.system.keywords.equip}}
+                data-tooltip="{{localize systemFields.keywords.fields.equip.label}}"/>
+                {{localize systemFields.keywords.fields.equip.label}}
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.obstruct" {{checked item.system.keywords.obstruct}}
+                data-tooltip="{{localize systemFields.keywords.fields.obstruct.label}}"/>
+                {{localize systemFields.keywords.fields.obstruct.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.obstruct_more" {{checked item.system.keywords.obstruct_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.obstruct_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.light" {{checked item.system.keywords.light}}
+                data-tooltip="{{localize systemFields.keywords.fields.light.label}}"/>
+                {{localize systemFields.keywords.fields.light.label}}
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.heavy" {{checked item.system.keywords.heavy}}
+                data-tooltip="{{localize systemFields.keywords.fields.heavy.label}}"/>
+                {{localize systemFields.keywords.fields.heavy.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.heavy_more" {{checked item.system.keywords.heavy_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.heavy_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.quick" {{checked item.system.keywords.quick}}
+                data-tooltip="{{localize systemFields.keywords.fields.quick.label}}"/>
+                {{localize systemFields.keywords.fields.quick.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.quick_more" {{checked item.system.keywords.quick_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.quick_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.somatic" {{checked item.system.keywords.somatic}}
+                data-tooltip="{{localize systemFields.keywords.fields.somatic.label}}"/>
+                {{localize systemFields.keywords.fields.somatic.label}}
+                </label>
+            </div>
+            {{!-- // Non booleans --}}
+            <div class="non-boolean-area flexcol">
+                <div class="flexrow">
+                <label>
+                    <input type="checkbox" data-dtype="Boolean" name="system.keywords.preserve" {{checked item.system.keywords.preserve}}
+                    data-tooltip="{{localize systemFields.keywords.fields.preserve.label}}"/>
+                    {{localize systemFields.keywords.fields.preserve.label}}
+                </label>
+
+                <input type="text" inputmode="numeric" data-dtype="Number"
+                name="system.keywords.preserve_data.max_amount" value="{{item.system.keywords.preserve_data.max_amount}}"
+                data-tooltip="{{systemFields.keywords.fields.preserve_data.fields.max_amount.label}}"/>
+
+                <select name="system.keywords.preserve_data.type"
+                data-tooltip="{{localize systemFields.keywords.fields.preserve_data.fields.type.label}}">
+                    {{selectOptions systemFields.keywords.fields.preserve_data.fields.type.choices selected=item.system.keywords.preserve_data.type localize=true}}
+                </select>
+
+                <input type="text" inputmode="numeric" data-dtype="Number"
+                name="system.keywords.preserve_data.increment" value="{{item.system.keywords.preserve_data.increment}}"
+                data-tooltip="{{systemFields.keywords.fields.preserve_data.fields.increment.label}}"/>
+
+                </div>
+            </div>
+            {{# if (eq item.type "armor")}}
+            <h6>{{localize "ATORIA.Sheet.Player.Inventory.Equipement.Armor"}}:</h6>
+            <div class="boolean-area">
+                {{!-- // Armor --}}
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.gruff" {{checked item.system.keywords.gruff}}
+                data-tooltip="{{localize systemFields.keywords.fields.gruff.label}}"/>
+                {{localize systemFields.keywords.fields.gruff.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.gruff_more" {{checked item.system.keywords.gruff_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.gruff_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.tough" {{checked item.system.keywords.tough}}
+                data-tooltip="{{localize systemFields.keywords.fields.tough.label}}"/>
+                {{localize systemFields.keywords.fields.tough.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.tough_more" {{checked item.system.keywords.tough_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.tough_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.sturdy" {{checked item.system.keywords.sturdy}}
+                data-tooltip="{{localize systemFields.keywords.fields.sturdy.label}}"/>
+                {{localize systemFields.keywords.fields.sturdy.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.sturdy_more" {{checked item.system.keywords.sturdy_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.sturdy_more.label}}"/>
+                </label>
+            </div>
+            {{/if}}
+            {{# if (eq item.type "weapon")}}
+            <h6>{{localize "ATORIA.Sheet.Player.Inventory.Equipement.Weapon"}}:</h6>
+            <div class="boolean-area">
+                {{!-- // Weapon --}}
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.reach" {{checked item.system.keywords.reach}}
+                data-tooltip="{{localize systemFields.keywords.fields.reach.label}}"/>
+                {{localize systemFields.keywords.fields.reach.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.reach_more" {{checked item.system.keywords.reach_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.reach_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.gruff" {{checked item.system.keywords.gruff}}
+                data-tooltip="{{localize systemFields.keywords.fields.gruff.label}}"/>
+                {{localize systemFields.keywords.fields.gruff.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.gruff_more" {{checked item.system.keywords.gruff_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.gruff_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.brutal" {{checked item.system.keywords.brutal}}
+                data-tooltip="{{localize systemFields.keywords.fields.brutal.label}}"/>
+                {{localize systemFields.keywords.fields.brutal.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.brutal_more" {{checked item.system.keywords.brutal_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.brutal_more.label}}"/>
+                </label>
+                <label>
+                    <input type="checkbox" data-dtype="Boolean" name="system.keywords.direct" {{checked item.system.keywords.direct}}
+                    data-tooltip="{{localize systemFields.keywords.fields.direct.label}}"/>
+                    {{localize systemFields.keywords.fields.direct.label}}
+
+                    <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.direct_more" {{checked item.system.keywords.direct_more}}
+                    data-tooltip="{{localize systemFields.keywords.fields.direct_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.smash" {{checked item.system.keywords.smash}}
+                data-tooltip="{{localize systemFields.keywords.fields.smash.label}}"/>
+                {{localize systemFields.keywords.fields.smash.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.smash_more" {{checked item.system.keywords.smash_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.smash_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.guard" {{checked item.system.keywords.guard}}
+                data-tooltip="{{localize systemFields.keywords.fields.guard.label}}"/>
+                {{localize systemFields.keywords.fields.guard.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.guard_more" {{checked item.system.keywords.guard_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.guard_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.throwable" {{checked item.system.keywords.throwable}}
+                data-tooltip="{{localize systemFields.keywords.fields.throwable.label}}"/>
+                {{localize systemFields.keywords.fields.throwable.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.throwable_more" {{checked item.system.keywords.throwable_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.throwable_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.penetrating" {{checked item.system.keywords.penetrating}}
+                data-tooltip="{{localize systemFields.keywords.fields.penetrating.label}}"/>
+                {{localize systemFields.keywords.fields.penetrating.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.penetrating_more" {{checked item.system.keywords.penetrating_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.penetrating_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.versatile" {{checked item.system.keywords.versatile}}
+                data-tooltip="{{localize systemFields.keywords.fields.versatile.label}}"/>
+                {{localize systemFields.keywords.fields.versatile.label}}
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.protection" {{checked item.system.keywords.protection}}
+                data-tooltip="{{localize systemFields.keywords.fields.protection.label}}"/>
+                {{localize systemFields.keywords.fields.protection.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.protection_more" {{checked item.system.keywords.protection_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.protection_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.protect" {{checked item.system.keywords.protect}}
+                data-tooltip="{{localize systemFields.keywords.fields.protect.label}}"/>
+                {{localize systemFields.keywords.fields.protect.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.protect_more" {{checked item.system.keywords.protect_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.protect_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.recharge" {{checked item.system.keywords.recharge}}
+                data-tooltip="{{localize systemFields.keywords.fields.recharge.label}}"/>
+                {{localize systemFields.keywords.fields.recharge.label}}
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.sturdy" {{checked item.system.keywords.sturdy}}
+                data-tooltip="{{localize systemFields.keywords.fields.sturdy.label}}"/>
+                {{localize systemFields.keywords.fields.sturdy.label}}
+                <input class="more" type="checkbox" data-dtype="Boolean" name="system.keywords.sturdy_more" {{checked item.system.keywords.sturdy_more}}
+                data-tooltip="{{localize systemFields.keywords.fields.sturdy_more.label}}"/>
+                </label>
+                <label>
+                <input type="checkbox" data-dtype="Boolean" name="system.keywords.sly" {{checked item.system.keywords.sly}}
+                data-tooltip="{{localize systemFields.keywords.fields.sly.label}}"/>
+                {{localize systemFields.keywords.fields.sly.label}}
+                </label>
+            </div>
+            {{/if}}
+        </div>
+    </fieldset>
+
+    <label>{{localize systemFields.encumbrance.label}}</label>
+    {{ formInput systemFields.encumbrance value=item.system.encumbrance disabled=(not @root.editable)}}
+
+
+</div>

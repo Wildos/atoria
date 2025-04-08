@@ -1,0 +1,106 @@
+& {
+    --atoria-item-line-width: 100%;
+    --atoria-item-line-vertical-padding: 1px;
+    --atoria-item-line-height: calc(1lh + var(--atoria-item-line-vertical-padding) + var(--atoria-item-line-vertical-padding));
+    --atoria-item-line-border-style: var(--atoria-border-style);
+}
+
+.atoria-inventory-bar {
+    > *, .atoria-create-button-group > * {
+        &.atoria-create-button {
+            min-height: calc(1lh - 2px);
+            max-height: calc(1lh - 2px);
+        }
+    }
+    position: relative;
+    .atoria-create-button-group {
+        display: inline-block;
+        position: absolute;
+        right: 0px;
+        left: auto;
+        min-width: fit-content;
+    }
+}
+
+.atoria-item-line-display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+
+    min-height: var(--atoria-skill-height);
+    max-height: fit-content;
+    min-width: var(--atoria-item-line-width);
+    max-width: var(--atoria-item-line-width);
+
+    border: var(--atoria-item-line-border-style);
+    border-radius: var(--atoria-border-style-radius);
+    padding: 0;
+
+    > i[data-action="toggleEffect"] {
+        margin-left: 5px;
+    }
+
+    > .name {
+        flex: auto;
+    }
+    > input {
+        height: 100%;
+    }
+
+    > .flexcol:has(.atoria-cost-display) {
+        gap: 2px;
+    }
+
+    > hr {
+        margin: 0;
+        height: calc(var(--atoria-base-line-block-height) / 2);
+        min-width: 1px;
+        border-left: var(--atoria-item-line-border-style);
+    }
+
+    // > label + label {
+    //     padding-left: calc(var(--atoria-columns-gap) / 2);
+    //     margin-left: calc(0px - var(--atoria-columns-gap) / 2);
+    // }
+    // > label:has(+ label) {
+    //     padding-right: calc(var(--atoria-columns-gap) / 2);
+    //     margin-right: calc(0px - var(--atoria-columns-gap) / 2);
+    // }
+
+    > .equip-toggle {
+        --atoria-border-style: none;
+        margin-left: 4px;
+        margin-right: 4px;
+    }
+    > .equip-toggle::after {
+        // --atoria-color-checkbox-checked: red;
+        --checkbox-content: "\f3ed" !important;
+    }
+
+    > .atoria-spell-marker {
+        border: none;
+        pointer-events: none;
+    }
+
+    > .target {
+        flex: auto;
+        // max-width: 10em;
+    }
+
+    + .atoria-expand-direct-data {
+        margin: 0;
+        border: var(--atoria-border-style);
+        border-radius: var(--atoria-border-style-radius);
+        padding: 0;
+        padding-left: var(--atoria-columns-gap);
+        padding-right: var(--atoria-columns-gap);
+        gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+
+        > .flexrow {
+            gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+        }
+
+    }
+}

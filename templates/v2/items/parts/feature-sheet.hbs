@@ -1,0 +1,14 @@
+<div class="atoria-item-feature-parts grid-2col">
+    <div class="flexrow">
+        <label>{{localize systemFields.use_color.label}}</label>
+        {{ formInput systemFields.use_color value=item.system.use_color disabled=(not @root.editable)}}
+    </div>
+    {{ formInput systemFields.color value=item.system.color disabled=(not @root.editable)}}
+
+    {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation systemFields=systemFields.limitation.fields 
+    data_path="system.limitation" cssClasses="double-col-field"}}
+
+    {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=item.system.skill_alteration
+    item_actor=item.actor associated_skills=@root.associated_skills
+    data_path="system.skill_alteration" systemFields=systemFields.skill_alteration.fields cssClasses="double-col-field"}}
+</div>

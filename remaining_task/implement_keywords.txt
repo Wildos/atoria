@@ -1,0 +1,25 @@
+case "brutal":
+  // handled by the weapon roll, show apply brutal on chat_message
+  break;
+case "brutal_more":
+  // handled by the weapon roll, show apply brutal+ on chat_message
+  break;
+case "smash":
+  // handled by the weapon roll, prefill -1 DoS on Parry button
+  break;
+case "penetrating":
+  // handled by the weapon roll, write it is active on the weapon roll
+  break;
+
+case "versatile":
+  // handled by the weapon roll, check it is
+  break;
+
+case "throwable":
+  // handled by the item throw roll, check it is
+  // +1 DoS Throw
+  break;
+case "throwable_more":
+  // handled by the item throw roll, check it is
+  // +2 DoS Throw
+  break;

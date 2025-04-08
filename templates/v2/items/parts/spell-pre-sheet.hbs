@@ -1,0 +1,55 @@
+<div class="atoria-item-actable-modifier-parts grid-2col">
+
+    <label>{{localize systemFields.success.label}}</label>
+    {{ formInput systemFields.success value=item.system.success disabled=(not @root.editable)}}
+    <label>{{localize systemFields.critical_success.label}}</label>
+    {{ formInput systemFields.critical_success value=item.system.critical_success disabled=(not @root.editable)}}
+    <label>{{localize systemFields.critical_fumble.label}}</label>
+    {{ formInput systemFields.critical_fumble value=item.system.critical_fumble disabled=(not @root.editable)}}
+
+    <label class="double-col-field">{{localize systemFields.critical_effect.label}}</label>
+    <textarea class="atoria-resize-ta double-col-field" data-name="critical_effect"
+    data-dtype="String" name="system.critical_effect" {{disabled (not editable)}}
+    >{{cleanLines item.system.critical_effect}}</textarea>
+
+    <label>{{localize systemFields.cost.label}}</label>
+    {{>"atoria.v2.commons_partials.cost-input" cost=item.system.cost
+    data_path="system.cost" systemFields=systemFields.cost.fields cssClasses="double-col-field"}}
+
+    <div style="padding-left: 5px">
+    {{ formInput systemFields.markers.fields.is_canalisation input=@root.atoria_inputs.createCheckboxInput
+    value=item.system.markers.is_canalisation disabled=(not @root.editable)
+     classes="atoria-spell-marker" dataset-letter=(localize "ATORIA.Ruleset.Spell.Markers.Canalisation")}}
+    <label>
+    {{localize systemFields.markers.fields.is_canalisation.label}}
+    </label>
+    </div>
+
+    <div>
+    {{ formInput systemFields.markers.fields.is_evocation input=@root.atoria_inputs.createCheckboxInput
+    value=item.system.markers.is_evocation disabled=(not @root.editable)
+     classes="atoria-spell-marker" dataset-letter=(localize "ATORIA.Ruleset.Spell.Markers.Evocation")}}
+    <label>
+    {{localize systemFields.markers.fields.is_evocation.label}}
+    </label>
+    </div>
+
+    <div style="padding-left: 5px">
+    {{ formInput systemFields.markers.fields.is_attack input=@root.atoria_inputs.createCheckboxInput
+    value=item.system.markers.is_attack disabled=(not @root.editable)
+     classes="atoria-spell-marker" dataset-letter=(localize "ATORIA.Ruleset.Spell.Markers.Attack")}}
+     <label>
+    {{localize systemFields.markers.fields.is_attack.label}}
+    </label>
+    </div>
+
+    <div>
+    {{ formInput systemFields.markers.fields.is_trap input=@root.atoria_inputs.createCheckboxInput
+    value=item.system.markers.is_trap disabled=(not @root.editable)
+     classes="atoria-spell-marker" dataset-letter=(localize "ATORIA.Ruleset.Spell.Markers.Trap")}}
+     <label>
+    {{localize systemFields.markers.fields.is_trap.label}}
+    </label>
+    </div>
+
+</div>

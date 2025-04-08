@@ -1,0 +1,61 @@
+& .atoria.chat-message {
+
+    ul {
+        &.used_supplementaries, &.used_features,
+        &.used_actable_modifiers, &.saves_asked {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin: 0;
+            }
+        }
+    }
+
+    .critial_success-title {
+        color: green;
+    }
+    .success-title {
+        color: color-mix(in srgb, green 40%, var(--color-text-dark-primary););
+    }
+    .failure-title {
+        color: color-mix(in srgb, red 40%, var(--color-text-dark-primary););
+    }
+    .critial_failure-title {
+        color: red;
+    }
+
+    .alteration-label {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2px;
+    }
+
+    hr {
+        height: 1px;
+        border-top: 1px solid black;
+        width: 100%;
+        margin: 2px;
+    }
+
+    .message-content {
+        .inline-roll {
+            white-space: normal;
+            word-break: normal;
+            background: none;
+            border: none;
+        }
+    }
+
+    ul.saves_asked {
+        /* display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center; */
+
+        li {
+            padding: 0 0.5em;
+        }
+    }
+
+}

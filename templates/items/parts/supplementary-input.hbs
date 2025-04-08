@@ -1,0 +1,21 @@
+<div class="supplementary-input flexrow">
+    <div class="flexcol">
+        {{>"atoria.items_partials.cost-input" cost=supplementary.cost
+        systemFields=systemFields.cost.fields
+        data_path=(concat data_path ".cost") deletable=false}}
+
+        <label>{{localize systemFields.usage_max.label}}</label>
+            <input type="text" inputmode="numeric" data-dtype="Number"
+            name="{{data_path}}.usage_max" value="{{supplementary.usage_max}}"
+            data-tooltip="{{systemFields.usage_max.label}}"/>
+                
+        <div class="description flexcol double-col-field">
+            <label for="{{data_path}}.description">{{localize systemFields.description.label}}:</label>
+            <textarea class="resize-ta" data-name="{{data_path}}.description" data-dtype="String" name="{{data_path}}.description"
+            >{{cleanLines supplementary.description}}</textarea>
+        </div>
+    </div>
+    <a class="sub-element-control delete-button" data-action="delete" data-sub-element-index="{{idx}}" data-tooltip="{{localize 'ATORIA.Sheet.Actable.Cost_list.Delete'}}">
+        <i class="fas fa-trash"></i>
+    </a>
+</div>

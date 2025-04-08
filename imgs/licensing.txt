@@ -44,3 +44,9 @@ regain-type-rest.svg : https://game-icons.net/1x1/delapouite/camp-cooking-pot.ht
 regain-type-sleep.svg : https://game-icons.net/1x1/delapouite/sleeping-bag.html, by Delapouite under CC BY 3.0
 regain-type-short-moon.svg : https://game-icons.net/1x1/lorc/moon.html, by Lorc under CC BY 3.0
 regain-type-long-moon.svg : https://game-icons.net/1x1/delapouite/moon-orbit.html, by Delapouite under CC BY 3.0
+
+telefrag.svg: https://game-icons.net/1x1/sbed/telefrag.html, by sbed under CC BY 3.0
+
+stiletto.svg: https://game-icons.net/1x1/lorc/stiletto.html, by Lorc under CC BY 3.0
+kevlar.svg: https://game-icons.net/1x1/sbed/kevlar.html, by sbed under CC BY 3.0
+knapsack.svg: https://game-icons.net/1x1/lorc/knapsack.html, by Lorc under CC BY 3.0

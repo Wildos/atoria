@@ -1,0 +1,38 @@
+<li class="item inventory-item horizontal-bar" data-item-id="{{item._id}}">
+    {{#if (eq item.type "kit")}}
+        <input class="item-update float-input" data-name="system.quantity"
+        type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.quantity}}"
+        data-tooltip="{{localize item.systemFields.quantity.label}}" />
+        {{#if item.system.has_usage_limit}}
+            <input class="item-update float-input" data-name="system.usage_left"
+            type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.usage_left}}"
+            data-tooltip="{{localize item.systemFields.usage_left.label}}" {{disabled (not @root.editable)}} />
+            <input class="float-input" type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.usage_max}}"
+            data-tooltip="{{localize item.systemFields.usage_max.label}}" disabled />
+        {{/if}}
+    {{/if}}
+    {{#if (eq item.type "armor")}}
+        {{#unless compact}}
+        <input class="item-update equip-toggle" data-name="system.keywords.equip"
+        type="checkbox" data-dtype="Boolean" {{checked item.system.keywords.equip}}
+        data-tooltip="{{localize item.systemFields.keywords.fields.equip.label}}" {{disabled (not @root.editable)}} />
+        {{/unless}}
+        <h5 class="armor-type" data-tooltip="{{localize item.systemFields.armor_type.label}}">{{localize (lookup item.systemFields.armor_type.choices item.system.armor_type)}}</h5>
+    {{/if}}
+    {{#if (eq item.type "weapon")}}
+        {{#unless compact}}
+        <input class="item-update equip-toggle" data-name="system.keywords.equip"
+        type="checkbox" data-dtype="Boolean" {{checked item.system.keywords.equip}}
+        data-tooltip="{{localize item.systemFields.keywords.fields.equip.label}}" {{disabled (not @root.editable)}} />
+        {{/unless}}
+    {{/if}}
+    <label class="name" data-tooltip="{{{item.descriptive_tooltip}}}" >{{item.name}}</label>
+    {{#if @root.editable}}
+    <a class="item-control edit-button" data-action="edit" data-tooltip="{{localize "ATORIA.Sheet.Item.Edit"}}">
+        <i class="fas fa-edit"></i>
+    </a>
+    <a class="item-control delete-button" data-action="delete" data-tooltip="{{localize "ATORIA.Sheet.Item.Delete"}}">
+        <i class="fas fa-trash"></i>
+    </a>
+    {{/if}}
+</li>

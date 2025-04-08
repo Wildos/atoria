@@ -1,0 +1,15 @@
+<div class='cost-tooltip flexcol'>
+    <div class='flexrow'>
+        <input class='time' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.time.main_amount}}' disabled />
+        <label>{{localize (lookup systemFields.time.fields.main_type.choices cost.time.main_type)}}</label>
+
+        <input class='time' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.time.second_amount}}' disabled />
+        <label>{{localize systemFields.time.fields.second_amount.label}}</label>
+    </div>
+    <div class='flexrow'>
+        <input class='health' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.health}}' disabled />
+        <input class='mana' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.mana}}' disabled />
+        <input class='stamina' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.stamina}}' disabled />
+        <input class='endurance' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.endurance}}' disabled />
+    </div>
+</div>

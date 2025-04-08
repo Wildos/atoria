@@ -1,0 +1,82 @@
+<div class="tab {{#if is_active_page}}active{{/if}}" data-group="primary" data-tab="action">
+    <div class="atoria-player-action-page">
+        <div class="atoria-horizontal-bar flexrow colored">
+            <h5 class="title">
+                {{localize "ATORIA.Sheet.Player.Action_area.Spell.Title"}}
+            </h5>
+            {{#if @root.editable}}
+            <a class="atoria-create-button" data-action="createItem" data-type="spell" data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.spell" )}}">
+                <i class="fas fa-plus"></i>
+            </a>
+            {{/if}}
+        </div>
+        <ul class="item-list">
+            {{#each actable_items.spell as |item idx|}}
+                {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
+            {{/each}}
+        </ul>
+
+
+        <div class="atoria-horizontal-bar flexrow colored">
+            <h5 class="title">
+                {{localize "ATORIA.Sheet.Player.Action_area.Action.Title"}}
+            </h5>
+            {{#if @root.editable}}
+            <a class="atoria-create-button" data-action="createItem" data-type="action" data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.action" )}}">
+                <i class="fas fa-plus"></i>
+            </a>
+            </a>
+            {{/if}}
+        </div>
+        <ul class="item-list">
+            {{#each actable_items.action as |item idx|}}
+                {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
+            {{/each}}
+        </ul>
+
+
+
+        <div class="atoria-horizontal-bar flexrow colored">
+            <h5 class="title">
+                {{localize "ATORIA.Sheet.Player.Action_area.Opportunity.Title"}}
+            </h5>
+            {{#if @root.editable}}
+            <a class="atoria-create-button" data-action="createItem" data-type="opportunity" data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.opportunity" )}}">
+                <i class="fas fa-plus"></i>
+            </a>
+            {{/if}}
+        </div>
+        <ul class="item-list">
+            {{#each actable_items.opportunity as |item idx|}}
+                {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
+            {{/each}}
+        </ul>
+
+
+
+        {{!-- <div class="atoria-horizontal-bar flexrow">
+            <h5 class="title">
+                {{localize "ATORIA.Sheet.Player.Action_area.Actable_modifier.Title"}}
+            </h5>
+        </div>
+        <ul class="item-list"> --}}
+        {{#each actable_items.actable_modifier as |item_cat_data cat_idx|}}
+            <div class="atoria-horizontal-bar flexrow colored">
+                <h5 class="title">
+                    {{localize item_cat_data.label}}
+                </h5>
+                {{#if @root.editable}}
+                <a class="atoria-create-button" data-action="createItem" data-type="{{item_cat_data.type}}" data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize (concat "TYPES.Item." item_cat_data.type))}}">
+                    <i class="fas fa-plus"></i>
+                </a>
+                {{/if}}
+            </div>
+            <ul class="item-list">
+            {{#each item_cat_data.items as |item idx|}}
+                {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
+            {{/each}}
+            </ul>
+        {{/each}}
+        {{!-- </ul> --}}
+    </div>
+</div>

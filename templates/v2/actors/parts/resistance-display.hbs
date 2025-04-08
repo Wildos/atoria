@@ -1,0 +1,107 @@
+<div class="atoria-resistance-display flexcol">
+    <h5 class="atoria-expand-control atoria-resistance" data-action="expandSection" data-expand-id="{{data_path}}">{{localize model.fields.main.label}}</h5>
+    <input type="text" data-dtype="Number" name="{{data_path}}.main" value="{{resistance.main}}"
+    data-tooltip="{{localize model.fields.main.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+
+    <div class="atoria-expand-following-data">
+    <label>
+        {{localize model.fields.acid.label}}
+    </label>
+    {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+    <input type="text" value="{{enhancedNumberFormat resistance.acid sign=true}}" disabled/>
+    {{else}}
+    <input type="text" data-dtype="Number" name="{{data_path}}.acid" value="{{resistance.acid}}"
+    data-tooltip="{{localize model.fields.acid.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    {{/if}}
+    <input type="text" value="{{sum resistance.main  resistance.acid}}" disabled/>
+
+
+    <label>
+        {{localize model.fields.arcanic.label}}
+    </label>
+    {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+    <input type="text" value="{{enhancedNumberFormat resistance.arcanic sign=true}}" disabled/>
+    {{else}}
+    <input type="text" data-dtype="Number" name="{{data_path}}.arcanic" value="{{resistance.arcanic}}"
+    data-tooltip="{{localize model.fields.arcanic.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    {{/if}}
+    <input type="text" value="{{sum resistance.main  resistance.arcanic}}" disabled/>
+
+    <label>
+        {{localize model.fields.fire.label}}
+    </label>
+    {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+    <input type="text" value="{{enhancedNumberFormat resistance.fire sign=true}}" disabled/>
+    {{else}}
+    <input type="text" data-dtype="Number" name="{{data_path}}.fire" value="{{resistance.fire}}"
+    data-tooltip="{{localize model.fields.fire.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    {{/if}}
+    <input type="text" value="{{sum resistance.main  resistance.fire}}" disabled/>
+
+    <label>
+        {{localize model.fields.lightning.label}}
+    </label>
+    {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+    <input type="text" value="{{enhancedNumberFormat resistance.lightning sign=true}}" disabled/>
+    {{else}}
+    <input type="text" data-dtype="Number" name="{{data_path}}.lightning" value="{{resistance.lightning}}"
+    data-tooltip="{{localize model.fields.lightning.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    {{/if}}
+    <input type="text" value="{{sum resistance.main  resistance.lightning}}" disabled/>
+
+    <label>
+        {{localize model.fields.cold.label}}
+    </label>
+    {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+    <input type="text" value="{{enhancedNumberFormat resistance.cold sign=true}}" disabled/>
+    {{else}}
+    <input type="text" data-dtype="Number" name="{{data_path}}.cold" value="{{resistance.cold}}"
+    data-tooltip="{{localize model.fields.cold.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    {{/if}}
+    <input type="text" value="{{sum resistance.main  resistance.cold}}" disabled/>
+
+    <label>
+        {{localize model.fields.necrotic.label}}
+    </label>
+    {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+    <input type="text" value="{{enhancedNumberFormat resistance.necrotic sign=true}}" disabled/>
+    {{else}}
+    <input type="text" data-dtype="Number" name="{{data_path}}.necrotic" value="{{resistance.necrotic}}"
+    data-tooltip="{{localize model.fields.necrotic.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    {{/if}}
+    <input type="text" value="{{sum resistance.main  resistance.necrotic}}" disabled/>
+
+    <label>
+        {{localize model.fields.poison.label}}
+    </label>
+    {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+    <input type="text" value="{{enhancedNumberFormat resistance.poison sign=true}}" disabled/>
+    {{else}}
+    <input type="text" data-dtype="Number" name="{{data_path}}.poison" value="{{resistance.poison}}"
+    data-tooltip="{{localize model.fields.poison.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    {{/if}}
+    <input type="text" value="{{sum resistance.main  resistance.poison}}" disabled/>
+
+    <label>
+        {{localize model.fields.psychic.label}}
+    </label>
+    {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+    <input type="text" value="{{enhancedNumberFormat resistance.psychic sign=true}}" disabled/>
+    {{else}}
+    <input type="text" data-dtype="Number" name="{{data_path}}.psychic" value="{{resistance.psychic}}"
+    data-tooltip="{{localize model.fields.psychic.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    {{/if}}
+    <input type="text" value="{{sum resistance.main  resistance.psychic}}" disabled/>
+
+    <label>
+        {{localize model.fields.radiant.label}}
+    </label>
+    {{#if (or (not @root.editable) (not @root.isEditingMode))}}
+    <input type="text" value="{{enhancedNumberFormat resistance.radiant sign=true}}" disabled/>
+    {{else}}
+    <input type="text" data-dtype="Number" name="{{data_path}}.radiant" value="{{resistance.radiant}}"
+    data-tooltip="{{localize model.fields.radiant.label}}" {{disabled (or readonly (not @root.editable) (not @root.isEditingMode))}}/>
+    {{/if}}
+    <input type="text" value="{{sum resistance.main  resistance.radiant}}" disabled/>
+    </div>
+</div>

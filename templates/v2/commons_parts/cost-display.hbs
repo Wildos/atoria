@@ -1,0 +1,36 @@
+<!--
+cost
+systemFields
+cssClasses
+-->
+<div class="atoria-cost-display {{cssClasses}}">
+    {{#if cost.health}}
+    <input class="atoria-health" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.health}}" disabled >
+    {{/if}}
+    {{#if cost.mana}}
+    <input class="atoria-mana" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.mana}}" disabled >
+    {{/if}}
+    {{#if cost.stamina}}
+    <input class="atoria-stamina" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.stamina}}" disabled >
+    {{/if}}
+    {{#if cost.endurance}}
+    <input class="atoria-endurance" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.endurance}}" disabled >
+    {{/if}}
+    {{#if systemFields}}
+        {{#if cost.time.main_amount}}
+        <label>{{cost.time.main_amount}} {{localize (pluralize (lookup systemFields.time.fields.main_type.choices cost.time.main_type) cost.time.main_amount)}}</label>
+        {{/if}}
+
+        {{#if cost.time.second_amount}}
+        <label>{{cost.time.second_amount}} {{localize (pluralize systemFields.time.fields.second_amount.label cost.time.second_amount)}}</label>
+        {{/if}}
+    {{else}}
+        {{#if cost.time.main_amount}}
+        <label>{{cost.time.main_amount}} {{localize (pluralize (lookup @root.ruleset.time_units cost.time.main_type) cost.time.main_amount)}}</label>
+        {{/if}}
+
+        {{#if cost.time.second_amount}}
+        <label>{{cost.time.second_amount}} {{localize (pluralize (lookup @root.ruleset.time_units "second") cost.time.second_amount)}}</label>
+        {{/if}}
+    {{/if}}
+</div>

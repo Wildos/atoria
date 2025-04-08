@@ -1,0 +1,9 @@
+<div class="atoria-simple-header {{#if small_image}}small-image{{/if}}">
+    <img class="atoria-document-img" data-action="onEditImage" src="{{document.img}}" data-tooltip="{{document.name}}" alt="{{document.name}}" data-edit="img">
+    {{ formInput fields.name value=document.name disabled=(not @root.editable)}}
+    <div class="atoria-description flexcol">
+        <label for="description">{{localize systemFields.description.label}}:</label>
+        <textarea class="atoria-resize-ta" data-name="description" data-dtype="String" name="system.description" rows="2" {{disabled (not @root.editable)}}
+        >{{cleanLines document.system.description}}</textarea>
+    </div>
+</div>

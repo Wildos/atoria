@@ -1,0 +1,18 @@
+{{#if used_features}}
+{{#if (or (eq @root.user @root.author) @root.isGM)}}
+<fieldset>
+    <legend class="atoria-expand-control"
+    onclick="if(window.event.button === 0){this.classList.toggle('expanded');window.event.stopPropagation();return false;}"
+    oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');window.event.stopPropagation();return false;}">
+    {{localize "ATORIA.Chat_message.Skill.Used_features"}}</legend>
+
+    <ul class="used_features atoria-expand-direct-data">
+        {{#each used_features as |feature key|}}
+        <li>
+            <label data-tooltip="{{feature.descriptive_tooltip}}">{{localize feature.name}}</label>
+        </li>
+        {{/each}}
+    </ul>
+</fieldset>
+{{/if}}
+{{/if}}

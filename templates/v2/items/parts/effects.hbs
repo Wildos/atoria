@@ -1,0 +1,17 @@
+<div class="atoria-effects">
+    <div class="atoria-horizontal-bar flexrow">
+        <h5 class="title">
+            {{localize "ATORIA.Sheet.Effect.Title"}}
+        </h5>
+        {{#if @root.editable}}
+        <a class="atoria-create-button" data-action="createItem" data-type="effect" data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.effect" )}}">
+            <i class="fas fa-plus"></i>
+        </a>
+        {{/if}}
+    </div>
+    <ul class="item-list">
+    {{#each effects as |effect idx|}}
+        {{>"atoria.v2.actors_partials.item-effect-line-display" effect=effect compact=compact}}
+    {{/each}}
+    </ul>
+</div>
