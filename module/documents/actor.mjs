@@ -1,6 +1,8 @@
 import * as utils from "../utils/module.mjs";
 import * as rolls from "../rolls/module.mjs";
 import RULESET from "../utils/ruleset.mjs";
+import DEFAULT_VALUES from "../utils/default-values.mjs";
+import { helpers } from "../models/module.mjs";
 
 export default class AtoriaActor extends Actor {
   prepareBaseData() {
@@ -107,7 +109,10 @@ export default class AtoriaActor extends Actor {
   getOpposedSkillList() {
     const skill_list = {};
     for (const skill_path of RULESET.character.getOpposingSaves()) {
-      skill_list[skill_path] = this.getSkillTitle(skill_path);
+      skill_list[skill_path] = utils.getSkillTitle(
+        skill_path,
+        DEFAULT_VALUES.associated_skills[skill_path],
+      );
     }
     return skill_list;
   }

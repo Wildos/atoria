@@ -305,6 +305,11 @@ export default class AtoriaItem extends Item {
       if (roll_config === null) return;
       const { used_actable_modifiers } = roll_config;
 
+      let roll_effect = this.system.effect;
+
+      const saves_asked =
+        foundry.utils.deepClone(this.system.saves_asked) ?? [];
+
       const speaker = ChatMessage.getSpeaker({ actor: this });
       ChatMessage.create(
         {
@@ -312,8 +317,7 @@ export default class AtoriaItem extends Item {
           speaker: speaker,
           user: game.user.id,
           type: CONST.CHAT_MESSAGE_STYLES.IC,
-          flavor: this.name,
-          content: this.system.effect,
+          flavor: `<h5>${this.name}</h5>`,
           system: {
             related_items: [
               {
@@ -321,6 +325,8 @@ export default class AtoriaItem extends Item {
                 items_id: used_actable_modifiers.map((elem) => elem.uuid),
               },
             ],
+            savesAsked: saves_asked,
+            effect: roll_effect,
           },
         },
         { rollMode: utils.convertDesiredVisibilityToRollMode(null) },
@@ -421,9 +427,6 @@ export default class AtoriaItem extends Item {
 
     const critical_effect =
       this.type === "spell" ? this.system.critical_effect : "";
-
-    console.debug(critical_effect);
-    console.debug(roll_effect);
 
     ChatMessage.create(
       {

@@ -1493,7 +1493,8 @@
   width: 100%;
   margin: 2px;
 }
-.system-atoria .atoria.chat-message .message-content .inline-roll {
+.system-atoria .atoria.chat-message .message-content .inline-roll,
+.system-atoria .atoria.chat-message .message-post-content .inline-roll {
   white-space: normal;
   word-break: normal;
   background: none;

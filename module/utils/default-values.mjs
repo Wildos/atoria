@@ -25,7 +25,7 @@ DEFAULT_VALUES["character"] = {
     earing: 50,
     smell: 50,
     taste: 50,
-    instinct: 20,
+    instinct: 25,
     magice: 15,
   },
 
