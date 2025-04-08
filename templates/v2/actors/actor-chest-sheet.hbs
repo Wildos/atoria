@@ -1,0 +1,29 @@
+<section class="flexcol">
+    <div class="atoria-inventory-bar atoria-horizontal-bar flexrow colored">
+        <h5 class="title">
+            {{localize "ATORIA.Sheet.Inventory.Title"}}
+        </h5>
+        {{#if editable}}
+            <img class="atoria-create-button" data-action="createItem" data-type="kit" data-open="true"
+            data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.kit" )}}"
+            src="systems/atoria/imgs/knapsack.svg" />
+
+            <img class="atoria-create-button" data-action="createItem" data-type="armor" data-open="true"
+            data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.armor" )}}"
+            src="systems/atoria/imgs/kevlar.svg" />
+
+            <img class="atoria-create-button" data-action="createItem" data-type="weapon" data-open="true"
+            data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.weapon" )}}"
+            src="systems/atoria/imgs/stiletto.svg" />
+        {{/if}}
+        {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-encumbrance" attribute_model=systemFields.encumbrance attribute=actor.system.encumbrance}}
+    </div>
+    {{#unless limited}}
+    {{>"atoria.v2.actors_partials.coins-display" coins_model=systemFields.coins coins=actor.system.coins}}
+    <ul class="item-list">
+    {{#each items as |item idx|}}
+        {{>"atoria.v2.actors_partials.item-line-display" item=item compact=true}}
+    {{/each}}
+    </ul>
+    {{/unless}}
+</section>

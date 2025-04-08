@@ -1,0 +1,69 @@
+<li class="item atoria-item-line-display {{item.type}} atoria-horizontal-bar atoria-expand-control"
+ data-expand-id="{{item._id}}" data-drag="Item" data-item-id="{{item._id}}" >
+    {{#if (eq item.type "kit")}}
+        <input class="item-update float-input" data-name="system.quantity"
+        type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.quantity}}"
+        data-tooltip="{{localize item.systemFields.quantity.label}}" {{disabled (not @root.editable)}}/>
+        {{#if item.system.has_usage_limit}}
+            <input class="item-update float-input" data-name="system.usage_left"
+            type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.usage_left}}"
+            data-tooltip="{{localize item.systemFields.usage_left.label}}" {{disabled (not @root.editable)}} />
+            <input class="float-input" type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.usage_max}}"
+            data-tooltip="{{localize item.systemFields.usage_max.label}}" disabled />
+        {{/if}}
+    {{/if}}
+    {{#if (eq item.type "armor")}}
+        {{#unless compact}}
+        <input class="item-update equip-toggle" data-name="system.is_worn"
+        type="checkbox" data-dtype="Boolean" {{checked item.system.is_worn}}
+         {{disabled (not @root.editable)}} />
+        {{/unless}}
+        {{#if (ne item.system.armor_type "without")}}
+            <label class="armor-type">{{localize (lookup item.systemFields.armor_type.choices item.system.armor_type)}}</label>
+            <hr/>
+        {{/if}}
+    {{/if}}
+    {{#if (eq item.type "weapon")}}
+        {{#unless compact}}
+        <input class="item-update equip-toggle" data-name="system.is_worn"
+        type="checkbox" data-dtype="Boolean" {{checked item.system.is_worn}}
+        {{disabled (not @root.editable)}} />
+        {{/unless}}
+    {{/if}}
+    <label class="name" data-action="expandSection" >{{item.name}}
+        {{#if (and (eq @root.document.type "chest") item.flags.atoria.previous_owner_name)}}
+        [{{item.flags.atoria.previous_owner_name}}]
+        {{/if}}
+    </label>
+    {{#if @root.editable}}
+        <a class="atoria-edit-button" data-action="editItem" data-item-id="{{item._id}}" data-tooltip="{{localize "ATORIA.Sheet.Item.Edit"}}">
+            <i class="fas fa-edit"></i>
+        </a>
+        {{#if @root.isEditingMode}}
+            <a class="atoria-delete-button" data-action="deleteItem" data-item-id="{{item._id}}" data-tooltip="{{localize "ATORIA.Sheet.Item.Delete"}}">
+                <i class="fas fa-trash"></i>
+            </a>
+        {{/if}}
+    {{/if}}
+</li>
+<li class="atoria-expand-direct-data flexcol">
+    <label>{{localize item.systemFields.encumbrance.label}}: {{item.system.encumbrance}}</label>
+    {{#if item.keywords_list}}
+    <label>{{localize item.systemFields.keywords.label}}: {{item.keywords_list}}</label>
+    {{/if}}
+    {{#if (eq item.type "weapon")}}
+
+    {{#if item.system.associated_skill}}
+        {{>"atoria.v2.commons_partials.rollfield-display" rollfield=item.system.damage_roll systemFields=item.systemFields.damage_roll.fields
+            data_path="system.focuser_damage_roll" hide_name=false}}
+    {{/if}}
+
+    {{#if item.system.is_focuser}}
+        {{>"atoria.v2.commons_partials.rollfield-display" rollfield=item.system.focuser_damage_roll systemFields=item.systemFields.focuser_damage_roll.fields
+            data_path="system.focuser_damage_roll" hide_name=false}}
+    {{/if}}
+
+    {{/if}}
+    <textarea class="atoria-resize-ta" data-name="{{item._id}}_description" data-dtype="String" rows="2" disabled
+        >{{cleanLines item.system.description}}</textarea>
+</li>

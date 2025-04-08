@@ -1,0 +1,26 @@
+.atoria-rollfield-display, .atoria-rollfield-input {
+    &.name-hidden {
+        .name {
+            display: none;
+        }
+
+    }
+    .atoria-expand-control:has(+ .atoria-damage-type-area)::before {
+        font-family: var(--font-awesome);
+        font-size: 1em;
+        content: "\f105";
+    }
+    .atoria-expand-control:has(+ .atoria-damage-type-area).expanded::before {
+        content: "\f107";
+    }
+
+    .atoria-damage-type-area {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+.atoria-rollfield-display {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}

@@ -1,0 +1,32 @@
+@armor-title-width: 75px;
+
+.atoria-player-inventory-page {
+    > .flexrow {
+        align-items: flex-start;
+    }
+
+    .armor-list {
+        display: grid;
+        grid-template-columns: @armor-title-width 1fr;
+        align-items: center;
+
+        .title {
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-evenly;
+
+            border: var(--atoria-border-style);
+            border-radius: var(--atoria-border-style-radius);
+
+            max-height: max-content !important;
+
+            > h5 {
+                background-color: transparent !important;
+                border: none;
+            }
+        }
+    }
+}

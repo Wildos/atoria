@@ -1,0 +1,45 @@
+<div class='cost-tooltip flexrow'>
+    {{!-- <div class='flexrow'>
+        <input class='time' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.time.main_amount}}' disabled />
+        <label>{{localize (pluralize (lookup systemFields.time.fields.main_type.choices cost.time.main_type) cost.time.main_amount)}}</label>
+
+        <input class='time' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.time.second_amount}}' disabled />
+        <label>{{localize (pluralize systemFields.time.fields.second_amount.label cost.time.second_amount)}}</label>
+    </div>
+    <div class='flexrow'>
+        <input class='atoria-health' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.health}}' disabled />
+        <input class='atoria-mana' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.mana}}' disabled />
+        <input class='atoria-stamina' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.stamina}}' disabled />
+        <input class='atoria-endurance' type='text' inputmode='numeric' data-dtype='Number' value='{{cost.endurance}}' disabled />
+    </div> --}}
+
+
+    {{#if cost.time.main_amount}}
+    <input type='text' inputmode='numeric' data-dtype='Number' value='{{cost.time.main_amount}}'
+        data-tooltip='{{localize systemFields.time.fields.main_amount.label}}' disabled >
+    <label>{{localize (pluralize (lookup systemFields.time.fields.main_type.choices cost.time.main_type) cost.time.main_amount)}}</label>
+    {{/if}}
+
+    {{#if cost.time.second_amount}}
+    <input type='text' inputmode='numeric' data-dtype='Number' value='{{cost.time.second_amount}}'
+        data-tooltip='{{localize systemFields.time.fields.second_amount.label}}' disabled >
+    <label>{{localize (pluralize systemFields.time.fields.second_amount.label cost.time.second_amount)}}</label>
+    {{/if}}
+    
+    {{#if cost.health}}
+    <input class='atoria-health' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.health}}'
+        data-tooltip='{{localize systemFields.health.label}}' disabled >
+    {{/if}}
+    {{#if cost.mana}}
+    <input class='atoria-mana' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.mana}}'
+        data-tooltip='{{localize systemFields.mana.label}}' disabled >
+    {{/if}}
+    {{#if cost.stamina}}
+    <input class='atoria-stamina' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.stamina}}'
+        data-tooltip='{{localize systemFields.stamina.label}}' disabled >
+    {{/if}}
+    {{#if cost.endurance}}
+    <input class='atoria-endurance' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.endurance}}'
+        data-tooltip='{{localize systemFields.endurance.label}}' disabled >
+    {{/if}}
+</div>

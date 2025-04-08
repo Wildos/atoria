@@ -1,0 +1,35 @@
+{{#if (or force_display @root.isEditingMode (not (includes @root.flags.atoria.hidden_skills data_path)))}}
+<div class="atoria-skill-display">
+    <label data-action="rollable" data-skill-path="{{data_path}}">{{localize skill.label}}</label>
+    <input type="number" name="{{data_path}}.success"
+    value="{{skill.success}}"
+    data-tooltip="{{localize systemFields.success.label}}"
+    {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+
+    {{#if deletable}}
+        <a class="atoria-delete-button" data-action="deleteSkill" data-skill-path="{{data_path}}" data-tooltip="{{localize "ATORIA.Sheet.Skill.Delete"}}">
+            <i class="fas fa-trash"></i>
+        </a>
+    {{/if}}
+
+    {{#if (and (not force_display) @root.editable @root.isEditingMode)}}
+        <input class="atoria-skill-shown-control" data-action="toggleSkillVisibility" type="checkbox" data-dtype="Boolean" data-skill-path="{{data_path}}"
+        {{checked (not (includes @root.flags.atoria.hidden_skills data_path))}}
+        {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+    {{/if}}
+</div>
+{{#unless (or limited (not @root.isEditingMode))}}
+    <div class="atoria-skill-display">
+        <label>{{localize systemFields.critical_success_modifier.label}}</label>
+        <input type="number" data-dtype="Number" name="{{data_path}}.critical_success_modifier"
+        value="{{skill.critical_success_modifier}}"
+        data-tooltip="{{localize systemFields.critical_success_modifier.label}}"
+        {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+        <label>{{localize systemFields.critical_fumble_modifier.label}}</label>
+        <input type="number" data-dtype="Number" name="{{data_path}}.critical_fumble_modifier"
+        value="{{skill.critical_fumble_modifier}}"
+        data-tooltip="{{localize systemFields.critical_fumble_modifier.label}}"
+        {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+    </div>
+{{/unless}}
+{{/if}}

@@ -1,0 +1,95 @@
+<div class="atoria dialog item-dialog" >
+{{#if need_roll}}
+    <script>
+        function onSkillDataChanged() {
+            const select_element = document.getElementById("skill-selector")
+            select_element.dataset["value"] = $(select_element).find(":selected").val();
+        }
+    </script>
+    {{#if secondary_skill_data}}
+    <select class="title" id="skill-selector" name="associated_skill"
+    onchange="onSkillDataChanged()" data-value="main_skill_data">
+        <option value="main_skill_data" selected>{{main_skill_data.label}}
+        </option>
+        <option value="secondary_skill_data">{{secondary_skill_data.label}}
+        </option>
+    </select>
+    {{else}}
+    <h2 class="title">{{main_skill_data.label}}</h2>
+    <input type="hidden" name="associated_skill" value="main_skill_data"/>
+    {{/if}}
+
+    <label>Advantage amount: <input type="number" data-dtype="Number" name="advantage_amount" value="0"/></label>
+    <label>Disadvantage amount: <input type="number" data-dtype="Number" name="disadvantage_amount" value="0"/></label>
+    <label>Luck applied: <input type="number" data-dtype="Number" name="luck_applied" value="0"/></label>
+    <label>DoS mod: <input type="number" data-dtype="Number" name="dos_mod" value="0"/></label>
+
+    <ul class="available-supplementaries">
+        {{#each available_supplementaries as |supplementary key|}}
+            <li class="flexrow">
+                <input type="checkbox" data-dtype="Boolean" name="available_supplementaries.{{key}}" />
+                <h5 data-tooltip="{{supplementary.tooltip}}">{{key}}</h5>
+            </li>
+        {{/each}}
+    </ul>
+    {{/if}}
+<ul class="available-actable_modifiers">
+    {{#each available_actable_modifiers as |actable_mod key|}}
+        <li class="flexrow">
+            <input type="checkbox" data-dtype="Boolean" name="associated_actable_modifiers.{{actable_mod._id}}" {{disabled (and (lte actable_mod.system.limitation.usage_left 0) (ne actable_mod.system.limitation.regain_type "permanent"))}} />
+            <h5 data-tooltip="{{actable_mod.system.description}}">{{actable_mod.name}}</h5>
+            <!--Alteration-->{{#if actable_mod.system.skill_alteration.has_skill_alteration}}
+            <label>{{localize (lookup actable_mod.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices
+                actable_mod.system.skill_alteration.skill_alteration_type)}}</label>
+            {{/if}}
+            <!--Limitation-->{{#unless (eq actable_mod.system.limitation.regain_type "permanent")}}
+            <label class="usage">{{actable_mod.system.limitation.usage_left}} / {{actable_mod.system.limitation.usage_max}}</label>
+            <label>{{actable_mod.system.limitation.regain_type}}</label>
+            {{/unless}}
+        </li>
+    {{/each}}
+</ul>
+{{#if need_roll}}
+    <ul class="available-features">
+        {{#each main_skill_data.associated_features as |feature key|}}
+            <li class="flexrow" data-related-skill="main">
+                <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
+                <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
+                <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
+                {{/if}}
+                <h5 data-tooltip="{{feature.system.description}}">{{feature.name}}</h5>
+
+                <!--Limitation-->{{#unless (eq feature.system.limitation.regain_type "permanent")}}
+                <label class="usage">{{feature.system.limitation.usage_left}} / {{feature.system.limitation.usage_max}}</label>
+                <label>{{feature.system.limitation.regain_type}}</label>
+                {{/unless}}
+            </li>
+        {{/each}}
+        {{#if secondary_skill_data}}
+        {{#each secondary_skill_data.associated_features as |feature key|}}
+            <li class="flexrow" data-related-skill="secondary">
+                <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
+                <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
+                <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
+                {{/if}}
+                <h5 data-tooltip="{{feature.system.description}}">{{feature.name}}</h5>
+
+                <!--Limitation-->{{#unless (eq feature.system.limitation.regain_type "permanent")}}
+                <label class="usage">{{feature.system.limitation.usage_left}} / {{feature.system.limitation.usage_max}}</label>
+                <label>{{feature.system.limitation.regain_type}}</label>
+                {{/unless}}
+            </li>
+        {{/each}}
+        {{/if}}
+    </ul>
+    <label>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Label"}}</label>
+    <select name="asked_visibility">
+        {{#unless is_main_blind_roll}}
+        <option value="public" {{#if (eq default_roll_mode "public")}}selected{{/if}}>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Public"}}</option>
+        <option value="private" {{#if (eq default_roll_mode "private")}}selected{{/if}}>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Private"}}</option>
+        <option value="self" {{#if (eq default_roll_mode "self")}}selected{{/if}}>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Self"}}</option>
+        {{/unless}}
+        <option value="blind" {{#if (eq default_roll_mode "blind")}}selected{{/if}}>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Blind"}}</option>
+    </select>
+{{/if}}
+</form>

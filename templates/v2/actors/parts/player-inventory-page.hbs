@@ -1,0 +1,72 @@
+<div class="atoria-player-inventory-page tab {{#if is_active_page}}active{{/if}}" data-group="primary" data-tab="inventory">
+    <div class="flexrow">
+        <div class="first-col">
+            <div class="atoria-horizontal-bar flexrow">
+                <h5 class="title">
+                    {{localize "ATORIA.Sheet.Player.Inventory.Equipement.Armor"}}
+                </h5>
+            </div>
+            {{#each equipped_items.armors as |item_cat_data cat_idx|}}
+                <div class="armor-list">
+                    <div class="title colored">
+                        <h5>
+                            {{localize item_cat_data.label}}
+                        </h5>
+                    </div>
+                    <ul class="item-list">
+                    {{#each item_cat_data.items as |item idx|}}
+                        {{>"atoria.v2.actors_partials.item-line-display" item=item}}
+                    {{/each}}
+                    </ul>
+                </div>
+            {{/each}}
+
+
+            <div class="atoria-horizontal-bar flexrow">
+                <h5 class="title">
+                    {{localize "ATORIA.Sheet.Player.Inventory.Equipement.Weapon"}}
+                </h5>
+            </div>
+            <ul class="item-list">
+            {{#each equipped_items.weapons as |item idx|}}
+                {{>"atoria.v2.actors_partials.item-line-display" item=item}}
+            {{/each}}
+            </ul>
+        </div>
+        <div class="second-col">
+            <div class="atoria-inventory-bar atoria-horizontal-bar flexrow colored">
+                <h5 class="title">
+                    {{localize "ATORIA.Sheet.Player.Inventory.Title"}}
+                </h5>
+                    {{#if editable}}
+                    <div class="atoria-create-button-group">
+                        <img class="atoria-create-button" data-action="createItem" data-type="kit" data-open="true"
+                        data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.kit" )}}"
+                        src="systems/atoria/imgs/knapsack.svg" />
+
+                        <img class="atoria-create-button" data-action="createItem" data-type="armor" data-open="true"
+                        data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.armor" )}}"
+                        src="systems/atoria/imgs/kevlar.svg" />
+
+                        <img class="atoria-create-button" data-action="createItem" data-type="weapon" data-open="true"
+                        data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.weapon" )}}"
+                        src="systems/atoria/imgs/stiletto.svg" />
+                    </div>
+                    {{/if}}
+            </div>
+
+            <ul class="item-list">
+            {{#each inventory_items_sort as |cat_idx key|}}
+                {{#with (lookup ../inventory_items cat_idx) as |item_cat_data|}}
+                    <h6 class="title" data-item-id="" data-inventory-cat="{{cat_idx}}">
+                        {{localize item_cat_data.label}}
+                    </h6>
+                    {{#each item_cat_data.items as |item idx|}}
+                        {{>"atoria.v2.actors_partials.item-line-display" item=item}}
+                    {{/each}}
+                {{/with}}
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>

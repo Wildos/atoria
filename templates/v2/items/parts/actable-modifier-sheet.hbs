@@ -1,0 +1,11 @@
+<div class="atoria-item-actable-modifier-parts grid-2col">
+    {{>"atoria.v2.commons_partials.cost-input" cost=item.system.cost
+    data_path="system.cost" systemFields=systemFields.cost.fields cssClasses="double-col-field"}}
+    {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation
+    data_path="system.limitation" systemFields=systemFields.limitation.fields cssClasses="double-col-field"}}
+
+    {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=item.system.skill_alteration
+    item_actor=true
+    data_path="system.skill_alteration" systemFields=systemFields.skill_alteration.fields cssClasses="double-col-field"}}
+
+</div>

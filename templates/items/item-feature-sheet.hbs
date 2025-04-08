@@ -1,0 +1,38 @@
+<form class="{{cssClass}} {{item.type}}" autocomplete="off">
+    {{>"atoria.commons.simple-header" object=item big_image=false}}
+
+    <section class="content">
+        <label>{{localize systemFields.use_color.label}}:</label>
+        <div class="color-control flexrow">
+            <input type="checkbox" data-dtype="Boolean" name="system.use_color" {{checked item.system.use_color}}
+            data-tooltip="{{localize systemFields.use_color.label}}"/>
+            <input type="color" name="system.color" value="{{item.system.color}}"
+            placeholder="{{ localize 'ATORIA.FeatureColorTitle' }}" data-tooltip="{{localize systemFields.color.label}}"/>
+        </div>
+
+
+        <label>{{localize "ATORIA.Sheet.Limitation"}}</label>
+        {{>"atoria.items_partials.limitation-input" systemFields=systemFields.limitation.fields
+        limitation=item.system.limitation data_path="system.limitation"
+        }}
+
+        <label>{{localize systemFields.has_skill_alteration.label}}</label>
+        <input type="checkbox" data-dtype="Boolean" name="system.has_skill_alteration" {{checked item.system.has_skill_alteration}}
+        data-tooltip="{{localize systemFields.has_skill_alteration.label}}"/>
+        {{#if item.system.has_skill_alteration}}
+            {{#if item.actor}}
+                <select name="system.skill_alteration_type"
+                data-tooltip="{{localize systemFields.skill_alteration_type.label}}">
+                    {{selectOptions systemFields.skill_alteration_type.choices selected=item.system.skill_alteration_type localize=true}}
+                </select>
+
+                <select name="system.associated_skill"
+                data-tooltip="{{localize systemFields.associated_skill.label}}">
+                    {{selectOptions associated_skills selected=item.system.associated_skill localize=true}}
+                </select>
+            {{else}}
+                <label class="error double-col-field">{{localize "ATORIA.Sheet.Feature.Require_actor"}}</label>
+            {{/if}}
+        {{/if}}
+    </section>
+</form>

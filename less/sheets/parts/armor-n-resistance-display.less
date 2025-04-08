@@ -1,0 +1,17 @@
+.atoria-armor-display, .atoria-resistance-display {
+    display: grid;
+    grid-template-columns: 1fr min-content min-content;
+
+    > h5 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        grid-column: 1 / span 2;
+        background-color: var(--disabled-background-color) !important;
+    }
+    > .atoria-expand-following-data {
+        display: grid;
+        grid-column: 1 / span 3;
+        grid-template-columns: subgrid;
+    }
+}

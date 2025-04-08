@@ -1,0 +1,49 @@
+<div class="atoria dialog atoria-skill-dialog grid-2col">
+    <h3 class="title double-col-field">{{skill_name}}</h3>
+    <input type="hidden" name="associated_skill" value="{{skill_path}}"/>
+    <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Advantage_amount" }}</label><input type="number" data-dtype="Number" name="advantage_amount" value="0"/></div>
+    <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Disadvantage_amount" }}</label><input type="number" data-dtype="Number" name="disadvantage_amount" value="0"/></div>
+    <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Luck_applied" }}</label><input type="number" data-dtype="Number" name="luck_applied" value="0"/></div>
+    <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.DoS_mod" }}</label><input type="number" data-dtype="Number" name="dos_mod" value="0"/></div>
+    <ul class="available-features double-col-field">
+        {{#each associated_features as |feature key|}}
+            <li class="flexrow atoria-expand-control"
+            oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
+                <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
+                <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
+                <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
+                {{/if}}
+                <h5>{{feature.name}}</h5>
+
+                <!--Limitation-->
+                {{>"atoria.v2.commons_partials.time-limitation-display" limitation=feature.system.limitation
+                systemFields=feature.systemFields.limitation.fields }}
+            </li>
+            <li class="atoria-expand-direct-data">
+                <p style="white-space: pre-line;">{{{feature.system.description}}}</p>
+            </li>
+        {{/each}}
+    </ul>
+    <ul class="available-keywords double-col-field">
+        {{#each associated_keywords as |keyword key|}}
+            <li class="flexrow atoria-expand-control"
+            oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
+                <input type="checkbox" data-dtype="Boolean" name="associated_keywords.{{keyword.name}}" />
+                <label>{{localize keyword.skill_alteration_type_label}}</label>
+                <h5>{{localize keyword.label}}</h5>
+            </li>
+            <li class="atoria-expand-direct-data">
+                <p style="white-space: pre-line;">{{{keyword.description}}}</p>
+            </li>
+        {{/each}}
+    </ul>
+    <label>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Label"}}</label>
+    <select name="asked_visibility">
+        {{#unless is_blind_roll}}
+        <option value="public" {{#if (eq default_roll_mode "public")}}selected{{/if}}>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Public"}}</option>
+        <option value="private" {{#if (eq default_roll_mode "private")}}selected{{/if}}>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Private"}}</option>
+        <option value="self" {{#if (eq default_roll_mode "self")}}selected{{/if}}>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Self"}}</option>
+        {{/unless}}
+        <option value="blind" {{#if (eq default_roll_mode "blind")}}selected{{/if}}>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Blind"}}</option>
+    </select>
+</div>

@@ -1,0 +1,34 @@
+<li class="item atoria-item-line-display {{item.type}} atoria-horizontal-bar atoria-expand-control"
+data-action="expandSection"  data-expand-id="{{item._id}}" data-drag="Item" data-item-id="{{item._id}}"
+{{#if item.system.use_color}}style="background-color: {{item.system.color}};"{{/if}}>
+    <label class="name" >{{item.name}}</label>
+
+    {{#if (ne item.system.limitation.regain_type "permanent")}}
+        {{>"atoria.v2.commons_partials.time-limitation-display" limitation=item.system.limitation
+        systemFields=item.systemFields.limitation.fields }}
+    {{/if}}
+
+    {{#if @root.editable}}
+        <a class="atoria-edit-button" data-action="editItem" data-item-id="{{item._id}}" data-tooltip="{{localize "ATORIA.Sheet.Item.Edit"}}">
+            <i class="fas fa-edit"></i>
+        </a>
+        {{#if @root.isEditingMode}}
+            <a class="atoria-delete-button" data-action="deleteItem" data-item-id="{{item._id}}" data-tooltip="{{localize "ATORIA.Sheet.Item.Delete"}}">
+                <i class="fas fa-trash"></i>
+            </a>
+        {{/if}}
+    {{/if}}
+</li>
+<li class="atoria-expand-direct-data"
+{{#if item.system.use_color}}style="background-color: {{item.system.color}};"{{/if}}>
+    {{#if item.system.skill_alteration.has_skill_alteration}}
+        <label>{{localize (lookup item.systemFields.skill_alteration.fields.skill_alteration_type.choices item.system.skill_alteration.skill_alteration_type)}}</label>
+        {{#if item.system.skill_alteration.associated_skill}}
+        <label>{{localize (lookup @root.associated_skills item.system.skill_alteration.associated_skill)}}</label>
+        {{else}}
+        <label>{{localize "ATORIA.Sheet.Associated_skill_blank"}}</label>
+        {{/if}}
+    {{/if}}
+    <textarea class="atoria-resize-ta" data-name="{{item._id}}_description" data-dtype="String" rows="2" disabled
+        >{{cleanLines item.system.description}}</textarea>
+</li>

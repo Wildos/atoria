@@ -1,783 +1,734 @@
-import { AtoriaTestParameterDialog } from "../applications/test-dialog/test-parameter-dialog.mjs"
-import { skillRoll } from "../rolls/dice.mjs"
-import { get_critical_value, get_fumble_value } from "../utils.mjs"
+import * as utils from "../utils/module.mjs";
+import * as rolls from "../rolls/module.mjs";
+import RULESET from "../utils/ruleset.mjs";
 
-/**
- * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
- * @extends {Actor}
- */
-export class AtoriaActor extends Actor {
-  _spells_displayed = [];
-
-  /** @override */
-  prepareData() {
-    // Prepare data for the actor. Calling the super version of this executes
-    // the following, in order: data reset (to clear active effects),
-    // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
-    // prepareDerivedData().
-    super.prepareData();
-  }
-
-  /** @override */
+export default class AtoriaActor extends Actor {
   prepareBaseData() {
-    // Data modifications in this step occur before processing embedded
-    // documents or derived data.
+    const actorData = this;
+    actorData.system.encumbrance.value = 0;
+    switch (this.type) {
+      case "player-character":
+        actorData.system.movement = utils.default_values.character.movement;
+        actorData.system.armor_fields =
+          utils.default_values.models.helpers.armorField();
+        actorData.system.armor = utils.default_values.models.helpers
+          .armorField()
+          .getInitialValue({});
+        actorData.system.resistance_fields =
+          utils.default_values.models.helpers.resistanceField();
+        actorData.system.resistance = utils.default_values.models.helpers
+          .resistanceField()
+          .getInitialValue({});
+        break;
+    }
   }
 
-  /**
-   * @override
-   * Augment the basic actor data with additional dynamic data. Typically,
-   * you'll want to handle most of your calculated/derived data in this step.
-   * Data calculated in this step should generally not exist in template.json
-   * (such as ability modifiers rather than ability scores) and should be
-   * available both inside and outside of character sheets (such as if an actor
-   * is queried and has a roll executed directly from it).
-   */
   prepareDerivedData() {
     const actorData = this;
-    const systemData = actorData.system;
-    const flags = actorData.flags.atoria || {};
-
-    // Make separate methods for each Actor type (character, npc, etc.) to keep
-    // things organized.
-    this._prepareCharacterData(actorData);
-    this._prepareNpcData(actorData);
-  }
-
-  /**
-   * Prepare Character type specific data
-   */
-  _prepareCharacterData(actorData) {
-    if (actorData.type !== 'character') return;
-
-    // Make modifications to data here. For example:
-    const systemData = actorData.system;
-    systemData.perceptionsListPair = [];
-    let perception_pair = [];
-    for (let perception in systemData.perceptions) {
-      perception_pair.push({
-        "id": perception,
-        "label": game.i18n.localize(CONFIG.ATORIA.PERCEPTION_LABEL[perception]),
-        "success_value": systemData.perceptions[perception].success_value
-      });
-      if (perception_pair.length == 2) {
-        systemData.perceptionsListPair.push(perception_pair);
-        perception_pair = [];
-      }
-    }
-  }
-
-  /**
-   * Prepare NPC type specific data.
-   */
-  _prepareNpcData(actorData) {
-    if (actorData.type !== 'npc') return;
-
-    // Make modifications to data here. For example:
-    const systemData = actorData.system;
-    systemData.perceptionsList = [];
-    for (let perception in systemData.perceptions) {
-      systemData.perceptionsList.push({
-        "id": perception,
-        "label": game.i18n.localize(CONFIG.ATORIA.PERCEPTION_LABEL[perception]),
-        "success_value": systemData.perceptions[perception].success_value
-      })
-    }
-  }
-
-  /**
-   * Override getRollData() that's supplied to rolls.
-   */
-  getRollData() {
-    const data = super.getRollData();
-
-    // Prepare character roll data.
-    this._getCharacterRollData(data);
-    this._getNpcRollData(data);
-
-    return data;
-  }
-
-  /**
-   * Prepare character roll data.
-   */
-  _getCharacterRollData(data) {
-    if (this.type !== 'character') return;
-
-  }
-
-  /**
-   * Prepare NPC roll data.
-   */
-  _getNpcRollData(data) {
-    if (this.type !== 'npc') return;
-
-    // Process additional NPC data here.
-  }
-
-
-
-  async _executeRoll(data_type, data_id) {
-    switch (data_type) {
-      case 'perception': {
-        let perception_id = data_id;
-        this.rollPerception(perception_id, {});
-        break;
-      }
-      case 'action': {
-        let action_id = data_id;
-        this.rollAction(action_id, {});
-        break;
-      }
-      case 'skill': {
-        let skill_id = data_id;
-        this.rollSkill(skill_id, {});
-        break;
-      }
-      case 'initiative': {
-        this.rollInitiativeDialog({});
-        break;
-      }
-      case 'spell': {
-        let spell_id = data_id;
-        this.rollSpell(spell_id, {});
-        break;
-      }
-      case 'spell-detail': {
-        let spell_id = data_id;
-        await this.sendSpellDetail(spell_id, {});
-        break;
-      }
-      case 'knowledge': {
-        let knowledge_id = data_id;
-        this.rollKnowledge(knowledge_id, {});
-        break;
-      }
-      case 'magic': {
-        let magic_id = data_id;
-        this.rollMagic(magic_id, {});
-        break;
-      }
-      case 'gear-weapon': {
-        let weapon_id = data_id;
-        this.rollWeapon(weapon_id, {});
-        break;
-      }
-    }
-  }
-
-
-
-
-
-
-  /**
-   * Roll a perception check.
-   * Prompt the user for input on which variety of roll they want to do.
-   * @param {string} perceptionId    The perception id (e.g. "str")
-   * @param {object} options      Options which configure how perception tests or saving throws are rolled
-   */
-  rollPerception(perceptionId, options = {}) {
-    const label = game.i18n.localize(CONFIG.ATORIA.PERCEPTION_LABEL[perceptionId]);
-    const perception_options = mergeObject(options, {
-      rollMode: "blindroll",
-      dialogOptions: {
-        force_rollmode: true,
-        forced_rollmode: "blindroll"
-      },
-      critical: get_critical_value(Number(this.system.perceptions[perceptionId].success_value), Number(this.system.perceptions[perceptionId].critical_mod)),
-      fumble: get_fumble_value(Number(this.system.perceptions[perceptionId].success_value), Number(this.system.perceptions[perceptionId].fumble_mod)),
-    });
-    this._roll({
-      title: `Perception - ${label}`,
-      targetValue: this.system.perceptions[perceptionId].success_value,
-    }, perception_options);
-  }
-
-  /**
-     * Roll an action check.
-     * Prompt the user for input on which variety of roll they want to do.
-     * @param {string} actionId    The action uuid
-     * @param {object} options      Options which configure how perception tests or saving throws are rolled
-     */
-  rollAction(actionId, options = {}) {
-    let action_item = this.items.get(actionId);
-
-    const roll_options = foundry.utils.mergeObject(options, {
-      critical: get_critical_value(Number(action_item.system.success_value), Number(action_item.system.critical_mod)),
-      fumble: get_fumble_value(Number(action_item.system.success_value), Number(action_item.system.fumble_mod)),
-    });
-
-    this._roll({
-      title: `${action_item.name}`,
-      targetValue: action_item.system.success_value,
-      effect_roll: action_item.system.effect_roll
-    }, roll_options);
-  }
-
-  _get_element_with_matching_id_from_list(element_list, wanted_id) {
-    let found_element = null;
-    Object.entries(element_list).forEach(([k, v]) => {
-      if (v._id === wanted_id) {
-        found_element = v;
-        return
-      }
-    });
-    return found_element;
-  }
-
-  rollWeapon(weaponId, options = {}) {
-    let weapon_item = this.items.get(weaponId);
-    let linked_skill_data = this.system.skills["combat"][weapon_item.system.linked_combative_skill];
-
-    let action_modifiers = {};
-    let known_action_modifier = this.get_action_modifiers();
-    Object.entries(weapon_item.system.related_techniques).forEach(([k, v]) => {
-      if (v) {
-        let found_technique = this._get_element_with_matching_id_from_list(known_action_modifier["technique"], k);
-        if (found_technique != null) {
-          action_modifiers[k] = {
-            used: false,
-            name: found_technique.name,
-            cost: found_technique.system.cost,
-            effect: found_technique.system.effect
-          }
-        }
-      }
-    });
-
-    const roll_options = foundry.utils.mergeObject(options, {
-      critical: get_critical_value(Number(linked_skill_data.success_value), Number(linked_skill_data.critical_mod) + Number(weapon_item.system.critical_mod)),
-      fumble: get_fumble_value(Number(linked_skill_data.success_value), Number(linked_skill_data.fumble_mod) + Number(weapon_item.system.fumble_mod)),
-      data: {
-        action_modifiers: action_modifiers,
-      },
-    });
-
-    this._roll({
-      title: `${weapon_item.name}`,
-      targetValue: linked_skill_data.success_value,
-      effect_roll: weapon_item.system.damage_roll,
-    }, roll_options);
-  }
-
-
-  /**
-     * Roll a skill check.
-     * Prompt the user for input on which variety of roll they want to do.
-     * @param {string} skillId    The skill uuid
-     * @param {object} options      Options which configure how perception tests or saving throws are rolled
-     */
-  rollSkill(skillId, options = {}) {
-    switch (this.type) {
-      case 'npc': {
-        let skill_item = this.items.get(skillId);
-
-        const roll_options = foundry.utils.mergeObject(options, {
-          critical: get_critical_value(Number(skill_item.system.success_value), Number(skill_item.system.critical_mod)),
-          fumble: get_fumble_value(Number(skill_item.system.success_value), Number(skill_item.system.fumble_mod)),
-        });
-
-        this._roll({
-          title: `${skill_item.name}`,
-          targetValue: skill_item.system.success_value
-        }, roll_options);
-        break;
-      }
-      case 'character': {
-        let skill_item = this.items.get(skillId);
-        if (!skill_item) {
-          const [cat_id, skill_id] = skillId.split('.');
-          if (!cat_id || !skill_id) return ui.notifications.warn("This actor does not own this skill");
-          let skill_data = this.system.skills[cat_id][skill_id];
-
-          const roll_options = foundry.utils.mergeObject(options, {
-            critical: get_critical_value(Number(skill_data.success_value), Number(skill_data.critical_mod)),
-            fumble: get_fumble_value(Number(skill_data.success_value), Number(skill_data.fumble_mod)),
-          });
-
-          const cat_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[cat_id])}`;
-          const skill_name = `${game.i18n.localize(CONFIG.ATORIA.SKILLS_LABEL[skill_id])}`;
-          this._roll({
-            title: `${cat_name} - ${skill_name}`,
-            targetValue: skill_data.success_value
-          }, roll_options);
-          return;
-        }
-
-        const roll_options = foundry.utils.mergeObject(options, {
-          critical: get_critical_value(Number(skill_item.system.success_value), Number(skill_item.system.critical_mod)),
-          fumble: get_fumble_value(Number(skill_item.system.success_value), Number(skill_item.system.fumble_mod)),
-        });
-
-        const skill_item_cat_name = this.get_item_cat_from_knowledge(skillId) + this.get_item_cat_from_magic(skillId);
-
-        this._roll({
-          title: `${skill_item_cat_name} - ${skill_item.name}`,
-          targetValue: skill_item.system.success_value
-        }, roll_options);
-        break;
-      }
-    }
-  }
-
-  get_item_cat_from_knowledge(item_id) {
-    for (const group_key in this.system.knowledges) {
-      const knowledge_cats = this.system.knowledges[group_key];
-      for (const cat_key in knowledge_cats) {
-        const sub_skills = [];
-        for (const sub_skill_key in knowledge_cats[cat_key].sub_skills) {
-          const skill_item = this.items.get(knowledge_cats[cat_key].sub_skills[sub_skill_key]);
-          if (!skill_item) continue;
-          if (skill_item.id == item_id) {
-            return game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[cat_key]);
-          }
-        }
-      }
-    }
-    return "";
-  }
-
-  get_item_cat_from_magic(item_id) {
-    for (const cat_key in this.system.magics) {
-      const sub_skills = [];
-      for (const sub_skill_key in this.system.magics[cat_key].sub_skills) {
-        const skill_item = this.items.get(this.system.magics[cat_key].sub_skills[sub_skill_key]);
-        if (!skill_item) continue;
-        if (skill_item && skill_item.id == item_id) {
-          return game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[cat_key]);
-        }
-      }
-    }
-    return "";
-  }
-
-  rollKnowledge(knowledge_id, options = {}) {
-    const knowledge_id_parts = knowledge_id.split('.');
-    const knowledge_group = knowledge_id_parts[0];
-    const knowledge_category = knowledge_id_parts[1];
-    const sub_knowledge_index = knowledge_id_parts[2];
-    const sub_knowledge_id = this.system.knowledges[knowledge_group][knowledge_category].sub_skills[sub_knowledge_index];
-    let knowledge_item = this.items.get(sub_knowledge_id);
-
-    const roll_options = foundry.utils.mergeObject(options, {
-      critical: get_critical_value(Number(knowledge_item.system.success_value), Number(knowledge_item.system.critical_mod)),
-      fumble: get_fumble_value(Number(knowledge_item.system.success_value), Number(knowledge_item.system.fumble_mod)),
-    });
-
-    this._roll({
-      title: `${game.i18n.localize(CONFIG.ATORIA.KNOWLEDGES_LABEL[knowledge_category])} - ${knowledge_item.name}`,
-      targetValue: knowledge_item.system.success_value
-    }, roll_options);
-  }
-
-  rollMagic(magic_id, options = {}) {
-    const magic_id_parts = magic_id.split('.');
-    const magic_category = magic_id_parts[0];
-    const sub_magic_index = magic_id_parts[1];
-    const sub_magic_id = this.system.magics[magic_category].sub_skills[sub_magic_index];
-    let magic_item = this.items.get(sub_magic_id);
-
-    const roll_options = foundry.utils.mergeObject(options, {
-      critical: get_critical_value(Number(magic_item.system.success_value), Number(magic_item.system.critical_mod)),
-      fumble: get_fumble_value(Number(magic_item.system.success_value), Number(magic_item.system.fumble_mod)),
-    });
-
-    this._roll({
-      title: `${game.i18n.localize(CONFIG.ATORIA.MAGICS_LABEL[magic_category])} - ${magic_item.name}`,
-      targetValue: magic_item.system.success_value
-    }, roll_options);
-  }
-
-
-
-  _spell_supp_to_action_modifier(spell_supp_name, spell_supp) {
-    return {
-      used: false,
-      name: spell_supp_name,
-      cost: spell_supp.cost,
-      effect: spell_supp.effect_description,
-    }
-  }
-
-
-  rollSpell(spellId, options = {}) {
-    if (this.type !== "character") return;
-
-    let spell_data = this.items.get(spellId);
-
-    let action_modifiers = {};
-    Object.entries(spell_data.system.spell_supps).forEach(([k, v]) => {
-      action_modifiers[k] = this._spell_supp_to_action_modifier(game.i18n.format(game.i18n.localize("ATORIA.SuppNaming"), { index: k }), v);
-    });
-
-    let known_action_modifier = this.get_action_modifiers();
-    Object.entries(spell_data.system.related_incantatory_additions).forEach(([k, v]) => {
-      if (v) {
-        let found_incantatory_addition = this._get_element_with_matching_id_from_list(known_action_modifier["incantatory_addition"], k);
-        if (found_incantatory_addition != null) {
-          action_modifiers[k] = {
-            used: false,
-            name: found_incantatory_addition.name,
-            cost: found_incantatory_addition.system.cost,
-            effect: found_incantatory_addition.system.effect
-          }
-        }
-      }
-    });
-
-
-    const roll_options = foundry.utils.mergeObject(options, {
-      critical: spell_data.system.critical_value,
-      fumble: 101 - spell_data.system.fumble_value,
-      data: {
-        action_modifiers: action_modifiers,
-      },
-    });
-
-    this._roll({
-      title: spell_data.name,
-      targetValue: spell_data.system.success_value,
-      effect_description: spell_data.system.effect_description,
-      critical_effect_description: spell_data.system.critical_effect_description,
-    }, roll_options);
-  }
-  // {
-  //         "maxi": {
-  //           used: false,
-  //           cost:  {
-  //             health: 1,
-  //             mana: 0,
-  //             stamina: 0,
-  //             endurance: 5,
-  //             restriction: "max 3",
-  //           },
-  //           effect: "Ca fait [bim: 1d2] [bam:2d4] [boum:12d12] !"
-  //         },
-  //         "target": {
-  //           used: false,
-  //           cost:  {
-  //             health: 0,
-  //             mana: 2,
-  //             stamina: 1,
-  //             endurance: 0,
-  //             restriction: "Requiert 3 cibles",
-  //           },
-  //           effect: "Ca fait [Kadabra: 2d4-2]!"
-  //         }
-  //       }
-
-
-  async sendSpellDetail(spellId, options = {}) {
-    if (this.type !== "character") return;
-
-    const spell_data = this.items.get(spellId);
-    const speaker = ChatMessage.getSpeaker({ actor: this })
-    const content = await renderTemplate("systems/atoria/templates/common/spell-detail.hbs", {
-      spell: spell_data,
-      isChatMessage: true
-    });
-    ChatMessage.create({
-      speaker: speaker,
-      whisper: game.users.filter(u => u.isGM),
-      blind: false,
-      content
-    });
-  }
-
-
-  /**
-   *
-   * @param {any} data data relevant to the specific test (such as what characteristic/item to use)
-   * @param {object} options Optional properties to customize the test
-   * @param {boolean} roll Whether to evaluate the test or not
-   * @returns
-   */
-  async _roll(data, options = {}) {
-    let speaker = ChatMessage.getSpeaker({ actor: this });
-    speaker.alias = this.name;
-    const rollData = foundry.utils.mergeObject({
-      data: data,
-      title: `${data.title}`,
-      flavor: `${data.title}`,
-      messageData: {
-        speaker: speaker
-      },
-      related_actor: this,
-    }, options);
-    let skill_roll = await skillRoll(rollData);
-
-    return skill_roll;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Get an un-evaluated EffectRoll instance used to roll initiative for this Actor.
-   * @param {object} [options]                        Options which modify the roll
-   * @param {EffectRoll.ADV_MODE} [options.advantageMode]    A specific advantage mode to apply
-   * @param {string} [options.flavor]                     Special flavor text to apply
-   * @returns {EffectRoll}                               The constructed but unevaluated D20Roll
-   */
-  getInitiativeRoll(options = {}) {
-    // Use a temporarily cached initiative roll
-    if (this._cachedInitiativeRoll) return this._cachedInitiativeRoll.clone();
-
-    // Obtain required data
-    const data = this.getRollData();
-    options = foundry.utils.mergeObject({
-      flavor: options.flavor ?? game.i18n.localize("ATORIA.Initiative"),
-      critical: null,
-      fumble: null
-    }, options);
-
-    // Create the roll
-    const formula = this.system.initiative;
-    return new CONFIG.Dice.EffectRoll(formula, data, options);
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Roll initiative for this Actor with a dialog that provides an opportunity to elect advantage or other bonuses.
-   * @param {object} [rollOptions]      Options forwarded to the Actor#getInitiativeRoll method
-   * @returns {Promise<void>}           A promise which resolves once initiative has been rolled for the Actor
-   */
-  async rollInitiativeDialog(rollOptions = {}) {
-    // Create and configure the Initiative roll
-    const roll = this.getInitiativeRoll(rollOptions);
-    // Temporarily cache the configured roll and use it to roll initiative for the Actor
-    this._cachedInitiativeRoll = roll;
-    await this.rollInitiative({ createCombatants: true });
-    delete this._cachedInitiativeRoll;
-  }
-
-  /* -------------------------------------------- */
-
-  /** @inheritdoc */
-  async rollInitiative(options = {}) {
-    /**
-     * A hook event that fires before initiative is rolled for an Actor.
-     * @function atoria.preRollInitiative
-     * @memberof hookEvents
-     * @param {Actor5e} actor  The Actor that is rolling initiative.
-     * @param {D20Roll} roll   The initiative roll.
-     */
-    if (Hooks.call("atoria.preRollInitiative", this, this._cachedInitiativeRoll) === false) return;
-
-    const combat = await super.rollInitiative(options);
-    const combatants = this.isToken ? this.getActiveTokens(false, true).reduce((arr, t) => {
-      const combatant = game.combat.getCombatantByToken(t.id);
-      if (combatant) arr.push(combatant);
-      return arr;
-    }, []) : [game.combat.getCombatantByActor(this.id)];
-
-    /**
-     * A hook event that fires after an Actor has rolled for initiative.
-     * @function atoria.rollInitiative
-     * @memberof hookEvents
-     * @param {Actor5e} actor           The Actor that rolled initiative.
-     * @param {Combatant[]} combatants  The associated Combatants in the Combat.
-     */
-    Hooks.callAll("atoria.rollInitiative", this, combatants);
-    return combat;
-  }
-
-
-  setSpellToDisplayed(spellId) {
-    if (this.type !== "character") return;
-
-    if (this._spells_displayed.includes(spellId)) {
-      this._spells_displayed = this._spells_displayed.filter(e => { return e !== spellId });
-    }
-    else this._spells_displayed.push(spellId);
-  }
-
-  onSortItems(type, filters) {
-    let sort_values = [];
-    let valid_items_ids = [];
-
-    for (let [key, element] of this.items.entries()) {
-      if (element.type == type) {
-        let is_matching = true;
-
-        for (let filter_key in filters) {
-          if (filters[filter_key] != element.system[filter_key]) {
-            is_matching = false;
-            break;
-          }
-        }
-
-        if (is_matching) {
-          sort_values.push(element.sort);
-          valid_items_ids.push(key);
-        }
-      }
-    };
-
-    sort_values.sort((a, b) => { return b - a; });
-    valid_items_ids.sort((item_a, item_b) => {
-      return this.items.get(item_a).name.localeCompare(this.items.get(item_b).name);
-    })
-
-    for (let key of valid_items_ids) {
-      let new_sort_value = sort_values.pop();
-      let item = this.items.get(key)
-      item.update({
-        "sort": new_sort_value
-      });
-    }
-  }
-
-
-  get_action_modifiers() {
-    const action_modifiers = {
-      "technique": [],
-      "incantatory_addition": []
-    };
-    // Iterate through items, allocating to containers
     for (let i of this.items) {
-      // Append to action_modifiers.
-      if (i.type === 'action-modifier') {
-        const parseHTML = new DOMParser().parseFromString(i.system.effect, 'text/html');
-        i.system.effect_cleaned = parseHTML.body.textContent || '';
-        switch (i.system.subtype) {
-          case "technique":
-            action_modifiers["technique"].push(i);
-            break;
-          case "incantatory_addition":
-            action_modifiers["incantatory_addition"].push(i);
-            break;
-          default:
-            console.error(`Unknown action modifier subtype found in ${i._id}`);
-        }
-      }
+      actorData.system.encumbrance.value += i.getEncumbrance();
     }
-    return action_modifiers;
+    switch (this.type) {
+      case "player-character":
+        actorData.system.mana.current_max =
+          utils.ruleset.character.getCurrentMaxMana(this);
+        actorData.system.stamina.current_max =
+          utils.ruleset.character.getCurrentMaxStamina(this);
+        for (let i of this.items) {
+          actorData.system.armor.main = Math.max(
+            actorData.system.armor.main,
+            utils.ruleset.character.getMainArmorValue(i),
+          );
+        }
+        break;
+      case "hero":
+        actorData.system.encumbrance.value +=
+          actorData.system.ration * RULESET.ration_encumbrance;
+        break;
+    }
   }
 
+  getRollData() {
+    const roll_data = {
+      ...super.getRollData(),
+      ...(this.system.getRollData?.() ?? null),
+    };
+    const active_keywords = utils.ruleset.character.getActiveKeywords(this);
+    for (const keyword of active_keywords.values()) {
+      switch (keyword) {
+        case "obstruct":
+          roll_data["initiative"] = roll_data["initiative"] + "-1";
+          break;
+        case "obstruct_more":
+          roll_data["initiative"] = roll_data["initiative"] + "-1d2";
+          break;
+      }
+    }
+    return roll_data;
+  }
 
-  async remove_item_link(item_type, item_id) {
-    if (this.type !== "character") return;
-    switch (item_type) {
-      case "feature-list-item":
-        for (const [cat, features] of Object.entries(this.system.feature_categories)) {
-          this.system.feature_categories[cat] = features.filter(el => { return el !== item_id });
-        }
-        await this.update({
-          "system.feature_categories": this.system.feature_categories
-        });
-        break;
-      case 'skill-item': {
-        const new_knowledges = this.system.knowledges;
-        for (const [key, subknowledge] of Object.entries(new_knowledges)) {
-          for (const [subkey, knowledge] of Object.entries(subknowledge)) {
-            knowledge.sub_skills = knowledge.sub_skills.filter(el => { return el !== item_id });
+  toPlainObject() {
+    const result = { ...this };
+
+    result.system = this.system.toPlainObject();
+    result.items = this.items?.size > 0 ? this.items.contents : [];
+    result.effects = this.effects?.size > 0 ? this.effects.contents : [];
+
+    return result;
+  }
+
+  getSkillFromPath(skill_path) {
+    let effective_skill_path_parts = skill_path.split(".");
+    let target_skill = foundry.utils.getProperty(this, skill_path);
+    if (target_skill === undefined) {
+      target_skill = this;
+      effective_skill_path_parts = [];
+      for (let p of skill_path.split(".")) {
+        const t = foundry.utils.getType(target_skill);
+        if (!(t === "Object" || t === "Array")) break; // Invalid path
+        if (p in target_skill) target_skill = target_skill[p];
+        else break; // Can't traverse anymore
+        effective_skill_path_parts.push(p);
+      }
+    }
+    if (!utils.isSkill(target_skill)) return undefined;
+    target_skill["path"] = effective_skill_path_parts.join(".");
+    return target_skill;
+  }
+
+  getSkillnKnowledgeList() {
+    const skill_types = {
+      skills: this.system.skills,
+      knowledges: this.system.knowledges,
+    };
+    return this.getSkillList(skill_types);
+  }
+
+  getOpposedSkillList() {
+    const skill_list = {};
+    for (const skill_path of RULESET.character.getOpposingSaves()) {
+      skill_list[skill_path] = this.getSkillTitle(skill_path);
+    }
+    return skill_list;
+  }
+
+  getSkillList(skill_types = { skills: this.system.skills }) {
+    const skill_list = {};
+
+    if (
+      !["player-character", "non-player-character", "hero"].includes(this.type)
+    )
+      return skill_list;
+
+    if (this.type === "hero") {
+      if (Object.keys(skill_types).includes("skills")) {
+        skill_list["system.skills.physical"] =
+          this.system.skills.physical.label;
+        skill_list["system.skills.social"] = this.system.skills.social.label;
+        skill_list["system.skills.combative"] =
+          this.system.skills.combative.label;
+      }
+      if (Object.keys(skill_types).includes("knowledges")) {
+        skill_list["system.knowledges.craftmanship"] =
+          this.system.knowledges.craftmanship.label;
+        skill_list["system.knowledges.artistic"] =
+          this.system.knowledges.artistic.label;
+        skill_list["system.knowledges.erudition"] =
+          this.system.knowledges.erudition.label;
+        skill_list["system.knowledges.utilitarian"] =
+          this.system.knowledges.utilitarian.label;
+        skill_list["system.knowledges.magic"] =
+          this.system.knowledges.magic.label;
+      }
+      return skill_list;
+    }
+
+    if (this.type === "non-player-character") {
+      for (let skill_group_key in skill_types) {
+        const skill_group = skill_types[skill_group_key];
+        for (let skill_cat_key in skill_group) {
+          const skill_cat = skill_group[skill_cat_key];
+          for (let skill_key in skill_cat) {
+            const skill_path = `system.${skill_group_key}.${skill_cat_key}.${skill_key}`;
+            skill_list[skill_path] =
+              skill_group[skill_cat_key][skill_key].label;
           }
         }
-        const new_magics = this.system.magics;
-        for (const [key, magic] of Object.entries(new_magics)) {
-          magic.sub_skills = magic.sub_skills.filter(el => { return el !== item_id });
+      }
+      return skill_list;
+    }
+    for (let skill_type_key in skill_types) {
+      const skill_type = skill_types[skill_type_key];
+      for (let skill_group_key in skill_type) {
+        const skill_group = skill_type[skill_group_key];
+        for (let skill_cat_key in skill_group) {
+          const skill_cat = skill_group[skill_cat_key];
+          for (let skill_key in skill_cat) {
+            const skill_path = `system.${skill_type_key}.${skill_group_key}.${skill_cat_key}.${skill_key}`;
+            skill_list[skill_path] =
+              skill_type[skill_group_key][skill_cat_key][skill_key].label;
+          }
         }
-        await this.update({
-          "system.knowledges": new_knowledges,
-          "system.magics": new_magics
+      }
+    }
+    return skill_list;
+  }
+
+  getWeaponSkillList() {
+    const skill_list = {};
+    if (
+      !["player-character", "non-player-character", "hero"].includes(this.type)
+    )
+      return skill_list;
+
+    if (this.type === "hero") {
+      return {
+        "system.skills.combative": this.system.skills.combative.label,
+      };
+    }
+    if (this.type === "non-player-character") {
+      return {
+        "system.skills.combative.weapon":
+          this.system.skills.combative.weapon.label,
+      };
+    }
+
+    const skill_cat = this.system.skills.combative.weapon;
+    for (let skill_key in skill_cat) {
+      const skill_path = `system.skills.combative.weapon.${skill_key}`;
+      skill_list[skill_path] = skill_cat[skill_key].label;
+    }
+
+    return skill_list;
+  }
+
+  getSkillTitle(skill_path) {
+    const skill = this.getSkillFromPath(skill_path);
+    if (skill === undefined) {
+      console.warn(`Couldn't generate skill title for path: '${skill_path}'`);
+      return "";
+    }
+    return utils.getSkillTitle(skill.path, skill.label);
+  }
+
+  async rollSkill(skill_path) {
+    const skill = this.getSkillFromPath(skill_path);
+    if (skill === undefined) {
+      // console.warn(`Unknown skill: '${skill_path}'`);
+      const skill_name = utils.getSkillTitle(skill_path);
+      const speaker = ChatMessage.getSpeaker({ actor: this });
+      ChatMessage.create({
+        speaker: speaker,
+        whisper: [game.user.id],
+        blind: false,
+        content: `${this.name} doesn't know the skill '${skill_name}'`,
+      });
+      return;
+    }
+
+    const roll_config = await utils.skillRollDialog(this, skill_path);
+    if (roll_config === null) return;
+
+    const used_features = roll_config["used_features"].map((element_id) =>
+      this.items.get(element_id),
+    );
+    const used_features_id = used_features.map((element) => {
+      return element.uuid;
+    });
+
+    const roll_config_altered_step_1 = utils.applyFeaturesToRollConfig(
+      roll_config,
+      used_features,
+    );
+    const roll_config_altered = utils.applyKeywordsToRollConfig(
+      roll_config_altered_step_1,
+      roll_config["used_keywords"],
+    );
+
+    const {
+      roll_mode,
+      advantage_amount,
+      disadvantage_amount,
+      luck_applied,
+      dos_mod,
+    } = roll_config_altered;
+
+    const skill_title = this.getSkillTitle(skill_path);
+    const roll = new rolls.AtoriaDOSRoll(this.getRollData(), {
+      owning_actor_id: this._id,
+      success_value: skill.success,
+      critical_success_amount:
+        utils.ruleset.character.getSkillCriticalSuccessAmount(skill),
+      critical_fumble_amount:
+        utils.ruleset.character.getSkillCriticalFumbleAmount(skill),
+      title: skill_title,
+      advantage_amount,
+      disadvantage_amount,
+      luck_applied,
+      dos_mod,
+    });
+    await roll.evaluate();
+
+    await ChatMessage.create(
+      {
+        type: "interactable",
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        user: game.user.id,
+        sound: CONFIG.sounds.dice,
+        rolls: [roll],
+        system: {
+          related_items: [
+            {
+              type: "feature",
+              items_id: used_features_id,
+            },
+          ],
+        },
+      },
+      { rollMode: roll_mode },
+    );
+
+    for (let feature of used_features) {
+      feature.update({
+        "system.limitation.usage_left":
+          feature.system.limitation.usage_left - 1,
+      });
+    }
+
+    this.update({
+      "system.luck": this.system.luck - luck_applied,
+    });
+
+    return roll;
+  }
+
+  async createSkill(skill_cat_path, skill_key, skill_label) {
+    const actor_with_skill = ["player-character", "non-player-character"];
+    if (!actor_with_skill.includes(this.type)) return;
+
+    if (
+      skill_cat_path === undefined ||
+      !utils.ruleset.character.getExtendableSkill().includes(skill_cat_path)
+    ) {
+      console.warn(
+        `Invalid skill category path given for skill handling: '${skill_cat_path}'`,
+      );
+      return;
+    }
+    const skill_category = foundry.utils.deepClone(
+      foundry.utils.getProperty(this, skill_cat_path),
+    );
+    if (skill_category === undefined || skill_category === null) {
+      console.warn(
+        `Invalid skill category path given for skill handling: '${skill_cat_path}'`,
+      );
+      return;
+    }
+    const valid_key_regex = /^[a-z]+$/g;
+    if (
+      (skill_key ?? "") === "" ||
+      !valid_key_regex.test(skill_key) ||
+      Object.keys(skill_category).includes(skill_key)
+    ) {
+      console.warn(
+        `Invalid skill key given for skill creation: '${skill_key}'`,
+      );
+      return;
+    }
+    const skill_cat_path_system_less = skill_cat_path.slice("system.".length);
+    const skill_schema = this.system.schema.getField(
+      skill_cat_path_system_less,
+    );
+    const new_skill = skill_schema.sub_element.getInitialValue({});
+    new_skill["label"] = skill_label;
+    skill_category[skill_key] = new_skill;
+    this.update({
+      [`${skill_cat_path}`]: skill_category,
+    });
+    this.render();
+  }
+
+  async deleteSkill(skill_cat_path, skill_key) {
+    const actor_with_skill = ["player-character", "non-player-character"];
+    if (!actor_with_skill.includes(this.type)) return;
+
+    if (skill_cat_path === undefined) {
+      console.warn(
+        `Invalid skill category path given for skill handling: '${skill_cat_path}'`,
+      );
+      return;
+    }
+    const skill_category = foundry.utils.deepClone(
+      foundry.utils.getProperty(this, skill_cat_path),
+    );
+    if (skill_category === undefined || skill_category === null) {
+      console.warn(
+        `Invalid skill category path given for skill handling: '${skill_cat_path}'`,
+      );
+      return;
+    }
+    if (!Object.keys(skill_category).includes(skill_key)) {
+      console.warn(
+        `Invalid skill key given for skill deletion: '${skill_key}'`,
+      );
+      return;
+    }
+    const confirmed = await utils.confirmDeletion(
+      skill_category[skill_key].label,
+    );
+    if (!confirmed) return;
+    this.update({
+      [`${skill_cat_path}.-=${skill_key}`]: null,
+    });
+    this.render();
+  }
+
+  async createSubItem(config) {
+    const { type } = config;
+    if (type === null || type === undefined) {
+      console.warn(`Missing item's type`);
+      return;
+    }
+    if (type === "effect") {
+      delete config.type;
+      if (config.name === undefined) {
+        const new_name = "ATORIA.Sheet.New_name";
+        config.name = game.i18n.format(new_name, {
+          type: game.i18n.localize(`TYPES.Effect`),
         });
-        break;
+      }
+      const created_effect = await ActiveEffect.create(config, {
+        parent: this,
+      });
+      return created_effect;
+    }
+    if (config.name === undefined) {
+      const new_name = "ATORIA.Sheet.New_name";
+      config.name = game.i18n.format(new_name, {
+        type: game.i18n.localize(`TYPES.Item.${type}`),
+      });
+    }
+    const created_item = await Item.create(config, { parent: this });
+    // var max_sort_value = this.items.reduce((acc, i) => Math.max(acc, i.sort), 0);
+    // created_item.update({ "sort": max_sort_value + 10000 });
+    return created_item;
+  }
+
+  async editEffect(effect_id) {
+    const effect = effect_id ? this.effects.get(effect_id) : null;
+    if (effect === null || effect === undefined) {
+      console.warn(`Missing or invalid effect-id: '${effect_id}'`);
+      return;
+    }
+    await effect.sheet.render(true);
+    effect.sheet.bringToFront();
+  }
+
+  async deleteEffect(effect_id) {
+    const effect = effect_id ? this.effects.get(effect_id) : null;
+    if (effect === null || effect === undefined) {
+      console.warn(`Missing or invalid effect-id: '${effect_id}'`);
+      return;
+    }
+    const confirmed = await utils.confirmDeletion(effect.name);
+    if (!confirmed) return;
+    effect.delete();
+  }
+
+  async editSubItem(item_id) {
+    const item = item_id ? this.items.get(item_id) : null;
+    if (item === null || item === undefined) {
+      console.warn(`Missing or invalid item-id: '${item_id}'`);
+      return;
+    }
+    await item.sheet.render(true);
+    item.sheet.bringToFront();
+  }
+  async deleteSubItem(item_id) {
+    const item = item_id ? this.items.get(item_id) : null;
+    if (item === null || item === undefined) {
+      console.warn(`Missing or invalid item-id: '${item_id}'`);
+      return;
+    }
+    const confirmed = await utils.confirmDeletion(item.name);
+    if (!confirmed) return;
+    item.delete();
+  }
+
+  async manageItem(action, type, item_id) {
+    console.warn("'manageItem' is deprecated, please inform Wildos");
+  }
+
+  _convertAttributeChangeToModChange(attribute_changes, changelogs) {
+    if (!["player-character", "non-player-character"].includes(this.type))
+      return;
+
+    const update_list = {};
+    // Health
+    let tmp_value = this.system.health.value;
+    let tmp_max = this.system.health.max;
+    let tmp_new_value = Math.min(
+      tmp_max,
+      tmp_value + attribute_changes["health"],
+    );
+    if (!Number.isNaN(tmp_new_value) && tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(this.system.schema.fields.health.label),
+            previous: tmp_value,
+            new: tmp_new_value,
+          },
+        ),
+      );
+      update_list["system.health.value"] = tmp_new_value;
+    }
+    // Stamina
+    tmp_value = this.system.stamina.value;
+    tmp_max = utils.ruleset.character.getCurrentMaxStamina(this);
+    tmp_new_value = Math.min(tmp_max, tmp_value + attribute_changes["stamina"]);
+    if (!Number.isNaN(tmp_new_value) && tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(this.system.schema.fields.stamina.label),
+            previous: tmp_value,
+            new: tmp_new_value,
+          },
+        ),
+      );
+      update_list["system.stamina.value"] = tmp_new_value;
+    }
+    // Mana
+    tmp_value = this.system.mana.value;
+    tmp_max = utils.ruleset.character.getCurrentMaxMana(this);
+    tmp_new_value = Math.min(tmp_max, tmp_value + attribute_changes["mana"]);
+    if (!Number.isNaN(tmp_new_value) && tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(this.system.schema.fields.mana.label),
+            previous: tmp_value,
+            new: tmp_new_value,
+          },
+        ),
+      );
+      update_list["system.mana.value"] = tmp_new_value;
+    }
+
+    if (this.type !== "player-character") return update_list;
+
+    // Healing inactive amount
+    tmp_value = this.system.healing_inactive.amount;
+    tmp_new_value = Math.max(
+      0,
+      tmp_value + attribute_changes["healing_inactive.amount"],
+    );
+    if (!Number.isNaN(tmp_new_value) && tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(
+              this.system.schema.fields.healing_inactive.label,
+            ),
+            previous: tmp_value,
+            new: tmp_new_value,
+          },
+        ),
+      );
+      update_list["system.healing_inactive.amount"] = tmp_new_value;
+    }
+
+    const checkboxVisual = (is_true) => {
+      return `<input type='checkbox' ${is_true ? "checked" : ""} disabled>`;
+    };
+
+    // Herbs inactive
+    tmp_value = this.system.healing_inactive.herbs;
+    tmp_new_value =
+      "healing_inactive.herbs" in attribute_changes
+        ? attribute_changes["healing_inactive.herbs"]
+        : tmp_value;
+    if (tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(
+              this.system.schema.fields.healing_inactive.fields.herbs.label,
+            ),
+            previous: checkboxVisual(tmp_value),
+            new: checkboxVisual(tmp_new_value),
+          },
+        ),
+      );
+      update_list["system.healing_inactive.herbs"] = tmp_new_value;
+    }
+
+    // Medical inactive
+    tmp_value = this.system.healing_inactive.medical;
+    tmp_new_value =
+      "healing_inactive.medical" in attribute_changes
+        ? attribute_changes["healing_inactive.medical"]
+        : tmp_value;
+    if (tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(
+              this.system.schema.fields.healing_inactive.fields.medical.label,
+            ),
+            previous: checkboxVisual(tmp_value),
+            new: checkboxVisual(tmp_new_value),
+          },
+        ),
+      );
+      update_list["system.healing_inactive.medical"] = tmp_new_value;
+    }
+
+    // Resurrection inactive
+    tmp_value = this.system.healing_inactive.resurrection;
+    tmp_new_value =
+      "healing_inactive.resurrection" in attribute_changes
+        ? attribute_changes["healing_inactive.resurrection"]
+        : tmp_value;
+    if (tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(
+              this.system.schema.fields.healing_inactive.fields.resurrection
+                .label,
+            ),
+            previous: checkboxVisual(tmp_value),
+            new: checkboxVisual(tmp_new_value),
+          },
+        ),
+      );
+      update_list["system.healing_inactive.resurrection"] = tmp_new_value;
+    }
+
+    // Sanity inactive
+    tmp_value = this.system.sanity.regain_inactive;
+    tmp_new_value =
+      "sanity.regain_inactive" in attribute_changes
+        ? attribute_changes["sanity.regain_inactive"]
+        : tmp_value;
+    if (tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(
+              this.system.schema.fields.sanity.fields.regain_inactive.label,
+            ),
+            previous: checkboxVisual(tmp_value),
+            new: checkboxVisual(tmp_new_value),
+          },
+        ),
+      );
+      update_list["system.sanity.regain_inactive"] = tmp_new_value;
+    }
+
+    // Endurance inactive
+    tmp_value = this.system.endurance.regain_inactive;
+    tmp_new_value =
+      "endurance.regain_inactive" in attribute_changes
+        ? attribute_changes["endurance.regain_inactive"]
+        : tmp_value;
+    if (tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(
+              this.system.schema.fields.endurance.fields.regain_inactive.label,
+            ),
+            previous: checkboxVisual(tmp_value),
+            new: checkboxVisual(tmp_new_value),
+          },
+        ),
+      );
+      update_list["system.endurance.regain_inactive"] = tmp_new_value;
+    }
+    return update_list;
+  }
+
+  async applyTimePhase(time_phase_type) {
+    if (!["player-character", "non-player-character"].includes(this.type))
+      return;
+
+    let changelogs = [
+      game.i18n.format(
+        game.i18n.localize("ATORIA.Chat_message.Changelog.Time_phase_passed"),
+        {
+          time_phase: game.i18n.localize(
+            utils.ruleset.time_phases[time_phase_type],
+          ),
+        },
+      ),
+    ];
+
+    const update_list = this._convertAttributeChangeToModChange(
+      utils.ruleset.character.getRestoredAttributes(this, time_phase_type),
+      changelogs,
+    );
+
+    const time_phases_type_to_apply =
+      utils.ruleset.general.getTimePhasesTypeToApply(time_phase_type);
+    for (let time_phase_type of time_phases_type_to_apply) {
+      for (const [_, i] of this.items.entries()) {
+        const item_changelogs = await i.applyTimePhase(time_phase_type);
+        for (let e of item_changelogs) {
+          changelogs.push(e);
+        }
       }
     }
-  }
+    await this.update(update_list);
 
-
-  async _apply_feature_regain(time_phase_type, log) {
-    for (const feature_list_cat in this.system.feature_categories) {
-      for (const feature_list_id in this.system.feature_categories[feature_list_cat]) {
-        const item = this.items.get(this.system.feature_categories[feature_list_cat][feature_list_id]);
-        if (item === undefined)
-          continue
-        await item.apply_feature_regain(time_phase_type, log);
-      }
-    }
-  }
-
-  async _apply_combat_regain(modification, log) {
-    await this._apply_feature_regain("combat", log);
-
-  }
-  async _apply_rest_regain(modification, log) {
-    await this._apply_feature_regain("rest", log);
-
-  }
-  async _apply_sleep_regain(modification, log) {
-    await this._apply_feature_regain("sleep", log);
-    if (this.system.medical_healing_used) {
-      log.push(game.i18n.localize("ATORIA.MedicalHealingRegained"));
-      modification["system.medical_healing_used"] = false;
-    }
-
-    if (this.system.healing_herbs_used) {
-      log.push(game.i18n.localize("ATORIA.HerbsHealingRegained"));
-      modification["system.healing_herbs_used"] = false;
-    }
-
-    const old_amount = this.system.health_regain_inactive;
-    const new_amount = Math.max(0, this.system.health_regain_inactive - 2);
-    if (old_amount !== new_amount) {
-      modification["system.health_regain_inactive"] = new_amount;
-      log.push(game.i18n.format(game.i18n.localize("ATORIA.HealthRegainRegained"), { amount: old_amount - new_amount }));
-    }
-
-  }
-  async _apply_short_moon_regain(modification, log) {
-    await this._apply_feature_regain("short-moon", log);
-    if (this.system.endurance_regain_inactive) {
-      log.push(game.i18n.localize("ATORIA.EnduranceRegained"));
-      modification["system.endurance_regain_inactive"] = false;
-    }
-
-  }
-  async _apply_long_moon_regain(modification, log) {
-    await this._apply_feature_regain("long-moon", log);
-    if (this.system.sanity_regain_inactive) {
-      log.push(game.i18n.localize("ATORIA.SanityRegained"));
-      modification["system.sanity_regain_inactive"] = false;
-    }
-    if (this.system.resurrection_inactive) {
-      log.push(game.i18n.localize("ATORIA.ResurectionRegained"));
-      modification["system.resurrection_inactive"] = false;
-    }
-  }
-
-
-  async apply_regain_phase(time_phase_type) {
-    let mod_list = {};
-    let change_log = [game.i18n.format(game.i18n.localize("ATORIA.TIME_PHASE_PASSED"), { time_phase: CONFIG.ATORIA.TIME_PHASES_LABEL[time_phase_type] })];
-    switch (time_phase_type) {
-      case "combat":
-        await this._apply_combat_regain(mod_list, change_log);
-        break;
-      case "rest":
-        await this._apply_rest_regain(mod_list, change_log);
-        break;
-      case "sleep":// also a rest
-        await this._apply_rest_regain(mod_list, change_log);
-        await this._apply_sleep_regain(mod_list, change_log);
-        break;
-      case "short-moon":
-        await this._apply_short_moon_regain(mod_list, change_log);
-        break;
-      case "long-moon": // also a short-moon
-        await this._apply_short_moon_regain(mod_list, change_log);
-        await this._apply_long_moon_regain(mod_list, change_log);
-        break;
-    }
-    this.update(mod_list);
-    const speaker = ChatMessage.getSpeaker({ actor: this })
+    const speaker = ChatMessage.getSpeaker({ actor: this });
     ChatMessage.create({
       speaker: speaker,
-      whisper: game.users.filter(u => u.isGM),
+      whisper: game.users.filter((u) => u.isGM),
       blind: false,
-      content: change_log.join("<br>")
+      content: changelogs.join("<br>"),
     });
+    await this.render();
+  }
+
+  getAssociatedFeatures(skill_path) {
+    const associated_features = [];
+    for (let i of this.items) {
+      if (i.type !== "feature") continue;
+      if (
+        i.system.skill_alteration.has_skill_alteration &&
+        i.system.skill_alteration.associated_skill === skill_path
+      )
+        associated_features.push(i);
+    }
+    return associated_features;
+  }
+
+  getActableModifierList(want_technique = true, want_incantatory = true) {
+    const actable_modifier_types = ["technique", "incantatory-addition"];
+    const actable_mod_list = [];
+    for (let i of this.items) {
+      if (!actable_modifier_types.includes(i.type)) continue;
+      if (want_technique && i.type === "technique") actable_mod_list.push(i);
+      if (want_incantatory && i.type === "incantatory-addition")
+        actable_mod_list.push(i);
+    }
+    return actable_mod_list;
+  }
+
+  onChatButton(data) {
+    console.log("Actor");
+    console.dir(data);
   }
 }

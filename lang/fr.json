@@ -1,417 +1,1402 @@
-{ 
-
-  "TYPES.Actor.character": "Personnage Joueur",
-  "TYPES.Actor.characterPl": "Personnages Joueur",
-  "TYPES.Actor.npc": "Personnage Non Joueur",
-  "TYPES.Actor.npcPl": "Personnages Non Joueur",
-
-  "TYPES.Item.gear-consumable": "Objet Consommable",
-  "TYPES.Item.gear-consumablePl": "Objets Consommable",
-  "TYPES.Item.gear-equipment": "Objet Equipement",
-  "TYPES.Item.gear-equipmentPl": "Objets Equipement",
-  "TYPES.Item.gear-ingredient": "Objet Ingredient/Matériel",
-  "TYPES.Item.gear-ingredientPl": "Objets Ingredient/Matériel",
-  "TYPES.Item.gear-weapon": "Arme",
-  "TYPES.Item.gear-weaponPl": "Armes",
-  "TYPES.Item.action": "Action",
-  "TYPES.Item.actionPl": "Actions",
-  "TYPES.Item.spell": "Sort",
-  "TYPES.Item.spellPl": "Sorts",
-  "TYPES.Item.feature": "Trait",
-  "TYPES.Item.featurePl": "Traits",
-  "TYPES.Item.skill": "Compétence",
-  "TYPES.Item.skillPl": "Compétences",
-  "TYPES.Item.action-modifier": "Technique/Ajout",
-  "TYPES.Item.action-modifierPl": "Techniques/Ajouts",
-
-
-  "ATORIA.Type": "Type",
-  "ATORIA.Technique": "Technique",
-  "ATORIA.IncantatoryAddition": "Ajout",
-
-  "ATORIA.UsableTechniques": "Techniques utilisables",
-  "ATORIA.UsableIncantatoryAddition": "Ajouts utilisables",
-  
-
-  "MIGRATION.Begin": "Une migration de données a commencé vers la version {version}",
-  "MIGRATION.Complete": "Une migration de données a terminé vers la version {version}\nIl y a eu {numberOfFailure} erreur lors de la migration",
-
-  "ATORIA.Yes": "Oui",
-  "ATORIA.No": "Non",
-
-
-  "ATORIA.TitleDeletionDialog": "Supression de {name}",
-  "ATORIA.ContentDeletionDialog": "Confirmer la supression de {name}",
-  "ATORIA.ConfirmDeletion": "Confirmer suppression",
-  "ATORIA.CancelDeletion": "Annuler suppression",
-
-  "ATORIA.SuppNaming": "Supp. {index}",
-
-  "ATORIA.SheetClassCharacter": "AtoriaCharacterSheet",
-  "ATORIA.SheetClassNPC": "AtoriaNPCSheet",
-  "ATORIA.SheetClassGear": "AtoriaGearSheet",
-  "ATORIA.SheetClassAction": "AtoriaActionSheet",
-  "ATORIA.SheetClassActionModifier": "AtoriaActionModifierSheet",
-  "ATORIA.SheetClassSpell": "AtoriaSpellSheet",
-  "ATORIA.SheetClassFeature": "AtoriaFeatureSheet",
-  "ATORIA.SheetClassSkill": "AtoriaSkillSheet",
-
-  "ATORIA.Healing": "Soins",
-
-  "ATORIA.NewItem": "Sans nom",
-  "ATORIA.NewEffect": "Nouvel Effet",
-
-  "ATORIA.ActiveEffectOverrideWarning": "You are about to override data",
-
-
-  "ATORIA.BaseConfig": "Configuration du l'acteur",
-
-
-  "ATORIA.SL_Modifier": "Modificateur de DR",
-
-  "ATORIA.Advantage": "Avantage",
-  "ATORIA.Normal": "Normal",
-  "ATORIA.Disadvantage": "Désavantage",
-
-  "ATORIA.RollMode": "Visibilité",
-
-  "ATORIA.CharacterPage": "Personnage",
-  "ATORIA.InventoryPage": "Inventaire",
-  "ATORIA.SpellPage": "Sorts",
-  "ATORIA.ActionModifierPage": "Techniques et Ajouts",
-
-  "ATORIA.PerceptionTitle": "Perception",
-  "ATORIA.Perception.Sight": "Vue",
-  "ATORIA.Perception.Taste": "Goût",
-  "ATORIA.Perception.Hearing": "Ouïe",
-  "ATORIA.Perception.Smell": "Odorat",
-  "ATORIA.Perception.Magice": "Magice",
-  "ATORIA.Perception.Instinct": "Instinct",
-
-  "ATORIA.Name": "Nom",
-  "ATORIA.Health": "Santé",
-  "ATORIA.HealthMax": "Santé Max.",
-  "ATORIA.Absorption": "Absorption",
-  "ATORIA.Stamina": "Vigueur",
-  "ATORIA.StaminaMax": "Vigueur Max.",
-  "ATORIA.Mana": "Mana",
-  "ATORIA.ManaMax": "Mana Max.",
-  "ATORIA.Sanity": "Sanité",
-  "ATORIA.SanityMax": "Sanité Max.",
-  "ATORIA.Endurance": "Endurance",
-  "ATORIA.EnduranceMax": "Endurance Max.",
-  "ATORIA.Encumbrance": "Encombrement",
-  "ATORIA.EncumbranceMax": "Encombrement Max.",
-  "ATORIA.Armor": "Armure",
-  "ATORIA.Initiative": "Initiative",
-  "ATORIA.Movement": "Mouvement",
-
-  "ATORIA.Time": "Temps",
-  "ATORIA.Restriction": "Restriction",
-
-  "ATORIA.Luck": "Chance",
-
-
-  "ATORIA.CombatTitle": "Combats",
-  "ATORIA.NPCFeatureTitle": "Traits",
-  "ATORIA.CharacterFeatureTitle": "Aptitudes et permanents",
-  "ATORIA.NPCSkillTitle": "Compétences",
-  "ATORIA.NPCKnowledgeTitle": "Connaissances",
-  "ATORIA.CharacterSkillTitle": "Compétences",
-  "ATORIA.EffectTitle": "États et temporaires",
-  "ATORIA.CharacterKnowledgeTitle": "Connaissances",
-  "ATORIA.CharacterMagicTitle": "Magies",
-
-
-  "ATORIA.Agility": "Agilité",
-  "ATORIA.Balance": "Équilibre",
-  "ATORIA.Dexterity": "Adresse",
-  "ATORIA.Analyse": "Analyse",
-  "ATORIA.Insight": "Perspicacité",
-  "ATORIA.Identification": "Identification",
-  "ATORIA.Investigation": "Investigation",
-  "ATORIA.Athletic": "Athlétisme",
-  "ATORIA.Hiking": "Marche",
-  "ATORIA.Running": "Course",
-  "ATORIA.Jump": "Saut",
-  "ATORIA.Charisma": "Charisme",
-  "ATORIA.Presence": "Prestance",
-  "ATORIA.Seduction": "Séduction",
-  "ATORIA.Slyness": "Discrétion",
-  "ATORIA.Silence": "Silence",
-  "ATORIA.Stealth": "Furtivité",
-  "ATORIA.Concealment": "Dissimulation",
-  "ATORIA.Eloquence": "Éloquence",
-  "ATORIA.Persuasion": "Persuasion",
-  "ATORIA.Calming": "Apaisement",
-  "ATORIA.Provocation": "Provocation",
-  "ATORIA.Climbing": "Escalade",
-  "ATORIA.Scale": "Grimpe",
-  "ATORIA.Fall": "Chute",
-  "ATORIA.Spirit": "Esprit",
-  "ATORIA.Will": "Volonté",
-  "ATORIA.Guarding": "Protection",
-  "ATORIA.Memory": "Memoire",
-  "ATORIA.Intimidation": "Intimidation",
-  "ATORIA.Fear": "Peur",
-  "ATORIA.Authority": "Autorité",
-  "ATORIA.Swiming": "Nage",
-  "ATORIA.Ease": "Aisance",
-  "ATORIA.Breath-Holding": "Apnée",
-  "ATORIA.Negotiation": "Négociation",
-  "ATORIA.Bargaining": "Marchandage",
-  "ATORIA.Reflex": "Réflexe",
-  "ATORIA.Evasion": "Esquive",
-  "ATORIA.Opportuneness": "Opportunité",
-  "ATORIA.Parade": "Parade",
-  "ATORIA.Sturdiness": "Robustesse",
-  "ATORIA.Force": "Force",
-  "ATORIA.Tenacity": "Ténacité",
-  "ATORIA.Fortitude": "Fortitude",
-  "ATORIA.Trickery": "Ruse",
-  "ATORIA.Acting": "Comédie",
-  "ATORIA.Lying": "Mensonge",
-
-
-
-  "ATORIA.Combative": "Combative",
-  "ATORIA.Brawl": "Pugilat",
-  "ATORIA.Blade": "Lame",
-  "ATORIA.Polearm": "Hast",
-  "ATORIA.Haft-slashing-piercing": "Emmanchée - Tranchant",
-  "ATORIA.Haft-bludgeonning": "Emmanchée - Perforant et Contondant",
-  "ATORIA.Shield": "Bouclier",
-  "ATORIA.Shooting": "Tir",
-  "ATORIA.Throw": "Jet",
-  "ATORIA.Focus": "Focalisateur",
-  "ATORIA.Instrument": "Instrument",
-
-
-
-  "ATORIA.Artistic": "Artistique",
-  "ATORIA.Craftmanship": "Artisanat",
-  "ATORIA.Erudition": "Érudition",
-  "ATORIA.Utilitarian": "Utilitaire",
-
-  "ATORIA.Alchemy": "Alchimie",
-  "ATORIA.Jewellery": "Bijouterie",
-  "ATORIA.Sewing": "Couture",
-  "ATORIA.Cabinet-making": "Ébénisterie",
-  "ATORIA.Forge": "Forge",
-  "ATORIA.Engineering": "Ingénierie",
-  "ATORIA.Leatherworking": "Maroquinerie",
-  "ATORIA.Song": "Chant",
-  "ATORIA.Dance": "Danse",
-  "ATORIA.Graphic": "Graphique",
-  "ATORIA.Music": "Musique",
-  "ATORIA.Sculpture": "Sculpture",
-  "ATORIA.Civilisation": "Civilisation",
-  "ATORIA.Language": "Langue",
-  "ATORIA.Medecine": "Médecine",
-  "ATORIA.Monstrology": "Monstrologie",
-  "ATORIA.Science": "Science",
-  "ATORIA.Symbolism": "Symbolique",
-  "ATORIA.Zoology": "Zoologie",
-  "ATORIA.Farming": "Culture",
-  "ATORIA.Dressage": "Dressage",
-  "ATORIA.Nature": "Nature",
-  "ATORIA.Mining": "Minage",
-  "ATORIA.Fishing": "Pêche",
-  "ATORIA.Hunting": "Chasse",
-  "ATORIA.Construction": "Construction",
-  "ATORIA.Cuisine": "Cuisine",
-  "ATORIA.Game": "Jeu",
-  "ATORIA.Strategy": "Stratégie",
-  "ATORIA.Transport": "Transport",
-  "ATORIA.Theft": "Vol",
-  "ATORIA.Runic": "Runique",
-
-  "ATORIA.Mental": "Psychique",
-  "ATORIA.Holy": "Sacré",
-  "ATORIA.Fire": "Feu",
-  "ATORIA.Water": "Eau",
-  "ATORIA.Air": "Air",
-  "ATORIA.Earth": "Terre",
-  "ATORIA.Blood": "Sanguin",
-  "ATORIA.Occult": "Occulte",
-  "ATORIA.Druidic": "Druidique",
-  "ATORIA.Invoker": "Invocateur",
-
-
-  "ATORIA.CoinCopper": "PC",
-  "ATORIA.CoinSilver": "PA",
-  "ATORIA.CoinElectrum": "PE",
-  "ATORIA.CoinGold": "PO",
-
-  "ATORIA.InventoryArmorTitle": "Armure",
-  "ATORIA.InventoryGearWeaponTitle": "Arsenal",
-  "ATORIA.InventoryGearTitle": "Barda",
-  "ATORIA.InventoryGearConsumableTitle": "Consommables",
-  "ATORIA.InventoryGearEquipmentTitle": "Équipements",
-  "ATORIA.InventoryGearIngredientMaterialTitle": "Matériels & Ingrédients",
-  
-  "ATORIA.NameTitle": "Nom",
-  "ATORIA.ArmorQuantityTitle": "Qté.",
-  "ATORIA.ArmorEncumbranceTitle": "Encbr.",
-  "ATORIA.ArmorEffectTitle": "Effets",
-  "ATORIA.ItemEffectTitle": "Effets",
-
-  "ATORIA.ArmorHead": "Tête",
-  "ATORIA.ArmorTorso": "Torse",
-  "ATORIA.ArmorShoulders": "Épaules",
-  "ATORIA.ArmorArms": "Bras",
-  "ATORIA.ArmorHands": "Mains",
-  "ATORIA.ArmorWaist": "Taille",
-  "ATORIA.ArmorLegs": "Jambes",
-  "ATORIA.ArmorFeet": "Pieds",
-  "ATORIA.ArmorCollar": "Cou",
-  "ATORIA.ArmorRing": "Anneau",
-
-
-
-  "ATORIA.SuccessValue": "Réussite",
-  "ATORIA.CriticalModifier": "Réussite critique modificateur",
-  "ATORIA.FumbleModifier": "Échec critique modificateur",
-
-  "ATORIA.ActionNameTitle": "Nom",
-  "ATORIA.ActionEffectRollTitle": "Formule d'effet",
-  "ATORIA.ActionEffectTitle" : "Effet",
-  "ATORIA.ActionDescriptionTitle": "Description",
-
-  "ATORIA.FeatureNameTitle": "Nom",
-  "ATORIA.FeatureEffectTitle": "Charge(s)",
-  "ATORIA.FeatureDescriptionTitle": "Description",
-  "ATORIA.FeatureColorTitle": "Couleur",
-
-  "ATORIA.SkillNameTitle": "Nom",
-
-  "ATORIA.EffectRoll": "Formule de l'effet",
-
-  "ATORIA.ItemNameTitle": "Nom",
-  "ATORIA.ItemQuantityTitle": "Quantité",
-  "ATORIA.ItemEncumbranceTitle": "Encombrement",
-  "ATORIA.ItemDescriptionTitle": "Description",
-
-
-  "ATORIA.SpellTitle": "Liste des sorts",
-  "ATORIA.SpellDetailTitle": "Détails des sorts",
-
-  "ATORIA.SpellNameTitle": "Nom", 
-  "ATORIA.SpellSuccessValueTitle": "Réussite", 
-  "ATORIA.SpellCriticalValueTitle": "RC", 
-  "ATORIA.SpellFumbleValueTitle": "EC", 
-  "ATORIA.SpellCostTitle": "Coût", 
-  "ATORIA.SpellTimeTitle": "Temps", 
-  "ATORIA.SpellTimePreparationTitle": "Préparation", 
-  "ATORIA.SpellTimeDurationTitle": "Durée", 
-  "ATORIA.SpellTimeModifierTitle": "C/E", 
-  "ATORIA.SpellComponentsTitle": "Composants", 
-  "ATORIA.SpellComponentsVerbalTitle": "Verbales", 
-  "ATORIA.SpellComponentsSomaticTitle": "Somatiques", 
-  "ATORIA.SpellComponentsMaterialTitle": "Matérielles", 
-  "ATORIA.SpellTargetingTitle": "Ciblage", 
-  "ATORIA.SpellTargetingTargetTitle": "Cible", 
-  "ATORIA.SpellTargetingRangeTitle": "Portée", 
-  "ATORIA.SpellTargetingAreaTitle": "Zone", 
-  "ATORIA.SpellEffectTitle": "Effets", 
-  "ATORIA.SpellCriticalEffectTitle": "Effet Critique Supplémentaire",
-  "ATORIA.SpellSuppTitle": "Supplémentaire",
-
-
-  "ATORIA.Offense": "Offense",
-  "ATORIA.Defense": "Défense",
-
-  "ATORIA.Techniques": "Techniques",
-  "ATORIA.IncantatoryAdditions": "Ajouts",
-
-
-  "ATORIA.RollSL": "DR",
-  "ATORIA.RollResult": "Résultat",
-  "ATORIA.RollMS": "Diff",
-
-  "MACRO.AtrMissingTargetWarn": "Votre personnage '{actor}' n'a pas de '{type}' avec le nom '{name}'.",
-  "MACRO.AtrMultipleTargetsWarn": "Votre personnage '{actor}' a plus d'un '{type}' avec le nom '{name}'. Le premier sera utilisé.",
-  "MACRO.AtrNoActorSelected": "Aucun personage selectionné ou assigné n'a pu être trouvé pour la macro.",
-  "MACRO.AtrUnownedWarn": "Vous ne pouvez créer de macro que pour des objects qui vous appartienne.",
-
-
-  "ATORIA.Concentration": "Concentration",
-  "ATORIA.Preparing": "Préparation",
-  "ATORIA.Evocation": "Évocation",
-  "ATORIA.Channelling": "Canalisation",
-  "ATORIA.Bleeding": "Saignement",
-  "ATORIA.Abused": "Brutalisé",
-  "ATORIA.Abused+": "Brutalisé+",
-  "ATORIA.Prone": "Renversé",
-  "ATORIA.Burning": "Enflammé",
-  "ATORIA.Burning+": "Enflammé+",
-  "ATORIA.Moist": "Humide",
-  "ATORIA.Frostbite": "Gelure",
-  "ATORIA.Unconscious": "Inconscient",
-  "ATORIA.Dead": "Mort",
-  "ATORIA.Stunned": "Étourdi",
-  "ATORIA.Banished": "Banni",
-  "ATORIA.Afraid": "Effrayé",
-  "ATORIA.Panic": "Paniqué",
-  "ATORIA.Terrified": "Terrifié",
-  "ATORIA.Dazed": "Hébété",
-  "ATORIA.Seduced": "Séduit",
-  "ATORIA.Charmed": "Charmé",
-  "ATORIA.Captivated": "Subjugué",
-  "ATORIA.Control": "Contrôlé",
-  "ATORIA.Provoked": "Provoqué",
-  "ATORIA.Provoked+": "Provoqué+",
-  "ATORIA.Enraged": "Enragé",
-  "ATORIA.Radiate": "Irradié",
-  "ATORIA.Conductive": "Conducteur",
-  "ATORIA.Shocked": "Choqué",
-  "ATORIA.Numb": "Engourdi",
-  "ATORIA.Numb+": "Engourdi+",
-  "ATORIA.Hungry": "Affamé",
-  "ATORIA.Dehydrated": "Déshydrater",
-  "ATORIA.Drunk": "Ébriété",
-  "ATORIA.Hangover": "Gueule de bois",
-  "ATORIA.Tired": "Fatigué",
-  "ATORIA.Rested": "Reposé",
-  "ATORIA.Incurable": "Incurable",
-  "ATORIA.Incurable+": "Incurable+",
-  "ATORIA.Blindness": "Cécité",
-  "ATORIA.Deaf": "Surdité",
-  "ATORIA.Silenced": "Silence",
-  "ATORIA.Invisible": "Invisible",
-  "ATORIA.Slowed": "Ralenti",
-  "ATORIA.Immobilised": "Immobilisé",
-  "ATORIA.Disability": "Incapacité",
-
-
-
-  "ATORIA.Permanent" : "Permanent",
-  "ATORIA.Combat": "Combat",
-  "ATORIA.Rest": "Repos",
-  "ATORIA.Sleep": "Sommeil",
-  "ATORIA.ShortMoon": "Lune courte",
-  "ATORIA.LongMoon": "Lune longue",
-
-  "ATORIA.TIME_PHASE_PASSED": "Phase {time_phase} appliqué.",
-
-  "ATORIA.FeatureRegained": "{name} a regagné {amount} utilisation(s)",
-  "ATORIA.MedicalHealingRegained": "Medecine inactive a été perdu",
-  "ATORIA.HerbsHealingRegained": "Herbes inactive a été perdu",
-  "ATORIA.HealthRegainRegained": "Santé inactive a regagné {amount} utilisation(s)",
-  "ATORIA.EnduranceRegained": "Endurance inactive a été perdu",
-  "ATORIA.SanityRegained": "Sanité inactive a été perdu",
-  "ATORIA.ResurectionRegained": "Résurection inactive a été perdu",
-
-  "ATORIA.ConfirmTitle": "Confirmation nécessaire",
-  "ATORIA.ApplyRegainPhase": "Appliquer phase: {subject}",
-
-  "ATORIA.Confirm": "Confirmer",
-  "ATORIA.Cancel": "Annuler",
-
-  "ATORIA.FeatureCombat": "Combat",
-  "ATORIA.FeatureSkill": "Compétence",
-  "ATORIA.FeatureMagic": "Magie",
-  "ATORIA.FeatureKnowledge": "Connaissance",
-  "ATORIA.FeatureOther": "Autre"
-
+{
+  "ATORIA": {
+    "Settings": {
+      "DisplayPlayerSheetHorizontally": "Forcer l'affichage horizontal de la fiche de personnage joueur",
+      "DisplayPlayerSheetHorizontallyHint": "Change l'affichage des compétences sur les feuilles de personnage joueur"
+    },
+    "Error": {
+      "Require_selected_actor": "Cette action nécessite un acteur selectionné"
+    },
+    "Model": {
+      "New_name": "Nouveau Nom",
+      "Invalid_name": "Nom invalid",
+      "Description": "Description",
+      "Quantity": "Quantité",
+      "Effect": "Effet",
+      "Additional_css_class": "Class(es) CSS additionnel(s)",
+      "Color": {
+        "Label": "Couleur",
+        "Use_color": "Couleur"
+      },
+      "Skill_alteration": {
+        "Label": "Altération de compétence",
+        "Has_skill_alteration": "Compétence associée",
+        "Skill_associated": "Compétence associée",
+        "Type": "Type d'altération",
+        "One_degree_of_success_gain": "DR +1",
+        "One_degree_of_success_loss": "DR -1",
+        "Advantage": "Avantage",
+        "Disadvantage": "Désavantage",
+        "Hand_handled": "Non automatisé"
+      },
+      "Health": {
+        "Value": "Valeur de Santé",
+        "Max": "Maximum de Santé"
+      },
+      "Stamina": {
+        "Value": "Valeur de Vigueur",
+        "Max": "Maximum de Vigueur"
+      },
+      "Mana": {
+        "Value": "Valeur de Mana",
+        "Max": "Maximum de Mana"
+      },
+      "Sanity": {
+        "Value": "Valeur de Sanité",
+        "Max": "Maximum de Sanité",
+        "Regain_inactive": "Regain de Sanité inactif"
+      },
+      "Endurance": {
+        "Value": "Valeur d'Endurance",
+        "Max": "Maximum d'Endurance",
+        "Regain_inactive": "Regain d'Endurance inactif"
+      },
+      "Encumbrance": {
+        "Value": "Valeur d'Encombrement",
+        "Max": "Maximum d'Encombrement"
+      },
+      "Offense": {
+        "Amount": "Offense quantité",
+        "Description": "Offense description"
+      },
+      "Defense": {
+        "Amount": "Défense quantité",
+        "Description": "Défense description"
+      },
+      "Healing_inactive": "Soin inactif",
+      "Coins": "Pièces",
+
+      "Unit_type": "Type d'unité",
+      "Language": "Langues",
+      "Favorite_god": "Dieux favoris",
+      "Ration": "Rations",
+
+      "Perception": "Perception",
+      "Skills": "Compétences",
+      "Knowledges": "Connaissances",
+      "Skill": {
+        "Label": "Compétence",
+        "Success": "Réussite",
+        "Modifier": {
+          "Success": "Réussite",
+          "Critical_success": "Mod. RC",
+          "Critical_fumble": "Mod. EC"
+        }
+      },
+      "Time_phase_limitation": {
+        "Label": "Limitation",
+        "Regain_type": "Type de regain",
+        "Usage_left": "Utilisation(s) restante(s)",
+        "Usage_max": "Utilisation(s) maximale(s)"
+      },
+      "Cost": {
+        "Label": "Coût",
+        "Time": {
+          "Label": "Temps",
+          "Main_amount": "Valeur principale",
+          "Main_type": "Type principal"
+        }
+      },
+      "Roll_field": {
+        "Label": "Dé configuration",
+        "Name": "Dé",
+        "Formula": "Formule",
+        "Types": "Types",
+        "Table": "Table"
+      },
+      "Usage_limitation": {
+        "Has_usage_limit": "A une limite d'utilisation",
+        "Usage_left": "Utilisation(s) restante(s)",
+        "Usage_max": "Utilisation(s) maximale(s)"
+      },
+      "Weapon": {
+        "Associated_skill": "Compétence associée",
+        "Damage_formula": "Dégâts",
+        "Damage_name": "Dégâts",
+        "Is_focuser": "Focalisateur",
+        "Focuser_damage_formula": "Dégâts de focalisateur",
+        "Focuser_damage_name": "Dégâts de focalisateur",
+        "Modificators": "Modificateurs",
+        "Modifier": {
+          "Success": "Réussite",
+          "Critical_success": "RC",
+          "Critical_fumble": "EC"
+        }
+      },
+      "Actable": {
+        "Usable_actable_modifiers": "Techniques ou Ajouts",
+        "Actable_modifiers": "Techniques ou Ajouts",
+        "Actable_modifiers_types": "Type de modificateur d'action",
+        "Rolls_asked": "Oppositions",
+        "Roll_asked": "Opposition"
+      },
+      "Action": {
+        "Associated_skill": "Compétence associée",
+        "Cost_list": "Coût disponible"
+      },
+      "Spell": {
+        "Success": "Réussite",
+        "Critical_success": "RC",
+        "Critical_fumble": "EC",
+        "Critical_effect": "Effet critique",
+        "Markers": "Marqueurs",
+        "Supplementaries_list": "Supplémentaires",
+        "Supplementaries": {
+          "Label": "Supplémentaire",
+          "Cost_list": "Coût disponible",
+          "Cumul_max": "Cumul maximum",
+          "Description": "Effet"
+        }
+      },
+      "Magic": {
+        "Save_asked": "Opposition",
+        "Saves_asked": "Oppositions",
+        "Save_data": {
+          "Label": "Donnée du jet",
+          "Skill_path": "Chemin de la compétence"
+        }
+      },
+      "Chat_message": {
+        "Related_item": "Objet lié",
+        "Related_item_data": {
+          "Label": "Donnée de l'objet lié",
+          "Type": "Type",
+          "Items": "objets",
+          "Item": "objet",
+          "Items_id": "Ids des objets",
+          "Item_id": "Id de l'objet"
+        }
+      },
+      "Actable_modifier": "Modificateur d'action"
+    },
+    "Sheet": {
+      "New_name": "Nouveau {type}",
+      "Disabled_by_active_effect": "Champs désactivé par un effet.<br>{tooltip}",
+      "Item": {
+        "Create": "Créer {type}",
+        "Edit": "Éditer",
+        "Delete": "Suppression"
+      },
+      "Effect": {
+        "Title": "Effets",
+        "Create": "Créer effect",
+        "Edit": "Éditer",
+        "Delete": "Suppression"
+      },
+      "Skill": {
+        "Create": "Créer skill",
+        "Delete": "Suppression"
+      },
+      "Action": {
+        "Title": "Actions"
+      },
+      "Attack": {
+        "Title": "Attaques"
+      },
+      "Spell": {
+        "Title": "Sorts"
+      },
+      "Opportunity": {
+        "Title": "Opportunités"
+      },
+      "Limitation": "Limitations",
+      "Feature": {
+        "Title": "Aptitudes et Permanents",
+        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ai la propriété de cet objet"
+      },
+      "Weapon": {
+        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ai la propriété de cet objet"
+      },
+      "Actable": {
+        "Cost_list": {
+          "Delete": "Suppression coût"
+        },
+        "Saves_asked": {
+          "Delete": "Suppression coût"
+        },
+        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ai la propriété de cet objet"
+      },
+      "Actable_modifier": {
+        "Title": "Modificateurs d'action"
+      },
+      "Associated_skill_blank": "Aucune compétence associée",
+      "Inventory": {
+        "Title": "Inventaire",
+        "Worn": "Sortir/Ranger"
+      },
+      "Player": {
+        "Pages": {
+          "Character": "Personnage",
+          "Inventory": "Inventaire",
+          "Action": "Action"
+        },
+        "Time_phase_buttons": "Phases",
+        "Features": {
+          "Combat": {
+            "Label": "Combat",
+            "Combatives": "Combatives",
+            "Armors": "Armures",
+            "Amplificators": "Amplificateurs",
+            "Other": "Autres"
+          },
+          "Skills": {
+            "Label": "Compétences",
+            "Perceptions": "Perceptions",
+            "Other": "Autres"
+          },
+          "Magic": {
+            "Label": "Magies",
+            "Other": "Autres"
+          },
+          "Knowledges": {
+            "Label": "Connaissances",
+            "Other": "Autres"
+          },
+          "Other": {
+            "Label": "Autres"
+          }
+        },
+
+        "Inventory": {
+          "Title": "Inventaire",
+          "Equipement": {
+            "Label": "Équipements",
+            "Armor": "Armure",
+            "Weapon": "Arme"
+          },
+          "Combat_gears": "Équipement de Combat",
+          "Consummables": "Consommables",
+          "Materials_ingredients": "Matériels & ingrédients",
+          "Gear": "Équipements",
+          "Other": "Autres"
+        },
+        "Action_area": {
+          "Title": "Actions etc...",
+          "Action": {
+            "Title": "Actions"
+          },
+          "Spell": {
+            "Title": "Sorts"
+          },
+          "Opportunity": {
+            "Title": "Opportunités"
+          },
+          "Actable_modifier": {
+            "Title": "Modificateurs d'action",
+            "Technique": "Techniques",
+            "Incantatory_addition": "Ajoûts incantatoires"
+          }
+        }
+      }
+    },
+    "Chat_message": {
+      "Changelog": {
+        "Time_phase_passed": "Application de la phase: {time_phase}",
+        "Regain": "Regain de '{type}': {previous} -> {new}"
+      },
+      "Spell": {
+        "Failed": "Le sort a échoué",
+        "Supplementary_name": "Supp. {key}",
+        "Used_supplementaries": "Supplémentaires",
+        "No_used_supplementaries": "Auncun supplementaire utilisé."
+      },
+      "Dice": {
+        "Disadvantage": "Désavantage",
+        "Disadvantages": "{amount} désavantages",
+        "Advantage": "Avantage",
+        "Advantages": "{amount} avantages",
+        "Failure": "Échec",
+        "Critical_failure": "Échec critique",
+        "Success": "Réussite",
+        "Critical_success": "Réussite critique",
+        "Dos": "DR"
+      },
+      "Skill": {
+        "Used_features": "Aptitudes",
+        "No_used_features": "Aucune aptitude utilisé."
+      },
+      "Actable": {
+        "Used_actable_modifiers": "Techniques ou Ajouts",
+        "No_used_actable_modifiers": "Aucune techniques ou ajouts utilisé",
+        "Saves_asked": "Oppositions"
+      }
+    },
+    "Dialog": {
+      "Selected_element": "Element selectionné",
+      "Confirm": "Confirmer",
+      "Cancel": "Annuler",
+      "Launch": "lancer",
+      "Delete": {
+        "Title": "Suppression {element_name}",
+        "Content": "Confirmez-vous la suppression de '{element_name}'?"
+      },
+      "Roll": {
+        "Advantage_amount": "Avantage",
+        "Disadvantage_amount": "Désavantage",
+        "Luck_applied": "Chance appliqué",
+        "DoS_mod": "DR bonus",
+        "Roll_visibility": {
+          "Label": "Visibilité du jet",
+          "Self": "Personnel",
+          "Public": "Publique",
+          "Private": "Privé",
+          "Blind": "Aveugle"
+        }
+      },
+      "Item_roll": {
+        "Title": "Jet pour {element_name}",
+        "Available_supplementaries": "Supplémentaires",
+        "Spell_supplementary": "Sort supp. {idx}",
+        "Available_actable_modifiers": "Technique(s) & Ajoût(s) incantatoire(s)"
+      },
+      "Skill_roll": {
+        "Title": "Jet pour {actor_name}",
+        "Associated_features": "Aptitude(s) associée(s)"
+      },
+      "Skill_creation": {
+        "Title": "Création de compétence dans {skill_cat}",
+        "Name_selection": "Nom:"
+      }
+    },
+    "Ruleset": {
+      "Health": "Santé",
+      "Absorption": "Absorption",
+      "Stamina": "Vigueur",
+      "Mana": "Mana",
+      "Sanity": "Sanité",
+      "Endurance": "Endurance",
+      "Initiative": "Initiative",
+      "Movement": "Mouvement",
+      "Offense": "Offense",
+      "Defense": "Défense",
+      "Healing_inactive": {
+        "Amount": "Valeur de Soin inactif",
+        "Herbs": "Herbes inactives",
+        "Medical": "Medicine inactive",
+        "Resurrection": "Resurrection inactive"
+      },
+      "Encumbrance": "Encombrement",
+      "Luck": "Chance",
+      "Coins": {
+        "Copper": "Cuivre",
+        "Silver": "Argent",
+        "Electrum": "Électrum",
+        "Gold": "Or"
+      },
+      "Armor": {
+        "Main": "Armure",
+        "Bludgeoning": "Contondant",
+        "Piercing": "Perforant",
+        "Slashing": "Tranchant",
+        "Position": {
+          "Label": "Position de l'armure",
+          "Head": "Tête",
+          "Neck": "Cou",
+          "Torso": "Torse",
+          "Shoulders": "Épaules",
+          "Arms": "Bras",
+          "Hands": "Mains",
+          "Waist": "Taille",
+          "Legs": "Jambes",
+          "Feet": "Pieds",
+          "Rings": "Anneau"
+        },
+        "Type": {
+          "Label": "Type d'armure",
+          "Without": "Sans",
+          "Light": "Légère",
+          "Medium": "Intermédiaire",
+          "Heavy": "Lourde"
+        }
+      },
+      "Resistance": {
+        "Main": "Résistance",
+        "Acid": "Acide",
+        "Arcanic": "Arcanique",
+        "Fire": "Feu",
+        "Lightning": "Foudre",
+        "Cold": "Froid",
+        "Necrotic": "Nécrotique",
+        "Poison": "Poison",
+        "Psychic": "Psychique",
+        "Radiant": "Radiant"
+      },
+      "Damage_type": {
+        "Bludgeoning": "Contondant",
+        "Piercing": "Perforant",
+        "Slashing": "Tranchant",
+        "Acid": "Acide",
+        "Arcanic": "Arcanique",
+        "Fire": "Feu",
+        "Lightning": "Foudre",
+        "Cold": "Froid",
+        "Necrotic": "Nécrotique",
+        "Poison": "Poison",
+        "Psychic": "Psychique",
+        "Radiant": "Radiant",
+        "Health": "Santé",
+        "Absorption": "Absorption",
+        "Stamina": "Vigueur",
+        "Mana": "Mana",
+        "Sanity": "Sanité",
+        "Endurance": "Endurance",
+        "Table": "Table"
+      },
+      "Perception": "Perceptions",
+      "Perceptions": {
+        "Label": "Perceptions",
+        "Sight": "Vue",
+        "Earing": "Ouïe",
+        "Smell": "Odorat",
+        "Taste": "Goût",
+        "Instinct": "Instinct",
+        "Magice": "Magice"
+      },
+      "Skills": {
+        "Label": "Compétences",
+        "Physical": {
+          "Label": "Physiques",
+          "Agility": {
+            "Label": "Agilité",
+            "Balance": {
+              "Label": "Équilibre"
+            },
+            "Dexterity": {
+              "Label": "Adresse"
+            }
+          },
+          "Athletic": {
+            "Label": "Athlétisme",
+            "Hiking": {
+              "Label": "Marche"
+            },
+            "Running": {
+              "Label": "Course"
+            },
+            "Jump": {
+              "Label": "Saut"
+            }
+          },
+          "Slyness": {
+            "Label": "Discrétion",
+            "Silence": {
+              "Label": "Silence"
+            },
+            "Stealth": {
+              "Label": "Furtivité"
+            },
+            "Concealment": {
+              "Label": "Dissimulation"
+            }
+          },
+          "Climbing": {
+            "Label": "Escalade",
+            "Scale": {
+              "Label": "Grimpe"
+            },
+            "Fall": {
+              "Label": "Chute"
+            }
+          },
+          "Swiming": {
+            "Label": "Nage",
+            "Ease": {
+              "Label": "Aisance"
+            },
+            "Breath-holding": {
+              "Label": "Apnée"
+            }
+          },
+          "Sturdiness": {
+            "Label": "Robustesse",
+            "Force": {
+              "Label": "Force"
+            },
+            "Tenacity": {
+              "Label": "Ténacité"
+            },
+            "Fortitude": {
+              "Label": "Fortitude"
+            }
+          }
+        },
+        "Social": {
+          "Label": "Sociales",
+          "Analyse": {
+            "Label": "Analyse",
+            "Insight": {
+              "Label": "Perspicacité"
+            },
+            "Identification": {
+              "Label": "Identification"
+            },
+            "Investigation": {
+              "Label": "Investigation"
+            }
+          },
+          "Charisma": {
+            "Label": "Charisme",
+            "Presence": {
+              "Label": "Prestance"
+            },
+            "Seduction": {
+              "Label": "Séduction"
+            }
+          },
+          "Eloquence": {
+            "Label": "Éloquence",
+            "Persuasion": {
+              "Label": "Persuasion"
+            },
+            "Calming": {
+              "Label": "Apaisement"
+            },
+            "Negotiation": {
+              "Label": "Négocation"
+            }
+          },
+          "Spirit": {
+            "Label": "Esprit",
+            "Will": {
+              "Label": "Volonté"
+            },
+            "Guarding": {
+              "Label": "Protection"
+            }
+          },
+          "Intimidation": {
+            "Label": "Intimidation",
+            "Fear": {
+              "Label": "Peur"
+            },
+            "Authority": {
+              "Label": "Autorité"
+            }
+          },
+          "Trickery": {
+            "Label": "Ruse",
+            "Acting": {
+              "Label": "Comédie"
+            },
+            "Lying": {
+              "Label": "Mensonge"
+            },
+            "Provocation": {
+              "Label": "Provocation"
+            }
+          }
+        },
+        "Combative": {
+          "Label": "Combatives",
+          "Reflex": {
+            "Label": "Réflexe",
+            "Dodge": {
+              "Label": "Esquive"
+            },
+            "Parry": {
+              "Label": "Parade"
+            },
+            "Opportuneness": {
+              "Label": "Opportunité"
+            }
+          },
+          "Weapon": {
+            "Label": "Arme",
+            "Brawl": {
+              "Label": "Pugilat"
+            },
+            "Blade": {
+              "Label": "Lame"
+            },
+            "Polearm": {
+              "Label": "Hast"
+            },
+            "Haft-slashing": {
+              "Label": "Emmanchée tranchant"
+            },
+            "Haft-bludgeonning-piercing": {
+              "Label": "Emmanchée contondant et perforant"
+            },
+            "Shield": {
+              "Label": "Bouclier"
+            },
+            "Shooting": {
+              "Label": "Tir"
+            },
+            "Throw": {
+              "Label": "Jet"
+            },
+            "Focuser": {
+              "Label": "Focalisateur"
+            },
+            "Instrument": {
+              "Label": "Instrument"
+            }
+          }
+        }
+      },
+      "Knowledges": {
+        "Label": "Connaissances",
+        "Craftmanship": {
+          "Label": "Artisanats",
+          "Jewellery": {
+            "Label": "Bijouterie",
+            "Finery": {
+              "Label": "Parure"
+            },
+            "Seaming": {
+              "Label": "Joaillerie"
+            }
+          },
+          "Sewing": {
+            "Label": "Couture",
+            "Fashion": {
+              "Label": "Vestimentaire"
+            },
+            "Domestic": {
+              "Label": "Domestique"
+            }
+          },
+          "Cabinet-making": {
+            "Label": "Ébénisterie",
+            "Gear": {
+              "Label": "Attirail"
+            },
+            "Woodworking": {
+              "Label": "Menuiserie"
+            }
+          },
+          "Leatherworking": {
+            "Label": "Maroquinerie",
+            "Tanning": {
+              "Label": "Tannage"
+            },
+            "Clothing": {
+              "Label": "Vêtement"
+            }
+          },
+          "Alchemy": {
+            "Label": "Alchimie",
+            "Potion": {
+              "Label": "Potion"
+            },
+            "Poison": {
+              "Label": "Poison"
+            },
+            "Transformation": {
+              "Label": "Transformation"
+            }
+          },
+          "Cuisine": {
+            "Label": "Cuisine",
+            "Meal": {
+              "Label": "Repas"
+            },
+            "Baking": {
+              "Label": "Boulangerie"
+            },
+            "Licor": {
+              "Label": "Alcoolerie"
+            }
+          },
+          "Forge": {
+            "Label": "Forge",
+            "Weaponry": {
+              "Label": "Armement"
+            },
+            "Armoury": {
+              "Label": "Armure"
+            },
+            "Goldsmithery": {
+              "Label": "Orfèvrerie"
+            }
+          },
+          "Engineering": {
+            "Label": "Ingénierie",
+            "Mechanism": {
+              "Label": "Mécanisme"
+            },
+            "Siege": {
+              "Label": "Siège"
+            },
+            "Glassware": {
+              "Label": "Verrerie"
+            }
+          }
+        },
+        "Artistic": {
+          "Label": "Artistiques",
+          "Song": {
+            "Label": "Chant",
+            "Entertaining": {
+              "Label": "Divertissant"
+            },
+            "Battle": {
+              "Label": "Bataille"
+            }
+          },
+          "Graphic": {
+            "Label": "Graphique",
+            "Work": {
+              "Label": "Œuvre"
+            },
+            "Tattoo": {
+              "Label": "Tatouage"
+            }
+          },
+          "Music": {
+            "Label": "Musique",
+            "Repertoire": {
+              "Label": "Répertoire"
+            },
+            "Theory": {
+              "Label": "Solfège"
+            }
+          },
+          "Sculpture": {
+            "Label": "Sculpture",
+            "Ceramic": {
+              "Label": "Céramique"
+            },
+            "Decoration": {
+              "Label": "Décorative"
+            }
+          },
+          "Dance": {
+            "Label": "Danse",
+            "Aesthetics": {
+              "Label": "Esthétique"
+            },
+            "Combat": {
+              "Label": "Combattante"
+            },
+            "Spiritual": {
+              "Label": "Spirituelle"
+            }
+          }
+        },
+        "Erudition": {
+          "Label": "Éruditions",
+          "Language": {
+            "Label": "Langue"
+          },
+          "Monstrology": {
+            "Label": "Monstrologie"
+          },
+          "Zoology": {
+            "Label": "Zoologie"
+          },
+          "Civilisation": {
+            "Label": "Civilisation"
+          },
+          "Medecine": {
+            "Label": "Médecine",
+            "Treatment": {
+              "Label": "Soin"
+            },
+            "Mortuary": {
+              "Label": "Mortuaire"
+            }
+          },
+          "Runic": {
+            "Label": "Runique",
+            "Enchantment": {
+              "Label": "Enchantement"
+            },
+            "Inscription": {
+              "Label": "Transcription"
+            }
+          },
+          "Symbolism": {
+            "Label": "Symbolique",
+            "Heraldry": {
+              "Label": "Héraldique"
+            },
+            "Cryptography": {
+              "Label": "Cryptographie"
+            }
+          },
+          "Science": {
+            "Label": "Science",
+            "Mathematic": {
+              "Label": "Mathématique"
+            },
+            "Astronomy": {
+              "Label": "Astronomie"
+            },
+            "Geology": {
+              "Label": "Géologie"
+            }
+          }
+        },
+        "Utilitarian": {
+          "Label": "Utilitaires",
+          "Hunting": {
+            "Label": "Chasse",
+            "Tracking": {
+              "Label": "Pistage"
+            },
+            "Cutting": {
+              "Label": "Dépeçage"
+            }
+          },
+          "Construction": {
+            "Label": "Construction",
+            "Masonry": {
+              "Label": "Maçonnerie"
+            },
+            "Carpentry": {
+              "Label": "Charpenterie"
+            }
+          },
+          "Dressage": {
+            "Label": "Dressage",
+            "Taming": {
+              "Label": "Domestication"
+            },
+            "War": {
+              "Label": "Guerre"
+            }
+          },
+          "Fishing": {
+            "Label": "Pêche",
+            "Bank": {
+              "Label": "Rive"
+            },
+            "High-sea": {
+              "Label": "Hauturière"
+            }
+          },
+          "Theft": {
+            "Label": "Vol",
+            "Pickpocketing": {
+              "Label": "À la tire"
+            },
+            "Lock-picking": {
+              "Label": "Crochetage"
+            }
+          },
+          "Nature": {
+            "Label": "Nature",
+            "Farming": {
+              "Label": "Culture"
+            },
+            "Herbalist": {
+              "Label": "Herboristerie"
+            },
+            "Fungus": {
+              "Label": "Fungus"
+            }
+          },
+          "Strategy": {
+            "Label": "Stratégie",
+            "Tactics": {
+              "Label": "Tactique"
+            },
+            "Logistics": {
+              "Label": "Logistique"
+            },
+            "Cartography": {
+              "Label": "Cartographie"
+            }
+          },
+          "Transport": {
+            "Label": "Transport",
+            "Mounting": {
+              "Label": "Monte"
+            },
+            "Land": {
+              "Label": "Terrestre"
+            },
+            "Sea": {
+              "Label": "Maritime"
+            }
+          }
+        },
+        "Magic": {
+          "Label": "Magiques",
+          "Air": {
+            "Label": "Air",
+            "Dazzling": {
+              "Label": "Fulgurance"
+            },
+            "Breeze": {
+              "Label": "Souffle"
+            },
+            "Lightning": {
+              "Label": "Foudre"
+            }
+          },
+          "Water": {
+            "Label": "Eau",
+            "Ablution": {
+              "Label": "Ablution"
+            },
+            "Source": {
+              "Label": "Source"
+            },
+            "Ice": {
+              "Label": "Glace"
+            }
+          },
+          "Fire": {
+            "Label": "Feu",
+            "Torch": {
+              "Label": "Flambeau"
+            },
+            "Ignition": {
+              "Label": "Ignition"
+            },
+            "Destruction": {
+              "Label": "Destruction"
+            }
+          },
+          "Occult": {
+            "Label": "Occulte",
+            "Toxic": {
+              "Label": "Toxique"
+            },
+            "Curse": {
+              "Label": "Malédiction"
+            },
+            "Ethereal": {
+              "Label": "Éthéré"
+            },
+            "Necromancy": {
+              "Label": "Nécromancie"
+            }
+          },
+          "Blood": {
+            "Label": "Sanguin",
+            "Sacrifice": {
+              "Label": "Sacrifice"
+            },
+            "Puncture": {
+              "Label": "Ponction"
+            },
+            "Drain": {
+              "Label": "Drain"
+            }
+          },
+          "Earth": {
+            "Label": "Terre",
+            "Bastion": {
+              "Label": "Bastion"
+            },
+            "Telluric": {
+              "Label": "Tellurique"
+            },
+            "Metallic": {
+              "Label": "Métallique"
+            }
+          },
+          "Druidic": {
+            "Label": "Druidique",
+            "Astral": {
+              "Label": "Astrale"
+            },
+            "Solicitude": {
+              "Label": "Sollicitude"
+            },
+            "Changeforme": {
+              "Label": "Changeforme"
+            },
+            "Mutation": {
+              "Label": "Mutation"
+            }
+          },
+          "Mental": {
+            "Label": "Arcanique",
+            "Kinetic": {
+              "Label": "Kinétique"
+            },
+            "Illusion": {
+              "Label": "Illusion"
+            },
+            "Power": {
+              "Label": "Puissance"
+            },
+            "Enchanted": {
+              "Label": "Enchantée"
+            }
+          },
+          "Holy": {
+            "Label": "Sacré",
+            "Blessing": {
+              "Label": "Bénédiction"
+            },
+            "Piety": {
+              "Label": "Dévotion"
+            },
+            "Glory": {
+              "Label": "Gloire"
+            },
+            "Purification": {
+              "Label": "Purification"
+            }
+          }
+        }
+      },
+      "Time_phase": {
+        "Permanent": "Permanent",
+        "Combat": "Combat",
+        "Rest": "Repos",
+        "Sleep": "Sommeil",
+        "Short_moon": "Lune courte",
+        "Long_moon": "Lune longue"
+      },
+      "Time_unit": {
+        "Hours_pl": "Heures",
+        "Hours": "Heure",
+        "Minutes_pl": "Minutes",
+        "Minutes": "Minute",
+        "Rounds_pl": "Rounds",
+        "Rounds": "Round",
+        "Turns_pl": "Tours",
+        "Turns": "Tour",
+        "Seconds_pl": "Secondes",
+        "Seconds": "Seconde"
+      },
+      "Keywords": {
+        "Label": "Mots-clefs",
+        "Noisy": "Bruyant",
+        "Noisy_more": "Bruyant+",
+        "Obstruct": "Gênant",
+        "Obstruct_more": "Gênant+",
+        "Preserve": {
+          "Label": "Préserver",
+          "Recap": "Préserver {amount} {type} {increment}",
+          "Max_amount": "Quantité maximale",
+          "Type": "Type",
+          "Increment": "Incrément"
+        },
+        "Equip": "Équipé",
+        "Two_handed": "2 mains",
+        "Two_handed_more": "2 mains+",
+        "Light": "Léger",
+        "Heavy": "Lourd",
+        "Heavy_more": "Lourd+",
+        "Quick": "Rapide",
+        "Quick_more": "Rapide+",
+        "Somatic": "Somatique",
+        "Gruff": "Bourru",
+        "Gruff_more": "Bourru+",
+        "Tough": "Coriace",
+        "Tough_more": "Coriace+",
+        "Sturdy": "Solide",
+        "Sturdy_more": "Solide+",
+        "Guard": "Garde",
+        "Guard_more": "Garde+",
+        "Protect": "Protégé",
+        "Protect_more": "Protégé+",
+        "Protection": "Protection",
+        "Protection_more": "Protection+",
+        "Brutal": "Brutal",
+        "Brutal_more": "Brutal+",
+        "Smash": "Fracasse",
+        "Smash_more": "Fracasse+",
+        "Penetrating": "Pénétrant",
+        "Penetrating_more": "Pénétrant+",
+        "Sly": "Sournois",
+        "Direct": "Direct",
+        "Direct_more": "Direct+",
+        "Versatile": "Polyvalent",
+        "Reach": "Allonge",
+        "Reach_more": "Allonge+",
+        "Throwable": "Jeté",
+        "Throwable_more": "Jeté+",
+        "Recharge": "Recharge"
+      },
+      "Keywords_description": {
+        "Label": "Description du Mot-clef",
+        "Noisy": "DR Discrétion - Silence / Furtivité -1 lorsque le personnage se déplace.",
+        "Noisy_more": "Désavantage Discrétion - Silence / Furtivité lorsque le personnage se déplace.",
+        "Obstruct": "Initiative -1.",
+        "Obstruct_more": "Initiative -1D2.",
+        "Preserve": "L'objet peut conserver une quantité maximale X d'une ressource qui s'accumule à hauteur de Y. Cette ressource ne peut être utilisée que pour un coût de magie. 5 endurance sont considérés comme une seule quantité X.",
+        "Equip": "L'objet n'a pas besoin d'être dégainée ou sortie du sac.",
+        "Two_handed": "L'action \"Attaquer\" a coût Seconde +1.\nL'arme nécessite les deux mains pour être utilisée. \n\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"Allonge\")",
+        "Two_handed_more": "L'arme nécessite les deux mains pour être utilisée. \n\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"Allonge\")",
+        "Light": "Peut être portée en main secondaire.",
+        "Heavy": "L'action \"Dégainer\" a coût Seconde +1",
+        "Heavy_more": "L'action \"Dégainer\" a coût Seconde +2.",
+        "Quick": "L'action \"Dégainer\" a coût Seconde -1.",
+        "Quick_more": "L'action \"Dégainer\" a coût Seconde -2.",
+        "Somatic": "La ou les mains qui tiennent l'objet sont considérées comme libres quant il s'agit de Composantes - Somatiques.",
+        "Gruff": "Une fois par combat, ignore \"Brutalisé\".",
+        "Gruff_more": "Une fois par combat, DR +1 sur l'action \"Bousculer\".\nUne fois par combat, ignore \"Brutalisé\".",
+        "Tough": "Une fois par phase de sommeil, ignore \"Saignement\".",
+        "Tough_more": "Une fois par combat, ignore \"Saignement\".",
+        "Sturdy": "Une fois par phase de sommeil, subir Dégâts > 8 donne Armure +1.",
+        "Sturdy_more": "Une fois par combat, subir Dégâts > 8 donne Armure +1.",
+        "Guard": "DR Réflexe - Parade +1 contre les attaques au corps à corps.",
+        "Guard_more": "DR Réflexe - Parade +1 contre les attaques au corps à corps.\nUne fois par combat, Armure +1 contre l'attaque lorsque vous ratez votre parade.",
+        "Protect": "Une fois par phase de sommeil, donne une parade supplémentaire hors limite.",
+        "Protect_more": "Une fois par combat, donne une parade supplémentaire hors limite.",
+        "Protection": "DR Réflexe - Parade +1 contre les attaques à distance.",
+        "Protection_more": "L'avantage DR Réflexe - Parade contre les attaques à distance.",
+        "Brutal": "Chaque tour, la première cible touchée a \"Brutalisé\" jusqu'à la fin du prochain tour.",
+        "Brutal_more": "Chaque tour, la première cible touchée a \"Brutalisé+\" jusqu'à la fin du prochain tour.",
+        "Smash": "La cible a DR Réflexe - Parade -1 contre l'attaque.",
+        "Smash_more": "La cible a DR Réflexe - Parade -1 contre l'attaque.\nLa cible ne peut parer qu'avec un bouclier.",
+        "Penetrating": "Pénétration +1",
+        "Penetrating_more": "Pénétration +1\nUne fois par combat, ignore l'armure et la résistance.",
+        "Sly": "En cas de surprise, augmente le % de dégâts supplémentaire, ignore l'armure et applique \"Saignement\".",
+        "Direct": "Une fois par phase de sommeil, attaquer avec X coûte Seconde -1.",
+        "Direct_more": "Une fois par combat, attaquer avec X coûte Seconde -1.",
+        "Versatile": "L'arme peut avoir 2 mains+ pour Dégât Arme +1.",
+        "Reach": "Donne \"Opportunité d'allonge\".\n\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")",
+        "Reach_more": "Donne \"Opportunité d'allonge\".\n\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")\nUne fois par combat, \"Opportunité d'allonge\" peut être utilisée sans Réflexe - Opportunité.",
+        "Throwable": "DR Jet +1, Portée effective +1m et Portée maximale +3m.",
+        "Throwable_more": "DR Jet +2, Portée effective +1m et Portée maximale +3m.",
+        "Recharge": "Nécessite l'action \"Recharger\" avant de pouvoir attaquer."
+      },
+      "Actable": {
+        "Require_immobile": "Immobile",
+        "Require_verbal": "Verbale",
+        "Somatic": "Somatique",
+        "Material": "Matériel",
+        "Duration": "Durée",
+        "Range": "Portée",
+        "Target": "Cible",
+        "Area": "Zone"
+      },
+      "Somatic": {
+        "None": "Aucun",
+        "Gesture": "Geste",
+        "One_hand": "Une main",
+        "Two_hands": "2 mains"
+      },
+      "Actable_modifier": {
+        "Technique": "Technique",
+        "Incantatory_addition": "Ajoût incantatoire"
+      },
+      "Action": {
+        "Is_magic": "Magique"
+      },
+      "Spell": {
+        "Markers": {
+          "Is_canalisation": "Canalisation",
+          "Is_evocation": "Évocation",
+          "Is_attack": "Attaque",
+          "Is_trap": "Piège",
+          "Canalisation": "C",
+          "Evocation": "E",
+          "Attack": "A",
+          "Trap": "P"
+        }
+      },
+      "Status_effect": {
+        "Preparing": {
+          "Label": "Préparation",
+          "Description": "Le sort demande de préparer sa magie. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir le sort."
+        },
+        "Evocation": {
+          "Label": "Évocation",
+          "Description": "Le sort demande de continuer à évoquer sa magie. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir le sort."
+        },
+        "Channelling": {
+          "Label": "Canalisation",
+          "Description": "Le sort demande de continuer à canaliser sa magie. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir le sort."
+        },
+        "Concentration": {
+          "Label": "Concentration",
+          "Description": "L'action demande un certain temps de concentration. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir l'action."
+        },
+        "Unconscious": {
+          "Label": "Inconscient",
+          "Description": "Un personnage affecté ne peut rien faire et n'a pas conscience de ce qui l'entoure."
+        },
+        "Bleeding": {
+          "Label": "Saignement",
+          "Description": "Un personnage affecté a Santé -1 / round.\nLorsque \"Saignement\" est appliqué à un personnage affecté par \"Saignement\", il subit Santé -1."
+        },
+        "Abused": {
+          "Label": "Brutalisé",
+          "Description": "Un personnage subit Dégât Arme +1 de l'émetteur."
+        },
+        "Abused+": {
+          "Label": "Brutalisé+",
+          "Description": "Un personnage subit Dégât Arme +1 de l'émetteur.\nDR Réflexe - Parade -1."
+        },
+        "Slowed": {
+          "Label": "Ralenti",
+          "Description": "Un personnage affecté a coût Mouvement +1 pour se déplacer."
+        },
+        "Prone": {
+          "Label": "Renversé",
+          "Description": "Un personnage affecté a un “Demi-couvert” et l'attaquer au corps à corps donne l'avantage."
+        },
+        "Immobilised": {
+          "Label": "Immobilisé",
+          "Description": "Un personnage affecté ne peut pas utiliser de Mouvement. Il a le désavantage pour esquiver."
+        },
+        "Disability": {
+          "Label": "Incapacité",
+          "Description": "Un personnage affecté ne peut rien faire à part utiliser un sort sans composantes verbales et somatiques."
+        },
+        "Moist": {
+          "Label": "Humide",
+          "Description": "Résistance foudre -1 feu +1. Dissipe \"Enflammé\". Les zones appliquant l'état dissipe les cases vides ardentes."
+        },
+        "Frostbite": {
+          "Label": "Gelure",
+          "Description": "Un personnage affecté subit Dégât froid 1 / round. L'état dure +1 round si la cible est \"Humide\"."
+        },
+        "Burning": {
+          "Label": "Enflammé",
+          "Description": "Dégât feu 1 / round. Dissipe l'état \"Humide\". Les zones appliquant l'état dissipe les cases gelées."
+        },
+        "Burning+": {
+          "Label": "Enflammé+",
+          "Description": "Dégât feu 1 / round. Dissipe l'état \"Humide\". Les zones appliquant l'état dissipe les cases gelées.\nDégât feu 2 / round. Dissipe \"Humide\" et \"Gelure\"."
+        },
+        "Radiate": {
+          "Label": "Irradié",
+          "Description": "Une cible affectée éclaire clairement sur 1m et l'attaquer au corps à corps donne DR +1. "
+        },
+        "Conductive": {
+          "Label": "Conducteur",
+          "Description": "Lorsqu'un sort Foudre cible Autrui affecté ou un objet affecté, il a Supp. coût Mana -1.\nLorsqu'un sort Foudre cible un objet affecté, le porteur n'est pas affecté par le sort."
+        },
+        "Dazed": {
+          "Label": "Hébété",
+          "Description": "Un personnage affecté joue son tour en dernière lors du round suivant."
+        },
+        "Shocked": {
+          "Label": "Choqué",
+          "Description": "Un personnage affecté a DR -1 à tous les jets."
+        },
+        "Stunned": {
+          "Label": "Étourdi",
+          "Description": "Un personnage affecté ne peut rien faire et n'a pas conscience de ce qui l'entoure puis il a l’avantage pour résister à l'état jusqu'à son tour."
+        },
+        "Banished": {
+          "Label": "Banni",
+          "Description": "Le personnage disparaît, il ne peut pas être ciblé, prendre d'opportunité et passe son tour. Lorsqu'il perd \"Banni\", si un personnage se trouve sur la case, il réapparait sur une case adjacente à l'appréciation du MJ."
+        },
+        "Drunk": {
+          "Label": "Ébriété",
+          "Description": "Un personnage affecté a DR -1 à tous les jets. L’état se dissipe après une phase de sommeil mais il faut faire un Robustesse - Ténacité pour ne pas recevoir l’état “Gueule de bois”. "
+        },
+        "Hangover": {
+          "Label": "Gueule de bois",
+          "Description": "Un personnage affecté a DR -1 aux compétences combatives et aux perceptions. L’état se dissipe après une phase de repos ou une phase de sommeil si l’état \"Ébriété\" était cumulé."
+        },
+        "Tired": {
+          "Label": "Fatigué",
+          "Description": "Un personnage affecté a DR -1 aux compétences combatives, physiques et aux connaissances. (Toujours appliqué Endurance < 25)"
+        },
+        "Hungry": {
+          "Label": "Affamé",
+          "Description": "Un personnage affecté a DR -1 aux compétences physiques et combatives."
+        },
+        "Dehydrated": {
+          "Label": "Déshydraté",
+          "Description": "Un personnage affecté a DR -1 aux compétences physiques et combatives."
+        },
+        "Rested": {
+          "Label": "Reposé",
+          "Description": "Un personnage affecté a Initiative +1."
+        },
+        "Deaf": {
+          "Label": "Surdité",
+          "Description": "Un personnage affecté n'entend plus rien."
+        },
+        "Silenced": {
+          "Label": "Silence",
+          "Description": "Un personnage affecté ne peut plus émettre de son avec sa voix. Elle ne peut pas utiliser de sort à composante verbale."
+        },
+        "Numb": {
+          "Label": "Engourdi",
+          "Description": "DR Attaque -1 lorsqu'une main ou plus est nécessaire."
+        },
+        "Numb+": {
+          "Label": "Engourdi+",
+          "Description": "DR Attaque -1 lorsqu'une main ou plus est nécessaire.\nDésavantage attaque lorsqu'une main ou plus est nécessaire."
+        },
+        "Blindness": {
+          "Label": "Cécité",
+          "Description": "Un personnage affecté ne voit plus. Il est considéré dans l'obscurité."
+        },
+        "Invisible": {
+          "Label": "Invisible",
+          "Description": "Un personnage affecté ne peut pas être perçu et ciblé. Un personnage qui attaque un personnage invisible a le désavantage."
+        },
+        "Incurable": {
+          "Label": "Incurable",
+          "Description": "Un personnage affecté ne peut pas avoir de soin de Santé."
+        },
+        "Incurable+": {
+          "Label": "Incurable+",
+          "Description": "Un personnage affecté ne peut pas avoir de soin de Santé.\nUn personnage affecté ne peut pas regagner de Santé."
+        },
+        "Afraid": {
+          "Label": "Effrayé",
+          "Description": "Un personnage affecté ne peut pas approcher l'émetteur et a le désavantage pour l'attaquer."
+        },
+        "Panic": {
+          "Label": "Paniqué",
+          "Description": "Un personnage affecté doit fuir le plus loin possible de l'émetteur."
+        },
+        "Terrified": {
+          "Label": "Terrifié",
+          "Description": "Un personnage affecté ne peut plus se déplacer ou attaquer. Il a le désavantage aux esquives et aux parades."
+        },
+        "Dead": {
+          "Label": "Dead",
+          "Description": "Vous ne pouvez rien faire et vous n'avez pas conscience de ce qui vous entoure. Faites que vos camarades trouvent une solution, ou préparer un nouveau personnage."
+        },
+        "Seduced": {
+          "Label": "Séduit",
+          "Description": "Un personnage affecté a le désavantage contre l'émetteur."
+        },
+        "Charmed": {
+          "Label": "Charmé",
+          "Description": "Un personnage affecté considère l'émetteur comme son ami proche, il ne peut pas entreprendre d’action néfaste contre lui et il l'aide de son mieux."
+        },
+        "Captivated": {
+          "Label": "Subjugué",
+          "Description": "Un personnage affecté obéit à l'émetteur. Il fait ce qu'il lui demande si cela ne comprend pas de se blesser."
+        },
+        "Control": {
+          "Label": "Contrôlé",
+          "Description": "Un personnage affecté obéit à l'émetteur. Il fait ce qu'il lui demande si cela ne comprend pas le suicide."
+        },
+        "Enraged": {
+          "Label": "Enragé",
+          "Description": "Un personnage affecté attaque la cible la plus proche dans sa ligne de vue ou dont il a connaissance à proximité."
+        },
+        "Provoked": {
+          "Label": "Provoqué",
+          "Description": "Un personnage affecté a DR -1 tant qu'il ne suit pas la provocation."
+        },
+        "Provoked+": {
+          "Label": "Provoqué+",
+          "Description": "Un personnage affecté a DR -1 tant qu'il ne suit pas la provocation.\nUn personnage affecté a le désavantage tant qu'il ne suit pas la provocation."
+        }
+      }
+    }
+  },
+  "TYPES": {
+    "Actor": {
+      "player-character": "Personnage joueur",
+      "non-player-character": "Personnage non joueur",
+      "hero": "Héros",
+      "chest": "Coffre"
+    },
+    "Item": {
+      "feature": "aptitude",
+      "kit": "objet",
+      "armor": "armure",
+      "weapon": "arme",
+      "action": "action",
+      "opportunity": "opportunité",
+      "spell": "sort",
+      "technique": "technique",
+      "incantatory-addition": "ajoût incantatoire",
+      "effect": "effet"
+    },
+    "Effect": "effet"
+  }
 }

@@ -1,0 +1,183 @@
+<div class="tab {{#if is_active_page}}active{{/if}}" data-group="primary" data-tab="character">
+    <div class="atoria-player-character-page {{#if is_forced_horizontally}}is_forced_horizontally{{/if}}">
+        <div class="first-col">
+            <div class="flexrow">
+                {{#unless @root.isEditingMode }}
+                {{>"atoria.v2.actors_partials.skill-cat-display"
+                    skill_cat_skills=reflex_skills.skill_cat
+                    data_path=reflex_skills.path
+                    model=reflex_skills.model
+                    cssClass="atoria-skill-area"
+                }}
+                {{/unless}}
+                <div class="flexcol">
+                    <div class="atoria-horizontal-bar flexrow">
+                        <h5 class="title">
+                            {{localize "ATORIA.Sheet.Attack.Title"}}
+                        </h5>
+                    </div>
+                    <ul class="item-list">
+                    {{#each action_items as |item idx|}}
+                        {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <div class="atoria-character-skill-n-knowledge">
+                {{>"atoria.v2.actors_partials.skill-type-display"
+                    skill_type_data=actor.system.skills
+                    data_path="system.skills"
+                    model=systemFields.skills
+                    cssClass="atoria-skill-area"
+                    filtered_skills_group=filtered_skills_group
+                }}
+
+                {{>"atoria.v2.actors_partials.skill-type-display"
+                    skill_type_data=actor.system.knowledges
+                    data_path="system.knowledges"
+                    model=systemFields.knowledges
+                    cssClass="atoria-knowledge-area"
+                }}
+            </div>
+        </div>
+        <div class="second-col">
+            <div class="atoria-horizontal-bar flexrow colored">
+                <h5 class="title">
+                    {{localize "ATORIA.Sheet.Effect.Title"}}
+                </h5>
+                {{#if @root.editable}}
+                <a class="atoria-create-button" data-action="createItem" data-type="effect" data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.effect" )}}">
+                    <i class="fas fa-plus"></i>
+                </a>
+                {{/if}}
+            </div>
+            <div class="atoria-offense-defense">
+                <div class="flexrow">
+                <label>{{localize systemFields.offense.label}}</label>
+                {{ formInput systemFields.offense.fields.amount value=actor.system.offense.amount disabled=(not @root.editable)}}
+                </div>
+                <textarea class="atoria-resize-ta" data-name="offense-description" rows=1 data-dtype="String" name="system.offense.description" {{disabled (not editable)}}
+                >{{cleanLines actor.system.offense.description}}</textarea>
+
+                <div class="flexrow">
+                <label>{{localize systemFields.defense.label}}</label>
+                {{ formInput systemFields.defense.fields.amount value=actor.system.defense.amount disabled=(not @root.editable)}}
+                </div>
+                <textarea class="atoria-resize-ta" data-name="defense-description" rows=1 data-dtype="String" name="system.defense.description" {{disabled (not editable)}}
+                >{{cleanLines actor.system.defense.description}}</textarea>
+            </div>
+            <ul class="item-list">
+            {{#each effects as |effect idx|}}
+                {{>"atoria.v2.actors_partials.item-effect-line-display" effect=effect compact=compact}}
+            {{/each}}
+            </ul>
+
+            <div class="atoria-horizontal-bar flexrow colored">
+                <h5 class="title">
+                    {{localize "ATORIA.Sheet.Feature.Title"}}
+                </h5>
+            </div>
+            <ul class="item-list">
+                <!-- Combat -->
+                {{#if (or formatted_feature_items.combat @root.isEditingMode)}}
+                <h5 class="title" data-item-id data-feature-cat="combat.other">{{localize feature_categories.combat.Label}}</h5>
+                    <!-- Combative -->
+                    <!-- Armors -->
+                    <!-- Amplificators -->
+                    <!-- Other -->
+                    {{#each feature_categories.combat.children as |child|}}
+                        {{#if (or (getProperty ../formatted_feature_items.combat child.id) @root.isEditingMode)}}
+                            <h6 class="title" data-item-id data-feature-cat="combat.{{child.id}}">{{localize child.Label}}
+                                {{#if (and @root.editable @root.isEditingMode)}}
+                                <a class="atoria-create-button" data-action="createItem" data-type="feature"
+                                data-feature-cat="combat.{{child.id}}"
+                                data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.feature" )}}">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                                {{/if}}
+                            </h6>
+                            {{#each (getProperty ../formatted_feature_items.combat child.id) as |item idx|}}
+                                {{>"atoria.v2.actors_partials.item-line-display" item=item}}
+                            {{/each}}
+                        {{/if}}
+                    {{/each}}
+                {{/if}}
+                <!-- Skills -->
+                {{#if (or formatted_feature_items.skills @root.isEditingMode)}}
+                <h5 class="title" data-item-id data-feature-cat="skills.other">{{localize feature_categories.skills.Label}}</h5>
+                    {{#each feature_categories.skills.children as |child|}}
+                    {{#if (or (getProperty ../formatted_feature_items.skills child.id) @root.isEditingMode)}}
+                    <h6 class="title" data-item-id data-feature-cat="skills.{{child.id}}">{{localize child.Label}}
+                    {{#if (and @root.editable @root.isEditingMode)}}
+                        <a class="atoria-create-button" data-action="createItem" data-type="feature"
+                        data-feature-cat="skills.{{child.id}}"
+                        data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.feature" )}}">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                        {{/if}}
+                    </h6>
+                    {{#each (getProperty ../formatted_feature_items.skills child.id) as |item idx|}}
+                                {{>"atoria.v2.actors_partials.item-line-display" item=item}}
+                            {{/each}}
+                        {{/if}}
+                    {{/each}}
+                {{/if}}
+                <!-- Magic -->
+                {{#if (or formatted_feature_items.magic @root.isEditingMode)}}
+                <h5 class="title" data-item-id data-feature-cat="magic.other">{{localize feature_categories.magic.Label}}</h5>
+                    {{#each feature_categories.magic.children as |child|}}
+                    {{#if (or (getProperty ../formatted_feature_items.magic child.id) @root.isEditingMode)}}
+                    <h6 class="title" data-item-id data-feature-cat="magic.{{child.id}}">{{localize child.Label}}
+                    {{#if (and @root.editable @root.isEditingMode)}}
+                        <a class="atoria-create-button" data-action="createItem" data-type="feature"
+                        data-feature-cat="magic.{{child.id}}"
+                        data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.feature" )}}">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                        {{/if}}
+                    </h6>
+                    {{#each (getProperty ../formatted_feature_items.magic child.id) as |item idx|}}
+                                {{>"atoria.v2.actors_partials.item-line-display" item=item}}
+                            {{/each}}
+                        {{/if}}
+                    {{/each}}
+                {{/if}}
+                <!-- Knowledge -->
+                {{#if (or formatted_feature_items.knowledges @root.isEditingMode)}}
+                <h5 class="title" data-item-id data-feature-cat="knowledges.other">{{localize feature_categories.knowledges.Label}}</h5>
+                    {{#each feature_categories.knowledges.children as |child|}}
+                        {{#if (or (getProperty ../formatted_feature_items.knowledges child.id) @root.isEditingMode)}}
+                        <h6 class="title" data-item-id data-feature-cat="knowledges.{{child.id}}">{{localize child.Label}}
+                        {{#if (and @root.editable @root.isEditingMode)}}
+                            <a class="atoria-create-button" data-action="createItem" data-type="feature"
+                            data-feature-cat="knowledges.{{child.id}}"
+                            data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.feature" )}}">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                            {{/if}}
+                        </h6>
+                        {{#each (getProperty ../formatted_feature_items.knowledges child.id) as |item idx|}}
+                            {{>"atoria.v2.actors_partials.item-line-display" item=item}}
+                        {{/each}}
+                        {{/if}}
+                    {{/each}}
+                {{/if}}
+                <!-- Other -->
+                {{#if (or formatted_feature_items.other @root.isEditingMode)}}
+                <h5 class="title" data-item-id data-feature-cat="other">{{localize feature_categories.other.Label}}
+                {{#if (and @root.editable @root.isEditingMode)}}
+                    <a class="atoria-create-button" data-action="createItem" data-type="feature"
+                    data-feature-cat="other"
+                    data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.feature" )}}">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    {{/if}}
+                </h5>
+                {{#each formatted_feature_items.other as |item idx|}}
+                    {{>"atoria.v2.actors_partials.item-line-display" item=item}}
+                {{/each}}
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</div>

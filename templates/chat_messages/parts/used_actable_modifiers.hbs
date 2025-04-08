@@ -1,0 +1,12 @@
+<h5 class="expand-control">{{localize "ATORIA.Chat_message.Actable.Used_actable_modifiers"}}</h5>
+<ul class="used_actable_modifiers expand-data">
+{{#if used_actable_modifiers}}
+    {{#each used_actable_modifiers as |actable_modifier key|}}
+    <li>
+        <label data-tooltip="{{actable_modifier.system.description}}">{{localize actable_modifier.name}}</label>
+    </li>
+    {{/each}}
+{{else}}
+    <li><label>{{localize "ATORIA.Chat_message.Actable.No_used_actable_modifiers"}}</label></li>
+{{/if}}
+</ul>

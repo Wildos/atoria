@@ -1,0 +1,47 @@
+.atoria-attribute-display {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    > label {
+        flex: 1;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        grid-area: ttl;
+        text-align: center;
+        width: 100%;
+        min-height: var(--atoria-skill-height);
+        max-height: var(--atoria-skill-height);
+
+        border: var(--atoria-border-style);
+        border-radius: var(--atoria-border-style-radius);
+    }
+    > input {
+        line-height: 1lh;
+        min-height: var(--atoria-skill-height);
+        max-height: var(--atoria-skill-height);
+    }
+    > input:first-of-type {
+        grid-area: val;
+    }
+    > input:last-of-type {
+        grid-area: max;
+    }
+
+
+    &.two-rows {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+        "ttl ttl"
+        "val max";
+        > input:first-of-type,
+        > input:last-of-type {
+            --atoria-input-width: 100%;
+        }
+
+    }
+}

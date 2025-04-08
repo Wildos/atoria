@@ -1,0 +1,148 @@
+& {
+    --atoria-document-img-size: 100%;
+
+    .atoria-document-img {
+        min-height: var(--atoria-document-img-size);
+        max-height: var(--atoria-document-img-size);
+        min-width: var(--atoria-document-img-size);
+        max-width: var(--atoria-document-img-size);
+        border-radius: var(--atoria-border-style-radius);
+    }
+
+    .atoria-create-button, .atoria-edit-button, .atoria-delete-button {
+        flex: 0;
+        vertical-align: middle;
+
+        display: inline-grid;
+        text-align: right;
+        align-content: center;
+        i {
+            font-size: 100%;
+        }
+    }
+
+    .atoria-horizontal-bar {
+        border: var(--atoria-border-style);
+        border-radius: var(--atoria-border-style-radius);
+        > *, > h5 {
+            border: none;
+        }
+        // > label + label {
+        //     border-left: var(--atoria-border-style);
+        // }
+
+        > hr {
+            margin: 0;
+            height: calc(var(--atoria-base-line-block-height) / 2);
+            min-width: 1px;
+            border-left: var(--atoria-item-line-border-style);
+        }
+
+        > *, .atoria-create-button-group > * {
+            &.atoria-create-button, &.atoria-edit-button, &.atoria-delete-button {
+                border: none;
+                margin: 0 3px;
+            }
+        }
+    }
+
+    --bar-percentage: 0%;
+    --bar-color-background: black;
+
+    .atoria-progress-bar {
+
+        background: var(--bar-color-background);
+        width: auto;
+        position:relative;
+        height: max-content;
+
+        > .progress {
+            --bar-color-bar: var(--atoria-color-disabled-value);
+            height: 100%;
+            width: var(--bar-percentage);
+            background: var(--bar-color-bar);
+
+            position: absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            margin: 0;
+        }
+        > .title {
+            position: relative;
+            background-color: transparent;
+            z-index: 1;
+            color: var(--atoria-color-disabled-value);
+            mix-blend-mode: difference;
+        }
+    }
+
+    [data-action]:hover {
+        cursor: pointer;
+        text-shadow: 0 0 8px var(--color-shadow-primary);
+    }
+    .atoria-expand-control:not(.expanded) ~ .atoria-expand-following-data,
+    .atoria-expand-control:not(.expanded) + .atoria-expand-direct-data {
+        height: 0;
+        min-height: 0;
+        max-height: 0;
+        overflow: hidden;
+        border: none;
+    }
+
+    .atoria-expand-control.expanded:has(+ .atoria-expand-direct-data) {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .atoria-expand-control.expanded + .atoria-expand-direct-data {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+
+    --atoria-color-error: red;
+
+    .atoria-error {
+        color: var(--atoria-color-error) !important;
+    }
+
+    .atoria-resize-ta {
+        resize: none;
+        height: auto;
+    }
+
+    fieldset > legend {
+        &.atoria-expand-control::before {
+            font-family: var(--font-awesome);
+            font-size: 1em;
+            content: "\f105";
+        }
+        &.atoria-expand-control.expanded::before {
+                content: "\f107";
+        }
+    }
+    .atoria-details > summary::before {
+        font-family: var(--font-awesome);
+        font-size: 1em;
+        content: "\f105";
+    }
+    .atoria-details[open] > summary::before {
+        content: "\f107";
+    }
+
+    .grid-2col {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+        .double-col-field {
+            grid-column: 1 / span 2;
+        }
+    }
+
+    .flex0 {
+        flex: 0;
+        min-width: fit-content;
+        min-height: fit-content;
+    }
+}

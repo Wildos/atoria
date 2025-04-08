@@ -1,0 +1,63 @@
+.atoria-coins-display {
+    --atoria-coins-line-vertical-padding: 1px;
+    --atoria-coins-line-height: 1lh + var(--atoria-coins-line-vertical-padding) + var(--atoria-coins-line-vertical-padding);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+
+    line-height: var(--atoria-coins-line-height);
+    padding: var(--atoria-coins-line-vertical-padding);
+
+    > * {
+        flex: 1;
+    }
+
+    > h5 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    > .coins {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+
+        flex: 4;
+
+        line-height: var(--atoria-coins-line-height);
+        padding: var(--atoria-coins-line-vertical-padding);
+
+        > * {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+
+            /* height: var(--atoria-base-line-block-height); */
+            height: var(--atoria-skill-height);
+
+            flex: 1;
+
+            > label {
+                text-align: center;
+                flex: 1;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            > input {
+                --atoria-input-width: var(--atoria-3dgt-input-width);
+                line-height: var(--atoria-coins-line-height);
+                flex: 0;
+            }
+        }
+
+    }
+}

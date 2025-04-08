@@ -1,0 +1,157 @@
+.editing-mode.sheet.hero > .window-content > .body > .top-block{
+    grid-template-rows: calc(9 * var(--atoria-skill-height));
+}
+
+.sheet.hero {
+    --atoria-document-img-size: calc(7 * var(--atoria-skill-height));
+
+    > .window-content {
+        div:not(.colored) > h5, ul:not(.colored) > h5, div.colored:has(h5) {
+            background-color: #0000ff55;
+        }
+        div:not(.colored) > h6, div.colored:has(h6) {
+            background-color: #3333aa55;
+            font-weight: 400;
+        }
+        div:not(.colored) > h5 {
+            min-height: var(--atoria-base-line-block-height);
+            max-height: var(--atoria-skill-height);
+        }
+        div:not(.colored) > h6 {
+            min-height: var(--atoria-skill-height);
+            max-height: var(--atoria-skill-height);
+        }
+        div.colored:has(h5), ul:not(.colored) > h5{
+            min-height: var(--atoria-skill-height);
+            max-height: var(--atoria-skill-height);
+        }
+    }
+
+    > .window-content > .body {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        > * {
+            flex: auto;
+        }
+
+        > .top-block {
+            display: grid;
+            grid-template-areas:
+            "hdr skl ha"
+            "hdr knw ha";
+            grid-template-columns: var(--atoria-document-img-size) min-content;
+            grid-template-rows: calc(5 * var(--atoria-skill-height));
+            flex: 0;
+
+            > .header-area {
+                grid-area: hdr;
+
+                > :not(.atoria-document-img) {
+                    min-height: var(--atoria-skill-height);
+                    max-height: var(--atoria-skill-height);
+                    > * {
+                        height: 100%;
+                        max-height: 100%;
+                    }
+                }
+                > .name-area {
+                    display: flex;
+                    flex-direction: row;
+                    width: 100%;
+                    > input[name="name"] {
+                        --atoria-input-width: 1fr;
+                    }
+                }
+            }
+
+            > .atoria-skill-area {
+                grid-area: skl;
+                max-height: fit-content;
+
+                > h5 {
+                    min-height: var(--atoria-skill-height);
+                    max-height: var(--atoria-skill-height);
+
+                    flex: 0 1 auto;
+                }
+            }
+
+            > .atoria-knowledge-area {
+                grid-area: knw;
+                max-height: fit-content;
+                > h5 {
+                    min-height: var(--atoria-skill-height);
+                    max-height: var(--atoria-skill-height);
+
+                    flex: 0 1 auto;
+                }
+            }
+
+            > .atoria-hero-attribute {
+                grid-area: ha;
+                display: flex;
+                flex-direction: column;
+
+                > h5, > input {
+                    min-height: var(--atoria-skill-height);
+                    max-height: var(--atoria-skill-height);
+                }
+                > input {
+                    --atoria-input-width: 1fr;
+                    min-width: var(--atoria-skill-width);
+                    max-width: var(--atoria-skill-width);
+                }
+            }
+        }
+
+        > .item-area {
+            grid-area: itm;
+
+            > .atoria-hero-ration-n-coins {
+                display: flex;
+
+                > .atoria-hero-ration {
+                    display: flex;
+                    align-items: center;
+                    padding: 3px;
+                }
+                > .atoria-coins-display{
+                    flex: 4;
+                }
+            }
+
+            > .atoria-inventory-bar {
+                --atoria-input-width: var(--atoria-4dgt-input-width);
+
+                /* .atoria-attribute-display.atoria-encumbrance {
+                    display: grid;
+                    grid-template-areas:
+                    "ttl ttl"
+                    "val max";
+                    grid-template-columns: min-content min-content;
+                    flex: 0;
+                    border-left: var(--atoria-border-style);
+                    label {
+                        border: none;
+                    }
+
+                    input {
+                        border: none;
+                        border-top: var(--atoria-border-style);
+                    }
+                    input:first-of-type {
+                        --atoria-input-width: 1fr;
+                        border-right: var(--atoria-border-style);
+                    }
+                    input:last-of-type {
+                        --atoria-input-width: 1fr;
+                        border-left: var(--atoria-border-style);
+                    }
+                } */
+            }
+        }
+    }
+
+}

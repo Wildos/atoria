@@ -1,0 +1,59 @@
+<li class="chat-message message flexcol atoria {{cssClass}}" data-message-id="{{message._id}}" {{#if borderColor}}style="border-color:{{borderColor}}"{{/if}}>
+    <header class="message-header flexrow">
+        <label class="message-sender">{{alias}}</label>
+        <span class="message-metadata">
+            <time class="message-timestamp">{{timeSince message.timestamp}}</time>
+            {{#if canDelete}}
+            <a aria-label="{{localize 'Delete'}}" class="message-delete"><i class="fas fa-trash"></i></a>
+            {{/if}}
+        </span>
+
+        {{#if isWhisper}}
+        <span class="whisper-to">{{localize 'CHAT.To'}}: {{whisperTo}}</span>
+        {{/if}}
+
+        {{#if message.flavor}}
+        <span class="flavor-text">{{{message.flavor}}}</span>
+        {{/if}}
+    </header>
+    <div class="message-content">
+        {{{message.content}}}
+    </div>
+
+    {{#if (or message.system.critical_effect message.system.effect)}}
+        <hr/>
+    {{/if}}
+
+    {{#if message.system.critical_effect}}
+        <div class="message-post-content">
+        {{{message.system.critical_effect}}}
+        </div>
+    {{/if}}
+    {{#if message.system.effect}}
+    <div class="message-post-content">
+        {{{message.system.effect}}}
+    </div>
+    {{/if}}
+    {{#if message.system.postContent}}
+    <div class="message-post-content">
+        {{{message.system.postContent}}}
+    </div>
+    {{/if}}
+    {{#if message.system.related_items}}
+    <div class="message-related-items">
+        {{#each message.system.related_items as |items_data key|}}
+            {{>"atoria.v2.chat_messages_partials.related-items" item_type=items_data.type  items=items_data.items}}
+        {{/each}}
+    </div>
+    {{/if}}
+    {{#if message.system.savesAsked}}
+    <fieldset class="message-saves-asked-area">
+        <legend>{{localize "ATORIA.Chat_message.Actable.Saves_asked"}}</legend>
+        <ul class="saves_asked">
+            {{#each message.system.savesAsked as |save_data key|}}
+                <li data-action="rollable" data-skill-path="{{save_data.skill_path}}" >{{save_data.label}}</li>
+            {{/each}}
+        </ul>
+    </fieldset>
+    {{/if}}
+</li>

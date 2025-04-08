@@ -1,0 +1,21 @@
+<li class="item atoria-item-line-display {{effect.type}} atoria-horizontal-bar atoria-expand-control"
+data-action="expandSection"  data-expand-id="{{effect._id}}" data-drag="Item" data-effect-id="{{effect._id}}">
+    
+    <i class="fa-solid fa-toggle-{{#if effect.disabled}}off{{else}}on{{/if}}" data-action="toggleEffect" data-effect-id="{{effect._id}}"
+    {{#if effect.disabled}}{{else}}style="color: red;"{{/if}}></i>
+
+    <label class="name">{{effect.name}}</label>
+    {{#if @root.editable}}
+        <a class="atoria-edit-button" data-action="editItem" data-effect-id="{{effect._id}}" data-tooltip="{{localize "ATORIA.Sheet.Item.Edit"}}">
+            <i class="fas fa-edit"></i>
+        </a>
+        {{#if @root.isEditingMode}}
+            <a class="atoria-delete-button" data-action="deleteItem" data-effect-id="{{effect._id}}" data-tooltip="{{localize "ATORIA.Sheet.Item.Delete"}}">
+                <i class="fas fa-trash"></i>
+            </a>
+        {{/if}}
+    {{/if}}
+</li>
+<li class="atoria-expand-direct-data">
+    {{{effect.description}}}
+</li>

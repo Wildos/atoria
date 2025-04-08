@@ -1,0 +1,38 @@
+<div class="atoria-item-actable-modifier-parts grid-2col">
+    <fieldset class="atoria-supplementaries-area double-col-field sub-element-category">
+        <legend>{{localize systemFields.supplementaries_list.label}}
+            <a class="atoria-create-button" data-action="createSubItem" data-sub-element-path="supplementaries_list" data-tooltip="{{localize systemFields.supplementaries_list.label}}">
+                <i class="fas fa-plus"></i>
+            </a>
+        </legend>
+        <ul>
+        {{#each item.system.supplementaries_list as |supplementary idx|}}
+            <li class="flexrow">
+                <div class="atoria-supplementary-input grid-2col">
+                    {{>"atoria.v2.commons_partials.cost-input" cost=supplementary.cost
+                    data_path=(concat "system.supplementaries_list." idx ".cost")
+                    systemFields=../systemFields.supplementaries_list.element.fields.cost.fields cssClasses="double-col-field"}}
+
+                    <label>{{localize ../systemFields.supplementaries_list.element.fields.usage_max.label}}</label>
+                    <input type="number" name="system.supplementaries_list.{{idx}}.usage_max" value={{supplementary.usage_max}} step="1" {{disabled (not @root.editable)}}>
+
+                    <label class="double-col-field">{{localize ../systemFields.supplementaries_list.element.fields.description.label}}</label>
+                    <textarea class="atoria-resize-ta double-col-field" data-name="supplementaries_list.{{idx}}.description"
+                    data-dtype="String" name="system.supplementaries_list.{{idx}}.description" {{disabled (not @root.editable)}}
+                    >{{cleanLines supplementary.description}}</textarea>
+
+                    {{>"atoria.v2.commons_partials.time-limitation-input" limitation=supplementary.limitation
+                    data_path=(concat "system.supplementaries_list." idx ".limitation")
+                    systemFields=../systemFields.supplementaries_list.element.fields.limitation.fields cssClasses="double-col-field"}}
+                </div>
+
+                <a class="atoria-delete-button" data-action="deleteSubItem" data-sub-element-path="supplementaries_list" data-sub-element-index="{{idx}}"
+                data-tooltip="{{localize 'ATORIA.Sheet.Actable.Saves_asked.Delete'}}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </li>
+            <li class="hr"></li>
+        {{/each}}
+        </ul>
+    </fieldset>
+</div>

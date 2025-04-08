@@ -1,0 +1,23 @@
+<div class="atoria-coins-display atoria-horizontal-bar">
+    {{#unless untitled}}
+    <h5 class="title">{{localize "ATORIA.Model.Coins"}}: </h5>
+    {{/unless}}
+    <div class="coins">
+        <div>
+            <label>{{localize coins_model.fields.copper.label}}</label>
+            {{ formInput coins_model.fields.copper value=coins.copper disabled=(not @root.editable) dataset=(tooltipToDataset coins_model.fields.copper.label)}}
+        </div>
+        <div>
+            <label>{{localize coins_model.fields.silver.label}}</label>
+            {{ formInput coins_model.fields.silver value=coins.silver disabled=(not @root.editable)  dataset=(tooltipToDataset coins_model.fields.silver.label)}}
+        </div>
+        <div>
+            <label>{{localize coins_model.fields.electrum.label}}</label>
+            {{ formInput coins_model.fields.electrum value=coins.electrum disabled=(not @root.editable)  dataset=(tooltipToDataset coins_model.fields.electrum.label)}}
+        </div>
+        <div>
+            <label>{{localize coins_model.fields.gold.label}}</label>
+            {{ formInput coins_model.fields.gold value=coins.gold disabled=(not @root.editable)  dataset=(tooltipToDataset coins_model.fields.gold.label)}}
+        </div>
+    </div>
+</div>

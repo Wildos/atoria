@@ -1,0 +1,15 @@
+<form class="{{cssClass}} {{item.type}}" autocomplete="off">
+    {{>"atoria.commons.simple-header" object=item big_image=false}}
+
+    <section class="content">
+        
+        <div class="double-col-field flexcol">
+            <label>{{localize systemFields.cost.label}}</label>
+            {{>"atoria.items_partials.cost-input" cost=item.system.cost systemFields=systemFields.cost.fields data_path="system.cost" }}
+        </div>
+        
+        {{>"atoria.items_partials.limitation-input" systemFields=systemFields.limitation.fields
+        limitation=item.system.limitation data_path="system.limitation" cssClass="double-col-field"}}
+
+    </section>
+</form>

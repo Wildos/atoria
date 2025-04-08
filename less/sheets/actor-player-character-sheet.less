@@ -1,0 +1,70 @@
+@editing-mode-input-size-scale: 1.3;
+
+.sheet.player-character {
+
+    .window-content {
+        div:not(.colored) > h5, ul:not(.colored) > h5, div.colored:has(h5) {
+            background-color: #0000ff55;
+        }
+        div:not(.colored) > h6, ul:not(.colored) > h6, div.colored:has(h6) {
+            background-color: #3333aa55;
+            font-weight: 400;
+        }
+        div:not(.colored) > h5 {
+            min-height: var(--atoria-base-line-block-height);
+            max-height: var(--atoria-skill-height);
+        }
+        div:not(.colored) > h6 {
+            min-height: var(--atoria-skill-height);
+            max-height: var(--atoria-skill-height);
+        }
+        div.colored:has(h5), ul:not(.colored) > h5,
+        div.colored:has(h6), ul:not(.colored) > h6{
+            min-height: var(--atoria-skill-height);
+            max-height: var(--atoria-skill-height);
+        }
+
+
+        input[data-action="toggleEditingMode"] {
+            border: none;
+            font-size: calc(@editing-mode-input-size-scale * var(--font-size));
+            --checkbox-size: calc(@editing-mode-input-size-scale * var(--atoria-base-line-block-height));
+            &::after {
+                color: var(--color-text-primary);
+            }
+        }
+
+        .atoria-inventory-bar {
+            --atoria-input-width: var(--atoria-4dgt-input-width);
+            > h5 {
+                border: none;
+                background-color: transparent;
+            }
+            /* .atoria-attribute-display.atoria-encumbrance {
+                display: grid;
+                grid-template-areas:
+                "ttl ttl"
+                "val max";
+                grid-template-columns: min-content min-content;
+                flex: 0;
+                border-left: var(--atoria-border-style);
+
+                label {
+                    border: none;
+                }
+
+                input {
+                    border: none;
+                    border-top: var(--atoria-border-style);
+                }
+                input:first-of-type {
+                    --atoria-input-width: var(--atoria-5dgt-input-width);
+                    border-right: var(--atoria-border-style);
+                }
+                input:last-of-type {
+                    border-left: var(--atoria-border-style);
+                }
+            } */
+        }
+    }
+}

@@ -1,0 +1,170 @@
+<li class="item atoria-item-line-display {{item.type}} atoria-horizontal-bar atoria-expand-control"
+data-action="rollableExpand" data-expand-id="{{item._id}}"
+data-drag="Item" data-item-id="{{item._id}}">
+
+    <label class="name">{{item.name}}</label>
+
+    {{#if (eq item.type "spell")}}
+        <input type="text" data-dtype="Number" value="{{item.system.success}}"
+        data-tooltip="{{localize item.systemFields.success.label}}" disabled />
+
+        {{>"atoria.v2.commons_partials.cost-display"
+            cost=item.system.cost
+            systemFields=systemFields.cost.fields
+        }}
+
+        {{#if item.system.markers.is_canalisation}}
+            <input class="atoria-spell-marker flex0" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Canalisation"}}"
+            type="checkbox" {{checked item.system.markers.is_canalisation}} disabled /><!--is_canalisation-->
+        {{/if}}
+        {{#if item.system.markers.is_evocation}}
+            <input class="atoria-spell-marker flex0" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Evocation"}}"
+            type="checkbox" {{checked item.system.markers.is_evocation}} disabled /><!--is_evocation-->
+        {{/if}}
+        {{#if item.system.markers.is_attack}}
+            <input class="atoria-spell-marker flex0" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Attack"}}"
+            type="checkbox" {{checked item.system.markers.is_attack}} disabled /><!--is_attack-->
+        {{/if}}
+        {{#if item.system.markers.is_trap}}
+            <input class="atoria-spell-marker flex0" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Trap"}}"
+            type="checkbox" {{checked item.system.markers.is_trap}} disabled /><!--is_trap-->
+        {{/if}}
+    {{else}}
+        <div class="flexcol">
+        {{#each item.system.cost_list as |cost_data idx|}}
+            {{>"atoria.v2.commons_partials.cost-display" cost=cost_data systemFields=../item.systemFields.cost_list.element.fields}}
+        {{/each}}
+        </div>
+    {{/if}}
+    {{#if (ne item.type "weapon")}}
+        {{#if item.system.target}}
+        <label class="target"><b>{{localize item.systemFields.target.label}}:</b> {{item.system.target}}</label>
+        {{/if}}
+        {{#if item.system.range}}
+            <label class="flex0"><b>{{localize item.systemFields.range.label}}:</b> {{item.system.range}}</label>
+        {{/if}}
+        {{#if item.system.area}}
+            <label class="flex0"><b>{{localize item.systemFields.area.label}}:</b> {{item.system.area}}</label>
+        {{/if}}
+    {{/if}}
+
+    {{#unless (eq item.type "spell")}}
+        {{>"atoria.v2.commons_partials.time-limitation-display" limitation=item.system.limitation
+        systemFields=item.systemFields.limitation.fields }}
+    {{/unless}}
+
+    {{#if @root.editable}}
+        <a class="atoria-edit-button" data-action="editItem" data-item-id="{{item._id}}" data-tooltip="{{localize "ATORIA.Sheet.Item.Edit"}}">
+            <i class="fas fa-edit"></i>
+        </a>
+        {{#if @root.isEditingMode}}
+            <a class="atoria-delete-button" data-action="deleteItem" data-item-id="{{item._id}}" data-tooltip="{{localize "ATORIA.Sheet.Item.Delete"}}">
+                <i class="fas fa-trash"></i>
+            </a>
+        {{/if}}
+    {{/if}}
+</li>
+<li class="atoria-expand-direct-data flexcol">
+    <!-- Pre -->
+    {{#if (ne item.type "weapon")}}
+        <div class="flexrow">
+        {{#if (eq item.type "spell")}}
+                <label><b>{{localize systemFields.critical_success.label}}:</b> {{item.system.critical_success}}</label>
+                <label><b>{{localize systemFields.critical_fumble.label}}:</b> {{item.system.critical_fumble}}</label>
+        {{/if}}
+        {{#if (or (eq item.type "action") (eq item.type "opportunity"))}}
+            <label>{{localize systemFields.is_magic.label}}</label>
+            {{ formInput systemFields.is_magic value=item.system.is_magic disabled=true }}
+            {{#unless item.system.is_magic}}
+                {{#if item.system.associated_skill}}
+                <label style="flex: 1 1 content;">
+                    <b>{{localize systemFields.associated_skill.label}}:</b>
+                    {{localize (lookup @root.associated_skills item.system.associated_skill)}}
+                </label>
+                {{/if}}
+            {{/unless}}
+        {{/if}}
+
+        {{#if (ne item.type "weapon")}}
+            {{#if item.system.duration}}
+            <label><b>{{localize item.systemFields.duration.label}}:</b> {{item.system.duration}}</label>
+            {{/if}}
+
+            <label style="flex: 1 1 content;">
+                {{#if item.system.require_verbal}}
+                    <b>{{localize item.systemFields.require_verbal.label}}</b><!--require_verbal-->
+                {{/if}}
+
+                {{#if item.system.require_immobile}}
+                    {{#if item.system.require_verbal}}, {{/if}}
+                    <b>{{localize item.systemFields.require_immobile.label}}</b><!--require_immobile-->
+                {{/if}}
+
+                {{#if (ne item.system.somatic "none")}}
+                    {{#if item.system.require_immobile}}, {{/if}}
+                    {{#if (and item.system.require_verbal (not item.system.require_immobile))}}, {{/if}}
+                    {{localize (lookup systemFields.somatic.choices item.system.somatic)}}
+                {{/if}}
+            </label>
+        {{/if}}
+        </div>
+    {{/if}}
+
+    {{#if (eq item.type "weapon")}}
+        {{#if item.keywords_list}}
+        <label>{{localize item.systemFields.keywords.label}}: {{item.keywords_list}}</label>
+        {{/if}}
+
+        {{#if item.system.associated_skill}}
+            {{>"atoria.v2.commons_partials.rollfield-display" rollfield=item.system.damage_roll systemFields=item.systemFields.damage_roll.fields
+                data_path="system.focuser_damage_roll" hide_name=false}}
+        {{/if}}
+
+        {{#if item.system.is_focuser}}
+            {{>"atoria.v2.commons_partials.rollfield-display" rollfield=item.system.focuser_damage_roll systemFields=item.systemFields.focuser_damage_roll.fields
+                data_path="system.focuser_damage_roll" hide_name=false}}
+        {{/if}}
+    {{/if}}
+
+    <!-- Actable -->
+
+    {{#if (ne item.type "weapon")}}
+        <div class="flexrow">
+            <label><b>{{localize item.systemFields.material.label}}:</b> {{item.system.material}}</label>
+        </div>
+        {{#if (eq item.type "spell")}}
+            {{#if item.system.critical_effect}}
+                <label><b>{{localize systemFields.critical_effect.label}}: </b></label>
+                <textarea class="atoria-resize-ta" data-name="inventory-{{item._id}}-critical_effect"
+                data-dtype="String" name="system.critical_effect" disabled
+                >{{cleanLines item.system.critical_effect}}</textarea>
+            {{/if}}
+        {{/if}}
+        <label><b>{{localize item.systemFields.effect.label}}:</b></label>
+        <textarea class="atoria-resize-ta" data-name="inventory-{{item._id}}-effect" data-dtype="String" disabled
+        >{{cleanLines item.system.effect}}</textarea>
+
+        <label><b>{{localize item.systemFields.description.label}}:</b></label>
+        <textarea class="atoria-resize-ta" data-name="inventory-{{item._id}}-description" data-dtype="String" disabled
+        >{{cleanLines item.system.description}}</textarea>
+    {{/if}}
+
+    {{#if (eq item.type "spell")}}
+    <label><b>{{localize item.systemFields.supplementaries_list.label}}:</b></label>
+    {{#each item.system.supplementaries_list as |supplementary key|}}
+        <div class="atoria-supplementary">
+            <div class="flexrow">
+                {{>"atoria.v2.commons_partials.cost-display"
+                    cost=supplementary.cost
+                    systemFields=../systemFields.supplementaries_list.element.fields.cost.fields
+                }}
+                <label>{{localize ../systemFields.supplementaries_list.element.fields.usage_max.label}}: {{supplementary.usage_max}}</label>
+                {{>"atoria.v2.commons_partials.time-limitation-display" limitation=supplementary.limitation
+                systemFields=../systemFields.supplementaries_list.element.fields.limitation.fields }}
+            </div>
+            <textarea class="atoria-resize-ta" data-name="inventory-{{../item._id}}-supplementaries_list.{{key}}" data-dtype="String" disabled
+            >{{cleanLines supplementary.description}}</textarea>
+        </div>
+    {{/each}}
+    {{/if}}
+</li>

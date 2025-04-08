@@ -1,0 +1,70 @@
+& {
+    .atoria-spell-marker::after {
+        --checkbox-content: attr(data-letter) !important;
+    }
+}
+
+> .item.sheet {
+    .grid-2col {
+        grid-template-columns: 10em auto;
+        input:not([type=checkbox]) {
+            max-width: 100%;
+        }
+    }
+
+    .sub-element-category > ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            margin: 0;
+        }
+        li:not(:first-child) {
+            margin-top: var(--atoria-rows-gap);
+        }
+    }
+
+    .atoria-supplementaries-area {
+        ul {
+            li:not(:first-child) {
+                margin-top: calc(2 * var(--atoria-rows-gap));
+            }
+            li.hr {
+                border-top: var(--atoria-fieldset-border-style);
+                border-bottom: var(--atoria-fieldset-border-style);
+                // margin-top: var(--atoria-rows-gap);
+            }
+            li:last-child {
+                visibility: hidden;
+                display: none;
+            }
+        }
+    }
+
+    ul.actable-mod-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        li {
+            margin: 0;
+        }
+        li:not(:first-child) {
+            margin-top: var(--atoria-rows-gap);
+        }
+    }
+
+    .atoria-keywords-area {
+        input[type=checkbox]:not(:checked) + input[type=checkbox].more {
+            display: none;
+        }
+        input[type=checkbox].more::after {
+            --checkbox-content: "\2b" !important;
+        }
+
+        .boolean-area {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}

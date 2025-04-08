@@ -1,0 +1,247 @@
+// Fix missing from foundryVTT
+
+&.theme-light .application textarea {
+    --input-text-color: var(--color-dark-2);
+    --background: rgba(0, 0, 0, 0.1);
+    --color-text-selection-bg: var(--color-dark-6);
+    --input-focus-outline-color: var(--color-warm-2);
+}
+&.theme-light .application textarea:read-only {
+    --input-text-color: var(--color-dark-4);
+    --background: rgba(0, 0, 0, 0.2);
+    color: var(--input-text-color);
+}
+.application textarea {
+    --input-text-color: var(--color-light-3);
+    --background: var(--color-cool-4);
+    --input-focus-outline-color: var(--color-cool-3);
+    background: var(--background);
+    padding: 2px 0.5em;
+    outline: 2px solid transparent;
+    transition: outline-color 0.5s;
+    font-family: var(--font-primary);
+}
+.application textarea:focus {
+    box-shadow: 0 0 5px var(--color-shadow-primary);
+    outline: 2px solid var(--input-focus-outline-color);
+}
+
+& {
+    --atoria-2dgt-input-width: 2em;
+    --atoria-3dgt-input-width: 2.5em;
+    --atoria-4dgt-input-width: 3em;
+    --atoria-5dgt-input-width: 3.5em;
+    --atoria-formula-input-width: 4em;
+
+    --atoria-base-line-block-height: 20px;
+    --atoria-input-width: var(--atoria-2dgt-input-width);
+
+    --atoria-columns-gap: 0.5em;
+    --atoria-rows-gap: 0.5em;
+
+    --atoria-border-style: 1px solid #383838;
+    --atoria-border-blending-style: 1px dotted #383838;
+    --atoria-border-style-radius: 4px;
+    --atoria-fieldset-border-style: 2px solid rgb(192, 192, 192);
+
+    .atoria .atoria-health {
+        --atoria-color-disabled-value: var(--atoria-color-health);
+        --disabled-background-color: var(--atoria-color-health);
+    }
+    .atoria .atoria-healing-inactive {
+        --atoria-color-disabled-value: var(--atoria-color-healing-inactive);
+        --disabled-background-color: var(--atoria-color-healing-inactive);
+    }
+    .atoria .atoria-mana {
+        --atoria-color-disabled-value: var(--atoria-color-mana);
+        --disabled-background-color: var(--atoria-color-mana);
+    }
+    .atoria .atoria-stamina {
+        --atoria-color-disabled-value: var(--atoria-color-stamina);
+        --disabled-background-color: var(--atoria-color-stamina);
+    }
+    .atoria .atoria-endurance {
+        --atoria-color-disabled-value: var(--atoria-color-endurance);
+        --disabled-background-color: var(--atoria-color-endurance);
+    }
+    .atoria .atoria-sanity {
+        --atoria-color-disabled-value: var(--atoria-color-sanity);
+        --disabled-background-color: var(--atoria-color-sanity);
+    }
+    .atoria .atoria-luck {
+        --atoria-color-disabled-value: var(--atoria-color-luck);
+        --disabled-background-color: var(--atoria-color-luck);
+    }
+    .atoria .atoria-encumbrance {
+        --atoria-color-disabled-value: var(--atoria-color-encumbrance);
+        --disabled-background-color: var(--atoria-color-encumbrance);
+        --color-text-primary: var(--atoria-font-color-encumbrance);
+        color: var(--color-text-primary);
+        * {
+            --input-text-color: var(--atoria-font-color-encumbrance);
+        }
+    }
+    .atoria .atoria-armor {
+        --atoria-color-disabled-value: var(--atoria-color-armor);
+        --disabled-background-color: var(--atoria-color-armor);
+    }
+    .atoria .atoria-resistance {
+        --atoria-color-disabled-value: var(--atoria-color-resistance);
+        --disabled-background-color: var(--atoria-color-resistance);
+    }
+
+
+
+    label, h5, h6, input:disabled, input.colored, .colored, input[type=checkbox], img {
+        background-color: var(--disabled-background-color);
+    }
+
+    .atoria.sheet {
+        .window-content {
+            gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+            overflow: auto;
+            padding-top: var(--atoria-rows-gap);
+
+            input[data-action=toggleEditingMode]::after {
+                font-weight: 900;
+                content: "\f044";
+            }
+        }
+    }
+
+}
+
+& .atoria {
+
+    --font-size: var(--font-size-15);
+    --font-h1-size: var(--font-size-15);
+    --font-h2-size: var(--font-size-15);
+    --font-h3-size: var(--font-size-15);
+    --font-h4-size: var(--font-size-15);
+    --font-h5-size: var(--font-size-15);
+    --font-h6-size: var(--font-size-15);
+
+    * {
+        font-size: var(--font-size);
+    }
+
+    h6 {
+        font-family: var(--font-h5);
+    }
+
+    .item-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        .item {
+            margin: 0;
+        }
+    }
+
+    fieldset {
+        border: var(--atoria-fieldset-border-style);
+        border-radius: var(--atoria-border-style-radius);
+    }
+
+    h1, h2, h3, h4, h5, h6, button, label {
+        padding-left: 5px;
+        padding-right: 5px;
+        height: auto;
+    }
+
+    h1, h2, h3, h4, h5, h6, input, select, button {
+        text-align: center;
+        vertical-align: middle;
+        margin: 0;
+        border: var(--atoria-border-style);
+        border-radius: var(--atoria-border-style-radius);
+
+        line-height: 1lh;
+
+        white-space: nowrap;
+
+        height: auto;
+    }
+
+    button {
+        line-height: 1.5em;
+    }
+
+    label, .colored, img, input[type=checkbox] {
+        border-radius: var(--atoria-border-style-radius);
+    }
+
+    textarea {
+        margin: 0;
+        border:  var(--atoria-border-style);
+        border-radius: var(--atoria-border-style-radius);
+        min-height: calc(1lh + 6px);
+    }
+    textarea:disabled {
+        background-color: color-mix(in lab, var(--background) 50%, transparent);
+    }
+
+    input:not([type=checkbox]) {
+        min-width: var(--atoria-input-width);
+        max-width: var(--atoria-input-width);
+        padding: 0px 2px;
+    }
+
+    --checkbox-size: var(--atoria-base-line-block-height);
+    input[type=checkbox] {
+        --checkbox-size: var(--atoria-base-line-block-height);
+        display: inline-block;
+        position: relative;
+        appearance:none;
+        content: none;
+
+        min-width: var(--checkbox-size);
+        max-width: var(--checkbox-size);
+        min-height: var(--checkbox-size);
+        max-height: var(--checkbox-size);
+    }
+
+    input[type=checkbox]::before {
+        display: none;
+        content: "";
+    }
+
+    --checkbox-content: "";
+    input[type=checkbox]::after {
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // right: 0;
+        // bottom: 0;
+        overflow: hidden;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-family: var(--font-awesome);
+        font-size: 1em;
+        content: var(--checkbox-content);
+
+        color: var(--atoria-color-checkbox-unchecked);
+        // text-shadow: 0 0 8px var(--atoria-color-checkbox-checked);
+        min-width: calc(var(--checkbox-size) - 2px);
+        max-width: calc(var(--checkbox-size) - 2px);
+        min-height: var(--checkbox-size);
+        max-height: var(--checkbox-size);
+    }
+    input[type=checkbox]:checked::after {
+        --checkbox-content: "\f00c";
+        color: var(--atoria-color-checkbox-checked);
+        // text-shadow: 0 0 8px var(--atoria-color-checkbox-unchecked);
+    }
+}
+
+.sheet {
+    min-width: min-content;
+}
+
+.context-menu {
+    z-index: var(--index-tooltip);
+}

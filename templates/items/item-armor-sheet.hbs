@@ -1,0 +1,26 @@
+<form class="{{cssClass}} {{item.type}}" autocomplete="off">
+    {{>"atoria.commons.simple-header" object=item big_image=false}}
+
+    <section class="content">
+        <label>{{localize systemFields.encumbrance.label}}</label>
+        <input class="float-input" type="text" inputmode="numeric" data-dtype="Number" 
+        name="system.encumbrance" value="{{item.system.encumbrance}}"
+        data-tooltip="{{systemFields.encumbrance.label}}"/>
+
+        <label>{{localize systemFields.armor_type.label}}</label>
+        <select name="system.armor_type"
+        data-tooltip="{{localize systemFields.armor_type.label}}">
+            {{selectOptions systemFields.armor_type.choices selected=item.system.armor_type localize=true}}
+        </select>
+
+        <label>{{localize systemFields.position.label}}</label>
+        <select name="system.position"
+        data-tooltip="{{localize systemFields.position.label}}">
+            {{selectOptions systemFields.position.choices selected=item.system.position localize=true}}
+        </select>
+        
+
+        {{>"atoria.items_partials.keywords-input" cssClass="double-col-field"
+        data_path="system.keywords" keywords=item.system.keywords systemFields=systemFields.keywords.fields}}
+    </section>
+</form>

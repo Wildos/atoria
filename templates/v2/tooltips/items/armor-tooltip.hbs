@@ -1,0 +1,6 @@
+<section class='atoria tooltip flexcol'>
+    <h5>{{item.name}}</h5>
+    <label>{{localize systemFields.position.label}}: {{localize (lookup systemFields.position.choices item.system.position)}}</label>
+    <label>{{localize systemFields.armor_type.label}}: {{localize (lookup systemFields.armor_type.choices item.system.armor_type)}}</label>
+    <p>Description: {{item.system.description}}</p>
+</section>

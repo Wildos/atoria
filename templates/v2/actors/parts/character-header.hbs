@@ -1,0 +1,49 @@
+<div class="atoria-character-header">
+    <img class="atoria-document-img" data-action="onEditImage" src="{{actor.img}}" data-tooltip="{{actor.name}}" alt="{{actor.name}}" data-edit="img">
+
+    <div class="attribute-area flexcol">
+        <div class="name-area">
+            {{ formInput fields.name value=actor.name disabled=(not (and @root.isEditingMode @root.editable))}}
+            <input data-action="toggleEditingMode" type="checkbox" data-dtype="Boolean" {{checked isEditingMode}}/>
+        </div>
+
+        <div class="flexrow">
+            {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-health" attribute_model=systemFields.health attribute=actor.system.health}}
+            <div class="atoria-attribute-display atoria-health">
+                <label>{{localize systemFields.absorption.label}}</label>
+                <input type="text" data-dtype="Number" name="system.absorption" value="{{actor.system.absorption}}"
+                data-tooltip="{{systemFields.absorption.label}}" {{disabled (not editable)}}/>
+            </div>
+        </div>
+        <div class="flexrow">
+            {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-stamina" attribute_model=systemFields.stamina attribute=actor.system.stamina}}
+            {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-mana" attribute_model=systemFields.mana attribute=actor.system.mana}}
+        </div>
+        <div class="atoria-attribute-display atoria-initiative">
+            <label>{{localize systemFields.initiative.label}}</label>
+            <input type="text" data-dtype="String" name="system.initiative" value="{{actor.system.initiative}}"
+            data-tooltip="{{systemFields.initiative.label}}" {{disabled (or (not editable) (not isEditingMode))}}/>
+        </div>
+        <div class="atoria-attribute-display atoria-movement">
+            <label>{{localize systemFields.movement.label}}</label>
+            <input type="text" data-dtype="Number" name="system.movement" value="{{actor.system.movement}}"
+            data-tooltip="{{systemFields.movement.label}}" {{disabled (or (not editable) (not isEditingMode))}}/>
+        </div>
+        {{>"atoria.v2.actors_partials.armor-display"
+            armor=actor.system.armor
+            model=systemFields.armor
+            data_path="system.armor"
+        }}
+        {{>"atoria.v2.actors_partials.resistance-display"
+            resistance=actor.system.resistance
+            model=systemFields.resistance
+            data_path="system.resistance"
+        }}
+    </div>
+    {{>"atoria.v2.actors_partials.skill-cat-display"
+    skill_cat_skills=actor.system.perceptions
+    data_path="system.perceptions"
+    model=systemFields.perceptions
+    cssClass="perception-area"
+    }}
+</div>

@@ -1,0 +1,18 @@
+{{#if used_supplementaries}}
+{{#if (or (eq @root.user @root.author) @root.isGM)}}
+<fieldset>
+    <legend class="atoria-expand-control"
+    onclick="if(window.event.button === 0){this.classList.toggle('expanded');window.event.stopPropagation();return false;}"
+    oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');window.event.stopPropagation();return false;}">
+    {{localize "ATORIA.Chat_message.Spell.Used_supplementaries"}}</legend>
+
+    <ul class="used_supplementaries atoria-expand-direct-data">
+        {{#each used_supplementaries as |supplementary key|}}
+        <li>
+            <label data-tooltip="{{supplementary.descriptive_tooltip}}">{{localize supplementary.name}}</label>
+        <li>
+        {{/each}}
+    </ul>
+</fieldset>
+{{/if}}
+{{/if}}

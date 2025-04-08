@@ -1,0 +1,30 @@
+<!--
+cost
+systemFields
+data_path
+cssClasses
+-->
+<div class="atoria-cost-input {{cssClasses}}">
+    <input class="atoria-health colored" type="text" inputmode="numeric" data-dtype="Number"  name="{{data_path}}.health" value="{{cost.health}}"
+        data-tooltip="{{localize systemFields.health.label}}" >
+
+    <input class="atoria-mana colored" type="text" inputmode="numeric" data-dtype="Number"  name="{{data_path}}.mana" value="{{cost.mana}}"
+        data-tooltip="{{localize systemFields.mana.label}}" >
+
+    <input class="atoria-stamina colored" type="text" inputmode="numeric" data-dtype="Number"  name="{{data_path}}.stamina" value="{{cost.stamina}}"
+        data-tooltip="{{localize systemFields.stamina.label}}" >
+
+    <input class="atoria-endurance colored" type="text" inputmode="numeric" data-dtype="Number"  name="{{data_path}}.endurance" value="{{cost.endurance}}"
+        data-tooltip="{{localize systemFields.endurance.label}}" >
+
+    <input type="text" inputmode="numeric" data-dtype="Number" name="{{data_path}}.time.main_amount" value="{{cost.time.main_amount}}"
+        data-tooltip="{{localize systemFields.time.fields.main_amount.label}}" >
+
+    <select name="{{data_path}}.time.main_type">
+      {{selectOptions systemFields.time.fields.main_type.choices selected=cost.time.main_type localize=true}}
+    </select>
+
+    <input type="text" inputmode="numeric" data-dtype="Number" name="{{data_path}}.time.second_amount" value="{{cost.time.second_amount}}"
+        data-tooltip="{{localize systemFields.time.fields.second_amount.label}}" >
+    <label>{{localize (pluralize systemFields.time.fields.second_amount.label cost.time.second_amount)}}</label>
+</div>

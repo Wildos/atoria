@@ -1,0 +1,31 @@
+{{#if (or @root.isEditingMode (not (includes @root.flags.atoria.hidden_skills data_path)))}}
+<div class="atoria-skill-type-display {{cssClass}}">
+    <h5>{{localize model.label}}
+    {{#if (and @root.editable @root.isEditingMode)}}
+        <input class="atoria-skill-shown-control" data-action="toggleSkillVisibility" type="checkbox" data-dtype="Boolean" data-skill-path="{{data_path}}"
+        {{checked (not (includes @root.flags.atoria.hidden_skills data_path))}}
+        {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
+    {{/if}}</h5>
+    <div class="atoria-skill-group-area">
+    {{#if (lookup @root.skill_n_knowledge_sorting_list data_path)}}
+        {{#each (lookup @root.skill_n_knowledge_sorting_list data_path) as |skill_group_id key|}}
+            {{#unless (and (not @root.isEditingMode) (includes ../filtered_skills_group skill_group_id))}}
+                {{>"atoria.v2.actors_partials.skill-group-display"
+                skill_group_data=(lookup ../skill_type_data skill_group_id)
+                data_path=(concat ../data_path "." skill_group_id)
+                model=(lookup ../model.fields skill_group_id)
+                }}
+            {{/unless}}
+        {{/each}}
+    {{else}}
+        {{#each skill_type_data as |skill_group_data key|}}
+            {{>"atoria.v2.actors_partials.skill-group-display"
+            skill_group_data=skill_group_data
+            data_path=(concat ../data_path "." key)
+            model=(lookup ../model.fields key)
+            }}
+        {{/each}}
+    {{/if}}
+    </div>
+</div>
+{{/if}}
