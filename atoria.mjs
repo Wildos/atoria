@@ -148,7 +148,7 @@ Hooks.once("ready", function () {
     }
   });
 
-  // Change status effect list
+  // Change status effect list /!\ CHANGE DURING INIT not in ready/!\
   CONFIG.statusEffects = [
     {
       "id": "preparing",
