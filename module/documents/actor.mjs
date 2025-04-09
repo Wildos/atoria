@@ -48,6 +48,8 @@ export default class AtoriaActor extends Actor {
           actorData.system.ration * RULESET.ration_encumbrance;
         break;
     }
+    actorData.system.encumbrance.level =
+      RULESET.character.get_encumbrance_level(actorData);
   }
 
   getRollData() {

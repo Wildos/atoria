@@ -9,6 +9,8 @@
   --atoria-color-resistance: #636363;
   --atoria-color-encumbrance: #434343;
   --atoria-font-color-encumbrance: white;
+  --atoria-color-encumbrance-limit: #E79427;
+  --atoria-color-encumbrance-over: #cc0000;
   --atoria-color-luck: #577e32;
   --atoria-color-inventory-title: #76a580;
   --atoria-color-modifiable-value: #fef2e0;
@@ -798,6 +800,12 @@
 .system-atoria .atoria-player-header > .atoria-encumbrance-n-coins {
   min-width: var(--atoria-mini-skill-width);
   max-width: var(--atoria-mini-skill-width);
+}
+.system-atoria .atoria-player-header > .atoria-encumbrance-n-coins[atoria-encumbrance-level="limit"] .atoria-unnamed-value {
+  background-color: var(--atoria-color-encumbrance-limit);
+}
+.system-atoria .atoria-player-header > .atoria-encumbrance-n-coins[atoria-encumbrance-level="over"] .atoria-unnamed-value {
+  background-color: var(--atoria-color-encumbrance-over);
 }
 .system-atoria .atoria-player-header > .atoria-encumbrance-n-coins > .atoria-coins-display {
   display: flex;

@@ -108,7 +108,7 @@
         </div>
     </div>
 
-    <div class="atoria-encumbrance-n-coins" >
+    <div class="atoria-encumbrance-n-coins" atoria-encumbrance-level="{{actor.system.encumbrance.level}}">
         {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-encumbrance two-rows"
         attribute_model=systemFields.encumbrance attribute=actor.system.encumbrance}}
         {{>"atoria.v2.actors_partials.coins-display" coins_model=systemFields.coins coins=actor.system.coins}}
