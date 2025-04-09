@@ -297,6 +297,7 @@ export default class AtoriaItem extends Item {
     const need_roll =
       this.type === "spell" ||
       (this.type === "weapon" && this.system.is_focuser) ||
+      this.type === "opportunity" ||
       ((this.system.associated_skill ?? "") !== "" &&
         !(this.type === "action" && this.system.is_magic));
 
@@ -386,8 +387,8 @@ export default class AtoriaItem extends Item {
     let roll_data = {
       owning_actor_id: this.actor?._id,
       success_value: chosen_skill_data.success,
-      critical_success_amount: chosen_skill_data.critical_success,
-      critical_fumble_amount: chosen_skill_data.critical_fumble,
+      critical_success_amount: chosen_skill_data.critical_success_amount,
+      critical_fumble_amount: chosen_skill_data.critical_fumble_amount,
       title: this.name,
       advantage_amount,
       disadvantage_amount,

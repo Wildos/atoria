@@ -11,6 +11,14 @@ function hasPopoutV2Module() {
   }
 }
 
+function isPoppedOut(app) {
+  if (hasPopoutV2Module())
+    return PopoutV2Module.singleton.poppedOut.has(app.appId);
+  else {
+    return false;
+  }
+}
+
 export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
   ActorSheetV2,
 ) {
@@ -26,6 +34,9 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
 
   static DEFAULT_OPTIONS = {
     classes: ["atoria", "actor"],
+    position: {
+      left: 250,
+    },
     window: {
       resizable: true,
       controls: [
@@ -45,6 +56,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       toggleEditingMode: this._toggleEditingMode,
       onEditImage: this._onEditImage,
       onPopoutV2: this._onPopoutV2,
+      onPopinV2: this._onPopinV2,
       createItem: this._createItem,
       editItem: this._editItem,
       deleteItem: this._deleteItem,
@@ -70,9 +82,16 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     return `${token_string}${game.i18n.localize(this.document.name)}`;
   }
 
-  static async _onPopoutV2(event, target) {
+  static async _onPopoutV2(event, _target) {
     if (!hasPopoutV2Module()) return;
-    PopoutV2Module.popoutv2App(this);
+    if (isPoppedOut(this)) {
+      event.stopPropagation();
+      await this.close();
+      this.render(true);
+    } else {
+      await this.render();
+      PopoutV2Module.popoutv2App(this);
+    }
   }
 
   /** @override */
@@ -94,10 +113,16 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       show_token_art;
 
     // PopOutV2
-    controls.find((c) => c.action === "onPopoutV2").visible =
-      hasPopoutV2Module();
+    controls.find(
+      (c) => c.action === "onPopoutV2" && c.label === "POPOUT.PopOut",
+    ).visible = hasPopoutV2Module();
 
     return controls;
+  }
+
+  async close(options = {}) {
+    this.is_popouted = false;
+    return super.close(options);
   }
 
   async _prepareContext(options) {

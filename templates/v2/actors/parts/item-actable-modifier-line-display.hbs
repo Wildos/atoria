@@ -1,13 +1,19 @@
 <li class="item atoria-item-line-display {{item.type}} atoria-horizontal-bar atoria-expand-control"
 data-action="expandSection" data-expand-id="{{item._id}}" data-drag="Item" data-item-id="{{item._id}}">
-    
+
     <label class="name" >{{item.name}}</label>
 
-    {{>"atoria.v2.commons_partials.cost-display" 
+    {{>"atoria.v2.commons_partials.cost-display"
         cost=item.system.cost
         systemFields=systemFields.cost.fields
     }}
-    
+
+    {{#if (eq item.type "technique")}}
+        {{#if item.system.charge_compatible }}
+        <label>{{localize item.systemFields.charge_compatible.label}}</label>
+        {{/if}}
+    {{/if}}
+
     {{#if item.system.skill_alteration.has_skill_alteration}}
         <hr/>
         <label>{{localize (lookup item.systemFields.skill_alteration.fields.skill_alteration_type.choices item.system.skill_alteration.skill_alteration_type)}}</label>

@@ -16,6 +16,9 @@ cssClasses
     {{#if cost.endurance}}
     <input class="atoria-endurance" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.endurance}}" disabled >
     {{/if}}
+    {{#if cost.movement}}
+    <input class="atoria-movement" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.movement}}" disabled >
+    {{/if}}
     {{#if systemFields}}
         {{#if cost.time.main_amount}}
         <label>{{cost.time.main_amount}} {{localize (pluralize (lookup systemFields.time.fields.main_type.choices cost.time.main_type) cost.time.main_amount)}}</label>

@@ -6,6 +6,9 @@
         {{selectOptions associated_skills selected=item.system.associated_skill sort=true localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
     </select>
 
+    <label>{{localize systemFields.range.label}}</label>
+    {{ formInput systemFields.range value=item.system.range disabled=(not @root.editable)}}
+
     <fieldset class="double-col-field">
         <legend>{{localize systemFields.damage_roll.label}}</legend>
         {{>"atoria.v2.commons_partials.rollfield-input" rollfield=item.system.damage_roll systemFields=systemFields.damage_roll.fields

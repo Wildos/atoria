@@ -1,7 +1,7 @@
 {{#if (or @root.isEditingMode (not (includes @root.flags.atoria.hidden_skills data_path)))}}
 <div class="atoria-skill-type-display {{cssClass}}">
     <h5>{{localize model.label}}
-    {{#if (and @root.editable @root.isEditingMode)}}
+    {{#if (and (not force_display) (not prevent_hide_action) @root.editable @root.isEditingMode)}}
         <input class="atoria-skill-shown-control" data-action="toggleSkillVisibility" type="checkbox" data-dtype="Boolean" data-skill-path="{{data_path}}"
         {{checked (not (includes @root.flags.atoria.hidden_skills data_path))}}
         {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
@@ -14,6 +14,8 @@
                 skill_group_data=(lookup ../skill_type_data skill_group_id)
                 data_path=(concat ../data_path "." skill_group_id)
                 model=(lookup ../model.fields skill_group_id)
+                force_display=../force_display
+                prevent_hide_action=../prevent_hide_action
                 }}
             {{/unless}}
         {{/each}}
@@ -23,6 +25,8 @@
             skill_group_data=skill_group_data
             data_path=(concat ../data_path "." key)
             model=(lookup ../model.fields key)
+            force_display=../force_display
+            prevent_hide_action=../prevent_hide_action
             }}
         {{/each}}
     {{/if}}

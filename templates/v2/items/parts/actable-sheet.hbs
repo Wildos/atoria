@@ -8,6 +8,9 @@
     <label>{{localize systemFields.require_immobile.label}}</label>
     {{ formInput systemFields.require_immobile value=item.system.require_immobile disabled=(not @root.editable)}}
 
+    <label>{{localize systemFields.travel.label}}</label>
+        {{ formInput systemFields.travel value=item.system.travel disabled=(not @root.editable)}}
+
     <label>{{localize systemFields.somatic.label}}</label>
     <select name="system.somatic">
       {{selectOptions systemFields.somatic.choices selected=item.system.somatic localize=true}}
@@ -39,7 +42,7 @@
             <li class="flexrow">
                 <select name="system.saves_asked.{{idx}}"
                 data-tooltip="{{localize ../systemFields.saves_asked.element.label}}">
-                    {{selectOptions ../associated_saves_skills selected=(lookup ../item.system.saves_asked idx) localize=true}}
+                    {{selectOptions ../associated_saves_skills selected=(lookup ../item.system.saves_asked idx) sort=true localize=true}}
                 </select>
                 <a class="atoria-delete-button" data-action="deleteSubItem" data-sub-element-path="saves_asked" data-sub-element-index="{{idx}}"
                 data-tooltip="{{localize 'ATORIA.Sheet.Actable.Saves_asked.Delete'}}">

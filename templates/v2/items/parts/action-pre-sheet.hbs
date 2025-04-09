@@ -21,7 +21,7 @@
     <label>{{localize systemFields.is_magic.label}}</label>
     {{ formInput systemFields.is_magic value=item.system.is_magic disabled=(not @root.editable)}}
 
-    {{#unless item.system.is_magic}}
+    {{#unless (or item.system.is_magic (eq item.type "opportunity"))}}
         <label>{{localize systemFields.associated_skill.label}}</label>
         <select name="system.associated_skill"
         data-tooltip="{{localize systemFields.associated_skill.label}}">

@@ -69,6 +69,14 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
       label: "ATORIA.Sheet.Inventory.Worn",
     });
 
+    schema.range = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      initial: "",
+      label: "ATORIA.Model.Weapon.Range",
+    });
+
     return schema;
   }
 }

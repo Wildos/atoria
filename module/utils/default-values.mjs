@@ -31,6 +31,12 @@ DEFAULT_VALUES["character"] = {
 
   skill: {
     success: 10,
+    get_success: (group) => {
+      if (group === "magic") {
+        return 0;
+      }
+      return 10;
+    },
   },
   skills: {
     physical: {

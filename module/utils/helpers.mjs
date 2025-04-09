@@ -100,13 +100,18 @@ function getSkillData(item, skill_path) {
       path: "",
       label: item.name,
       success: item.system.success,
-      critical_success: item.system.critical_success,
-      critical_fumble: item.system.critical_fumble,
+      critical_success_amount: item.system.critical_success,
+      critical_fumble_amount: item.system.critical_fumble,
     };
   const skill_data = foundry.utils.deepClone(
     item.actor?.getSkillFromPath(skill_path),
   );
+  skill_data.critical_success_amount =
+    utils.ruleset.character.getSkillCriticalSuccessAmount(skill_data);
+  skill_data.critical_fumble_amount =
+    utils.ruleset.character.getSkillCriticalFumbleAmount(skill_data);
   skill_data.label = item.actor.getSkillTitle(skill_path);
+  console.debug(skill_data);
   return skill_data;
 }
 
@@ -169,13 +174,19 @@ export async function itemRollDialog(item, need_roll = true) {
       label: item.name,
       associated_features: [],
     };
-  } else if (item.system.associated_skill !== "") {
+  } else if (item.type === "opportunity") {
+    let associated_skill = "system.skills.combative.reflex.opportuneness";
     main_skill_data = {
-      path: item.system.associated_skill,
-      label: item.actor.getSkillTitle(item.system.associated_skill),
-      associated_features: item.actor.getAssociatedFeatures(
-        item.system.associated_skill,
-      ),
+      path: associated_skill,
+      label: item.actor.getSkillTitle(associated_skill),
+      associated_features: item.actor.getAssociatedFeatures(associated_skill),
+    };
+  } else if (item.system.associated_skill !== "") {
+    let associated_skill = item.system.associated_skill;
+    main_skill_data = {
+      path: associated_skill,
+      label: item.actor.getSkillTitle(associated_skill),
+      associated_features: item.actor.getAssociatedFeatures(associated_skill),
     };
   }
   if (item.type === "weapon" && item.system.is_focuser) {
@@ -522,6 +533,6 @@ export function getInlineRollFromRollData(roll_data) {
     if (roll_data.types[key])
       active_keys.push(RULESET.localized_damage_type(key));
   }
-  label += " (" + active_keys.join(", ") + ") ";
+  label += " " + active_keys.join(", ");
   return `[[${roll_data.formula}]]{${label}}`;
 }
