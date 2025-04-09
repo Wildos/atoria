@@ -144,6 +144,18 @@
     > .atoria-encumbrance-n-coins {
         min-width: var(--atoria-mini-skill-width);
         max-width: var(--atoria-mini-skill-width);
+
+        &[atoria-encumbrance-level="limit"] {
+            .atoria-unnamed-value {
+                background-color: var(--atoria-color-encumbrance-limit);
+            }
+        }
+        &[atoria-encumbrance-level="over"] {
+            .atoria-unnamed-value {
+                background-color: var(--atoria-color-encumbrance-over);
+            }
+        }
+
         > .atoria-coins-display {
             display: flex;
             flex-direction: column;

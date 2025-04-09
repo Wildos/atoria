@@ -10,7 +10,7 @@ dataset=(tooltipToDataset attribute_model.fields.regain_inactive.label)}}
 {{ formInput attribute_model.fields.value value=attribute.value disabled=(not @root.editable)
 dataset=(tooltipToDataset attribute_model.fields.value.label)}}
 {{else}}
-<input type="number"
+<input class="atoria-unnamed-value" type="number"
     data-tooltip="{{enhancedNumberFormat attribute.value decimals=2}}"
     value="{{enhancedNumberFormat attribute.value decimals=2}}" disabled/>
 {{/if}}

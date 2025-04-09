@@ -1,4 +1,5 @@
-PopoutV2, le bouton PopOut devient PopIn quand la sheet est PopOut
+Discretion encombrement
+
 -----------------------------
 
 Check si on peut reduire le privilège pour drop des items sur les coffres (actuellement owner requis)

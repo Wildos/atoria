@@ -57,7 +57,8 @@ export default class AtoriaDOSRoll extends Roll {
   }
 
   get is_success() {
-    return this.degree_of_success >= 0;
+    let total = this.margin_of_success + this._dos_mod * 10;
+    return total >= 0;
   }
 
   get is_critical() {

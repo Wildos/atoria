@@ -308,6 +308,19 @@ RULESET["character"] = class ActorRuleset {
     }
     return skill_associated_keywords_data;
   }
+
+  static get_encumbrance_level(actor) {
+    console.debug(actor);
+    if (actor.system.encumbrance.value > actor.system.encumbrance.max) {
+      return "over";
+    } else if (
+      actor.system.encumbrance.value >=
+      actor.system.encumbrance.max - 4
+    ) {
+      return "limit";
+    }
+    return "";
+  }
 };
 
 RULESET["item"] = class ItemRuleset {
