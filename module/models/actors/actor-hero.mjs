@@ -219,39 +219,39 @@ export default class AtoriaHero extends atoria_models.AtoriaDataModel {
         ),
         air: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Magic.Air.Label",
-          10,
+          0,
         ),
         druidic: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Magic.Druidic.Label",
-          10,
+          0,
         ),
         water: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Magic.Water.Label",
-          10,
+          0,
         ),
         fire: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Magic.Fire.Label",
-          10,
+          0,
         ),
         occult: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Magic.Occult.Label",
-          10,
+          0,
         ),
         mental: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Magic.Mental.Label",
-          10,
+          0,
         ),
         holy: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Magic.Holy.Label",
-          10,
+          0,
         ),
         blood: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Magic.Blood.Label",
-          10,
+          0,
         ),
         earth: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Magic.Earth.Label",
-          10,
+          0,
         ),
       },
       { label: "ATORIA.Model.Knowledges" },

@@ -1173,7 +1173,8 @@
       },
       "Actable_modifier": {
         "Technique": "Technique",
-        "Incantatory_addition": "Ajout incantatoire"
+        "Incantatory_addition": "Ajout incantatoire",
+        "Charge_compatible": "Compatible charge"
       },
       "Action": {
         "Is_magic": "Magique"
@@ -1348,7 +1349,7 @@
           "Description": "Un personnage affecté ne peut plus se déplacer ou attaquer. Il a le désavantage aux esquives et aux parades."
         },
         "Dead": {
-          "Label": "Dead",
+          "Label": "Mort",
           "Description": "Vous ne pouvez rien faire et vous n'avez pas conscience de ce qui vous entoure. Faites que vos camarades trouvent une solution, ou préparer un nouveau personnage."
         },
         "Seduced": {
@@ -1390,17 +1391,17 @@
       "chest": "Coffre"
     },
     "Item": {
-      "feature": "aptitude",
-      "kit": "objet",
-      "armor": "armure",
-      "weapon": "arme",
-      "action": "action",
-      "opportunity": "opportunité",
-      "spell": "sort",
-      "technique": "technique",
-      "incantatory-addition": "ajout incantatoire",
-      "effect": "effet"
+      "feature": "Aptitude",
+      "kit": "Objet",
+      "armor": "Armure",
+      "weapon": "Arme",
+      "action": "Action",
+      "opportunity": "Opportunité",
+      "spell": "Sort",
+      "technique": "Technique",
+      "incantatory-addition": "Ajout incantatoire",
+      "effect": "Effet"
     },
-    "Effect": "effet"
+    "Effect": "Effet"
   }
 }

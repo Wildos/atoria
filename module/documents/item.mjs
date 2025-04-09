@@ -297,6 +297,7 @@ export default class AtoriaItem extends Item {
     const need_roll =
       this.type === "spell" ||
       (this.type === "weapon" && this.system.is_focuser) ||
+      this.type === "opportunity" ||
       ((this.system.associated_skill ?? "") !== "" &&
         !(this.type === "action" && this.system.is_magic));
 

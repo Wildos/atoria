@@ -30,6 +30,8 @@
                     model=systemFields.skills
                     cssClass="atoria-skill-area"
                     filtered_skills_group=filtered_skills_group
+                    force_display=false
+                    prevent_hide_action=true
                 }}
 
                 {{>"atoria.v2.actors_partials.skill-type-display"
@@ -80,11 +82,13 @@
             <ul class="item-list">
                 <!-- Combat -->
                 {{#if (or formatted_feature_items.combat @root.isEditingMode)}}
-                <h5 class="title" data-item-id data-feature-cat="combat.other">{{localize feature_categories.combat.Label}}</h5>
+                <h5 class="title atoria-expand-control" data-expand-id="atoria-sheet-feature-combat" data-action="expandSection"
+                data-item-id data-feature-cat="combat.other">{{localize feature_categories.combat.Label}}</h5>
                     <!-- Combative -->
                     <!-- Armors -->
                     <!-- Amplificators -->
                     <!-- Other -->
+                    <div class="atoria-expand-direct-data">
                     {{#each feature_categories.combat.children as |child|}}
                         {{#if (or (getProperty ../formatted_feature_items.combat child.id) @root.isEditingMode)}}
                             <h6 class="title" data-item-id data-feature-cat="combat.{{child.id}}">{{localize child.Label}}
@@ -101,10 +105,13 @@
                             {{/each}}
                         {{/if}}
                     {{/each}}
+                    </div>
                 {{/if}}
                 <!-- Skills -->
                 {{#if (or formatted_feature_items.skills @root.isEditingMode)}}
-                <h5 class="title" data-item-id data-feature-cat="skills.other">{{localize feature_categories.skills.Label}}</h5>
+                <h5 class="title atoria-expand-control" data-expand-id="atoria-sheet-feature-skills" data-action="expandSection"
+                 data-item-id data-feature-cat="skills.other">{{localize feature_categories.skills.Label}}</h5>
+                 <div class="atoria-expand-direct-data">
                     {{#each feature_categories.skills.children as |child|}}
                     {{#if (or (getProperty ../formatted_feature_items.skills child.id) @root.isEditingMode)}}
                     <h6 class="title" data-item-id data-feature-cat="skills.{{child.id}}">{{localize child.Label}}
@@ -121,10 +128,13 @@
                             {{/each}}
                         {{/if}}
                     {{/each}}
+                    </div>
                 {{/if}}
                 <!-- Magic -->
                 {{#if (or formatted_feature_items.magic @root.isEditingMode)}}
-                <h5 class="title" data-item-id data-feature-cat="magic.other">{{localize feature_categories.magic.Label}}</h5>
+                <h5 class="title atoria-expand-control" data-expand-id="atoria-sheet-feature-magic" data-action="expandSection"
+                 data-item-id data-feature-cat="magic.other">{{localize feature_categories.magic.Label}}</h5>
+                 <div class="atoria-expand-direct-data">
                     {{#each feature_categories.magic.children as |child|}}
                     {{#if (or (getProperty ../formatted_feature_items.magic child.id) @root.isEditingMode)}}
                     <h6 class="title" data-item-id data-feature-cat="magic.{{child.id}}">{{localize child.Label}}
@@ -141,10 +151,13 @@
                             {{/each}}
                         {{/if}}
                     {{/each}}
+                    </div>
                 {{/if}}
                 <!-- Knowledge -->
                 {{#if (or formatted_feature_items.knowledges @root.isEditingMode)}}
-                <h5 class="title" data-item-id data-feature-cat="knowledges.other">{{localize feature_categories.knowledges.Label}}</h5>
+                <h5 class="title atoria-expand-control" data-expand-id="atoria-sheet-feature-knowledge" data-action="expandSection"
+                 data-item-id data-feature-cat="knowledges.other">{{localize feature_categories.knowledges.Label}}</h5>
+                 <div class="atoria-expand-direct-data">
                     {{#each feature_categories.knowledges.children as |child|}}
                         {{#if (or (getProperty ../formatted_feature_items.knowledges child.id) @root.isEditingMode)}}
                         <h6 class="title" data-item-id data-feature-cat="knowledges.{{child.id}}">{{localize child.Label}}
@@ -161,10 +174,12 @@
                         {{/each}}
                         {{/if}}
                     {{/each}}
+                    </div>
                 {{/if}}
                 <!-- Other -->
                 {{#if (or formatted_feature_items.other @root.isEditingMode)}}
-                <h5 class="title" data-item-id data-feature-cat="other">{{localize feature_categories.other.Label}}
+                <h5 class="title atoria-expand-control" data-expand-id="atoria-sheet-feature-other" data-action="expandSection"
+                 data-item-id data-feature-cat="other">{{localize feature_categories.other.Label}}
                 {{#if (and @root.editable @root.isEditingMode)}}
                     <a class="atoria-create-button" data-action="createItem" data-type="feature"
                     data-feature-cat="other"
@@ -173,9 +188,11 @@
                     </a>
                     {{/if}}
                 </h5>
+                <div class="atoria-expand-direct-data">
                 {{#each formatted_feature_items.other as |item idx|}}
                     {{>"atoria.v2.actors_partials.item-line-display" item=item}}
                 {{/each}}
+                </div>
                 {{/if}}
             </ul>
         </div>

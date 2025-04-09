@@ -1,7 +1,7 @@
-{{#if (or @root.isEditingMode (not (includes @root.flags.atoria.hidden_skills data_path)))}}
+{{#if (or force_display @root.isEditingMode (not (includes @root.flags.atoria.hidden_skills data_path)))}}
 <div class="atoria-skill-cat-display">
     <h6>{{localize model.label}}
-    {{#if (and @root.editable @root.isEditingMode)}}
+    {{#if (and (not force_display) (not prevent_hide_action) @root.editable @root.isEditingMode)}}
         {{#if (includes @root.extendable_skill data_path)}}
             <a class="atoria-create-button" data-action="createSkill" data-skill-cat-path="{{data_path}}" data-tooltip="{{localize "ATORIA.Sheet.Skill.Create"}}">
                 <i class="fas fa-plus"></i>
@@ -18,6 +18,8 @@
             skill=(lookup ../skill_cat_skills skill_id)
             data_path=(concat ../data_path "." skill_id)
             systemFields=../model.sub_element.fields
+            force_display=../force_display
+            prevent_hide_action=../prevent_hide_action
             deletable=(and @root.editable @root.isEditingMode (includes @root.extendable_skill ../data_path))
             }}
 
@@ -28,6 +30,8 @@
             skill=skill
             data_path=(concat ../data_path "." key)
             systemFields=../model.sub_element.fields
+            force_display=../force_display
+            prevent_hide_action=../prevent_hide_action
             deletable=(and @root.editable @root.isEditingMode (includes @root.extendable_skill ../data_path))
             }}
         {{/each}}

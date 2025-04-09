@@ -180,6 +180,7 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               skill_key,
               "Label",
             ),
+            utils.default_values.character.skill.get_success(skill_group_key),
           );
         });
         skill_list[skill_category_key] =
@@ -234,7 +235,7 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
             skill_category_key,
             "Label",
           ),
-          utils.default_values.character.skill.success,
+          utils.default_values.character.skill.get_success(skill_group_key),
           false,
         );
       });

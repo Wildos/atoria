@@ -1,7 +1,3 @@
-Connaissances magiques : Préremplit à 10 alors que doit être 0.
-Les armes mettent les dégâts entre ( ) mais pas le reste
-Ne pas pouvoir cacher les Physiques et sociales pour les joueurs
-Pouvoir ouvrir et fermer les catégories d'aptitudes
 PopoutV2, le bouton PopOut devient PopIn quand la sheet est PopOut
 -----------------------------
 

@@ -1174,7 +1174,8 @@
       },
       "Actable_modifier": {
         "Technique": "Technique",
-        "Incantatory_addition": "Incantatory_addition"
+        "Incantatory_addition": "Incantatory_addition",
+        "Charge_compatible": "Compatible charge"
       },
       "Action": {
         "Is_magic": "Is magic",
