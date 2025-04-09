@@ -71,6 +71,10 @@
             {{/unless}}
         </li>
         <li class="atoria-expand-direct-data">
+            {{>"atoria.v2.commons_partials.cost-display"
+                cost=actable_mod.system.cost
+                systemFields=actable_mod.systemFields.cost.fields
+            }}
             <p style="white-space: pre-line;">{{{actable_mod.system.description}}}</p>
         </li>
     {{/each}}
@@ -79,7 +83,27 @@
 {{#if need_roll}}
     <ul class="available-features double-col-field">
         {{#each main_skill_data.associated_features as |feature key|}}
-            <li class="flexrow" data-related-skill="main">
+            <li class="flexrow atoria-expand-control" data-related-skill="main"
+            oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
+                <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
+                <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
+                <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
+                {{/if}}
+                <h5>{{feature.name}}</h5>
+
+                <!--Limitation-->{{#unless (eq feature.system.limitation.regain_type "permanent")}}
+                <label class="usage">{{feature.system.limitation.usage_left}} / {{feature.system.limitation.usage_max}}</label>
+                <label>{{feature.system.limitation.regain_type}}</label>
+                {{/unless}}
+            </li>
+            <li class="atoria-expand-direct-data">
+            {{feature.system.description}}
+            </li>
+        {{/each}}
+        {{#if secondary_skill_data}}
+        {{#each secondary_skill_data.associated_features as |feature key|}}
+            <li class="flexrow atoria-expand-control" data-related-skill="secondary"
+                oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
                 <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
                 <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
                 <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
@@ -91,20 +115,8 @@
                 <label>{{feature.system.limitation.regain_type}}</label>
                 {{/unless}}
             </li>
-        {{/each}}
-        {{#if secondary_skill_data}}
-        {{#each secondary_skill_data.associated_features as |feature key|}}
-            <li class="flexrow" data-related-skill="secondary">
-                <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
-                <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
-                <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
-                {{/if}}
-                <h5 data-tooltip="{{feature.system.description}}">{{feature.name}}</h5>
-
-                <!--Limitation-->{{#unless (eq feature.system.limitation.regain_type "permanent")}}
-                <label class="usage">{{feature.system.limitation.usage_left}} / {{feature.system.limitation.usage_max}}</label>
-                <label>{{feature.system.limitation.regain_type}}</label>
-                {{/unless}}
+            <li class="atoria-expand-direct-data">
+            {{feature.system.description}}
             </li>
         {{/each}}
         {{/if}}

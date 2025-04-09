@@ -1,5 +1,3 @@
-Discretion encombrement
-
 -----------------------------
 
 Check si on peut reduire le privilège pour drop des items sur les coffres (actuellement owner requis)

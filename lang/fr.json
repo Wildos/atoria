@@ -1162,7 +1162,8 @@
         "Duration": "Durée",
         "Range": "Portée",
         "Target": "Cible",
-        "Area": "Zone"
+        "Area": "Zone",
+        "Restriction": "Restriction"
       },
       "Somatic": {
         "None": "Aucun",
