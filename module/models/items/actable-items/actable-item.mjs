@@ -17,6 +17,10 @@ export default class AtoriaActableItem extends atoria_models.AtoriaItemBase {
       initial: false,
       label: "ATORIA.Ruleset.Actable.Require_immobile",
     });
+    schema.travel = new fields.StringField({
+      required: true,
+      label: "ATORIA.Ruleset.Actable.Travel",
+    });
     schema.somatic = new fields.StringField({
       required: true,
       nullable: false,

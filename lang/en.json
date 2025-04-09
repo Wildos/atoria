@@ -96,7 +96,8 @@
           "Label": "Time",
           "Main_amount": "Main amount",
           "Main_type": "Main type"
-        }
+        },
+        "Movement": "Movement"
       },
       "Roll_field": {
         "Label": "Roll field",
@@ -117,7 +118,13 @@
         "Is_focuser": "Is focuser",
         "Focuser_damage_formula": "Focuser damage formula",
         "Focuser_damage_name": "Focuser Damage",
-        "Modificators": "Modificators"
+        "Modificators": "Modificators",
+        "Modifier": {
+          "Success": "Success",
+          "Critical_success": "CS",
+          "Critical_fumble": "CF"
+        },
+        "Range": "Portée"
       },
       "Actable": {
         "Usable_actable_modifiers": "Usable actable modifiers",
@@ -1151,6 +1158,7 @@
         "Require_immobile": "Require immobile",
         "Require_verbal": "Require verbal",
         "Somatic": "Somatic",
+        "Travel": "Travel",
         "Material": "Material",
         "Duration": "Duration",
         "Range": "Range",
@@ -1161,7 +1169,8 @@
         "None": "None",
         "Gesture": "Gesture",
         "One_hand": "One hand",
-        "Two_hands": "Two hands"
+        "Two_hands": "Two hands",
+        "Meditate": "Meditation position"
       },
       "Actable_modifier": {
         "Technique": "Technique",

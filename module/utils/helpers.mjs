@@ -100,13 +100,18 @@ function getSkillData(item, skill_path) {
       path: "",
       label: item.name,
       success: item.system.success,
-      critical_success: item.system.critical_success,
-      critical_fumble: item.system.critical_fumble,
+      critical_success_amount: item.system.critical_success,
+      critical_fumble_amount: item.system.critical_fumble,
     };
   const skill_data = foundry.utils.deepClone(
     item.actor?.getSkillFromPath(skill_path),
   );
+  skill_data.critical_success_amount =
+    utils.ruleset.character.getSkillCriticalSuccessAmount(skill_data);
+  skill_data.critical_fumble_amount =
+    utils.ruleset.character.getSkillCriticalFumbleAmount(skill_data);
   skill_data.label = item.actor.getSkillTitle(skill_path);
+  console.debug(skill_data);
   return skill_data;
 }
 

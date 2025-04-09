@@ -95,7 +95,8 @@
           "Label": "Temps",
           "Main_amount": "Valeur principale",
           "Main_type": "Type principal"
-        }
+        },
+        "Movement": "Mouvement"
       },
       "Roll_field": {
         "Label": "Dé configuration",
@@ -121,7 +122,8 @@
           "Success": "Réussite",
           "Critical_success": "RC",
           "Critical_fumble": "EC"
-        }
+        },
+        "Range": "Portée"
       },
       "Actable": {
         "Usable_actable_modifiers": "Techniques ou Ajouts",
@@ -233,7 +235,7 @@
         "Time_phase_buttons": "Phases",
         "Features": {
           "Combat": {
-            "Label": "Combat",
+            "Label": "Combats",
             "Combatives": "Combatives",
             "Armors": "Armures",
             "Amplificators": "Amplificateurs",
@@ -241,7 +243,7 @@
           },
           "Skills": {
             "Label": "Compétences",
-            "Perceptions": "Perceptions",
+            "Perceptions": "Perception",
             "Other": "Autres"
           },
           "Magic": {
@@ -284,7 +286,7 @@
           "Actable_modifier": {
             "Title": "Modificateurs d'action",
             "Technique": "Techniques",
-            "Incantatory_addition": "Ajoûts incantatoires"
+            "Incantatory_addition": "Ajouts incantatoires"
           }
         }
       }
@@ -347,7 +349,7 @@
         "Title": "Jet pour {element_name}",
         "Available_supplementaries": "Supplémentaires",
         "Spell_supplementary": "Sort supp. {idx}",
-        "Available_actable_modifiers": "Technique(s) & Ajoût(s) incantatoire(s)"
+        "Available_actable_modifiers": "Technique(s) & Ajout(s) incantatoire(s)"
       },
       "Skill_roll": {
         "Title": "Jet pour {actor_name}",
@@ -442,9 +444,9 @@
         "Endurance": "Endurance",
         "Table": "Table"
       },
-      "Perception": "Perceptions",
+      "Perception": "Perception",
       "Perceptions": {
-        "Label": "Perceptions",
+        "Label": "Perception",
         "Sight": "Vue",
         "Earing": "Ouïe",
         "Smell": "Odorat",
@@ -1155,6 +1157,7 @@
         "Require_immobile": "Immobile",
         "Require_verbal": "Verbale",
         "Somatic": "Somatique",
+        "Travel": "Déplacement",
         "Material": "Matériel",
         "Duration": "Durée",
         "Range": "Portée",
@@ -1165,11 +1168,12 @@
         "None": "Aucun",
         "Gesture": "Geste",
         "One_hand": "Une main",
-        "Two_hands": "2 mains"
+        "Two_hands": "2 mains",
+        "Meditate": "Position de méditation"
       },
       "Actable_modifier": {
         "Technique": "Technique",
-        "Incantatory_addition": "Ajoût incantatoire"
+        "Incantatory_addition": "Ajout incantatoire"
       },
       "Action": {
         "Is_magic": "Magique"
@@ -1394,7 +1398,7 @@
       "opportunity": "opportunité",
       "spell": "sort",
       "technique": "technique",
-      "incantatory-addition": "ajoût incantatoire",
+      "incantatory-addition": "ajout incantatoire",
       "effect": "effet"
     },
     "Effect": "effet"

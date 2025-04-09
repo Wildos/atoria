@@ -100,9 +100,13 @@ data-drag="Item" data-item-id="{{item._id}}">
                     <b>{{localize item.systemFields.require_immobile.label}}</b><!--require_immobile-->
                 {{/if}}
 
+                {{#if item.system.travel}}
+                    {{#if (or item.system.require_immobile item.system.require_verbal)}}, {{/if}}
+                    <b>{{localize item.systemFields.travel.label}}: {{item.system.travel}}</b><!--require_immobile-->
+                {{/if}}
+
                 {{#if (ne item.system.somatic "none")}}
-                    {{#if item.system.require_immobile}}, {{/if}}
-                    {{#if (and item.system.require_verbal (not item.system.require_immobile))}}, {{/if}}
+                    {{#if (or item.system.require_immobile item.system.require_verbal item.system.travel)}}, {{/if}}
                     {{localize (lookup systemFields.somatic.choices item.system.somatic)}}
                 {{/if}}
             </label>

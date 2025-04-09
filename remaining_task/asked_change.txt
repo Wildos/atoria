@@ -1,5 +1,8 @@
-Changer la couleur d'Armure et Résistance pour se différencier du reste.
-Voir pour descendre de 1 pixel les sous catégories de compétences et connaissances : Équilibre, Adresse, Marche, Course, Saut, Potion, Poison, Transformation, Parure ???? Toujours le cas ????
+Connaissances magiques : Préremplit à 10 alors que doit être 0.
+Les armes mettent les dégâts entre ( ) mais pas le reste
+Ne pas pouvoir cacher les Physiques et sociales pour les joueurs
+Pouvoir ouvrir et fermer les catégories d'aptitudes
+PopoutV2, le bouton PopOut devient PopIn quand la sheet est PopOut
 -----------------------------
 
 Check si on peut reduire le privilège pour drop des items sur les coffres (actuellement owner requis)
@@ -13,14 +16,4 @@ tooltip des mots clef: montrer la description
 
 -----------------------------------------------------------------------
 -------------------------- DONE ---------------------------------------
------------------------------------------------------------------------
-
-Ajouter catégories dans Aptitudes et permanents : Combats / Compétences / Magies / Connaissances / Autres.
-Aptitudes et permanents :
-Combats : Combatives / Armure / Amplificateur / Autres
-Compétences : Toute la liste (Sans les arborescences, juste la compétence direct Équilibre, Adresse, Perspicacité etc) / Perceptions / Autres
-Magies : Les flux et les écoles de magie / Autres
-Connaissances : Toute la liste (Sans les arborescences)
-Faire que dans Aptitudes et permanents les catégories non remplies sont cachées.
-
-Couleur des "aptitudes & permanents" qui ne s'affiche pas
+---------------------------------------------------------------

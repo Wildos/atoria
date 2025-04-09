@@ -539,6 +539,7 @@ RULESET["actable"] = {
     gesture: "ATORIA.Ruleset.Somatic.Gesture",
     one_hand: "ATORIA.Ruleset.Somatic.One_hand",
     two_hands: "ATORIA.Ruleset.Somatic.Two_hands",
+    meditate: "ATORIA.Ruleset.Somatic.Meditate",
   },
 };
 
