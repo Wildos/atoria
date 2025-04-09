@@ -144,6 +144,11 @@ data-drag="Item" data-item-id="{{item._id}}">
                 >{{cleanLines item.system.critical_effect}}</textarea>
             {{/if}}
         {{/if}}
+
+        <label class="double-col-field">{{localize systemFields.restriction.label}}</label>
+        <textarea class="atoria-resize-ta" data-name="{{item._id}}_restriction" data-dtype="String" rows="2" disabled
+            >{{cleanLines item.system.restriction}}</textarea>
+
         <label><b>{{localize item.systemFields.effect.label}}:</b></label>
         <textarea class="atoria-resize-ta" data-name="inventory-{{item._id}}-effect" data-dtype="String" disabled
         >{{cleanLines item.system.effect}}</textarea>

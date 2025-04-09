@@ -190,6 +190,12 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
             "atoria",
             "hidden_skills",
           ) ?? []) {
+            if (
+              this.actor?.type === "player-character" &&
+              hidden_skill === "system.skills.combative"
+            ) {
+              continue;
+            }
             if (matching_skills.startsWith(hidden_skill)) {
               delete context.associated_skills[matching_skills];
             }
@@ -217,6 +223,12 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
             "atoria",
             "hidden_skills",
           ) ?? []) {
+            if (
+              this.actor?.type === "player-character" &&
+              hidden_skill === "system.skills.combative"
+            ) {
+              continue;
+            }
             if (matching_skills.startsWith(hidden_skill)) {
               delete context.associated_skills[matching_skills];
             }

@@ -102,7 +102,9 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     const skillPath = "system.skills.combative";
     const hidden_skills =
       this.document.getFlag("atoria", "hidden_skills") ?? [];
-    if (!hidden_skills.includes(skillPath)) hidden_skills.push(skillPath);
+    if (!hidden_skills.includes(skillPath)) {
+      hidden_skills.push(skillPath);
+    }
     this.document.setFlag("atoria", "hidden_skills", hidden_skills);
     return context;
   }

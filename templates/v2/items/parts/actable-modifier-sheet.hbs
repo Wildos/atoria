@@ -1,6 +1,32 @@
 <div class="atoria-item-actable-modifier-parts grid-2col">
     {{>"atoria.v2.commons_partials.cost-input" cost=item.system.cost
     data_path="system.cost" systemFields=systemFields.cost.fields cssClasses="double-col-field"}}
+
+    <label class="double-col-field">{{localize systemFields.restriction.label}}</label>
+    <textarea class="atoria-resize-ta double-col-field" data-name="restriction" data-dtype="String" name="system.restriction" {{disabled (not editable)}}
+    >{{cleanLines item.system.restriction}}</textarea>
+
+
+    {{#if (eq item.type "incantatory-addition")}}
+    <label>{{localize systemFields.require_verbal.label}}</label>
+    {{ formInput systemFields.require_verbal value=item.system.require_verbal disabled=(not @root.editable)}}
+
+    <label>{{localize systemFields.require_immobile.label}}</label>
+    {{ formInput systemFields.require_immobile value=item.system.require_immobile disabled=(not @root.editable)}}
+
+    <label>{{localize systemFields.travel.label}}</label>
+        {{ formInput systemFields.travel value=item.system.travel disabled=(not @root.editable)}}
+
+    <label>{{localize systemFields.somatic.label}}</label>
+    <select name="system.somatic">
+        {{selectOptions systemFields.somatic.choices selected=item.system.somatic localize=true}}
+    </select>
+
+    <label>{{localize systemFields.material.label}}</label>
+    {{ formInput systemFields.material value=item.system.material disabled=(not @root.editable)}}
+
+    {{/if}}
+
     {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation
     data_path="system.limitation" systemFields=systemFields.limitation.fields cssClasses="double-col-field"}}
 

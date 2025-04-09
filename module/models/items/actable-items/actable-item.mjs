@@ -7,6 +7,11 @@ export default class AtoriaActableItem extends atoria_models.AtoriaItemBase {
     const fields = foundry.data.fields;
     const schema = super.defineSchema();
 
+    schema.restriction = new fields.StringField({
+      required: true,
+      label: "ATORIA.Ruleset.Actable.Restriction",
+    });
+
     schema.effect = new fields.StringField({
       required: true,
       label: "ATORIA.Model.Effect",

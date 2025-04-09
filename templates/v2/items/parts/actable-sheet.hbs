@@ -1,4 +1,8 @@
 <div class="atoria-item-actable-parts grid-2col">
+    <label class="double-col-field">{{localize systemFields.restriction.label}}</label>
+    <textarea class="atoria-resize-ta double-col-field" data-name="restriction" data-dtype="String" name="system.restriction" {{disabled (not editable)}}
+    >{{cleanLines item.system.restriction}}</textarea>
+
     <label>{{localize systemFields.duration.label}}</label>
     {{ formInput systemFields.duration value=item.system.duration disabled=(not @root.editable)}}
 

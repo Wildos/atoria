@@ -35,7 +35,7 @@ export default class AtoriaChatMessage extends ChatMessage {
         }
       }
     }
-    return result_array;
+    return result_array.reverse();
   }
 
   async _createInlineRoll(match, rollData, options = {}) {

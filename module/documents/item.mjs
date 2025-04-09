@@ -418,6 +418,14 @@ export default class AtoriaItem extends Item {
       );
     }
 
+    if (this.type === "spell") {
+      let new_supplementaries_list = this.system.supplementaries_list;
+      for (let supplementary of used_supplementaries) {
+        let own_supplementary = new_supplementaries_list[supplementary.idx];
+        roll_effect += own_supplementary.description;
+      }
+    }
+
     const saves_asked = foundry.utils.deepClone(this.system.saves_asked) ?? [];
     if (
       this.type === "weapon" ||
