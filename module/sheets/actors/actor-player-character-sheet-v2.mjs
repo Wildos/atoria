@@ -14,7 +14,10 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
   static DEFAULT_OPTIONS = {
     classes: ["player-character"],
     actions: {
-      applyTimePhase: this._applyTimePhase,
+      applyTimePhase: {
+        handler: this._applyTimePhase,
+        buttons: [0],
+      },
       editHealingInactive: this._editHealingInactive,
       createSkill: this._createSkill,
       deleteSkill: this._deleteSkill,
@@ -46,6 +49,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
 
   static async _applyTimePhase(_event, target) {
     const { timePhase } = target.dataset;
+    console.debug(_event);
     if (!timePhase) return;
     await this.actor.applyTimePhase(timePhase);
   }
