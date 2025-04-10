@@ -744,18 +744,22 @@
   display: flex;
   align-items: center;
 }
-.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > button {
+.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > label {
   max-height: var(--atoria-skill-height);
   align-items: stretch;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  border: var(--atoria-border-style);
 }
-.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > button > img {
+.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > label > img {
   flex: 0;
   max-width: var(--atoria-base-line-block-height);
   max-height: var(--atoria-base-line-block-height);
   border: none;
   filter: var(--atoria-img-filter);
 }
-.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > button > * {
+.system-atoria .atoria-player-header > .attribute-area > .atoria-time-phase-buttons > label > * {
   flex: 1;
 }
 .system-atoria .atoria-player-header > .attribute-area .atoria-initiative input {

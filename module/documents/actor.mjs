@@ -5,6 +5,15 @@ import DEFAULT_VALUES from "../utils/default-values.mjs";
 import { helpers } from "../models/module.mjs";
 
 export default class AtoriaActor extends Actor {
+  /**
+   * Overriden to force only linked token to update
+   */
+  _updateDependentTokens(...args) {
+    for (const token of this.getDependentTokens({ linked: true })) {
+      token._onUpdateBaseActor(...args);
+    }
+  }
+
   prepareBaseData() {
     const actorData = this;
     actorData.system.encumbrance.value = 0;

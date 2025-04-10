@@ -134,6 +134,8 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       limited: this.document.limited,
       gm: game.user.isGM,
 
+      token: this.document.token,
+
       actor: this.actor,
       system: this.actor.system,
       systemSource: this.actor.system._source,

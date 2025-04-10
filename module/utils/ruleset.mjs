@@ -310,7 +310,6 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static get_encumbrance_level(actor) {
-    console.debug(actor);
     if (actor.system.encumbrance.value > actor.system.encumbrance.max) {
       return "over";
     } else if (
