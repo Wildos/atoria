@@ -29,6 +29,15 @@ export default class AtoriaItem extends Item {
         );
       }
     }
+    if (this.system.usable_actable_modifiers !== undefined) {
+      let invalid_ids = this.system.usable_actable_modifiers.flatMap((id) => {
+        let usable_actable = this.actor.items.get(id);
+        return usable_actable !== undefined ? [] : id;
+      });
+      for (const id of invalid_ids) {
+        this.disableActableModifier(id);
+      }
+    }
   }
 
   getRollData() {

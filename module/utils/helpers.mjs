@@ -232,9 +232,11 @@ export async function itemRollDialog(item, need_roll = true) {
     }
   }
 
-  const associated_actable_modifiers = item.system.usable_actable_modifiers.map(
-    (id) => item.actor.items.get(id),
-  );
+  const associated_actable_modifiers =
+    item.system.usable_actable_modifiers.flatMap((id) => {
+      let usable_actable = item.actor.items.get(id);
+      return usable_actable !== undefined ? usable_actable : [];
+    });
   const is_blind_roll =
     (main_skill_data.path ?? "") === ""
       ? false
