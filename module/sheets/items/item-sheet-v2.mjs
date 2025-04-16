@@ -183,7 +183,7 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         context.available_actable_modifiers =
           utils.ruleset.item.getActableModifiersApplicable(this.item);
         context.associated_skills =
-          this.actor?.getSkillnKnowledgeList() ??
+          this.actor?.getAssociatedSkillList() ??
           foundry.utils.deepClone(utils.default_values.associated_skills);
         for (const matching_skills of Object.keys(context.associated_skills)) {
           for (const hidden_skill of this.actor?.getFlag(
@@ -216,7 +216,7 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
       case "action_opportunity_post":
       case "feature":
         context.associated_skills =
-          this.actor?.getSkillnKnowledgeList() ??
+          this.actor?.getAssociatedSkillList() ??
           foundry.utils.deepClone(utils.default_values.associated_skills);
         for (const matching_skills of Object.keys(context.associated_skills)) {
           for (const hidden_skill of this.actor?.getFlag(

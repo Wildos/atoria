@@ -190,6 +190,23 @@ export default class AtoriaActor extends Actor {
     return skill_list;
   }
 
+  getPerceptionSkillList() {
+    const perception_list = {};
+    for (let perception in this.system.perceptions) {
+      const skill_path = `system.perceptions.${perception}`;
+      perception_list[skill_path] = this.system.perceptions[perception].label;
+    }
+    return perception_list;
+  }
+
+  getAssociatedSkillList() {
+    return Object.assign(
+      {},
+      this.getSkillnKnowledgeList(),
+      this.getPerceptionSkillList(),
+    );
+  }
+
   getWeaponSkillList() {
     const skill_list = {};
     if (
