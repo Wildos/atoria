@@ -449,7 +449,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       case "Item":
         return this._onDropItem(event, data);
       case "ActiveEffect":
-        return this._onDropEffect(event, data);
+        return this._onDropActiveEffect(event, data);
     }
   }
 
@@ -463,14 +463,14 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     return this._onDropItemCreate(item, event);
   }
 
-  async _onDropEffect(event, data) {
-    if (!this.actor.isOwner) return false;
-    const effect = await ActiveEffect.implementation.fromDropData(data);
+  async _onDropActiveEffect(event, data) {
+    const aeCls = getDocumentClass("ActiveEffect");
+    const effect = await aeCls.fromDropData(data);
+    if (!this.actor.isOwner || !effect) return false;
 
     if (this.actor.uuid === effect.parent?.uuid)
-      return this._onSortEffect(event, effect);
-
-    // return this._onDropItemCreate(item, event);
+      return this._onEffectSort(event, effect);
+    return aeCls.create(effect, { parent: this.actor });
   }
 
   async _onDropItemCreate(itemData, event) {
