@@ -49,6 +49,12 @@ export function applySkillAlterationsToRollConfig(
       case "one_degree_of_success_loss":
         roll_config["dos_mod"] -= 1;
         break;
+      case "two_degree_of_success_gain":
+        roll_config["dos_mod"] += 2;
+        break;
+      case "two_degree_of_success_loss":
+        roll_config["dos_mod"] -= 2;
+        break;
       case "advantage":
         roll_config["advantage_amount"] += 1;
         break;
@@ -75,6 +81,12 @@ export function applyKeywordsToRollConfig(roll_config, keywords_data) {
         break;
       case "one_degree_of_success_loss":
         roll_config["dos_mod"] -= 1;
+        break;
+      case "two_degree_of_success_gain":
+        roll_config["dos_mod"] += 2;
+        break;
+      case "two_degree_of_success_loss":
+        roll_config["dos_mod"] -= 2;
         break;
       case "advantage":
         roll_config["advantage_amount"] += 1;

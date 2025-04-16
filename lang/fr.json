@@ -25,6 +25,8 @@
         "Type": "Type d'altération",
         "One_degree_of_success_gain": "DR +1",
         "One_degree_of_success_loss": "DR -1",
+        "Two_degree_of_success_gain": "DR +2",
+        "Two_degree_of_success_loss": "DR -2",
         "Advantage": "Avantage",
         "Disadvantage": "Désavantage",
         "Hand_handled": "Non automatisé"
