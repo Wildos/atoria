@@ -204,10 +204,10 @@
       "Limitation": "Limitations",
       "Feature": {
         "Title": "Aptitudes et Permanents",
-        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ai la propriété de cet objet"
+        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ait la propriété de cet objet"
       },
       "Weapon": {
-        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ai la propriété de cet objet"
+        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ait la propriété de cet objet"
       },
       "Actable": {
         "Cost_list": {
@@ -216,7 +216,7 @@
         "Saves_asked": {
           "Delete": "Suppression coût"
         },
-        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ai la propriété de cet objet"
+        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ait la propriété de cet objet"
       },
       "Actable_modifier": {
         "Title": "Modificateurs d'action"
