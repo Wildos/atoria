@@ -106,26 +106,99 @@ export default class AtoriaChatMessage extends ChatMessage {
     return false;
   }
 
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user);
+    if (allowed === false) return false;
+    if (
+      data.system?.effect &&
+      foundry.utils.getType(data.system.effect) === "string"
+    ) {
+      // Evaluate any immediately-evaluated inline rolls.
+      const matches = data.system.effect.matchAll(
+        /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi,
+      );
+      let effect = "";
+      for (const [expression] of matches) {
+        effect +=
+          (await TextEditor.enrichHTML(expression, {
+            documents: false,
+            secrets: false,
+            links: false,
+            rolls: true,
+            rollData: this.getRollData(),
+          })) + "</br>";
+      }
+      this.updateSource({ "system.effect": effect });
+    }
+    if (
+      data.system?.postContent &&
+      foundry.utils.getType(data.system.postContent) === "string"
+    ) {
+      // Evaluate any immediately-evaluated inline rolls.
+      const matches = data.system.postContent.matchAll(
+        /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi,
+      );
+      let postContent = "";
+      for (const [expression] of matches) {
+        postContent +=
+          (await TextEditor.enrichHTML(expression, {
+            documents: false,
+            secrets: false,
+            links: false,
+            rolls: true,
+            rollData: this.getRollData(),
+          })) + "</br>";
+      }
+      this.updateSource({ "system.postContent": postContent });
+    }
+
+    if (
+      data.system?.critical_effect &&
+      foundry.utils.getType(data.system.critical_effect) === "string"
+    ) {
+      // Evaluate any immediately-evaluated inline rolls.
+      const matches = data.system.critical_effect.matchAll(
+        /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi,
+      );
+      let critical_effect = "";
+      for (const [expression] of matches) {
+        critical_effect +=
+          (await TextEditor.enrichHTML(expression, {
+            documents: false,
+            secrets: false,
+            links: false,
+            rolls: true,
+            rollData: this.getRollData(),
+          })) + "</br>";
+      }
+      this.updateSource({ "system.critical_effect": critical_effect });
+    }
+  }
+
   async getHTML() {
     // Determine some metadata
     const data = this.toObject(false);
     data.content = await TextEditor.enrichHTML(this.content, {
       rollData: this.getRollData(),
     });
-    data.system.postContent = await TextEditor.enrichHTML(
-      this.system.postContent,
-      { rollData: this.getRollData() },
-    );
-    data.system.effect = await this._enricheInlineRolls(
-      this.getRollData(),
-      this.system.effect,
-      { maximize: this.is_critical_success },
-    );
-    data.system.critical_effect = await this._enricheInlineRolls(
-      this.getRollData(),
-      this.system.critical_effect,
-      {},
-    );
+
+    data.system.effect = "";
+    data.system.critical_effect = "";
+    data.system.postContent = "";
+    if (this.isContentVisible) {
+      data.system.postContent = await TextEditor.enrichHTML(
+        this.system.postContent,
+        { rollData: this.getRollData() },
+      );
+      data.system.effect = await TextEditor.enrichHTML(this.system.effect, {
+        rollData: this.getRollData(),
+      });
+      data.system.critical_effect = this.is_critical_success
+        ? await TextEditor.enrichHTML(this.system.critical_effect, {
+            rollData: this.getRollData(),
+          })
+        : "";
+    }
 
     const isWhisper = this.whisper.length;
 
@@ -167,6 +240,7 @@ export default class AtoriaChatMessage extends ChatMessage {
           return user ? user.name : null;
         })
         .filterJoin(", "),
+      isContentVisible: this.isContentVisible,
       isGM: game.user.isGM,
     };
 
