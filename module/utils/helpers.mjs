@@ -111,7 +111,6 @@ function getSkillData(item, skill_path) {
   skill_data.critical_fumble_amount =
     utils.ruleset.character.getSkillCriticalFumbleAmount(skill_data);
   skill_data.label = item.actor.getSkillTitle(skill_path);
-  console.debug(skill_data);
   return skill_data;
 }
 
@@ -478,11 +477,6 @@ export function getSkillTitle(skill_path, skill_label = undefined) {
   }
 
   let skill_name = game.i18n.localize(skill_label);
-  if (skill_name === skill_label) {
-    skill_name = skill_path_parts[skill_path_parts.length - 1];
-    skill_name =
-      skill_name.charAt(0).toUpperCase() + skill_name.slice(1).toLowerCase();
-  }
 
   skill_path_parts.pop();
   if (skill_path_parts.length <= 1) {

@@ -991,7 +991,6 @@ RULESET.localized_effects = (status_effects) => {
 RULESET.localized_damage_type = (damage_type) => {
   damage_type =
     damage_type.charAt(0).toUpperCase() + damage_type.slice(1).toLowerCase();
-  console.debug(damage_type);
   return game.i18n.localize(`ATORIA.Ruleset.Damage_type.${damage_type}`);
 };
 

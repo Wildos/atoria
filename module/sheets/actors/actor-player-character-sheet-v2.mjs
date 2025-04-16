@@ -49,7 +49,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
 
   static async _applyTimePhase(_event, target) {
     const { timePhase } = target.dataset;
-    console.debug(_event);
     if (!timePhase) return;
     await this.actor.applyTimePhase(timePhase);
   }
