@@ -1,3 +1,5 @@
+import ruleset from "./ruleset.mjs";
+
 export const preloadHandlebarsTemplates = async function () {
   // const commons_partials = [
   //     "simple-header.hbs",
@@ -179,12 +181,12 @@ function _arraytize(...args) {
   return args;
 }
 
-function _boolDictToString(dict) {
+function _boolDictToStringArray(dict) {
   const active_keys = [];
   for (let key of Object.keys(dict)) {
     if (dict[key]) active_keys.push(key);
   }
-  return active_keys.join(", ");
+  return active_keys;
 }
 
 function _pluralize(localize_string, amount) {
@@ -194,6 +196,10 @@ function _pluralize(localize_string, amount) {
 
 function _split(string, delimiter) {
   return string.split(delimiter);
+}
+
+function _localizeDamage(type) {
+  return ruleset.localized_damage_type(type);
 }
 
 export const registerHandlebarsHelpers = async function () {
@@ -209,8 +215,9 @@ export const registerHandlebarsHelpers = async function () {
     readonly: _readonly,
     sum: _sum,
     arraytize: _arraytize,
-    boolDictToString: _boolDictToString,
+    boolDictToStringArray: _boolDictToStringArray,
     pluralize: _pluralize,
     split: _split,
+    localizeDamage: _localizeDamage,
   });
 };

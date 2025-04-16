@@ -8,9 +8,17 @@
     {{ formInput systemFields.critical_fumble value=item.system.critical_fumble disabled=(not @root.editable)}}
 
     <label class="double-col-field">{{localize systemFields.critical_effect.label}}</label>
-    <textarea class="atoria-resize-ta double-col-field" data-name="critical_effect"
-    data-dtype="String" name="system.critical_effect" {{disabled (not editable)}}
-    >{{cleanLines item.system.critical_effect}}</textarea>
+    <div class="double-col-field" style="display: grid;">
+        <textarea
+            class="textarea-auto-resize"
+            style="grid-area: 1 / 1 / 2/ 2;"
+            {{disabled (not @root.editable)}}>{{cleanLines item.system.critical_effect}}</textarea>
+        <div
+        class="textarea-auto-resize-sibling"
+        aria-hidden="true"
+        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+        >{{cleanLines item.system.critical_effect}}</div>
+    </div>
 
     <label>{{localize systemFields.cost.label}}</label>
     {{>"atoria.v2.commons_partials.cost-input" cost=item.system.cost

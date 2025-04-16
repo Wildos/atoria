@@ -61,10 +61,28 @@ data-action="expandSection" data-expand-id="{{item._id}}" data-drag="Item" data-
     </div>
     {{/if}}
     <label class="double-col-field">{{localize systemFields.restriction.label}}</label>
-    <textarea class="atoria-resize-ta" data-name="{{item._id}}_restriction" data-dtype="String" rows="2" disabled
-        >{{cleanLines item.system.restriction}}</textarea>
+    <div style="display: grid;">
+        <textarea
+            class="textarea-auto-resize"
+            style="grid-area: 1 / 1 / 2/ 2;"
+            disabled>{{cleanLines item.system.restriction}}</textarea>
+        <div
+        class="textarea-auto-resize-sibling"
+        aria-hidden="true"
+        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+        >{{cleanLines item.system.restriction}}</div>
+    </div>
 
     <label class="double-col-field">{{localize systemFields.description.label}}</label>
-    <textarea class="atoria-resize-ta" data-name="{{item._id}}_description" data-dtype="String" rows="2" disabled
-        >{{cleanLines item.system.description}}</textarea>
+    <div style="display: grid;">
+        <textarea
+            class="textarea-auto-resize"
+            style="grid-area: 1 / 1 / 2/ 2;"
+            disabled>{{cleanLines item.system.description}}</textarea>
+        <div
+        class="textarea-auto-resize-sibling"
+        aria-hidden="true"
+        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+        >{{cleanLines item.system.description}}</div>
+    </div>
 </li>

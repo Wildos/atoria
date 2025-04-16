@@ -332,20 +332,9 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
 
     const html = $(this.element);
 
-    html.find(".atoria-resize-ta").each(function (_idx, textarea) {
-      const calculate_new_height = (scroll_height) => {
-        return Math.max(22, Math.ceil((textarea.scrollHeight - 3) / 22) * 22);
-      };
-
-      textarea.style.height = "auto";
-      textarea.style.height =
-        calculate_new_height(textarea.scrollHeight) + "px";
-      textarea.style.overflowY = "hidden";
-
-      textarea.addEventListener("input", function () {
-        this.style.height = "auto";
-        this.style.height = calculate_new_height(this.scrollHeight) + "px";
-      });
+    // Ensure height is adjusted on edit.
+    html.find("textarea.textarea-auto-resize").on("input", function () {
+      this.nextElementSibling.textContent = this.value;
     });
 
     for (const id in this.expanded_section) {

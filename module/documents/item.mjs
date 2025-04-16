@@ -537,6 +537,18 @@ export default class AtoriaItem extends Item {
   }
 
   getKeywordList() {
+    if (
+      ![
+        "feature",
+        "action",
+        "opportunity",
+        "spell",
+        "technique",
+        "incantatory-addition",
+      ].includes(this.type)
+    ) {
+      return [];
+    }
     let keywords_list = [];
 
     const active_keywords = Array.from(

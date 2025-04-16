@@ -412,8 +412,8 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
 
         context.items = await Promise.all(
           this.actor.items.map(async (i) => {
-            // i.descriptive_tooltip = await i.getTooltipHTML();
             i.systemFields = i.system.schema.fields;
+            i.keywords_list = i.getKeywordList();
             return i;
           }),
         );

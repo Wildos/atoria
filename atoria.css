@@ -350,10 +350,6 @@
 .system-atoria .atoria-error {
   color: var(--atoria-color-error) !important;
 }
-.system-atoria .atoria-resize-ta {
-  resize: none;
-  height: auto;
-}
 .system-atoria fieldset > legend.atoria-expand-control::before {
   font-family: var(--font-awesome);
   font-size: 1em;
@@ -382,6 +378,16 @@
   flex: 0;
   min-width: fit-content;
   min-height: fit-content;
+}
+.system-atoria .textarea-auto-resize,
+.system-atoria .textarea-auto-resize-sibling {
+  resize: none;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  padding: 4px;
+  margin: 0;
+  box-sizing: border-box;
+  border: 1px solid #7a7971;
 }
 .system-atoria .atoria-cost-input,
 .system-atoria .atoria-cost-display {

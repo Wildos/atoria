@@ -3,9 +3,17 @@
     data_path="system.cost" systemFields=systemFields.cost.fields cssClasses="double-col-field"}}
 
     <label class="double-col-field">{{localize systemFields.restriction.label}}</label>
-    <textarea class="atoria-resize-ta double-col-field" data-name="restriction" data-dtype="String" name="system.restriction" {{disabled (not editable)}}
-    >{{cleanLines item.system.restriction}}</textarea>
-
+    <div class="double-col-field" style="display: grid;">
+        <textarea
+            class="textarea-auto-resize"
+            style="grid-area: 1 / 1 / 2/ 2;"
+            {{disabled (not @root.editable)}}>{{cleanLines item.system.restriction}}</textarea>
+        <div
+        class="textarea-auto-resize-sibling"
+        aria-hidden="true"
+        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+        >{{cleanLines item.system.restriction}}</div>
+    </div>
 
     {{#if (eq item.type "incantatory-addition")}}
     <label>{{localize systemFields.require_verbal.label}}</label>

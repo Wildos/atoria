@@ -7,14 +7,13 @@
     </select>
 
     <label>{{localize systemFields.range.label}}</label>
-    {{ formInput systemFields.range value=item.system.range disabled=(not @root.editable)}}
+        {{ formInput systemFields.range value=item.system.range disabled=(not @root.editable)}}
 
     <fieldset class="double-col-field">
         <legend>{{localize systemFields.damage_roll.label}}</legend>
         {{>"atoria.v2.commons_partials.rollfield-input" rollfield=item.system.damage_roll systemFields=systemFields.damage_roll.fields
         data_path="system.damage_roll" hide_name=true disabled=(not @root.editable)}}
     </fieldset>
-
 
     <label>{{localize systemFields.is_focuser.label}}</label>
     {{ formInput systemFields.is_focuser value=item.system.is_focuser disabled=(not @root.editable)}}

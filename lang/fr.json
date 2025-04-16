@@ -286,7 +286,7 @@
           "Actable_modifier": {
             "Title": "Modificateurs d'action",
             "Technique": "Techniques",
-            "Incantatory_addition": "Ajouts incantatoires"
+            "Incantatory_addition": "Ajouts"
           }
         }
       }
@@ -349,7 +349,7 @@
         "Title": "Jet pour {element_name}",
         "Available_supplementaries": "Supplémentaires",
         "Spell_supplementary": "Sort supp. {idx}",
-        "Available_actable_modifiers": "Technique(s) & Ajout(s) incantatoire(s)"
+        "Available_actable_modifiers": "Technique(s) & Ajout(s)"
       },
       "Skill_roll": {
         "Title": "Jet pour {actor_name}",
@@ -962,7 +962,7 @@
               "Label": "Malédiction"
             },
             "Ethereal": {
-              "Label": "Éthéré"
+              "Label": "Éthérée"
             },
             "Necromancy": {
               "Label": "Nécromancie"
@@ -1174,7 +1174,7 @@
       },
       "Actable_modifier": {
         "Technique": "Technique",
-        "Incantatory_addition": "Ajout incantatoire",
+        "Incantatory_addition": "Ajout",
         "Charge_compatible": "Compatible charge"
       },
       "Action": {
@@ -1400,7 +1400,7 @@
       "opportunity": "Opportunité",
       "spell": "Sort",
       "technique": "Technique",
-      "incantatory-addition": "Ajout incantatoire",
+      "incantatory-addition": "Ajout",
       "effect": "Effet"
     },
     "Effect": "Effet"

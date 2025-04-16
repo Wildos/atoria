@@ -107,11 +107,6 @@
         color: var(--atoria-color-error) !important;
     }
 
-    .atoria-resize-ta {
-        resize: none;
-        height: auto;
-    }
-
     fieldset > legend {
         &.atoria-expand-control::before {
             font-family: var(--font-awesome);
@@ -144,5 +139,15 @@
         flex: 0;
         min-width: fit-content;
         min-height: fit-content;
+    }
+
+    .textarea-auto-resize, .textarea-auto-resize-sibling {
+      resize: none;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      padding: 4px;
+      margin: 0;
+      box-sizing: border-box;
+      border: 1px solid #7a7971;
     }
 }

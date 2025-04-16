@@ -58,15 +58,33 @@
                 <label>{{localize systemFields.offense.label}}</label>
                 {{ formInput systemFields.offense.fields.amount value=actor.system.offense.amount disabled=(not @root.editable)}}
                 </div>
-                <textarea class="atoria-resize-ta" data-name="offense-description" rows=1 data-dtype="String" name="system.offense.description" {{disabled (not editable)}}
-                >{{cleanLines actor.system.offense.description}}</textarea>
+                <div style="display: grid;">
+                    <textarea
+                        class="textarea-auto-resize"
+                        style="grid-area: 1 / 1 / 2/ 2;"
+                        disabled>{{cleanLines item.system.offense.description}}</textarea>
+                    <div
+                    class="textarea-auto-resize-sibling"
+                    aria-hidden="true"
+                    style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+                    >{{cleanLines item.system.offense.description}}</div>
+                </div>
 
                 <div class="flexrow">
                 <label>{{localize systemFields.defense.label}}</label>
                 {{ formInput systemFields.defense.fields.amount value=actor.system.defense.amount disabled=(not @root.editable)}}
                 </div>
-                <textarea class="atoria-resize-ta" data-name="defense-description" rows=1 data-dtype="String" name="system.defense.description" {{disabled (not editable)}}
-                >{{cleanLines actor.system.defense.description}}</textarea>
+                <div style="display: grid;">
+                    <textarea
+                        class="textarea-auto-resize"
+                        style="grid-area: 1 / 1 / 2/ 2;"
+                        disabled>{{cleanLines item.system.defense.description}}</textarea>
+                    <div
+                    class="textarea-auto-resize-sibling"
+                    aria-hidden="true"
+                    style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+                    >{{cleanLines item.system.defense.description}}</div>
+                </div>
             </div>
             <ul class="item-list">
             {{#each effects as |effect idx|}}
