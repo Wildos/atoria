@@ -1440,6 +1440,9 @@
   border: none;
   background-color: transparent;
 }
+.system-atoria .atoria.dialog {
+  max-width: 550px;
+}
 .system-atoria .atoria.dialog .atoria-cost-display.atoria-secondary {
   display: none;
   visibility: hidden;
