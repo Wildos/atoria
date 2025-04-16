@@ -272,8 +272,6 @@ DEFAULT_VALUES["associated_skills"] = {
     "ATORIA.Ruleset.Knowledges.Artistic.Sculpture.Ceramic.Label",
   "system.knowledges.artistic.sculpture.decoration":
     "ATORIA.Ruleset.Knowledges.Artistic.Sculpture.Decoration.Label",
-  "system.knowledges.erudition.civilisation.native":
-    "ATORIA.Ruleset.Knowledges.Erudition.Civilisation.Native.Label",
   "system.knowledges.erudition.medecine.treatment":
     "ATORIA.Ruleset.Knowledges.Erudition.Medecine.Treatment.Label",
   "system.knowledges.erudition.medecine.mortuary":
@@ -349,7 +347,7 @@ DEFAULT_VALUES["associated_skills"] = {
   "system.knowledges.magic.water.source":
     "ATORIA.Ruleset.Knowledges.Magic.Water.Source.Label",
   "system.knowledges.magic.water.ice":
-    "ATORIA.Ruleset.Knowledges.Magic.Water.ice.Label",
+    "ATORIA.Ruleset.Knowledges.Magic.Water.Ice.Label",
   "system.knowledges.magic.fire.torch":
     "ATORIA.Ruleset.Knowledges.Magic.Fire.Torch.Label",
   "system.knowledges.magic.fire.ignition":
@@ -361,7 +359,7 @@ DEFAULT_VALUES["associated_skills"] = {
   "system.knowledges.magic.occult.curse":
     "ATORIA.Ruleset.Knowledges.Magic.Occult.Curse.Label",
   "system.knowledges.magic.occult.ethereal":
-    "ATORIA.Ruleset.Knowledges.Magic.Occult.ethereal.Label",
+    "ATORIA.Ruleset.Knowledges.Magic.Occult.Ethereal.Label",
   "system.knowledges.magic.occult.necromancy":
     "ATORIA.Ruleset.Knowledges.Magic.Occult.Necromancy.Label",
   "system.knowledges.magic.mental.kinetic":
