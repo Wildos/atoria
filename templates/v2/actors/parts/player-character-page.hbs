@@ -62,7 +62,8 @@
                     <textarea
                         class="textarea-auto-resize"
                         style="grid-area: 1 / 1 / 2/ 2;"
-                        disabled>{{cleanLines item.system.offense.description}}</textarea>
+                        rows="1"
+                        {{disabled (not @root.editable)}}>{{cleanLines item.system.offense.description}}</textarea>
                     <div
                     class="textarea-auto-resize-sibling"
                     aria-hidden="true"
@@ -78,7 +79,8 @@
                     <textarea
                         class="textarea-auto-resize"
                         style="grid-area: 1 / 1 / 2/ 2;"
-                        disabled>{{cleanLines item.system.defense.description}}</textarea>
+                        rows="1"
+                        {{disabled (not @root.editable)}}>{{cleanLines item.system.defense.description}}</textarea>
                     <div
                     class="textarea-auto-resize-sibling"
                     aria-hidden="true"

@@ -4,6 +4,7 @@
         <textarea
             class="textarea-auto-resize"
             style="grid-area: 1 / 1 / 2/ 2;"
+            rows="1"
             {{disabled (not editable)}}>{{cleanLines item.system.restriction}}</textarea>
         <div
         class="textarea-auto-resize-sibling"
@@ -45,6 +46,7 @@
         <textarea
             class="textarea-auto-resize"
             style="grid-area: 1 / 1 / 2/ 2;"
+            rows="1"
             {{disabled (not @root.editable)}}>{{cleanLines item.system.effect}}</textarea>
         <div
         class="textarea-auto-resize-sibling"
