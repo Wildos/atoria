@@ -159,6 +159,7 @@ data-drag="Item" data-item-id="{{item._id}}">
                         class="textarea-auto-resize"
                         style="grid-area: 1 / 1 / 2/ 2;"
                         rows="1"
+                        data-name="inventory-{{item._id}}-critical_effect" data-dtype="String"
                         disabled>{{cleanLines item.system.critical_effect}}</textarea>
                     <div
                     class="textarea-auto-resize-sibling"
@@ -175,6 +176,8 @@ data-drag="Item" data-item-id="{{item._id}}">
                 class="textarea-auto-resize"
                 style="grid-area: 1 / 1 / 2/ 2;"
                 rows="1"
+                data-name="inventory-{{item._id}}-effect" data-dtype="String"
+                data-name="{{item._id}}_restriction" data-dtype="String"
                 disabled>{{cleanLines item.system.restriction}}</textarea>
             <div
             class="textarea-auto-resize-sibling"
@@ -203,6 +206,7 @@ data-drag="Item" data-item-id="{{item._id}}">
                 class="textarea-auto-resize"
                 style="grid-area: 1 / 1 / 2/ 2;"
                 rows="1"
+                data-name="inventory-{{item._id}}-description" data-dtype="String"
                 disabled>{{cleanLines item.system.description}}</textarea>
             <div
             class="textarea-auto-resize-sibling"
@@ -230,6 +234,7 @@ data-drag="Item" data-item-id="{{item._id}}">
                     class="textarea-auto-resize"
                     style="grid-area: 1 / 1 / 2/ 2;"
                     rows="1"
+                    data-name="inventory-{{../item._id}}-supplementaries_list.{{key}}" data-dtype="String"
                     disabled>{{cleanLines supplementary.description}}</textarea>
                 <div
                 class="textarea-auto-resize-sibling"

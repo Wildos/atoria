@@ -34,6 +34,7 @@ data-action="expandSection"  data-expand-id="{{item._id}}" data-drag="Item" data
             class="textarea-auto-resize"
             style="grid-area: 1 / 1 / 2/ 2;"
             rows="1"
+            data-name="{{item._id}}_description" data-dtype="String"
             disabled>{{cleanLines item.system.description}}</textarea>
         <div
         class="textarea-auto-resize-sibling"

@@ -63,12 +63,13 @@
                         class="textarea-auto-resize"
                         style="grid-area: 1 / 1 / 2/ 2;"
                         rows="1"
-                        {{disabled (not @root.editable)}}>{{cleanLines item.system.offense.description}}</textarea>
+                        data-name="offense-description" data-dtype="String" name="system.offense.description"
+                        {{disabled (not @root.editable)}}>{{cleanLines system.offense.description}}</textarea>
                     <div
                     class="textarea-auto-resize-sibling"
                     aria-hidden="true"
                     style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-                    >{{cleanLines item.system.offense.description}}</div>
+                    >{{cleanLines system.offense.description}}</div>
                 </div>
 
                 <div class="flexrow">
@@ -80,12 +81,13 @@
                         class="textarea-auto-resize"
                         style="grid-area: 1 / 1 / 2/ 2;"
                         rows="1"
-                        {{disabled (not @root.editable)}}>{{cleanLines item.system.defense.description}}</textarea>
+                        data-name="defense-description" data-dtype="String" name="system.defense.description"
+                        {{disabled (not @root.editable)}}>{{cleanLines system.defense.description}}</textarea>
                     <div
                     class="textarea-auto-resize-sibling"
                     aria-hidden="true"
                     style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-                    >{{cleanLines item.system.defense.description}}</div>
+                    >{{cleanLines system.defense.description}}</div>
                 </div>
             </div>
             <ul class="item-list">

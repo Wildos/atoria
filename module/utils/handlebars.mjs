@@ -202,6 +202,14 @@ function _localizeDamage(type) {
   return ruleset.localized_damage_type(type);
 }
 
+function _brNewLines(text) {
+  const htmlResult = text
+    .split(/\n/)
+    .map((line) => Handlebars.Utils.escapeExpression(line))
+    .join("<br>");
+  return new Handlebars.SafeString(htmlResult);
+}
+
 export const registerHandlebarsHelpers = async function () {
   Handlebars.registerHelper({
     cleanLines: _cleanLines,
@@ -219,5 +227,6 @@ export const registerHandlebarsHelpers = async function () {
     pluralize: _pluralize,
     split: _split,
     localizeDamage: _localizeDamage,
+    brNewLines: _brNewLines,
   });
 };
