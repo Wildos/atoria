@@ -118,6 +118,9 @@ function getSkillData(item, skill_path) {
   const skill_data = foundry.utils.deepClone(
     item.actor?.getSkillFromPath(skill_path),
   );
+  if (skill_data === undefined) {
+    return undefined;
+  }
   skill_data.critical_success_amount =
     utils.ruleset.character.getSkillCriticalSuccessAmount(skill_data);
   skill_data.critical_fumble_amount =
@@ -194,6 +197,9 @@ export async function itemRollDialog(item, need_roll = true) {
     };
   } else if (item.system.associated_skill !== "") {
     let associated_skill = item.system.associated_skill;
+    if (getSkillData(item, item.system.associated_skill) === undefined) {
+      return null;
+    }
     main_skill_data = {
       path: associated_skill,
       label: item.actor.getSkillTitle(associated_skill),
