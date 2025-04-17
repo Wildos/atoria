@@ -508,6 +508,10 @@ RULESET["skill_alterations"] = {
     "ATORIA.Model.Skill_alteration.One_degree_of_success_gain",
   one_degree_of_success_loss:
     "ATORIA.Model.Skill_alteration.One_degree_of_success_loss",
+  two_degree_of_success_gain:
+    "ATORIA.Model.Skill_alteration.Two_degree_of_success_gain",
+  two_degree_of_success_loss:
+    "ATORIA.Model.Skill_alteration.Two_degree_of_success_loss",
   advantage: "ATORIA.Model.Skill_alteration.Advantage",
   disadvantage: "ATORIA.Model.Skill_alteration.Disadvantage",
 };

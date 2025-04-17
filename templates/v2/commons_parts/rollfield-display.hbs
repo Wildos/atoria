@@ -4,5 +4,10 @@ hide_name
 -->
 <div class="atoria-rollfield-display {{#if hide_name}}name-hidden{{/if}}">
     <label class="name">{{rollfield.name}}: </label>
-    <label>{{rollfield.formula}} ({{boolDictToString rollfield.types}})</label>
+    <label>{{rollfield.formula}}
+    {{#each (boolDictToStringArray rollfield.types) as |key id|}}
+        {{#unless (eq id 0)}},{{/unless}}
+        {{localizeDamage key}}
+    {{/each}}
+    </label>
 </div>

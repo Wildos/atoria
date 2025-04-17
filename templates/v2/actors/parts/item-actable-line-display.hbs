@@ -8,11 +8,14 @@ data-drag="Item" data-item-id="{{item._id}}">
         <input type="text" data-dtype="Number" value="{{item.system.success}}"
         data-tooltip="{{localize item.systemFields.success.label}}" disabled />
 
+        <div class="atoria-cost">
         {{>"atoria.v2.commons_partials.cost-display"
             cost=item.system.cost
             systemFields=systemFields.cost.fields
         }}
+        </div>
 
+        <div class="atoria-markers">
         {{#if item.system.markers.is_canalisation}}
             <input class="atoria-spell-marker flex0" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Canalisation"}}"
             type="checkbox" {{checked item.system.markers.is_canalisation}} disabled /><!--is_canalisation-->
@@ -29,23 +32,31 @@ data-drag="Item" data-item-id="{{item._id}}">
             <input class="atoria-spell-marker flex0" data-letter="{{localize "ATORIA.Ruleset.Spell.Markers.Trap"}}"
             type="checkbox" {{checked item.system.markers.is_trap}} disabled /><!--is_trap-->
         {{/if}}
+        </div>
     {{else}}
-        <div class="flexcol">
+        <div class="atoria-cost">
         {{#each item.system.cost_list as |cost_data idx|}}
             {{>"atoria.v2.commons_partials.cost-display" cost=cost_data systemFields=../item.systemFields.cost_list.element.fields}}
         {{/each}}
         </div>
     {{/if}}
     {{#if (ne item.type "weapon")}}
+        <label class="atoria-target">
         {{#if item.system.target}}
-        <label class="target"><b>{{localize item.systemFields.target.label}}:</b> {{item.system.target}}</label>
+        <b>{{localize item.systemFields.target.label}}:</b> {{item.system.target}}
         {{/if}}
+        </label>
+
+        <label class="atoria-range">
         {{#if item.system.range}}
-            <label class="flex0"><b>{{localize item.systemFields.range.label}}:</b> {{item.system.range}}</label>
+            <b>{{localize item.systemFields.range.label}}:</b> {{item.system.range}}
         {{/if}}
+        </label>
+        <label class="atoria-area">
         {{#if item.system.area}}
-            <label class="flex0"><b>{{localize item.systemFields.area.label}}:</b> {{item.system.area}}</label>
+            <b>{{localize item.systemFields.area.label}}:</b> {{item.system.area}}
         {{/if}}
+        </label>
     {{/if}}
 
     {{#unless (eq item.type "spell")}}
@@ -119,6 +130,10 @@ data-drag="Item" data-item-id="{{item._id}}">
         <label>{{localize item.systemFields.keywords.label}}: {{item.keywords_list}}</label>
         {{/if}}
 
+        {{#if item.system.range}}
+        <label><b>{{localize item.systemFields.range.label}}:</b> {{item.system.range}}</label>
+        {{/if}}
+
         {{#if item.system.associated_skill}}
             {{>"atoria.v2.commons_partials.rollfield-display" rollfield=item.system.damage_roll systemFields=item.systemFields.damage_roll.fields
                 data_path="system.focuser_damage_roll" hide_name=false}}
@@ -139,23 +154,66 @@ data-drag="Item" data-item-id="{{item._id}}">
         {{#if (eq item.type "spell")}}
             {{#if item.system.critical_effect}}
                 <label><b>{{localize systemFields.critical_effect.label}}: </b></label>
-                <textarea class="atoria-resize-ta" data-name="inventory-{{item._id}}-critical_effect"
-                data-dtype="String" name="system.critical_effect" disabled
-                >{{cleanLines item.system.critical_effect}}</textarea>
+                <div style="display: grid;">
+                    <textarea
+                        class="textarea-auto-resize"
+                        style="grid-area: 1 / 1 / 2/ 2;"
+                        rows="1"
+                        data-name="inventory-{{item._id}}-critical_effect" data-dtype="String"
+                        disabled>{{cleanLines item.system.critical_effect}}</textarea>
+                    <div
+                    class="textarea-auto-resize-sibling"
+                    aria-hidden="true"
+                    style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+                    >{{cleanLines item.system.critical_effect}}</div>
+                </div>
             {{/if}}
         {{/if}}
 
         <label class="double-col-field">{{localize systemFields.restriction.label}}</label>
-        <textarea class="atoria-resize-ta" data-name="{{item._id}}_restriction" data-dtype="String" rows="2" disabled
-            >{{cleanLines item.system.restriction}}</textarea>
+        <div style="display: grid;">
+            <textarea
+                class="textarea-auto-resize"
+                style="grid-area: 1 / 1 / 2/ 2;"
+                rows="1"
+                data-name="inventory-{{item._id}}-effect" data-dtype="String"
+                data-name="{{item._id}}_restriction" data-dtype="String"
+                disabled>{{cleanLines item.system.restriction}}</textarea>
+            <div
+            class="textarea-auto-resize-sibling"
+            aria-hidden="true"
+            style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+            >{{cleanLines item.system.restriction}}</div>
+        </div>
 
         <label><b>{{localize item.systemFields.effect.label}}:</b></label>
-        <textarea class="atoria-resize-ta" data-name="inventory-{{item._id}}-effect" data-dtype="String" disabled
-        >{{cleanLines item.system.effect}}</textarea>
+        <div style="display: grid;">
+         <textarea
+             class="textarea-auto-resize"
+             style="grid-area: 1 / 1 / 2/ 2;"
+             rows="1"
+             disabled>{{cleanLines item.system.effect}}</textarea>
+         <div
+         class="textarea-auto-resize-sibling"
+         aria-hidden="true"
+         style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+         >{{cleanLines item.system.effect}}</div>
+     </div>
 
         <label><b>{{localize item.systemFields.description.label}}:</b></label>
-        <textarea class="atoria-resize-ta" data-name="inventory-{{item._id}}-description" data-dtype="String" disabled
-        >{{cleanLines item.system.description}}</textarea>
+        <div style="display: grid;">
+            <textarea
+                class="textarea-auto-resize"
+                style="grid-area: 1 / 1 / 2/ 2;"
+                rows="1"
+                data-name="inventory-{{item._id}}-description" data-dtype="String"
+                disabled>{{cleanLines item.system.description}}</textarea>
+            <div
+            class="textarea-auto-resize-sibling"
+            aria-hidden="true"
+            style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+            >{{cleanLines item.system.description}}</div>
+        </div>
     {{/if}}
 
     {{#if (eq item.type "spell")}}
@@ -171,8 +229,19 @@ data-drag="Item" data-item-id="{{item._id}}">
                 {{>"atoria.v2.commons_partials.time-limitation-display" limitation=supplementary.limitation
                 systemFields=../systemFields.supplementaries_list.element.fields.limitation.fields }}
             </div>
-            <textarea class="atoria-resize-ta" data-name="inventory-{{../item._id}}-supplementaries_list.{{key}}" data-dtype="String" disabled
-            >{{cleanLines supplementary.description}}</textarea>
+            <div style="display: grid;">
+                <textarea
+                    class="textarea-auto-resize"
+                    style="grid-area: 1 / 1 / 2/ 2;"
+                    rows="1"
+                    data-name="inventory-{{../item._id}}-supplementaries_list.{{key}}" data-dtype="String"
+                    disabled>{{cleanLines supplementary.description}}</textarea>
+                <div
+                class="textarea-auto-resize-sibling"
+                aria-hidden="true"
+                style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+                >{{cleanLines supplementary.description}}</div>
+            </div>
         </div>
     {{/each}}
     {{/if}}

@@ -1,4 +1,4 @@
 <section class='atoria tooltip'>
     <h5>{{item.name}}{{>"atoria.v2.tooltips_partials.time-limitation-tooltip" limitation=item.system.limitation}}</h5>
-    <p>Description: {{item.system.description}}</p>
+    <p>Description: {{cleanLines item.system.description}}</p>
 </section>

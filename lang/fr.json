@@ -25,6 +25,8 @@
         "Type": "Type d'altération",
         "One_degree_of_success_gain": "DR +1",
         "One_degree_of_success_loss": "DR -1",
+        "Two_degree_of_success_gain": "DR +2",
+        "Two_degree_of_success_loss": "DR -2",
         "Advantage": "Avantage",
         "Disadvantage": "Désavantage",
         "Hand_handled": "Non automatisé"
@@ -204,10 +206,10 @@
       "Limitation": "Limitations",
       "Feature": {
         "Title": "Aptitudes et Permanents",
-        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ai la propriété de cet objet"
+        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ait la propriété de cet objet"
       },
       "Weapon": {
-        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ai la propriété de cet objet"
+        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ait la propriété de cet objet"
       },
       "Actable": {
         "Cost_list": {
@@ -216,7 +218,7 @@
         "Saves_asked": {
           "Delete": "Suppression coût"
         },
-        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ai la propriété de cet objet"
+        "Require_actor": "La configuration de cette partie nécessite qu'un acteur ait la propriété de cet objet"
       },
       "Actable_modifier": {
         "Title": "Modificateurs d'action"
@@ -286,7 +288,7 @@
           "Actable_modifier": {
             "Title": "Modificateurs d'action",
             "Technique": "Techniques",
-            "Incantatory_addition": "Ajouts incantatoires"
+            "Incantatory_addition": "Ajouts"
           }
         }
       }
@@ -349,7 +351,7 @@
         "Title": "Jet pour {element_name}",
         "Available_supplementaries": "Supplémentaires",
         "Spell_supplementary": "Sort supp. {idx}",
-        "Available_actable_modifiers": "Technique(s) & Ajout(s) incantatoire(s)"
+        "Available_actable_modifiers": "Technique(s) & Ajout(s)"
       },
       "Skill_roll": {
         "Title": "Jet pour {actor_name}",
@@ -962,7 +964,7 @@
               "Label": "Malédiction"
             },
             "Ethereal": {
-              "Label": "Éthéré"
+              "Label": "Éthérée"
             },
             "Necromancy": {
               "Label": "Nécromancie"
@@ -1174,7 +1176,7 @@
       },
       "Actable_modifier": {
         "Technique": "Technique",
-        "Incantatory_addition": "Ajout incantatoire",
+        "Incantatory_addition": "Ajout",
         "Charge_compatible": "Compatible charge"
       },
       "Action": {
@@ -1400,7 +1402,7 @@
       "opportunity": "Opportunité",
       "spell": "Sort",
       "technique": "Technique",
-      "incantatory-addition": "Ajout incantatoire",
+      "incantatory-addition": "Ajout",
       "effect": "Effet"
     },
     "Effect": "Effet"

@@ -3,7 +3,18 @@
     {{ formInput fields.name value=document.name disabled=(not @root.editable)}}
     <div class="atoria-description flexcol">
         <label for="description">{{localize systemFields.description.label}}:</label>
-        <textarea class="atoria-resize-ta" data-name="description" data-dtype="String" name="system.description" rows="2" {{disabled (not @root.editable)}}
-        >{{cleanLines document.system.description}}</textarea>
+        <div style="display: grid;">
+            <textarea
+                class="textarea-auto-resize"
+                style="grid-area: 1 / 1 / 2/ 2;"
+                rows="1"
+                data-name="description" data-dtype="String" name="system.description"
+                {{disabled (not editable)}}>{{cleanLines document.system.description}}</textarea>
+            <div
+            class="textarea-auto-resize-sibling"
+            aria-hidden="true"
+            style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+            >{{cleanLines document.system.description}}</div>
+        </div>
     </div>
 </div>

@@ -49,6 +49,12 @@ export function applySkillAlterationsToRollConfig(
       case "one_degree_of_success_loss":
         roll_config["dos_mod"] -= 1;
         break;
+      case "two_degree_of_success_gain":
+        roll_config["dos_mod"] += 2;
+        break;
+      case "two_degree_of_success_loss":
+        roll_config["dos_mod"] -= 2;
+        break;
       case "advantage":
         roll_config["advantage_amount"] += 1;
         break;
@@ -75,6 +81,12 @@ export function applyKeywordsToRollConfig(roll_config, keywords_data) {
         break;
       case "one_degree_of_success_loss":
         roll_config["dos_mod"] -= 1;
+        break;
+      case "two_degree_of_success_gain":
+        roll_config["dos_mod"] += 2;
+        break;
+      case "two_degree_of_success_loss":
+        roll_config["dos_mod"] -= 2;
         break;
       case "advantage":
         roll_config["advantage_amount"] += 1;
@@ -106,12 +118,14 @@ function getSkillData(item, skill_path) {
   const skill_data = foundry.utils.deepClone(
     item.actor?.getSkillFromPath(skill_path),
   );
+  if (skill_data === undefined) {
+    return undefined;
+  }
   skill_data.critical_success_amount =
     utils.ruleset.character.getSkillCriticalSuccessAmount(skill_data);
   skill_data.critical_fumble_amount =
     utils.ruleset.character.getSkillCriticalFumbleAmount(skill_data);
   skill_data.label = item.actor.getSkillTitle(skill_path);
-  console.debug(skill_data);
   return skill_data;
 }
 
@@ -183,6 +197,9 @@ export async function itemRollDialog(item, need_roll = true) {
     };
   } else if (item.system.associated_skill !== "") {
     let associated_skill = item.system.associated_skill;
+    if (getSkillData(item, item.system.associated_skill) === undefined) {
+      return null;
+    }
     main_skill_data = {
       path: associated_skill,
       label: item.actor.getSkillTitle(associated_skill),
@@ -232,9 +249,11 @@ export async function itemRollDialog(item, need_roll = true) {
     }
   }
 
-  const associated_actable_modifiers = item.system.usable_actable_modifiers.map(
-    (id) => item.actor.items.get(id),
-  );
+  const associated_actable_modifiers =
+    item.system.usable_actable_modifiers.flatMap((id) => {
+      let usable_actable = item.actor.items.get(id);
+      return usable_actable !== undefined ? usable_actable : [];
+    });
   const is_blind_roll =
     (main_skill_data.path ?? "") === ""
       ? false
@@ -476,11 +495,6 @@ export function getSkillTitle(skill_path, skill_label = undefined) {
   }
 
   let skill_name = game.i18n.localize(skill_label);
-  if (skill_name === skill_label) {
-    skill_name = skill_path_parts[skill_path_parts.length - 1];
-    skill_name =
-      skill_name.charAt(0).toUpperCase() + skill_name.slice(1).toLowerCase();
-  }
 
   skill_path_parts.pop();
   if (skill_path_parts.length <= 1) {

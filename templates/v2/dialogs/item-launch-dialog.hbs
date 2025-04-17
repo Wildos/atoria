@@ -46,7 +46,7 @@
                     }}
                     <label>{{localize supplementary.systemFields.usage_max.label}}: {{supplementary.usage_max}}</label>
                 </div>
-                <p style="white-space: pre-line;">{{{supplementary.description}}}</p>
+                <p style="white-space: pre-line; max-width: 100%;">{{{supplementary.description}}}</p>
             </li>
         {{/each}}
     </ul>
@@ -75,7 +75,7 @@
                 cost=actable_mod.system.cost
                 systemFields=actable_mod.systemFields.cost.fields
             }}
-            <p style="white-space: pre-line;">{{{actable_mod.system.description}}}</p>
+            <p style="white-space: pre-line; max-width: 100%;">{{{actable_mod.system.description}}}</p>
         </li>
     {{/each}}
 </ul>
@@ -97,7 +97,7 @@
                 {{/unless}}
             </li>
             <li class="atoria-expand-direct-data">
-            {{feature.system.description}}
+            <p style="white-space: pre-line; max-width: 100%;">{{{feature.system.description}}}</p>
             </li>
         {{/each}}
         {{#if secondary_skill_data}}
@@ -116,7 +116,7 @@
                 {{/unless}}
             </li>
             <li class="atoria-expand-direct-data">
-            {{feature.system.description}}
+            <p style="white-space: pre-line; max-width: 100%;">{{{feature.system.description}}}</p>
             </li>
         {{/each}}
         {{/if}}

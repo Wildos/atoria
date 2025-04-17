@@ -25,6 +25,8 @@
         "Type": "Alteration type",
         "One_degree_of_success_gain": "+1 DoS",
         "One_degree_of_success_loss": "-1 DoS",
+        "Two_degree_of_success_gain": "+2 DoS",
+        "Two_degree_of_success_loss": "-2 DoS",
         "Advantage": "Advantage",
         "Disadvantage": "Disadvantage",
         "Hand_handled": "Hand-handled"

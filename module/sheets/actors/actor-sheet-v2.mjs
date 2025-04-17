@@ -163,8 +163,8 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       case "body":
         context.items = await Promise.all(
           this.actor.items.map(async (i) => {
-            // i.descriptive_tooltip = await i.getTooltipHTML();
             i.systemFields = i.system.schema.fields;
+            i.keywords_list = i.getKeywordList();
             return i;
           }),
         );
@@ -323,20 +323,9 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
 
     const html = $(this.element);
 
-    html.find(".atoria-resize-ta").each(function (_idx, textarea) {
-      const calculate_new_height = (scroll_height) => {
-        return Math.max(22, Math.ceil((textarea.scrollHeight - 3) / 22) * 22);
-      };
-
-      textarea.style.height = "auto";
-      textarea.style.height =
-        calculate_new_height(textarea.scrollHeight) + "px";
-      textarea.style.overflowY = "hidden";
-
-      textarea.addEventListener("input", function () {
-        this.style.height = "auto";
-        this.style.height = calculate_new_height(this.scrollHeight) + "px";
-      });
+    // Ensure height is adjusted on edit.
+    html.find("textarea.textarea-auto-resize").on("input", function () {
+      this.nextElementSibling.textContent = this.value;
     });
 
     for (const id in this.expanded_section) {
@@ -449,7 +438,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       case "Item":
         return this._onDropItem(event, data);
       case "ActiveEffect":
-        return this._onDropEffect(event, data);
+        return this._onDropActiveEffect(event, data);
     }
   }
 
@@ -463,14 +452,14 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     return this._onDropItemCreate(item, event);
   }
 
-  async _onDropEffect(event, data) {
-    if (!this.actor.isOwner) return false;
-    const effect = await ActiveEffect.implementation.fromDropData(data);
+  async _onDropActiveEffect(event, data) {
+    const aeCls = getDocumentClass("ActiveEffect");
+    const effect = await aeCls.fromDropData(data);
+    if (!this.actor.isOwner || !effect) return false;
 
     if (this.actor.uuid === effect.parent?.uuid)
-      return this._onSortEffect(event, effect);
-
-    // return this._onDropItemCreate(item, event);
+      return this._onEffectSort(event, effect);
+    return aeCls.create(effect, { parent: this.actor });
   }
 
   async _onDropItemCreate(itemData, event) {

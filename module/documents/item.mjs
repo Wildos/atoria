@@ -29,6 +29,15 @@ export default class AtoriaItem extends Item {
         );
       }
     }
+    if (this.system.usable_actable_modifiers !== undefined) {
+      let invalid_ids = this.system.usable_actable_modifiers.flatMap((id) => {
+        let usable_actable = this.actor.items.get(id);
+        return usable_actable !== undefined ? [] : id;
+      });
+      for (const id of invalid_ids) {
+        this.disableActableModifier(id);
+      }
+    }
   }
 
   getRollData() {
@@ -459,9 +468,9 @@ export default class AtoriaItem extends Item {
               items_id: used_actable_modifiers.map((elem) => elem.uuid),
             },
           ],
-          savesAsked: saves_asked,
           critical_effect: critical_effect,
           effect: roll_effect,
+          savesAsked: saves_asked,
         },
       },
       { rollMode: roll_mode },
@@ -528,6 +537,18 @@ export default class AtoriaItem extends Item {
   }
 
   getKeywordList() {
+    if (
+      ![
+        "feature",
+        "action",
+        "opportunity",
+        "spell",
+        "technique",
+        "incantatory-addition",
+      ].includes(this.type)
+    ) {
+      return [];
+    }
     let keywords_list = [];
 
     const active_keywords = Array.from(
