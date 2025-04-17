@@ -1050,14 +1050,19 @@
         "Long_moon": "Lune longue"
       },
       "Time_unit": {
+        "Hours_shrt": "H",
         "Hours_pl": "Heures",
         "Hours": "Heure",
+        "Minutes_shrt": "Min",
         "Minutes_pl": "Minutes",
         "Minutes": "Minute",
+        "Rounds_shrt": "R",
         "Rounds_pl": "Rounds",
         "Rounds": "Round",
+        "Turns_shrt": "T",
         "Turns_pl": "Tours",
         "Turns": "Tour",
+        "Seconds_shrt": "S",
         "Seconds_pl": "Secondes",
         "Seconds": "Seconde"
       },
