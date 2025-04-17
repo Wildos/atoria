@@ -985,6 +985,10 @@
 .system-atoria .atoria-item-line-display > .atoria-target {
   flex: auto;
 }
+.system-atoria .atoria-item-line-display.weapon .atoria-cost {
+  min-width: 0px;
+  max-width: none;
+}
 .system-atoria .atoria-item-line-display + .atoria-expand-direct-data {
   margin: 0;
   border: var(--atoria-border-style);
