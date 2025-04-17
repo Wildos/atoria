@@ -387,7 +387,7 @@
   padding: 4px;
   margin: 0;
   min-height: calc(1lh);
-  max-height: fit-content;
+  max-height: 100%;
   box-sizing: border-box;
   border: 1px solid #7a7971;
 }
@@ -1568,4 +1568,9 @@
 .system-atoria .cost-tooltip > label {
   max-width: fit-content;
   padding: 0 5px;
+}
+.system-atoria .atoria.tooltip p {
+  max-width: fit-content;
+  padding: 0 5px;
+  text-align: left;
 }
