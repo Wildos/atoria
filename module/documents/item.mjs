@@ -538,7 +538,7 @@ export default class AtoriaItem extends Item {
 
   getKeywordList() {
     if (
-      ![
+      [
         "feature",
         "action",
         "opportunity",

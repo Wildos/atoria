@@ -43,7 +43,7 @@ data-drag="Item" data-item-id="{{item._id}}">
     {{#if (ne item.type "weapon")}}
         <label class="atoria-target">
         {{#if item.system.target}}
-            <img class="atoria-icon" src="systems/atoria/imgs/target-dummy.svg" data-tooltop="{{localize item.systemFields.target.label}}">
+            <img class="atoria-icon" src="systems/atoria/imgs/target-dummy.svg" data-tooltip="{{localize item.systemFields.target.label}}">
             {{item.system.target}}
         {{/if}}
         </label>
@@ -56,7 +56,7 @@ data-drag="Item" data-item-id="{{item._id}}">
         </label>
         <label class="atoria-area">
         {{#if item.system.area}}
-            <img class="atoria-icon" src="systems/atoria/imgs/select.svg" data-tooltop="{{localize item.systemFields.area.label}}">
+            <img class="atoria-icon" src="systems/atoria/imgs/select.svg" data-tooltip="{{localize item.systemFields.area.label}}">
             {{item.system.area}}
         {{/if}}
         </label>

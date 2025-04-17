@@ -48,24 +48,25 @@
 </li>
 <li class="atoria-expand-direct-data flexcol">
     <label>{{localize item.systemFields.encumbrance.label}}: {{item.system.encumbrance}}</label>
+    {{log item}}
     {{#if item.keywords_list}}
     <label>{{localize item.systemFields.keywords.label}}: {{item.keywords_list}}</label>
     {{/if}}
     {{#if (eq item.type "weapon")}}
 
-    {{#if item.system.range}}
-        <label><b>{{localize item.systemFields.range.label}}:</b> {{item.system.range}}</label>
-    {{/if}}
+        {{#if item.system.range}}
+            <label><b>{{localize item.systemFields.range.label}}:</b> {{item.system.range}}</label>
+        {{/if}}
 
-    {{#if item.system.associated_skill}}
-        {{>"atoria.v2.commons_partials.rollfield-display" rollfield=item.system.damage_roll systemFields=item.systemFields.damage_roll.fields
-            data_path="system.focuser_damage_roll" hide_name=false}}
-    {{/if}}
+        {{#if item.system.associated_skill}}
+            {{>"atoria.v2.commons_partials.rollfield-display" rollfield=item.system.damage_roll systemFields=item.systemFields.damage_roll.fields
+                data_path="system.focuser_damage_roll" hide_name=false}}
+        {{/if}}
 
-    {{#if item.system.is_focuser}}
-        {{>"atoria.v2.commons_partials.rollfield-display" rollfield=item.system.focuser_damage_roll systemFields=item.systemFields.focuser_damage_roll.fields
-            data_path="system.focuser_damage_roll" hide_name=false}}
-    {{/if}}
+        {{#if item.system.is_focuser}}
+            {{>"atoria.v2.commons_partials.rollfield-display" rollfield=item.system.focuser_damage_roll systemFields=item.systemFields.focuser_damage_roll.fields
+                data_path="system.focuser_damage_roll" hide_name=false}}
+        {{/if}}
 
     {{/if}}
     <div style="display: grid;">
