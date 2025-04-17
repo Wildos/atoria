@@ -1215,9 +1215,8 @@
 }
 .system-atoria .sheet.hero > .window-content > .body > .top-block {
   display: grid;
-  grid-template-areas: "hdr skl ha" "hdr knw ha";
+  grid-template-areas: "hdr skl knw ha";
   grid-template-columns: var(--atoria-document-img-size) min-content;
-  grid-template-rows: calc(5 * var(--atoria-skill-height));
   flex: 0;
 }
 .system-atoria .sheet.hero > .window-content > .body > .top-block > .header-area {
