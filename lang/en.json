@@ -1046,14 +1046,19 @@
         "Long_moon": "LongMoon"
       },
       "Time_unit": {
+        "Hours_shrt": "H.",
         "Hours_pl": "Hours",
         "Hours": "Hour",
+        "Minutes_shrt": "Min",
         "Minutes_pl": "Minutes",
         "Minutes": "Minute",
+        "Rounds_shrt": "R.",
         "Rounds_pl": "Rounds",
         "Rounds": "Round",
+        "Turns_shrt": "T.",
         "Turns_pl": "Turns",
         "Turns": "Turn",
+        "Seconds_shrt": "S.",
         "Seconds_pl": "Seconds",
         "Seconds": "Second"
       },

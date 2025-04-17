@@ -50,3 +50,8 @@ telefrag.svg: https://game-icons.net/1x1/sbed/telefrag.html, by sbed under CC BY
 stiletto.svg: https://game-icons.net/1x1/lorc/stiletto.html, by Lorc under CC BY 3.0
 kevlar.svg: https://game-icons.net/1x1/sbed/kevlar.html, by sbed under CC BY 3.0
 knapsack.svg: https://game-icons.net/1x1/lorc/knapsack.html, by Lorc under CC BY 3.0
+
+
+target-dummy.svg: https://game-icons.net/1x1/lorc/target-dummy.html, by Lorc under CC BY 3.0
+high-shot.svg: https://game-icons.net/1x1/lorc/high-shot.html, by Lorc under CC BY 3.0
+select.svg: https://game-icons.net/1x1/sbed/select.html, by sbed under CC BY 3.0

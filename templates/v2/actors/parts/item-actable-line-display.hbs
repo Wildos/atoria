@@ -43,25 +43,30 @@ data-drag="Item" data-item-id="{{item._id}}">
     {{#if (ne item.type "weapon")}}
         <label class="atoria-target">
         {{#if item.system.target}}
-        <b>{{localize item.systemFields.target.label}}:</b> {{item.system.target}}
+            <img class="atoria-icon" src="systems/atoria/imgs/target-dummy.svg" data-tooltop="{{localize item.systemFields.target.label}}">
+            {{item.system.target}}
         {{/if}}
         </label>
 
         <label class="atoria-range">
         {{#if item.system.range}}
-            <b>{{localize item.systemFields.range.label}}:</b> {{item.system.range}}
+            <img class="atoria-icon" src="systems/atoria/imgs/high-shot.svg" data-tooltip="{{localize item.systemFields.range.label}}">
+            {{item.system.range}}
         {{/if}}
         </label>
         <label class="atoria-area">
         {{#if item.system.area}}
-            <b>{{localize item.systemFields.area.label}}:</b> {{item.system.area}}
+            <img class="atoria-icon" src="systems/atoria/imgs/select.svg" data-tooltop="{{localize item.systemFields.area.label}}">
+            {{item.system.area}}
         {{/if}}
         </label>
     {{/if}}
 
     {{#unless (eq item.type "spell")}}
+    <div class="atoria-limitation">
         {{>"atoria.v2.commons_partials.time-limitation-display" limitation=item.system.limitation
         systemFields=item.systemFields.limitation.fields }}
+    </div>
     {{/unless}}
 
     {{#if @root.editable}}

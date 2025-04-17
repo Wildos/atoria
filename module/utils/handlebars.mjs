@@ -210,6 +210,11 @@ function _brNewLines(text) {
   return new Handlebars.SafeString(htmlResult);
 }
 
+function _shorten(localize_string) {
+  const result_string = localize_string + "_shrt";
+  return result_string;
+}
+
 export const registerHandlebarsHelpers = async function () {
   Handlebars.registerHelper({
     cleanLines: _cleanLines,
@@ -228,5 +233,6 @@ export const registerHandlebarsHelpers = async function () {
     split: _split,
     localizeDamage: _localizeDamage,
     brNewLines: _brNewLines,
+    shorten: _shorten,
   });
 };
