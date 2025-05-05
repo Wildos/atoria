@@ -673,6 +673,9 @@
             },
             "Clothing": {
               "Label": "Clothing"
+            },
+            "Object": {
+              "Label": "Object"
             }
           },
           "Alchemy": {
@@ -1391,6 +1394,10 @@
         }
       }
     }
+  },
+  "MIGRATION": {
+    "AtoriaBegin": "Migrating the world to the version {version} has started.",
+    "AtoriaComplete": "Migrating the world to the version {version} has finished."
   },
   "TYPES": {
     "Actor": {

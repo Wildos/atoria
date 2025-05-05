@@ -139,6 +139,15 @@ Hooks.once("init", function () {
 
   CONFIG.statusEffects = RULESET.status_effects;
 
+  // Internal System Last Migration Version
+  game.settings.register("atoria", "worldLastMigrationVersion", {
+    name: "System Last Migration Version",
+    scope: "world",
+    config: false,
+    type: String,
+    default: "",
+  });
+
   game.settings.register("atoria", "display_player_sheet_horizontally", {
     name: game.i18n.localize("ATORIA.Settings.DisplayPlayerSheetHorizontally"),
     hint: game.i18n.localize(
@@ -157,6 +166,10 @@ Hooks.once("init", function () {
 
 Hooks.once("ready", function () {
   utils.ruleset.localized_effects(CONFIG.statusEffects);
+
+  // Migration check is only for GM
+  if (!game.user.isGM) return;
+  utils.migration.migrateWorld();
 });
 
 // Activate chat listeners
