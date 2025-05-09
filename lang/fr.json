@@ -337,8 +337,8 @@
       "Roll": {
         "Advantage_amount": "Avantage",
         "Disadvantage_amount": "Désavantage",
-        "Luck_applied": "Chance appliqué",
-        "DoS_mod": "DR bonus",
+        "Luck_applied": "Chance",
+        "DoS_mod": "DR",
         "Roll_visibility": {
           "Label": "Visibilité du jet",
           "Self": "Personnel",
@@ -677,6 +677,9 @@
             },
             "Clothing": {
               "Label": "Vêtement"
+            },
+            "Object": {
+              "Label": "Objet"
             }
           },
           "Alchemy": {
@@ -1390,6 +1393,10 @@
         }
       }
     }
+  },
+  "MIGRATION": {
+    "AtoriaBegin": "Migration du monde vers la version {version} commencé.",
+    "AtoriaComplete": "Migration du monde vers la version {version} terminé."
   },
   "TYPES": {
     "Actor": {

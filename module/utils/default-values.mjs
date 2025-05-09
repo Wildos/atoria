@@ -80,7 +80,7 @@ DEFAULT_VALUES["character"] = {
       "cabinet-making": ["gear", "woodworking"],
       forge: ["weaponry", "armoury", "goldsmithery"],
       engineering: ["mechanism", "siege", "glassware"],
-      leatherworking: ["tanning", "clothing"],
+      leatherworking: ["tanning", "clothing", "object"],
     },
     artistic: {
       song: ["entertaining", "battle"],

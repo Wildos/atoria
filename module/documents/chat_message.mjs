@@ -2,42 +2,6 @@ import * as utils from "../utils/module.mjs";
 import AtoriaDOSRoll from "../rolls/atoria_dos_roll.mjs";
 
 export default class AtoriaChatMessage extends ChatMessage {
-  async _enricheInlineRolls(rollData, content, options = {}) {
-    const rgx = /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi;
-    const html = document.createElement("div");
-    html.innerHTML = String(content || "");
-    const text = TextEditor._getTextNodes(html);
-    const results = await this._extractInlineRoll(text, rgx, (match) =>
-      this._createInlineRoll(match, rollData, options),
-    );
-    $(html).empty();
-    for (let res of results) {
-      $(html).append(res);
-      $(html).append("<br />");
-    }
-    return html.innerHTML;
-  }
-
-  async _extractInlineRoll(text, rgx, func, options = {}) {
-    let result_array = [];
-    for (const t of text) {
-      const matches = t.textContent.matchAll(rgx);
-      for (const match of Array.from(matches).reverse()) {
-        let result;
-        try {
-          result = await func(match);
-        } catch (err) {
-          Hooks.onError("TextEditor.enrichHTML", err, { log: "error" });
-        }
-        if (result) {
-          TextEditor._replaceTextNode(t, match, result, options);
-          result_array.push(result);
-        }
-      }
-    }
-    return result_array.reverse();
-  }
-
   async _createInlineRoll(match, rollData, options = {}) {
     let [command, formula, closing, label] = match.slice(1, 5);
     const rollCls = Roll.defaultImplementation;
@@ -55,7 +19,7 @@ export default class AtoriaChatMessage extends ChatMessage {
           label,
         };
         const roll = await rollCls
-          .create(formula, rollData)
+          .create(formula, rollData, options)
           .evaluate({ allowInteractive: false, ...options });
         return roll.toAnchor(anchorOptions);
       } catch {
@@ -118,15 +82,16 @@ export default class AtoriaChatMessage extends ChatMessage {
         /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi,
       );
       let effect = "";
-      for (const [expression] of matches) {
-        effect +=
-          (await TextEditor.enrichHTML(expression, {
-            documents: false,
-            secrets: false,
-            links: false,
-            rolls: true,
-            rollData: this.getRollData(),
-          })) + "</br>";
+      for (const match of Array.from(matches)) {
+        const inline_roll = await this._createInlineRoll(
+          match,
+          this.getRollData(),
+          {
+            maximize: this.is_critical_success,
+          },
+        );
+        effect += inline_roll?.outerHTML || "<span>An error occured</span>";
+        effect += "</br>";
       }
       this.updateSource({ "system.effect": effect });
     }
@@ -139,15 +104,17 @@ export default class AtoriaChatMessage extends ChatMessage {
         /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi,
       );
       let postContent = "";
-      for (const [expression] of matches) {
+      for (const match of Array.from(matches)) {
+        const inline_roll = await this._createInlineRoll(
+          match,
+          this.getRollData(),
+          {
+            maximize: this.is_critical_success,
+          },
+        );
         postContent +=
-          (await TextEditor.enrichHTML(expression, {
-            documents: false,
-            secrets: false,
-            links: false,
-            rolls: true,
-            rollData: this.getRollData(),
-          })) + "</br>";
+          inline_roll?.outerHTML || "<span>An error occured</span>";
+        postContent += "</br>";
       }
       this.updateSource({ "system.postContent": postContent });
     }

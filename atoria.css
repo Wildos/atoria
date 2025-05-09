@@ -1234,7 +1234,7 @@
   border: none;
 }
 .system-atoria .editing-mode.sheet.hero > .window-content > .body > .top-block {
-  grid-template-rows: calc(9 * var(--atoria-skill-height));
+  /* grid-template-rows: calc(9 * var(--atoria-skill-height)); */
 }
 .system-atoria .sheet.hero {
   --atoria-document-img-size: calc(7 * var(--atoria-skill-height));
@@ -1370,6 +1370,27 @@
                     }
                 } */
 }
+.system-atoria .sheet.hero > .window-content > .body > .item-area .atoria-item-line-display {
+  flex-wrap: wrap;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area .atoria-item-line-display .atoria-markers {
+  min-width: 0px;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area .atoria-item-line-display .atoria-cost {
+  min-width: 0px;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area .atoria-item-line-display .atoria-target {
+  min-width: 0px;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area .atoria-item-line-display .atoria-range {
+  min-width: 0px;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area .atoria-item-line-display .atoria-area {
+  min-width: 0px;
+}
+.system-atoria .sheet.hero > .window-content > .body > .item-area .atoria-item-line-display .atoria-limitation {
+  min-width: 0px;
+}
 .system-atoria .sheet.non-player-character .window-content {
   display: grid;
   grid-template-areas: "char-hdr char-hdr " "char-smpl-skl-knw char-smpl-inv ";
@@ -1428,6 +1449,27 @@
 }
 .system-atoria .sheet.non-player-character .window-content .atoria-inventory-bar > h5 {
   border: none;
+}
+.system-atoria .sheet.non-player-character .window-content .atoria-item-line-display {
+  flex-wrap: wrap;
+}
+.system-atoria .sheet.non-player-character .window-content .atoria-item-line-display .atoria-markers {
+  min-width: 0px;
+}
+.system-atoria .sheet.non-player-character .window-content .atoria-item-line-display .atoria-cost {
+  min-width: 0px;
+}
+.system-atoria .sheet.non-player-character .window-content .atoria-item-line-display .atoria-target {
+  min-width: 0px;
+}
+.system-atoria .sheet.non-player-character .window-content .atoria-item-line-display .atoria-range {
+  min-width: 0px;
+}
+.system-atoria .sheet.non-player-character .window-content .atoria-item-line-display .atoria-area {
+  min-width: 0px;
+}
+.system-atoria .sheet.non-player-character .window-content .atoria-item-line-display .atoria-limitation {
+  min-width: 0px;
 }
 .system-atoria .sheet.non-player-character.editing-mode .window-content {
   grid-template-columns: var(--atoria-skill-width) max-content;
