@@ -50,7 +50,8 @@
             {{/each}}
         </div>
         {{/if}}
-        {{#if message.system.savesAsked}}
+    {{/if}}
+    {{#if message.system.savesAsked}}
         <fieldset class="message-saves-asked-area">
             <legend>{{localize "ATORIA.Chat_message.Actable.Saves_asked"}}</legend>
             <ul class="saves_asked">
@@ -59,6 +60,5 @@
                 {{/each}}
             </ul>
         </fieldset>
-        {{/if}}
     {{/if}}
 </li>
