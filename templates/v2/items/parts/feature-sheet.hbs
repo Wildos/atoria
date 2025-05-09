@@ -5,7 +5,7 @@
     </div>
     {{ formInput systemFields.color value=item.system.color disabled=(not @root.editable)}}
 
-    {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation systemFields=systemFields.limitation.fields 
+    {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation systemFields=systemFields.limitation.fields
     data_path="system.limitation" cssClasses="double-col-field"}}
 
     {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=item.system.skill_alteration

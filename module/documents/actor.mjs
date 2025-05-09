@@ -145,16 +145,10 @@ export default class AtoriaActor extends Actor {
           this.system.skills.combative.label;
       }
       if (Object.keys(skill_types).includes("knowledges")) {
-        skill_list["system.knowledges.craftmanship"] =
-          this.system.knowledges.craftmanship.label;
-        skill_list["system.knowledges.artistic"] =
-          this.system.knowledges.artistic.label;
-        skill_list["system.knowledges.erudition"] =
-          this.system.knowledges.erudition.label;
-        skill_list["system.knowledges.utilitarian"] =
-          this.system.knowledges.utilitarian.label;
-        skill_list["system.knowledges.magic"] =
-          this.system.knowledges.magic.label;
+        for (let knowledge_group_key in this.system.knowledges) {
+          skill_list[`system.knowledges.${knowledge_group_key}`] =
+            this.system.knowledges[knowledge_group_key].label;
+        }
       }
       return skill_list;
     }
@@ -192,9 +186,13 @@ export default class AtoriaActor extends Actor {
 
   getPerceptionSkillList() {
     const perception_list = {};
-    for (let perception in this.system.perceptions) {
-      const skill_path = `system.perceptions.${perception}`;
-      perception_list[skill_path] = this.system.perceptions[perception].label;
+    if (this.type === "hero") {
+      perception_list["perception"] = this.system.perceptions.label;
+    } else {
+      for (let perception in this.system.perceptions) {
+        const skill_path = `system.perceptions.${perception}`;
+        perception_list[skill_path] = this.system.perceptions[perception].label;
+      }
     }
     return perception_list;
   }
