@@ -177,6 +177,7 @@ RULESET["character"] = class ActorRuleset {
       "noisy",
       "noisy_more",
       "guard",
+      "guard_more",
       "protection",
       "protection_more",
     ];
@@ -259,6 +260,21 @@ RULESET["character"] = class ActorRuleset {
           }
           break;
         case "guard":
+          // handled by the skill roll, +1 DoS Parry, against cac attack
+          if (SKILL_PARRY.startsWith(skill_path)) {
+            skill_associated_keywords_data.push({
+              name: "guard",
+              label: game.i18n.localize("ATORIA.Ruleset.Keywords.Guard"),
+              description: game.i18n.localize(
+                "ATORIA.Ruleset.Keywords_description.Guard",
+              ),
+              skill_alteration_type: "one_degree_of_success_gain",
+              skill_alteration_type_label:
+                RULESET.skill_alterations.one_degree_of_success_gain,
+            });
+          }
+          break;
+        case "guard_more":
           // handled by the skill roll, +1 DoS Parry, against cac attack
           if (SKILL_PARRY.startsWith(skill_path)) {
             skill_associated_keywords_data.push({
