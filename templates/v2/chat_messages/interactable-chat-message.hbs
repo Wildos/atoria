@@ -51,14 +51,16 @@
         </div>
         {{/if}}
     {{/if}}
-    {{#if (and @root.isContentVisible message.system.savesAsked)}}
-        <fieldset class="message-saves-asked-area">
-            <legend>{{localize "ATORIA.Chat_message.Actable.Saves_asked"}}</legend>
-            <ul class="saves_asked">
-                {{#each message.system.savesAsked as |save_data key|}}
-                    <li data-action="rollable" data-skill-path="{{save_data.skill_path}}" >{{save_data.label}}</li>
-                {{/each}}
-            </ul>
-        </fieldset>
+    {{#if @root.isContentVisible}}
+        {{#if message.system.savesAsked}}
+            <fieldset class="message-saves-asked-area">
+                <legend>{{localize "ATORIA.Chat_message.Actable.Saves_asked"}}</legend>
+                <ul class="saves_asked">
+                    {{#each message.system.savesAsked as |save_data key|}}
+                        <li data-action="rollable" data-skill-path="{{save_data.skill_path}}" >{{save_data.label}}</li>
+                    {{/each}}
+                </ul>
+            </fieldset>
+        {{/if}}
     {{/if}}
 </li>
