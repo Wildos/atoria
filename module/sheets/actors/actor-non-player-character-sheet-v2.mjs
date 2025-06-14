@@ -80,7 +80,7 @@ export default class AtoriaActorNonPlayerCharacterSheetV2 extends AtoriaActorShe
         break;
       case "skill_n_knowledge":
         context.skill_n_knowledge_sorting_list = {
-          "system.skills": ["combative", "social", "physical"],
+          "system.skills": ["combative", "physical", "social"],
 
           "system.skills.combative": ["reflex", "weapon"],
           "system.skills.social": [

@@ -111,11 +111,11 @@ DEFAULT_VALUES["character"] = {
     },
     magic: {
       air: ["dazzling", "breeze", "lightning"],
+      mental: ["kinetic", "illusion", "power", "enchanted"],
       druidic: ["astral", "solicitude", "changeforme", "mutation"],
       water: ["ablution", "source", "ice"],
       fire: ["torch", "ignition", "destruction"],
       occult: ["toxic", "curse", "ethereal", "necromancy"],
-      mental: ["kinetic", "illusion", "power", "enchanted"],
       holy: ["blessing", "piety", "glory", "purification"],
       blood: ["sacrifice", "puncture", "drain"],
       earth: ["bastion", "telluric", "metallic"],
