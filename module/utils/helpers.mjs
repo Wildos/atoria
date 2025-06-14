@@ -330,9 +330,10 @@ export async function itemRollDialog(item, need_roll = true) {
 
           if (item.type === "weapon") {
             formDataObject["chosen_skill_data"].damage_roll =
-              formDataObject["associated_skill"] === "main_skill_data"
-                ? item.system.damage_roll
-                : item.system.focuser_damage_roll;
+              picked_skill_data.path ===
+              "system.skills.combative.weapon.focuser"
+                ? item.system.focuser_damage_roll
+                : item.system.damage_roll;
           }
 
           formDataObject["used_supplementaries"] = [];
