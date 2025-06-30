@@ -179,12 +179,15 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         );
         context.associated_saves_skills =
           this.actor?.getOpposedSkillList() ??
-          utils.default_values.associated_skills;
+          utils.default_values.get_opposed_skills();
         context.available_actable_modifiers =
           utils.ruleset.item.getActableModifiersApplicable(this.item);
         context.associated_skills =
           this.actor?.getAssociatedSkillList() ??
-          foundry.utils.deepClone(utils.default_values.associated_skills);
+          foundry.utils.deepClone(utils.default_values.get_associated_skills());
+        if (this.actor === null) {
+          break;
+        }
         for (const matching_skills of Object.keys(context.associated_skills)) {
           for (const hidden_skill of this.actor?.getFlag(
             "atoria",
@@ -204,20 +207,25 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         break;
       case "weapon":
         context.associated_saves_skills =
-          this.actor?.getSkillnKnowledgeList() ??
-          utils.default_values.associated_skills;
+          this.actor?.getOpposedSkillList() ??
+          utils.default_values.get_opposed_skills();
         context.available_actable_modifiers =
           utils.ruleset.item.getActableModifiersApplicable(this.item);
         context.associated_skills =
           this.actor?.getWeaponSkillList() ??
-          utils.default_values.associated_skills;
+          foundry.utils.deepClone(
+            utils.default_values.get_weapon_associated_skills(),
+          );
         break;
       case "action_opportunity_pre":
       case "action_opportunity_post":
       case "feature":
         context.associated_skills =
           this.actor?.getAssociatedSkillList() ??
-          foundry.utils.deepClone(utils.default_values.associated_skills);
+          foundry.utils.deepClone(utils.default_values.get_associated_skills());
+        if (this.actor === null) {
+          break;
+        }
         for (const matching_skills of Object.keys(context.associated_skills)) {
           for (const hidden_skill of this.actor?.getFlag(
             "atoria",

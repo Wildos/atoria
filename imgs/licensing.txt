@@ -55,3 +55,7 @@ knapsack.svg: https://game-icons.net/1x1/lorc/knapsack.html, by Lorc under CC BY
 target-dummy.svg: https://game-icons.net/1x1/lorc/target-dummy.html, by Lorc under CC BY 3.0
 high-shot.svg: https://game-icons.net/1x1/lorc/high-shot.html, by Lorc under CC BY 3.0
 select.svg: https://game-icons.net/1x1/sbed/select.html, by sbed under CC BY 3.0
+
+leather-armor.svg: https://game-icons.net/1x1/delapouite/leather-armor.html, by Delapouite under CC BY 3.0
+armor-vest.svg: https://game-icons.net/1x1/lorc/armor-vest.html, by Lorc under CC BY 3.0
+lamellar.svg: https://game-icons.net/1x1/lorc/lamellar.html, by Lorc under CC BY 3.0

@@ -30,6 +30,12 @@ export default class AtoriaActor extends Actor {
         actorData.system.resistance = utils.default_values.models.helpers
           .resistanceField()
           .getInitialValue({});
+        for (let i of this.items) {
+          actorData.system.armor.main = Math.max(
+            actorData.system.armor.main,
+            utils.ruleset.character.getMainArmorValue(i),
+          );
+        }
         break;
     }
   }
@@ -45,12 +51,6 @@ export default class AtoriaActor extends Actor {
           utils.ruleset.character.getCurrentMaxMana(this);
         actorData.system.stamina.current_max =
           utils.ruleset.character.getCurrentMaxStamina(this);
-        for (let i of this.items) {
-          actorData.system.armor.main = Math.max(
-            actorData.system.armor.main,
-            utils.ruleset.character.getMainArmorValue(i),
-          );
-        }
         break;
       case "hero":
         actorData.system.encumbrance.value +=
@@ -120,10 +120,7 @@ export default class AtoriaActor extends Actor {
   getOpposedSkillList() {
     const skill_list = {};
     for (const skill_path of RULESET.character.getOpposingSaves()) {
-      skill_list[skill_path] = utils.getSkillTitle(
-        skill_path,
-        DEFAULT_VALUES.associated_skills[skill_path],
-      );
+      skill_list[skill_path] = utils.getSkillTitle(skill_path, undefined);
     }
     return skill_list;
   }

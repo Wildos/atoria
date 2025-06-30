@@ -32,8 +32,7 @@ Utilitaire:
 - Strategy => Passe en erudition, cartographie passe en symbolique
 
 
-CHANGER DEFAULT_VALUES["associated_skills"] to match new skill list
-
+Adapter le visuel des PC, NPC, HERO pour que l'ordre soit correct avec la nouvelle version
 
 -----------------------------
 

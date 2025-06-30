@@ -376,8 +376,8 @@
       "Healing_inactive": {
         "Amount": "Valeur de Soin inactif",
         "Herbs": "Herbes inactives",
-        "Medical": "Medicine inactive",
-        "Resurrection": "Resurrection inactive"
+        "Medical": "Médicine inactive",
+        "Resurrection": "Résurrection inactive"
       },
       "Encumbrance": "Encombrement",
       "Luck": "Chance",
@@ -556,7 +556,7 @@
               "Label": "Apaisement"
             },
             "Negotiation": {
-              "Label": "Négocation"
+              "Label": "Négociation"
             }
           },
           "Spirit": {
@@ -650,6 +650,21 @@
             },
             "Seaming": {
               "Label": "Joaillerie"
+            },
+            "Glassware": {
+              "Label": "Verrerie"
+            }
+          },
+          "Artistic": {
+            "Label": "Artistique",
+            "Ceramic": {
+              "Label": "Céramique"
+            },
+            "Sculpture": {
+              "Label": "Sculpture"
+            },
+            "Graphic": {
+              "Label": "Graphique"
             }
           },
           "Sewing": {
@@ -675,20 +690,14 @@
             "Tanning": {
               "Label": "Tannage"
             },
-            "Clothing": {
-              "Label": "Vêtement"
-            },
-            "Object": {
-              "Label": "Objet"
+            "Manufacture": {
+              "Label": "Fabrication"
             }
           },
           "Alchemy": {
             "Label": "Alchimie",
-            "Potion": {
-              "Label": "Potion"
-            },
-            "Poison": {
-              "Label": "Poison"
+            "Mixture": {
+              "Label": "Mixture"
             },
             "Transformation": {
               "Label": "Transformation"
@@ -701,9 +710,6 @@
             },
             "Baking": {
               "Label": "Boulangerie"
-            },
-            "Licor": {
-              "Label": "Alcoolerie"
             }
           },
           "Forge": {
@@ -725,60 +731,6 @@
             },
             "Siege": {
               "Label": "Siège"
-            },
-            "Glassware": {
-              "Label": "Verrerie"
-            }
-          }
-        },
-        "Artistic": {
-          "Label": "Artistiques",
-          "Song": {
-            "Label": "Chant",
-            "Entertaining": {
-              "Label": "Divertissant"
-            },
-            "Battle": {
-              "Label": "Bataille"
-            }
-          },
-          "Graphic": {
-            "Label": "Graphique",
-            "Work": {
-              "Label": "Œuvre"
-            },
-            "Tattoo": {
-              "Label": "Tatouage"
-            }
-          },
-          "Music": {
-            "Label": "Musique",
-            "Repertoire": {
-              "Label": "Répertoire"
-            },
-            "Theory": {
-              "Label": "Solfège"
-            }
-          },
-          "Sculpture": {
-            "Label": "Sculpture",
-            "Ceramic": {
-              "Label": "Céramique"
-            },
-            "Decoration": {
-              "Label": "Décorative"
-            }
-          },
-          "Dance": {
-            "Label": "Danse",
-            "Aesthetics": {
-              "Label": "Esthétique"
-            },
-            "Combat": {
-              "Label": "Combattante"
-            },
-            "Spiritual": {
-              "Label": "Spirituelle"
             }
           }
         },
@@ -796,13 +748,13 @@
           "Civilisation": {
             "Label": "Civilisation"
           },
-          "Medecine": {
-            "Label": "Médecine",
-            "Treatment": {
-              "Label": "Soin"
+          "Music": {
+            "Label": "Musique",
+            "Repertoire": {
+              "Label": "Répertoire"
             },
-            "Mortuary": {
-              "Label": "Mortuaire"
+            "Theory": {
+              "Label": "Composition"
             }
           },
           "Runic": {
@@ -812,6 +764,9 @@
             },
             "Inscription": {
               "Label": "Transcription"
+            },
+            "Tattoo": {
+              "Label": "Tatouage"
             }
           },
           "Symbolism": {
@@ -821,6 +776,9 @@
             },
             "Cryptography": {
               "Label": "Cryptographie"
+            },
+            "Cartography": {
+              "Label": "Cartographie"
             }
           },
           "Science": {
@@ -834,10 +792,28 @@
             "Geology": {
               "Label": "Géologie"
             }
+          },
+          "Strategy": {
+            "Label": "Stratégie",
+            "Battle": {
+              "Label": "Bataille"
+            },
+            "Expedition": {
+              "Label": "Expédition"
+            }
           }
         },
         "Utilitarian": {
           "Label": "Utilitaires",
+          "Song": {
+            "Label": "Chant",
+            "Entertaining": {
+              "Label": "Divertissant"
+            },
+            "Martial": {
+              "Label": "Martial"
+            }
+          },
           "Hunting": {
             "Label": "Chasse",
             "Tracking": {
@@ -856,31 +832,40 @@
               "Label": "Charpenterie"
             }
           },
+          "Dance": {
+            "Label": "Danse",
+            "Aesthetics": {
+              "Label": "Esthétique"
+            },
+            "Spinning": {
+              "Label": "Tournoyante"
+            }
+          },
           "Dressage": {
             "Label": "Dressage",
             "Taming": {
-              "Label": "Domestication"
+              "Label": "Élevage"
             },
             "War": {
               "Label": "Guerre"
             }
           },
-          "Fishing": {
-            "Label": "Pêche",
-            "Bank": {
-              "Label": "Rive"
-            },
-            "High-sea": {
-              "Label": "Hauturière"
-            }
-          },
           "Theft": {
-            "Label": "Vol",
+            "Label": "Illégale",
             "Pickpocketing": {
-              "Label": "À la tire"
+              "Label": "Vol"
             },
             "Lock-picking": {
               "Label": "Crochetage"
+            }
+          },
+          "Medecine": {
+            "Label": "Médecine",
+            "Treatment": {
+              "Label": "Soin"
+            },
+            "Mortuary": {
+              "Label": "Mortuaire"
             }
           },
           "Nature": {
@@ -895,16 +880,13 @@
               "Label": "Fungus"
             }
           },
-          "Strategy": {
-            "Label": "Stratégie",
-            "Tactics": {
-              "Label": "Tactique"
+          "Fishing": {
+            "Label": "Pêche",
+            "Bank": {
+              "Label": "Rive"
             },
-            "Logistics": {
-              "Label": "Logistique"
-            },
-            "Cartography": {
-              "Label": "Cartographie"
+            "High-sea": {
+              "Label": "Hauturière"
             }
           },
           "Transport": {
@@ -916,7 +898,7 @@
               "Label": "Terrestre"
             },
             "Sea": {
-              "Label": "Maritime"
+              "Label": "Bateau"
             }
           }
         },

@@ -921,10 +921,11 @@
   min-width: fit-content;
 }
 .system-atoria .atoria-item-line-display {
+  /* --atoria-columns-gap: calc(var(--atoria-columns-gap) / 2); */
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+  gap: var(--atoria-rows-gap) calc(var(--atoria-columns-gap) / 2);
   min-height: var(--atoria-skill-height);
   max-height: fit-content;
   min-width: var(--atoria-item-line-width);
@@ -1015,6 +1016,19 @@
 .system-atoria .atoria-item-line-display.weapon .atoria-limitation {
   min-width: 0px;
   max-width: 0px;
+}
+.system-atoria .atoria-item-line-display.armor .armor-type {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.system-atoria .atoria-item-line-display.armor .armor-type img {
+  flex: 0;
+  max-width: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-base-line-block-height);
+  width: var(--atoria-base-line-block-height);
+  height: var(--atoria-base-line-block-height);
+  border: none;
 }
 .system-atoria .atoria-item-line-display + .atoria-expand-direct-data {
   margin: 0;
