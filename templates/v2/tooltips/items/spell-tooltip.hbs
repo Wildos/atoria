@@ -1,4 +1,191 @@
-<section class='atoria tooltip'>
-    <h5>{{item.name}}</h5>
-    <p>Description: {{brNewLines item.system.description}}</p>
+<section class='atoria tooltip item {{item.type}}'>
+
+    <div id='first_line' class='flexrow'>
+        <label class='name'>{{item.name}}</label>
+
+        <input type='text' data-dtype='Number' value='{{item.system.success}}'
+        data-tooltip='{{localize systemFields.success.label}}' disabled />
+    </div>
+
+    <div id='second_line' class='flexrow'>
+        <div class='atoria-cost'>
+        {{>'atoria.v2.commons_partials.cost-display'
+            cost=item.system.cost
+            systemFields=systemFields.cost.fields
+        }}
+        </div>
+
+        <div class='atoria-markers'>
+        {{#if item.system.markers.is_canalisation}}
+            <input class='atoria-spell-marker flex0' data-letter='{{localize 'ATORIA.Ruleset.Spell.Markers.Canalisation'}}'
+            type='checkbox' {{checked item.system.markers.is_canalisation}} disabled /><!--is_canalisation-->
+        {{/if}}
+        {{#if item.system.markers.is_evocation}}
+            <input class='atoria-spell-marker flex0' data-letter='{{localize 'ATORIA.Ruleset.Spell.Markers.Evocation'}}'
+            type='checkbox' {{checked item.system.markers.is_evocation}} disabled /><!--is_evocation-->
+        {{/if}}
+        {{#if item.system.markers.is_attack}}
+            <input class='atoria-spell-marker flex0' data-letter='{{localize 'ATORIA.Ruleset.Spell.Markers.Attack'}}'
+            type='checkbox' {{checked item.system.markers.is_attack}} disabled /><!--is_attack-->
+        {{/if}}
+        {{#if item.system.markers.is_trap}}
+            <input class='atoria-spell-marker flex0' data-letter='{{localize 'ATORIA.Ruleset.Spell.Markers.Trap'}}'
+            type='checkbox' {{checked item.system.markers.is_trap}} disabled /><!--is_trap-->
+        {{/if}}
+        </div>
+    </div>
+
+    <div id='third_line' class='flexrow'>
+        <label class='atoria-target'>
+        {{#if item.system.target}}
+            <img class='atoria-icon' src='systems/atoria/imgs/target-dummy.svg' data-tooltip='{{localize item.systemFields.target.label}}'>
+            {{item.system.target}}
+        {{/if}}
+        </label>
+
+        <label class='atoria-range'>
+        {{#if item.system.range}}
+            <img class='atoria-icon' src='systems/atoria/imgs/high-shot.svg' data-tooltip='{{localize item.systemFields.range.label}}'>
+            {{item.system.range}}
+        {{/if}}
+        </label>
+        <label class='atoria-area'>
+        {{#if item.system.area}}
+            <img class='atoria-icon' src='systems/atoria/imgs/select.svg' data-tooltip='{{localize item.systemFields.area.label}}'>
+            {{item.system.area}}
+        {{/if}}
+        </label>
+    </div>
+
+    <!-- Pre -->
+    <div id='fourth_line' class='flexrow'>
+        <label><b>{{localize systemFields.critical_success.label}}:</b> {{item.system.critical_success}}</label>
+        <label><b>{{localize systemFields.critical_fumble.label}}:</b> {{item.system.critical_fumble}}</label>
+
+        {{#if item.system.duration}}
+        <label><b>{{localize systemFields.duration.label}}:</b> {{item.system.duration}}</label>
+        {{/if}}
+
+        <label style='flex: 1 1 content;'>
+            {{#if item.system.require_verbal}}
+                <b>{{localize systemFields.require_verbal.label}}</b><!--require_verbal-->
+            {{/if}}
+
+            {{#if item.system.require_immobile}}
+                {{#if item.system.require_verbal}}, {{/if}}
+                <b>{{localize systemFields.require_immobile.label}}</b><!--require_immobile-->
+            {{/if}}
+
+            {{#if item.system.travel}}
+                {{#if (or item.system.require_immobile item.system.require_verbal)}}, {{/if}}
+                <b>{{localize systemFields.travel.label}}: {{item.system.travel}}</b><!--require_immobile-->
+            {{/if}}
+
+            {{#if (ne item.system.somatic 'none')}}
+                {{#if (or item.system.require_immobile item.system.require_verbal item.system.travel)}}, {{/if}}
+                {{localize (lookup systemFields.somatic.choices item.system.somatic)}}
+            {{/if}}
+        </label>
+    </div>
+    <!-- Actable -->
+
+    <div id='fifth_line' class='flexrow'>
+        <label><b>{{localize systemFields.material.label}}:</b> {{item.system.material}}</label>
+    </div>
+
+    {{#if item.system.critical_effect}}
+        <label><b>{{localize systemFields.critical_effect.label}}: </b></label>
+        <div style='display: grid;'>
+            <p
+                class='textarea-auto-resize'
+                style='grid-area: 1 / 1 / 2/ 2;'
+                rows='1'
+                data-name='inventory-{{item._id}}-critical_effect' data-dtype='String'
+                disabled>{{cleanLines item.system.critical_effect}}</p>
+            <div
+            class='textarea-auto-resize-sibling'
+            aria-hidden='true'
+            style='visibility: hidden; grid-area: 1 / 1 / 2 / 2;'
+            >{{cleanLines item.system.critical_effect}}</div>
+        </div>
+    {{/if}}
+
+    {{#if item.system.restriction}}
+        <label class='double-col-field'>{{localize systemFields.restriction.label}}</label>
+        <div style='display: grid;'>
+            <p
+                class='textarea-auto-resize'
+                style='grid-area: 1 / 1 / 2/ 2;'
+                rows='1'
+                data-name='inventory-{{item._id}}-effect' data-dtype='String'
+                data-name='{{item._id}}_restriction' data-dtype='String'
+                disabled>{{cleanLines item.system.restriction}}</p>
+            <div
+            class='textarea-auto-resize-sibling'
+            aria-hidden='true'
+            style='visibility: hidden; grid-area: 1 / 1 / 2 / 2;'
+            >{{cleanLines item.system.restriction}}</div>
+        </div>
+    {{/if}}
+
+        <label><b>{{localize systemFields.effect.label}}:</b></label>
+        <div style='display: grid;'>
+         <p
+             class='textarea-auto-resize'
+             style='grid-area: 1 / 1 / 2/ 2;'
+             rows='1'
+             disabled>{{cleanLines item.system.effect}}</p>
+         <div
+         class='textarea-auto-resize-sibling'
+         aria-hidden='true'
+         style='visibility: hidden; grid-area: 1 / 1 / 2 / 2;'
+         >{{cleanLines item.system.effect}}</div>
+     </div>
+
+     {{#if item.system.description}}
+        <label><b>{{localize systemFields.description.label}}:</b></label>
+        <div style='display: grid;'>
+            <p
+                class='textarea-auto-resize'
+                style='grid-area: 1 / 1 / 2/ 2;'
+                rows='1'
+                data-name='inventory-{{item._id}}-description' data-dtype='String'
+                disabled>{{cleanLines item.system.description}}</p>
+            <div
+            class='textarea-auto-resize-sibling'
+            aria-hidden='true'
+            style='visibility: hidden; grid-area: 1 / 1 / 2 / 2;'
+            >{{cleanLines item.system.description}}</div>
+        </div>
+     {{/if}}
+
+    <label><b>{{localize systemFields.supplementaries_list.label}}:</b></label>
+
+    {{#each item.system.supplementaries_list as |supplementary key|}}
+        <div class='atoria-supplementary'>
+            <div class='flexrow'>
+                {{>'atoria.v2.commons_partials.cost-display'
+                    cost=supplementary.cost
+                    systemFields=../systemFields.supplementaries_list.element.fields.cost.fields
+                }}
+                <label>{{localize ../systemFields.supplementaries_list.element.fields.usage_max.label}}: {{supplementary.usage_max}}</label>
+                {{>'atoria.v2.commons_partials.time-limitation-display' limitation=supplementary.limitation
+                systemFields=../systemFields.supplementaries_list.element.fields.limitation.fields }}
+            </div>
+            <div style='display: grid;'>
+                <p
+                    class='textarea-auto-resize'
+                    style='grid-area: 1 / 1 / 2/ 2;'
+                    rows='1'
+                    data-name='inventory-{{../item._id}}-supplementaries_list.{{key}}' data-dtype='String'
+                    disabled>{{cleanLines supplementary.description}}</p>
+                <div
+                class='textarea-auto-resize-sibling'
+                aria-hidden='true'
+                style='visibility: hidden; grid-area: 1 / 1 / 2 / 2;'
+                >{{cleanLines supplementary.description}}</div>
+            </div>
+        </div>
+    {{/each}}
+
 </section>

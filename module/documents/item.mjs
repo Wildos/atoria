@@ -41,7 +41,10 @@ export default class AtoriaItem extends Item {
   }
 
   getRollData() {
-    const rollData = { ...this.system };
+    const rollData = {
+      descriptive_tooltip: this.descriptive_tooltip,
+      ...this.system,
+    };
 
     if (!this.actor) return rollData;
 

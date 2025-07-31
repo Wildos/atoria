@@ -1,3 +1,10 @@
+& {
+    --atoria-item-line-width: 100%;
+    --atoria-item-line-vertical-padding: 1px;
+    --atoria-item-line-height: calc(1lh + var(--atoria-item-line-vertical-padding) + var(--atoria-item-line-vertical-padding));
+    --atoria-item-line-border-style: var(--atoria-border-style);
+}
+
 .cost-tooltip {
     justify-content: flex-start;
     flex-wrap: nowrap;
@@ -13,5 +20,170 @@
         max-width: fit-content;
         padding: 0 5px;
         text-align: left;
+    }
+
+    &.item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        gap: var(--atoria-rows-gap) calc(var(--atoria-columns-gap) / 2);
+
+        min-height: var(--atoria-skill-height);
+        max-height: fit-content;
+        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
+
+        border: var(--atoria-item-line-border-style);
+        border-radius: var(--atoria-border-style-radius);
+        padding: 0;
+
+        div:has(p) {
+            min-width: 100%;
+            width: 100%;
+            border-bottom: var(--atoria-border-style);
+        }
+        p {
+            border: none;
+            min-width: 100%;
+            width: 100%;
+        }
+
+        #first_line {
+            flex: 1;
+            min-width: 100%;
+            max-width: 100%;
+            border-bottom: var(--atoria-border-style);
+        }
+        #fifth_line {
+            max-width: 100%;
+            border-bottom: var(--atoria-border-style);
+            padding-bottom: 0.5em;
+            > label {
+                max-width: 100%;
+            }
+        }
+
+        > i[data-action="toggleEffect"] {
+            margin-left: 5px;
+        }
+
+        > .name {
+            flex: auto;
+        }
+        > input {
+            height: 100%;
+        }
+
+        > .flexcol:has(.atoria-cost-display) {
+            gap: 2px;
+        }
+
+        > hr {
+            margin: 0;
+            height: calc(var(--atoria-base-line-block-height) / 2);
+            min-width: 1px;
+            border-left: var(--atoria-item-line-border-style);
+        }
+
+        > .equip-toggle {
+            --atoria-border-style: none;
+            margin-left: 4px;
+            margin-right: 4px;
+        }
+        > .equip-toggle::after {
+            // --atoria-color-checkbox-checked: red;
+            --checkbox-content: "\f3ed" !important;
+        }
+
+        .name {
+            flex: 2;
+        }
+        * {
+            flex: none;
+        }
+        .atoria-markers {
+            min-width: 45px;
+            max-width: 45px;
+        }
+        .atoria-cost {
+            min-width: 170px;
+            max-width: 170px;
+        }
+        .atoria-target {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2px;
+            min-width: 150px;
+            max-width: 150px;
+        }
+        .atoria-range {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2px;
+            min-width: 70px;
+            max-width: 70px;
+        }
+        .atoria-area {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 2px;
+            min-width: 80px;
+            max-width: 80px;
+        }
+        .atoria-limitation {
+            min-width: 80px;
+            max-width: 80px;
+        }
+
+
+        > .atoria-spell-marker {
+            border: none;
+            pointer-events: none;
+        }
+
+        > .atoria-target {
+            flex: auto;
+            // max-width: 10em;
+        }
+
+        > .atoria-supplementary {
+            border-bottom: var(--atoria-border-style);
+        }
+
+        > .atoria-supplementary:last-of-type {
+            border: none;
+        }
+
+        &.weapon {
+            .atoria-cost {
+                min-width: 0px;
+                max-width: none;
+            }
+            .atoria-limitation {
+                min-width: 0px;
+                max-width: 0px;
+            }
+        }
+
+        &.armor {
+            .armor-type {
+                display: flex;
+                justify-content: center;
+                padding: 0;
+                img {
+                    flex: 0;
+                    max-width: var(--atoria-base-line-block-height);
+                    max-height: var(--atoria-base-line-block-height);
+                    width: var(--atoria-base-line-block-height);
+                    height: var(--atoria-base-line-block-height);
+                    border: none;
+                }
+            }
+        }
     }
 }
