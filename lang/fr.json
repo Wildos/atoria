@@ -329,7 +329,7 @@
       "Selected_element": "Element selectionné",
       "Confirm": "Confirmer",
       "Cancel": "Annuler",
-      "Launch": "lancer",
+      "Launch": "Lancer",
       "Delete": {
         "Title": "Suppression {element_name}",
         "Content": "Confirmez-vous la suppression de '{element_name}'?"
@@ -376,7 +376,7 @@
       "Healing_inactive": {
         "Amount": "Valeur de Soin inactif",
         "Herbs": "Herbes inactives",
-        "Medical": "Médicine inactive",
+        "Medical": "Médecine inactive",
         "Resurrection": "Résurrection inactive"
       },
       "Encumbrance": "Encombrement",
