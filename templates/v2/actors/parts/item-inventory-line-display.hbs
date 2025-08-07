@@ -19,7 +19,18 @@
          {{disabled (not @root.editable)}} />
         {{/unless}}
         {{#if (ne item.system.armor_type "without")}}
-            <label class="armor-type">{{localize (lookup item.systemFields.armor_type.choices item.system.armor_type)}}</label>
+            <label class="armor-type">
+            {{#if (eq item.system.armor_type "light")}}
+            <img data-tooltip="{{localize (lookup item.systemFields.armor_type.choices item.system.armor_type)}}" src="systems/atoria/imgs/leather-armor.svg"/>
+            {{/if}}
+            {{#if (eq item.system.armor_type "medium")}}
+                <img data-tooltip="{{localize (lookup item.systemFields.armor_type.choices item.system.armor_type)}}" src="systems/atoria/imgs/armor-vest.svg"/>
+            {{/if}}
+            {{#if (eq item.system.armor_type "heavy")}}
+                <img data-tooltip="{{localize (lookup item.systemFields.armor_type.choices item.system.armor_type)}}" src="systems/atoria/imgs/lamellar.svg"/>
+            {{/if}}
+            {{!-- <label class="armor-type">{{localize (lookup item.systemFields.armor_type.choices item.system.armor_type)}} --}}
+            </label>
             <hr/>
         {{/if}}
     {{/if}}

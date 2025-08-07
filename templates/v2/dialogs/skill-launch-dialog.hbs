@@ -30,11 +30,11 @@
             <li class="flexrow atoria-expand-control"
             oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
                 <input type="checkbox" data-dtype="Boolean" name="associated_keywords.{{keyword.name}}" />
-                <label>{{localize keyword.skill_alteration_type_label}}</label>
                 <h5>{{localize keyword.label}}</h5>
+                <label>{{localize keyword.skill_alteration_type_label}}</label>
             </li>
             <li class="atoria-expand-direct-data">
-                <p style="white-space: pre-line; max-width: 100%;">{{{keyword.description}}}</p>
+                <p style="white-space: pre-line; max-width: 100%;">{{{localize keyword.description}}}</p>
             </li>
         {{/each}}
     </ul>

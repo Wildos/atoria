@@ -3,21 +3,21 @@ cost
 systemFields
 cssClasses
 -->
-<div class="atoria-cost-display {{cssClasses}}">
+<div class='atoria-cost-display {{cssClasses}}'>
     {{#if cost.health}}
-    <input class="atoria-health" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.health}}" disabled >
+    <input class='atoria-health' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.health}}' disabled >
     {{/if}}
     {{#if cost.mana}}
-    <input class="atoria-mana" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.mana}}" disabled >
+    <input class='atoria-mana' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.mana}}' disabled >
     {{/if}}
     {{#if cost.stamina}}
-    <input class="atoria-stamina" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.stamina}}" disabled >
+    <input class='atoria-stamina' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.stamina}}' disabled >
     {{/if}}
     {{#if cost.endurance}}
-    <input class="atoria-endurance" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.endurance}}" disabled >
+    <input class='atoria-endurance' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.endurance}}' disabled >
     {{/if}}
     {{#if cost.movement}}
-    <input class="atoria-movement" type="text" inputmode="numeric" data-dtype="Number"  value="{{cost.movement}}" disabled >
+    <input class='atoria-movement' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.movement}}' disabled >
     {{/if}}
     {{#if systemFields}}
         {{#if cost.time.main_amount}}
@@ -33,7 +33,7 @@ cssClasses
         {{/if}}
 
         {{#if cost.time.second_amount}}
-        <label>{{cost.time.second_amount}} {{localize (shorten (lookup @root.ruleset.time_units "second"))}}</label>
+        <label>{{cost.time.second_amount}} {{localize (shorten (lookup @root.ruleset.time_units 'second'))}}</label>
         {{/if}}
     {{/if}}
 </div>

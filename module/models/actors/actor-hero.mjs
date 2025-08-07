@@ -105,6 +105,10 @@ export default class AtoriaHero extends atoria_models.AtoriaDataModel {
           "ATORIA.Ruleset.Knowledges.Craftmanship.Alchemy.Label",
           10,
         ),
+        artistic: atoria_models.helpers.skillField(
+          "ATORIA.Ruleset.Knowledges.Craftmanship.Artistic.Label",
+          10,
+        ),
         jewellery: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Craftmanship.Jewellery.Label",
           10,
@@ -134,23 +138,15 @@ export default class AtoriaHero extends atoria_models.AtoriaDataModel {
           10,
         ),
         song: atoria_models.helpers.skillField(
-          "ATORIA.Ruleset.Knowledges.Artistic.Song.Label",
+          "ATORIA.Ruleset.Knowledges.Utilitarian.Song.Label",
           10,
         ),
         dance: atoria_models.helpers.skillField(
-          "ATORIA.Ruleset.Knowledges.Artistic.Dance.Label",
-          10,
-        ),
-        graphic: atoria_models.helpers.skillField(
-          "ATORIA.Ruleset.Knowledges.Artistic.Graphic.Label",
+          "ATORIA.Ruleset.Knowledges.Utilitarian.Dance.Label",
           10,
         ),
         music: atoria_models.helpers.skillField(
-          "ATORIA.Ruleset.Knowledges.Artistic.Music.Label",
-          10,
-        ),
-        sculpture: atoria_models.helpers.skillField(
-          "ATORIA.Ruleset.Knowledges.Artistic.Sculpture.Label",
+          "ATORIA.Ruleset.Knowledges.Erudition.Music.Label",
           10,
         ),
         civilisation: atoria_models.helpers.skillField(
@@ -159,10 +155,6 @@ export default class AtoriaHero extends atoria_models.AtoriaDataModel {
         ),
         language: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Erudition.Language.Label",
-          10,
-        ),
-        medecine: atoria_models.helpers.skillField(
-          "ATORIA.Ruleset.Knowledges.Erudition.Medecine.Label",
           10,
         ),
         monstrology: atoria_models.helpers.skillField(
@@ -185,6 +177,10 @@ export default class AtoriaHero extends atoria_models.AtoriaDataModel {
           "ATORIA.Ruleset.Knowledges.Erudition.Zoology.Label",
           10,
         ),
+        strategy: atoria_models.helpers.skillField(
+          "ATORIA.Ruleset.Knowledges.Erudition.Strategy.Label",
+          10,
+        ),
         hunting: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Utilitarian.Hunting.Label",
           10,
@@ -205,16 +201,16 @@ export default class AtoriaHero extends atoria_models.AtoriaDataModel {
           "ATORIA.Ruleset.Knowledges.Utilitarian.Fishing.Label",
           10,
         ),
-        strategy: atoria_models.helpers.skillField(
-          "ATORIA.Ruleset.Knowledges.Utilitarian.Strategy.Label",
-          10,
-        ),
         transport: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Utilitarian.Transport.Label",
           10,
         ),
         theft: atoria_models.helpers.skillField(
           "ATORIA.Ruleset.Knowledges.Utilitarian.Theft.Label",
+          10,
+        ),
+        medecine: atoria_models.helpers.skillField(
+          "ATORIA.Ruleset.Knowledges.Utilitarian.Medecine.Label",
           10,
         ),
         air: atoria_models.helpers.skillField(

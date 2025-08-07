@@ -25,7 +25,7 @@
         data-tooltip='{{localize systemFields.time.fields.second_amount.label}}' disabled >
     <label>{{localize (pluralize systemFields.time.fields.second_amount.label cost.time.second_amount)}}</label>
     {{/if}}
-    
+
     {{#if cost.health}}
     <input class='atoria-health' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.health}}'
         data-tooltip='{{localize systemFields.health.label}}' disabled >
@@ -41,5 +41,9 @@
     {{#if cost.endurance}}
     <input class='atoria-endurance' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.endurance}}'
         data-tooltip='{{localize systemFields.endurance.label}}' disabled >
+    {{/if}}
+    {{#if cost.movement}}
+    <input class='atoria-movement' type='text' inputmode='numeric' data-dtype='Number'  value='{{cost.movement}}'
+        data-tooltip='{{localize systemFields.movement.label}}' disabled >
     {{/if}}
 </div>

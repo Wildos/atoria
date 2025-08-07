@@ -2,7 +2,7 @@
     {{#if (ne limitation.regain_type 'permanent')}}
     <label>
         {{limitation.usage_left}}/{{limitation.usage_max}}
-        {{limitation.regain_type}}
+        {{localize (lookup systemFields.limitation.fields.regain_type.choices limitation.regain_type)}}
     </label>
     {{/if}}
 </div>

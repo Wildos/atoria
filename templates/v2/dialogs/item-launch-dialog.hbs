@@ -58,16 +58,20 @@
         oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
             <input type="checkbox" data-dtype="Boolean" name="associated_actable_modifiers.{{actable_mod._id}}"
             {{disabled (and (lte actable_mod.system.limitation.usage_left 0) (ne actable_mod.system.limitation.regain_type "permanent"))}} />
+
+            <h5>{{actable_mod.name}}</h5>
+
             <!--Alteration-->{{#if actable_mod.system.skill_alteration.has_skill_alteration}}
             <label>{{localize (lookup actable_mod.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices actable_mod.system.skill_alteration.skill_alteration_type)}}</label>
             {{/if}}
 
-            <h5>{{actable_mod.name}}</h5>
-
             <!--Limitation-->
             {{#unless (eq actable_mod.system.limitation.regain_type "permanent")}}
-            <label class="usage">{{actable_mod.system.limitation.usage_left}} / {{actable_mod.system.limitation.usage_max}}</label>
-            <label>{{actable_mod.system.limitation.regain_type}}</label>
+            {{!-- <label class="usage">{{actable_mod.system.limitation.usage_left}} / {{actable_mod.system.limitation.usage_max}}</label>
+            <label>{{actable_mod.system.limitation.regain_type}}</label> --}}
+
+            {{>"atoria.v2.commons_partials.time-limitation-display" limitation=actable_mod.system.limitation
+            systemFields=supplementary.systemFields.limitation.fields }}
             {{/unless}}
         </li>
         <li class="atoria-expand-direct-data">
@@ -86,14 +90,19 @@
             <li class="flexrow atoria-expand-control" data-related-skill="main"
             oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
                 <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
+
+                <h5>{{feature.name}}</h5>
+
                 <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
                 <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
                 {{/if}}
-                <h5>{{feature.name}}</h5>
 
                 <!--Limitation-->{{#unless (eq feature.system.limitation.regain_type "permanent")}}
-                <label class="usage">{{feature.system.limitation.usage_left}} / {{feature.system.limitation.usage_max}}</label>
-                <label>{{feature.system.limitation.regain_type}}</label>
+                {{!-- <label class="usage">{{feature.system.limitation.usage_left}} / {{feature.system.limitation.usage_max}}</label>
+                <label>{{feature.system.limitation.regain_type}}</label> --}}
+
+                {{>"atoria.v2.commons_partials.time-limitation-display" limitation=feature.system.limitation
+                systemFields=supplementary.systemFields.limitation.fields }}
                 {{/unless}}
             </li>
             <li class="atoria-expand-direct-data">
@@ -105,14 +114,18 @@
             <li class="flexrow atoria-expand-control" data-related-skill="secondary"
                 oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
                 <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
+
+                <h5 data-tooltip="{{feature.system.description}}">{{feature.name}}</h5>
+
                 <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
                 <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
                 {{/if}}
-                <h5 data-tooltip="{{feature.system.description}}">{{feature.name}}</h5>
 
                 <!--Limitation-->{{#unless (eq feature.system.limitation.regain_type "permanent")}}
-                <label class="usage">{{feature.system.limitation.usage_left}} / {{feature.system.limitation.usage_max}}</label>
-                <label>{{feature.system.limitation.regain_type}}</label>
+                {{!-- <label class="usage">{{feature.system.limitation.usage_left}} / {{feature.system.limitation.usage_max}}</label>
+                <label>{{feature.system.limitation.regain_type}}</label> --}}
+                {{>"atoria.v2.commons_partials.time-limitation-display" limitation=feature.system.limitation
+                systemFields=supplementary.systemFields.limitation.fields }}
                 {{/unless}}
             </li>
             <li class="atoria-expand-direct-data">

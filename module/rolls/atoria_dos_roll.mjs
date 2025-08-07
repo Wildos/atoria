@@ -26,11 +26,13 @@ export default class AtoriaDOSRoll extends Roll {
       data,
       options,
     );
+
     this._margin_of_success = undefined;
     this._success_value = options.success_value;
     this._critical_success_amount = options.critical_success_amount;
     this._critical_fumble_amount = options.critical_fumble_amount;
     this._title = options.title;
+    this._descriptive_tooltip = data.descriptive_tooltip;
     this._advantage_amount = options.advantage_amount;
     this._disadvantage_amount = options.disadvantage_amount;
     this._luck_applied = options.luck_applied;
@@ -88,6 +90,7 @@ export default class AtoriaDOSRoll extends Roll {
       roll._critical_success_amount = data.critical_success_amount;
       roll._critical_fumble_amount = data.critical_fumble_amount;
       roll._title = data.title;
+      roll._descriptive_tooltip = data.descriptive_tooltip;
       roll._advantage_amount = data.advantage_amount;
       roll._disadvantage_amount = data.disadvantage_amount;
       roll._luck_applied = data.luck_applied;
@@ -111,6 +114,7 @@ export default class AtoriaDOSRoll extends Roll {
       critical_success_amount: this._critical_success_amount,
       critical_fumble_amount: this._critical_fumble_amount,
       title: this._title,
+      descriptive_tooltip: this._descriptive_tooltip,
       advantage_amount: this._advantage_amount,
       disadvantage_amount: this._disadvantage_amount,
       luck_applied: this._luck_applied,
@@ -169,6 +173,8 @@ export default class AtoriaDOSRoll extends Roll {
       flavor: isPrivate ? null : (flavor ?? this.options.flavor),
       formula: isPrivate ? "" : this._formula,
       title: isPrivate ? "" : this._title,
+      descriptive_tooltip: isPrivate ? "" : this._descriptive_tooltip,
+
       dice_value: isPrivate ? "" : Math.round(this.total * 100) / 100,
       dice_tooltip: isPrivate ? "" : await this.getTooltip(),
       margin_of_success: isPrivate ? "" : this.margin_of_success,

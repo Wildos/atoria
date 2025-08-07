@@ -250,9 +250,8 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
       },
     };
 
-    context.associated_skills =
-      this.actor?.getSkillnKnowledgeList() ??
-      utils.default_values.associated_skills;
+    context.associated_skills = this.actor?.getSkillnKnowledgeList() ?? {};
+    // utils.default_values.associated_skills;
 
     switch (partId) {
       case "header":
@@ -335,8 +334,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           "atoria",
           "display_player_sheet_horizontally",
         );
-
-        context.skill_n_skill_sorting_list = {
+        context.skill_n_knowledge_sorting_list = {
           "system.skills": ["combative", "physical", "social"],
 
           "system.skills.combative": ["reflex", "weapon"],
@@ -399,6 +397,164 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "tenacity",
             "fortitude",
           ],
+          "system.knowledges": [
+            "craftmanship",
+            "erudition",
+            "utilitarian",
+            "magic",
+          ],
+
+          "system.knowledges.craftmanship": [
+            "alchemy",
+            "artistic",
+            "jewellery",
+            "sewing",
+            "cuisine",
+            "cabinet-making",
+            "forge",
+            "engineering",
+            "leatherworking",
+          ],
+
+          "system.knowledges.craftmanship.alchemy": [
+            "mixture",
+            "transformation",
+          ],
+          "system.knowledges.craftmanship.artistic": [
+            "ceramic",
+            "sculpture",
+            "graphic",
+          ],
+          "system.knowledges.craftmanship.jewellery": [
+            "finery",
+            "seaming",
+            "glassware",
+          ],
+          "system.knowledges.craftmanship.sewing": ["fashion", "domestic"],
+          "system.knowledges.craftmanship.cuisine": ["meal", "baking"],
+          "system.knowledges.craftmanship.cabinet-making": [
+            "gear",
+            "woodworking",
+          ],
+          "system.knowledges.craftmanship.forge": [
+            "weaponry",
+            "armoury",
+            "goldsmithery",
+          ],
+          "system.knowledges.craftmanship.engineering": ["mechanism", "siege"],
+          "system.knowledges.craftmanship.leatherworking": [
+            "tanning",
+            "manufacture",
+          ],
+
+          "system.knowledges.erudition": [
+            "civilisation",
+            "language",
+            "monstrology",
+            "music",
+            "runic",
+            "science",
+            "strategy",
+            "symbolism",
+            "zoology",
+          ],
+
+          "system.knowledges.erudition.music": ["repertoire", "theory"],
+          "system.knowledges.erudition.runic": [
+            "enchantment",
+            "inscription",
+            "tattoo",
+          ],
+          "system.knowledges.erudition.science": [
+            "astronomy",
+            "geology",
+            "mathematic",
+          ],
+          "system.knowledges.erudition.strategy": ["battle", "expedition"],
+          "system.knowledges.erudition.symbolism": [
+            "heraldry",
+            "cryptography",
+            "cartography",
+          ],
+
+          "system.knowledges.utilitarian": [
+            "song",
+            "hunting",
+            "construction",
+            "dance",
+            "dressage",
+            "theft",
+            "medecine",
+            "nature",
+            "fishing",
+            "transport",
+          ],
+          "system.knowledges.utilitarian.song": ["entertaining", "martial"],
+          "system.knowledges.utilitarian.hunting": ["tracking", "cutting"],
+          "system.knowledges.utilitarian.construction": [
+            "masonry",
+            "carpentry",
+          ],
+          "system.knowledges.utilitarian.dance": ["aesthetics", "spinning"],
+          "system.knowledges.utilitarian.dressage": ["taming", "war"],
+          "system.knowledges.utilitarian.theft": [
+            "pickpocketing",
+            "lock-picking",
+          ],
+          "system.knowledges.utilitarian.medecine": ["treatment", "mortuary"],
+          "system.knowledges.utilitarian.nature": [
+            "farming",
+            "herbalist",
+            "fungus",
+          ],
+          "system.knowledges.utilitarian.fishing": ["bank", "high-sea"],
+          "system.knowledges.utilitarian.transport": [
+            "mounting",
+            "land",
+            "sea",
+          ],
+
+          "system.knowledges.magic": [
+            "air",
+            "mental",
+            "druidic",
+            "water",
+            "fire",
+            "occult",
+            "holy",
+            "blood",
+            "earth",
+          ],
+
+          "system.knowledges.magic.air": ["dazzling", "breeze", "lightning"],
+          "system.knowledges.magic.mental": [
+            "kinetic",
+            "illusion",
+            "power",
+            "enchanted",
+          ],
+          "system.knowledges.magic.druidic": [
+            "astral",
+            "solicitude",
+            "changeforme",
+            "mutation",
+          ],
+          "system.knowledges.magic.water": ["ablution", "source", "ice"],
+          "system.knowledges.magic.fire": ["torch", "ignition", "destruction"],
+          "system.knowledges.magic.occult": [
+            "toxic",
+            "curse",
+            "ethereal",
+            "necromancy",
+          ],
+          "system.knowledges.magic.holy": [
+            "blessing",
+            "piety",
+            "glory",
+            "purification",
+          ],
+          "system.knowledges.magic.blood": ["sacrifice", "puncture", "drain"],
+          "system.knowledges.magic.earth": ["bastion", "telluric", "metallic"],
         };
         context.reflex_skills = {
           skill_cat: this.actor.system.skills.combative.reflex,

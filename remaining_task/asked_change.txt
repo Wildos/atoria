@@ -1,3 +1,39 @@
+Connaissance ajouté:
+Artisanat:
+- Alchimie => Potion & poison fusionnent
+- Artistique => Ceramique, sculpture, graphique
+- Bijouterie => Gagne verrerie
+- Maroquinerie => Fabrication
+Erutidtion:
+- Runique - Tatoo
+- Music => Repertoir, composition
+- Strategy
+- Symbolique - Cartographie
+Utilitaire:
+- Chant => Divertissant , martial
+- Dance => Esthetique, tournoyante
+- Medecine
+
+Connaissance retiré:
+Artistic:
+- Song => va en utilitaire
+- Dance => Va en utilitaire, combat et spirituel fusionnent
+- Graphic => Work devient graphique dans Artistic, tatoo dans runique
+- Music => Va en erudition
+- Sculpture => Ceramique va en "Artistic", Decoration aussi et devien "Sculpture"
+Artisanat:
+- Alchimie => Potion & poison fusionnent
+- Cuisine - Alcool
+- Ingenierie => Verrerie va en bijouterie
+- Maroquinerie => Vetement & objet fusionnent
+Erudition:
+- Medecine => Passe en utilitaire
+Utilitaire:
+- Strategy => Passe en erudition, cartographie passe en symbolique
+
+
+Adapter le visuel des PC, NPC, HERO pour que l'ordre soit correct avec la nouvelle version
+
 -----------------------------
 
 Check si on peut reduire le privilège pour drop des items sur les coffres (actuellement owner requis)
