@@ -450,8 +450,8 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           "system.knowledges.erudition": [
             "civilisation",
             "language",
+            "medecine",
             "monstrology",
-            "music",
             "runic",
             "science",
             "strategy",
@@ -459,7 +459,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "zoology",
           ],
 
-          "system.knowledges.erudition.music": ["repertoire", "theory"],
+          "system.knowledges.utilitarian.medecine": ["treatment", "mortuary"],
           "system.knowledges.erudition.runic": [
             "enchantment",
             "inscription",
@@ -484,7 +484,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "dance",
             "dressage",
             "theft",
-            "medecine",
             "nature",
             "fishing",
             "transport",
@@ -501,7 +500,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "pickpocketing",
             "lock-picking",
           ],
-          "system.knowledges.utilitarian.medecine": ["treatment", "mortuary"],
           "system.knowledges.utilitarian.nature": [
             "farming",
             "herbalist",

@@ -88,8 +88,8 @@ DEFAULT_VALUES["character"] = {
     erudition: {
       civilisation: [],
       language: [],
+      medecine: ["treatment", "mortuary"],
       monstrology: [],
-      music: ["repertoire", "theory"],
       runic: ["enchantment", "inscription", "tattoo"],
       science: ["astronomy", "geology", "mathematic"],
       strategy: ["battle", "expedition"],
@@ -103,7 +103,6 @@ DEFAULT_VALUES["character"] = {
       dance: ["aesthetics", "spinning"],
       dressage: ["taming", "war"],
       theft: ["pickpocketing", "lock-picking"],
-      medecine: ["treatment", "mortuary"],
       nature: ["farming", "herbalist", "fungus"],
       fishing: ["bank", "high-sea"],
       transport: ["mounting", "land", "sea"],
