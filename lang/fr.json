@@ -67,12 +67,10 @@
       },
       "Healing_inactive": "Soin inactif",
       "Coins": "Pièces",
-
       "Unit_type": "Type d'unité",
       "Language": "Langues",
       "Favorite_god": "Dieux favoris",
       "Ration": "Rations",
-
       "Perception": "Perception",
       "Skills": "Compétences",
       "Knowledges": "Connaissances",
@@ -260,7 +258,6 @@
             "Label": "Autres"
           }
         },
-
         "Inventory": {
           "Title": "Inventaire",
           "Equipement": {
@@ -739,6 +736,15 @@
           "Language": {
             "Label": "Langue"
           },
+          "Medecine": {
+            "Label": "Médecine",
+            "Treatment": {
+              "Label": "Soin"
+            },
+            "Mortuary": {
+              "Label": "Mortuaire"
+            }
+          },
           "Monstrology": {
             "Label": "Monstrologie"
           },
@@ -857,15 +863,6 @@
             },
             "Lock-picking": {
               "Label": "Crochetage"
-            }
-          },
-          "Medecine": {
-            "Label": "Médecine",
-            "Treatment": {
-              "Label": "Soin"
-            },
-            "Mortuary": {
-              "Label": "Mortuaire"
             }
           },
           "Nature": {
