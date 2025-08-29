@@ -1,5 +1,6 @@
 import { AtoriaActorSheetV2 } from "../module.mjs";
 import * as utils from "../../utils/module.mjs";
+import * as helpers from "../../utils/helpers.mjs";
 
 const DEFAULT_FEATURE_PLACE = "other";
 
@@ -13,6 +14,17 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
 
   static DEFAULT_OPTIONS = {
     classes: ["player-character"],
+    window: {
+      controls: [
+        ...AtoriaActorSheetV2.DEFAULT_OPTIONS.window.controls,
+        {
+          action: "onFixKnowledges",
+          icon: "fa-solid fa-wrench",
+          label: "ATORIA.DEBUG.FixKnowledges",
+          ownership: "OWNER",
+        },
+      ],
+    },
     actions: {
       applyTimePhase: {
         handler: this._applyTimePhase,
@@ -22,6 +34,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
       createSkill: this._createSkill,
       deleteSkill: this._deleteSkill,
       createItem: this._createItem,
+      onFixKnowledges: this._onFixKnowledges,
     },
   };
 
@@ -46,6 +59,44 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         "systems/atoria/templates/v2/actors/parts/player-action-page.hbs",
     },
   };
+
+
+  /** @override */
+  _getHeaderControls() {
+    const controls = this.options.window.controls;
+
+    // Portrait image
+    const img = this.actor.img;
+    controls.find((c) => c.action === "showPortraitArtwork").visible =
+      img !== CONST.DEFAULT_TOKEN;
+
+    // Token image
+    const pt = this.actor.prototypeToken;
+    const tex = pt.texture.src;
+    const show_token_art = !(
+      pt.randomImg || [null, undefined, CONST.DEFAULT_TOKEN].includes(tex)
+    );
+    controls.find((c) => c.action === "showTokenArtwork").visible =
+      show_token_art;
+
+    // PopOutV2
+    controls.find(
+      (c) => c.action === "onPopoutV2" && c.label === "POPOUT.PopOut",
+    ).visible = helpers.hasPopoutV2Module();
+
+    // DEBUG
+    controls.find(
+      (c) => c.action === "onFixKnowledges" && c.label === "ATORIA.DEBUG.FixKnowledges",
+    ).visible = game.user?.isGM;
+
+
+    return controls;
+  }
+
+  static async _onFixKnowledges(event, _target) {
+    event.stopPropagation();
+    await this.actor.debug_fix_knowledges();
+  }
 
   static async _applyTimePhase(_event, target) {
     const { timePhase } = target.dataset;

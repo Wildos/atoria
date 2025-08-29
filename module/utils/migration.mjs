@@ -7,6 +7,18 @@ export async function migrateWorld() {
   const current_version =
     game.settings.get("atoria", "worldLastMigrationVersion") ||
     VERSION_BEFORE_MIGRATION_CODE;
+
+  const version = game.system.version;
+  if (current_version === version) {
+    return;
+  }
+
+  ui.notifications.info(
+    game.i18n.format("MIGRATION.AtoriaBegin", { version }),
+    {
+      permanent: true,
+    },
+  );
   // 0.3.9: Addition of leatherwork - object
   if (foundry.utils.isNewerVersion("0.3.9", current_version)) {
     await migrateTo_0_3_9();
@@ -16,22 +28,20 @@ export async function migrateWorld() {
     await migrateTo_0_3_13();
   }
   // 0.3.15: Fix of knowledges
-  if (foundry.utils.isNewerVersion("0.3.15", current_version)) {
-    await migrateTo_0_3_15();
-  }
+  // if (foundry.utils.isNewerVersion("0.3.15", current_version)) {
+  //   await migrateTo_0_3_15();
+  // }
 
   game.settings.set("atoria", "worldLastMigrationVersion", game.system.version);
-}
-
-async function migrateTo_0_3_9() {
-  const version = game.system.version;
   ui.notifications.info(
-    game.i18n.format("MIGRATION.AtoriaBegin", { version }),
+    game.i18n.format("MIGRATION.AtoriaComplete", { version }),
     {
       permanent: true,
     },
   );
+}
 
+async function migrateTo_0_3_9() {
   // Migrate World Actors
   const actors = game.actors
     .map((a) => [a, true])
@@ -73,23 +83,9 @@ async function migrateTo_0_3_9() {
       console.error(err);
     }
   }
-  ui.notifications.info(
-    game.i18n.format("MIGRATION.AtoriaComplete", { version }),
-    {
-      permanent: true,
-    },
-  );
 }
 
 async function migrateTo_0_3_13() {
-  const version = game.system.version;
-  ui.notifications.info(
-    game.i18n.format("MIGRATION.AtoriaBegin", { version }),
-    {
-      permanent: true,
-    },
-  );
-
   // Migrate World Actors
   const actors = game.actors
     .map((a) => [a, true])
@@ -546,23 +542,9 @@ async function migrateTo_0_3_13() {
       console.error(err);
     }
   }
-  ui.notifications.info(
-    game.i18n.format("MIGRATION.AtoriaComplete", { version }),
-    {
-      permanent: true,
-    },
-  );
 }
 
 async function migrateTo_0_3_15() {
-  const version = game.system.version;
-  ui.notifications.info(
-    game.i18n.format("MIGRATION.AtoriaBegin", { version }),
-    {
-      permanent: true,
-    },
-  );
-
   // Migrate World Actors
   const actors = game.actors
     .map((a) => [a, true])
@@ -576,11 +558,12 @@ async function migrateTo_0_3_15() {
     try {
       const flags = { persistSourceMigration: false };
 
+      let deleteData = {};
       let updateData = {};
       if (actor.type === "player-character") {
         // add remove action to removed and moved knowledges
-        updateData["system.knowledges.utilitarian.-=medecine"] = null;
-        updateData["system.knowledges.erudtion.-=music"] = null;
+        deleteData["system.knowledges.utilitarian.-=medecine"] = null;
+        deleteData["system.knowledges.erudtion.-=music"] = null;
 
         // add add action to new knowledges
         updateData["system.knowledges.erudition.medecine"] = {
@@ -607,183 +590,10 @@ async function migrateTo_0_3_15() {
             utils.default_values.character.skill.get_success("Erudition"),
           ),
         };
-        updateData["system.knowledges.craftmanship.alchemy.mixture"] =
-          helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Craftmanship",
-              "Alchemy",
-              "Mixture",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          );
-        updateData["system.knowledges.craftmanship.artistic"] = {
-          ceramic: helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Craftmanship",
-              "Artistic",
-              "Ceramic",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          ),
-          sculpture: helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Craftmanship",
-              "Artistic",
-              "Sculpture",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          ),
-          graphic: helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Craftmanship",
-              "Artistic",
-              "Graphic",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          ),
-        };
-
-        updateData["system.knowledges.craftmanship.jewellery.glassware"] =
-          helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Craftmanship",
-              "Jewellery",
-              "Glassware",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          );
-
-        updateData[
-          "system.knowledges.craftmanship.leatherworking.manufacture"
-        ] = helpers.skillInitialValue(
-          utils.buildLocalizeString(
-            "Ruleset",
-            "Knowledges",
-            "Craftmanship",
-            "Leatherworking",
-            "Manufacture",
-            "Label",
-          ),
-          utils.default_values.character.skill.get_success("Craftmanship"),
-        );
-        updateData["system.knowledges.erudition.runic.tattoo"] =
-          helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Erudition",
-              "Runic",
-              "Tattoo",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          );
-        updateData["system.knowledges.erudition.strategy"] = {
-          battle: helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Erudition",
-              "Strategy",
-              "Battle",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          ),
-          expedition: helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Erudition",
-              "Strategy",
-              "Expedition",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          ),
-        };
-
-        updateData["system.knowledges.erudition.symbolism.cartography"] =
-          helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Erudition",
-              "Symbolism",
-              "Cartography",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          );
-
-        updateData["system.knowledges.utilitarian.song"] = {
-          entertaining: helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Utilitarian",
-              "Song",
-              "Entertaining",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          ),
-          martial: helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Utilitarian",
-              "Song",
-              "Martial",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          ),
-        };
-
-        updateData["system.knowledges.utilitarian.dance"] = {
-          aesthetics: helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Utilitarian",
-              "Dance",
-              "Aesthetics",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          ),
-          spinning: helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Utilitarian",
-              "Dance",
-              "Spinning",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Utilitarian"),
-          ),
-        };
       }
       if (actor.type === "non-player-character") {
-        updateData["system.knowledges.utilitarian.-=medecine"] = null;
-        updateData["system.knowledges.erudtion.-=music"] = null;
+        deleteData["system.knowledges.utilitarian.-=medecine"] = null;
+        deleteData["system.knowledges.erudtion.-=music"] = null;
 
         updateData["system.knowledges.erudition.medecine"] =
           helpers.skillInitialValue(
@@ -796,56 +606,10 @@ async function migrateTo_0_3_15() {
             ),
             utils.default_values.character.skill.get_success("Erudition"),
           );
-        updateData["system.knowledges.craftmanship.artistic"] =
-          helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Craftmanship",
-              "Artistic",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          );
-
-        updateData["system.knowledges.erudition.strategy"] =
-          helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Erudition",
-              "Strategy",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Craftmanship"),
-          );
-
-        updateData["system.knowledges.utilitarian.song"] =
-          helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Utilitarian",
-              "Song",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Utilitarian"),
-          );
-        updateData["system.knowledges.utilitarian.dance"] =
-          helpers.skillInitialValue(
-            utils.buildLocalizeString(
-              "Ruleset",
-              "Knowledges",
-              "Utilitarian",
-              "Dance",
-              "Label",
-            ),
-            utils.default_values.character.skill.get_success("Utilitarian"),
-          );
       }
 
       if (actor.type === "hero") {
-        updateData["system.knowledges.-=music"] = null;
+        deleteData["system.knowledges.-=music"] = null;
       }
 
       if (actor.type in ["player-character", "non-player-character", "hero"]) {
@@ -879,25 +643,21 @@ async function migrateTo_0_3_15() {
         }
       }
 
-      console.debug(`UpdateData: ${updateData}`);
-
       console.log(`Migrating Actor document ${actor.name}`);
-      await actor.update(updateData, {
-        enforceTypes: true,
+      await actor.update(deleteData, {
+        enforceTypes: false,
         diff: valid && !flags.persistSourceMigration,
         recursive: !flags.persistSourceMigration,
         render: false,
         performDeletions: true,
       });
+      await actor.update(updateData);
+      if (actor.type === "player-character") {
+        await actor.debug_fix_knowledges();
+      }
     } catch (err) {
       err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
       console.error(err);
     }
   }
-  ui.notifications.info(
-    game.i18n.format("MIGRATION.AtoriaComplete", { version }),
-    {
-      permanent: true,
-    },
-  );
 }

@@ -759,4 +759,33 @@ export default class AtoriaActor extends Actor {
     console.log("Actor");
     console.dir(data);
   }
+
+
+
+  // Debug functions
+  async debug_fix_knowledges() {
+    let updated_knowledges = helpers.getInitialFullSkillSchema(
+      utils.default_values.character.knowledges,
+      "knowledges",
+    );
+
+    Object.keys(this.system.knowledges).forEach((group_key) => {
+      Object.keys(this.system.knowledges[group_key]).forEach((cat_key) => {
+        if (foundry.utils.getType(this.system.knowledges[group_key][cat_key]) === "Object") {
+          Object.keys(this.system.knowledges[group_key][cat_key]).forEach((skill_key) => {
+            if (skill_key in updated_knowledges[group_key][cat_key]
+              && this.system.knowledges[group_key][cat_key][skill_key] !== undefined) {
+              delete updated_knowledges[group_key][cat_key][skill_key]["success"];
+              delete updated_knowledges[group_key][cat_key][skill_key]["critical_success_modifier"];
+              delete updated_knowledges[group_key][cat_key][skill_key]["critical_fumble_modifier"];
+            }
+          });
+        }
+      });
+    });
+
+    this.update({
+      "system.knowledges": updated_knowledges
+    })
+  }
 }
