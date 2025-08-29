@@ -28,9 +28,9 @@ export async function migrateWorld() {
     await migrateTo_0_3_13();
   }
   // 0.3.15: Fix of knowledges
-  // if (foundry.utils.isNewerVersion("0.3.15", current_version)) {
-  //   await migrateTo_0_3_15();
-  // }
+  if (foundry.utils.isNewerVersion("0.3.15", current_version)) {
+    await migrateTo_0_3_15();
+  }
 
   game.settings.set("atoria", "worldLastMigrationVersion", game.system.version);
   ui.notifications.info(
