@@ -1,23 +1,8 @@
 import * as utils from "../../utils/module.mjs";
+import * as helpers from "../../utils/helpers.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
-
-function hasPopoutV2Module() {
-  try {
-    return PopoutV2Module !== undefined;
-  } catch (e) {
-    return false;
-  }
-}
-
-function isPoppedOut(app) {
-  if (hasPopoutV2Module())
-    return PopoutV2Module.singleton.poppedOut.has(app.appId);
-  else {
-    return false;
-  }
-}
 
 export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
   ActorSheetV2,
@@ -45,7 +30,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
           action: "onPopoutV2",
           icon: "fas fa-external-link-alt",
           label: "POPOUT.PopOut",
-          ownership: "LIMITED",
+          ownership: "OWNER",
         },
       ],
     },
@@ -83,8 +68,8 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
   }
 
   static async _onPopoutV2(event, _target) {
-    if (!hasPopoutV2Module()) return;
-    if (isPoppedOut(this)) {
+    if (!helpers.hasPopoutV2Module()) return;
+    if (helpers.isPoppedOut(this)) {
       event.stopPropagation();
       await this.close();
       this.render(true);
@@ -115,7 +100,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     // PopOutV2
     controls.find(
       (c) => c.action === "onPopoutV2" && c.label === "POPOUT.PopOut",
-    ).visible = hasPopoutV2Module();
+    ).visible = helpers.hasPopoutV2Module();
 
     return controls;
   }
@@ -429,7 +414,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
 
-  _onDragOver(event) {}
+  _onDragOver(event) { }
 
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event);

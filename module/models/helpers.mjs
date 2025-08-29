@@ -19,6 +19,7 @@ export function skillField(skill_label, initial_value, required = true) {
       type: new foundry.data.fields.StringField({
         required: true,
         nullable: false,
+        trim: false,
         blank: false,
         textSearch: false,
         initial: "skill",
@@ -28,7 +29,8 @@ export function skillField(skill_label, initial_value, required = true) {
         required: true,
         nullable: false,
         blank: false,
-        textSearch: true,
+        trim: false,
+        textSearch: false,
         initial: skill_label,
         label: "ATORIA.Model.Skill.Label",
       }),
@@ -451,4 +453,34 @@ export function defineRollField(
     },
     { required: true, label: field_label },
   );
+}
+
+export function getInitialFullSkillSchema(skill_type_data, skill_holder_label) {
+  const skill_type_schema = {};
+  Object.keys(skill_type_data).map(function (skill_group_key, _) {
+    const skill_group_list = skill_type_data[skill_group_key];
+    const skill_list = {};
+
+    Object.keys(skill_group_list).forEach(function (skill_category_key, _) {
+      const skill_category_list = skill_group_list[skill_category_key];
+      const skill_list_initial = {};
+
+      skill_category_list.forEach((skill_key) => {
+        skill_list_initial[skill_key] = skillInitialValue(
+          utils.buildLocalizeString(
+            "Ruleset",
+            skill_holder_label,
+            skill_group_key,
+            skill_category_key,
+            skill_key,
+            "Label",
+          ),
+          utils.default_values.character.skill.get_success(skill_group_key),
+        );
+      });
+      skill_list[skill_category_key] = skill_list_initial;
+    });
+    skill_type_schema[skill_group_key] = skill_list;
+  });
+  return skill_type_schema;
 }

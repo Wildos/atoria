@@ -162,8 +162,8 @@ export default class AtoriaChatMessage extends ChatMessage {
       });
       data.system.critical_effect = this.is_critical_success
         ? await TextEditor.enrichHTML(this.system.critical_effect, {
-            rollData: this.getRollData(),
-          })
+          rollData: this.getRollData(),
+        })
         : "";
     }
 
@@ -231,7 +231,6 @@ export default class AtoriaChatMessage extends ChatMessage {
   static async chatListeners(html) {
     html.on("click", "[data-action=rollable]", (event) => {
       event.preventDefault();
-      console.log("chatListeners");
       const skill_title = event.currentTarget;
       const { skillPath } = skill_title.dataset;
       if (skillPath === undefined) return;

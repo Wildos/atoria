@@ -6,6 +6,11 @@ import * as utils from "./utils/module.mjs";
 import RULESET from "./utils/ruleset.mjs";
 
 Hooks.once("init", function () {
+
+  // Debug helpers
+  CONFIG.debug_helpers = {};
+
+
   CONFIG.Actor.trackableAttributes = {
     character: {
       bar: ["health", "mana", "stamina", "sanity", "endurance", "encumbrance"],
@@ -169,6 +174,7 @@ Hooks.once("ready", function () {
 
   // Migration check is only for GM
   if (!game.user.isGM) return;
+
   utils.migration.migrateWorld();
 });
 

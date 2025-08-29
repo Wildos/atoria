@@ -2,6 +2,24 @@ import * as utils from "../utils/module.mjs";
 import * as models from "../models/module.mjs";
 import RULESET from "./ruleset.mjs";
 
+
+
+export function hasPopoutV2Module() {
+  try {
+    return PopoutV2Module !== undefined;
+  } catch (e) {
+    return false;
+  }
+}
+
+export function isPoppedOut(app) {
+  if (hasPopoutV2Module())
+    return PopoutV2Module.singleton.poppedOut.has(app.appId);
+  else {
+    return false;
+  }
+}
+
 export async function confirmDeletion(element_name) {
   element_name =
     element_name ?? game.i18n.localize("ATORIA.Dialog.Selected_element");
@@ -274,8 +292,8 @@ export async function itemRollDialog(item, need_roll = true) {
       default_roll_mode: is_blind_roll
         ? "blind"
         : convertRollModeToDesiredVisibility(
-            game.settings.get("core", "rollMode"),
-          ),
+          game.settings.get("core", "rollMode"),
+        ),
     },
   );
   const return_format = {
@@ -331,7 +349,7 @@ export async function itemRollDialog(item, need_roll = true) {
           if (item.type === "weapon") {
             formDataObject["chosen_skill_data"].damage_roll =
               picked_skill_data.path ===
-              "system.skills.combative.weapon.focuser"
+                "system.skills.combative.weapon.focuser"
                 ? item.system.focuser_damage_roll
                 : item.system.damage_roll;
           }
@@ -363,7 +381,7 @@ export async function itemRollDialog(item, need_roll = true) {
         for (const actable_modifier of associated_actable_modifiers) {
           if (
             formDataObject[
-              `associated_actable_modifiers.${actable_modifier._id}`
+            `associated_actable_modifiers.${actable_modifier._id}`
             ]
           )
             formDataObject["used_actable_modifiers"].push(actable_modifier);
@@ -398,8 +416,8 @@ export async function skillRollDialog(actor, skill_path) {
       default_roll_mode: is_blind_roll
         ? "blind"
         : convertRollModeToDesiredVisibility(
-            game.settings.get("core", "rollMode"),
-          ),
+          game.settings.get("core", "rollMode"),
+        ),
     },
   );
   const return_format = {
