@@ -95,13 +95,13 @@ export default class AtoriaPC extends atoria_models.AtoriaActorBase {
           min: 0,
           label: "ATORIA.Ruleset.Healing_inactive.Amount",
         }),
-        herbs: new fields.BooleanField({
+        medical: new fields.BooleanField({
           required: true,
           nullable: false,
           initial: false,
-          label: "ATORIA.Ruleset.Healing_inactive.Herbs",
+          label: "ATORIA.Ruleset.Healing_inactive.Medical",
         }),
-        medical: new fields.BooleanField({
+        medical_2: new fields.BooleanField({
           required: true,
           nullable: false,
           initial: false,

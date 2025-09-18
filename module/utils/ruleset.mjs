@@ -61,8 +61,8 @@ RULESET["character"] = class ActorRuleset {
         restored_attributes["health"] = Math.floor(actor.system.health.max / 4);
         restored_attributes["mana"] = actor.system.mana.max;
         restored_attributes["healing_inactive.amount"] = -2;
-        restored_attributes["healing_inactive.herbs"] = false;
         restored_attributes["healing_inactive.medical"] = false;
+        restored_attributes["healing_inactive.medical_2"] = false;
       case "rest":
         restored_attributes["mana"] =
           "mana" in restored_attributes
@@ -171,47 +171,47 @@ RULESET["character"] = class ActorRuleset {
 
   static getActiveKeywords(actor) {
     const keywords_active = new Set();
-    const automatized_keywords_actor_related = [
-      "obstruct",
-      "obstruct_more",
-      "noisy",
-      "noisy_more",
-      "guard",
-      "guard_more",
-      "protection",
-      "protection_more",
-    ];
-    for (const item of actor.items) {
-      const item_keywords_active =
-        RULESET.item.getAutomatizedActiveKeywords(item);
+    // const automatized_keywords_actor_related = [
+    //   "obstruct",
+    //   "obstruct_more",
+    //   "noisy",
+    //   "noisy_more",
+    //   "guard",
+    //   "guard_more",
+    //   "protection",
+    //   "protection_more",
+    // ];
+    // for (const item of actor.items) {
+    //   const item_keywords_active =
+    //     RULESET.item.getAutomatizedActiveKeywords(item);
 
-      for (const keyword of item_keywords_active) {
-        if (!automatized_keywords_actor_related.includes(keyword)) {
-          // keyword not actor related
-          continue;
-        }
-        if (keywords_active.has(`${keyword}_more`)) {
-          // already has more version
-          continue;
-        }
-        if (keyword.endsWith("_more")) {
-          // keyword_more
-          const base_keyword = keyword.substring(
-            0,
-            keyword.length - "_more".length,
-          );
-          keywords_active.delete(base_keyword);
-          keywords_active.add(keyword);
-        } else if (keywords_active.has(keyword)) {
-          // keyword & keyword
-          keywords_active.delete(keyword);
-          keywords_active.add(`${keyword}_more`);
-        } else {
-          // keyword is new to the set
-          keywords_active.add(keyword);
-        }
-      }
-    }
+    //   for (const keyword of item_keywords_active) {
+    //     if (!automatized_keywords_actor_related.includes(keyword)) {
+    //       // keyword not actor related
+    //       continue;
+    //     }
+    //     if (keywords_active.has(`${keyword}_more`)) {
+    //       // already has more version
+    //       continue;
+    //     }
+    //     if (keyword.endsWith("_more")) {
+    //       // keyword_more
+    //       const base_keyword = keyword.substring(
+    //         0,
+    //         keyword.length - "_more".length,
+    //       );
+    //       keywords_active.delete(base_keyword);
+    //       keywords_active.add(keyword);
+    //     } else if (keywords_active.has(keyword)) {
+    //       // keyword & keyword
+    //       keywords_active.delete(keyword);
+    //       keywords_active.add(`${keyword}_more`);
+    //     } else {
+    //       // keyword is new to the set
+    //       keywords_active.add(keyword);
+    //     }
+    //   }
+    // }
     return keywords_active;
   }
 
@@ -219,109 +219,109 @@ RULESET["character"] = class ActorRuleset {
     const keywords_active = this.getActiveKeywords(actor);
     const skill_associated_keywords_data = [];
 
-    const NOISY_SKILL_SILENCE = "system.skills.physical.slyness.silence";
-    const NOISY_SKILL_STEALTH = "system.skills.physical.slyness.stealth";
-    const SKILL_PARRY = "system.skills.combative.reflex.parry";
+    // const NOISY_SKILL_SILENCE = "system.skills.physical.slyness.silence";
+    // const NOISY_SKILL_STEALTH = "system.skills.physical.slyness.stealth";
+    // const SKILL_PARRY = "system.skills.combative.reflex.parry";
 
-    for (const keyword of keywords_active.values()) {
-      switch (keyword) {
-        case "noisy":
-          // handled by the skill roll, -1 DoS silence / Furtivité when moving
-          if (
-            NOISY_SKILL_SILENCE.startsWith(skill_path) ||
-            NOISY_SKILL_STEALTH.startsWith(skill_path)
-          ) {
-            skill_associated_keywords_data.push({
-              name: "noisy",
-              label: "ATORIA.Ruleset.Keywords.Noisy",
-              description: "ATORIA.Ruleset.Keywords_description.Noisy",
-              skill_alteration_type: "one_degree_of_success_loss",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.one_degree_of_success_loss,
-            });
-          }
-          break;
-        case "noisy_more":
-          // handled by the skill roll, 1 Desavantage silence / Furtivité when moving
-          if (
-            NOISY_SKILL_SILENCE.startsWith(skill_path) ||
-            NOISY_SKILL_STEALTH.startsWith(skill_path)
-          ) {
-            skill_associated_keywords_data.push({
-              name: "noisy_more",
-              label: game.i18n.localize("ATORIA.Ruleset.Keywords.Noisy_more"),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Noisy_more",
-              ),
-              skill_alteration_type: "disadvantage",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.disadvantage,
-            });
-          }
-          break;
-        case "guard":
-          // handled by the skill roll, +1 DoS Parry, against cac attack
-          if (SKILL_PARRY.startsWith(skill_path)) {
-            skill_associated_keywords_data.push({
-              name: "guard",
-              label: game.i18n.localize("ATORIA.Ruleset.Keywords.Guard"),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Guard",
-              ),
-              skill_alteration_type: "one_degree_of_success_gain",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.one_degree_of_success_gain,
-            });
-          }
-          break;
-        case "guard_more":
-          // handled by the skill roll, +1 DoS Parry, against cac attack
-          if (SKILL_PARRY.startsWith(skill_path)) {
-            skill_associated_keywords_data.push({
-              name: "guard",
-              label: game.i18n.localize("ATORIA.Ruleset.Keywords.Guard"),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Guard",
-              ),
-              skill_alteration_type: "one_degree_of_success_gain",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.one_degree_of_success_gain,
-            });
-          }
-          break;
-        case "protection":
-          // handled by the skill roll, +1 DoS Parry, against range attack
-          if (SKILL_PARRY.startsWith(skill_path)) {
-            skill_associated_keywords_data.push({
-              name: "protection",
-              label: game.i18n.localize("ATORIA.Ruleset.Keywords.Protection"),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Protection",
-              ),
-              skill_alteration_type: "one_degree_of_success_gain",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.one_degree_of_success_gain,
-            });
-          }
-          break;
-        case "protection_more":
-          // handled by the skill roll, 1 avantage Parry, against range attack
-          if (SKILL_PARRY.startsWith(skill_path)) {
-            skill_associated_keywords_data.push({
-              name: "protection_more",
-              label: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords.Protection_more",
-              ),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Protection_more",
-              ),
-              skill_alteration_type: "advantage",
-              skill_alteration_type_label: RULESET.skill_alterations.advantage,
-            });
-          }
-          break;
-      }
-    }
+    // for (const keyword of keywords_active.values()) {
+    //   switch (keyword) {
+    //     case "noisy":
+    //       // handled by the skill roll, -1 DoS silence / Furtivité when moving
+    //       if (
+    //         NOISY_SKILL_SILENCE.startsWith(skill_path) ||
+    //         NOISY_SKILL_STEALTH.startsWith(skill_path)
+    //       ) {
+    //         skill_associated_keywords_data.push({
+    //           name: "noisy",
+    //           label: "ATORIA.Ruleset.Keywords.Noisy",
+    //           description: "ATORIA.Ruleset.Keywords_description.Noisy",
+    //           skill_alteration_type: "one_degree_of_success_loss",
+    //           skill_alteration_type_label:
+    //             RULESET.skill_alterations.one_degree_of_success_loss,
+    //         });
+    //       }
+    //       break;
+    //     case "noisy_more":
+    //       // handled by the skill roll, 1 Desavantage silence / Furtivité when moving
+    //       if (
+    //         NOISY_SKILL_SILENCE.startsWith(skill_path) ||
+    //         NOISY_SKILL_STEALTH.startsWith(skill_path)
+    //       ) {
+    //         skill_associated_keywords_data.push({
+    //           name: "noisy_more",
+    //           label: game.i18n.localize("ATORIA.Ruleset.Keywords.Noisy_more"),
+    //           description: game.i18n.localize(
+    //             "ATORIA.Ruleset.Keywords_description.Noisy_more",
+    //           ),
+    //           skill_alteration_type: "disadvantage",
+    //           skill_alteration_type_label:
+    //             RULESET.skill_alterations.disadvantage,
+    //         });
+    //       }
+    //       break;
+    //     case "guard":
+    //       // handled by the skill roll, +1 DoS Parry, against cac attack
+    //       if (SKILL_PARRY.startsWith(skill_path)) {
+    //         skill_associated_keywords_data.push({
+    //           name: "guard",
+    //           label: game.i18n.localize("ATORIA.Ruleset.Keywords.Guard"),
+    //           description: game.i18n.localize(
+    //             "ATORIA.Ruleset.Keywords_description.Guard",
+    //           ),
+    //           skill_alteration_type: "one_degree_of_success_gain",
+    //           skill_alteration_type_label:
+    //             RULESET.skill_alterations.one_degree_of_success_gain,
+    //         });
+    //       }
+    //       break;
+    //     case "guard_more":
+    //       // handled by the skill roll, +1 DoS Parry, against cac attack
+    //       if (SKILL_PARRY.startsWith(skill_path)) {
+    //         skill_associated_keywords_data.push({
+    //           name: "guard",
+    //           label: game.i18n.localize("ATORIA.Ruleset.Keywords.Guard"),
+    //           description: game.i18n.localize(
+    //             "ATORIA.Ruleset.Keywords_description.Guard",
+    //           ),
+    //           skill_alteration_type: "one_degree_of_success_gain",
+    //           skill_alteration_type_label:
+    //             RULESET.skill_alterations.one_degree_of_success_gain,
+    //         });
+    //       }
+    //       break;
+    //     case "protection":
+    //       // handled by the skill roll, +1 DoS Parry, against range attack
+    //       if (SKILL_PARRY.startsWith(skill_path)) {
+    //         skill_associated_keywords_data.push({
+    //           name: "protection",
+    //           label: game.i18n.localize("ATORIA.Ruleset.Keywords.Protection"),
+    //           description: game.i18n.localize(
+    //             "ATORIA.Ruleset.Keywords_description.Protection",
+    //           ),
+    //           skill_alteration_type: "one_degree_of_success_gain",
+    //           skill_alteration_type_label:
+    //             RULESET.skill_alterations.one_degree_of_success_gain,
+    //         });
+    //       }
+    //       break;
+    //     case "protection_more":
+    //       // handled by the skill roll, 1 avantage Parry, against range attack
+    //       if (SKILL_PARRY.startsWith(skill_path)) {
+    //         skill_associated_keywords_data.push({
+    //           name: "protection_more",
+    //           label: game.i18n.localize(
+    //             "ATORIA.Ruleset.Keywords.Protection_more",
+    //           ),
+    //           description: game.i18n.localize(
+    //             "ATORIA.Ruleset.Keywords_description.Protection_more",
+    //           ),
+    //           skill_alteration_type: "advantage",
+    //           skill_alteration_type_label: RULESET.skill_alterations.advantage,
+    //         });
+    //       }
+    //       break;
+    //   }
+    // }
     return skill_associated_keywords_data;
   }
 
@@ -436,48 +436,48 @@ RULESET["item"] = class ItemRuleset {
       "throwable_more",
     ];
     const keywords_active = [];
-    for (const keyword of Object.keys(item.system.keywords)) {
-      if (
-        automatized_keywords.includes(keyword) &&
-        item.system.keywords[keyword]
-      ) {
-        keywords_active.push(keyword);
-      }
-    }
+    // for (const keyword of Object.keys(item.system.keywords)) {
+    //   if (
+    //     automatized_keywords.includes(keyword) &&
+    //     item.system.keywords[keyword]
+    //   ) {
+    //     keywords_active.push(keyword);
+    //   }
+    // }
     return keywords_active;
   }
 
   static getActiveKeywords(item) {
     if (!["kit", "weapon", "armor"].includes(item.type)) return [];
     const keywords_active = new Set();
-    const ignored_key = ["preserve_data"];
-    for (const keyword of Object.keys(item.system.keywords)) {
-      if (item.system.keywords[keyword]) {
-        if (
-          ignored_key.includes(keyword) ||
-          keywords_active.has(`${keyword}_more`)
-        ) {
-          // ignored or already has more version
-          continue;
-        }
-        if (keyword.endsWith("_more")) {
-          // keyword_more
-          const base_keyword = keyword.substring(
-            0,
-            keyword.length - "_more".length,
-          );
-          keywords_active.delete(base_keyword);
-          keywords_active.add(keyword);
-        } else if (keywords_active.has(keyword)) {
-          // keyword & keyword
-          keywords_active.delete(keyword);
-          keywords_active.add(`${keyword}_more`);
-        } else {
-          // keyword is new to the set
-          keywords_active.add(keyword);
-        }
-      }
-    }
+    // const ignored_key = ["preserve_data"];
+    // for (const keyword of Object.keys(item.system.keywords)) {
+    //   if (item.system.keywords[keyword]) {
+    //     if (
+    //       ignored_key.includes(keyword) ||
+    //       keywords_active.has(`${keyword}_more`)
+    //     ) {
+    //       // ignored or already has more version
+    //       continue;
+    //     }
+    //     if (keyword.endsWith("_more")) {
+    //       // keyword_more
+    //       const base_keyword = keyword.substring(
+    //         0,
+    //         keyword.length - "_more".length,
+    //       );
+    //       keywords_active.delete(base_keyword);
+    //       keywords_active.add(keyword);
+    //     } else if (keywords_active.has(keyword)) {
+    //       // keyword & keyword
+    //       keywords_active.delete(keyword);
+    //       keywords_active.add(`${keyword}_more`);
+    //     } else {
+    //       // keyword is new to the set
+    //       keywords_active.add(keyword);
+    //     }
+    //   }
+    // }
     return keywords_active;
   }
 
@@ -540,6 +540,7 @@ RULESET["keywords"] = {
       stamina: "ATORIA.Ruleset.Stamina",
       sanity: "ATORIA.Ruleset.Sanity",
       endurance: "ATORIA.Ruleset.Endurance",
+      all: "ATORIA.Ruleset.All",
     },
   },
 };

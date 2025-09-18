@@ -1099,12 +1099,59 @@
 .system-atoria > .item.sheet .atoria-keywords-area input[type=checkbox]:not(:checked) + input[type=checkbox].more {
   display: none;
 }
-.system-atoria > .item.sheet .atoria-keywords-area input[type=checkbox].more::after {
-  --checkbox-content: "\2b" !important;
+.system-atoria > .item.sheet .atoria-keywords-area .visual-numbered-input .input-title {
+  display: inline-block;
+  min-width: 80px;
+  max-width: 80px;
 }
-.system-atoria > .item.sheet .atoria-keywords-area .boolean-area {
+.system-atoria > .item.sheet .atoria-keywords-area .visual-numbered-input input[type="checkbox"] {
+  --checkbox-size: 14px;
+}
+.system-atoria > .item.sheet .atoria-keywords-area .visual-numbered-input input[type="checkbox"]:not(:first-of-type) {
+  --checkbox-size: 12px;
+  margin-left: 2px;
+  border: none;
+}
+.system-atoria > .item.sheet .atoria-keywords-area .visual-numbered-input input[type=checkbox]:not(:first-of-type)::after {
+  --checkbox-content: "\2b";
+  font-size: var(--checkbox-size);
+}
+.system-atoria > .item.sheet .atoria-keywords-area .visual-numbered-input input[type="number"] {
+  margin-left: 3px;
+  max-width: var(--atoria-input-width);
+}
+.system-atoria > .item.sheet .atoria-keywords-area .visual-numbered-input input[type="text"] {
+  margin-left: 3px;
+}
+.system-atoria > .item.sheet .atoria-keywords-area .simple-area {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  row-gap: 3px;
+}
+.system-atoria > .item.sheet .atoria-keywords-area .complex-area {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3px;
+}
+.system-atoria > .item.sheet .atoria-keywords-area .complex-area input[type="checkbox"] {
+  --checkbox-size: 14px;
+}
+.system-atoria > .item.sheet .atoria-keywords-area .complex-area input[type="number"] {
+  margin-left: 3px;
+  max-width: var(--atoria-input-width);
+}
+.system-atoria > .item.sheet .atoria-keywords-area .complex-area input[type="text"],
+.system-atoria > .item.sheet .atoria-keywords-area .complex-area select {
+  margin-left: 3px;
+}
+.system-atoria > .item.sheet .atoria-keywords-area .complex-area .form-group {
+  flex: 0;
+  min-width: fit-content;
+}
+.system-atoria > .item.sheet .atoria-keywords-area .complex-area .form-group label {
+  display: inline-block;
+  min-width: 80px;
+  max-width: 80px;
 }
 .system-atoria .atoria-player-character-page {
   display: flex;

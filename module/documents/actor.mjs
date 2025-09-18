@@ -575,28 +575,6 @@ export default class AtoriaActor extends Actor {
       return `<input type='checkbox' ${is_true ? "checked" : ""} disabled>`;
     };
 
-    // Herbs inactive
-    tmp_value = this.system.healing_inactive.herbs;
-    tmp_new_value =
-      "healing_inactive.herbs" in attribute_changes
-        ? attribute_changes["healing_inactive.herbs"]
-        : tmp_value;
-    if (tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(
-              this.system.schema.fields.healing_inactive.fields.herbs.label,
-            ),
-            previous: checkboxVisual(tmp_value),
-            new: checkboxVisual(tmp_new_value),
-          },
-        ),
-      );
-      update_list["system.healing_inactive.herbs"] = tmp_new_value;
-    }
-
     // Medical inactive
     tmp_value = this.system.healing_inactive.medical;
     tmp_new_value =
@@ -617,6 +595,27 @@ export default class AtoriaActor extends Actor {
         ),
       );
       update_list["system.healing_inactive.medical"] = tmp_new_value;
+    }
+    // Medical inactive 2
+    tmp_value = this.system.healing_inactive.medical_2;
+    tmp_new_value =
+      "healing_inactive.medical_2" in attribute_changes
+        ? attribute_changes["healing_inactive.medical_2"]
+        : tmp_value;
+    if (tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(
+              this.system.schema.fields.healing_inactive.fields.medical_2.label,
+            ),
+            previous: checkboxVisual(tmp_value),
+            new: checkboxVisual(tmp_new_value),
+          },
+        ),
+      );
+      update_list["system.healing_inactive.medical_2"] = tmp_new_value;
     }
 
     // Resurrection inactive
@@ -760,8 +759,6 @@ export default class AtoriaActor extends Actor {
     console.dir(data);
   }
 
-
-
   // Debug functions
   async debug_fix_knowledges() {
     let updated_knowledges = helpers.getInitialFullSkillSchema(
@@ -771,21 +768,35 @@ export default class AtoriaActor extends Actor {
 
     Object.keys(this.system.knowledges).forEach((group_key) => {
       Object.keys(this.system.knowledges[group_key]).forEach((cat_key) => {
-        if (foundry.utils.getType(this.system.knowledges[group_key][cat_key]) === "Object") {
-          Object.keys(this.system.knowledges[group_key][cat_key]).forEach((skill_key) => {
-            if (skill_key in updated_knowledges[group_key][cat_key]
-              && this.system.knowledges[group_key][cat_key][skill_key] !== undefined) {
-              delete updated_knowledges[group_key][cat_key][skill_key]["success"];
-              delete updated_knowledges[group_key][cat_key][skill_key]["critical_success_modifier"];
-              delete updated_knowledges[group_key][cat_key][skill_key]["critical_fumble_modifier"];
-            }
-          });
+        if (
+          foundry.utils.getType(this.system.knowledges[group_key][cat_key]) ===
+          "Object"
+        ) {
+          Object.keys(this.system.knowledges[group_key][cat_key]).forEach(
+            (skill_key) => {
+              if (
+                skill_key in updated_knowledges[group_key][cat_key] &&
+                this.system.knowledges[group_key][cat_key][skill_key] !==
+                  undefined
+              ) {
+                delete updated_knowledges[group_key][cat_key][skill_key][
+                  "success"
+                ];
+                delete updated_knowledges[group_key][cat_key][skill_key][
+                  "critical_success_modifier"
+                ];
+                delete updated_knowledges[group_key][cat_key][skill_key][
+                  "critical_fumble_modifier"
+                ];
+              }
+            },
+          );
         }
       });
     });
 
     this.update({
-      "system.knowledges": updated_knowledges
-    })
+      "system.knowledges": updated_knowledges,
+    });
   }
 }
