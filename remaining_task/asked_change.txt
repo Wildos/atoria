@@ -1,14 +1,31 @@
 
 
-Tracking des valeurs actuelle sur la fiche : Source & Preservé
-
 Tracking utilisable des mot-clefs
 
 Revoir les fonction lié au keywords: ruleset & rolldialog
 
+Jeté => Possibilité de jeter des armes avec "Jeté"
+"Polyvalent" => +1 sur degat arme
 
-Voir regle de comptabilisation: Bruyant, Genant, Bourru, etc...
-=> Prend en compte les equipements non équipé ?
------------------------------------------------------------------------
--------------------------- DONE ---------------------------------------
+Attaque de focalisateur consomme la reserve (sauf les crit)
+
+Track utilisation
+- Garde + Bonus sur jet
+- Protégé + use sur jet
+- Bourru + Bonus sur jet
+- Coriace
+- Prise + Bonus sur jet
+- Resistant
+- Solide
+- Stable + Bonus sur jet
+- Direct
+
+Bonus sur jet:
+- Jeté
+- Protection
+- Bruyant
+
+
+---------------------------------------------------------------
+-------------------------- DONE -------------------------------
 ---------------------------------------------------------------

@@ -27,7 +27,7 @@ export default class AtoriaActorNonPlayerCharacterSheetV2 extends AtoriaActorShe
         context.items = await Promise.all(
           this.actor.items.map(async (i) => {
             i.systemFields = i.system.schema.fields;
-            i.keywords_list = i.getKeywordList();
+            i.keywords_recap = i.getKeywordRecap();
             return i;
           }),
         );

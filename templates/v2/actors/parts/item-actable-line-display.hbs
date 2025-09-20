@@ -131,8 +131,56 @@ data-drag="Item" data-item-id="{{item._id}}">
     {{/if}}
 
     {{#if (eq item.type "weapon")}}
-        {{#if item.keywords_list}}
-        <label>{{localize item.systemFields.keywords.label}}: {{item.keywords_list}}</label>
+        {{#if item.keywords_recap.list}}
+        <label>{{localize item.systemFields.keywords.label}}: {{item.keywords_recap.list}}</label>
+        {{/if}}
+        {{#if item.keywords_recap.has_preserve}}
+        <label>{{localize item.systemFields.keywords.fields.preserve.label}} {{item.system.keywords.preserve.max_amount}}
+            {{localize (lookup item.systemFields.keywords.fields.preserve.fields.type.choices
+                item.system.keywords.preserve.type)}}
+            {{item.system.keywords.preserve.increment}}</label>
+            {{#if (includes (arraytize "all" "mana") item.system.keywords.preserve.type)}}
+            <label>{{localize item.systemFields.keywords.fields.preserve_mana.label}}:
+                <input class="item-update float-input" data-name="system.keywords.preserve_mana"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_mana}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_mana.label}}" {{disabled (not @root.editable)}}/>
+            </label>
+            {{/if}}
+            {{#if (includes (arraytize "all" "health") item.system.keywords.preserve.type)}}
+            <label>{{localize item.systemFields.keywords.fields.preserve_health.label}}:
+                <input class="item-update float-input" data-name="system.keywords.preserve_health"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_health}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_health.label}}" {{disabled (not @root.editable)}}/>
+            </label>
+            {{/if}}
+            {{#if (includes (arraytize "all" "stamina") item.system.keywords.preserve.type)}}
+            <label>{{localize item.systemFields.keywords.fields.preserve_stamina.label}}:
+                <input class="item-update float-input" data-name="system.keywords.preserve_stamina"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_stamina}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_stamina.label}}" {{disabled (not @root.editable)}}/>
+            </label>
+            {{/if}}
+            {{#if (includes (arraytize "all" "endurance") item.system.keywords.preserve.type)}}
+            <label>{{localize item.systemFields.keywords.fields.preserve_endurance.label}}:
+                <input class="item-update float-input" data-name="system.keywords.preserve_endurance"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_endurance}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_endurance.label}}" {{disabled (not @root.editable)}}/>
+            </label>
+            {{/if}}
+            {{#if (includes (arraytize "all" "sanity") item.system.keywords.preserve.type)}}
+            <label>{{localize item.systemFields.keywords.fields.preserve_sanity.label}}:
+                <input class="item-update float-input" data-name="system.keywords.preserve_sanity"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_sanity}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_sanity.label}}" {{disabled (not @root.editable)}}/>
+            </label>
+            {{/if}}
+        {{/if}}
+        {{#if item.keywords_recap.has_reserve}}
+        <label>{{localize item.systemFields.keywords.fields.reserve.label}}
+            <input class="item-update float-input" data-name="system.keywords.reserve_current"
+            type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.reserve_current}}"
+            data-tooltip="{{localize item.systemFields.keywords.fields.reserve_current.label}}" {{disabled (not @root.editable)}}/>
+            / {{item.system.keywords.reserve_max}}</label>
         {{/if}}
 
         {{#if item.system.range}}

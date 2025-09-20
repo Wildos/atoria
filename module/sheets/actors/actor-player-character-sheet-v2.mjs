@@ -31,6 +31,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         buttons: [0],
       },
       editHealingInactive: this._editHealingInactive,
+      toggle_keyword_direct: this._toggle_keyword_direct,
       createSkill: this._createSkill,
       deleteSkill: this._deleteSkill,
       createItem: this._createItem,
@@ -60,7 +61,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     },
   };
 
-
   /** @override */
   _getHeaderControls() {
     const controls = this.options.window.controls;
@@ -86,9 +86,10 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
 
     // DEBUG
     controls.find(
-      (c) => c.action === "onFixKnowledges" && c.label === "ATORIA.DEBUG.FixKnowledges",
+      (c) =>
+        c.action === "onFixKnowledges" &&
+        c.label === "ATORIA.DEBUG.FixKnowledges",
     ).visible = game.user?.isGM;
-
 
     return controls;
   }
@@ -111,6 +112,21 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
       new_amount -= 1;
     await this.actor.update({
       "system.healing_inactive.amount": new_amount,
+    });
+  }
+
+  static async _toggle_keyword_direct(_event, target) {
+    const { type } = target.dataset;
+    let new_value = this.actor.system.keywords_used.direct;
+    if (new_value.includes(type)) {
+      new_value = new_value.filter(function (item) {
+        return item !== type;
+      });
+    } else {
+      new_value.push(type);
+    }
+    await this.actor.update({
+      "system.keywords_used.direct": new_value,
     });
   }
 
@@ -344,7 +360,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         context.items = await Promise.all(
           this.actor.items.map(async (i) => {
             i.systemFields = i.system.schema.fields;
-            i.keywords_list = i.getKeywordList();
+            i.keywords_recap = i.getKeywordRecap();
             return i;
           }),
         );
@@ -617,7 +633,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         context.items = await Promise.all(
           this.actor.items.map(async (i) => {
             i.systemFields = i.system.schema.fields;
-            i.keywords_list = i.getKeywordList();
+            i.keywords_recap = i.getKeywordRecap();
             return i;
           }),
         );
@@ -684,6 +700,62 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           },
         };
         context.action_items = action_items;
+
+        {
+          const tracked_keywords = [
+            "reach",
+            "brute",
+            "guard",
+            "penetrating",
+            "protect",
+            "gruff",
+            "tough",
+            "grip",
+            "resistant",
+            "sturdy",
+            "stable",
+            "direct",
+          ];
+          context.tracked_keywords_data = {};
+          context.tracked_keywords = [];
+          for (let keyword in this.actor.active_keywords_data) {
+            if (tracked_keywords.includes(keyword)) {
+              if (keyword === "direct") {
+                context.tracked_keywords.push("direct");
+                context.tracked_keywords_data["direct"] = {};
+                for (let direct_type in this.actor.active_keywords_data[
+                  "direct"
+                ]) {
+                  context.tracked_keywords_data["direct"][direct_type] = {
+                    checked:
+                      this.actor.system.keywords_used.direct.includes(
+                        direct_type,
+                      ),
+                    time_phase: utils.ruleset.keywords.get_time_phase(
+                      "direct",
+                      this.actor.active_keywords_data["direct"][direct_type],
+                    ),
+                  };
+                }
+              } else {
+                context.tracked_keywords.push(keyword);
+                context.tracked_keywords_data[keyword] = {
+                  label: utils.ruleset.keywords.get_localized_name(keyword),
+                  time_phase: utils.ruleset.keywords.get_time_phase(
+                    keyword,
+                    this.actor.active_keywords_data[keyword],
+                  ),
+                };
+              }
+            }
+          }
+          context.tracked_keywords.sort(function (key_a, key_b) {
+            return utils.ruleset.keywords
+              .get_localized_name(key_a)
+              .localeCompare(utils.ruleset.keywords.get_localized_name(key_b));
+          });
+        }
+
         break;
       case "action_page":
         context.is_active_page = this.tabGroups["primary"] === "action";

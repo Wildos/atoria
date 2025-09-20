@@ -20,12 +20,12 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
         max: 3,
         label: "ATORIA.Ruleset.Keywords.Reach",
       }),
-      brutal: new fields.NumberField({
+      brute: new fields.NumberField({
         required: true,
         initial: 0,
         min: 0,
         max: 2,
-        label: "ATORIA.Ruleset.Keywords.Brutal",
+        label: "ATORIA.Ruleset.Keywords.Brute",
       }),
       equip: new fields.NumberField({
         required: true,
@@ -167,12 +167,12 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
         max: 2,
         label: "ATORIA.Ruleset.Keywords.Obstruct",
       }),
-      prise: new fields.NumberField({
+      grip: new fields.NumberField({
         required: true,
         initial: 0,
         min: 0,
         max: 4,
-        label: "ATORIA.Ruleset.Keywords.Prise",
+        label: "ATORIA.Ruleset.Keywords.Grip",
       }),
       resistant: new fields.NumberField({
         required: true,
@@ -250,32 +250,32 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
         required: true,
         nullable: false,
         initial: 0,
-        label: "ATORIA.Ruleset.Mana",
+        label: "ATORIA.Ruleset.Keywords.PreserveMana",
       }),
       preserve_health: new fields.NumberField({
         required: true,
         nullable: false,
         initial: 0,
-        label: "ATORIA.Ruleset.Health",
+        label: "ATORIA.Ruleset.Keywords.PreserveHealth",
       }),
       preserve_stamina: new fields.NumberField({
         required: true,
         nullable: false,
         initial: 0,
-        label: "ATORIA.Ruleset.Stamina",
+        label: "ATORIA.Ruleset.Keywords.PreserveStamina",
       }),
       preserve_endurance: new fields.NumberField({
         required: true,
         nullable: false,
         initial: 0,
         step: 5,
-        label: "ATORIA.Ruleset.Endurance",
+        label: "ATORIA.Ruleset.Keywords.PreserveEndurance",
       }),
       preserve_sanity: new fields.NumberField({
         required: true,
         nullable: false,
         initial: 0,
-        label: "ATORIA.Ruleset.Sanity",
+        label: "ATORIA.Ruleset.Keywords.PreserveSanity",
       }),
     };
   }

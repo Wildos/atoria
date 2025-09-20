@@ -539,7 +539,12 @@ export default class AtoriaItem extends Item {
     );
   }
 
-  getKeywordList() {
+  getKeywordRecap() {
+    let keywords_recap = {
+      list: "",
+      has_preserve: false,
+      has_reserve: false,
+    };
     if (
       [
         "feature",
@@ -550,40 +555,52 @@ export default class AtoriaItem extends Item {
         "incantatory-addition",
       ].includes(this.type)
     ) {
-      return [];
+      return keywords_recap;
     }
-    let keywords_list = [];
 
     const active_keywords = Array.from(
       utils.ruleset.item.getActiveKeywords(this),
     );
-    const special_keyword = ["preserve"];
+    let keywords_list = [];
+    const get_pluses_string = function (value) {
+      if (value <= 1) {
+        return "";
+      } else {
+        let pluses = "";
+        for (let i = 1; i < value; i++) {
+          pluses += "+";
+        }
+        return pluses;
+      }
+    };
+    const special_keyword = ["preserve", "reserve", "direct"];
     for (const keyword of active_keywords) {
       if (special_keyword.includes(keyword)) {
         switch (keyword) {
           case "preserve":
+            keywords_recap.has_preserve = true;
+            break;
+          case "reserve":
+            keywords_recap.has_reserve = true;
+            break;
+          case "direct":
             keywords_list.push(
-              game.i18n.format("ATORIA.Ruleset.Keywords.Preserve.Recap", {
-                amount: this.system.keywords.preserve_data.max_amount,
-                type: game.i18n.localize(
-                  utils.buildLocalizeString(
-                    "Ruleset",
-                    this.system.keywords.preserve_data.type,
-                  ),
-                ),
-                increment: this.system.keywords.preserve_data.increment,
-              }),
+              game.i18n.format("ATORIA.Ruleset.Keywords.Direct_recap", {
+                type: this.system.keywords.direct_type,
+              }) + get_pluses_string(this.system.keywords.direct),
             );
             break;
         }
       } else {
         keywords_list.push(
-          game.i18n.localize(this.systemFields.keywords.fields[keyword]?.label),
+          game.i18n.localize(
+            this.systemFields.keywords.fields[keyword]?.label,
+          ) + get_pluses_string(this.system.keywords[keyword]),
         );
       }
     }
-
-    return keywords_list.join(", ");
+    keywords_recap.list = keywords_list.join(", ");
+    return keywords_recap;
   }
 
   onChatButton(data) {

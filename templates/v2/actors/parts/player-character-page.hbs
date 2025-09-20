@@ -96,6 +96,34 @@
             {{/each}}
             </ul>
 
+            <ul class="atoria-keywords">
+                {{#each tracked_keywords as |keyword idx|}}
+                    {{#if (ne keyword "direct")}}
+                       {{#with (lookup ../tracked_keywords_data keyword) as |keyword_data|}}
+                        <li>
+                            {{formInput (lookup ../../systemFields.keywords_used.fields keyword) value=(lookup ../../actor.system.keywords_used keyword)  disabled=(not @root.editable) }}
+                            {{{keyword_data.label}}}:
+                            <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
+                        </li>
+                       {{/with}}
+                    {{/if}}
+                {{/each}}
+                {{#if (lookup tracked_keywords_data "direct")}}
+                    {{#with (lookup tracked_keywords_data "direct") as |keyword_type_data|}}
+                    {{#each keyword_type_data as | keyword_data direct_type|}}
+                        <li><input type="checkbox"
+                            data-action="toggle_keyword_direct"
+                            data-type="{{direct_type}}"
+                            {{#if keyword_data.checked}}checked{{/if}}
+                            >
+                            {{{direct_type}}} {{localize "ATORIA.Ruleset.Keywords.Direct"}}:
+                            <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
+                        </li>
+                    {{/each}}
+                    {{/with}}
+                {{/if}}
+            </ul>
+
             <div class="atoria-horizontal-bar flexrow colored">
                 <h5 class="title">
                     {{localize "ATORIA.Sheet.Feature.Title"}}

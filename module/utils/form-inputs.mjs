@@ -46,7 +46,6 @@ export function visualNumberInput(field, config) {
   }
 
   if (config.additional_fields) {
-    console.debug(config.additional_fields);
     input.innerHTML += config.additional_fields;
   }
   return input;

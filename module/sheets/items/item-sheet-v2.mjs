@@ -318,13 +318,11 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
   static async _setVisualNumberField(_event, target) {
     const { datapath, amount } = target.dataset;
     let new_amount = amount;
-    console.debug(`Want to Set ${datapath} to ${new_amount}`);
     if (new_amount <= foundry.utils.getProperty(this.item, datapath))
       new_amount -= 1;
     await this.item.update({
       [`${datapath}`]: new_amount,
     });
-    console.debug(`Set ${datapath} to ${new_amount}`);
   }
 
   static async _toggleEffect(_event, target) {

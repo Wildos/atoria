@@ -45,6 +45,9 @@ export default class AtoriaActor extends Actor {
     for (let i of this.items) {
       actorData.system.encumbrance.value += i.getEncumbrance();
     }
+    actorData.active_keywords_data =
+      utils.ruleset.character.getActiveKeywordsData(this);
+
     switch (this.type) {
       case "player-character":
         actorData.system.mana.current_max =
@@ -66,15 +69,13 @@ export default class AtoriaActor extends Actor {
       ...super.getRollData(),
       ...(this.system.getRollData?.() ?? null),
     };
-    const active_keywords = utils.ruleset.character.getActiveKeywords(this);
-    for (const keyword of active_keywords.values()) {
-      switch (keyword) {
-        case "obstruct":
-          roll_data["initiative"] = roll_data["initiative"] + "-1";
-          break;
-        case "obstruct_more":
-          roll_data["initiative"] = roll_data["initiative"] + "-1d2";
-          break;
+    const active_keywords = utils.ruleset.character.getActiveKeywordsData(this);
+
+    if (active_keywords["obstruct"] >= 2) {
+      roll_data["initiative"] = roll_data["initiative"] + "-1d2";
+    } else if (active_keywords["obstruct"] >= 1) {
+      {
+        roll_data["initiative"] = roll_data["initiative"] + "-1";
       }
     }
     return roll_data;
@@ -209,25 +210,7 @@ export default class AtoriaActor extends Actor {
     )
       return skill_list;
 
-    if (this.type === "hero") {
-      return {
-        "system.skills.combative": this.system.skills.combative.label,
-      };
-    }
-    if (this.type === "non-player-character") {
-      return {
-        "system.skills.combative.weapon":
-          this.system.skills.combative.weapon.label,
-      };
-    }
-
-    const skill_cat = this.system.skills.combative.weapon;
-    for (let skill_key in skill_cat) {
-      const skill_path = `system.skills.combative.weapon.${skill_key}`;
-      skill_list[skill_path] = skill_cat[skill_key].label;
-    }
-
-    return skill_list;
+    return DEFAULT_VALUES.get_weapon_associated_skills();
   }
 
   getSkillTitle(skill_path) {

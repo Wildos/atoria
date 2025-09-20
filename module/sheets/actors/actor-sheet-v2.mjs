@@ -149,7 +149,8 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
         context.items = await Promise.all(
           this.actor.items.map(async (i) => {
             i.systemFields = i.system.schema.fields;
-            i.keywords_list = i.getKeywordList();
+            i.keywords_recap = i.getKeywordRecap();
+
             return i;
           }),
         );
@@ -414,7 +415,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
 
-  _onDragOver(event) { }
+  _onDragOver(event) {}
 
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event);

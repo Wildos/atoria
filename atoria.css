@@ -691,7 +691,7 @@
 .system-atoria .editing-mode {
   --atoria-mini-skill-width: calc(7em + var(--atoria-input-width) * 3 + var(--checkbox-size));
 }
-.system-atoria.theme-light .atoria-player-header img {
+.system-atoria.theme-light img {
   --atoria-img-filter: none;
 }
 .system-atoria .atoria-player-header {
@@ -1053,6 +1053,24 @@
 }
 .system-atoria .atoria-character-simple-inventory > .atoria-inventory-bar {
   --atoria-input-width: var(--atoria-4dgt-input-width);
+}
+.system-atoria .atoria-keywords {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.system-atoria .atoria-keywords li {
+  display: flex;
+  flex-direction: row;
+  line-height: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-base-line-block-height);
+}
+.system-atoria .atoria-keywords li img {
+  flex: 0;
+  max-width: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-base-line-block-height);
+  border: none;
+  filter: var(--atoria-img-filter);
 }
 .system-atoria .atoria-spell-marker::after {
   --checkbox-content: attr(data-letter) !important;
