@@ -73,6 +73,75 @@ export default class AtoriaActorNonPlayerCharacterSheetV2 extends AtoriaActorShe
               break;
           }
         }
+
+        {
+          const tracked_keywords = [
+            "reach",
+            "brute",
+            "guard",
+            "penetrating",
+            "protect",
+            "gruff",
+            "tough",
+            "grip",
+            "resistant",
+            "sturdy",
+            "stable",
+            "direct",
+            "noisy",
+            "obstruct",
+          ];
+          context.tracked_keywords_data = {};
+          context.tracked_keywords = [];
+          for (let keyword in this.actor.active_keywords_data) {
+            if (tracked_keywords.includes(keyword)) {
+              if (keyword === "direct") {
+                context.tracked_keywords.push("direct");
+                context.tracked_keywords_data["direct"] = {};
+                for (let direct_type in this.actor.active_keywords_data[
+                  "direct"
+                ]) {
+                  context.tracked_keywords_data["direct"][direct_type] = {
+                    checked:
+                      this.actor.system.keywords_used.direct.includes(
+                        direct_type,
+                      ),
+                    time_phase: utils.ruleset.keywords.get_time_phase(
+                      "direct",
+                      this.actor.active_keywords_data["direct"][direct_type],
+                    ),
+                    description: utils.ruleset.keywords.get_description(
+                      "direct",
+                      this.actor.active_keywords_data["direct"][direct_type],
+                    ),
+                  };
+                }
+              } else {
+                context.tracked_keywords.push(keyword);
+                context.tracked_keywords_data[keyword] = {
+                  label: utils.ruleset.keywords.get_localized_name(
+                    keyword,
+                    this.actor.active_keywords_data[keyword],
+                  ),
+                  time_phase: utils.ruleset.keywords.get_time_phase(
+                    keyword,
+                    this.actor.active_keywords_data[keyword],
+                  ),
+                  description: utils.ruleset.keywords.get_description(
+                    keyword,
+                    this.actor.active_keywords_data[keyword],
+                  ),
+                };
+              }
+            }
+          }
+          context.tracked_keywords.sort(function (key_a, key_b) {
+            return utils.ruleset.keywords
+              .get_localized_name(key_a)
+              .localeCompare(utils.ruleset.keywords.get_localized_name(key_b));
+          });
+        }
+
         context.feature_items = feature_items;
         context.action_items = action_items;
         context.inventory_items = inventory_items;

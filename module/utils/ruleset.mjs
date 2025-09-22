@@ -36,18 +36,6 @@ RULESET["general"] = class GeneralRuleset {
     }
     return attack_cost;
   }
-  static getCostFocuserWeaponAttack(weapon_item) {
-    const cost_model = default_values.models.helpers.defineCostField();
-    let attack_cost = cost_model.getInitialValue();
-    attack_cost.time.second_amount = 3;
-    attack_cost.stamina = 1;
-    attack_cost.mana = 1;
-    const weapon_keywords = weapon_item.system.keywords;
-    if (weapon_keywords.two_handed == 1) {
-      attack_cost.time.second_amount += 1;
-    }
-    return attack_cost;
-  }
 };
 
 RULESET["character"] = class ActorRuleset {
@@ -180,7 +168,7 @@ RULESET["character"] = class ActorRuleset {
           item.system.associated_skill ==
           "system.skills.combative.weapon.shield"
         ) {
-          for (let keyword in item_active_keywords) {
+          for (let keyword of item_active_keywords) {
             if (["guard", "protection", "protect"].includes(keyword)) {
               keywords_active[keyword] = Math.min(
                 (keywords_active[keyword] || 0) + item.system.keywords[keyword],
@@ -189,7 +177,7 @@ RULESET["character"] = class ActorRuleset {
             }
           }
         } else {
-          if (!handled_primary_weapon) {
+          if (handled_primary_weapon) {
             switch (item.system.associated_skill) {
               case "system.skills.combative.weapon.blade":
                 keywords_active["guard"] = Math.min(
@@ -215,6 +203,15 @@ RULESET["character"] = class ActorRuleset {
             }
           } else {
             handled_primary_weapon = true;
+            for (let keyword of item_active_keywords) {
+              if (!["preserve", "reserve"].includes(keyword)) {
+                keywords_active[keyword] = Math.min(
+                  (keywords_active[keyword] || 0) +
+                    item.system.keywords[keyword],
+                  item.system.schema.fields.keywords.fields[keyword].max,
+                );
+              }
+            }
           }
         }
       } else {
@@ -243,12 +240,114 @@ RULESET["character"] = class ActorRuleset {
         }
       }
     }
+
     return keywords_active;
   }
 
   static getSkillAssociatedKeywordsData(actor, skill_path) {
-    const active_keywords_data = this.getActiveKeywordsData(actor);
     const skill_associated_keywords_data = [];
+
+    if (skill_path === "") return skill_associated_keywords_data;
+
+    const add_keyword_data = (keyword, keyword_amount, alteration_type) => {
+      skill_associated_keywords_data.push({
+        name: keyword,
+        label: RULESET.keywords.get_localized_name(keyword, keyword_amount),
+        description: RULESET.keywords.get_description(keyword, keyword_amount),
+        skill_alteration_type: alteration_type,
+        skill_alteration_type_label: RULESET.skill_alterations[alteration_type],
+      });
+    };
+    const active_keywords_data = this.getActiveKeywordsData(actor);
+
+    const PARRY = "system.skills.combative.reflex.parry";
+    const THROW = "system.skills.combative.weapon.throw";
+    const FORCE = "system.skills.physical.sturdiness.force";
+    const SILENCE = "system.skills.physical.slyness.silence";
+    const STEALTH = "system.skills.physical.slyness.stealth";
+    const WEAPON = "system.skills.combative.weapon";
+    const BRAWL = "system.skills.combative.weapon.brawl";
+    const TENACITY = "system.skills.physical.sturdiness.tenacity";
+
+    if (PARRY.startsWith(skill_path) && active_keywords_data["guard"] >= 2) {
+      add_keyword_data(
+        "guard",
+        active_keywords_data["guard"],
+        "one_degree_of_success_gain",
+      );
+    }
+
+    if (
+      THROW.startsWith(skill_path) &&
+      active_keywords_data["throwable"] >= 0
+    ) {
+      add_keyword_data(
+        "throwable",
+        active_keywords_data["throwable"],
+        active_keywords_data["throwable"] >= 2
+          ? "two_degree_of_success_gain"
+          : "one_degree_of_success_gain",
+      );
+    }
+
+    if (
+      PARRY.startsWith(skill_path) &&
+      active_keywords_data["protection"] >= 0
+    ) {
+      add_keyword_data(
+        "protection",
+        active_keywords_data["protection"],
+        active_keywords_data["protection"] >= 2
+          ? "advantage"
+          : "one_degree_of_success_gain",
+      );
+    }
+
+    if (FORCE.startsWith(skill_path) && active_keywords_data["gruff"] >= 0) {
+      add_keyword_data(
+        "gruff",
+        active_keywords_data["gruff"],
+        "one_degree_of_success_gain",
+      );
+    }
+
+    if (
+      active_keywords_data["noisy"] >= 0 &&
+      (SILENCE.startsWith(skill_path) || STEALTH.startsWith(skill_path))
+    ) {
+      add_keyword_data(
+        "noisy",
+        active_keywords_data["noisy"],
+        active_keywords_data["noisy"] >= 3
+          ? "disadvantage_n_one_degree_of_success_loss"
+          : active_keywords_data["noisy"] >= 2
+            ? "disadvantage"
+            : "one_degree_of_success_loss",
+      );
+    }
+
+    if (
+      (WEAPON.startsWith(skill_path) || skill_path.startsWith(WEAPON)) &&
+      BRAWL.localeCompare(skill_path) !== 0 &&
+      active_keywords_data["grip"] >= 0
+    ) {
+      add_keyword_data(
+        "grip",
+        active_keywords_data["grip"],
+        "one_degree_of_success_gain",
+      );
+    }
+
+    if (
+      TENACITY.startsWith(skill_path) &&
+      active_keywords_data["stable"] >= 0
+    ) {
+      add_keyword_data(
+        "stable",
+        active_keywords_data["stable"],
+        "one_degree_of_success_gain",
+      );
+    }
 
     return skill_associated_keywords_data;
   }
@@ -333,13 +432,8 @@ RULESET["item"] = class ItemRuleset {
   static attackFromWeapon(item) {
     const new_item = foundry.utils.deepClone(item);
     new_item.system.cost_list = [];
-    if (new_item.system.associated_skill) {
+    if (new_item.system.associated_skill || item.system.is_focuser) {
       new_item.system.cost_list.push(RULESET.general.getCostWeaponAttack(item));
-    }
-    if (item.system.is_focuser) {
-      new_item.system.cost_list.push(
-        RULESET.general.getCostFocuserWeaponAttack(item),
-      );
     }
 
     new_item.system.limitation = default_values.models.helpers
@@ -379,6 +473,10 @@ RULESET["skill_alterations"] = {
     "ATORIA.Model.Skill_alteration.Two_degree_of_success_loss",
   advantage: "ATORIA.Model.Skill_alteration.Advantage",
   disadvantage: "ATORIA.Model.Skill_alteration.Disadvantage",
+  advantage_n_one_degree_of_success_gain:
+    "ATORIA.Model.Skill_alteration.Advantage_n_One_degree_of_success_gain",
+  disadvantage_n_one_degree_of_success_loss:
+    "ATORIA.Model.Skill_alteration.Disadvantage_n_One_degree_of_success_loss",
 };
 
 RULESET["keywords"] = {
@@ -391,6 +489,37 @@ RULESET["keywords"] = {
       endurance: "ATORIA.Ruleset.Endurance",
       all: "ATORIA.Ruleset.All",
     },
+  },
+  max_amount: {
+    two_handed: 2,
+    reach: 3,
+    brute: 2,
+    equip: 1,
+    fluxian: 1,
+    smash: 3,
+    guard: 2,
+    throwable: 2,
+    light: 1,
+    heavy: 2,
+    penetrating: 2,
+    versatile: 1,
+    protect: 2,
+    protection: 2,
+    quick: 2,
+    recharge: 1,
+    somatic: 1,
+    reserve: 1,
+    sly: 1,
+    gruff: 4,
+    noisy: 3,
+    tough: 4,
+    obstruct: 2,
+    grip: 4,
+    resistant: 4,
+    sturdy: 4,
+    stable: 4,
+    direct: 2,
+    preserve: 1,
   },
   get_time_phase: function (keyword, amount) {
     const four_phase_keywords = [
@@ -436,11 +565,27 @@ RULESET["keywords"] = {
         if (amount === 0) return "";
         else if (amount === 1) return "sleep";
         return "combat";
+      default:
+        return "";
     }
   },
-  get_localized_name: function (keyword) {
+  get_description: function (keyword, amount) {
+    let pluses = "";
+    for (let i = 1; i < amount; i++) {
+      pluses += "+";
+    }
     return game.i18n.localize(
-      buildLocalizeString("Ruleset", "Keywords", keyword),
+      buildLocalizeString("Ruleset", "Keywords_description", keyword) + pluses,
+    );
+  },
+  get_localized_name: function (keyword, amount) {
+    let pluses = "";
+    for (let i = 1; i < amount; i++) {
+      pluses += "+";
+    }
+    return (
+      game.i18n.localize(buildLocalizeString("Ruleset", "Keywords", keyword)) +
+      pluses
     );
   },
 };

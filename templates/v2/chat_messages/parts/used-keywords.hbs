@@ -1,15 +1,16 @@
-{{#if used_supplementaries}}
+{{#if used_keywords}}
 {{#if (or (eq @root.user @root.author) @root.isGM)}}
+{{log used_keywords}}
 <fieldset>
     <legend class="atoria-expand-control"
     onclick="if(window.event.button === 0){this.classList.toggle('expanded');window.event.stopPropagation();return false;}"
     oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');window.event.stopPropagation();return false;}">
-    {{localize "ATORIA.Chat_message.Spell.Used_supplementaries"}}</legend>
+    {{localize "ATORIA.Chat_message.Skill.Used_keywords"}}</legend>
 
-    <ul class="used_supplementaries atoria-expand-direct-data">
-        {{#each used_supplementaries as |supplementary key|}}
+    <ul class="used_keywords atoria-expand-direct-data">
+        {{#each used_keywords as |keyword_data key|}}
         <li>
-            <label data-tooltip="{{supplementary.descriptive_tooltip}}">{{localize supplementary.name}}</label>
+            <label data-tooltip="{{keyword_data.descriptive_tooltip}}">{{localize keyword_data.name}}</label>
         </li>
         {{/each}}
     </ul>

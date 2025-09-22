@@ -13,6 +13,7 @@
     "Model": {
       "New_name": "Nouveau Nom",
       "Invalid_name": "Nom invalid",
+      "Name": "Nom",
       "Description": "Description",
       "Quantity": "Quantité",
       "Effect": "Effet",
@@ -99,7 +100,8 @@
           "Main_amount": "Valeur principale",
           "Main_type": "Type principal"
         },
-        "Movement": "Mouvement"
+        "Movement": "Mouvement",
+        "Material": "Matériel"
       },
       "Roll_field": {
         "Label": "Dé configuration",
@@ -317,7 +319,8 @@
       },
       "Skill": {
         "Used_features": "Aptitudes",
-        "No_used_features": "Aucune aptitude utilisé."
+        "No_used_features": "Aucune aptitude utilisé.",
+        "Used_keywords": "Mot-Clefs"
       },
       "Actable": {
         "Used_actable_modifiers": "Techniques ou Ajouts",
@@ -1100,7 +1103,8 @@
         "Reserve_current": "Quantité actuelle de réserve",
         "Grip": "Prise",
         "Resistant": "Résistant",
-        "Stable": "Stable"
+        "Stable": "Stable",
+        "Fluxian": "Fluctuant"
       },
       "Keywords_description": {
         "Label": "Description du Mot-clef",
@@ -1131,7 +1135,8 @@
         "Reserve": "Reserve",
         "Grip": "Prise",
         "Resistant": "Resistant",
-        "Stable": "Stable"
+        "Stable": "Stable",
+        "Fluxian": "Fluctuant"
       },
       "Actable": {
         "Require_immobile": "Immobile",

@@ -240,6 +240,8 @@ export default class AtoriaActor extends Actor {
     const roll_config = await utils.skillRollDialog(this, skill_path);
     if (roll_config === null) return;
 
+    console.debug(roll_config);
+
     const used_features = roll_config["used_features"].map((element_id) =>
       this.items.get(element_id),
     );
@@ -292,6 +294,25 @@ export default class AtoriaActor extends Actor {
             {
               type: "feature",
               items_id: used_features_id,
+            },
+            {
+              type: "keyword",
+              items: roll_config.used_keywords.map((keyword_data) => {
+                return {
+                  descriptive_tooltip: RULESET.keywords.get_description(
+                    keyword_data.name,
+                    RULESET.character.getActiveKeywordsData(this)[
+                      keyword_data.name
+                    ] || 0,
+                  ),
+                  name: RULESET.keywords.get_localized_name(
+                    keyword_data.name,
+                    RULESET.character.getActiveKeywordsData(this)[
+                      keyword_data.name
+                    ] || 0,
+                  ),
+                };
+              }),
             },
           ],
         },

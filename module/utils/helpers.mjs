@@ -2,7 +2,7 @@ import * as utils from "../utils/module.mjs";
 import * as models from "../models/module.mjs";
 import RULESET from "./ruleset.mjs";
 
-
+import { AtoriaRollItemDialogV2 } from "../sheets/module.mjs";
 
 export function hasPopoutV2Module() {
   try {
@@ -79,6 +79,14 @@ export function applySkillAlterationsToRollConfig(
       case "disadvantage":
         roll_config["disadvantage_amount"] += 1;
         break;
+      case "advantage_n_one_degree_of_success_gain":
+        roll_config["advantage_amount"] += 1;
+        roll_config["dos_mod"] += 1;
+        break;
+      case "disadvantage_n_one_degree_of_success_loss":
+        roll_config["disadvantage_amount"] += 1;
+        roll_config["dos_mod"] -= 1;
+        break;
       case "":
         break;
       default:
@@ -87,6 +95,43 @@ export function applySkillAlterationsToRollConfig(
         );
         break;
     }
+  }
+  return roll_config;
+}
+
+export function applySkillAlteration(roll_config, alteration) {
+  switch (alteration) {
+    case "one_degree_of_success_gain":
+      roll_config["dos_mod"] += 1;
+      break;
+    case "one_degree_of_success_loss":
+      roll_config["dos_mod"] -= 1;
+      break;
+    case "two_degree_of_success_gain":
+      roll_config["dos_mod"] += 2;
+      break;
+    case "two_degree_of_success_loss":
+      roll_config["dos_mod"] -= 2;
+      break;
+    case "advantage":
+      roll_config["advantage_amount"] += 1;
+      break;
+    case "disadvantage":
+      roll_config["disadvantage_amount"] += 1;
+      break;
+    case "advantage_n_none_degree_of_success_gain":
+      roll_config["advantage_amount"] += 1;
+      roll_config["dos_mod"] += 1;
+      break;
+    case "disadvantage_n_one_degree_of_success_loss":
+      roll_config["disadvantage_amount"] += 1;
+      roll_config["dos_mod"] -= 1;
+      break;
+    case "":
+      break;
+    default:
+      console.warn(`Unknown skill_alteration_type: '${alteration}'`);
+      break;
   }
   return roll_config;
 }
@@ -112,6 +157,14 @@ export function applyKeywordsToRollConfig(roll_config, keywords_data) {
       case "disadvantage":
         roll_config["disadvantage_amount"] += 1;
         break;
+      case "advantage_n_none_degree_of_success_gain":
+        roll_config["advantage_amount"] += 1;
+        roll_config["dos_mod"] += 1;
+        break;
+      case "disadvantage_n_one_degree_of_success_loss":
+        roll_config["disadvantage_amount"] += 1;
+        roll_config["dos_mod"] -= 1;
+        break;
       case "":
         break;
       default:
@@ -124,7 +177,7 @@ export function applyKeywordsToRollConfig(roll_config, keywords_data) {
   return roll_config;
 }
 
-function getSkillData(item, skill_path) {
+export function getSkillData(item, skill_path) {
   if (item.type === "spell")
     return {
       path: "",
@@ -188,7 +241,11 @@ export async function skillCreationDialog(actor, skill_cat) {
   return null;
 }
 
-export async function itemRollDialog(item, need_roll = true) {
+export async function itemRollDialog(item) {
+  return await AtoriaRollItemDialogV2.wait({ item: item });
+}
+
+export async function old_itemRollDialog(item, need_roll = true) {
   const allowed_items = ["weapon", "action", "spell", "opportunity"];
   if (!allowed_items.includes(item.type)) {
     console.warn("Disallowed item type asked to roll");
@@ -292,8 +349,8 @@ export async function itemRollDialog(item, need_roll = true) {
       default_roll_mode: is_blind_roll
         ? "blind"
         : convertRollModeToDesiredVisibility(
-          game.settings.get("core", "rollMode"),
-        ),
+            game.settings.get("core", "rollMode"),
+          ),
     },
   );
   const return_format = {
@@ -349,7 +406,7 @@ export async function itemRollDialog(item, need_roll = true) {
           if (item.type === "weapon") {
             formDataObject["chosen_skill_data"].damage_roll =
               picked_skill_data.path ===
-                "system.skills.combative.weapon.focuser"
+              "system.skills.combative.weapon.focuser"
                 ? item.system.focuser_damage_roll
                 : item.system.damage_roll;
           }
@@ -381,7 +438,7 @@ export async function itemRollDialog(item, need_roll = true) {
         for (const actable_modifier of associated_actable_modifiers) {
           if (
             formDataObject[
-            `associated_actable_modifiers.${actable_modifier._id}`
+              `associated_actable_modifiers.${actable_modifier._id}`
             ]
           )
             formDataObject["used_actable_modifiers"].push(actable_modifier);
@@ -416,8 +473,8 @@ export async function skillRollDialog(actor, skill_path) {
       default_roll_mode: is_blind_roll
         ? "blind"
         : convertRollModeToDesiredVisibility(
-          game.settings.get("core", "rollMode"),
-        ),
+            game.settings.get("core", "rollMode"),
+          ),
     },
   );
   const return_format = {

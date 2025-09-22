@@ -67,6 +67,7 @@ export const preloadHandlebarsTemplates = async function () {
     "armor-display.hbs",
     "resistance-display.hbs",
     "item-header-bar.hbs",
+    "keywords-recap.hbs",
   ];
   const v2_items_partials = ["skill-alteration-input.hbs"];
   const v2_tooltips_partials = [
@@ -78,6 +79,7 @@ export const preloadHandlebarsTemplates = async function () {
     "used-features.hbs",
     "used-actable-modifiers.hbs",
     "used-supplementaries.hbs",
+    "used-keywords.hbs",
   ];
   for (const path of v2_commons_partials) {
     paths[`atoria.v2.commons_partials.${path.replace(".hbs", "")}`] =

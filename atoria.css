@@ -415,6 +415,10 @@
 .system-atoria .atoria-cost-display > label {
   flex: 0;
 }
+.system-atoria .atoria-cost-input > .atoria-material,
+.system-atoria .atoria-cost-display > .atoria-material {
+  --atoria-input-width: fit-content;
+}
 .system-atoria .atoria-cost-display {
   justify-content: flex-start;
 }
@@ -1055,17 +1059,20 @@
   --atoria-input-width: var(--atoria-4dgt-input-width);
 }
 .system-atoria .atoria-keywords {
-  list-style-type: none;
+  column-count: 2;
+  column-rule: var(--atoria-border-style);
+  column-gap: 5px;
   padding: 0;
   margin: 0;
 }
-.system-atoria .atoria-keywords li {
+.system-atoria .atoria-keywords .keyword_block {
   display: flex;
   flex-direction: row;
   line-height: var(--atoria-base-line-block-height);
   max-height: var(--atoria-base-line-block-height);
+  column-gap: 5px;
 }
-.system-atoria .atoria-keywords li img {
+.system-atoria .atoria-keywords .keyword_block img {
   flex: 0;
   max-width: var(--atoria-base-line-block-height);
   max-height: var(--atoria-base-line-block-height);
@@ -1624,55 +1631,95 @@
   border: none;
   background-color: transparent;
 }
-.system-atoria .atoria.dialog {
+.system-atoria .atoria.dialog,
+.system-atoria .atoria.roll-dialog {
   max-width: 550px;
 }
-.system-atoria .atoria.dialog .atoria-cost-display.atoria-secondary {
+.system-atoria .atoria.dialog .atoria-cost-display.atoria-secondary,
+.system-atoria .atoria.roll-dialog .atoria-cost-display.atoria-secondary {
   display: none;
   visibility: hidden;
 }
-.system-atoria .atoria.dialog > select:has( option:checked:not([value="main_skill_data"])) ~ .available-features ul[data-related-skill="main"] {
+.system-atoria .atoria.dialog > select:has( option:checked:not([value="main_skill_data"])) ~ .available-features ul[data-related-skill="main"],
+.system-atoria .atoria.roll-dialog > select:has( option:checked:not([value="main_skill_data"])) ~ .available-features ul[data-related-skill="main"] {
   display: none;
   visibility: hidden;
 }
-.system-atoria .atoria.dialog > select:has( option:checked:not([value="main_skill_data"])) ~ .atoria-cost-display.atoria-main {
+.system-atoria .atoria.dialog > select:has( option:checked:not([value="main_skill_data"])) ~ .atoria-cost-display.atoria-main,
+.system-atoria .atoria.roll-dialog > select:has( option:checked:not([value="main_skill_data"])) ~ .atoria-cost-display.atoria-main {
   display: none;
   visibility: hidden;
 }
-.system-atoria .atoria.dialog > select:has( option:checked:not([value="secondary_skill_data"])) ~ .available-features ul[data-related-skill="secondary"] {
+.system-atoria .atoria.dialog > select:has( option:checked:not([value="secondary_skill_data"])) ~ .available-features ul[data-related-skill="secondary"],
+.system-atoria .atoria.roll-dialog > select:has( option:checked:not([value="secondary_skill_data"])) ~ .available-features ul[data-related-skill="secondary"] {
   display: none;
   visibility: hidden;
 }
-.system-atoria .atoria.dialog > select:has( option:checked[value="secondary_skill_data"] ) ~ .atoria-cost-display.atoria-secondary {
+.system-atoria .atoria.dialog > select:has( option:checked[value="secondary_skill_data"] ) ~ .atoria-cost-display.atoria-secondary,
+.system-atoria .atoria.roll-dialog > select:has( option:checked[value="secondary_skill_data"] ) ~ .atoria-cost-display.atoria-secondary {
   display: initial;
   visibility: visible;
 }
-.system-atoria .atoria.dialog ul {
+.system-atoria .atoria.dialog ul,
+.system-atoria .atoria.roll-dialog ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
-.system-atoria .atoria.dialog ul li {
+.system-atoria .atoria.dialog ul li,
+.system-atoria .atoria.roll-dialog ul li {
   margin: 0;
 }
-.system-atoria .atoria.dialog ul li:not(:first-child) {
+.system-atoria .atoria.dialog ul li:not(:first-child),
+.system-atoria .atoria.roll-dialog ul li:not(:first-child) {
   margin-top: var(--atoria-rows-gap);
 }
-.system-atoria .atoria.dialog.atoria-skill-creation-dialog input {
+.system-atoria .atoria.dialog.atoria-skill-creation-dialog input,
+.system-atoria .atoria.roll-dialog.atoria-skill-creation-dialog input {
   --atoria-input-width: 100%;
+}
+.system-atoria .atoria.dialog .available-keywords img,
+.system-atoria .atoria.roll-dialog .available-keywords img {
+  flex: 0;
+  max-width: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-base-line-block-height);
+  border: none;
+  filter: var(--atoria-img-filter);
+}
+.system-atoria .atoria.dialog .atoria-item-dialog,
+.system-atoria .atoria.roll-dialog .atoria-item-dialog {
+  display: flex;
+  row-gap: 10px;
+  flex-direction: column;
+  align-items: stretch;
+}
+.system-atoria .atoria.dialog .sheet-tabs,
+.system-atoria .atoria.roll-dialog .sheet-tabs {
+  margin: 4px 0;
+  margin-bottom: 15px;
+  border-top: 1px solid var(--color-border-light-primary);
+  border-bottom: 1px solid var(--color-border-light-primary);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
 }
 .system-atoria .atoria.chat-message ul.used_supplementaries,
 .system-atoria .atoria.chat-message ul.used_features,
-.system-atoria .atoria.chat-message ul.used_actable_modifiers,
-.system-atoria .atoria.chat-message ul.saves_asked {
+.system-atoria .atoria.chat-message ul.used_keywords,
+.system-atoria .atoria.chat-message ul.saves_asked,
+.system-atoria .atoria.chat-message ul.used_actable_modifiers {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 .system-atoria .atoria.chat-message ul.used_supplementaries li,
 .system-atoria .atoria.chat-message ul.used_features li,
-.system-atoria .atoria.chat-message ul.used_actable_modifiers li,
-.system-atoria .atoria.chat-message ul.saves_asked li {
+.system-atoria .atoria.chat-message ul.used_keywords li,
+.system-atoria .atoria.chat-message ul.saves_asked li,
+.system-atoria .atoria.chat-message ul.used_actable_modifiers li {
   margin: 0;
 }
 .system-atoria .atoria.chat-message .critial_success-title {

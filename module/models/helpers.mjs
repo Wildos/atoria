@@ -319,6 +319,12 @@ export function defineCostField() {
         initial: 0,
         label: "ATORIA.Model.Cost.Movement",
       }),
+      material: new fields.StringField({
+        required: true,
+        nullable: false,
+        blank: true,
+        label: "ATORIA.Model.Cost.Material",
+      }),
     },
     { required: true, nullable: false, label: "ATORIA.Model.Cost.Label" },
   );

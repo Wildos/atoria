@@ -306,137 +306,67 @@ export default class AtoriaItem extends Item {
     const action_item_types = ["weapon", "action", "spell", "opportunity"];
     if (!action_item_types.includes(this.type)) return;
 
-    const need_roll =
-      this.type === "spell" ||
-      (this.type === "weapon" && this.system.is_focuser) ||
-      this.type === "opportunity" ||
-      ((this.system.associated_skill ?? "") !== "" &&
-        !(this.type === "action" && this.system.is_magic));
+    // if (!need_roll) {
+    //   const roll_config = await utils.itemRollDialog(this, need_roll);
+    //   if (roll_config === null) return;
+    //   const { used_actable_modifiers } = roll_config;
 
-    if (!need_roll) {
-      const roll_config = await utils.itemRollDialog(this, need_roll);
-      if (roll_config === null) return;
-      const { used_actable_modifiers } = roll_config;
+    //   let roll_effect = this.system.effect;
 
-      let roll_effect = this.system.effect;
+    //   const saves_asked =
+    //     foundry.utils.deepClone(this.system.saves_asked) ?? [];
 
-      const saves_asked =
-        foundry.utils.deepClone(this.system.saves_asked) ?? [];
+    //   const speaker = ChatMessage.getSpeaker({ actor: this });
+    //   ChatMessage.create(
+    //     {
+    //       type: "interactable",
+    //       speaker: speaker,
+    //       user: game.user.id,
+    //       type: CONST.CHAT_MESSAGE_STYLES.IC,
+    //       flavor: `<h5>${this.name}</h5>`,
+    //       system: {
+    //         related_items: [
+    //           {
+    //             type: "actable-modifier",
+    //             items_id: used_actable_modifiers.map((elem) => elem.uuid),
+    //           },
+    //         ],
+    //         savesAsked: saves_asked,
+    //         effect: roll_effect,
+    //       },
+    //     },
+    //     { rollMode: utils.convertDesiredVisibilityToRollMode(null) },
+    //   );
 
-      const speaker = ChatMessage.getSpeaker({ actor: this });
-      ChatMessage.create(
-        {
-          type: "interactable",
-          speaker: speaker,
-          user: game.user.id,
-          type: CONST.CHAT_MESSAGE_STYLES.IC,
-          flavor: `<h5>${this.name}</h5>`,
-          system: {
-            related_items: [
-              {
-                type: "actable-modifier",
-                items_id: used_actable_modifiers.map((elem) => elem.uuid),
-              },
-            ],
-            savesAsked: saves_asked,
-            effect: roll_effect,
-          },
-        },
-        { rollMode: utils.convertDesiredVisibilityToRollMode(null) },
-      );
+    //   if (
+    //     this.type === "action" &&
+    //     this.system.limitation.regain_type != "permanent"
+    //   ) {
+    //     this.update({
+    //       "system.limitation.usage_left": this.system.limitation.usage_left - 1,
+    //     });
+    //   }
+    //   if (
+    //     this.type === "opportunity" &&
+    //     this.system.limitation.regain_type != "permanent"
+    //   ) {
+    //     this.update({
+    //       "system.limitation.usage_left": this.system.limitation.usage_left - 1,
+    //     });
+    //   }
+    //   for (let actable_modifier of used_actable_modifiers) {
+    //     actable_modifier.update({
+    //       "system.limitation.usage_left":
+    //         actable_modifier.system.limitation.usage_left - 1,
+    //     });
+    //   }
+    //   return;
+    // }
 
-      if (
-        this.type === "action" &&
-        this.system.limitation.regain_type != "permanent"
-      ) {
-        this.update({
-          "system.limitation.usage_left": this.system.limitation.usage_left - 1,
-        });
-      }
-      if (
-        this.type === "opportunity" &&
-        this.system.limitation.regain_type != "permanent"
-      ) {
-        this.update({
-          "system.limitation.usage_left": this.system.limitation.usage_left - 1,
-        });
-      }
-      for (let actable_modifier of used_actable_modifiers) {
-        actable_modifier.update({
-          "system.limitation.usage_left":
-            actable_modifier.system.limitation.usage_left - 1,
-        });
-      }
-      return;
-    }
-
-    const roll_config = await utils.itemRollDialog(this);
-    if (roll_config === null) return;
-
-    const used_features = roll_config["used_features"].map((element_id) =>
-      this.actor.items.get(element_id),
-    );
-
-    let roll_config_altered = utils.applyFeaturesToRollConfig(
-      roll_config,
-      used_features,
-    );
-    roll_config_altered = utils.applySkillAlterationsToRollConfig(
-      roll_config,
-      roll_config["used_actable_modifiers"],
-    );
-    const {
-      advantage_amount,
-      disadvantage_amount,
-      luck_applied,
-      dos_mod,
-      roll_mode,
-      chosen_skill_data,
-      used_supplementaries,
-      used_actable_modifiers,
-    } = roll_config_altered;
-
-    let roll_data = {
-      owning_actor_id: this.actor?._id,
-      success_value: chosen_skill_data.success,
-      critical_success_amount: chosen_skill_data.critical_success_amount,
-      critical_fumble_amount: chosen_skill_data.critical_fumble_amount,
-      title: this.name,
-      advantage_amount,
-      disadvantage_amount,
-      luck_applied,
-      dos_mod,
-    };
-
-    if (this.type === "weapon") {
-      roll_data.success_value += this.system.modificators.success;
-      roll_data.critical_success_amount +=
-        this.system.modificators.critical_success;
-      roll_data.critical_fumble_amount +=
-        this.system.modificators.critical_fumble;
-    }
-
-    const roll = new rolls.AtoriaDOSRoll(this.getRollData(), roll_data);
-    await roll.evaluate();
-
-    const chat_rolls = [roll];
-    let roll_effect = this.system.effect;
-    if (chosen_skill_data.damage_roll != "") {
-      chosen_skill_data.damage_roll.name = game.i18n.localize(
-        "ATORIA.Model.Weapon.Damage_name",
-      );
-      roll_effect = utils.getInlineRollFromRollData(
-        chosen_skill_data.damage_roll,
-      );
-    }
-
-    if (this.type === "spell") {
-      let new_supplementaries_list = this.system.supplementaries_list;
-      for (let supplementary of used_supplementaries) {
-        let own_supplementary = new_supplementaries_list[supplementary.idx];
-        roll_effect += own_supplementary.description;
-      }
-    }
+    const roll_data = await utils.itemRollDialog(this);
+    console.debug("Returned to item.mjs");
+    console.debug(roll_data);
+    if (roll_data === null) return;
 
     const saves_asked = foundry.utils.deepClone(this.system.saves_asked) ?? [];
     if (
@@ -448,85 +378,212 @@ export default class AtoriaItem extends Item {
 
     const critical_effect =
       this.type === "spell" ? this.system.critical_effect : "";
-
     ChatMessage.create(
       {
         type: "interactable",
         speaker: ChatMessage.getSpeaker({ actor: this }),
         user: game.user.id,
         sound: CONFIG.sounds.dice,
-        rolls: chat_rolls,
+        flavor: roll_data.flavor,
+        rolls: roll_data.chat_rolls,
         system: {
           related_items: [
             {
               type: "feature",
-              items_id: used_features.map((elem) => elem.uuid),
+              items_id: roll_data.used_features,
             },
             {
               type: "supplementary",
-              items: used_supplementaries,
+              items: roll_data.used_supplementaries,
+            },
+            {
+              type: "keyword",
+              items: roll_data.used_keywords.map((keyword) => {
+                return {
+                  descriptive_tooltip: utils.ruleset.keywords.get_description(
+                    keyword,
+                    utils.ruleset.character.getActiveKeywordsData(this.actor)[
+                      keyword
+                    ] || 0,
+                  ),
+                  name: utils.ruleset.keywords.get_localized_name(
+                    keyword,
+                    utils.ruleset.character.getActiveKeywordsData(this.actor)[
+                      keyword
+                    ] || 0,
+                  ),
+                };
+              }),
             },
             {
               type: "actable-modifier",
-              items_id: used_actable_modifiers.map((elem) => elem.uuid),
+              items_id: roll_data.used_actable_modifiers,
             },
           ],
           critical_effect: critical_effect,
-          effect: roll_effect,
+          effect: roll_data.effect,
           savesAsked: saves_asked,
         },
       },
-      { rollMode: roll_mode },
+      { rollMode: roll_data.roll_mode },
     );
 
-    for (let feature of used_features) {
-      if (feature.system.limitation.regain_type != "permanent") {
-        feature.update({
-          "system.limitation.usage_left":
-            feature.system.limitation.usage_left - 1,
-        });
-      }
-    }
-    if (used_supplementaries.length != 0) {
-      let new_supplementaries_list = this.system.supplementaries_list;
-      for (let supplementary of used_supplementaries) {
-        let own_supplementary = new_supplementaries_list[supplementary.idx];
-        if (own_supplementary.limitation.regain_type != "permanent") {
-          own_supplementary.limitation.usage_left -= 1;
-        }
-      }
-      this.update({
-        "system.supplementaries_list": new_supplementaries_list,
-      });
-    }
-    for (let actable_modifier of used_actable_modifiers) {
-      if (actable_modifier.system.limitation.regain_type != "permanent") {
-        actable_modifier.update({
-          "system.limitation.usage_left":
-            actable_modifier.system.limitation.usage_left - 1,
-        });
-      }
-    }
-    if (
-      this.type === "action" &&
-      this.system.limitation.regain_type != "permanent"
-    ) {
-      this.update({
-        "system.limitation.usage_left": this.system.limitation.usage_left - 1,
-      });
-    }
-    if (
-      this.type === "opportunity" &&
-      this.system.limitation.regain_type != "permanent"
-    ) {
-      this.update({
-        "system.limitation.usage_left": this.system.limitation.usage_left - 1,
-      });
-    }
+    // --------------------------
 
-    this.actor?.update({
-      "system.luck": this.actor.system.luck - luck_applied,
-    });
+    // const used_features = roll_config["used_features"].map((element_id) =>
+    //   this.actor.items.get(element_id),
+    // );
+
+    // let roll_config_altered = utils.applyFeaturesToRollConfig(
+    //   roll_config,
+    //   used_features,
+    // );
+    // roll_config_altered = utils.applySkillAlterationsToRollConfig(
+    //   roll_config,
+    //   roll_config["used_actable_modifiers"],
+    // );
+    // const {
+    //   advantage_amount,
+    //   disadvantage_amount,
+    //   luck_applied,
+    //   dos_mod,
+    //   roll_mode,
+    //   chosen_skill_data,
+    //   used_supplementaries,
+    //   used_actable_modifiers,
+    // } = roll_config_altered;
+
+    // let roll_data = {
+    //   owning_actor_id: this.actor?._id,
+    //   success_value: chosen_skill_data.success,
+    //   critical_success_amount: chosen_skill_data.critical_success_amount,
+    //   critical_fumble_amount: chosen_skill_data.critical_fumble_amount,
+    //   title: this.name,
+    //   advantage_amount,
+    //   disadvantage_amount,
+    //   luck_applied,
+    //   dos_mod,
+    // };
+
+    // if (this.type === "weapon") {
+    //   roll_data.success_value += this.system.modificators.success;
+    //   roll_data.critical_success_amount +=
+    //     this.system.modificators.critical_success;
+    //   roll_data.critical_fumble_amount +=
+    //     this.system.modificators.critical_fumble;
+    // }
+
+    // const roll = new rolls.AtoriaDOSRoll(this.getRollData(), roll_data);
+    // await roll.evaluate();
+
+    // const chat_rolls = [roll];
+    // let roll_effect = this.system.effect;
+    // if (chosen_skill_data.damage_roll != "") {
+    //   chosen_skill_data.damage_roll.name = game.i18n.localize(
+    //     "ATORIA.Model.Weapon.Damage_name",
+    //   );
+    //   roll_effect = utils.getInlineRollFromRollData(
+    //     chosen_skill_data.damage_roll,
+    //   );
+    // }
+
+    // if (this.type === "spell") {
+    //   let new_supplementaries_list = this.system.supplementaries_list;
+    //   for (let supplementary of used_supplementaries) {
+    //     let own_supplementary = new_supplementaries_list[supplementary.idx];
+    //     roll_effect += own_supplementary.description;
+    //   }
+    // }
+
+    // const saves_asked = foundry.utils.deepClone(this.system.saves_asked) ?? [];
+    // if (
+    //   this.type === "weapon" ||
+    //   (this.type === "spell" && this.system.markers.is_attack)
+    // ) {
+    //   saves_asked.push(...utils.ruleset.character.getAttackSaves());
+    // }
+
+    // const critical_effect =
+    //   this.type === "spell" ? this.system.critical_effect : "";
+
+    // ChatMessage.create(
+    //   {
+    //     type: "interactable",
+    //     speaker: ChatMessage.getSpeaker({ actor: this }),
+    //     user: game.user.id,
+    //     sound: CONFIG.sounds.dice,
+    //     rolls: chat_rolls,
+    //     system: {
+    //       related_items: [
+    //         {
+    //           type: "feature",
+    //           items_id: used_features.map((elem) => elem.uuid),
+    //         },
+    //         {
+    //           type: "supplementary",
+    //           items: used_supplementaries,
+    //         },
+    //         {
+    //           type: "actable-modifier",
+    //           items_id: used_actable_modifiers.map((elem) => elem.uuid),
+    //         },
+    //       ],
+    //       critical_effect: critical_effect,
+    //       effect: roll_effect,
+    //       savesAsked: saves_asked,
+    //     },
+    //   },
+    //   { rollMode: roll_mode },
+    // );
+
+    // for (let feature of used_features) {
+    //   if (feature.system.limitation.regain_type != "permanent") {
+    //     feature.update({
+    //       "system.limitation.usage_left":
+    //         feature.system.limitation.usage_left - 1,
+    //     });
+    //   }
+    // }
+    // if (used_supplementaries.length != 0) {
+    //   let new_supplementaries_list = this.system.supplementaries_list;
+    //   for (let supplementary of used_supplementaries) {
+    //     let own_supplementary = new_supplementaries_list[supplementary.idx];
+    //     if (own_supplementary.limitation.regain_type != "permanent") {
+    //       own_supplementary.limitation.usage_left -= 1;
+    //     }
+    //   }
+    //   this.update({
+    //     "system.supplementaries_list": new_supplementaries_list,
+    //   });
+    // }
+    // for (let actable_modifier of used_actable_modifiers) {
+    //   if (actable_modifier.system.limitation.regain_type != "permanent") {
+    //     actable_modifier.update({
+    //       "system.limitation.usage_left":
+    //         actable_modifier.system.limitation.usage_left - 1,
+    //     });
+    //   }
+    // }
+    // if (
+    //   this.type === "action" &&
+    //   this.system.limitation.regain_type != "permanent"
+    // ) {
+    //   this.update({
+    //     "system.limitation.usage_left": this.system.limitation.usage_left - 1,
+    //   });
+    // }
+    // if (
+    //   this.type === "opportunity" &&
+    //   this.system.limitation.regain_type != "permanent"
+    // ) {
+    //   this.update({
+    //     "system.limitation.usage_left": this.system.limitation.usage_left - 1,
+    //   });
+    // }
+
+    // this.actor?.update({
+    //   "system.luck": this.actor.system.luck - luck_applied,
+    // });
   }
 
   async getTooltipHTML() {

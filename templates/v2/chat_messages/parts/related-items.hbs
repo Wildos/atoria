@@ -7,3 +7,6 @@
 {{#if (eq item_type "supplementary")}}
     {{>"atoria.v2.chat_messages_partials.used-supplementaries" used_supplementaries=items}}
 {{/if}}
+{{#if (eq item_type "keyword")}}
+    {{>"atoria.v2.chat_messages_partials.used-keywords" used_keywords=items}}
+{{/if}}

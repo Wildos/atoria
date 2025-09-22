@@ -715,6 +715,8 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "sturdy",
             "stable",
             "direct",
+            "noisy",
+            "obstruct",
           ];
           context.tracked_keywords_data = {};
           context.tracked_keywords = [];
@@ -735,13 +737,24 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
                       "direct",
                       this.actor.active_keywords_data["direct"][direct_type],
                     ),
+                    description: utils.ruleset.keywords.get_description(
+                      "direct",
+                      this.actor.active_keywords_data["direct"][direct_type],
+                    ),
                   };
                 }
               } else {
                 context.tracked_keywords.push(keyword);
                 context.tracked_keywords_data[keyword] = {
-                  label: utils.ruleset.keywords.get_localized_name(keyword),
+                  label: utils.ruleset.keywords.get_localized_name(
+                    keyword,
+                    this.actor.active_keywords_data[keyword],
+                  ),
                   time_phase: utils.ruleset.keywords.get_time_phase(
+                    keyword,
+                    this.actor.active_keywords_data[keyword],
+                  ),
+                  description: utils.ruleset.keywords.get_description(
                     keyword,
                     this.actor.active_keywords_data[keyword],
                   ),
