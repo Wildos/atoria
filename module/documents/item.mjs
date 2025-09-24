@@ -19,7 +19,6 @@ export default class AtoriaItem extends Item {
         keywords_recap: this.getKeywordRecap(),
       },
     );
-    console.debug("PrepareDeriveData");
     if (this.type === "spell") {
       for (let supp of this.system.supplementaries_list) {
         supp.descriptive_tooltip = await renderTemplate(

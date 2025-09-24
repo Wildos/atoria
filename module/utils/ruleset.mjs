@@ -163,10 +163,8 @@ RULESET["character"] = class ActorRuleset {
     let handled_primary_weapon = false;
     for (const item of actor.items) {
       if (["weapon", "armor"].includes(item.type) && !item.system.is_worn) {
-        console.debug("not worn: " + item.name);
         continue;
       }
-      console.debug("WORN: " + item.name);
       const item_active_keywords = RULESET.item.getActiveKeywords(item);
       if (["weapon"].includes(item.type)) {
         if (
