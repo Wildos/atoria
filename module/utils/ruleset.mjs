@@ -172,7 +172,7 @@ RULESET["character"] = class ActorRuleset {
             if (["guard", "protection", "protect"].includes(keyword)) {
               keywords_active[keyword] = Math.min(
                 (keywords_active[keyword] || 0) + item.system.keywords[keyword],
-                item.system.schema.fields.keywords.fields[keyword].max,
+                RULESET.keywords.max_amount[keyword],
               );
             }
           }
@@ -183,32 +183,32 @@ RULESET["character"] = class ActorRuleset {
                 keywords_active["guard"] = Math.min(
                   (keywords_active["guard"] || 0) +
                     item.system.keywords["guard"],
-                  item.system.schema.fields.keywords.fields["guard"].max,
+                  RULESET.keywords.max_amount.guard,
                 );
                 break;
               case "system.skills.combative.weapon.haft-slashing":
                 keywords_active["brute"] = Math.min(
                   (keywords_active["brute"] || 0) +
                     item.system.keywords["brute"],
-                  item.system.schema.fields.keywords.fields["brute"].max,
+                  RULESET.keywords.max_amount.brute,
                 );
                 break;
               case "system.skills.combative.weapon.haft-bludgeonning-piercing":
                 keywords_active["smash"] = Math.min(
                   (keywords_active["smash"] || 0) +
                     item.system.keywords["smash"],
-                  item.system.schema.fields.keywords.fields["smash"].max,
+                  RULESET.keywords.max_amount.smash,
                 );
                 break;
             }
           } else {
             handled_primary_weapon = true;
             for (let keyword of item_active_keywords) {
-              if (!["preserve", "reserve"].includes(keyword)) {
+              if (!RULESET.keywords.weapon_linked.includes(keyword)) {
                 keywords_active[keyword] = Math.min(
                   (keywords_active[keyword] || 0) +
                     item.system.keywords[keyword],
-                  item.system.schema.fields.keywords.fields[keyword].max,
+                  RULESET.keywords.max_amount[keyword],
                 );
               }
             }
@@ -224,7 +224,7 @@ RULESET["character"] = class ActorRuleset {
               Math.min(
                 (keywords_active["direct"][item.system.keywords.direct_type] ||
                   0) + item.system.keywords.direct,
-                item.system.schema.fields.keywords.fields.direct.max,
+                RULESET.keywords.max_amount.direct,
               );
           } else if (["preserve", "reserve"].includes(keyword)) {
             if (!Object.keys(keywords_active).includes(keyword)) {
@@ -234,7 +234,7 @@ RULESET["character"] = class ActorRuleset {
           } else {
             keywords_active[keyword] = Math.min(
               (keywords_active[keyword] || 0) + item.system.keywords[keyword],
-              item.system.schema.fields.keywords.fields[keyword].max,
+              RULESET.keywords.max_amount[keyword],
             );
           }
         }
@@ -244,7 +244,7 @@ RULESET["character"] = class ActorRuleset {
     return keywords_active;
   }
 
-  static getSkillAssociatedKeywordsData(actor, skill_path) {
+  static getSkillAssociatedKeywordsData(actor, item, skill_path) {
     const skill_associated_keywords_data = [];
 
     if (skill_path === "") return skill_associated_keywords_data;
@@ -258,7 +258,17 @@ RULESET["character"] = class ActorRuleset {
         skill_alteration_type_label: RULESET.skill_alterations[alteration_type],
       });
     };
-    const active_keywords_data = this.getActiveKeywordsData(actor);
+    const actor_active_keywords_data = this.getActiveKeywordsData(actor);
+    const item_active_keywords_data =
+      RULESET.item.getWeaponLinkedActiveKeywords(item);
+    const active_keywords_data = {};
+    Object.keys(actor_active_keywords_data).forEach((key) => {
+      active_keywords_data[key] = actor_active_keywords_data[key];
+    });
+    item_active_keywords_data.forEach((key) => {
+      active_keywords_data[key] =
+        active_keywords_data[key] || 0 + item.system.keywords[key];
+    });
 
     const PARRY = "system.skills.combative.reflex.parry";
     const THROW = "system.skills.combative.weapon.throw";
@@ -396,6 +406,7 @@ RULESET["item"] = class ItemRuleset {
   }
 
   static getActiveKeywords(item) {
+    if (item === null || item === undefined) return [];
     if (!["kit", "weapon", "armor"].includes(item.type)) return [];
     const keywords_active = new Set();
     const ignored_key = [
@@ -427,6 +438,13 @@ RULESET["item"] = class ItemRuleset {
       }
     }
     return keywords_active;
+  }
+
+  static getWeaponLinkedActiveKeywords(item) {
+    let active_keywords = this.getActiveKeywords(item);
+    return active_keywords.filter((key) =>
+      RULESET.keywords.weapon_linked.includes(key),
+    );
   }
 
   static attackFromWeapon(item) {
@@ -521,6 +539,21 @@ RULESET["keywords"] = {
     direct: 2,
     preserve: 1,
   },
+  weapon_linked: [
+    "two_handed",
+    "reach",
+    "smash",
+    "throwable",
+    "heavy",
+    "penetrating",
+    "versatile",
+    "quick",
+    "recharge",
+    "somatic",
+    "reserve",
+    "sly",
+    "preserve",
+  ],
   get_time_phase: function (keyword, amount) {
     const four_phase_keywords = [
       "gruff",
@@ -618,6 +651,256 @@ RULESET["actable"] = {
     one_hand: "ATORIA.Ruleset.Somatic.One_hand",
     two_hands: "ATORIA.Ruleset.Somatic.Two_hands",
     meditate: "ATORIA.Ruleset.Somatic.Meditate",
+  },
+  associated_magic_schools: {
+    "system.knowledges.magic.air.dazzling": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "air",
+      "dazzling",
+      "full_label",
+    ),
+    "system.knowledges.magic.air.breeze": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "air",
+      "breeze",
+      "full_label",
+    ),
+    "system.knowledges.magic.air.lightning": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "air",
+      "lightning",
+      "full_label",
+    ),
+    "system.knowledges.magic.mental.kinetic": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "mental",
+      "kinetic",
+      "full_label",
+    ),
+    "system.knowledges.magic.mental.illusion": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "mental",
+      "illusion",
+      "full_label",
+    ),
+    "system.knowledges.magic.mental.power": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "mental",
+      "power",
+      "full_label",
+    ),
+    "system.knowledges.magic.mental.enchanted": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "mental",
+      "enchanted",
+      "full_label",
+    ),
+    "system.knowledges.magic.druidic.astral": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "druidic",
+      "astral",
+      "full_label",
+    ),
+    "system.knowledges.magic.druidic.solicitude": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "druidic",
+      "solicitude",
+      "full_label",
+    ),
+    "system.knowledges.magic.druidic.changeforme": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "druidic",
+      "changeforme",
+      "full_label",
+    ),
+    "system.knowledges.magic.druidic.mutation": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "druidic",
+      "mutation",
+      "full_label",
+    ),
+    "system.knowledges.magic.water.ablution": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "water",
+      "ablution",
+      "full_label",
+    ),
+    "system.knowledges.magic.water.source": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "water",
+      "source",
+      "full_label",
+    ),
+    "system.knowledges.magic.water.ice": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "water",
+      "ice",
+      "full_label",
+    ),
+    "system.knowledges.magic.fire.torch": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "fire",
+      "torch",
+      "full_label",
+    ),
+    "system.knowledges.magic.fire.ignition": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "fire",
+      "ignition",
+      "full_label",
+    ),
+    "system.knowledges.magic.fire.destruction": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "fire",
+      "destruction",
+      "full_label",
+    ),
+    "system.knowledges.magic.occult.toxic": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "occult",
+      "toxic",
+      "full_label",
+    ),
+    "system.knowledges.magic.occult.curse": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "occult",
+      "curse",
+      "full_label",
+    ),
+    "system.knowledges.magic.occult.ethereal": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "occult",
+      "ethereal",
+      "full_label",
+    ),
+    "system.knowledges.magic.occult.necromancy": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "occult",
+      "necromancy",
+      "full_label",
+    ),
+    "system.knowledges.magic.holy.blessing": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "holy",
+      "blessing",
+      "full_label",
+    ),
+    "system.knowledges.magic.holy.piety": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "holy",
+      "piety",
+      "full_label",
+    ),
+    "system.knowledges.magic.holy.glory": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "holy",
+      "glory",
+      "full_label",
+    ),
+    "system.knowledges.magic.holy.purification": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "holy",
+      "purification",
+      "full_label",
+    ),
+    "system.knowledges.magic.blood.sacrifice": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "blood",
+      "sacrifice",
+      "full_label",
+    ),
+    "system.knowledges.magic.blood.puncture": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "blood",
+      "puncture",
+      "full_label",
+    ),
+    "system.knowledges.magic.blood.drain": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "blood",
+      "drain",
+      "full_label",
+    ),
+    "system.knowledges.magic.earth.bastion": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "earth",
+      "bastion",
+      "full_label",
+    ),
+    "system.knowledges.magic.earth.telluric": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "earth",
+      "telluric",
+      "full_label",
+    ),
+    "system.knowledges.magic.earth.metallic": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "earth",
+      "metallic",
+      "full_label",
+    ),
   },
 };
 

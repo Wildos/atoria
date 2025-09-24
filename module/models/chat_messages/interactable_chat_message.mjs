@@ -14,6 +14,9 @@ export default class AtoriaInteractableChatMessage extends foundry.abstract
       }),
       { required: true, label: "ATORIA.Model.Additional_css_class" },
     );
+
+    schema.flavor_tooltip = new fields.HTMLField({ textSearch: true });
+
     schema.postContent = new fields.HTMLField({ textSearch: true });
 
     schema.effect = new fields.HTMLField({ textSearch: true });

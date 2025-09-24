@@ -145,7 +145,14 @@ export default class AtoriaActor extends Actor {
       if (Object.keys(skill_types).includes("knowledges")) {
         for (let knowledge_group_key in this.system.knowledges) {
           skill_list[`system.knowledges.${knowledge_group_key}`] =
-            this.system.knowledges[knowledge_group_key].label;
+            game.i18n.localize(
+              this.system.schema.fields.knowledges.fields[knowledge_group_key]
+                .label,
+            ) +
+            " - " +
+            game.i18n.localize(
+              this.system.knowledges[knowledge_group_key].label,
+            );
         }
       }
       return skill_list;
@@ -159,7 +166,12 @@ export default class AtoriaActor extends Actor {
           for (let skill_key in skill_cat) {
             const skill_path = `system.${skill_group_key}.${skill_cat_key}.${skill_key}`;
             skill_list[skill_path] =
-              skill_group[skill_cat_key][skill_key].label;
+              game.i18n.localize(
+                this.system.schema.fields[skill_group_key].fields[skill_cat_key]
+                  .label,
+              ) +
+              " - " +
+              game.i18n.localize(skill_group[skill_cat_key][skill_key].label);
           }
         }
       }
@@ -174,7 +186,15 @@ export default class AtoriaActor extends Actor {
           for (let skill_key in skill_cat) {
             const skill_path = `system.${skill_type_key}.${skill_group_key}.${skill_cat_key}.${skill_key}`;
             skill_list[skill_path] =
-              skill_type[skill_group_key][skill_cat_key][skill_key].label;
+              game.i18n.localize(
+                this.system.schema.fields[skill_type_key].fields[
+                  skill_group_key
+                ].fields[skill_cat_key].label,
+              ) +
+              " - " +
+              game.i18n.localize(
+                skill_type[skill_group_key][skill_cat_key][skill_key].label,
+              );
           }
         }
       }
@@ -189,7 +209,10 @@ export default class AtoriaActor extends Actor {
     } else {
       for (let perception in this.system.perceptions) {
         const skill_path = `system.perceptions.${perception}`;
-        perception_list[skill_path] = this.system.perceptions[perception].label;
+        perception_list[skill_path] =
+          game.i18n.localize(this.system.schema.fields.perceptions.label) +
+          " - " +
+          game.i18n.localize(this.system.perceptions[perception].label);
       }
     }
     return perception_list;
@@ -239,8 +262,6 @@ export default class AtoriaActor extends Actor {
 
     const roll_config = await utils.skillRollDialog(this, skill_path);
     if (roll_config === null) return;
-
-    console.debug(roll_config);
 
     const used_features = roll_config["used_features"].map((element_id) =>
       this.items.get(element_id),

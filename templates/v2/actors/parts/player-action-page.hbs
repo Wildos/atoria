@@ -11,8 +11,17 @@
             {{/if}}
         </div>
         <ul class="item-list">
-            {{#each actable_items.spell as |item idx|}}
-                {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
+            {{#each actable_items.spell_school_order as |school_path|}}
+                {{#with (lookup ../actable_items.spell school_path) as |school_item|}}
+                    {{#if school_item}}
+                    <h6 class="title">
+                        {{localize (lookup @root.ruleset.actable.associated_magic_schools school_path)}}
+                    </h6>
+                    {{/if}}
+                    {{#each school_item as |item idx|}}
+                        {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
+                    {{/each}}
+                {{/with}}
             {{/each}}
         </ul>
 

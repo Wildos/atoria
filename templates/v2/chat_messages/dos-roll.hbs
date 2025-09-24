@@ -3,7 +3,7 @@
 {{#if is_success}}success{{/if}}
 {{#if is_critical}}critical{{/if}}
 ">
-    <h5 {{#if owner_or_gm}}data-tooltip="{{{descriptive_tooltip}}}"{{/if}}>{{title}}{{#if owner_or_gm}}: {{success_value}}{{/if}}</h5>
+    <h5 {{#if owner_or_gm}}data-tooltip-class="atoria-tooltip" data-tooltip="{{{descriptive_tooltip}}}"{{/if}}>{{title}}{{#if owner_or_gm}}: {{success_value}}{{/if}}</h5>
     <label class="alteration-label">{{#if adv_disadv}}
         <span>{{adv_disadv}}</span>
         {{/if}}{{#if luck_applied}}

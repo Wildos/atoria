@@ -1,10 +1,20 @@
 import * as atoria_models from "../../module.mjs";
+import * as utils from "../../../utils/module.mjs";
 
 export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
   static defineSchema() {
     const fields = foundry.data.fields;
     const requiredInteger = { required: true, nullable: false, integer: true };
     const schema = super.defineSchema();
+
+    schema.associated_magic_school = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: false,
+      choices: utils.ruleset.actable.associated_magic_schools,
+      initial: Object.keys(utils.ruleset.actable.associated_magic_schools)[0],
+      label: "ATORIA.Model.Action.Associated_magic_school",
+    });
 
     schema.cost = atoria_models.helpers.defineCostField();
 

@@ -1,44 +1,7 @@
-description des keywords dans FR.json
-
-Revoir les fonction lié au keywords: ruleset & rolldialog
-Handle:
-Rework item roll, make keyword applicable
-
-Change to the dialog:
-Jeté => Possibilité de jeter des armes avec "Jeté"
-"Polyvalent" => allow use of the keyword & +1 sur degat arme
-fracasse => Show reminder for defender
-protégé => allow use of the keyword
-
-Handle new skill_alteration + Create FR.json entries
-advantage_n_one_degree_of_success_gain
-disadvantage_n_one_degree_of_success_loss
+Categorie=Ecole dans sort
++ Trie dans Page Actions
 
 
-Attaque de focalisateur consomme la reserve (sauf les crit)
-
-Track utilisation
-- Garde + Bonus sur jet
-- Protégé + use sur jet
-- Bourru + Bonus sur jet
-- Coriace
-- Prise + Bonus sur jet
-- Resistant
-- Solide
-- Stable + Bonus sur jet
-- Direct
-
-Bonus sur jet:
-- Jeté
-- Protection
-- Bruyant
-
-Handle Keywords_used on weapons for:
-allonge
-brute
-penetrant
-
-Add [[]]{} to techniques + add their effect to effect in roll so they show
 
 ---------------------------------------------------------------
 -------------------------- DONE -------------------------------

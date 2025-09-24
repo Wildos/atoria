@@ -427,6 +427,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-end;
+  flex: 0;
+  width: fit-content;
+  max-width: fit-content;
+  min-width: fit-content;
 }
 .system-atoria .atoria-time-limitation-input > *,
 .system-atoria .atoria-time-limitation-display > * {
@@ -434,7 +439,7 @@
 }
 .system-atoria .atoria-time-limitation-input > label,
 .system-atoria .atoria-time-limitation-display > label {
-  text-align: center;
+  text-align: right;
 }
 .system-atoria .atoria-time-limitation-input > img,
 .system-atoria .atoria-time-limitation-display > img {
@@ -443,6 +448,7 @@
   min-width: var(--atoria-base-line-block-height);
   max-width: var(--atoria-base-line-block-height);
   border: none;
+  filter: var(--atoria-img-filter);
 }
 .system-atoria .atoria-time-limitation-input > input,
 .system-atoria .atoria-time-limitation-display > input {
@@ -1010,6 +1016,8 @@
 .system-atoria .atoria-item-line-display .atoria-limitation {
   min-width: 80px;
   max-width: 80px;
+  display: flex;
+  justify-content: flex-end;
 }
 .system-atoria .atoria-item-line-display > .atoria-spell-marker {
   border: none;
@@ -1053,7 +1061,8 @@
 }
 .system-atoria .atoria-character-simple-inventory {
   grid-area: char-smpl-inv;
-  max-width: 30em;
+  width: 27em;
+  max-width: fit-content;
 }
 .system-atoria .atoria-character-simple-inventory > .atoria-inventory-bar {
   --atoria-input-width: var(--atoria-4dgt-input-width);
@@ -1187,6 +1196,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  max-width: min-content;
 }
 .system-atoria .atoria-player-character-page > .first-col .flexrow {
   align-items: flex-start;
@@ -1219,6 +1229,7 @@
 }
 .system-atoria .atoria-player-character-page > .second-col {
   min-width: 20em;
+  width: 100%;
 }
 .system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense {
   /* display: grid; */
@@ -1769,6 +1780,11 @@
   max-width: fit-content;
   padding: 0 5px;
 }
+.system-atoria .atoria-tooltip,
+.system-atoria #tooltip.atoria-tooltip,
+.system-atoria .locked-tooltip.atoria-tooltip {
+  text-align: left;
+}
 .system-atoria .atoria.tooltip p {
   max-width: fit-content;
   padding: 0 5px;
@@ -1777,7 +1793,7 @@
 .system-atoria .atoria.tooltip.item {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   gap: var(--atoria-rows-gap) calc(var(--atoria-columns-gap) / 2);
   min-height: var(--atoria-skill-height);
   max-height: fit-content;

@@ -1,5 +1,8 @@
 <div class="atoria-item-actable-modifier-parts grid-2col">
 
+    <label>{{localize systemFields.associated_magic_school.label}}</label>
+    {{ formInput systemFields.associated_magic_school value=item.system.associated_magic_school disabled=(not @root.editable) localize=true}}
+
     <label>{{localize systemFields.success.label}}</label>
     {{ formInput systemFields.success value=item.system.success disabled=(not @root.editable)}}
     <label>{{localize systemFields.critical_success.label}}</label>

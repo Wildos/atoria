@@ -1,5 +1,4 @@
 import * as atoria_models from "../../module.mjs";
-
 export default class AtoriaOpportunityItem extends atoria_models.AtoriaActableItem {
   static defineSchema() {
     const fields = foundry.data.fields;

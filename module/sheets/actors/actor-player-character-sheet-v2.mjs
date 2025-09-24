@@ -317,7 +317,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
       },
     };
 
-    context.associated_skills = this.actor?.getSkillnKnowledgeList() ?? {};
+    context.associated_skills = this.actor?.getAssociatedSkillList() ?? {};
     // utils.default_values.associated_skills;
 
     switch (partId) {
@@ -770,12 +770,21 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         }
 
         break;
-      case "action_page":
+      case "action_page": {
         context.is_active_page = this.tabGroups["primary"] === "action";
+        let spell_container = {};
+        let spell_school_order = [];
+        for (const school_path in utils.ruleset.actable
+          .associated_magic_schools) {
+          spell_container[school_path] = [];
+          spell_school_order.push(school_path);
+        }
+
         context.actable_items = {
           action: [],
           opportunity: [],
-          spell: [],
+          spell: spell_container,
+          spell_school_order: spell_school_order,
           actable_modifier: {
             technique: {
               label:
@@ -808,7 +817,9 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
               context.actable_items.opportunity.push(i);
               break;
             case "spell":
-              context.actable_items.spell.push(i);
+              context.actable_items.spell[
+                i.system.associated_magic_school
+              ].push(i);
               break;
             case "technique":
               context.actable_items.actable_modifier.technique.items.push(i);
@@ -819,6 +830,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           }
         }
         break;
+      }
       default:
         break;
     }

@@ -33,6 +33,8 @@
         "Two_degree_of_success_loss": "DR -2",
         "Advantage": "Avantage",
         "Disadvantage": "Désavantage",
+        "Advantage_n_One_degree_of_success_gain": "Avantage & DR +1",
+        "Disadvantage_n_One_degree_of_success_loss": "Désavantage & DR -1",
         "Hand_handled": "Non automatisé"
       },
       "Health": {
@@ -139,6 +141,7 @@
       },
       "Action": {
         "Associated_skill": "Compétence associée",
+        "Associated_magic_school": "École associé",
         "Cost_list": "Coût disponible"
       },
       "Spell": {
@@ -915,121 +918,152 @@
           "Air": {
             "Label": "Air",
             "Dazzling": {
-              "Label": "Fulgurance"
+              "Label": "Fulgurance",
+              "Full_label": "Air - Fulgurance"
             },
             "Breeze": {
-              "Label": "Souffle"
+              "Label": "Souffle",
+              "Full_label": "Air - Souffle"
             },
             "Lightning": {
-              "Label": "Foudre"
+              "Label": "Foudre",
+              "Full_label": "Air - Foudre"
             }
           },
           "Water": {
             "Label": "Eau",
             "Ablution": {
-              "Label": "Ablution"
+              "Label": "Ablution",
+              "Full_label": "Eau - Ablution"
             },
             "Source": {
-              "Label": "Source"
+              "Label": "Source",
+              "Full_label": "Eau - Source"
             },
             "Ice": {
-              "Label": "Glace"
+              "Label": "Glace",
+              "Full_label": "Eau - Glace"
             }
           },
           "Fire": {
             "Label": "Feu",
             "Torch": {
-              "Label": "Flambeau"
+              "Label": "Flambeau",
+              "Full_label": "Feu - Flambeau"
             },
             "Ignition": {
-              "Label": "Ignition"
+              "Label": "Ignition",
+              "Full_label": "Feu - Ignition"
             },
             "Destruction": {
-              "Label": "Destruction"
+              "Label": "Destruction",
+              "Full_label": "Feu - Destruction"
             }
           },
           "Occult": {
             "Label": "Occulte",
             "Toxic": {
-              "Label": "Toxique"
+              "Label": "Toxique",
+              "Full_label": "Occulte - Toxique"
             },
             "Curse": {
-              "Label": "Malédiction"
+              "Label": "Malédiction",
+              "Full_label": "Occulte - Malédiction"
             },
             "Ethereal": {
-              "Label": "Éthérée"
+              "Label": "Éthérée",
+              "Full_label": "Occulte - Éthérée"
             },
             "Necromancy": {
-              "Label": "Nécromancie"
+              "Label": "Nécromancie",
+              "Full_label": "Occulte - Nécromancie"
             }
           },
           "Blood": {
             "Label": "Sanguin",
             "Sacrifice": {
-              "Label": "Sacrifice"
+              "Label": "Sacrifice",
+              "Full_label": "Sanguin - Sacrifice"
             },
             "Puncture": {
-              "Label": "Ponction"
+              "Label": "Ponction",
+              "Full_label": "Sanguin - Ponction"
             },
             "Drain": {
-              "Label": "Drain"
+              "Label": "Drain",
+              "Full_label": "Sanguin - Drain"
             }
           },
           "Earth": {
             "Label": "Terre",
             "Bastion": {
-              "Label": "Bastion"
+              "Label": "Bastion",
+              "Full_label": "Terre - Bastion"
             },
             "Telluric": {
-              "Label": "Tellurique"
+              "Label": "Tellurique",
+              "Full_label": "Terre - Tellurique"
             },
             "Metallic": {
-              "Label": "Métallique"
+              "Label": "Métallique",
+              "Full_label": "Terre - Métallique"
             }
           },
           "Druidic": {
             "Label": "Druidique",
             "Astral": {
-              "Label": "Astrale"
+              "Label": "Astrale",
+              "Full_label": "Druidique - Astrale"
             },
             "Solicitude": {
-              "Label": "Sollicitude"
+              "Label": "Sollicitude",
+              "Full_label": "Druidique - Sollicitude"
             },
             "Changeforme": {
-              "Label": "Changeforme"
+              "Label": "Changeforme",
+              "Full_label": "Druidique - Changeforme"
             },
             "Mutation": {
-              "Label": "Mutation"
+              "Label": "Mutation",
+              "Full_label": "Druidique - Mutation"
             }
           },
           "Mental": {
             "Label": "Arcanique",
             "Kinetic": {
-              "Label": "Kinétique"
+              "Label": "Kinétique",
+              "Full_label": "Arcanique - Kinétique"
             },
             "Illusion": {
-              "Label": "Illusion"
+              "Label": "Illusion",
+              "Full_label": "Arcanique - Illusion"
             },
             "Power": {
-              "Label": "Puissance"
+              "Label": "Puissance",
+              "Full_label": "Arcanique - Puissance"
             },
             "Enchanted": {
-              "Label": "Enchantée"
+              "Label": "Enchantée",
+              "Full_label": "Arcanique - Enchantée"
             }
           },
           "Holy": {
             "Label": "Sacré",
             "Blessing": {
-              "Label": "Bénédiction"
+              "Label": "Bénédiction",
+              "Full_label": "Sacré - Bénédiction"
             },
             "Piety": {
-              "Label": "Dévotion"
+              "Label": "Dévotion",
+              "Full_label": "Sacré - Dévotion"
             },
             "Glory": {
-              "Label": "Gloire"
+              "Label": "Gloire",
+              "Full_label": "Sacré - Gloire"
             },
             "Purification": {
-              "Label": "Purification"
+              "Label": "Purification",
+              "Full_label": "Sacré - Purification"
             }
           }
         }
@@ -1108,35 +1142,98 @@
       },
       "Keywords_description": {
         "Label": "Description du Mot-clef",
-        "Noisy": "DR Discrétion - Silence / Furtivité -1 lorsque le personnage se déplace.",
-        "Obstruct": "Initiative -1.",
-        "Preserve": "L'objet peut conserver une quantité maximale X d'une ressource qui s'accumule à hauteur de Y. Cette ressource ne peut être utilisée que pour un coût de magie. 5 endurance sont considérés comme une seule quantité X.",
-        "Equip": "L'objet n'a pas besoin d'être dégainée ou sortie du sac.",
-        "Two_handed": "L'action \"Attaquer\" a coût Seconde +1.\nL'arme nécessite les deux mains pour être utilisée. \n\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"Allonge\")",
-        "Light": "Peut être portée en main secondaire.",
-        "Heavy": "L'action \"Dégainer\" a coût Seconde +1",
-        "Quick": "L'action \"Dégainer\" a coût Seconde -1.",
-        "Somatic": "La ou les mains qui tiennent l'objet sont considérées comme libres quant il s'agit de Composantes - Somatiques.",
-        "Gruff": "Une fois par combat, ignore \"Brutalisé\".",
-        "Tough": "Une fois par phase de sommeil, ignore \"Saignement\".",
-        "Sturdy": "Une fois par phase de sommeil, subir Dégâts > 8 donne Armure +1.",
+        "Two_handed": "L'action \"Attaquer\" a coût Seconde +1.</br>L'arme nécessite les deux mains pour être utilisée.</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"Allonge\")",
+        "Two_handed+": "L'arme nécessite les deux mains pour être utilisée.</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"Allonge\")",
+
+        "Reach": "Donne \"Opportunité d'allonge\".</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")",
+        "Reach+": "Donne \"Opportunité d'allonge\".</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")</br>Une fois par combat, \"Opportunité d'allonge\" peut être utilisée sans Réflexe - Opportunité.",
+        "Reach++": "Donne \"Opportunité d'allonge\".</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")</br>Une fois par combat, \"Opportunité d'allonge\" peut être utilisée sans Réflexe - Opportunité.</br>Une fois par combat, \"Opportunité d'allonge\" peut être utilisée même avec 1 ennemi adjacent.",
+
+        "Brute": "Lorsque vous infligez Dégât Arme minimum +1, vous avez l'état \"Brutal\".",
+        "Brute+": "Lorsque vous infligez Dégât Arme minimum +1, vous avez l'état \"Brutal\".</br>Une fois par combat, lorsque vous perdez l'état \"Brutal\", vous gardez l'état \"Brutal\".",
+
+        "Equip": "L'objet n'a pas besoin d'être degainée ou sortie du sac.",
+
+        "Fluxian": "Les dégâts varient en fonction des écoles de magie utilisée par le personnage et une école peut donner accès à plusieurs types de dégâts",
+
+        "Smash": "L'attaque applique DR Réflexe - Parade -1.",
+        "Smash+": "L'attaque applique DR Réflexe - Parade -1.</br>La cible ne peut parer qu'avec un bouclier.",
+        "Smash++": "L'attaque applique Désavantage Réflexe - Parade et ne peut être parer qu'avec un bouclier.",
+
         "Guard": "DR Réflexe - Parade +1 contre les attaques au corps à corps.",
-        "Protect": "Une fois par phase de sommeil, donne une parade supplémentaire hors limite.",
-        "Protection": "DR Réflexe - Parade +1 contre les attaques à distance.",
-        "Brute": "Chaque tour, la première cible touchée a \"Brutalisé\" jusqu'à la fin du prochain tour.",
-        "Smash": "La cible a DR Réflexe - Parade -1 contre l'attaque.",
-        "Penetrating": "Pénétration +1",
-        "Sly": "En cas de surprise, augmente le % de dégâts supplémentaire, ignore l'armure et applique \"Saignement\".",
-        "Direct": "Une fois par phase de sommeil, attaquer avec X coûte Seconde -1.",
-        "Versatile": "L'arme peut avoir 2 mains+ pour Dégât Arme +1.",
-        "Reach": "Donne \"Opportunité d'allonge\".\n\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")",
+        "Guard+": "DR Réflexe - Parade +1 contre les attaques au corps à corps.</br>Une fois par combat, lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
+
         "Throwable": "DR Jet +1, Portée effective +1m et Portée maximale +3m.",
+        "Throwable+": "DR Jet +2, Portée effective +1m et Portée maximale +3m.",
+
+        "Light": "Peut être portée en main secondaire.",
+
+        "Heavy": "L'action \"Dégainer\" a coût Seconde +1",
+        "Heavy+": "L'action \"Dégainer\" a coût Seconde +2",
+
+        "Penetrating": "Pénétration +1",
+        "Penetrating+": "Pénétration +1</br>Une fois par combat, ignore l'armure et la résistance.",
+
+        "Versatile": "L'arme peut être prise à 2 mains pour Dégât Arme +1.",
+
+        "Protect": "Une fois par sommeil, donne une parade supplémentaire hors limite.",
+        "Protect+": "Une fois par combat, donne une parade supplémentaire hors limite.",
+
+        "Protection": "DR Réflexe - Parade +1 contre les attaques à distance.",
+        "Protection+": "L'avantage DR Réflexe - Parade contre les attaques à distance.",
+
+        "Quick": "L'action \"Dégainer\" a coût Seconde -1 sur cette arme.",
+        "Quick+": "L'action \"Dégainer\" a coût Seconde -2 sur cette arme.",
+
         "Recharge": "Nécessite l'action \"Recharger\" avant de pouvoir attaquer.",
-        "Reserve": "Reserve",
-        "Grip": "Prise",
-        "Resistant": "Resistant",
-        "Stable": "Stable",
-        "Fluxian": "Fluctuant"
+
+        "Somatic": "La ou les mains qui tiennent l'objet sont considérées comme libres quant il s'agit de Composantes - Somatiques.",
+
+        "Reserve": "Le focalisateur peut contenir un maximum de X mana. Lors d'un repos, vous pouvez dépenser du mana pour le remplir.",
+
+        "Sly": "En cas de surprise, augmente le % de dégâts supplémentaire, ignore l'armure et applique \"Saignement\".",
+
+        "Gruff": "Une fois par lune longue, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff+": "Une fois par lune courte, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff++": "Une fois par sommeil, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff+++": "Une fois par combat, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
+
+        "Noisy": "DR Discrétion - Silence / Furtivité -1 lorsque le personnage se déplace.",
+        "Noisy+": "Désavantage Discrétion - Silence / Furtivité lorsque le personnage se déplace.",
+        "Noisy++": "Désavantage et DR Discrétion - Silence / Furtivité -1 lorsque le personnage se déplace.",
+
+        "Tough": "Une fois par lune longue, ignore \"Saignement\".",
+        "Tough+": "Une fois par lune courte, ignore \"Saignement\".",
+        "Tough++": "Une fois par sommeil, ignore \"Saignement\".",
+        "Tough+++": "Une fois par combat, ignore \"Saignement\".",
+
+        "Obstruct": "Initiative -1.",
+        "Obstruct+": "Initiative -1D2.",
+
+        "Grip": "Une fois par lune longue, vous avez DR Arme +1. (Hors pugilat)",
+        "Grip+": "Une fois par lune courte, vous avez DR Arme +1. (Hors pugilat)",
+        "Grip++": "Une fois par sommeil, vous avez DR Arme +1. (Hors pugilat)",
+        "Grip+++": "Une fois par combat, vous avez DR Arme +1. (Hors pugilat)",
+
+        "Resistant": "Une fois par lune longue, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant+": "Une fois par lune courte, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant++": "Une fois par sommeil, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant+++": "Une fois par combat, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
+
+        "Sturdy": "Une fois par lune longue, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy+": "Une fois par lune courte, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy++": "Une fois par sommeil, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy+++": "Une fois par combat, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
+
+        "Stable": "Une fois par lune longue, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
+        "Stable+": "Une fois par lune courte, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
+        "Stable++": "Une fois par sommeil, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
+        "Stable+++": "Une fois par combat, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
+
+        "Direct": "Une fois par sommeil, \"Attaquer\" avec X a coût Seconde -1.",
+        "Direct+": "Une fois par combat, \"Attaquer\" avec X a coût Seconde -1.",
+
+        "Preserve": "L'objet peut conserver une quantité maximale X d'une ressource qui s'accumule à hauteur de Y. Cette ressource ne peut être utilisée que pour une réussite d'un sort. 5 endurance sont considérés comme une seule quantité X."
       },
       "Actable": {
         "Require_immobile": "Immobile",

@@ -75,6 +75,16 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
     );
   }
 
+  current_picked_skill_id() {
+    if (this.item.type === "spell") {
+      return "default";
+    }
+    if (this.item.type === "opportunity") {
+      return "default";
+    }
+    return this.tabGroups["primary"];
+  }
+
   current_picked_skill_data() {
     if (this.item.type === "spell") {
       return helpers.getSkillData(this.item, "");
@@ -179,37 +189,35 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
   }
 
   static async #onSubmitForm(event, form, formData) {
-    console.debug("ROLLED!");
-    console.debug(formData);
-
     let form_values = formData.object;
-    console.debug(form_values);
 
     let used_keywords = [];
     let used_features = [];
     let used_supplementaries = [];
     let used_actable_modifiers = [];
 
+    let skill_id = this.current_picked_skill_id() || "";
+
     for (const [key, value] of Object.entries(form_values)) {
-      if (key.startsWith("used_keywords")) {
+      if (key.startsWith("used_keywords_" + skill_id)) {
         if (value) {
           used_keywords.push(key.split(".")[1]);
         }
         continue;
       }
-      if (key.startsWith("used_supplementaries")) {
+      if (key.startsWith("used_supplementaries_" + skill_id)) {
         if (value) {
           used_supplementaries.push(key.split(".")[1]);
         }
         continue;
       }
-      if (key.startsWith("used_features")) {
+      if (key.startsWith("used_features_" + skill_id)) {
         if (value) {
           used_features.push(key.split("|")[1]);
         }
         continue;
       }
-      if (key.startsWith("used_actable_modifiers")) {
+      if (key.startsWith("used_actable_modifiers_" + skill_id)) {
         if (value) {
           used_actable_modifiers.push(key.split("|")[1]);
         }
@@ -222,10 +230,14 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
     let roll_effect = this.item.system.effect;
     let out_used_supplementaries = [];
 
+    let luck_applied = 0;
+
     if (this.need_roll) {
       let picked_skill_data = this.current_picked_skill_data();
 
-      let roll_data = {
+      luck_applied = form_values.luck_applied;
+
+      let skill_roll_data = {
         owning_actor_id: this.item.actor?._id,
         success_value: picked_skill_data.success,
         critical_success_amount: picked_skill_data.critical_success_amount,
@@ -233,49 +245,17 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
         title: picked_skill_data.label,
         advantage_amount: form_values.advantage_amount,
         disadvantage_amount: form_values.disadvantage_amount,
-        luck_applied: form_values.luck_applied,
+        luck_applied: luck_applied,
         dos_mod: form_values.dos_mod,
       };
 
       if (this.item.type === "weapon") {
-        roll_data.success_value += this.item.system.modificators.success;
-        roll_data.critical_success_amount +=
+        skill_roll_data.success_value += this.item.system.modificators.success;
+        skill_roll_data.critical_success_amount +=
           this.item.system.modificators.critical_success;
-        roll_data.critical_fumble_amount +=
+        skill_roll_data.critical_fumble_amount +=
           this.item.system.modificators.critical_fumble;
-      }
 
-      let actor_active_keyword =
-        utils.ruleset.character.getSkillAssociatedKeywordsData(
-          this.item.actor,
-          picked_skill_data.path,
-        );
-      for (const keyword in used_keywords) {
-        utils.applySkillAlteration(
-          roll_data,
-          actor_active_keyword[keyword].skill_alteration_type,
-        );
-      }
-      for (const features_uuid of used_features) {
-        let feature = fromUuidSync(features_uuid);
-        utils.applySkillAlteration(
-          roll_data,
-          feature.system.skill_alteration.skill_alteration_type,
-        );
-      }
-      for (const actable_uuid of used_actable_modifiers) {
-        let actable_mod = fromUuidSync(actable_uuid);
-        utils.applySkillAlteration(
-          roll_data,
-          actable_mod.system.skill_alteration.skill_alteration_type,
-        );
-      }
-
-      const roll = new rolls.AtoriaDOSRoll(this.item.getRollData(), roll_data);
-      await roll.evaluate();
-      chat_rolls.push(roll);
-
-      if (this.item.type === "weapon") {
         const damage_roll =
           picked_skill_data.path === "system.skills.combative.weapon.focuser"
             ? this.item.system.focuser_damage_roll
@@ -301,13 +281,49 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
             );
           }
           roll_effect += supplementary.description;
-          out_used_supplementaries.push(supplementary);
+          out_used_supplementaries.push(supplementary_idx);
         }
       }
+      let actor_active_keyword =
+        utils.ruleset.character.getSkillAssociatedKeywordsData(
+          this.item.actor,
+          this.item,
+          picked_skill_data.path,
+        );
+      for (const keyword in used_keywords) {
+        utils.applySkillAlteration(
+          skill_roll_data,
+          actor_active_keyword[keyword].skill_alteration_type,
+        );
+      }
+      for (const feature_uuid of used_features) {
+        let feature = fromUuidSync(feature_uuid);
+        utils.applySkillAlteration(
+          skill_roll_data,
+          feature.system.skill_alteration.skill_alteration_type,
+        );
+        roll_effect += feature.system.description;
+      }
+      for (const actable_uuid of used_actable_modifiers) {
+        let actable_mod = fromUuidSync(actable_uuid);
+        utils.applySkillAlteration(
+          skill_roll_data,
+          actable_mod.system.skill_alteration.skill_alteration_type,
+        );
+        roll_effect += actable_mod.system.description;
+      }
+
+      const roll = new rolls.AtoriaDOSRoll(
+        this.item.getRollData(),
+        skill_roll_data,
+      );
+      await roll.evaluate();
+      chat_rolls.push(roll);
     }
 
-    const rolled_data = {
+    const roll_data = {
       chat_rolls: chat_rolls,
+      luck_applied: luck_applied,
       used_keywords: used_keywords,
       used_features: used_features, // uuid
       used_supplementaries: out_used_supplementaries,
@@ -316,9 +332,10 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
         form_values.asked_visibility,
       ),
       flavor: this.need_roll ? null : `<h5>${this.item.name}</h5>`,
+      flavor_tooltip: this.need_roll ? null : this.item.descriptive_tooltip,
       effect: roll_effect,
     };
-    await this.options.submit?.(rolled_data);
+    await this.options.submit?.(roll_data);
     this.close();
   }
 
@@ -453,6 +470,20 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
           context.available_skills_data = [];
           let available_skills = this.available_skills_data();
 
+          if (
+            available_skills.length === 0 &&
+            this.item.type === "action" &&
+            this.item.system.is_magic
+          ) {
+            let sub_context = {};
+            sub_context.available_actable_modifiers =
+              this.item.system.usable_actable_modifiers.flatMap((id) => {
+                let usable_actable = this.item.actor.items.get(id);
+                return usable_actable !== undefined ? usable_actable : [];
+              });
+            context.available_skills_data.push(sub_context);
+          }
+
           for (const available_skill of available_skills) {
             let sub_context = {
               group: available_skill.group,
@@ -482,10 +513,8 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
               sub_context.available_keywords = utils.ruleset.character
                 .getSkillAssociatedKeywordsData(
                   this.item.actor,
+                  this.item,
                   available_skill.path,
-                )
-                .filter((keyword_data) =>
-                  Object.keys(active_keywords).includes(keyword_data.name),
                 )
                 .map((keyword_data) => {
                   keyword_data["usable"] =
@@ -501,13 +530,12 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
 
               sub_context.available_features =
                 this.item.actor.getAssociatedFeatures(available_skill.path);
-
-              sub_context.available_actable_modifiers =
-                this.item.system.usable_actable_modifiers.flatMap((id) => {
-                  let usable_actable = this.item.actor.items.get(id);
-                  return usable_actable !== undefined ? usable_actable : [];
-                });
             }
+            sub_context.available_actable_modifiers =
+              this.item.system.usable_actable_modifiers.flatMap((id) => {
+                let usable_actable = this.item.actor.items.get(id);
+                return usable_actable !== undefined ? usable_actable : [];
+              });
             context.available_skills_data.push(sub_context);
           }
         }

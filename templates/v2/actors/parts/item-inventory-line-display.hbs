@@ -59,8 +59,12 @@
 </li>
 <li class="atoria-expand-direct-data flexcol" data-item-id="{{item._id}}">
     <label>{{localize item.systemFields.encumbrance.label}}: {{item.system.encumbrance}}</label>
-    {{#if item.keywords_recap.list}}
-    <label>{{localize item.systemFields.keywords.label}}: {{item.keywords_recap.list}}</label>
+    {{#if item.keywords_recap.list_data}}
+    <label data-tooltip-class="atoria-tooltip" >{{localize item.systemFields.keywords.label}}:
+        {{#each item.keywords_recap.list_data as |keyword_data idx|}}
+        <span data-tooltip="{{keyword_data.description}}">{{keyword_data.label}}</span>,
+        {{/each}}
+    </label>
     {{/if}}
     {{#if item.keywords_recap.has_preserve}}
     <label>{{localize item.systemFields.keywords.fields.preserve.label}} {{item.system.keywords.preserve.max_amount}}

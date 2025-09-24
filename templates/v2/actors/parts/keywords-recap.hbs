@@ -8,14 +8,14 @@
                 <div class="keyword_block">
                 {{formInput (lookup ../../systemFields.keywords_used.fields keyword) value=(lookup ../../actor.system.keywords_used keyword)  disabled=(not @root.editable) }}
                 <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
-                <label data-tooltip="{{keyword_data.description}}">{{{keyword_data.label}}}</label>
+                <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{keyword_data.label}}}</label>
                 </div>
             {{/with}}
         {{else}}
             {{#if (ne keyword "direct")}}
                 {{#with (lookup ../tracked_keywords_data keyword) as |keyword_data|}}
                     <div class="keyword_block">
-                    <label data-tooltip="{{keyword_data.description}}">{{{keyword_data.label}}}</label>
+                    <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{keyword_data.label}}}</label>
                 </div>
                 {{/with}}
             {{/if}}
@@ -31,7 +31,7 @@
                 {{#if keyword_data.checked}}checked{{/if}}
                 >
                 <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
-                <label data-tooltip="{{keyword_data.description}}">{{{direct_type}}} {{localize "ATORIA.Ruleset.Keywords.Direct"}}</label>
+                <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{direct_type}}} {{localize "ATORIA.Ruleset.Keywords.Direct"}}</label>
             </div>
         {{/each}}
         {{/with}}

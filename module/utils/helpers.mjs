@@ -218,7 +218,7 @@ export async function skillCreationDialog(actor, skill_cat) {
     rejectClose: false,
     content: content,
     ok: {
-      label: game.i18n.localize("ATORIA.Dialog.Launch"),
+      label: game.i18n.localize("ATORIA.Dialog.Confirm"),
       callback: (event, button, dialog) => {
         const formElement = dialog.querySelector("form");
         const formData = new FormDataExtended(formElement);
@@ -460,7 +460,11 @@ export async function skillRollDialog(actor, skill_path) {
   }
   const associated_features = actor.getAssociatedFeatures(skill_path);
   const associated_keywords =
-    utils.ruleset.character.getSkillAssociatedKeywordsData(actor, skill_path);
+    utils.ruleset.character.getSkillAssociatedKeywordsData(
+      actor,
+      null,
+      skill_path,
+    );
   const is_blind_roll = utils.ruleset.character.isBlindSkill(skill_path);
   const content = await renderTemplate(
     CONFIG.ATORIA.DIALOG_TEMPLATES.skill_launch,

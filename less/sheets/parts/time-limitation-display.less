@@ -2,13 +2,19 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
+
+    flex: 0;
+    width: fit-content;
+    max-width: fit-content;
+    min-width: fit-content;
 
     > * {
         flex: 1;
     }
 
     > label {
-        text-align: center;
+        text-align: right;
     }
 
     > img {
@@ -17,6 +23,7 @@
         min-width: var(--atoria-base-line-block-height);
         max-width: var(--atoria-base-line-block-height);
         border: none;
+        filter: var(--atoria-img-filter);
     }
 
     > input {
