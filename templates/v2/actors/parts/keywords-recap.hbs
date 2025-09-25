@@ -1,0 +1,39 @@
+<h5 class="title atoria-expand-control" data-expand-id="atoria-sheet-keywords" data-action="expandSection">
+    {{localize "ATORIA.Ruleset.Keywords.Label"}}
+</h5>
+<div class="atoria-keywords atoria-expand-direct-data">
+    {{#each tracked_keywords as |keyword idx|}}
+        {{#if (not (oneOf keyword "direct" "noisy" "obstruct"))}}
+            {{#with (lookup ../tracked_keywords_data keyword) as |keyword_data|}}
+                <div class="keyword_block">
+                {{formInput (lookup ../../systemFields.keywords_used.fields keyword) value=(lookup ../../actor.system.keywords_used keyword)  disabled=(not @root.editable) }}
+                <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
+                <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{keyword_data.label}}}</label>
+                </div>
+            {{/with}}
+        {{else}}
+            {{#if (ne keyword "direct")}}
+                {{#with (lookup ../tracked_keywords_data keyword) as |keyword_data|}}
+                    <div class="keyword_block">
+                    <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{keyword_data.label}}}</label>
+                </div>
+                {{/with}}
+            {{/if}}
+        {{/if}}
+    {{/each}}
+    {{#if (lookup tracked_keywords_data "direct")}}
+        {{#with (lookup tracked_keywords_data "direct") as |keyword_type_data|}}
+        {{#each keyword_type_data as |keyword_data direct_type| }}
+            <div class="keyword_block">
+                <input type="checkbox"
+                data-action="toggle_keyword_direct"
+                data-type="{{direct_type}}"
+                {{#if keyword_data.checked}}checked{{/if}}
+                >
+                <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
+                <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{direct_type}}} {{localize "ATORIA.Ruleset.Keywords.Direct"}}</label>
+            </div>
+        {{/each}}
+        {{/with}}
+    {{/if}}
+</div>

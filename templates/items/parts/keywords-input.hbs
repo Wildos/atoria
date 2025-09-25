@@ -98,10 +98,10 @@
             </label>
             <label>
             <input type="checkbox" data-dtype="Boolean" name="{{data_path}}.brutal" {{checked keywords.brutal}}
-            data-tooltip="{{localize systemFields.brutal.label}}"/>
-            {{localize systemFields.brutal.label}}
+            data-tooltip="{{localize systemFields.brute.label}}"/>
+            {{localize systemFields.brute.label}}
             <input class="more" type="checkbox" data-dtype="Boolean" name="{{data_path}}.brutal_more" {{checked keywords.brutal_more}}
-            data-tooltip="{{localize systemFields.brutal_more.label}}"/>
+            data-tooltip="{{localize systemFields.brute_more.label}}"/>
             </label>
             <label>
             <input type="checkbox" data-dtype="Boolean" name="{{data_path}}.smash" {{checked keywords.smash}}
@@ -161,7 +161,7 @@
             data-tooltip="{{localize systemFields.preserve.label}}"/>
             {{localize systemFields.preserve.label}}
 
-            <input type="text" inputmode="numeric" data-dtype="Number" 
+            <input type="text" inputmode="numeric" data-dtype="Number"
             name="{{data_path}}.preserve_data.max_amount" value="{{keywords.preserve_data.max_amount}}"
             data-tooltip="{{systemFields.preserve_data.fields.max_amount.label}}"/>
 
@@ -170,7 +170,7 @@
                 {{selectOptions systemFields.preserve_data.fields.type.choices selected=keywords.preserve_data.type localize=true}}
             </select>
 
-            <input type="text" inputmode="numeric" data-dtype="Number" 
+            <input type="text" inputmode="numeric" data-dtype="Number"
             name="{{data_path}}.preserve_data.increment" value="{{keywords.preserve_data.increment}}"
             data-tooltip="{{systemFields.preserve_data.fields.increment.label}}"/>
 
@@ -195,4 +195,3 @@ preserve_data: new fields.SchemaField({
 
 direct: new fields.BooleanField({ required: true, initial: false, label: "ATORIA.Ruleset.Keywords.Direct" }),
 direct_more: new fields.BooleanField({ required: true, initial: false, label: "ATORIA.Ruleset.Keywords.Direct_more" }),
-

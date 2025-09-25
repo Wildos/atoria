@@ -46,9 +46,9 @@
                     <img class="medical" data-action="toggleAttribute" data-name="system.healing_inactive.medical"
                     data-tooltip="{{localize systemFields.healing_inactive.fields.medical.label}}"
                     src="systems/atoria/imgs/medical-pack{{#if system.healing_inactive.medical}}-checked{{/if}}.svg" /><!--Medic-->
-                    <img class="herbs" data-action="toggleAttribute" data-name="system.healing_inactive.herbs"
-                    data-tooltip="{{localize systemFields.healing_inactive.fields.herbs.label}}"
-                    src="systems/atoria/imgs/herbs-bundle{{#if system.healing_inactive.herbs}}-checked{{/if}}.svg" /><!--Herbs-->
+                    <img class="medical" data-action="toggleAttribute" data-name="system.healing_inactive.medical_2"
+                    data-tooltip="{{localize systemFields.healing_inactive.fields.medical_2.label}}"
+                    src="systems/atoria/imgs/medical-pack{{#if system.healing_inactive.medical_2}}-checked{{/if}}.svg" /><!--Medic_2-->
                 </div>
                 <div class="flexrow colored">
                     <img class="amount" data-action="editHealingInactive" data-amount="1"
@@ -89,7 +89,7 @@
             <div class="atoria-attribute-display atoria-initiative">
                 <label>{{localize systemFields.initiative.label}}</label>
                 <input type="text" data-dtype="String" name="system.initiative" value="{{actor.system.initiative}}"
-                data-tooltip="{{systemFields.initiative.label}}" {{disabled (or (not editable) (not isEditingMode))}}/>
+                data-tooltip="{{actor.system.initiative}}" {{disabled (or (not editable) (not isEditingMode))}}/>
             </div>
         </div>
         <div class="atoria-armor-n-resistance">

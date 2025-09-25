@@ -1,4 +1,4 @@
-.atoria.dialog  {
+.atoria.dialog, .atoria.roll-dialog  {
 
     max-width: 550px;
 
@@ -42,5 +42,35 @@
         input {
             --atoria-input-width: 100%;
         }
+    }
+
+    .available-keywords{
+        img {
+            flex: 0;
+            max-width: var(--atoria-base-line-block-height);
+            max-height: var(--atoria-base-line-block-height);
+            border: none;
+            filter: var(--atoria-img-filter);
+        }
+    }
+
+    .atoria-item-dialog{
+        display: flex;
+        row-gap: 10px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sheet-tabs{
+        margin: 4px 0;
+        margin-bottom: 15px;
+        border-top: 1px solid var(--color-border-light-primary);
+        border-bottom: 1px solid var(--color-border-light-primary);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 1rem;
     }
 }

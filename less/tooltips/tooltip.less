@@ -15,6 +15,10 @@
     }
 }
 
+.atoria-tooltip, #tooltip.atoria-tooltip, .locked-tooltip.atoria-tooltip {
+    text-align: left;
+}
+
 .atoria.tooltip {
     p {
         max-width: fit-content;
@@ -25,7 +29,7 @@
     &.item {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        /* align-items: center; */
 
         gap: var(--atoria-rows-gap) calc(var(--atoria-columns-gap) / 2);
 

@@ -1,4 +1,9 @@
 <div class="atoria-character-simple-inventory">
+
+    {{#unless limited}}
+    {{>"atoria.v2.actors_partials.keywords-recap" tracked_keywords=tracked_keywords tracked_keywords_data=tracked_keywords_data}}
+    {{/unless}}
+
     {{#unless limited}}
     {{#if (or @root.isEditingMode effects.length)}}
     {{>"atoria.v2.actors_partials.item-header-bar" title="ATORIA.Sheet.Effect.Title" item_types=(arraytize "effect")}}

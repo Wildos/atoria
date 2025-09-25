@@ -1,6 +1,7 @@
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ItemSheetV2 } = foundry.applications.sheets;
 import * as utils from "../../utils/module.mjs";
+import RULESET from "../../utils/ruleset.mjs";
 
 export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
   ItemSheetV2,
@@ -29,6 +30,7 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         handler: AtoriaItemSheet._expandSection,
         buttons: [0, 2],
       },
+      setVisualNumberField: AtoriaItemSheet._setVisualNumberField,
       toggleEffect: AtoriaItemSheet._toggleEffect,
       handleUsableActableModifier: AtoriaItemSheet._handleUsableActableModifier,
     },
@@ -311,6 +313,16 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
       this.expanded_section.splice(this.expanded_section.indexOf(expandId), 1);
     else this.expanded_section.push(expandId);
     $expand_control.toggleClass("expanded");
+  }
+
+  static async _setVisualNumberField(_event, target) {
+    const { datapath, amount } = target.dataset;
+    let new_amount = amount;
+    if (new_amount <= foundry.utils.getProperty(this.item, datapath))
+      new_amount -= 1;
+    await this.item.update({
+      [`${datapath}`]: new_amount,
+    });
   }
 
   static async _toggleEffect(_event, target) {

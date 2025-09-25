@@ -45,6 +45,9 @@ export default class AtoriaActor extends Actor {
     for (let i of this.items) {
       actorData.system.encumbrance.value += i.getEncumbrance();
     }
+    actorData.active_keywords_data =
+      utils.ruleset.character.getActiveKeywordsData(this);
+
     switch (this.type) {
       case "player-character":
         actorData.system.mana.current_max =
@@ -66,15 +69,13 @@ export default class AtoriaActor extends Actor {
       ...super.getRollData(),
       ...(this.system.getRollData?.() ?? null),
     };
-    const active_keywords = utils.ruleset.character.getActiveKeywords(this);
-    for (const keyword of active_keywords.values()) {
-      switch (keyword) {
-        case "obstruct":
-          roll_data["initiative"] = roll_data["initiative"] + "-1";
-          break;
-        case "obstruct_more":
-          roll_data["initiative"] = roll_data["initiative"] + "-1d2";
-          break;
+    const active_keywords = utils.ruleset.character.getActiveKeywordsData(this);
+
+    if (active_keywords["obstruct"] >= 2) {
+      roll_data["initiative"] = roll_data["initiative"] + "-1d2";
+    } else if (active_keywords["obstruct"] >= 1) {
+      {
+        roll_data["initiative"] = roll_data["initiative"] + "-1";
       }
     }
     return roll_data;
@@ -158,7 +159,12 @@ export default class AtoriaActor extends Actor {
           for (let skill_key in skill_cat) {
             const skill_path = `system.${skill_group_key}.${skill_cat_key}.${skill_key}`;
             skill_list[skill_path] =
-              skill_group[skill_cat_key][skill_key].label;
+              game.i18n.localize(
+                this.system.schema.fields[skill_group_key].fields[skill_cat_key]
+                  .label,
+              ) +
+              " - " +
+              game.i18n.localize(skill_group[skill_cat_key][skill_key].label);
           }
         }
       }
@@ -173,7 +179,15 @@ export default class AtoriaActor extends Actor {
           for (let skill_key in skill_cat) {
             const skill_path = `system.${skill_type_key}.${skill_group_key}.${skill_cat_key}.${skill_key}`;
             skill_list[skill_path] =
-              skill_type[skill_group_key][skill_cat_key][skill_key].label;
+              game.i18n.localize(
+                this.system.schema.fields[skill_type_key].fields[
+                  skill_group_key
+                ].fields[skill_cat_key].label,
+              ) +
+              " - " +
+              game.i18n.localize(
+                skill_type[skill_group_key][skill_cat_key][skill_key].label,
+              );
           }
         }
       }
@@ -188,7 +202,10 @@ export default class AtoriaActor extends Actor {
     } else {
       for (let perception in this.system.perceptions) {
         const skill_path = `system.perceptions.${perception}`;
-        perception_list[skill_path] = this.system.perceptions[perception].label;
+        perception_list[skill_path] =
+          game.i18n.localize(this.system.schema.fields.perceptions.label) +
+          " - " +
+          game.i18n.localize(this.system.perceptions[perception].label);
       }
     }
     return perception_list;
@@ -209,25 +226,7 @@ export default class AtoriaActor extends Actor {
     )
       return skill_list;
 
-    if (this.type === "hero") {
-      return {
-        "system.skills.combative": this.system.skills.combative.label,
-      };
-    }
-    if (this.type === "non-player-character") {
-      return {
-        "system.skills.combative.weapon":
-          this.system.skills.combative.weapon.label,
-      };
-    }
-
-    const skill_cat = this.system.skills.combative.weapon;
-    for (let skill_key in skill_cat) {
-      const skill_path = `system.skills.combative.weapon.${skill_key}`;
-      skill_list[skill_path] = skill_cat[skill_key].label;
-    }
-
-    return skill_list;
+    return DEFAULT_VALUES.get_weapon_associated_skills();
   }
 
   getSkillTitle(skill_path) {
@@ -309,6 +308,25 @@ export default class AtoriaActor extends Actor {
             {
               type: "feature",
               items_id: used_features_id,
+            },
+            {
+              type: "keyword",
+              items: roll_config.used_keywords.map((keyword_data) => {
+                return {
+                  descriptive_tooltip: RULESET.keywords.get_description(
+                    keyword_data.name,
+                    RULESET.character.getActiveKeywordsData(this)[
+                      keyword_data.name
+                    ] || 0,
+                  ),
+                  name: RULESET.keywords.get_localized_name(
+                    keyword_data.name,
+                    RULESET.character.getActiveKeywordsData(this)[
+                      keyword_data.name
+                    ] || 0,
+                  ),
+                };
+              }),
             },
           ],
         },
@@ -575,28 +593,6 @@ export default class AtoriaActor extends Actor {
       return `<input type='checkbox' ${is_true ? "checked" : ""} disabled>`;
     };
 
-    // Herbs inactive
-    tmp_value = this.system.healing_inactive.herbs;
-    tmp_new_value =
-      "healing_inactive.herbs" in attribute_changes
-        ? attribute_changes["healing_inactive.herbs"]
-        : tmp_value;
-    if (tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(
-              this.system.schema.fields.healing_inactive.fields.herbs.label,
-            ),
-            previous: checkboxVisual(tmp_value),
-            new: checkboxVisual(tmp_new_value),
-          },
-        ),
-      );
-      update_list["system.healing_inactive.herbs"] = tmp_new_value;
-    }
-
     // Medical inactive
     tmp_value = this.system.healing_inactive.medical;
     tmp_new_value =
@@ -617,6 +613,27 @@ export default class AtoriaActor extends Actor {
         ),
       );
       update_list["system.healing_inactive.medical"] = tmp_new_value;
+    }
+    // Medical inactive 2
+    tmp_value = this.system.healing_inactive.medical_2;
+    tmp_new_value =
+      "healing_inactive.medical_2" in attribute_changes
+        ? attribute_changes["healing_inactive.medical_2"]
+        : tmp_value;
+    if (tmp_value != tmp_new_value) {
+      changelogs.push(
+        game.i18n.format(
+          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+          {
+            type: game.i18n.localize(
+              this.system.schema.fields.healing_inactive.fields.medical_2.label,
+            ),
+            previous: checkboxVisual(tmp_value),
+            new: checkboxVisual(tmp_new_value),
+          },
+        ),
+      );
+      update_list["system.healing_inactive.medical_2"] = tmp_new_value;
     }
 
     // Resurrection inactive
@@ -760,8 +777,6 @@ export default class AtoriaActor extends Actor {
     console.dir(data);
   }
 
-
-
   // Debug functions
   async debug_fix_knowledges() {
     let updated_knowledges = helpers.getInitialFullSkillSchema(
@@ -771,21 +786,35 @@ export default class AtoriaActor extends Actor {
 
     Object.keys(this.system.knowledges).forEach((group_key) => {
       Object.keys(this.system.knowledges[group_key]).forEach((cat_key) => {
-        if (foundry.utils.getType(this.system.knowledges[group_key][cat_key]) === "Object") {
-          Object.keys(this.system.knowledges[group_key][cat_key]).forEach((skill_key) => {
-            if (skill_key in updated_knowledges[group_key][cat_key]
-              && this.system.knowledges[group_key][cat_key][skill_key] !== undefined) {
-              delete updated_knowledges[group_key][cat_key][skill_key]["success"];
-              delete updated_knowledges[group_key][cat_key][skill_key]["critical_success_modifier"];
-              delete updated_knowledges[group_key][cat_key][skill_key]["critical_fumble_modifier"];
-            }
-          });
+        if (
+          foundry.utils.getType(this.system.knowledges[group_key][cat_key]) ===
+          "Object"
+        ) {
+          Object.keys(this.system.knowledges[group_key][cat_key]).forEach(
+            (skill_key) => {
+              if (
+                skill_key in updated_knowledges[group_key][cat_key] &&
+                this.system.knowledges[group_key][cat_key][skill_key] !==
+                  undefined
+              ) {
+                delete updated_knowledges[group_key][cat_key][skill_key][
+                  "success"
+                ];
+                delete updated_knowledges[group_key][cat_key][skill_key][
+                  "critical_success_modifier"
+                ];
+                delete updated_knowledges[group_key][cat_key][skill_key][
+                  "critical_fumble_modifier"
+                ];
+              }
+            },
+          );
         }
       });
     });
 
     this.update({
-      "system.knowledges": updated_knowledges
-    })
+      "system.knowledges": updated_knowledges,
+    });
   }
 }

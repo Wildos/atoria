@@ -4,7 +4,8 @@ systemFields
 data_path
 cssClasses
 -->
-<div class="atoria-cost-input {{cssClasses}}">
+<div class="flexcol {{cssClasses}}">
+    <div class="atoria-cost-input flexrow">
     <input class="atoria-health colored" type="text" inputmode="numeric" data-dtype="Number"  name="{{data_path}}.health" value="{{cost.health}}"
         data-tooltip="{{localize systemFields.health.label}}" >
 
@@ -20,7 +21,6 @@ cssClasses
     <input class="atoria-movement colored" type="text" inputmode="numeric" data-dtype="Number"  name="{{data_path}}.movement" value="{{cost.movement}}"
         data-tooltip="{{localize systemFields.movement.label}}" >
 
-
     <input type="text" inputmode="numeric" data-dtype="Number" name="{{data_path}}.time.main_amount" value="{{cost.time.main_amount}}"
         data-tooltip="{{localize systemFields.time.fields.main_amount.label}}" >
 
@@ -31,4 +31,13 @@ cssClasses
     <input type="text" inputmode="numeric" data-dtype="Number" name="{{data_path}}.time.second_amount" value="{{cost.time.second_amount}}"
         data-tooltip="{{localize systemFields.time.fields.second_amount.label}}" >
     <label>{{localize (pluralize systemFields.time.fields.second_amount.label cost.time.second_amount)}}</label>
+    </div>
+
+    {{#if complete_cost}}
+    <div class="flexrow">
+        <label>{{localize systemFields.material.label}}:</label>
+        <input class="atoria-material colored" type="text" name="{{data_path}}.material" value="{{cost.material}}"
+            data-tooltip="{{localize systemFields.material.label}}" >
+    </div>
+    {{/if}}
 </div>

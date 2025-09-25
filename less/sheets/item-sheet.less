@@ -58,13 +58,64 @@
         input[type=checkbox]:not(:checked) + input[type=checkbox].more {
             display: none;
         }
-        input[type=checkbox].more::after {
-            --checkbox-content: "\2b" !important;
-        }
 
-        .boolean-area {
+        .visual-numbered-input{
+
+            .input-title{
+                display: inline-block;
+                min-width: 80px;
+                max-width: 80px;
+            }
+            input[type="checkbox"]{
+                --checkbox-size: 14px;
+            }
+            input[type="checkbox"]:not(:first-of-type){
+                --checkbox-size: 12px;
+                margin-left: 2px;
+                border: none;
+            }
+            input[type=checkbox]:not(:first-of-type)::after {
+                --checkbox-content: "\2b";
+                font-size: var(--checkbox-size);
+            }
+
+            input[type="number"]{
+                margin-left: 3px;
+                max-width: var(--atoria-input-width);
+            }
+            input[type="text"]{
+                margin-left: 3px;
+            }
+        }
+        .simple-area {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
+            row-gap: 3px;
+        }
+        .complex-area {
+            display: flex;
+            flex-direction: column;
+            margin-top: 3px;
+
+            input[type="checkbox"]{
+                --checkbox-size: 14px;
+            }
+            input[type="number"]{
+                margin-left: 3px;
+                max-width: var(--atoria-input-width);
+            }
+            input[type="text"], select{
+                margin-left: 3px;
+            }
+            .form-group {
+                flex: 0;
+                min-width: fit-content;
+                label {
+                    display: inline-block;
+                    min-width: 80px;
+                    max-width: 80px;
+                }
+            }
         }
     }
 }

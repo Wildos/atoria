@@ -13,7 +13,7 @@
         {{/if}}
 
         {{#if message.flavor}}
-        <span class="flavor-text">{{{message.flavor}}}</span>
+        <span class="flavor-text" data-tooltip="{{message.system.flavor_tooltip}}">{{{message.flavor}}}</span>
         {{/if}}
     </header>
     {{#if @root.isContentVisible}}

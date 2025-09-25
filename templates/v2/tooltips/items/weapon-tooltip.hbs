@@ -1,4 +1,9 @@
 <section class='atoria tooltip'>
     <h5>{{item.name}}</h5>
+    {{#if keywords_recap.list}}
+    <label>{{localize systemFields.keywords.label}}:
+        {{keywords_recap.list}}
+    </label>
+    {{/if}}
     <p>Description: {{brNewLines item.system.description}}</p>
 </section>

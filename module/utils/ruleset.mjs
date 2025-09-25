@@ -1,5 +1,6 @@
 import { itemRollDialog } from "./helpers.mjs";
 import { default as default_values } from "./default-values.mjs";
+import { buildLocalizeString } from "../utils/atoria-lang.mjs";
 
 const RULESET = {};
 
@@ -30,19 +31,7 @@ RULESET["general"] = class GeneralRuleset {
     attack_cost.time.second_amount = 3;
     attack_cost.stamina = 1;
     const weapon_keywords = weapon_item.system.keywords;
-    if (weapon_keywords.two_handed && !weapon_keywords.two_handed_more) {
-      attack_cost.time.second_amount += 1;
-    }
-    return attack_cost;
-  }
-  static getCostFocuserWeaponAttack(weapon_item) {
-    const cost_model = default_values.models.helpers.defineCostField();
-    let attack_cost = cost_model.getInitialValue();
-    attack_cost.time.second_amount = 3;
-    attack_cost.stamina = 1;
-    attack_cost.mana = 1;
-    const weapon_keywords = weapon_item.system.keywords;
-    if (weapon_keywords.two_handed && !weapon_keywords.two_handed_more) {
+    if (weapon_keywords.two_handed == 1) {
       attack_cost.time.second_amount += 1;
     }
     return attack_cost;
@@ -61,8 +50,8 @@ RULESET["character"] = class ActorRuleset {
         restored_attributes["health"] = Math.floor(actor.system.health.max / 4);
         restored_attributes["mana"] = actor.system.mana.max;
         restored_attributes["healing_inactive.amount"] = -2;
-        restored_attributes["healing_inactive.herbs"] = false;
         restored_attributes["healing_inactive.medical"] = false;
+        restored_attributes["healing_inactive.medical_2"] = false;
       case "rest":
         restored_attributes["mana"] =
           "mana" in restored_attributes
@@ -169,159 +158,210 @@ RULESET["character"] = class ActorRuleset {
     ];
   }
 
-  static getActiveKeywords(actor) {
-    const keywords_active = new Set();
-    const automatized_keywords_actor_related = [
-      "obstruct",
-      "obstruct_more",
-      "noisy",
-      "noisy_more",
-      "guard",
-      "guard_more",
-      "protection",
-      "protection_more",
-    ];
+  static getActiveKeywordsData(actor) {
+    const keywords_active = {};
+    let handled_primary_weapon = false;
     for (const item of actor.items) {
-      const item_keywords_active =
-        RULESET.item.getAutomatizedActiveKeywords(item);
-
-      for (const keyword of item_keywords_active) {
-        if (!automatized_keywords_actor_related.includes(keyword)) {
-          // keyword not actor related
-          continue;
-        }
-        if (keywords_active.has(`${keyword}_more`)) {
-          // already has more version
-          continue;
-        }
-        if (keyword.endsWith("_more")) {
-          // keyword_more
-          const base_keyword = keyword.substring(
-            0,
-            keyword.length - "_more".length,
-          );
-          keywords_active.delete(base_keyword);
-          keywords_active.add(keyword);
-        } else if (keywords_active.has(keyword)) {
-          // keyword & keyword
-          keywords_active.delete(keyword);
-          keywords_active.add(`${keyword}_more`);
+      if (["weapon", "armor"].includes(item.type) && !item.system.is_worn) {
+        continue;
+      }
+      const item_active_keywords = RULESET.item.getActiveKeywords(item);
+      if (["weapon"].includes(item.type)) {
+        if (
+          item.system.associated_skill ==
+          "system.skills.combative.weapon.shield"
+        ) {
+          for (let keyword of item_active_keywords) {
+            if (["guard", "protection", "protect"].includes(keyword)) {
+              keywords_active[keyword] = Math.min(
+                (keywords_active[keyword] || 0) + item.system.keywords[keyword],
+                RULESET.keywords.max_amount[keyword],
+              );
+            }
+          }
         } else {
-          // keyword is new to the set
-          keywords_active.add(keyword);
+          if (handled_primary_weapon) {
+            switch (item.system.associated_skill) {
+              case "system.skills.combative.weapon.blade":
+                keywords_active["guard"] = Math.min(
+                  (keywords_active["guard"] || 0) +
+                    item.system.keywords["guard"],
+                  RULESET.keywords.max_amount.guard,
+                );
+                break;
+              case "system.skills.combative.weapon.haft-slashing":
+                keywords_active["brute"] = Math.min(
+                  (keywords_active["brute"] || 0) +
+                    item.system.keywords["brute"],
+                  RULESET.keywords.max_amount.brute,
+                );
+                break;
+              case "system.skills.combative.weapon.haft-bludgeonning-piercing":
+                keywords_active["smash"] = Math.min(
+                  (keywords_active["smash"] || 0) +
+                    item.system.keywords["smash"],
+                  RULESET.keywords.max_amount.smash,
+                );
+                break;
+            }
+          } else {
+            handled_primary_weapon = true;
+            for (let keyword of item_active_keywords) {
+              if (!RULESET.keywords.weapon_linked.includes(keyword)) {
+                keywords_active[keyword] = Math.min(
+                  (keywords_active[keyword] || 0) +
+                    item.system.keywords[keyword],
+                  RULESET.keywords.max_amount[keyword],
+                );
+              }
+            }
+          }
+        }
+      } else {
+        for (let keyword of item_active_keywords) {
+          if (["direct"].includes(keyword)) {
+            if (!Object.keys(keywords_active).includes("direct")) {
+              keywords_active["direct"] = {};
+            }
+            keywords_active["direct"][item.system.keywords.direct_type] =
+              Math.min(
+                (keywords_active["direct"][item.system.keywords.direct_type] ||
+                  0) + item.system.keywords.direct,
+                RULESET.keywords.max_amount.direct,
+              );
+          } else if (["preserve", "reserve"].includes(keyword)) {
+            if (!Object.keys(keywords_active).includes(keyword)) {
+              keywords_active[keyword] = [];
+            }
+            keywords_active[keyword].push(item.uuid);
+          } else {
+            keywords_active[keyword] = Math.min(
+              (keywords_active[keyword] || 0) + item.system.keywords[keyword],
+              RULESET.keywords.max_amount[keyword],
+            );
+          }
         }
       }
     }
+
     return keywords_active;
   }
 
-  static getSkillAssociatedKeywordsData(actor, skill_path) {
-    const keywords_active = this.getActiveKeywords(actor);
+  static getSkillAssociatedKeywordsData(actor, item, skill_path) {
     const skill_associated_keywords_data = [];
 
-    const NOISY_SKILL_SILENCE = "system.skills.physical.slyness.silence";
-    const NOISY_SKILL_STEALTH = "system.skills.physical.slyness.stealth";
-    const SKILL_PARRY = "system.skills.combative.reflex.parry";
+    if (skill_path === "") return skill_associated_keywords_data;
 
-    for (const keyword of keywords_active.values()) {
-      switch (keyword) {
-        case "noisy":
-          // handled by the skill roll, -1 DoS silence / Furtivité when moving
-          if (
-            NOISY_SKILL_SILENCE.startsWith(skill_path) ||
-            NOISY_SKILL_STEALTH.startsWith(skill_path)
-          ) {
-            skill_associated_keywords_data.push({
-              name: "noisy",
-              label: "ATORIA.Ruleset.Keywords.Noisy",
-              description: "ATORIA.Ruleset.Keywords_description.Noisy",
-              skill_alteration_type: "one_degree_of_success_loss",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.one_degree_of_success_loss,
-            });
-          }
-          break;
-        case "noisy_more":
-          // handled by the skill roll, 1 Desavantage silence / Furtivité when moving
-          if (
-            NOISY_SKILL_SILENCE.startsWith(skill_path) ||
-            NOISY_SKILL_STEALTH.startsWith(skill_path)
-          ) {
-            skill_associated_keywords_data.push({
-              name: "noisy_more",
-              label: game.i18n.localize("ATORIA.Ruleset.Keywords.Noisy_more"),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Noisy_more",
-              ),
-              skill_alteration_type: "disadvantage",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.disadvantage,
-            });
-          }
-          break;
-        case "guard":
-          // handled by the skill roll, +1 DoS Parry, against cac attack
-          if (SKILL_PARRY.startsWith(skill_path)) {
-            skill_associated_keywords_data.push({
-              name: "guard",
-              label: game.i18n.localize("ATORIA.Ruleset.Keywords.Guard"),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Guard",
-              ),
-              skill_alteration_type: "one_degree_of_success_gain",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.one_degree_of_success_gain,
-            });
-          }
-          break;
-        case "guard_more":
-          // handled by the skill roll, +1 DoS Parry, against cac attack
-          if (SKILL_PARRY.startsWith(skill_path)) {
-            skill_associated_keywords_data.push({
-              name: "guard",
-              label: game.i18n.localize("ATORIA.Ruleset.Keywords.Guard"),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Guard",
-              ),
-              skill_alteration_type: "one_degree_of_success_gain",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.one_degree_of_success_gain,
-            });
-          }
-          break;
-        case "protection":
-          // handled by the skill roll, +1 DoS Parry, against range attack
-          if (SKILL_PARRY.startsWith(skill_path)) {
-            skill_associated_keywords_data.push({
-              name: "protection",
-              label: game.i18n.localize("ATORIA.Ruleset.Keywords.Protection"),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Protection",
-              ),
-              skill_alteration_type: "one_degree_of_success_gain",
-              skill_alteration_type_label:
-                RULESET.skill_alterations.one_degree_of_success_gain,
-            });
-          }
-          break;
-        case "protection_more":
-          // handled by the skill roll, 1 avantage Parry, against range attack
-          if (SKILL_PARRY.startsWith(skill_path)) {
-            skill_associated_keywords_data.push({
-              name: "protection_more",
-              label: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords.Protection_more",
-              ),
-              description: game.i18n.localize(
-                "ATORIA.Ruleset.Keywords_description.Protection_more",
-              ),
-              skill_alteration_type: "advantage",
-              skill_alteration_type_label: RULESET.skill_alterations.advantage,
-            });
-          }
-          break;
-      }
+    const add_keyword_data = (keyword, keyword_amount, alteration_type) => {
+      skill_associated_keywords_data.push({
+        name: keyword,
+        label: RULESET.keywords.get_localized_name(keyword, keyword_amount),
+        description: RULESET.keywords.get_description(keyword, keyword_amount),
+        skill_alteration_type: alteration_type,
+        skill_alteration_type_label: RULESET.skill_alterations[alteration_type],
+      });
+    };
+    const actor_active_keywords_data = this.getActiveKeywordsData(actor);
+    const item_active_keywords_data =
+      RULESET.item.getWeaponLinkedActiveKeywords(item);
+    const active_keywords_data = {};
+    Object.keys(actor_active_keywords_data).forEach((key) => {
+      active_keywords_data[key] = actor_active_keywords_data[key];
+    });
+    item_active_keywords_data.forEach((key) => {
+      active_keywords_data[key] =
+        active_keywords_data[key] || 0 + item.system.keywords[key];
+    });
+
+    const PARRY = "system.skills.combative.reflex.parry";
+    const THROW = "system.skills.combative.weapon.throw";
+    const FORCE = "system.skills.physical.sturdiness.force";
+    const SILENCE = "system.skills.physical.slyness.silence";
+    const STEALTH = "system.skills.physical.slyness.stealth";
+    const WEAPON = "system.skills.combative.weapon";
+    const BRAWL = "system.skills.combative.weapon.brawl";
+    const TENACITY = "system.skills.physical.sturdiness.tenacity";
+
+    if (PARRY.startsWith(skill_path) && active_keywords_data["guard"] >= 2) {
+      add_keyword_data(
+        "guard",
+        active_keywords_data["guard"],
+        "one_degree_of_success_gain",
+      );
     }
+
+    if (
+      THROW.startsWith(skill_path) &&
+      active_keywords_data["throwable"] >= 0
+    ) {
+      add_keyword_data(
+        "throwable",
+        active_keywords_data["throwable"],
+        active_keywords_data["throwable"] >= 2
+          ? "two_degree_of_success_gain"
+          : "one_degree_of_success_gain",
+      );
+    }
+
+    if (
+      PARRY.startsWith(skill_path) &&
+      active_keywords_data["protection"] >= 0
+    ) {
+      add_keyword_data(
+        "protection",
+        active_keywords_data["protection"],
+        active_keywords_data["protection"] >= 2
+          ? "advantage"
+          : "one_degree_of_success_gain",
+      );
+    }
+
+    if (FORCE.startsWith(skill_path) && active_keywords_data["gruff"] >= 0) {
+      add_keyword_data(
+        "gruff",
+        active_keywords_data["gruff"],
+        "one_degree_of_success_gain",
+      );
+    }
+
+    if (
+      active_keywords_data["noisy"] >= 0 &&
+      (SILENCE.startsWith(skill_path) || STEALTH.startsWith(skill_path))
+    ) {
+      add_keyword_data(
+        "noisy",
+        active_keywords_data["noisy"],
+        active_keywords_data["noisy"] >= 3
+          ? "disadvantage_n_one_degree_of_success_loss"
+          : active_keywords_data["noisy"] >= 2
+            ? "disadvantage"
+            : "one_degree_of_success_loss",
+      );
+    }
+
+    if (
+      (WEAPON.startsWith(skill_path) || skill_path.startsWith(WEAPON)) &&
+      BRAWL.localeCompare(skill_path) !== 0 &&
+      active_keywords_data["grip"] >= 0
+    ) {
+      add_keyword_data(
+        "grip",
+        active_keywords_data["grip"],
+        "one_degree_of_success_gain",
+      );
+    }
+
+    if (
+      TENACITY.startsWith(skill_path) &&
+      active_keywords_data["stable"] >= 0
+    ) {
+      add_keyword_data(
+        "stable",
+        active_keywords_data["stable"],
+        "one_degree_of_success_gain",
+      );
+    }
+
     return skill_associated_keywords_data;
   }
 
@@ -368,129 +408,53 @@ RULESET["item"] = class ItemRuleset {
     return false;
   }
 
-  // AUTOMATIZED KEYWORDS:
-  // case "obstruct":
-  //   // handled by the initiative roll, initative -1
-  //   break;
-  // case "obstruct_more":
-  //   // handled by the initiative roll, initative -1d2
-  //   break;
-  // case "noisy":
-  //   // handled by the skill roll, -1 DoS silence / Furtivité when moving
-  //   break;
-  // case "noisy_more":
-  //   // handled by the skill roll, 1 Desavantage silence / Furtivité when moving
-  //   break;
-  // case "guard":
-  //   // handled by the skill roll, +1 DoS Parry, against cac attack
-  //   break;
-  // case "protection":
-  //   // handled by the skill roll, +1 DoS Parry, against range attack
-  //   break;
-  // case "protection_more":
-  //   // handled by the skill roll, 1 avantage Parry, against range attack
-  //   break;
-  // case "brutal":
-  //   // handled by the weapon roll, show apply brutal on chat_message
-  //   break;
-  // case "brutal_more":
-  //   // handled by the weapon roll, show apply brutal+ on chat_message
-  //   break;
-  // case "smash":
-  //   // handled by the weapon roll, prefill -1 DoS on Parry button
-  //   break;
-  // case "penetrating":
-  //   // handled by the weapon roll, write it is active on the weapon roll
-  //   break;
-  // case "two_handed":
-  //   // handled by the weapon roll, check it is
-  //   break;
-  // case "versatile":
-  //   // handled by the weapon roll, check it is
-  //   break;
-  // case "throwable":
-  //   // handled by the item throw roll, check it is
-  //   // +1 DoS Throw
-  //   break;
-  // case "throwable_more":
-  //   // handled by the item throw roll, check it is
-  //   // +2 DoS Throw
-  //   break;
-  static getAutomatizedActiveKeywords(item) {
+  static getActiveKeywords(item) {
+    if (item === null || item === undefined) return [];
     if (!["kit", "weapon", "armor"].includes(item.type)) return [];
-    const automatized_keywords = [
-      "obstruct",
-      "obstruct_more",
-      "noisy",
-      "noisy_more",
-      "guard",
-      "protection",
-      "protection_more",
-      "brutal",
-      "brutal_more",
-      "smash",
-      "penetrating",
-      "two_handed",
-      "versatile",
-      "throwable",
-      "throwable_more",
+    const keywords_active = new Set();
+    const ignored_key = [
+      "reserve_max",
+      "reserve_current",
+      "direct_type",
+      "preserve",
+      "preserve_mana",
+      "preserve_health",
+      "preserve_stamina",
+      "preserve_endurance",
+      "preserve_sanity",
     ];
-    const keywords_active = [];
     for (const keyword of Object.keys(item.system.keywords)) {
-      if (
-        automatized_keywords.includes(keyword) &&
-        item.system.keywords[keyword]
-      ) {
-        keywords_active.push(keyword);
+      if (ignored_key.includes(keyword)) {
+        switch (keyword) {
+          case "preserve":
+            if (item.system.keywords.preserve.active) {
+              keywords_active.add(keyword);
+            }
+            break;
+          default:
+            continue;
+        }
+      } else {
+        if (Number(item.system.keywords[keyword]) > 0) {
+          keywords_active.add(keyword);
+        }
       }
     }
     return keywords_active;
   }
 
-  static getActiveKeywords(item) {
-    if (!["kit", "weapon", "armor"].includes(item.type)) return [];
-    const keywords_active = new Set();
-    const ignored_key = ["preserve_data"];
-    for (const keyword of Object.keys(item.system.keywords)) {
-      if (item.system.keywords[keyword]) {
-        if (
-          ignored_key.includes(keyword) ||
-          keywords_active.has(`${keyword}_more`)
-        ) {
-          // ignored or already has more version
-          continue;
-        }
-        if (keyword.endsWith("_more")) {
-          // keyword_more
-          const base_keyword = keyword.substring(
-            0,
-            keyword.length - "_more".length,
-          );
-          keywords_active.delete(base_keyword);
-          keywords_active.add(keyword);
-        } else if (keywords_active.has(keyword)) {
-          // keyword & keyword
-          keywords_active.delete(keyword);
-          keywords_active.add(`${keyword}_more`);
-        } else {
-          // keyword is new to the set
-          keywords_active.add(keyword);
-        }
-      }
-    }
-    return keywords_active;
+  static getWeaponLinkedActiveKeywords(item) {
+    let active_keywords = this.getActiveKeywords(item);
+    return active_keywords.filter((key) =>
+      RULESET.keywords.weapon_linked.includes(key),
+    );
   }
 
   static attackFromWeapon(item) {
     const new_item = foundry.utils.deepClone(item);
     new_item.system.cost_list = [];
-    if (new_item.system.associated_skill) {
+    if (new_item.system.associated_skill || item.system.is_focuser) {
       new_item.system.cost_list.push(RULESET.general.getCostWeaponAttack(item));
-    }
-    if (item.system.is_focuser) {
-      new_item.system.cost_list.push(
-        RULESET.general.getCostFocuserWeaponAttack(item),
-      );
     }
 
     new_item.system.limitation = default_values.models.helpers
@@ -530,6 +494,10 @@ RULESET["skill_alterations"] = {
     "ATORIA.Model.Skill_alteration.Two_degree_of_success_loss",
   advantage: "ATORIA.Model.Skill_alteration.Advantage",
   disadvantage: "ATORIA.Model.Skill_alteration.Disadvantage",
+  advantage_n_one_degree_of_success_gain:
+    "ATORIA.Model.Skill_alteration.Advantage_n_One_degree_of_success_gain",
+  disadvantage_n_one_degree_of_success_loss:
+    "ATORIA.Model.Skill_alteration.Disadvantage_n_One_degree_of_success_loss",
 };
 
 RULESET["keywords"] = {
@@ -540,7 +508,121 @@ RULESET["keywords"] = {
       stamina: "ATORIA.Ruleset.Stamina",
       sanity: "ATORIA.Ruleset.Sanity",
       endurance: "ATORIA.Ruleset.Endurance",
+      all: "ATORIA.Ruleset.All",
     },
+  },
+  max_amount: {
+    two_handed: 2,
+    reach: 3,
+    brute: 2,
+    equip: 1,
+    fluxian: 1,
+    smash: 3,
+    guard: 2,
+    throwable: 2,
+    light: 1,
+    heavy: 2,
+    penetrating: 2,
+    versatile: 1,
+    protect: 2,
+    protection: 2,
+    quick: 2,
+    recharge: 1,
+    somatic: 1,
+    reserve: 1,
+    sly: 1,
+    gruff: 4,
+    noisy: 3,
+    tough: 4,
+    obstruct: 2,
+    grip: 4,
+    resistant: 4,
+    sturdy: 4,
+    stable: 4,
+    direct: 2,
+    preserve: 1,
+  },
+  weapon_linked: [
+    "two_handed",
+    "reach",
+    "smash",
+    "throwable",
+    "heavy",
+    "penetrating",
+    "versatile",
+    "quick",
+    "recharge",
+    "somatic",
+    "reserve",
+    "sly",
+    "preserve",
+  ],
+  get_time_phase: function (keyword, amount) {
+    const four_phase_keywords = [
+      "gruff",
+      "tough",
+      "grip",
+      "resistant",
+      "sturdy",
+      "stable",
+    ];
+    if (four_phase_keywords.includes(keyword)) {
+      switch (amount) {
+        case 0:
+          return "";
+        case 1:
+          return "long-moon";
+        case 2:
+          return "short-moon";
+        case 3:
+          return "sleep";
+        default:
+          return "combat";
+      }
+    }
+    switch (keyword) {
+      case "reach":
+        if (amount === 0) return "";
+        else return "combat";
+      case "brute":
+        if (amount === 0) return "";
+        else return "combat";
+      case "guard":
+        if (amount === 0) return "";
+        else return "combat";
+      case "penetrating":
+        if (amount === 0) return "";
+        else return "combat";
+      case "protect":
+        if (amount === 0) return "";
+        else if (amount === 1) return "sleep";
+        return "combat";
+      case "direct":
+        if (amount === 0) return "";
+        else if (amount === 1) return "sleep";
+        return "combat";
+      default:
+        return "";
+    }
+  },
+  get_description: function (keyword, amount) {
+    let pluses = "";
+    for (let i = 1; i < amount; i++) {
+      pluses += "+";
+    }
+    return game.i18n.localize(
+      buildLocalizeString("Ruleset", "Keywords_description", keyword) + pluses,
+    );
+  },
+  get_localized_name: function (keyword, amount) {
+    let pluses = "";
+    for (let i = 1; i < amount; i++) {
+      pluses += "+";
+    }
+    return (
+      game.i18n.localize(buildLocalizeString("Ruleset", "Keywords", keyword)) +
+      pluses
+    );
   },
 };
 
@@ -572,6 +654,256 @@ RULESET["actable"] = {
     one_hand: "ATORIA.Ruleset.Somatic.One_hand",
     two_hands: "ATORIA.Ruleset.Somatic.Two_hands",
     meditate: "ATORIA.Ruleset.Somatic.Meditate",
+  },
+  associated_magic_schools: {
+    "system.knowledges.magic.air.dazzling": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "air",
+      "dazzling",
+      "full_label",
+    ),
+    "system.knowledges.magic.air.breeze": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "air",
+      "breeze",
+      "full_label",
+    ),
+    "system.knowledges.magic.air.lightning": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "air",
+      "lightning",
+      "full_label",
+    ),
+    "system.knowledges.magic.mental.kinetic": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "mental",
+      "kinetic",
+      "full_label",
+    ),
+    "system.knowledges.magic.mental.illusion": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "mental",
+      "illusion",
+      "full_label",
+    ),
+    "system.knowledges.magic.mental.power": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "mental",
+      "power",
+      "full_label",
+    ),
+    "system.knowledges.magic.mental.enchanted": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "mental",
+      "enchanted",
+      "full_label",
+    ),
+    "system.knowledges.magic.druidic.astral": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "druidic",
+      "astral",
+      "full_label",
+    ),
+    "system.knowledges.magic.druidic.solicitude": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "druidic",
+      "solicitude",
+      "full_label",
+    ),
+    "system.knowledges.magic.druidic.changeforme": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "druidic",
+      "changeforme",
+      "full_label",
+    ),
+    "system.knowledges.magic.druidic.mutation": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "druidic",
+      "mutation",
+      "full_label",
+    ),
+    "system.knowledges.magic.water.ablution": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "water",
+      "ablution",
+      "full_label",
+    ),
+    "system.knowledges.magic.water.source": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "water",
+      "source",
+      "full_label",
+    ),
+    "system.knowledges.magic.water.ice": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "water",
+      "ice",
+      "full_label",
+    ),
+    "system.knowledges.magic.fire.torch": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "fire",
+      "torch",
+      "full_label",
+    ),
+    "system.knowledges.magic.fire.ignition": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "fire",
+      "ignition",
+      "full_label",
+    ),
+    "system.knowledges.magic.fire.destruction": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "fire",
+      "destruction",
+      "full_label",
+    ),
+    "system.knowledges.magic.occult.toxic": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "occult",
+      "toxic",
+      "full_label",
+    ),
+    "system.knowledges.magic.occult.curse": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "occult",
+      "curse",
+      "full_label",
+    ),
+    "system.knowledges.magic.occult.ethereal": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "occult",
+      "ethereal",
+      "full_label",
+    ),
+    "system.knowledges.magic.occult.necromancy": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "occult",
+      "necromancy",
+      "full_label",
+    ),
+    "system.knowledges.magic.holy.blessing": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "holy",
+      "blessing",
+      "full_label",
+    ),
+    "system.knowledges.magic.holy.piety": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "holy",
+      "piety",
+      "full_label",
+    ),
+    "system.knowledges.magic.holy.glory": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "holy",
+      "glory",
+      "full_label",
+    ),
+    "system.knowledges.magic.holy.purification": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "holy",
+      "purification",
+      "full_label",
+    ),
+    "system.knowledges.magic.blood.sacrifice": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "blood",
+      "sacrifice",
+      "full_label",
+    ),
+    "system.knowledges.magic.blood.puncture": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "blood",
+      "puncture",
+      "full_label",
+    ),
+    "system.knowledges.magic.blood.drain": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "blood",
+      "drain",
+      "full_label",
+    ),
+    "system.knowledges.magic.earth.bastion": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "earth",
+      "bastion",
+      "full_label",
+    ),
+    "system.knowledges.magic.earth.telluric": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "earth",
+      "telluric",
+      "full_label",
+    ),
+    "system.knowledges.magic.earth.metallic": buildLocalizeString(
+      "ruleset",
+      "knowledges",
+      "magic",
+      "earth",
+      "metallic",
+      "full_label",
+    ),
   },
 };
 
@@ -631,19 +963,10 @@ RULESET["status_effects"] = [
     },
   },
   {
-    id: "abused",
-    name: "ATORIA.Ruleset.Status_effect.Abused.Label",
+    id: "brutal",
+    name: "ATORIA.Ruleset.Status_effect.Brutal.Label",
     img: "systems/atoria/imgs/chopped-skull.svg",
-    description: "ATORIA.Ruleset.Status_effect.Abused.Description",
-    duration: {
-      round: 0,
-    },
-  },
-  {
-    id: "abused+",
-    name: "ATORIA.Ruleset.Status_effect.Abused+.Label",
-    img: "systems/atoria/imgs/chopped-skull+.svg",
-    description: "ATORIA.Ruleset.Status_effect.Abused+.Description",
+    description: "ATORIA.Ruleset.Status_effect.Brutal.Description",
     duration: {
       round: 0,
     },

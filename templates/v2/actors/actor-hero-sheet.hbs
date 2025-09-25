@@ -134,6 +134,8 @@
     </div>
     <div class="item-area">
         {{#unless limited}}
+        {{>"atoria.v2.actors_partials.keywords-recap" tracked_keywords=tracked_keywords tracked_keywords_data=tracked_keywords_data}}
+
         {{#if (or @root.isEditingMode action_items.length)}}
         <div class="atoria-horizontal-bar flexrow colored">
             <h5 class="title">

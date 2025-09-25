@@ -1,7 +1,7 @@
 {
   "id": "atoria",
-  "title": "Atoria 0.5.1",
-  "description": "The Atoria 0.5.1 system for FoundryVTT!",
+  "title": "Atoria 0.5.2",
+  "description": "The Atoria 0.5.2 system for FoundryVTT!",
   "authors": [
     {
       "name": "Wildos",
@@ -10,20 +10,16 @@
   ],
   "url": "https://github.com/Wildos/atoria/",
   "manifest": "https://raw.githubusercontent.com/Wildos/atoria/main/system.json",
-  "download": "https://github.com/Wildos/atoria/releases/download/v0.3.16/atoria-0.3.16.zip",
+  "download": "https://github.com/Wildos/atoria/releases/download/v0.3.17/atoria-0.3.17.zip",
   "bugs": "",
   "media": [],
-  "version": "0.3.16",
+  "version": "0.3.17",
   "compatibility": {
     "minimum": "12.331",
     "verified": "12.331"
   },
-  "esmodules": [
-    "module/atoria.mjs"
-  ],
-  "styles": [
-    "atoria.css"
-  ],
+  "esmodules": ["module/atoria.mjs"],
+  "styles": ["atoria.css"],
   "languages": [
     {
       "lang": "fr",
