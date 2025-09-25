@@ -963,19 +963,10 @@ RULESET["status_effects"] = [
     },
   },
   {
-    id: "abused",
-    name: "ATORIA.Ruleset.Status_effect.Abused.Label",
+    id: "brutal",
+    name: "ATORIA.Ruleset.Status_effect.Brutal.Label",
     img: "systems/atoria/imgs/chopped-skull.svg",
-    description: "ATORIA.Ruleset.Status_effect.Abused.Description",
-    duration: {
-      round: 0,
-    },
-  },
-  {
-    id: "abused+",
-    name: "ATORIA.Ruleset.Status_effect.Abused+.Label",
-    img: "systems/atoria/imgs/chopped-skull+.svg",
-    description: "ATORIA.Ruleset.Status_effect.Abused+.Description",
+    description: "ATORIA.Ruleset.Status_effect.Brutal.Description",
     duration: {
       round: 0,
     },

@@ -145,14 +145,7 @@ export default class AtoriaActor extends Actor {
       if (Object.keys(skill_types).includes("knowledges")) {
         for (let knowledge_group_key in this.system.knowledges) {
           skill_list[`system.knowledges.${knowledge_group_key}`] =
-            game.i18n.localize(
-              this.system.schema.fields.knowledges.fields[knowledge_group_key]
-                .label,
-            ) +
-            " - " +
-            game.i18n.localize(
-              this.system.knowledges[knowledge_group_key].label,
-            );
+            this.system.knowledges[knowledge_group_key].label;
         }
       }
       return skill_list;

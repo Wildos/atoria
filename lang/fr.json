@@ -1299,13 +1299,9 @@
           "Label": "Saignement",
           "Description": "Un personnage affecté a Santé -1 / round.\nLorsque \"Saignement\" est appliqué à un personnage affecté par \"Saignement\", il subit Santé -1."
         },
-        "Abused": {
-          "Label": "Brutalisé",
-          "Description": "Un personnage subit Dégât Arme +1 de l'émetteur."
-        },
-        "Abused+": {
-          "Label": "Brutalisé+",
-          "Description": "Un personnage subit Dégât Arme +1 de l'émetteur.\nDR Réflexe - Parade -1."
+        "Brutal": {
+          "Label": "Brutal",
+          "Description": "Vous avez Dégât Arme +1 lors de votre prochaine instance de Dégât."
         },
         "Slowed": {
           "Label": "Ralenti",
@@ -1313,7 +1309,7 @@
         },
         "Prone": {
           "Label": "Renversé",
-          "Description": "Un personnage affecté a un “Demi-couvert” et l'attaquer au corps à corps donne l'avantage."
+          "Description": "Un personnage affecté a un “Léger couvert” et l'attaquer au corps à corps donne l'avantage."
         },
         "Immobilised": {
           "Label": "Immobilisé",
@@ -1337,7 +1333,7 @@
         },
         "Burning+": {
           "Label": "Enflammé+",
-          "Description": "Dégât feu 1 / round. Dissipe l'état \"Humide\". Les zones appliquant l'état dissipe les cases gelées.\nDégât feu 2 / round. Dissipe \"Humide\" et \"Gelure\"."
+          "Description": "Dégât feu 2 / round. Dissipe l'état \"Humide\" et \"Gelure\". Les zones appliquant l'état dissipe les cases gelées."
         },
         "Radiate": {
           "Label": "Irradié",
@@ -1349,7 +1345,7 @@
         },
         "Dazed": {
           "Label": "Hébété",
-          "Description": "Un personnage affecté joue son tour en dernière lors du round suivant."
+          "Description": "Un personnage affecté joue son tour en dernier lors du round suivant."
         },
         "Shocked": {
           "Label": "Choqué",
@@ -1365,7 +1361,7 @@
         },
         "Drunk": {
           "Label": "Ébriété",
-          "Description": "Un personnage affecté a DR -1 à tous les jets. L’état se dissipe après une phase de sommeil mais il faut faire un Robustesse - Ténacité pour ne pas recevoir l’état “Gueule de bois”. "
+          "Description": "Un personnage affecté a DR -1 à tous les jets. L’état se dissipe après une sommeil. À l'appréciation du MJ, il faut faire un Robustesse - Ténacité pour ne pas recevoir l’état “Gueule de bois”."
         },
         "Hangover": {
           "Label": "Gueule de bois",
@@ -1401,7 +1397,7 @@
         },
         "Numb+": {
           "Label": "Engourdi+",
-          "Description": "DR Attaque -1 lorsqu'une main ou plus est nécessaire.\nDésavantage attaque lorsqu'une main ou plus est nécessaire."
+          "Description": "Désavantage attaque lorsqu'une main ou plus est nécessaire."
         },
         "Blindness": {
           "Label": "Cécité",
@@ -1417,7 +1413,7 @@
         },
         "Incurable+": {
           "Label": "Incurable+",
-          "Description": "Un personnage affecté ne peut pas avoir de soin de Santé.\nUn personnage affecté ne peut pas regagner de Santé."
+          "Description": "Un personnage affecté ne peut pas regagner de Santé."
         },
         "Afraid": {
           "Label": "Effrayé",
@@ -1461,7 +1457,7 @@
         },
         "Provoked+": {
           "Label": "Provoqué+",
-          "Description": "Un personnage affecté a DR -1 tant qu'il ne suit pas la provocation.\nUn personnage affecté a le désavantage tant qu'il ne suit pas la provocation."
+          "Description": "Un personnage affecté a le désavantage tant qu'il ne suit pas la provocation."
         }
       }
     }
