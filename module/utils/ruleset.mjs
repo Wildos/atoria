@@ -125,11 +125,6 @@ RULESET["character"] = class ActorRuleset {
 
   static getMaxHealingInactive(actor) {
     if (actor.type !== "player-character") return 0;
-    console.debug(actor.system.endurance.value);
-    console.debug(Math.min(actor.system.endurance.value, 100));
-    console.debug((100 - Math.min(actor.system.endurance.value, 100)) / 25);
-    console.debug(4 - (100 - Math.min(actor.system.endurance.value, 100)) / 25);
-
     return 4 - (100 - Math.min(actor.system.endurance.value, 100)) / 25;
   }
 
