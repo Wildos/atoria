@@ -107,9 +107,26 @@
         .atoria-healing-inactive {
             --checkbox-size: var(--atoria-base-line-block-height);
             text-align: center;
-            > div {
-                border: var(--atoria-border-style);
-                border-radius: var(--atoria-border-style-radius);
+
+            display: flex;
+            flex-wrap: no-wrap;
+            align-content: center;
+            align-items: center;
+            text-align: center;
+            justify-content: space-around;
+
+            min-height: var(--atoria-skill-height);
+            max-height: var(--atoria-skill-height);
+
+            > label{
+                min-height: calc(var(--atoria-skill-height) - 2px);
+                max-height: calc(var(--atoria-skill-height) - 2px);
+                width: fit-content;
+                max-width: fit-content;
+            }
+            > .flexrow{
+                width: fit-content;
+                max-width: fit-content;
             }
 
             img[data-action=editHealingInactive],

@@ -344,6 +344,7 @@ export default class AtoriaItem extends Item {
         rolls: roll_data.chat_rolls,
         system: {
           flavor_tooltip: roll_data.flavor_tooltip,
+          owning_actor_id: this.actor?._id,
           related_items: [
             {
               type: "feature",

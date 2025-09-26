@@ -175,7 +175,8 @@
           "Item": "objet",
           "Items_id": "Ids des objets",
           "Item_id": "Id de l'objet"
-        }
+        },
+        "Owning_actor_id": "Identifiant de l'acteur proprietaire"
       },
       "Actable_modifier": "Modificateur d'action"
     },
@@ -1249,7 +1250,7 @@
       },
       "Somatic": {
         "None": "Aucun",
-        "Gesture": "Geste",
+        "Gesture": "Gestes",
         "One_hand": "Une main",
         "Two_hands": "2 mains",
         "Meditate": "Position de méditation"

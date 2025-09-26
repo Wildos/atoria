@@ -79,6 +79,14 @@ export default class AtoriaInteractableChatMessage extends foundry.abstract
       { required: false, label: "ATORIA.Model.Magic.Saves_asked" },
     );
 
+    schema.owning_actor_id = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      initial: "",
+      label: "ATORIA.Model.Chat_message.Owning_actor_id",
+    });
+
     return schema;
   }
 }

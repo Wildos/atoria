@@ -27,51 +27,47 @@
         </div>
 
         <div class="flexrow">
-            <div class="flexcol">
-                {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-health" attribute_model=systemFields.health attribute=actor.system.health}}
+            {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-health" attribute_model=systemFields.health attribute=actor.system.health}}
 
-                <div class="atoria-attribute-display atoria-health">
-                    <label>{{localize systemFields.absorption.label}}</label>
-                    <input type="text" data-dtype="Number" name="system.absorption" value="{{actor.system.absorption}}"
-                    data-tooltip="{{systemFields.absorption.label}}" {{disabled (not editable)}}/>
-                </div>
-            </div>
-            <div class="flexcol atoria-healing-inactive">
-                <div class="flexrow colored">
-                    <label>{{localize systemFields.healing_inactive.label}}</label>
-                    <img class="resurrection" data-action="toggleAttribute" data-name="system.healing_inactive.resurrection"
-                    data-tooltip="{{localize systemFields.healing_inactive.fields.resurrection.label}}"
-                    src="systems/atoria/imgs/telefrag{{#if system.healing_inactive.resurrection}}-checked{{/if}}.svg" /><!--Res-->
-
-                    <img class="medical" data-action="toggleAttribute" data-name="system.healing_inactive.medical"
-                    data-tooltip="{{localize systemFields.healing_inactive.fields.medical.label}}"
-                    src="systems/atoria/imgs/medical-pack{{#if system.healing_inactive.medical}}-checked{{/if}}.svg" /><!--Medic-->
-                    <img class="medical" data-action="toggleAttribute" data-name="system.healing_inactive.medical_2"
-                    data-tooltip="{{localize systemFields.healing_inactive.fields.medical_2.label}}"
-                    src="systems/atoria/imgs/medical-pack{{#if system.healing_inactive.medical_2}}-checked{{/if}}.svg" /><!--Medic_2-->
-                </div>
-                <div class="flexrow colored">
-                    <img class="amount" data-action="editHealingInactive" data-amount="1"
-                    src="systems/atoria/imgs/{{#if (gte 1 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 1)}}-checked{{/if}}.svg"
-                    /><!--Healing inactive control-->
-                    <img class="amount" data-action="editHealingInactive" data-amount="2"
-                    src="systems/atoria/imgs/{{#if (gte 2 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 2)}}-checked{{/if}}.svg"
-                    /><!--Healing inactive control-->
-                    <img class="amount" data-action="editHealingInactive" data-amount="3"
-                    src="systems/atoria/imgs/{{#if (gte 3 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 3)}}-checked{{/if}}.svg"
-                    /><!--Healing inactive control-->
-                    <img class="amount" data-action="editHealingInactive" data-amount="4"
-                    src="systems/atoria/imgs/{{#if (gte 4 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 4)}}-checked{{/if}}.svg"
-                    /><!--Healing inactive control-->
-                    <img class="amount" data-action="editHealingInactive" data-amount="5"
-                    src="systems/atoria/imgs/{{#if (gte 5 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 5)}}-checked{{/if}}.svg"
-                    /><!--Healing inactive control-->
-                    <img class="amount" data-action="editHealingInactive" data-amount="6"
-                    src="systems/atoria/imgs/{{#if (gte 6 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 6)}}-checked{{/if}}.svg"
-                    /><!--Healing inactive control-->
-                </div>
+            <div class="atoria-attribute-display atoria-health">
+                <label>{{localize systemFields.absorption.label}}</label>
+                <input type="text" data-dtype="Number" name="system.absorption" value="{{actor.system.absorption}}"
+                data-tooltip="{{systemFields.absorption.label}}" {{disabled (not editable)}}/>
             </div>
         </div>
+        <div class="flexrow atoria-healing-inactive colored">
+            <label>{{localize systemFields.healing_inactive.label}}</label>
+            <div class="flexrow">
+                <img class="medical" data-action="toggleAttribute" data-name="system.healing_inactive.medical"
+                data-tooltip="{{localize systemFields.healing_inactive.fields.medical.label}}"
+                src="systems/atoria/imgs/medical-pack{{#if system.healing_inactive.medical}}-checked{{/if}}.svg" /><!--Medic-->
+                <img class="medical" data-action="toggleAttribute" data-name="system.healing_inactive.medical_2"
+                data-tooltip="{{localize systemFields.healing_inactive.fields.medical_2.label}}"
+                src="systems/atoria/imgs/medical-pack{{#if system.healing_inactive.medical_2}}-checked{{/if}}.svg" /><!--Medic_2-->
+            </div>
+
+            <div class="flexrow">
+                <img class="resurrection" data-action="toggleAttribute" data-name="system.healing_inactive.resurrection"
+                data-tooltip="{{localize systemFields.healing_inactive.fields.resurrection.label}}"
+                src="systems/atoria/imgs/telefrag{{#if system.healing_inactive.resurrection}}-checked{{/if}}.svg" /><!--Res-->
+            </div>
+
+            <div class="flexrow">
+                <img class="amount" data-action="editHealingInactive" data-amount="1" data-tooltip="{{localize systemFields.healing_inactive.label}}"
+                src="systems/atoria/imgs/heart-drop{{#if (gte system.healing_inactive.amount 1)}}-checked{{/if}}.svg"
+                /><!--Healing inactive control-->
+                <img class="amount" data-action="editHealingInactive" data-amount="2" data-tooltip="{{localize systemFields.healing_inactive.label}}"
+                src="systems/atoria/imgs/heart-drop{{#if (gte system.healing_inactive.amount 2)}}-checked{{/if}}.svg"
+                /><!--Healing inactive control-->
+                <img class="amount" data-action="editHealingInactive" data-amount="3" data-tooltip="{{localize systemFields.healing_inactive.label}}"
+                src="systems/atoria/imgs/heart-drop{{#if (gte system.healing_inactive.amount 3)}}-checked{{/if}}.svg"
+                /><!--Healing inactive control-->
+                <img class="amount" data-action="editHealingInactive" data-amount="4" data-tooltip="{{localize systemFields.healing_inactive.label}}"
+                src="systems/atoria/imgs/heart-drop{{#if (gte system.healing_inactive.amount 4)}}-checked{{/if}}.svg"
+                /><!--Healing inactive control-->
+            </div>
+        </div>
+
         <div class="flexrow">
             {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-mana" attribute_model=systemFields.mana attribute=actor.system.mana max=max_override.mana}}
             {{>"atoria.v2.commons_partials.attribute-display" cssClass="atoria-sanity" attribute_model=systemFields.sanity attribute=actor.system.sanity}}
