@@ -13,7 +13,8 @@
         {{/if}}
 
         {{#if message.flavor}}
-        <span class="flavor-text" data-tooltip="{{message.system.flavor_tooltip}}">{{{message.flavor}}}</span>
+        <span class="flavor-text"
+        {{#if owner_or_gm}}data-tooltip="{{message.system.flavor_tooltip}}"{{/if}}>{{{message.flavor}}}</span>
         {{/if}}
     </header>
     {{#if @root.isContentVisible}}

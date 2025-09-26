@@ -162,8 +162,8 @@ export default class AtoriaChatMessage extends ChatMessage {
       });
       data.system.critical_effect = this.is_critical_success
         ? await TextEditor.enrichHTML(this.system.critical_effect, {
-          rollData: this.getRollData(),
-        })
+            rollData: this.getRollData(),
+          })
         : "";
     }
 
@@ -192,6 +192,10 @@ export default class AtoriaChatMessage extends ChatMessage {
       this.blind ? "blind" : null,
     ]);
 
+    let user_level = game.actors
+      .get(this.system.owning_actor_id)
+      ?.getUserLevel();
+
     // Construct message data
     const messageData = {
       message: data,
@@ -209,8 +213,9 @@ export default class AtoriaChatMessage extends ChatMessage {
         .filterJoin(", "),
       isContentVisible: this.isContentVisible,
       isGM: game.user.isGM,
+      owner_or_gm:
+        game.user.isGM || user_level === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
     };
-
     // Render message data specifically for ROLL type messages
     if (this.isRoll) await this._renderRollContent(messageData);
 

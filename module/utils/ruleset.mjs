@@ -47,16 +47,14 @@ RULESET["character"] = class ActorRuleset {
         restored_attributes["stamina"] = actor.system.stamina.max;
         break;
       case "sleep": // also a rest
-        restored_attributes["health"] = Math.floor(actor.system.health.max / 4);
+        restored_attributes["health"] = 4;
         restored_attributes["mana"] = actor.system.mana.max;
-        restored_attributes["healing_inactive.amount"] = -2;
+        restored_attributes["healing_inactive.amount"] = -1;
         restored_attributes["healing_inactive.medical"] = false;
         restored_attributes["healing_inactive.medical_2"] = false;
       case "rest":
         restored_attributes["mana"] =
-          "mana" in restored_attributes
-            ? restored_attributes["mana"]
-            : Math.floor(actor.system.mana.max / 5);
+          "mana" in restored_attributes ? restored_attributes["mana"] : 4;
         break;
       case "long-moon": // also a short-moon
         restored_attributes["sanity.regain_inactive"] = false;
@@ -127,7 +125,7 @@ RULESET["character"] = class ActorRuleset {
 
   static getMaxHealingInactive(actor) {
     if (actor.type !== "player-character") return 0;
-    return 2 + Math.min(actor.system.endurance.value, 100) / 25;
+    return 4 - (100 - Math.min(actor.system.endurance.value, 100)) / 25;
   }
 
   static getAttackSaves() {
@@ -972,6 +970,15 @@ RULESET["status_effects"] = [
     },
   },
   {
+    id: "enraged",
+    name: "ATORIA.Ruleset.Status_effect.Enraged.Label",
+    img: "systems/atoria/imgs/enrage.svg",
+    description: "ATORIA.Ruleset.Status_effect.Enraged.Description",
+    duration: {
+      round: 0,
+    },
+  },
+  {
     id: "slowed",
     name: "ATORIA.Ruleset.Status_effect.Slowed.Label",
     img: "systems/atoria/imgs/sticky-boot.svg",
@@ -1291,15 +1298,6 @@ RULESET["status_effects"] = [
     name: "ATORIA.Ruleset.Status_effect.Control.Label",
     img: "systems/atoria/imgs/puppet.svg",
     description: "ATORIA.Ruleset.Status_effect.Control.Description",
-    duration: {
-      round: 0,
-    },
-  },
-  {
-    id: "enraged",
-    name: "ATORIA.Ruleset.Status_effect.Enraged.Label",
-    img: "systems/atoria/imgs/enrage.svg",
-    description: "ATORIA.Ruleset.Status_effect.Enraged.Description",
     duration: {
       round: 0,
     },
