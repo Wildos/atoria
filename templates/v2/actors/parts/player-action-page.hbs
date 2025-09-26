@@ -10,20 +10,23 @@
             </a>
             {{/if}}
         </div>
-        <ul class="item-list">
+        <div class="spell-area flexcol">
             {{#each actable_items.spell_school_order as |school_path|}}
                 {{#with (lookup ../actable_items.spell school_path) as |school_item|}}
                     {{#if school_item}}
-                    <h6 class="title">
+                    <h6 class="title atoria-expand-control"
+                    data-action="rollableExpand" data-expand-id="spell_school_cat.{{school_path}}">
                         {{localize (lookup @root.ruleset.actable.associated_magic_schools school_path)}}
                     </h6>
                     {{/if}}
+                    <ul class="item-list atoria-expand-direct-data">
                     {{#each school_item as |item idx|}}
                         {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
                     {{/each}}
+                    </ul>
                 {{/with}}
             {{/each}}
-        </ul>
+        </div>
 
 
         <div class="atoria-horizontal-bar flexrow colored">
