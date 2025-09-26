@@ -1292,8 +1292,11 @@
   background-color: transparent !important;
   border: none;
 }
-.system-atoria .atoria-player-action-page > div:not(:first-child) {
+.system-atoria .atoria-player-action-page > div:not(:first-child):not(.spell-area) {
   margin-top: var(--atoria-rows-gap);
+}
+.system-atoria .atoria-player-action-page > .spell-area {
+  margin: 0;
 }
 .system-atoria .sheet.chest > .window-content div:not(.colored) > h5,
 .system-atoria .sheet.chest > .window-content ul:not(.colored) > h5,
