@@ -216,12 +216,6 @@ export default class AtoriaChatMessage extends ChatMessage {
       owner_or_gm:
         game.user.isGM || user_level === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
     };
-    console.debug(
-      "game.user.isGM || user_level === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER",
-    );
-    console.debug(game.user.isGM);
-    console.debug(user_level === CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER);
-
     // Render message data specifically for ROLL type messages
     if (this.isRoll) await this._renderRollContent(messageData);
 

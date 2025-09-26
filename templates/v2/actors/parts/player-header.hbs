@@ -54,16 +54,16 @@
 
             <div class="flexrow">
                 <img class="amount" data-action="editHealingInactive" data-amount="1" data-tooltip="{{localize systemFields.healing_inactive.label}}"
-                src="systems/atoria/imgs/heart-drop{{#if (gte system.healing_inactive.amount 1)}}-checked{{/if}}.svg"
+                src="systems/atoria/imgs/{{#if (gte 0 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 1)}}-checked{{/if}}.svg"
                 /><!--Healing inactive control-->
                 <img class="amount" data-action="editHealingInactive" data-amount="2" data-tooltip="{{localize systemFields.healing_inactive.label}}"
-                src="systems/atoria/imgs/heart-drop{{#if (gte system.healing_inactive.amount 2)}}-checked{{/if}}.svg"
+                src="systems/atoria/imgs/{{#if (gte 1 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 2)}}-checked{{/if}}.svg"
                 /><!--Healing inactive control-->
                 <img class="amount" data-action="editHealingInactive" data-amount="3" data-tooltip="{{localize systemFields.healing_inactive.label}}"
-                src="systems/atoria/imgs/heart-drop{{#if (gte system.healing_inactive.amount 3)}}-checked{{/if}}.svg"
+                src="systems/atoria/imgs/{{#if (gte 2 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 3)}}-checked{{/if}}.svg"
                 /><!--Healing inactive control-->
                 <img class="amount" data-action="editHealingInactive" data-amount="4" data-tooltip="{{localize systemFields.healing_inactive.label}}"
-                src="systems/atoria/imgs/heart-drop{{#if (gte system.healing_inactive.amount 4)}}-checked{{/if}}.svg"
+                src="systems/atoria/imgs/{{#if (gte 3 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 4)}}-checked{{/if}}.svg"
                 /><!--Healing inactive control-->
             </div>
         </div>
