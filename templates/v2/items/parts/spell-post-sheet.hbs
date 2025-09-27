@@ -10,14 +10,14 @@
             <li class="flexrow">
                 <div class="atoria-supplementary-input grid-2col">
                     <label>{{localize ../systemFields.supplementaries_list.element.fields.name.label}}</label>
-                    <input type="text" name="system.supplementaries_list.{{idx}}.name" value={{supplementary.name}} {{disabled (not @root.editable)}}>
+                    <input type="text" name="system.supplementaries_list.{{idx}}.name" value="{{supplementary.name}}" {{disabled (not @root.editable)}}>
 
                     {{>"atoria.v2.commons_partials.cost-input" cost=supplementary.cost
                     data_path=(concat "system.supplementaries_list." idx ".cost")
                     systemFields=../systemFields.supplementaries_list.element.fields.cost.fields cssClasses="double-col-field" complete_cost=true}}
 
                     <label>{{localize ../systemFields.supplementaries_list.element.fields.usage_max.label}}</label>
-                    <input type="number" name="system.supplementaries_list.{{idx}}.usage_max" value={{supplementary.usage_max}} step="1" {{disabled (not @root.editable)}}>
+                    <input type="number" name="system.supplementaries_list.{{idx}}.usage_max" value="{{supplementary.usage_max}}" step="1" {{disabled (not @root.editable)}}>
 
                     <label class="double-col-field">{{localize ../systemFields.supplementaries_list.element.fields.description.label}}</label>
                     <div class="double-col-field" style="display: grid;">

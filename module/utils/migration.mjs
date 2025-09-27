@@ -1,5 +1,7 @@
 import * as utils from "./module.mjs";
 import { helpers } from "../models/module.mjs";
+import RULESET from "./ruleset.mjs";
+import DEFAULT_VALUES from "./default-values.mjs";
 
 const VERSION_BEFORE_MIGRATION_CODE = "0.3.8";
 
@@ -30,6 +32,10 @@ export async function migrateWorld() {
   // 0.3.15: Fix of knowledges
   if (foundry.utils.isNewerVersion("0.3.15", current_version)) {
     await migrateTo_0_3_15();
+  }
+  // 0.3.21: Change of skills
+  if (foundry.utils.isNewerVersion("0.3.21", current_version)) {
+    await migrateTo_0_3_21();
   }
 
   game.settings.set("atoria", "worldLastMigrationVersion", game.system.version);
@@ -655,6 +661,49 @@ async function migrateTo_0_3_15() {
       if (actor.type === "player-character") {
         await actor.debug_fix_knowledges();
       }
+    } catch (err) {
+      err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
+      console.error(err);
+    }
+  }
+}
+
+async function migrateTo_0_3_21() {
+  // Migrate World Actors
+  const actors = game.actors
+    .map((a) => [a, true])
+    .concat(
+      Array.from(game.actors.invalidDocumentIds).map((id) => [
+        game.actors.getInvalid(id),
+        false,
+      ]),
+    );
+
+  for (const [actor, valid] of actors) {
+    try {
+      const flags = { persistSourceMigration: false };
+
+      // let updateSchema = {};
+      let deleteData = {};
+      let updateData = {};
+      if (actor.type === "player-character") {
+        deleteData["system.-=skills"] = null;
+        updateData["system.skills.social.charisma.intimidation"] =
+          actor.system.schema.fields.skills.fields.social.fields.charisma.initial.intimidation;
+      }
+      if (actor.type === "non-player-character") {
+        deleteData["system.-=skills"] = null;
+      }
+
+      console.log(`Migrating Actor document ${actor.name}`);
+      await actor.update(deleteData, {
+        enforceTypes: false,
+        diff: valid && !flags.persistSourceMigration,
+        recursive: !flags.persistSourceMigration,
+        render: false,
+        performDeletions: true,
+      });
+      await actor.update(updateData);
     } catch (err) {
       err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
       console.error(err);

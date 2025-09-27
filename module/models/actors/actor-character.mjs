@@ -126,7 +126,11 @@ export default class AtoriaPC extends atoria_models.AtoriaActorBase {
 
     schema.skills = new fields.SchemaField(
       this._fullSkillSchema(utils.default_values.character.skills, "skills"),
-      { label: "ATORIA.Model.Skills" },
+      {
+        required: true,
+        nullable: false,
+        label: "ATORIA.Model.Skills",
+      },
     );
 
     schema.knowledges = new fields.SchemaField(
@@ -134,7 +138,11 @@ export default class AtoriaPC extends atoria_models.AtoriaActorBase {
         utils.default_values.character.knowledges,
         "knowledges",
       ),
-      { label: "ATORIA.Model.Knowledges" },
+      {
+        required: true,
+        nullable: false,
+        label: "ATORIA.Model.Knowledges",
+      },
     );
 
     return schema;

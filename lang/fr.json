@@ -503,22 +503,16 @@
               "Label": "Dissimulation"
             }
           },
-          "Climbing": {
-            "Label": "Escalade",
-            "Scale": {
-              "Label": "Grimpe"
+          "Environment": {
+            "Label": "Environnement",
+            "Climbing": {
+              "Label": "Escalade"
             },
-            "Fall": {
-              "Label": "Chute"
-            }
-          },
-          "Swiming": {
-            "Label": "Nage",
-            "Ease": {
-              "Label": "Aisance"
+            "Nage": {
+              "Label": "Nage"
             },
-            "Breath-holding": {
-              "Label": "Apnée"
+            "Fortitude": {
+              "Label": "Fortitude"
             }
           },
           "Sturdiness": {
@@ -528,9 +522,6 @@
             },
             "Tenacity": {
               "Label": "Ténacité"
-            },
-            "Fortitude": {
-              "Label": "Fortitude"
             }
           }
         },
@@ -541,15 +532,15 @@
             "Insight": {
               "Label": "Perspicacité"
             },
-            "Identification": {
-              "Label": "Identification"
-            },
             "Investigation": {
               "Label": "Investigation"
             }
           },
           "Charisma": {
             "Label": "Charisme",
+            "Intimidation": {
+              "Label": "Intimidation"
+            },
             "Presence": {
               "Label": "Prestance"
             },
@@ -576,15 +567,6 @@
             },
             "Guarding": {
               "Label": "Protection"
-            }
-          },
-          "Intimidation": {
-            "Label": "Intimidation",
-            "Fear": {
-              "Label": "Peur"
-            },
-            "Authority": {
-              "Label": "Autorité"
             }
           },
           "Trickery": {
