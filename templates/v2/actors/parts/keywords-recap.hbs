@@ -7,7 +7,11 @@
             {{#with (lookup ../tracked_keywords_data keyword) as |keyword_data|}}
                 <div class="keyword_block">
                 {{formInput (lookup ../../systemFields.keywords_used.fields keyword) value=(lookup ../../actor.system.keywords_used keyword)  disabled=(not @root.editable) }}
+
+                {{#if keyword_data.time_phase}}
                 <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
+                {{/if}}
+
                 <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{keyword_data.label}}}</label>
                 </div>
             {{/with}}
@@ -30,7 +34,9 @@
                 data-type="{{direct_type}}"
                 {{#if keyword_data.checked}}checked{{/if}}
                 >
+                {{#if keyword_data.time_phase}}
                 <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
+                {{/if}}
                 <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{direct_type}}} {{localize "ATORIA.Ruleset.Keywords.Direct"}}</label>
             </div>
         {{/each}}

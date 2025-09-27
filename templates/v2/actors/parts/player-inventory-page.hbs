@@ -55,18 +55,23 @@
                     {{/if}}
             </div>
 
-            <ul class="item-list">
+            <div>
             {{#each inventory_items_sort as |cat_idx key|}}
                 {{#with (lookup ../inventory_items cat_idx) as |item_cat_data|}}
-                    <h6 class="title" data-item-id="" data-inventory-cat="{{cat_idx}}">
+                    <h6 class="title atoria-expand-control"
+                        data-action="expandSection" data-expand-id="inventory_categories.{{cat_idx}}"
+                        data-expand-default="true"
+                        data-item-id="" data-inventory-cat="{{cat_idx}}">
                         {{localize item_cat_data.label}}
                     </h6>
+                    <ul class="item-list atoria-expand-direct-data">
                     {{#each item_cat_data.items as |item idx|}}
                         {{>"atoria.v2.actors_partials.item-line-display" item=item}}
                     {{/each}}
+                    </ul>
                 {{/with}}
             {{/each}}
-            </ul>
+            </div>
         </div>
     </div>
 </div>

@@ -15,7 +15,7 @@
                 {{#with (lookup ../actable_items.spell school_path) as |school_item|}}
                     {{#if school_item}}
                     <h6 class="title atoria-expand-control"
-                    data-action="rollableExpand" data-expand-id="spell_school_cat.{{school_path}}">
+                    data-action="expandSection" data-expand-id="spell_school_cat.{{school_path}}">
                         {{localize (lookup @root.ruleset.actable.associated_magic_schools school_path)}}
                     </h6>
                     {{/if}}

@@ -69,6 +69,12 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
       label: "ATORIA.Sheet.Inventory.Worn",
     });
 
+    schema.is_secondary_weapon = new fields.BooleanField({
+      required: true,
+      initial: false,
+      label: "ATORIA.Sheet.Inventory.Secondary_weapon",
+    });
+
     schema.range = new fields.StringField({
       required: true,
       nullable: false,

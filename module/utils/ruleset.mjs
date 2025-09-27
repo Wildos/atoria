@@ -158,7 +158,6 @@ RULESET["character"] = class ActorRuleset {
 
   static getActiveKeywordsData(actor) {
     const keywords_active = {};
-    let handled_primary_weapon = false;
     for (const item of actor.items) {
       if (["weapon", "armor"].includes(item.type) && !item.system.is_worn) {
         continue;
@@ -178,32 +177,28 @@ RULESET["character"] = class ActorRuleset {
             }
           }
         } else {
-          if (handled_primary_weapon) {
+          if (item.system.is_secondary_weapon) {
             switch (item.system.associated_skill) {
               case "system.skills.combative.weapon.blade":
                 keywords_active["guard"] = Math.min(
-                  (keywords_active["guard"] || 0) +
-                    item.system.keywords["guard"],
+                  (keywords_active["guard"] || 0) + 1,
                   RULESET.keywords.max_amount.guard,
                 );
                 break;
               case "system.skills.combative.weapon.haft-slashing":
                 keywords_active["brute"] = Math.min(
-                  (keywords_active["brute"] || 0) +
-                    item.system.keywords["brute"],
+                  (keywords_active["brute"] || 0) + 1,
                   RULESET.keywords.max_amount.brute,
                 );
                 break;
               case "system.skills.combative.weapon.haft-bludgeonning-piercing":
                 keywords_active["smash"] = Math.min(
-                  (keywords_active["smash"] || 0) +
-                    item.system.keywords["smash"],
+                  (keywords_active["smash"] || 0) + 1,
                   RULESET.keywords.max_amount.smash,
                 );
                 break;
             }
           } else {
-            handled_primary_weapon = true;
             for (let keyword of item_active_keywords) {
               if (!RULESET.keywords.weapon_linked.includes(keyword)) {
                 keywords_active[keyword] = Math.min(
@@ -280,7 +275,7 @@ RULESET["character"] = class ActorRuleset {
     const BRAWL = "system.skills.combative.weapon.brawl";
     const TENACITY = "system.skills.physical.sturdiness.tenacity";
 
-    if (PARRY.startsWith(skill_path) && active_keywords_data["guard"] >= 2) {
+    if (PARRY.startsWith(skill_path) && active_keywords_data["guard"] > 0) {
       add_keyword_data(
         "guard",
         active_keywords_data["guard"],
@@ -288,10 +283,7 @@ RULESET["character"] = class ActorRuleset {
       );
     }
 
-    if (
-      THROW.startsWith(skill_path) &&
-      active_keywords_data["throwable"] >= 0
-    ) {
+    if (THROW.startsWith(skill_path) && active_keywords_data["throwable"] > 0) {
       add_keyword_data(
         "throwable",
         active_keywords_data["throwable"],
@@ -303,7 +295,7 @@ RULESET["character"] = class ActorRuleset {
 
     if (
       PARRY.startsWith(skill_path) &&
-      active_keywords_data["protection"] >= 0
+      active_keywords_data["protection"] > 0
     ) {
       add_keyword_data(
         "protection",
@@ -314,7 +306,7 @@ RULESET["character"] = class ActorRuleset {
       );
     }
 
-    if (FORCE.startsWith(skill_path) && active_keywords_data["gruff"] >= 0) {
+    if (FORCE.startsWith(skill_path) && active_keywords_data["gruff"] > 0) {
       add_keyword_data(
         "gruff",
         active_keywords_data["gruff"],
@@ -323,7 +315,7 @@ RULESET["character"] = class ActorRuleset {
     }
 
     if (
-      active_keywords_data["noisy"] >= 0 &&
+      active_keywords_data["noisy"] > 0 &&
       (SILENCE.startsWith(skill_path) || STEALTH.startsWith(skill_path))
     ) {
       add_keyword_data(
@@ -340,7 +332,7 @@ RULESET["character"] = class ActorRuleset {
     if (
       (WEAPON.startsWith(skill_path) || skill_path.startsWith(WEAPON)) &&
       BRAWL.localeCompare(skill_path) !== 0 &&
-      active_keywords_data["grip"] >= 0
+      active_keywords_data["grip"] > 0
     ) {
       add_keyword_data(
         "grip",
@@ -349,10 +341,7 @@ RULESET["character"] = class ActorRuleset {
       );
     }
 
-    if (
-      TENACITY.startsWith(skill_path) &&
-      active_keywords_data["stable"] >= 0
-    ) {
+    if (TENACITY.startsWith(skill_path) && active_keywords_data["stable"] > 0) {
       add_keyword_data(
         "stable",
         active_keywords_data["stable"],
@@ -580,16 +569,16 @@ RULESET["keywords"] = {
     }
     switch (keyword) {
       case "reach":
-        if (amount === 0) return "";
+        if (amount < 2) return "";
         else return "combat";
       case "brute":
-        if (amount === 0) return "";
+        if (amount < 2) return "";
         else return "combat";
       case "guard":
-        if (amount === 0) return "";
+        if (amount < 2) return "";
         else return "combat";
       case "penetrating":
-        if (amount === 0) return "";
+        if (amount < 2) return "";
         else return "combat";
       case "protect":
         if (amount === 0) return "";
