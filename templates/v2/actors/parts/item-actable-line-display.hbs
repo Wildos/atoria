@@ -278,6 +278,7 @@ data-drag="Item" data-item-id="{{item._id}}">
     {{#each item.system.supplementaries_list as |supplementary key|}}
         <div class="atoria-supplementary">
             <div class="flexrow">
+                <label>{{supplementary.name}}</label>
                 {{>"atoria.v2.commons_partials.cost-display"
                     cost=supplementary.cost
                     systemFields=../systemFields.supplementaries_list.element.fields.cost.fields

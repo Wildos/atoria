@@ -257,6 +257,7 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
     Object.keys(skill_type_data).map(function (skill_group_key, _) {
       const skill_group_list = skill_type_data[skill_group_key];
       const skill_list = {};
+      const cat_list_initial = {};
 
       Object.keys(skill_group_list).forEach(function (skill_category_key, _) {
         const skill_category_list = skill_group_list[skill_category_key];
@@ -280,7 +281,7 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
             helpers.skillField(
               "ATORIA.Model.New_name",
               utils.default_values.character.skill.success,
-              false,
+              skill_holder_label === "skills",
             ),
             {
               required: true,
@@ -295,12 +296,14 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               ),
             },
           );
+        cat_list_initial[skill_category_key] = skill_list_initial;
       });
       skill_type_schema[skill_group_key] = new foundry.data.fields.SchemaField(
         skill_list,
         {
           required: true,
           nullable: false,
+          initial: cat_list_initial,
           label: utils.buildLocalizeString(
             "Ruleset",
             skill_holder_label,

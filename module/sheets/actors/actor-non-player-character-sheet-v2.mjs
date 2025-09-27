@@ -157,15 +157,13 @@ export default class AtoriaActorNonPlayerCharacterSheetV2 extends AtoriaActorShe
             "charisma",
             "eloquence",
             "spirit",
-            "intimidation",
             "trickery",
           ],
           "system.skills.physical": [
             "agility",
             "athletic",
             "slyness",
-            "climbing",
-            "swiming",
+            "environment",
             "sturdiness",
           ],
         };
