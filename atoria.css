@@ -988,6 +988,10 @@
 .system-atoria .atoria-item-line-display > .equip-toggle::after {
   --checkbox-content: "\f3ed" !important;
 }
+.system-atoria .atoria-item-line-display > .secondary-toggle {
+  max-width: calc(var(--atoria-skill-height) - 4px);
+  max-height: calc(var(--atoria-skill-height) - 4px);
+}
 .system-atoria .atoria-item-line-display .name {
   flex: 2;
 }

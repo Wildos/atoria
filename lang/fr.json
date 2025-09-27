@@ -233,7 +233,9 @@
       "Associated_skill_blank": "Aucune compétence associée",
       "Inventory": {
         "Title": "Inventaire",
-        "Worn": "Sortir/Ranger"
+        "Worn": "Sortir/Ranger",
+        "Primary_weapon": "Est une arme principale",
+        "Secondary_weapon": "Est une arme secondaire"
       },
       "Player": {
         "Pages": {

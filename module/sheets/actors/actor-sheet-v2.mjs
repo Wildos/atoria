@@ -238,7 +238,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       console.warn("Undefined data-expand-id");
       return;
     }
-    if ($expand_control.hasClass("expanded"))
+    if (this.expanded_section.includes(expandId))
       this.expanded_section.splice(this.expanded_section.indexOf(expandId), 1);
     else this.expanded_section.push(expandId);
     $expand_control.toggleClass("expanded");
@@ -260,7 +260,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
           return;
         }
         const $expand_control = $(target);
-        if ($expand_control.hasClass("expanded"))
+        if (this.expanded_section.includes(expandId))
           this.expanded_section.splice(
             this.expanded_section.indexOf(expandId),
             1,
@@ -314,16 +314,17 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       this.nextElementSibling.textContent = this.value;
     });
 
-    for (const id in this.expanded_section) {
-      html
-        .find(
-          `.atoria-expand-control[data-expand-id="${this.expanded_section[id]}"]`,
-        )
-        .each((_idx, element) => {
-          const $element = $(element);
-          $element.addClass("expanded");
-        });
-    }
+    html.find(`.atoria-expand-control`).each((_idx, element) => {
+      const $element = $(element);
+      const { expandId, expandDefault } = element.dataset;
+
+      let is_toggled = this.expanded_section.includes(expandId);
+      let is_expand_default = expandDefault === "true";
+
+      if (is_toggled != is_expand_default) {
+        $element.addClass("expanded");
+      }
+    });
 
     if (!this.isEditable) return;
 
@@ -344,6 +345,23 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
         event.target.type === "checkbox"
           ? event.target.checked
           : event.target.value;
+      item.update({ [event.target.dataset.name]: value });
+    });
+
+    html.on("click", ".item-img-toggle-update", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if ((event.target.dataset.name ?? "") === "") return;
+
+      const itemId = event.target.closest("[data-item-id]")?.dataset.itemId;
+      if (!itemId) return;
+
+      event.stopImmediatePropagation();
+      const item = await this.actor.items.get(itemId);
+      if (!item) return;
+
+      const value = !foundry.utils.getProperty(item, event.target.dataset.name);
       item.update({ [event.target.dataset.name]: value });
     });
 

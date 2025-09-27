@@ -39,6 +39,16 @@
         <input class="item-update equip-toggle" data-name="system.is_worn"
         type="checkbox" data-dtype="Boolean" {{checked item.system.is_worn}}
         {{disabled (not @root.editable)}} />
+
+        <img class="item-img-toggle-update secondary-toggle"
+        {{#if @root.editable}}data-name="system.is_secondary_weapon"{{/if}}
+        {{#if system.is_secondary_weapon}}
+        data-tooltip="{{localize "ATORIA.Sheet.Inventory.Secondary_weapon"}}"
+        {{else}}
+        data-tooltip="{{localize "ATORIA.Sheet.Inventory.Primary_weapon"}}"
+        {{/if}}
+        src="systems/atoria/imgs/crossed-swords{{#if system.is_secondary_weapon}}-checked{{/if}}.svg" /><!--is_secondary_weapon-->
+
         {{/unless}}
     {{/if}}
     <label class="name" data-action="expandSection" >{{item.name}}
