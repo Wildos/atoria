@@ -23,6 +23,12 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           label: "ATORIA.DEBUG.FixKnowledges",
           ownership: "OWNER",
         },
+        {
+          action: "onFixSkills",
+          icon: "fa-solid fa-wrench",
+          label: "ATORIA.DEBUG.FixSkills",
+          ownership: "OWNER",
+        },
       ],
     },
     actions: {
@@ -36,6 +42,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
       deleteSkill: this._deleteSkill,
       createItem: this._createItem,
       onFixKnowledges: this._onFixKnowledges,
+      onFixSkills: this._onFixSkills,
     },
   };
 
@@ -90,6 +97,9 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         c.action === "onFixKnowledges" &&
         c.label === "ATORIA.DEBUG.FixKnowledges",
     ).visible = game.user?.isGM;
+    controls.find(
+      (c) => c.action === "onFixSkills" && c.label === "ATORIA.DEBUG.FixSkills",
+    ).visible = game.user?.isGM;
 
     return controls;
   }
@@ -97,6 +107,11 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
   static async _onFixKnowledges(event, _target) {
     event.stopPropagation();
     await this.actor.debug_fix_knowledges();
+  }
+
+  static async _onFixSkills(event, _target) {
+    event.stopPropagation();
+    await this.actor.debug_fix_skills();
   }
 
   static async _applyTimePhase(_event, target) {
