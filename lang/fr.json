@@ -1,7 +1,8 @@
 {
   "ATORIA": {
     "DEBUG": {
-      "FixKnowledges": "Corriger les connaissances"
+      "FixKnowledges": "Corriger les connaissances",
+      "FixSkills": "Corriger les compétences"
     },
     "Settings": {
       "DisplayPlayerSheetHorizontally": "Forcer l'affichage horizontal de la fiche de personnage joueur",

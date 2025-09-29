@@ -37,6 +37,10 @@ export async function migrateWorld() {
   if (foundry.utils.isNewerVersion("0.3.21", current_version)) {
     await migrateTo_0_3_21();
   }
+  // 0.3.23: Fix of skills
+  if (foundry.utils.isNewerVersion("0.3.23", current_version)) {
+    await migrateTo_0_3_23();
+  }
 
   game.settings.set("atoria", "worldLastMigrationVersion", game.system.version);
   ui.notifications.info(
@@ -704,6 +708,29 @@ async function migrateTo_0_3_21() {
         performDeletions: true,
       });
       await actor.update(updateData);
+    } catch (err) {
+      err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
+      console.error(err);
+    }
+  }
+}
+
+async function migrateTo_0_3_23() {
+  // Migrate World Actors
+  const actors = game.actors
+    .map((a) => [a, true])
+    .concat(
+      Array.from(game.actors.invalidDocumentIds).map((id) => [
+        game.actors.getInvalid(id),
+        false,
+      ]),
+    );
+  for (const [actor, valid] of actors) {
+    try {
+      console.log(`Migrating Actor document ${actor.name}`);
+      if (actor.type === "player-character") {
+        await actor.debug_fix_skills();
+      }
     } catch (err) {
       err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
       console.error(err);

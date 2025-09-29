@@ -817,4 +817,41 @@ export default class AtoriaActor extends Actor {
       "system.knowledges": updated_knowledges,
     });
   }
+  // Debug functions
+  async debug_fix_skills() {
+    let updated_skills = helpers.getInitialFullSkillSchema(
+      utils.default_values.character.skills,
+      "skills",
+    );
+
+    Object.keys(this.system.skills).forEach((group_key) => {
+      Object.keys(this.system.skills[group_key]).forEach((cat_key) => {
+        if (
+          foundry.utils.getType(this.system.skills[group_key][cat_key]) ===
+          "Object"
+        ) {
+          Object.keys(this.system.skills[group_key][cat_key]).forEach(
+            (skill_key) => {
+              if (
+                skill_key in updated_skills[group_key][cat_key] &&
+                this.system.skills[group_key][cat_key][skill_key] !== undefined
+              ) {
+                delete updated_skills[group_key][cat_key][skill_key]["success"];
+                delete updated_skills[group_key][cat_key][skill_key][
+                  "critical_success_modifier"
+                ];
+                delete updated_skills[group_key][cat_key][skill_key][
+                  "critical_fumble_modifier"
+                ];
+              }
+            },
+          );
+        }
+      });
+    });
+
+    this.update({
+      "system.skills": updated_skills,
+    });
+  }
 }
