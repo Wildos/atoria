@@ -5,7 +5,8 @@
     <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Disadvantage_amount" }}</label><input type="number" data-dtype="Number" name="disadvantage_amount" value="0"/></div>
     <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Luck_applied" }}</label><input type="number" data-dtype="Number" name="luck_applied" value="0"/></div>
     <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.DoS_mod" }}</label><input type="number" data-dtype="Number" name="dos_mod" value="0"/></div>
-    <ul class="available-features double-col-field">
+    <div class="double-col-field">
+        <ul class="available-features double-col-field">
         {{#each associated_features as |feature key|}}
             <li class="flexrow atoria-expand-control"
             oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
@@ -38,6 +39,7 @@
             </li>
         {{/each}}
     </ul>
+    </div>
     <label>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Label"}}</label>
     <select name="asked_visibility">
         {{#unless is_blind_roll}}

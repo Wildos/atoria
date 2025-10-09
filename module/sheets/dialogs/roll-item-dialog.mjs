@@ -462,6 +462,9 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
         break;
       case "body":
         {
+          context.default_roll_mode = utils.convertRollModeToDesiredVisibility(
+            game.settings.get("core", "rollMode"),
+          );
           context.tab = context.tabs[partId];
           context.roll_config = this.#roll_config;
           let active_keywords = utils.ruleset.character.getActiveKeywordsData(

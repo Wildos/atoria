@@ -36,7 +36,7 @@
   --bar-color-background: black;
   --atoria-color-error: red;
   --atoria-skill-height: calc(2px + var(--atoria-base-line-block-height));
-  --atoria-skill-title-width: 6em;
+  --atoria-skill-title-width: 7em;
   --atoria-skill-width: calc(8em + var(--atoria-input-width));
   --atoria-mini-skill-width: calc(7em + var(--atoria-input-width));
   --atoria-img-filter: invert(100%);
@@ -343,6 +343,7 @@
   max-height: 0;
   overflow: hidden;
   border: none;
+  display: none;
 }
 .system-atoria .atoria-expand-control.expanded:has(+ .atoria-expand-direct-data) {
   border-bottom-right-radius: 0;
@@ -1696,6 +1697,10 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+.system-atoria .atoria.dialog ul:not(:first-child),
+.system-atoria .atoria.roll-dialog ul:not(:first-child) {
+  margin-top: var(--atoria-rows-gap);
 }
 .system-atoria .atoria.dialog ul li,
 .system-atoria .atoria.roll-dialog ul li {

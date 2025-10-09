@@ -43,7 +43,9 @@
                     <input type="checkbox" data-dtype="Boolean" name="used_keywords_{{available_skill_data.tab}}.{{keyword_data.name}}"
                     {{disabled (not keyword_data.usable)}}/>
                     <h5>{{keyword_data.label}}</h5>
+                    {{#if keyword_data.skill_alteration_type_label}}
                     <label>{{localize keyword_data.skill_alteration_type_label}}</label>
+                    {{/if}}
                     {{#if keyword_data.time_phase}}
                     <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
                     {{/if}}

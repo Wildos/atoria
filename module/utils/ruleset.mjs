@@ -54,7 +54,9 @@ RULESET["character"] = class ActorRuleset {
         restored_attributes["healing_inactive.medical_2"] = false;
       case "rest":
         restored_attributes["mana"] =
-          "mana" in restored_attributes ? restored_attributes["mana"] : 4;
+          "mana" in restored_attributes
+            ? restored_attributes["mana"]
+            : 4 + actor.system.regain_rest_mana_mod;
         break;
       case "long-moon": // also a short-moon
         restored_attributes["sanity.regain_inactive"] = false;

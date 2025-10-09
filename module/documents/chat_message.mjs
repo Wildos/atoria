@@ -2,6 +2,14 @@ import * as utils from "../utils/module.mjs";
 import AtoriaDOSRoll from "../rolls/atoria_dos_roll.mjs";
 
 export default class AtoriaChatMessage extends ChatMessage {
+  get isContentVisible() {
+    const whisper = this.whisper || [];
+    const isBlind = whisper.length && this.blind;
+    if (whisper.length)
+      return whisper.includes(game.user.id) || (this.isAuthor && !isBlind);
+    return true;
+  }
+
   async _createInlineRoll(match, rollData, options = {}) {
     let [command, formula, closing, label] = match.slice(1, 5);
     const rollCls = Roll.defaultImplementation;
@@ -140,6 +148,8 @@ export default class AtoriaChatMessage extends ChatMessage {
       }
       this.updateSource({ "system.critical_effect": critical_effect });
     }
+    if (options.rollMode || !(data.whisper?.length > 0))
+      this.applyRollMode(options.rollMode || "roll");
   }
 
   async getHTML() {
