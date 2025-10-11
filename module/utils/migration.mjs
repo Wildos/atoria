@@ -41,6 +41,10 @@ export async function migrateWorld() {
   if (foundry.utils.isNewerVersion("0.3.23", current_version)) {
     await migrateTo_0_3_23();
   }
+  // 0.3.24: Clean skill + Fix Medecine of heros + Fix keywords of items
+  if (foundry.utils.isNewerVersion("0.3.24", current_version)) {
+    await migrateTo_0_3_24();
+  }
 
   game.settings.set("atoria", "worldLastMigrationVersion", game.system.version);
   ui.notifications.info(
@@ -734,6 +738,152 @@ async function migrateTo_0_3_23() {
     } catch (err) {
       err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
       console.error(err);
+    }
+  }
+}
+
+async function migrateTo_0_3_24() {
+  const update_items = async (items) => {
+    for (const [item, valid] of items) {
+      try {
+        const flags = { persistSourceMigration: false };
+        let updateData = {};
+        console.log(`Migrating Item document ${item.name}`);
+        if (item.type !== "weapon") {
+          updateData["system.keywords.two_handed"] = 0;
+          updateData["system.keywords.reach"] = 0;
+          updateData["system.keywords.brute"] = 0;
+          updateData["system.keywords.equip"] = 0;
+          updateData["system.keywords.fluxian"] = 0;
+          updateData["system.keywords.smash"] = 0;
+          updateData["system.keywords.guard"] = 0;
+          updateData["system.keywords.throwable"] = 0;
+          updateData["system.keywords.light"] = 0;
+          updateData["system.keywords.heavy"] = 0;
+          updateData["system.keywords.penetrating"] = 0;
+          updateData["system.keywords.versatile"] = 0;
+          updateData["system.keywords.protect"] = 0;
+          updateData["system.keywords.protection"] = 0;
+          updateData["system.keywords.quick"] = 0;
+          updateData["system.keywords.recharge"] = 0;
+          updateData["system.keywords.reserve"] = 0;
+          updateData["system.keywords.reserve_max"] = 0;
+          updateData["system.keywords.reserve_current"] = 0;
+          updateData["system.keywords.sly"] = 0;
+        }
+        if (item.type === "weapon") {
+          updateData["system.keywords.gruff"] = 0;
+          updateData["system.keywords.noisy"] = 0;
+          updateData["system.keywords.tough"] = 0;
+          updateData["system.keywords.obstruct"] = 0;
+          updateData["system.keywords.grip"] = 0;
+          updateData["system.keywords.resistant"] = 0;
+          updateData["system.keywords.sturdy"] = 0;
+          updateData["system.keywords.stable"] = 0;
+          updateData["system.keywords.direct"] = 0;
+        }
+        await item.update(updateData, {
+          enforceTypes: true,
+          diff: valid && !flags.persistSourceMigration,
+          recursive: !flags.persistSourceMigration,
+          render: false,
+        });
+      } catch (err) {
+        err.message = `Failed atoria system migration for Item ${item.name}: ${err.message}`;
+        console.error(err);
+      }
+    }
+  };
+  // Migrate World Items
+  const game_items = game.items
+    .map((a) => [a, true])
+    .concat(
+      Array.from(game.items.invalidDocumentIds).map((id) => [
+        game.items.getInvalid(id),
+        false,
+      ]),
+    );
+  update_items(game_items);
+  // Migrate World Actors
+  const actors = game.actors
+    .map((a) => [a, true])
+    .concat(
+      Array.from(game.actors.invalidDocumentIds).map((id) => [
+        game.actors.getInvalid(id),
+        false,
+      ]),
+    );
+
+  for (const [actor, valid] of actors) {
+    try {
+      const flags = { persistSourceMigration: false };
+      let deleteData = {};
+      let updateData = {};
+      console.log(`Migrating Actor document ${actor.name}`);
+      if (actor.type === "player-character") {
+        deleteData["system.skills.physical.sturdiness.-=fortitude"] = null;
+        deleteData["system.skills.social.analyse.-=identification"] = null;
+      }
+      if (actor.type === "hero") {
+        updateData["system.knowledges.medecine.label"] =
+          "ATORIA.Ruleset.Knowledges.Erudition.Medecine.Label";
+      }
+      await actor.update(deleteData, {
+        enforceTypes: false,
+        diff: valid && !flags.persistSourceMigration,
+        recursive: !flags.persistSourceMigration,
+        render: false,
+        performDeletions: true,
+      });
+      await actor.update(updateData, {
+        enforceTypes: true,
+        diff: valid && !flags.persistSourceMigration,
+        recursive: !flags.persistSourceMigration,
+        render: false,
+      });
+      update_items(actor.items.map((a) => [a, true]));
+    } catch (err) {
+      err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
+      console.error(err);
+    }
+  }
+
+  const scenes = game.scenes;
+
+  for (const scene of scenes) {
+    for (const [token, valid] of scene.tokens.map((a) => [a, true])) {
+      try {
+        const actor = token.actor;
+        const flags = { persistSourceMigration: false };
+        let deleteData = {};
+        let updateData = {};
+        console.log(`Migrating Token document ${actor.name}`);
+        if (actor.type === "player-character") {
+          deleteData["system.skills.physical.sturdiness.-=fortitude"] = null;
+          deleteData["system.skills.social.analyse.-=identification"] = null;
+        }
+        if (actor.type === "hero") {
+          updateData["system.knowledges.medecine.label"] =
+            "ATORIA.Ruleset.Knowledges.Erudition.Medecine.Label";
+        }
+        await actor.update(deleteData, {
+          enforceTypes: false,
+          diff: valid && !flags.persistSourceMigration,
+          recursive: !flags.persistSourceMigration,
+          render: false,
+          performDeletions: true,
+        });
+        await actor.update(updateData, {
+          enforceTypes: true,
+          diff: valid && !flags.persistSourceMigration,
+          recursive: !flags.persistSourceMigration,
+          render: false,
+        });
+        update_items(actor.items.map((a) => [a, true]));
+      } catch (err) {
+        err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
+        console.error(err);
+      }
     }
   }
 }

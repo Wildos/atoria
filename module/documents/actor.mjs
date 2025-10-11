@@ -17,6 +17,7 @@ export default class AtoriaActor extends Actor {
   prepareBaseData() {
     const actorData = this;
     actorData.system.encumbrance.value = 0;
+    actorData.system.regain_rest_mana_mod = 0;
     switch (this.type) {
       case "player-character":
         actorData.system.movement = utils.default_values.character.movement;
@@ -30,12 +31,6 @@ export default class AtoriaActor extends Actor {
         actorData.system.resistance = utils.default_values.models.helpers
           .resistanceField()
           .getInitialValue({});
-        for (let i of this.items) {
-          actorData.system.armor.main = Math.max(
-            actorData.system.armor.main,
-            utils.ruleset.character.getMainArmorValue(i),
-          );
-        }
         break;
     }
   }
