@@ -207,13 +207,27 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
           }
         }
         break;
+      case "kit":
+        context.associated_skills =
+          this.actor?.getAssociatedSkillList() ??
+          foundry.utils.deepClone(utils.default_values.get_associated_skills());
+        break;
+      case "armor":
+        context.associated_skills =
+          this.actor?.getAssociatedSkillList() ??
+          foundry.utils.deepClone(utils.default_values.get_associated_skills());
+        break;
       case "weapon":
+        context.associated_skills =
+          this.actor?.getAssociatedSkillList() ??
+          foundry.utils.deepClone(utils.default_values.get_associated_skills());
+
         context.associated_saves_skills =
           this.actor?.getOpposedSkillList() ??
           utils.default_values.get_opposed_skills();
         context.available_actable_modifiers =
           utils.ruleset.item.getActableModifiersApplicable(this.item);
-        context.associated_skills =
+        context.weapon_associated_skills =
           this.actor?.getWeaponSkillList() ??
           foundry.utils.deepClone(
             utils.default_values.get_weapon_associated_skills(),

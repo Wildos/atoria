@@ -720,6 +720,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "guard",
             "penetrating",
             "protect",
+            "protection",
             "gruff",
             "tough",
             "grip",

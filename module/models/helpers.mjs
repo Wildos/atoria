@@ -223,17 +223,74 @@ export function defineTimePhaseLimitation() {
   );
 }
 
+// return new fields.SchemaField(
+//   {
+//     has_skill_alteration: new fields.BooleanField({
+//       required: true,
+//       nullable: false,
+//       initial: false,
+//       label: "ATORIA.Model.Skill_alteration.Has_skill_alteration",
+//     }),
+//     associated_skill: new fields.StringField({
+//       required: true,
+//       nullable: false,
+//       blank: true,
+//       initial: "",
+//       label: "ATORIA.Model.Skill_alteration.Skill_associated",
+//     }),
+//     skill_alteration_type: new fields.StringField({
+//       required: true,
+//       nullable: false,
+//       blank: false,
+//       choices: utils.ruleset.skill_alterations,
+//       initial: Object.keys(utils.ruleset.skill_alterations)[0],
+//       label: "ATORIA.Model.Skill_alteration.Type",
+//     }),
+//   },
+//   {
+//     required: true,
+//     nullable: false,
+//     label: "ATORIA.Model.Skill_alteration.Label",
+//   },
+// );
+
+export function defineAlteration() {
+  const fields = foundry.data.fields;
+
+  return new fields.SchemaField(
+    {
+      dos_mod: new fields.NumberField({
+        required: true,
+        nullable: false,
+        initial: 0,
+        label: "ATORIA.Model.Skill_alteration.DoS_mod",
+      }),
+      adv_amount: new fields.NumberField({
+        required: true,
+        nullable: false,
+        initial: 0,
+        label: "ATORIA.Model.Skill_alteration.Advantage_amount",
+      }),
+      disadv_amount: new fields.NumberField({
+        required: true,
+        nullable: false,
+        initial: 0,
+        label: "ATORIA.Model.Skill_alteration.Disadvantage_amount",
+      }),
+    },
+    {
+      required: true,
+      nullable: false,
+      label: "ATORIA.Model.Alteration.Label",
+    },
+  );
+}
+
 export function defineSkillAlteration() {
   const fields = foundry.data.fields;
 
   return new fields.SchemaField(
     {
-      has_skill_alteration: new fields.BooleanField({
-        required: true,
-        nullable: false,
-        initial: false,
-        label: "ATORIA.Model.Skill_alteration.Has_skill_alteration",
-      }),
       associated_skill: new fields.StringField({
         required: true,
         nullable: false,
@@ -241,13 +298,23 @@ export function defineSkillAlteration() {
         initial: "",
         label: "ATORIA.Model.Skill_alteration.Skill_associated",
       }),
-      skill_alteration_type: new fields.StringField({
+      dos_mod: new fields.NumberField({
         required: true,
         nullable: false,
-        blank: false,
-        choices: utils.ruleset.skill_alterations,
-        initial: Object.keys(utils.ruleset.skill_alterations)[0],
-        label: "ATORIA.Model.Skill_alteration.Type",
+        initial: 0,
+        label: "ATORIA.Model.Skill_alteration.DoS_mod",
+      }),
+      adv_amount: new fields.NumberField({
+        required: true,
+        nullable: false,
+        initial: 0,
+        label: "ATORIA.Model.Skill_alteration.Advantage_amount",
+      }),
+      disadv_amount: new fields.NumberField({
+        required: true,
+        nullable: false,
+        initial: 0,
+        label: "ATORIA.Model.Skill_alteration.Disadvantage_amount",
       }),
     },
     {
@@ -256,6 +323,15 @@ export function defineSkillAlteration() {
       label: "ATORIA.Model.Skill_alteration.Label",
     },
   );
+}
+
+export function define_skills_alterations_list() {
+  const fields = foundry.data.fields;
+  return new fields.ArrayField(defineSkillAlteration(), {
+    required: true,
+    nullable: false,
+    label: "ATORIA.Model.Skill_alteration.Label_pl",
+  });
 }
 
 export function defineCostField() {

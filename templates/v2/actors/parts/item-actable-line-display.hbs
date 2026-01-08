@@ -62,7 +62,7 @@ data-drag="Item" data-item-id="{{item._id}}">
         </label>
     {{/if}}
 
-    {{#unless (eq item.type "spell")}}
+    {{#unless (oneOf item.type "spell" "weapon")}}
     <div class="atoria-limitation">
         {{>"atoria.v2.commons_partials.time-limitation-display" limitation=item.system.limitation
         systemFields=item.systemFields.limitation.fields }}

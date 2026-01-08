@@ -18,6 +18,7 @@
       "Description": "Description",
       "Quantity": "Quantité",
       "Effect": "Effet",
+      "Critical_effect": "Effet critique",
       "Additional_css_class": "Class(es) CSS additionnel(s)",
       "Color": {
         "Label": "Couleur",
@@ -25,18 +26,11 @@
       },
       "Skill_alteration": {
         "Label": "Altération de compétence",
-        "Has_skill_alteration": "Compétence associée",
+        "Label_pl": "Altérations de compétence",
         "Skill_associated": "Compétence associée",
-        "Type": "Type d'altération",
-        "One_degree_of_success_gain": "DR +1",
-        "One_degree_of_success_loss": "DR -1",
-        "Two_degree_of_success_gain": "DR +2",
-        "Two_degree_of_success_loss": "DR -2",
-        "Advantage": "Avantage",
-        "Disadvantage": "Désavantage",
-        "Advantage_n_One_degree_of_success_gain": "Avantage & DR +1",
-        "Disadvantage_n_One_degree_of_success_loss": "Désavantage & DR -1",
-        "Hand_handled": "Non automatisé"
+        "Advantage_amount": "Avantage",
+        "Disadvantage_amount": "Désavantage",
+        "DoS_mod": "DR"
       },
       "Health": {
         "Value": "Valeur de Santé",
@@ -155,8 +149,7 @@
         "Supplementaries": {
           "Label": "Supplémentaire",
           "Cost_list": "Coût disponible",
-          "Cumul_max": "Cumul maximum",
-          "Description": "Effet"
+          "Cumul_max": "Cumul maximum"
         }
       },
       "Magic": {
@@ -1111,6 +1104,7 @@
         "Smash": "Fracasse",
         "Penetrating": "Pénétrant",
         "Sly": "Sournois",
+        "Sly_amount": "Sournois valeur",
         "Direct": "Direct",
         "Direct_recap": "{type} direct",
         "Direct_type": "Direct Type",
@@ -1166,7 +1160,7 @@
         "Protect+": "Une fois par combat, donne une parade supplémentaire hors limite.",
 
         "Protection": "DR Réflexe - Parade +1 contre les attaques à distance.",
-        "Protection+": "L'avantage DR Réflexe - Parade contre les attaques à distance.",
+        "Protection+": "DR Réflexe - Parade +1 contre les attaques à distance.</br> 1 / Combat : Lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
 
         "Quick": "L'action \"Dégainer\" a coût Seconde -1 sur cette arme.",
         "Quick+": "L'action \"Dégainer\" a coût Seconde -2 sur cette arme.",

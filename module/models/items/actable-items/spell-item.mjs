@@ -80,9 +80,9 @@ export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
             initial: 1,
             label: "ATORIA.Model.Spell.Supplementaries.Cumul_max",
           }),
-          description: new fields.StringField({
+          effect: new fields.StringField({
             required: true,
-            label: "ATORIA.Model.Spell.Supplementaries.Description",
+            label: "ATORIA.Model.Effect",
           }),
           limitation: atoria_models.helpers.defineTimePhaseLimitation(),
         },
@@ -92,5 +92,20 @@ export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
     );
 
     return schema;
+  }
+
+  /**
+   * Migrate source data from some prior format into a new specification.
+   * The source parameter is either original data retrieved from disk or provided by an update operation.
+   * @inheritDoc
+   */
+  static migrateData(source) {
+    const supplementaries_list = source.supplementaries_list ?? [];
+    if (!("effect" in supplementaries_list)) {
+      supplementaries_list.effect = foundry.utils.deepClone(
+        supplementaries_list.description,
+      );
+    }
+    return super.migrateData(source);
   }
 }

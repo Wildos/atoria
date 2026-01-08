@@ -32,7 +32,8 @@
             <li class="flexrow atoria-expand-control"
             oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}"
             >
-                <input type="checkbox" data-dtype="Boolean" name="available_supplementaries.{{key}}"
+                <input type="number" data-dtype="Number" name="available_supplementaries.{{key}}"
+                value=0 min="0" max="{{supplementary.usage_max}}"
                 {{disabled (and (ne supplementary.limitation.regain_type "permanent") (lte supplementary.limitation.usage_left 0))}}/>
                 <h5>{{supplementary.name}}</h5>
                 {{>"atoria.v2.commons_partials.time-limitation-display" limitation=supplementary.limitation
@@ -53,6 +54,7 @@
 {{/if}}
 {{#if available_actable_modifiers}}
 <ul class="available-actable_modifiers double-col-field">
+    <!--TODO: redo this part -->
     {{#each available_actable_modifiers as |actable_mod key|}}
         <li class="flexrow atoria-expand-control"
         oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">

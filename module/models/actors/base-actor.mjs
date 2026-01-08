@@ -164,6 +164,13 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
         label: "ATORIA.Ruleset.Keywords.Protect",
       }),
 
+      protection: new fields.BooleanField({
+        required: true,
+        nullable: false,
+        initial: false,
+        label: "ATORIA.Ruleset.Keywords.Protection",
+      }),
+
       gruff: new fields.BooleanField({
         required: true,
         nullable: false,

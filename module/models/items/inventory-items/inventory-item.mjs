@@ -144,6 +144,12 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
         max: utils.ruleset.keywords.max_amount.sly,
         label: "ATORIA.Ruleset.Keywords.Sly",
       }),
+      sly_amount: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+        label: "ATORIA.Ruleset.Keywords.Sly_amount",
+      }),
 
       // Armor & Equipment related
       gruff: new fields.NumberField({
@@ -302,6 +308,11 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
       required: true,
       label: "ATORIA.Ruleset.Keywords.Label",
     });
+
+    schema.limitation = atoria_models.helpers.defineTimePhaseLimitation();
+
+    schema.skill_alterations =
+      atoria_models.helpers.define_skills_alterations_list();
 
     return schema;
   }

@@ -17,6 +17,13 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
       "ATORIA.Model.Weapon.Damage_name",
     );
 
+    schema.critical_effect = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      label: "ATORIA.Model.Critical_effect",
+    });
+
     schema.is_focuser = new fields.BooleanField({
       required: true,
       nullable: false,

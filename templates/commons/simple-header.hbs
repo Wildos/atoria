@@ -1,9 +1,0 @@
-<div class="simple-header {{#if big_image}}big-image-header{{/if}}">
-    <img class="img-sheet" src="{{object.img}}" data-tooltip="{{object.name}}" alt="{{object.name}}" data-edit="img">
-    <input class="name" type="text" data-dtype="String" name="name" value="{{object.name}}" {{disabled (not editable)}}/>
-    <div class="description flexcol">
-        <label for="system.description">{{localize systemFields.description.label}}:</label>
-        <textarea class="resize-ta" data-name="description" data-dtype="String" name="system.description" {{disabled (not editable)}}
-        >{{cleanLines object.system.description}}</textarea>
-    </div>
-</div>

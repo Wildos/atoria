@@ -16,7 +16,8 @@
         <ul class="available-supplementaries double-col-field">
             {{#each available_skill_data.available_supplementaries as |supplementary key|}}
                 <li class="flexrow atoria-expand-control" data-expand-id="supplementaries.{{supplementary.name}}" data-action="expandSection">
-                    <input type="checkbox" data-dtype="Boolean" name="used_supplementaries_{{available_skill_data.tab}}.{{key}}"
+                    <input type="number" data-dtype="Number" name="used_supplementaries_{{available_skill_data.tab}}.{{key}}"
+                    value=0 min="0" max="{{supplementary.usage_max}}"
                     {{disabled (and (ne supplementary.limitation.regain_type "permanent") (lte supplementary.limitation.usage_left 0))}}/>
                     <h5>{{supplementary.name}}</h5>
                     {{>"atoria.v2.commons_partials.time-limitation-display" limitation=supplementary.limitation
@@ -35,7 +36,6 @@
             {{/each}}
         </ul>
         {{/if}}
-
         {{#if available_skill_data.available_keywords}}
         <ul class="available-keywords double-col-field">
             {{#each available_skill_data.available_keywords as |keyword_data key|}}

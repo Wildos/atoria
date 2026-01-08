@@ -1,0 +1,16 @@
+<div class="{{cssClasses}} flexcol">
+    <label for={{data_name}}>{{localize systemFields.label}}:</label>
+    <div style="display: grid;">
+        <textarea
+            class="textarea-auto-resize"
+            style="grid-area: 1 / 1 / 2/ 2;"
+            rows="1"
+            data-name={{data_name}} data-dtype="String" name={{data_path}}
+            {{disabled disabled}}>{{cleanLines value}}</textarea>
+        <div
+        class="textarea-auto-resize-sibling"
+        aria-hidden="true"
+        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+        >{{cleanLines value}}</div>
+    </div>
+</div>

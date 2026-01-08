@@ -258,13 +258,20 @@ export default class AtoriaActor extends Actor {
       return element.uuid;
     });
 
-    const roll_config_altered_step_1 = utils.applyFeaturesToRollConfig(
+    let used_alterations = [];
+    for (let feature of used_features) {
+      let alterations = feature.getAlterations(skill_path);
+      for (let alteration of alterations) {
+        used_alterations.push(alteration);
+      }
+    }
+    for (let keyword_data of roll_config["used_keywords"]) {
+      used_alterations.push(keyword_data.alteration);
+    }
+
+    const roll_config_altered = utils.applyAlterationsToRollConfig(
       roll_config,
-      used_features,
-    );
-    const roll_config_altered = utils.applyKeywordsToRollConfig(
-      roll_config_altered_step_1,
-      roll_config["used_keywords"],
+      used_alterations,
     );
 
     const {
@@ -334,6 +341,12 @@ export default class AtoriaActor extends Actor {
         "system.limitation.usage_left":
           feature.system.limitation.usage_left - 1,
       });
+    }
+
+    console.debug(roll_config.used_keywords);
+    for (let keyword of roll_config.used_keywords) {
+      keyword.id = keyword.name;
+      this.takeOneKeywordUse(keyword);
     }
 
     this.update({
@@ -722,6 +735,74 @@ export default class AtoriaActor extends Actor {
 
     const time_phases_type_to_apply =
       utils.ruleset.general.getTimePhasesTypeToApply(time_phase_type);
+
+    const checkboxVisual = (is_true) => {
+      return `<input type='checkbox' ${is_true ? "checked" : ""} disabled>`;
+    };
+
+    update_list["system.keywords_used.direct"] =
+      this.system.keywords_used.direct;
+    for (let keyword_id in this.system.keywords_used) {
+      let keyword_value = this.active_keywords_data[keyword_id];
+
+      if (keyword_id === "direct") {
+        for (let keyword_type in keyword_value) {
+          if (
+            time_phases_type_to_apply.includes(
+              RULESET.keywords.get_time_phase(
+                keyword_id,
+                keyword_value[keyword_type],
+              ),
+            )
+          ) {
+            var index =
+              update_list["system.keywords_used.direct"].indexOf(keyword_type);
+            if (index !== -1) {
+              update_list["system.keywords_used.direct"].splice(index, 1);
+              changelogs.push(
+                game.i18n.format(
+                  game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+                  {
+                    type:
+                      keyword_type +
+                      " " +
+                      RULESET.keywords.get_localized_name(
+                        keyword_id,
+                        this.active_keywords_data[keyword_id][keyword_type],
+                      ),
+                    previous: checkboxVisual(true),
+                    new: checkboxVisual(false),
+                  },
+                ),
+              );
+            }
+          }
+        }
+      } else {
+        if (
+          this.system.keywords_used[keyword_id] &&
+          time_phases_type_to_apply.includes(
+            RULESET.keywords.get_time_phase(keyword_id, keyword_value),
+          )
+        ) {
+          update_list["system.keywords_used." + keyword_id] = false;
+          changelogs.push(
+            game.i18n.format(
+              game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
+              {
+                type: RULESET.keywords.get_localized_name(
+                  keyword_id,
+                  keyword_value,
+                ),
+                previous: checkboxVisual(this.system.keywords_used[keyword_id]),
+                new: checkboxVisual(false),
+              },
+            ),
+          );
+        }
+      }
+    }
+
     for (let time_phase_type of time_phases_type_to_apply) {
       for (const [_, i] of this.items.entries()) {
         const item_changelogs = await i.applyTimePhase(time_phase_type);
@@ -742,15 +823,16 @@ export default class AtoriaActor extends Actor {
     await this.render();
   }
 
-  getAssociatedFeatures(skill_path) {
+  getAssociatedFeature_n_ItemAlterations(skill_path) {
     const associated_features = [];
     for (let i of this.items) {
-      if (i.type !== "feature") continue;
-      if (
-        i.system.skill_alteration.has_skill_alteration &&
-        i.system.skill_alteration.associated_skill === skill_path
-      )
-        associated_features.push(i);
+      if (!["feature", "kit", "weapon", "armor"].includes(i.type)) continue;
+      for (let alteration of i.system.skill_alterations) {
+        if (alteration.associated_skill == skill_path) {
+          associated_features.push(i);
+          break;
+        }
+      }
     }
     return associated_features;
   }
@@ -765,6 +847,150 @@ export default class AtoriaActor extends Actor {
         actable_mod_list.push(i);
     }
     return actable_mod_list;
+  }
+
+  is_keyword_effect_usable(keyword_data) {
+    switch (keyword_data.id) {
+      case "reach+":
+        return !this.system.keywords_used.reach;
+
+      case "brute+":
+        return !this.system.keywords_used.brute;
+
+      case "guard+":
+        return !this.system.keywords_used.guard;
+
+      case "penetrating+":
+        return !this.system.keywords_used.penetrating;
+
+      case "protect":
+      case "protect+":
+        return !this.system.keywords_used.protect;
+
+      case "protection+":
+        return !this.system.keywords_used.protection;
+
+      case "gruff":
+      case "gruff+":
+      case "gruff++":
+      case "gruff+++":
+        return !this.system.keywords_used.gruff;
+
+      case "tough":
+      case "tough+":
+      case "tough++":
+      case "tough+++":
+        return !this.system.keywords_used.tough;
+
+      case "grip":
+      case "grip+":
+      case "grip++":
+      case "grip+++":
+        return !this.system.keywords_used.grip;
+
+      case "resistant":
+      case "resistant+":
+      case "resistant++":
+      case "resistant+++":
+        return !this.system.keywords_used.resistant;
+
+      case "sturdy":
+      case "sturdy+":
+      case "sturdy++":
+      case "sturdy+++":
+        return !this.system.keywords_used.sturdy;
+
+      case "stable":
+      case "stable+":
+      case "stable++":
+      case "stable+++":
+        return !this.system.keywords_used.stable;
+
+      case "direct":
+      case "direct+":
+        var index = this.system.keywords_used.direct.indexOf(keyword_data.type);
+        if (index !== -1) {
+          return false;
+        }
+        break;
+    }
+    return true;
+  }
+
+  takeOneKeywordUse(keyword_data) {
+    let keyword_id = keyword_data.id;
+    switch (keyword_id) {
+      case "reach+":
+        this.update({ "system.keywords_used.reach": true });
+        break;
+      case "brute+":
+        this.update({ "system.keywords_used.brute": true });
+        break;
+      case "guard+":
+        this.update({ "system.keywords_used.guard": true });
+        break;
+      case "penetrating+":
+        this.update({ "system.keywords_used.penetrating": true });
+        break;
+      case "protect":
+      case "protect+":
+        this.update({ "system.keywords_used.protect": true });
+        break;
+      case "protection+":
+        this.update({ "system.keywords_used.protection": true });
+        break;
+      case "gruff":
+      case "gruff+":
+      case "gruff++":
+      case "gruff+++":
+        this.update({ "system.keywords_used.gruff": true });
+        break;
+      case "tough":
+      case "tough+":
+      case "tough++":
+      case "tough+++":
+        this.update({ "system.keywords_used.tough": true });
+        break;
+      case "grip":
+      case "grip+":
+      case "grip++":
+      case "grip+++":
+        this.update({ "system.keywords_used.grip": true });
+        break;
+      case "resistant":
+      case "resistant+":
+      case "resistant++":
+      case "resistant+++":
+        this.update({ "system.keywords_used.resistant": true });
+        break;
+      case "sturdy":
+      case "sturdy+":
+      case "sturdy++":
+      case "sturdy+++":
+        this.update({ "system.keywords_used.sturdy": true });
+        break;
+      case "stable":
+      case "stable+":
+      case "stable++":
+      case "stable+++":
+        this.update({ "system.keywords_used.stable": true });
+        break;
+      case "direct":
+      case "direct+":
+        let new_array = foundry.utils.deepClone(
+          this.system.keywords_used.direct,
+        );
+
+        var index = new_array.indexOf(keyword_data.type);
+        if (index === -1) {
+          new_array.push(keyword_data.type);
+        } else {
+          new_array.splice(index, 1);
+        }
+
+        this.update({ "system.keywords_used.direct": new_array });
+        break;
+    }
   }
 
   onChatButton(data) {

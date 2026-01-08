@@ -21,7 +21,22 @@ export default class AtoriaFeatureItem extends atoria_models.AtoriaItemBase {
 
     schema.limitation = atoria_models.helpers.defineTimePhaseLimitation();
 
-    schema.skill_alteration = atoria_models.helpers.defineSkillAlteration();
+    schema.effect = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      label: "ATORIA.Model.Effect",
+    });
+
+    schema.critical_effect = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      label: "ATORIA.Model.Critical_effect",
+    });
+
+    schema.skill_alterations =
+      atoria_models.helpers.define_skills_alterations_list();
 
     return schema;
   }

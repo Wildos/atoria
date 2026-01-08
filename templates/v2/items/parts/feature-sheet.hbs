@@ -5,10 +5,29 @@
     </div>
     {{ formInput systemFields.color value=item.system.color disabled=(not @root.editable)}}
 
+    {{>"atoria.v2.commons_partials.textarea-input" value=item.system.effect systemFields=systemFields.effect data_path="system.effect" data_name="effect" cssClasses="double-col-field" disabled=(not @root.editable)}}
+
+    {{>"atoria.v2.commons_partials.textarea-input" value=item.system.critical_effect systemFields=systemFields.critical_effect data_path="system.critical_effect" data_name="critical_effect" cssClasses="double-col-field" disabled=(not @root.editable)}}
+
     {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation systemFields=systemFields.limitation.fields
     data_path="system.limitation" cssClasses="double-col-field"}}
 
-    {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=item.system.skill_alteration
-    item_actor=item.actor associated_skills=@root.associated_skills
-    data_path="system.skill_alteration" systemFields=systemFields.skill_alteration.fields cssClasses="double-col-field"}}
+    <h5 class="double-col-field">{{localize systemFields.skill_alterations.label}}
+        <a class="atoria-create-button" data-action="createSubItem" data-sub-element-path="skill_alterations" data-tooltip="{{localize systemFields.skill_alterations.label}}">
+            <i class="fas fa-plus"></i>
+        </a>
+    </h5>
+    {{#each item.system.skill_alterations as |skill_alteration key|}}
+        <div class="flexrow double-col-field">
+            {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=skill_alteration
+            item_actor=../item.actor associated_skills=@root.associated_skills
+            data_path=(concat "system.skill_alterations." key) systemFields=../systemFields.skill_alterations.element.fields
+            cssClasses=""}}
+
+            <a class="atoria-delete-button" data-action="deleteSubItem" data-sub-element-path="skill_alterations" data-sub-element-index="{{key}}"
+            data-tooltip="{{localize 'ATORIA.Sheet.Actable.Skill_Alterations.Delete'}}">
+                <i class="fas fa-trash"></i>
+            </a>
+        </div>
+    {{/each}}
 </div>

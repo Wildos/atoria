@@ -14,10 +14,21 @@ data-action="expandSection" data-expand-id="{{item._id}}" data-drag="Item" data-
         {{/if}}
     {{/if}}
 
-    {{#if item.system.skill_alteration.has_skill_alteration}}
-        <hr/>
-        <label>{{localize (lookup item.systemFields.skill_alteration.fields.skill_alteration_type.choices item.system.skill_alteration.skill_alteration_type)}}</label>
-    {{/if}}
+    {{#each item.system.skill_alterations as |skill_alteration key|}}
+        <div class="flexcol">
+            {{#if item.system.skill_alteration.associated_skill}}
+            <label>{{localize (lookup @root.associated_skills item.system.skill_alteration.associated_skill)}}</label>
+
+            <div class="flexrow" style="margin:auto">
+                <label style="max-width:fit-content">{{localize item.systemFields.skill_alteration.fields.dos_mod.label}}: {{item.system.skill_alteration.dos_mod}}</label>
+                <label style="max-width:fit-content">{{localize item.systemFields.skill_alteration.fields.adv_amount.label}}: {{item.system.skill_alteration.adv_amount}}</label>
+                <label style="max-width:fit-content">{{localize item.systemFields.skill_alteration.fields.disadv_amount.label}}: {{item.system.skill_alteration.disadv_amount}}</label>
+            </div>
+            {{else}}
+            <label>{{localize "ATORIA.Sheet.Associated_skill_blank"}}</label>
+            {{/if}}
+        </div>
+    {{/each}}
 
     {{>"atoria.v2.commons_partials.time-limitation-display" limitation=item.system.limitation
     systemFields=item.systemFields.limitation.fields }}

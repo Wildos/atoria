@@ -14,7 +14,21 @@ export default class AtoriaActableModifierItem extends atoria_models.AtoriaItemB
       label: "ATORIA.Ruleset.Actable.Restriction",
     });
 
-    schema.skill_alteration = atoria_models.helpers.defineSkillAlteration();
+    schema.effect = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      label: "ATORIA.Model.Effect",
+    });
+
+    schema.critical_effect = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      label: "ATORIA.Model.Critical_effect",
+    });
+
+    schema.alteration = atoria_models.helpers.defineAlteration();
 
     return schema;
   }

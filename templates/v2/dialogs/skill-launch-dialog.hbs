@@ -11,7 +11,7 @@
             <li class="flexrow atoria-expand-control"
             oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
                 <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
-
+<!--TODO: redo this part -->
                 <h5>{{feature.name}}</h5>
 
                 <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
@@ -30,7 +30,7 @@
         {{#each associated_keywords as |keyword key|}}
             <li class="flexrow atoria-expand-control"
             oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
-                <input type="checkbox" data-dtype="Boolean" name="associated_keywords.{{keyword.name}}" />
+                <input type="checkbox" data-dtype="Boolean" name="associated_keywords.{{keyword.name}}" {{disabled (not keyword.usable)}}/>
                 <h5>{{localize keyword.label}}</h5>
                 <label>{{localize keyword.skill_alteration_type_label}}</label>
             </li>

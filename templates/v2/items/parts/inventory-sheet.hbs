@@ -99,7 +99,12 @@
                     {{ formInput systemFields.keywords.fields.sly
                     value=system.keywords.sly disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    additional_fields=(
+                        formInput systemFields.keywords.fields.sly_amount
+                        value=system.keywords.sly_amount disabled=(not @root.editable)
+                    )
                     }}
+
                 {{/if}}
                 {{# if (or (eq item.type "armor") (eq item.type "kit"))}}
                     {{ formInput systemFields.keywords.fields.gruff
@@ -182,6 +187,5 @@
 
     <label>{{localize systemFields.encumbrance.label}}</label>
     {{ formInput systemFields.encumbrance value=item.system.encumbrance disabled=(not @root.editable)}}
-
 
 </div>
