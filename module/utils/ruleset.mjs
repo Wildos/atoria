@@ -36,6 +36,14 @@ RULESET["general"] = class GeneralRuleset {
     }
     return attack_cost;
   }
+
+  static getVersatileEffect() {
+    return (
+      "[[1]]{" +
+      game.i18n.localize("ATORIA.Ruleset.Keywords_effect.Versatile") +
+      "}"
+    );
+  }
 };
 
 RULESET["character"] = class ActorRuleset {
@@ -247,7 +255,22 @@ RULESET["character"] = class ActorRuleset {
   static getSkillAssociatedKeywordsData(actor, item, skill_path) {
     const skill_associated_keywords_data = [];
 
-    if (skill_path === "") return skill_associated_keywords_data;
+    if (skill_path === "") {
+      if (item.type === "spell" && item.system.versatile) {
+        skill_associated_keywords_data.push({
+          name: "versatile",
+          usable: true,
+          label: RULESET.keywords.get_localized_name("versatile", 1),
+          description: RULESET.keywords.get_description("versatile", 1),
+          alteration: {
+            dos_mod: 0,
+            adv_amount: 0,
+            disadv_amount: 0,
+          },
+        });
+      }
+      return skill_associated_keywords_data;
+    }
 
     const add_keyword_data = (keyword, keyword_amount, alteration) => {
       skill_associated_keywords_data.push({
@@ -272,6 +295,20 @@ RULESET["character"] = class ActorRuleset {
       active_keywords_data[key] =
         active_keywords_data[key] || 0 + item.system.keywords[key];
     });
+
+    if (active_keywords_data["versatile"] > 0) {
+      skill_associated_keywords_data.push({
+        name: "versatile",
+        usable: true,
+        label: RULESET.keywords.get_localized_name("versatile", 1),
+        description: RULESET.keywords.get_description("versatile", 1),
+        alteration: {
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+      });
+    }
 
     const PARRY = "system.skills.combative.reflex.parry";
     const THROW = "system.skills.combative.weapon.throw";
@@ -388,6 +425,34 @@ RULESET["item"] = class ItemRuleset {
         available_actable_modifiers.push(i);
     }
     return available_actable_modifiers;
+  }
+
+  static getActableModifiersTypedApplicable(item) {
+    if (item.type !== "weapon") {
+      console.error("Invalid call, only weapon have typed modifier data");
+      return [];
+    }
+    let actable_mod_list = this.getActableModifiersApplicable(item);
+
+    return actable_mod_list.map((actable_mod) => {
+      console.debug("actable_mod", actable_mod);
+      let found_item = foundry.utils.deepClone(
+        item.system.usable_actable_modifiers_typed.find(
+          (data) => data.uuid === actable_mod._id,
+        ),
+      );
+      if (found_item === undefined) {
+        found_item = {
+          actable: actable_mod,
+          main: false,
+          throw: false,
+          focuser: false,
+        };
+      } else {
+        found_item.actable = actable_mod;
+      }
+      return found_item;
+    });
   }
 
   static isActableModifierApplicable(item, actable_modifier) {

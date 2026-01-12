@@ -1,5 +1,8 @@
 <div class="atoria-item-armor-parts grid-2col">
 
+    <label>{{localize systemFields.worn_encumbrance.label}}</label>
+    {{ formInput systemFields.worn_encumbrance value=item.system.worn_encumbrance disabled=(not @root.editable)}}
+
     <label>{{localize systemFields.position.label}}</label>
     <select name="system.position"
     data-tooltip="{{localize systemFields.position.label}}">

@@ -60,6 +60,12 @@ export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
       { label: "ATORIA.Model.Spell.Markers" },
     );
 
+    schema.versatile = new fields.BooleanField({
+      required: true,
+      initial: false,
+      label: "ATORIA.Ruleset.Keywords.Versatile",
+    });
+
     schema.critical_effect = new fields.StringField({
       required: true,
       label: "ATORIA.Model.Spell.Critical_effect",

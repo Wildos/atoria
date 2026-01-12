@@ -66,4 +66,11 @@
     </label>
     </div>
 
+    <div style="padding-left: 5px">
+    {{ formInput systemFields.versatile value=item.system.versatile disabled=(not @root.editable)}}
+     <label>
+    {{localize systemFields.versatile.label}}
+    </label>
+    </div>
+
 </div>

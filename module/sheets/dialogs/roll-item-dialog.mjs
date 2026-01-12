@@ -1,6 +1,7 @@
 import * as utils from "../../utils/module.mjs";
 import * as helpers from "../../utils/helpers.mjs";
 import * as rolls from "../../rolls/module.mjs";
+import RULESET from "../../utils/ruleset.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -232,7 +233,6 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
 
     let roll_effect = this.item.get_effect();
     let roll_critical_effect = this.item.get_critical_effect();
-    let out_used_supplementaries = [];
 
     let luck_applied = 0;
 
@@ -328,6 +328,10 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
     }
 
     // Add effect
+    if (used_keywords.some((elem) => (elem.id = "versatile"))) {
+      roll_effect += RULESET.general.getVersatileEffect();
+    }
+
     for (const feature_uuid of used_features) {
       let feature = fromUuidSync(feature_uuid);
       roll_effect += feature.get_effect();
@@ -550,11 +554,35 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
                   available_skill.path,
                 );
             }
-            sub_context.available_actable_modifiers =
-              this.item.system.usable_actable_modifiers.flatMap((id) => {
-                let usable_actable = this.item.actor.items.get(id);
-                return usable_actable !== undefined ? usable_actable : [];
-              });
+            if (this.item.type === "weapon") {
+              sub_context.available_actable_modifiers =
+                this.item.system.usable_actable_modifiers_typed.flatMap(
+                  (data) => {
+                    let usable_actable = undefined;
+                    switch (available_skill?.path) {
+                      case "system.skills.combative.weapon.throw":
+                        if (data.throw)
+                          usable_actable = this.item.actor.items.get(data.uuid);
+                        break;
+                      case "system.skills.combative.weapon.focuser":
+                        if (data.focuser)
+                          usable_actable = this.item.actor.items.get(data.uuid);
+                        break;
+                      default:
+                        if (data.main)
+                          usable_actable = this.item.actor.items.get(data.uuid);
+                        break;
+                    }
+                    return usable_actable !== undefined ? usable_actable : [];
+                  },
+                );
+            } else {
+              sub_context.available_actable_modifiers =
+                this.item.system.usable_actable_modifiers.flatMap((id) => {
+                  let usable_actable = this.item.actor.items.get(id);
+                  return usable_actable !== undefined ? usable_actable : [];
+                });
+            }
             context.available_skills_data.push(sub_context);
           }
         }

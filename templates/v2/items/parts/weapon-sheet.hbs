@@ -64,17 +64,33 @@
 
 
     <fieldset class="double-col-field">
-        <legend>{{localize systemFields.usable_actable_modifiers.label}}</legend>
+        <legend>{{localize systemFields.usable_actable_modifiers_typed.label}}</legend>
         {{#if item.actor}}
             <ul class="actable-mod-list">
-                {{#each available_actable_modifiers as |actable_mod idx|}}
+                {{log available_actable_modifiers_typed}}
+                {{#each available_actable_modifiers_typed as |actable_mod idx|}}
                     <li class="flexrow">
-                        <h5>{{actable_mod.name}}</h5>
+                        <h5>{{actable_mod.actable.name}}</h5>
                         <input class="actable-modifier-toggle" type="checkbox" data-dtype="Boolean"
                         data-action="handleUsableActableModifier"
-                        data-actable-modifier-id="{{actable_mod._id}}"
-                        {{checked (includes ../item.system.usable_actable_modifiers actable_mod._id)}}
-                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers.element.label}}"/>
+                        data-actable-modifier-id="{{actable_mod.actable._id}}"
+                        data-actable-type="main"
+                        {{checked actable_mod.main}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.main.label}}"/>
+
+                        <input class="actable-modifier-toggle focuser-icon" type="checkbox" data-dtype="Boolean"
+                        data-action="handleUsableActableModifier"
+                        data-actable-modifier-id="{{actable_mod.actable._id}}"
+                        data-actable-type="focuser"
+                        {{checked actable_mod.focuser}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.focuser.label}}"/>
+
+                        <input class="actable-modifier-toggle throw-icon" type="checkbox" data-dtype="Boolean"
+                        data-action="handleUsableActableModifier"
+                        data-actable-modifier-id="{{actable_mod.actable._id}}"
+                        data-actable-type="throw"
+                        {{checked actable_mod.throw}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.throw.label}}"/>
                     </li>
                 {{/each}}
             </ul>

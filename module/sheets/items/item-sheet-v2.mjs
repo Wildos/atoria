@@ -227,6 +227,8 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
           utils.default_values.get_opposed_skills();
         context.available_actable_modifiers =
           utils.ruleset.item.getActableModifiersApplicable(this.item);
+        context.available_actable_modifiers_typed =
+          utils.ruleset.item.getActableModifiersTypedApplicable(this.item);
         context.weapon_associated_skills =
           this.actor?.getWeaponSkillList() ??
           foundry.utils.deepClone(
@@ -352,11 +354,11 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
   }
 
   static async _handleUsableActableModifier(_event, target) {
-    const { actableModifierId } = target.dataset;
+    const { actableModifierId, actableType } = target.dataset;
     if (target.checked) {
-      this.item.enableActableModifier(actableModifierId);
+      this.item.enableActableModifier(actableModifierId, actableType);
     } else {
-      this.item.disableActableModifier(actableModifierId);
+      this.item.disableActableModifier(actableModifierId, actableType);
     }
   }
 

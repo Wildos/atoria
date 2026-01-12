@@ -60,9 +60,9 @@ DEFAULT_VALUES["character"] = {
       weapon: [
         "brawl",
         "blade",
-        "polearm",
         "haft-slashing",
         "haft-bludgeonning-piercing",
+        "polearm",
         "shield",
         "shooting",
         "throw",

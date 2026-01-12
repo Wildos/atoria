@@ -40,6 +40,36 @@ export default class AtoriaItem extends Item {
         this.disableActableModifier(id);
       }
     }
+    if (this.system.usable_actable_modifiers_typed !== undefined) {
+      let invalid_ids = this.system.usable_actable_modifiers_typed.flatMap(
+        (data) => {
+          let usable_actable = this.actor.items.get(data.uuid);
+          return usable_actable !== undefined
+            ? []
+            : data?.uuid !== undefined
+              ? data.uuid
+              : data;
+        },
+      );
+      if (!invalid_ids.length == 0) {
+        this.system.usable_actable_modifiers_typed =
+          this.system.usable_actable_modifiers_typed.filter(
+            (data) => !invalid_ids.includes(data.uuid),
+          );
+      }
+    }
+  }
+
+  prepareEmbeddedDocuments() {
+    if (["armor", "weapon"].includes(this.type)) {
+      for (const collectionName of Object.keys(
+        this.constructor.hierarchy || {},
+      )) {
+        for (let e of this.getEmbeddedCollection(collectionName)) {
+          e.disabled = !this.system.is_worn;
+        }
+      }
+    }
   }
 
   getRollData() {
@@ -186,54 +216,131 @@ export default class AtoriaItem extends Item {
     if (!inventory_item_types.includes(this.type)) return 0.0;
     if (this.type === "kit")
       return this.system.encumbrance * this.system.quantity;
+    if (this.type === "armor")
+      return this.system.is_worn
+        ? this.system.worn_encumbrance
+        : this.system.encumbrance;
     return this.system.encumbrance;
   }
 
-  enableActableModifier(action_modifier_id) {
+  enableActableModifier(action_modifier_id, actable_type = undefined) {
     if (action_modifier_id === undefined) {
       console.warn(
         `Invalid action_modifier_id given for handling: '${action_modifier_id}'`,
       );
       return;
     }
-    const new_usable_actable_modifiers = foundry.utils.deepClone(
-      this.system.usable_actable_modifiers,
-    );
-    if (this.system.usable_actable_modifiers.includes(action_modifier_id)) {
-      console.warn(
-        `Addition error: action_modifier_id '${action_modifier_id}' already present in list of item ${this._id}`,
+    if (actable_type === undefined) {
+      const new_usable_actable_modifiers = foundry.utils.deepClone(
+        this.system.usable_actable_modifiers,
       );
-      return;
+      if (this.system.usable_actable_modifiers.includes(action_modifier_id)) {
+        console.warn(
+          `Addition error: action_modifier_id '${action_modifier_id}' already present in list of item ${this._id}`,
+        );
+        return;
+      }
+      new_usable_actable_modifiers.push(action_modifier_id);
+      this.update({
+        "system.usable_actable_modifiers": new_usable_actable_modifiers,
+      });
+    } else {
+      const new_usable_actable_modifiers_typed = foundry.utils.deepClone(
+        this.system.usable_actable_modifiers_typed,
+      );
+      let found_entry = new_usable_actable_modifiers_typed.find(
+        (element) => element.uuid == action_modifier_id,
+      );
+      if (found_entry === undefined) {
+        found_entry = {
+          uuid: action_modifier_id,
+          main: false,
+          throw: false,
+          focuser: false,
+        };
+        new_usable_actable_modifiers_typed.push(found_entry);
+      }
+      switch (actable_type) {
+        case "main":
+          found_entry.main = true;
+          break;
+        case "throw":
+          found_entry.throw = true;
+          break;
+        case "focuser":
+          found_entry.focuser = true;
+          break;
+        default:
+          console.error("Invalid type");
+          break;
+      }
+      this.update({
+        "system.usable_actable_modifiers_typed":
+          new_usable_actable_modifiers_typed,
+      });
     }
-    new_usable_actable_modifiers.push(action_modifier_id);
-    this.update({
-      "system.usable_actable_modifiers": new_usable_actable_modifiers,
-    });
   }
 
-  disableActableModifier(action_modifier_id) {
+  disableActableModifier(action_modifier_id, actable_type = undefined) {
     if (action_modifier_id === undefined) {
       console.warn(
         `Invalid action_modifier_id given for handling: '${action_modifier_id}'`,
       );
       return;
     }
-    const new_usable_actable_modifiers = foundry.utils.deepClone(
-      this.system.usable_actable_modifiers,
-    );
-    if (!this.system.usable_actable_modifiers.includes(action_modifier_id)) {
-      console.warn(
-        `Removal error: action_modifier_id '${action_modifier_id}' not present in list of item ${this._id}`,
+
+    if (actable_type === undefined) {
+      const new_usable_actable_modifiers = foundry.utils.deepClone(
+        this.system.usable_actable_modifiers,
       );
-      return;
+      if (!this.system.usable_actable_modifiers.includes(action_modifier_id)) {
+        console.warn(
+          `Removal error: action_modifier_id '${action_modifier_id}' not present in list of item ${this._id}`,
+        );
+        return;
+      }
+      new_usable_actable_modifiers.splice(
+        new_usable_actable_modifiers.indexOf(action_modifier_id),
+        1,
+      );
+      this.update({
+        "system.usable_actable_modifiers": new_usable_actable_modifiers,
+      });
+    } else {
+      const new_usable_actable_modifiers_typed = foundry.utils.deepClone(
+        this.system.usable_actable_modifiers_typed,
+      );
+      let found_entry = new_usable_actable_modifiers_typed.find(
+        (element) => element.uuid == action_modifier_id,
+      );
+      if (found_entry === undefined) {
+        found_entry = {
+          uuid: action_modifier_id,
+          main: false,
+          throw: false,
+          focuser: false,
+        };
+        new_usable_actable_modifiers_typed.push(found_entry);
+      }
+      switch (actable_type) {
+        case "main":
+          found_entry.main = false;
+          break;
+        case "throw":
+          found_entry.throw = false;
+          break;
+        case "focuser":
+          found_entry.focuser = false;
+          break;
+        default:
+          console.error("Invalid type");
+          break;
+      }
+      this.update({
+        "system.usable_actable_modifiers_typed":
+          new_usable_actable_modifiers_typed,
+      });
     }
-    new_usable_actable_modifiers.splice(
-      new_usable_actable_modifiers.indexOf(action_modifier_id),
-      1,
-    );
-    this.update({
-      "system.usable_actable_modifiers": new_usable_actable_modifiers,
-    });
   }
 
   getAvailableActableModifiers() {

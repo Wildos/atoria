@@ -425,9 +425,9 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           "system.skills.combative.weapon": [
             "brawl",
             "blade",
-            "polearm",
             "haft-slashing",
             "haft-bludgeonning-piercing",
+            "polearm",
             "shield",
             "shooting",
             "throw",

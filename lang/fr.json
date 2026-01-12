@@ -130,6 +130,9 @@
       "Actable": {
         "Usable_actable_modifiers": "Techniques ou Ajouts",
         "Actable_modifiers": "Techniques ou Ajouts",
+        "Actable_modifiers_main": "Techniques ou Ajouts sur jet primaire",
+        "Actable_modifiers_throw": "Techniques ou Ajouts sur jet",
+        "Actable_modifiers_focuser": "Techniques ou Ajouts sur focalisateur",
         "Actable_modifiers_types": "Type de modificateur d'action",
         "Rolls_asked": "Oppositions",
         "Roll_asked": "Opposition"
@@ -409,6 +412,7 @@
           "Feet": "Pieds",
           "Rings": "Anneau"
         },
+        "Worn_encumbrance": "Encombrement quand porté",
         "Type": {
           "Label": "Type d'armure",
           "Without": "Sans",
@@ -1108,7 +1112,7 @@
         "Direct": "Direct",
         "Direct_recap": "{type} direct",
         "Direct_type": "Direct Type",
-        "Versatile": "Polyvalent",
+        "Versatile": "Polyvalence",
         "Reach": "Allonge",
         "Throwable": "Jeté",
         "Recharge": "Recharge",
@@ -1214,6 +1218,9 @@
         "Direct+": "Une fois par combat, \"Attaquer\" avec X a coût Seconde -1.",
 
         "Preserve": "L'objet peut conserver une quantité maximale X d'une ressource qui s'accumule à hauteur de Y. Cette ressource ne peut être utilisée que pour une réussite d'un sort. 5 endurance sont considérés comme une seule quantité X."
+      },
+      "Keywords_effect": {
+        "Versatile": "Polyvalence: Dégât"
       },
       "Actable": {
         "Require_immobile": "Immobile",
