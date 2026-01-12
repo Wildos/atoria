@@ -6,10 +6,8 @@ import * as utils from "./utils/module.mjs";
 import RULESET from "./utils/ruleset.mjs";
 
 Hooks.once("init", function () {
-
   // Debug helpers
   CONFIG.debug_helpers = {};
-
 
   CONFIG.Actor.trackableAttributes = {
     character: {
@@ -92,6 +90,44 @@ Hooks.once("init", function () {
 
   CONFIG.ActiveEffect.legacyTransferral = false;
 
+  const danger_roll_func = function dangerResult(_modifier) {
+    // Sort active results in ascending (keep) or descending (drop) order
+    const values = this.results
+      .reduce((arr, r) => {
+        if (r.active) arr.push(r.result);
+        return arr;
+      }, [])
+      .sort((a, b) => {
+        let diff = Math.abs(b - 50) - Math.abs(a - 50);
+        if (diff === 0) {
+          return a - b;
+        } else {
+          return diff;
+        }
+      });
+
+    console.debug("dgr values: ", values);
+    let kept_value = values[0];
+
+    let discard_mode = false;
+    // First mark results on the wrong side of the cut as discarded
+    this.results.forEach((r) => {
+      if (!r.active) return; // Skip results which have already been discarded
+      if (discard_mode) {
+        // if kept value already passed, discard everything else
+        r.discarded = true;
+        r.active = false;
+      } else {
+        if (kept_value !== r.result) {
+          // if not kept value discard
+          r.discarded = true;
+          r.active = false;
+        } else discard_mode = true; // If reach kept value, go discard mode
+      }
+    });
+  };
+
+  foundry.dice.terms.Die.MODIFIERS["dgr"] = danger_roll_func;
   CONFIG.Dice.rolls.push(rolls.AtoriaDOSRoll);
 
   Actors.unregisterSheet("core", ActorSheet);

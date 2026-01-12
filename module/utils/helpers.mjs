@@ -254,6 +254,7 @@ export async function skillRollDialog(actor, skill_path) {
     disadvantage_amount: 0,
     luck_applied: 0,
     dos_mod: 0,
+    is_danger: false,
     used_features: [],
     used_keywords: [],
     roll_mode: "public",
@@ -286,6 +287,15 @@ export async function skillRollDialog(actor, skill_path) {
         formDataObject["roll_mode"] = utils.convertDesiredVisibilityToRollMode(
           formDataObject["asked_visibility"],
         );
+        console.debug("formDataObject: ", formDataObject);
+        console.debug(
+          "mergeObject: ",
+          foundry.utils.mergeObject(return_format, formDataObject, {
+            overwrite: true,
+            insertKeys: false,
+          }),
+        );
+
         return foundry.utils.mergeObject(return_format, formDataObject, {
           overwrite: true,
           insertKeys: false,

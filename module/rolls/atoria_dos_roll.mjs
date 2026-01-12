@@ -12,17 +12,23 @@ const defaultOptions = {
   disadvantage_amount: 0,
   luck_applied: 0,
   dos_mod: 0,
+  is_danger: false,
 };
 
 export default class AtoriaDOSRoll extends Roll {
   constructor(data = {}, options = {}) {
+    console.debug("base options :", options);
     options = foundry.utils.mergeObject(defaultOptions, options);
+    console.debug("merged options :", options);
     const adv_minus_disadv =
       (options.advantage_amount ?? 0) - (options.disadvantage_amount ?? 0);
-    const dice_keep_rule =
-      adv_minus_disadv === 0 ? "" : adv_minus_disadv > 0 ? "kl" : "kh";
+    let dice_keep_rule = "";
+    if (adv_minus_disadv !== 0) {
+      dice_keep_rule =
+        (adv_minus_disadv > 0 ? "kl" : "kh") + (options.is_danger ? "2" : "1");
+    }
     super(
-      `${Math.abs(adv_minus_disadv) + 1}d100${dice_keep_rule}`,
+      `${Math.abs(adv_minus_disadv) + 1 + (options.is_danger ? 1 : 0)}d100${dice_keep_rule}${options.is_danger ? "dgr" : ""}`,
       data,
       options,
     );
@@ -37,6 +43,7 @@ export default class AtoriaDOSRoll extends Roll {
     this._disadvantage_amount = options.disadvantage_amount;
     this._luck_applied = options.luck_applied;
     this._dos_mod = options.dos_mod;
+    this._is_danger = options.is_danger;
 
     this._owning_actor_id = options.owning_actor_id;
   }
@@ -95,6 +102,7 @@ export default class AtoriaDOSRoll extends Roll {
       roll._disadvantage_amount = data.disadvantage_amount;
       roll._luck_applied = data.luck_applied;
       roll._dos_mod = data.dos_mod;
+      roll._is_danger = data.is_danger;
 
       roll._owning_actor_id = data.owning_actor_id;
     }
@@ -119,6 +127,7 @@ export default class AtoriaDOSRoll extends Roll {
       disadvantage_amount: this._disadvantage_amount,
       luck_applied: this._luck_applied,
       dos_mod: this._dos_mod,
+      is_danger: this._is_danger,
       owning_actor_id: this._owning_actor_id,
     };
   }
@@ -183,6 +192,7 @@ export default class AtoriaDOSRoll extends Roll {
       is_success: isPrivate ? "" : this.is_success,
       is_critical: isPrivate ? "" : this.is_critical,
       adv_disadv: isPrivate ? "" : adv_disadv_string,
+      is_danger: isPrivate ? "" : this._is_danger,
       luck_applied: isPrivate ? "" : this._luck_applied,
       dos_mod: isPrivate ? "" : this._dos_mod,
       owner_or_gm:

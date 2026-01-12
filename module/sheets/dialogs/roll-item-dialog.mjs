@@ -254,6 +254,7 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
         disadvantage_amount: form_values.disadvantage_amount,
         luck_applied: luck_applied,
         dos_mod: form_values.dos_mod,
+        is_danger: form_values.is_danger,
       };
 
       if (this.item.type === "weapon") {

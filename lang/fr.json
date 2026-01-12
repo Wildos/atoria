@@ -318,7 +318,8 @@
         "Critical_failure": "Échec critique",
         "Success": "Réussite",
         "Critical_success": "Réussite critique",
-        "Dos": "DR"
+        "Dos": "DR",
+        "Is_Danger": "Danger"
       },
       "Skill": {
         "Used_features": "Aptitudes",
@@ -345,6 +346,7 @@
         "Disadvantage_amount": "Désavantage",
         "Luck_applied": "Chance",
         "DoS_mod": "DR",
+        "Is_danger": "Danger",
         "Roll_visibility": {
           "Label": "Visibilité du jet",
           "Self": "Personnel",

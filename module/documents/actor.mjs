@@ -280,6 +280,7 @@ export default class AtoriaActor extends Actor {
       disadvantage_amount,
       luck_applied,
       dos_mod,
+      is_danger,
     } = roll_config_altered;
 
     const skill_title = this.getSkillTitle(skill_path);
@@ -295,6 +296,7 @@ export default class AtoriaActor extends Actor {
       disadvantage_amount,
       luck_applied,
       dos_mod,
+      is_danger,
     });
     await roll.evaluate();
 
