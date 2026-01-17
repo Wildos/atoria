@@ -1268,119 +1268,119 @@
       "Status_effect": {
         "Preparing": {
           "Label": "Préparation",
-          "Description": "Le sort demande de préparer sa magie. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir le sort."
+          "Description": "Le sort demande de préparer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort.</br>Incompatible avec “Évocation” et “Préparation”."
         },
         "Evocation": {
           "Label": "Évocation",
-          "Description": "Le sort demande de continuer à évoquer sa magie. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir le sort."
+          "Description": "Le sort demande de continuer à évoquer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort."
         },
         "Channelling": {
           "Label": "Canalisation",
-          "Description": "Le sort demande de continuer à canaliser sa magie. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir le sort."
+          "Description": "Le sort demande de continuer à canaliser sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort."
         },
         "Concentration": {
           "Label": "Concentration",
-          "Description": "L'action demande un certain temps de concentration. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir l'action."
+          "Description": "L'action demande un temps de concentration. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir l'action.</br>Incompatible avec “Évocation” et “Préparation”."
         },
         "Unconscious": {
           "Label": "Inconscient",
-          "Description": "Un personnage affecté ne peut rien faire et n'a pas conscience de ce qui l'entoure."
+          "Description": "Ne peut rien faire et ignore son environnement."
         },
         "Bleeding": {
           "Label": "Saignement",
-          "Description": "Un personnage affecté a Santé -1 / round.\nLorsque \"Saignement\" est appliqué à un personnage affecté par \"Saignement\", il subit Santé -1."
+          "Description": "Santé -1 / round.</br>Application supplémentaire : Santé -1"
         },
         "Brutal": {
           "Label": "Brutal",
-          "Description": "Vous avez Dégât Arme +1 lors de votre prochaine instance de Dégât."
+          "Description": "Dégât Arme +1 lors de la prochaine instance de Dégât.</br>Perdu si paré ou lors de la \"Préparation\" d'un sort.</br>1 fois par tour"
         },
         "Slowed": {
           "Label": "Ralenti",
-          "Description": "Un personnage affecté a coût Mouvement +1 pour se déplacer."
+          "Description": "Coûts en mouvement : Coût Mouvement +1"
         },
         "Prone": {
           "Label": "Renversé",
-          "Description": "Un personnage affecté a un “Léger couvert” et l'attaquer au corps à corps donne l'avantage."
+          "Description": "Applique un Léger couvert. Attaquant au corps à corps : Avantage"
         },
         "Immobilised": {
           "Label": "Immobilisé",
-          "Description": "Un personnage affecté ne peut pas utiliser de Mouvement. Il a le désavantage pour esquiver."
+          "Description": "Ne peut pas utiliser de Mouvement. Désavantage pour Esquiver."
         },
         "Disability": {
           "Label": "Incapacité",
-          "Description": "Un personnage affecté ne peut rien faire à part utiliser un sort sans composantes verbales et somatiques."
+          "Description": "Ne peut rien faire hors utiliser un sort sans composantes verbales et somatiques.</br>Supplante \"Immobilisé\""
         },
         "Moist": {
           "Label": "Humide",
-          "Description": "Résistance foudre -1 feu +1. Dissipe \"Enflammé\". Les zones appliquant l'état dissipe les cases vides ardentes."
+          "Description": "Résistance foudre -1 feu +1. S'annule avec \"Enflammé\".</br>Zones appliquant l'état dissipe les cases vides ardentes."
         },
         "Frostbite": {
           "Label": "Gelure",
-          "Description": "Un personnage affecté subit Dégât froid 1 / round. L'état dure +1 round si la cible est \"Humide\"."
+          "Description": "Applique \"Engourdi\" 1 tour et se dissipe lorsque Dégât froid subi."
         },
         "Burning": {
           "Label": "Enflammé",
-          "Description": "Dégât feu 1 / round. Dissipe l'état \"Humide\". Les zones appliquant l'état dissipe les cases gelées."
+          "Description": "Dégât feu 1 / round. S'annule avec \"Humide\". Dissipe \"Gelure\".</br>Zones appliquant l'état dissipent les cases gelées.</br>Seconde application : Effet+"
         },
         "Burning+": {
           "Label": "Enflammé+",
-          "Description": "Dégât feu 2 / round. Dissipe l'état \"Humide\" et \"Gelure\". Les zones appliquant l'état dissipe les cases gelées."
+          "Description": "Dégât feu 2 / round. S'annule avec \"Humide\". Dissipe \"Gelure\".</br>Zones appliquant l'état dissipent les cases gelées."
         },
         "Radiate": {
           "Label": "Irradié",
-          "Description": "Une cible affectée éclaire clairement sur 1m et l'attaquer au corps à corps donne DR +1. "
+          "Description": "Éclaire clairement sur 1m. Attaquant au corps à corps : DR +1."
         },
         "Conductive": {
           "Label": "Conducteur",
-          "Description": "Lorsqu'un sort Foudre cible Autrui affecté ou un objet affecté, il a Supp. coût Mana -1.\nLorsqu'un sort Foudre cible un objet affecté, le porteur n'est pas affecté par le sort."
+          "Description": "Sorts Foudre ciblant : Supp. coût Mana -1."
         },
         "Dazed": {
           "Label": "Hébété",
-          "Description": "Un personnage affecté joue son tour en dernier lors du round suivant."
+          "Description": "/!\\ Retiré, voir règles Atoria /!\\"
         },
         "Shocked": {
           "Label": "Choqué",
-          "Description": "Un personnage affecté a DR -1 à tous les jets."
+          "Description": "DR -1 à tous les jets."
         },
         "Stunned": {
           "Label": "Étourdi",
-          "Description": "Un personnage affecté ne peut rien faire et n'a pas conscience de ce qui l'entoure puis il a l’avantage pour résister à l'état jusqu'à son tour."
+          "Description": "Ne peut rien faire et ignore son environnement.</br>Avantage pour résister à l'état 1 tour."
         },
         "Banished": {
           "Label": "Banni",
-          "Description": "Le personnage disparaît, il ne peut pas être ciblé, prendre d'opportunité et passe son tour. Lorsqu'il perd \"Banni\", si un personnage se trouve sur la case, il réapparait sur une case adjacente à l'appréciation du MJ."
+          "Description": "Disparaît et ne peut rien faire.</br>Lorsque \"Banni\" est perdu, si un personnage se trouve sur la case, réapparait sur une case adjacente, à l'appréciation du MJ."
         },
         "Drunk": {
           "Label": "Ébriété",
-          "Description": "Un personnage affecté a DR -1 à tous les jets. L’état se dissipe après une sommeil. À l'appréciation du MJ, il faut faire un Robustesse - Ténacité pour ne pas recevoir l’état “Gueule de bois”."
+          "Description": "DR -1 à tous les jets.</br>Se dissipe après Sommeil. À l'appréciation du MJ, Robustesse - Ténacité pour ignorer l’état “Gueule de bois”. "
         },
         "Hangover": {
           "Label": "Gueule de bois",
-          "Description": "Un personnage affecté a DR -1 aux compétences combatives et aux perceptions. L’état se dissipe après une phase de repos ou une phase de sommeil si l’état \"Ébriété\" était cumulé."
+          "Description": "DR -1 aux compétences combatives et aux perceptions.</br>Se dissipe après Repos."
         },
         "Tired": {
           "Label": "Fatigué",
-          "Description": "Un personnage affecté a DR -1 aux compétences combatives, physiques et aux connaissances. (Toujours appliqué Endurance < 25)"
+          "Description": "DR -1 aux compétences combatives, physiques et aux connaissances.</br>S'applique à Endurance < 25"
         },
         "Hungry": {
           "Label": "Affamé",
-          "Description": "Un personnage affecté a DR -1 aux compétences physiques et combatives."
+          "Description": "DR -1 aux compétences physiques et combatives. Peut se cumuler avec \"Déshydraté\"."
         },
         "Dehydrated": {
           "Label": "Déshydraté",
-          "Description": "Un personnage affecté a DR -1 aux compétences physiques et combatives."
+          "Description": "DR -1 aux compétences physiques et combatives. Peut se cumuler avec \"Affamé\"."
         },
         "Rested": {
           "Label": "Reposé",
-          "Description": "Un personnage affecté a Initiative +1."
+          "Description": "Donne Initiative +1."
         },
         "Deaf": {
           "Label": "Surdité",
-          "Description": "Un personnage affecté n'entend plus rien."
+          "Description": "N'entend plus rien."
         },
         "Silenced": {
           "Label": "Silence",
-          "Description": "Un personnage affecté ne peut plus émettre de son avec sa voix. Elle ne peut pas utiliser de sort à composante verbale."
+          "Description": "Ne peut pas émettre de son avec la voix et ne peut pas utiliser de sort à composante verbale."
         },
         "Numb": {
           "Label": "Engourdi",
@@ -1388,35 +1388,35 @@
         },
         "Numb+": {
           "Label": "Engourdi+",
-          "Description": "Désavantage attaque lorsqu'une main ou plus est nécessaire."
+          "Description": "Désavantage Attaque lorsqu'une main ou plus est nécessaire."
         },
         "Blindness": {
           "Label": "Cécité",
-          "Description": "Un personnage affecté ne voit plus. Il est considéré dans l'obscurité."
+          "Description": "Ne voit plus. Est considéré dans l'obscurité."
         },
         "Invisible": {
           "Label": "Invisible",
-          "Description": "Un personnage affecté ne peut pas être perçu et ciblé. Un personnage qui attaque un personnage invisible a le désavantage."
+          "Description": "Ne peut pas être perçu et ciblé.</br>Attaquer un personnage invisible applique le désavantage."
         },
         "Incurable": {
           "Label": "Incurable",
-          "Description": "Un personnage affecté ne peut pas avoir de soin de Santé."
+          "Description": "Ne peut obtenir de Soin ou de Médication."
         },
         "Incurable+": {
           "Label": "Incurable+",
-          "Description": "Un personnage affecté ne peut pas regagner de Santé."
+          "Description": "Ne peut obtenir de Regain de Santé."
         },
         "Afraid": {
           "Label": "Effrayé",
-          "Description": "Un personnage affecté ne peut pas approcher l'émetteur et a le désavantage pour l'attaquer."
+          "Description": "Ne peut pas approcher l'émetteur et désavantage pour l'attaquer."
         },
         "Panic": {
           "Label": "Paniqué",
-          "Description": "Un personnage affecté doit fuir le plus loin possible de l'émetteur."
+          "Description": "Doit fuir le plus loin possible de l'émetteur.</br>Supplante “Effrayé”"
         },
         "Terrified": {
           "Label": "Terrifié",
-          "Description": "Un personnage affecté ne peut plus se déplacer ou attaquer. Il a le désavantage aux esquives et aux parades."
+          "Description": "Ne peut plus se déplacer ou attaquer. Désavantage aux esquives et aux parades.</br>Supplante \"Effrayé\" et “Paniqué”"
         },
         "Dead": {
           "Label": "Mort",
@@ -1424,31 +1424,31 @@
         },
         "Seduced": {
           "Label": "Séduit",
-          "Description": "Un personnage affecté a le désavantage contre l'émetteur."
+          "Description": "Désavantage contre l'émetteur."
         },
         "Charmed": {
           "Label": "Charmé",
-          "Description": "Un personnage affecté considère l'émetteur comme son ami proche, il ne peut pas entreprendre d’action néfaste contre lui et il l'aide de son mieux."
+          "Description": "Considère l'émetteur comme son ami proche, ne peut pas entreprendre d’action néfaste contre lui et l'aide de son mieux.</br>Supplante “Séduit” avec le même émetteur."
         },
         "Captivated": {
           "Label": "Subjugué",
-          "Description": "Un personnage affecté obéit à l'émetteur. Il fait ce qu'il lui demande si cela ne comprend pas de se blesser."
+          "Description": "Obéit à l'émetteur tant que cela ne comprend pas de se blesser.</br>Supplante “Séduit” ou \"Charmé\" avec le même émetteur."
         },
         "Control": {
           "Label": "Contrôlé",
-          "Description": "Un personnage affecté obéit à l'émetteur. Il fait ce qu'il lui demande si cela ne comprend pas le suicide."
+          "Description": "Sous contrôle de l'émetteur tant que cela ne comprend pas le suicide."
         },
         "Enraged": {
           "Label": "Enragé",
-          "Description": "Un personnage affecté attaque la cible la plus proche dans sa ligne de vue ou dont il a connaissance à proximité."
+          "Description": "Doit attaquer la cible connue la plus proche.</br>Immunise à la \"Peur\" et au \"Charme\"."
         },
         "Provoked": {
           "Label": "Provoqué",
-          "Description": "Un personnage affecté a DR -1 tant qu'il ne suit pas la provocation."
+          "Description": "DR -1 si la provocation n'est pas suivie."
         },
         "Provoked+": {
           "Label": "Provoqué+",
-          "Description": "Un personnage affecté a le désavantage tant qu'il ne suit pas la provocation."
+          "Description": "Désavantage si la provocation n'est pas suivie."
         }
       }
     }
