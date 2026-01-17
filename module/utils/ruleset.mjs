@@ -2,6 +2,8 @@ import { itemRollDialog } from "./helpers.mjs";
 import { default as default_values } from "./default-values.mjs";
 import { buildLocalizeString } from "../utils/atoria-lang.mjs";
 
+import { defineAlteration } from "../models/helpers.mjs";
+
 const RULESET = {};
 
 RULESET["general"] = class GeneralRuleset {
@@ -151,6 +153,7 @@ RULESET["character"] = class ActorRuleset {
       "system.skills.combative.reflex.parry",
       "system.skills.combative.reflex.opportuneness",
       "system.skills.physical.sturdiness.tenacity",
+      "system.skills.physical.sturdiness.force",
       "system.skills.physical.agility.balance",
       "system.skills.social.analyse.investigation",
       "system.skills.social.charisma.presence",
@@ -267,6 +270,7 @@ RULESET["character"] = class ActorRuleset {
             adv_amount: 0,
             disadv_amount: 0,
           },
+          systemFields: defineAlteration(),
         });
       }
       return skill_associated_keywords_data;
@@ -282,6 +286,7 @@ RULESET["character"] = class ActorRuleset {
         label: RULESET.keywords.get_localized_name(keyword, keyword_amount),
         description: RULESET.keywords.get_description(keyword, keyword_amount),
         alteration: alteration,
+        systemFields: defineAlteration(),
       });
     };
     const actor_active_keywords_data = this.getActiveKeywordsData(actor);
@@ -307,6 +312,7 @@ RULESET["character"] = class ActorRuleset {
           adv_amount: 0,
           disadv_amount: 0,
         },
+        systemFields: defineAlteration(),
       });
     }
 
@@ -435,7 +441,6 @@ RULESET["item"] = class ItemRuleset {
     let actable_mod_list = this.getActableModifiersApplicable(item);
 
     return actable_mod_list.map((actable_mod) => {
-      console.debug("actable_mod", actable_mod);
       let found_item = foundry.utils.deepClone(
         item.system.usable_actable_modifiers_typed.find(
           (data) => data.uuid === actable_mod._id,
@@ -576,8 +581,9 @@ RULESET["keywords"] = {
   },
   max_amount: {
     two_handed: 2,
-    reach: 3,
+    reach: 2,
     brute: 2,
+    deployable: 1,
     equip: 1,
     fluxian: 1,
     smash: 3,
@@ -607,11 +613,12 @@ RULESET["keywords"] = {
   },
   weapon_linked: [
     "two_handed",
+    "deployable",
+    "equip",
     "reach",
     "smash",
     "throwable",
     "heavy",
-    "penetrating",
     "versatile",
     "quick",
     "recharge",

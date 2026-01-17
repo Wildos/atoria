@@ -106,7 +106,6 @@ Hooks.once("init", function () {
         }
       });
 
-    console.debug("dgr values: ", values);
     let kept_value = values[0];
 
     let discard_mode = false;
@@ -217,4 +216,40 @@ Hooks.once("ready", function () {
 // Activate chat listeners
 Hooks.on("renderChatLog", (log, html, data) => {
   documents.AtoriaChatMessage.chatListeners(html);
+});
+
+/**
+ * Adds a datalist helper for suggesting valid Actor attribute keys in the ActiveEffect config dialog.
+ */
+Hooks.on("renderActiveEffectConfig", (activeEffectConfig, html, data) => {
+  const effectsSection = html[0].querySelector("section[data-tab='effects']");
+  if (!effectsSection) return;
+  const datalist = document.createElement("datalist");
+  datalist.id = "attribute-key-list";
+  const inputFields = effectsSection.querySelectorAll(".key input");
+  inputFields.forEach((input) => input.setAttribute("list", datalist.id));
+  const attributeKeys = [];
+
+  let parent_document = activeEffectConfig.object?.parent;
+  let parent_character = data.isActorEffect
+    ? parent_document
+    : parent_document.actor;
+  let parent_systemfields = parent_character
+    ? parent_character.get_effect_fields()
+    : {};
+  for (const model of Object.keys(parent_systemfields)) {
+    attributeKeys.push({
+      key: model,
+      label: game.i18n.localize(parent_systemfields[model]),
+    });
+  }
+  attributeKeys
+    .sort((a, b) => a.key.localeCompare(b.key))
+    .forEach(({ key, label }) => {
+      const option = document.createElement("option");
+      option.value = key;
+      if (label) option.label = label;
+      datalist.appendChild(option);
+    });
+  effectsSection.appendChild(datalist);
 });

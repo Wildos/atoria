@@ -1094,6 +1094,7 @@
         "PreserveStamina": "Vigeur préservé",
         "PreserveEndurance": "Endurance préservé",
         "PreserveSanity": "Sanité préservé",
+        "Deployable": "Déployable",
         "Equip": "Équipé",
         "Two_handed": "2 mains",
         "Light": "Léger",
@@ -1128,98 +1129,99 @@
       },
       "Keywords_description": {
         "Label": "Description du Mot-clef",
-        "Two_handed": "L'action \"Attaquer\" a coût Seconde +1.</br>L'arme nécessite les deux mains pour être utilisée.</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"Allonge\")",
-        "Two_handed+": "L'arme nécessite les deux mains pour être utilisée.</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"Allonge\")",
+        "Two_handed": "<i>Attaquer</i> : coût Seconde +1.</br>Nécessite deux mains pour <i>Attaquer</i>.</br>Technique - Coup large : Jusqu'à Cible +1. (Non-cumulable avec <b>Allonge</b>)",
+        "Two_handed+": "Nécessite deux mains pour <i>Attaquer</i>.</br>Technique - Coup large : Jusqu'à Cible +1. (Non-cumulable avec <b>Allonge</b>)",
 
-        "Reach": "Donne \"Opportunité d'allonge\".</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")",
-        "Reach+": "Donne \"Opportunité d'allonge\".</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")</br>Une fois par combat, \"Opportunité d'allonge\" peut être utilisée sans Réflexe - Opportunité.",
-        "Reach++": "Donne \"Opportunité d'allonge\".</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")</br>Une fois par combat, \"Opportunité d'allonge\" peut être utilisée sans Réflexe - Opportunité.</br>Une fois par combat, \"Opportunité d'allonge\" peut être utilisée même avec 1 ennemi adjacent.",
+        "Reach": "Vous avez l'opportunité <i>Allonge</i>.</br>Technique - Coup large : Jusqu'à Cible +1. (Non-cumulable avec <b>2 mains</b>)",
+        "Reach+": "Vous avez l'opportunité <i>Allonge</i>.</br>Technique - Coup large : Jusqu'à Cible +1. (Non-cumulable avec <b>2 mains</b>)</br>1 / Combat : <i>Allonge</i> peut être utilisée sans Réflexe - Opportunité.",
 
-        "Brute": "Lorsque vous infligez Dégât Arme minimum +1, vous avez l'état \"Brutal\".",
-        "Brute+": "Lorsque vous infligez Dégât Arme minimum +1, vous avez l'état \"Brutal\".</br>Une fois par combat, lorsque vous perdez l'état \"Brutal\", vous gardez l'état \"Brutal\".",
+        "Brute": "Lorsque vous infligez Dégât Arme > Minimum, vous avez \"Brutal\".",
+        "Brute+": "Lorsque vous infligez Dégât Arme > Minimum, vous avez \"Brutal\".</br>1 / combat, lorsque vous perdez l'état \"Brutal\", vous gardez l'état \"Brutal\".",
 
-        "Equip": "L'objet n'a pas besoin d'être degainée ou sortie du sac.",
+        "Deployable": "Peut être <i>Déployer</i>.",
+
+        "Equip": "Est considéré dégainé.",
 
         "Fluxian": "Les dégâts varient en fonction des écoles de magie utilisée par le personnage et une école peut donner accès à plusieurs types de dégâts",
 
-        "Smash": "L'attaque applique DR Réflexe - Parade -1.",
-        "Smash+": "L'attaque applique DR Réflexe - Parade -1.</br>La cible ne peut parer qu'avec un bouclier.",
-        "Smash++": "L'attaque applique Désavantage Réflexe - Parade et ne peut être parer qu'avec un bouclier.",
+        "Smash": "Applique DR Réflexe - Parade -1.",
+        "Smash+": "Applique DR Réflexe - Parade -1.</br>Parable uniquement avec un bouclier.",
+        "Smash++": "Applique Désavantage Réflexe - Parade.</br>Parable uniquement avec un bouclier.",
 
-        "Guard": "DR Réflexe - Parade +1 contre les attaques au corps à corps.",
-        "Guard+": "DR Réflexe - Parade +1 contre les attaques au corps à corps.</br>Une fois par combat, lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
+        "Guard": "DR Réflexe - Parade +1 au contact.",
+        "Guard+": "DR Réflexe - Parade +1 au contact.</br>1 / Combat : Lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
 
         "Throwable": "DR Jet +1, Portée effective +1m et Portée maximale +3m.",
         "Throwable+": "DR Jet +2, Portée effective +1m et Portée maximale +3m.",
 
-        "Light": "Peut être portée en main secondaire.",
+        "Light": "Peut être utilisé en main secondaire.",
 
-        "Heavy": "L'action \"Dégainer\" a coût Seconde +1",
-        "Heavy+": "L'action \"Dégainer\" a coût Seconde +2",
+        "Heavy": "<i>Dégainer</i> : Coût Seconde +1",
+        "Heavy+": "<i>Dégainer</i> : Coût Seconde +2",
 
         "Penetrating": "Pénétration +1",
-        "Penetrating+": "Pénétration +1</br>Une fois par combat, ignore l'armure et la résistance.",
+        "Penetrating+": "Pénétration +1</br>1 / Sommeil : Ignore l'armure et la résistance.",
 
-        "Versatile": "L'arme peut être prise à 2 mains pour Dégât Arme +1.",
+        "Versatile": "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
 
-        "Protect": "Une fois par sommeil, donne une parade supplémentaire hors limite.",
-        "Protect+": "Une fois par combat, donne une parade supplémentaire hors limite.",
+        "Protect": "1 / Sommeil : 1 Parade hors limite.",
+        "Protect+": "1 / Combat : 1 Parade hors limite.",
 
-        "Protection": "DR Réflexe - Parade +1 contre les attaques à distance.",
-        "Protection+": "DR Réflexe - Parade +1 contre les attaques à distance.</br> 1 / Combat : Lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
+        "Protection": "DR Réflexe - Parade +1 à distance.",
+        "Protection+": "DR Réflexe - Parade +1 à distance.</br>1 / Combat : Lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
 
-        "Quick": "L'action \"Dégainer\" a coût Seconde -1 sur cette arme.",
-        "Quick+": "L'action \"Dégainer\" a coût Seconde -2 sur cette arme.",
+        "Quick": "<i>Dégainer</i> : Coût Seconde -1",
+        "Quick+": "<i>Dégainer</i> : Coût Seconde -2",
 
-        "Recharge": "Nécessite l'action \"Recharger\" avant de pouvoir attaquer.",
+        "Recharge": "Nécessite <i>Recharger</i> après chaque attaque.",
 
-        "Somatic": "La ou les mains qui tiennent l'objet sont considérées comme libres quant il s'agit de Composantes - Somatiques.",
+        "Somatic": "Les mains sur l'objet sont considérées comme libres pour les Composantes - Somatiques.",
 
-        "Reserve": "Le focalisateur peut contenir un maximum de X mana. Lors d'un repos, vous pouvez dépenser du mana pour le remplir.",
+        "Reserve": "Peut contenir jusqu'à X mana. Lors d'un repos, vous pouvez dépenser du mana pour le remplir.",
 
-        "Sly": "En cas de surprise, augmente le % de dégâts supplémentaire, ignore l'armure et applique \"Saignement\".",
+        "Sly": "Surprise : Dégât maximum +xX ,ignore l'armure et applique \"Saignement\".",
 
-        "Gruff": "Une fois par lune longue, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
-        "Gruff+": "Une fois par lune courte, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
-        "Gruff++": "Une fois par sommeil, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
-        "Gruff+++": "Une fois par combat, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff": "1 / Lune longue : <i>Bousculer</i> : DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff+": "1 / Lune courte : <i>Bousculer</i> : DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff++": "1 / Sommeil : <i>Bousculer</i> : DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff+++": "1 / Combat : <i>Bousculer</i> : DR Robustesse - Force +1 et coût Vigueur -1.",
 
-        "Noisy": "DR Discrétion - Silence / Furtivité -1 lorsque le personnage se déplace.",
-        "Noisy+": "Désavantage Discrétion - Silence / Furtivité lorsque le personnage se déplace.",
-        "Noisy++": "Désavantage et DR Discrétion - Silence / Furtivité -1 lorsque le personnage se déplace.",
+        "Noisy": "DR Discrétion - Silence / Furtivité -1 en déplacement.",
+        "Noisy+": "Désavantage Discrétion - Silence / Furtivité en déplacement.",
+        "Noisy++": "Désavantage DR Discrétion - Silence / Furtivité -1 en déplacement.",
 
-        "Tough": "Une fois par lune longue, ignore \"Saignement\".",
-        "Tough+": "Une fois par lune courte, ignore \"Saignement\".",
-        "Tough++": "Une fois par sommeil, ignore \"Saignement\".",
-        "Tough+++": "Une fois par combat, ignore \"Saignement\".",
+        "Tough": "1 / Lune longue: Ignore \"Saignement\".",
+        "Tough+": "1 / Lune courte: Ignore \"Saignement\".",
+        "Tough++": "1 / Sommeil: Ignore \"Saignement\".",
+        "Tough+++": "1 / Combat: Ignore \"Saignement\".",
 
         "Obstruct": "Initiative -1.",
         "Obstruct+": "Initiative -1D2.",
 
-        "Grip": "Une fois par lune longue, vous avez DR Arme +1. (Hors pugilat)",
-        "Grip+": "Une fois par lune courte, vous avez DR Arme +1. (Hors pugilat)",
-        "Grip++": "Une fois par sommeil, vous avez DR Arme +1. (Hors pugilat)",
-        "Grip+++": "Une fois par combat, vous avez DR Arme +1. (Hors pugilat)",
+        "Grip": "1 / Lune longue: Vous avez DR Arme +1. (Hors pugilat)",
+        "Grip+": "1 / Lune courte: Vous avez DR Arme +1. (Hors pugilat)",
+        "Grip++": "1 / Sommeil: Vous avez DR Arme +1. (Hors pugilat)",
+        "Grip+++": "1 / Combat: Vous avez DR Arme +1. (Hors pugilat)",
 
-        "Resistant": "Une fois par lune longue, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
-        "Resistant+": "Une fois par lune courte, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
-        "Resistant++": "Une fois par sommeil, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
-        "Resistant+++": "Une fois par combat, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant": "1 / Lune longue: Se voir infliger Dégât > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant+": "1 / Lune courte: Se voir infliger Dégât > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant++": "1 / Sommeil: Se voir infliger Dégât > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant+++": "1 / Combat: Se voir infliger Dégât > 6 donne Résistance +1 contre l'attaque.",
 
-        "Sturdy": "Une fois par lune longue, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
-        "Sturdy+": "Une fois par lune courte, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
-        "Sturdy++": "Une fois par sommeil, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
-        "Sturdy+++": "Une fois par combat, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy": "1 / Lune longue: Se voir infliger Dégât > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy+": "1 / Lune courte: Se voir infliger Dégât > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy++": "1 / Sommeil: Se voir infliger Dégât > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy+++": "1 / Combat: Se voir infliger Dégât > 6 donne Armure +1 contre l'attaque.",
 
-        "Stable": "Une fois par lune longue, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
-        "Stable+": "Une fois par lune courte, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
-        "Stable++": "Une fois par sommeil, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
-        "Stable+++": "Une fois par combat, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
+        "Stable": "1 / Lune longue: Lors d'un déplacement forcé, vous avez DR Robustesse - Ténacité +1.",
+        "Stable+": "1 / Lune courte: Lors d'un déplacement forcé, vous avez DR Robustesse - Ténacité +1.",
+        "Stable++": "1 / Sommeil: Lors d'un déplacement forcé, vous avez DR Robustesse - Ténacité +1.",
+        "Stable+++": "1 / Combat: Lors d'un déplacement forcé, vous avez DR Robustesse - Ténacité +1.",
 
-        "Direct": "Une fois par sommeil, \"Attaquer\" avec X a coût Seconde -1.",
-        "Direct+": "Une fois par combat, \"Attaquer\" avec X a coût Seconde -1.",
+        "Direct": "1 / Sommeil : Attaquer avec X : Coût Seconde -1.",
+        "Direct+": "1 / Combat : Attaquer avec X : Coût Seconde -1.",
 
-        "Preserve": "L'objet peut conserver une quantité maximale X d'une ressource qui s'accumule à hauteur de Y. Cette ressource ne peut être utilisée que pour une réussite d'un sort. 5 endurance sont considérés comme une seule quantité X."
+        "Preserve": "Peut contenir jusqu'à X d'une ressource qui augmente de Y. </br>Peut être utilisée pour payer le coût d'une réussite de sort. </br>5 endurance sont considérés comme une seule quantité X."
       },
       "Keywords_effect": {
         "Versatile": "Polyvalence: Dégât"
@@ -1232,7 +1234,7 @@
         "Material": "Matériel",
         "Duration": "Durée",
         "Range": "Portée",
-        "Target": "Cible",
+        "Target": "Ciblage",
         "Area": "Zone",
         "Restriction": "Restriction"
       },

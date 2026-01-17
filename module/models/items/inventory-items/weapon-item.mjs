@@ -126,10 +126,6 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
       old_usable_actable_modifiers.length > 0 &&
       typeof old_usable_actable_modifiers[0] == "string"
     ) {
-      console.debug("MIGRATE !!!", old_usable_actable_modifiers);
-      if (old_usable_actable_modifiers[0] === "R68SIWLsjgkCbWca") {
-        console.debug("BATON DE JOIE");
-      }
       source.usable_actable_modifiers_typed = [];
       for (let uuid of old_usable_actable_modifiers) {
         source.usable_actable_modifiers_typed.push({
@@ -141,7 +137,6 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
       }
       source.usable_actable_modifiers = [];
       delete source.usable_actable_modifiers;
-      console.debug("Migrated: ", source);
     }
     return super.migrateData(source);
   }

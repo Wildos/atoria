@@ -26,7 +26,8 @@ export default class AtoriaItem extends Item {
           CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["supplementary"],
           {
             supplementary: supp,
-            systemFields: this.system.schema.fields.supplementaries_list.fields,
+            systemFields:
+              this.system.schema.fields.supplementaries_list.element.fields,
           },
         );
       }
@@ -419,6 +420,9 @@ export default class AtoriaItem extends Item {
       "action",
       "opportunity",
       "spell",
+      "kit",
+      "armor",
+      "weapon",
     ];
     if (!item_with_time_limitation.includes(this.type)) return [];
     let changelog_messages = [];

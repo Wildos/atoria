@@ -513,6 +513,7 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
             let sub_context = {
               group: available_skill.group,
               tab: available_skill.id,
+              path: available_skill.path,
             };
 
             sub_context.available_supplementaries =

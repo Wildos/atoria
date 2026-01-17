@@ -51,6 +51,7 @@ export const preloadHandlebarsTemplates = async function () {
     "rollfield-input.hbs",
     "rollfield-display.hbs",
     "textarea-input.hbs",
+    "alteration-display.hbs",
   ];
   const v2_actors_partials = [
     "effect-line-display.hbs",

@@ -384,12 +384,11 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         for (const i of context.items) {
           switch (i.type) {
             case "weapon":
-              // if (i.system.is_worn)
-              equipped_items.weapons.push(i);
-              // else
-              //   inventory_items[
-              //     i.getFlag("atoria", "inventory-category") ?? "other"
-              //   ].items.push(i);
+              if (i.system.is_worn) equipped_items.weapons.push(i);
+              else
+                inventory_items[
+                  i.getFlag("atoria", "inventory-category") ?? "other"
+                ].items.push(i);
               break;
             case "armor":
               if (i.system.is_worn)
@@ -429,8 +428,8 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "haft-bludgeonning-piercing",
             "polearm",
             "shield",
-            "shooting",
             "throw",
+            "shooting",
             "focuser",
             "instrument",
           ],

@@ -27,6 +27,13 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
         max: utils.ruleset.keywords.max_amount.brute,
         label: "ATORIA.Ruleset.Keywords.Brute",
       }),
+      deployable: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+        max: utils.ruleset.keywords.max_amount.deployable,
+        label: "ATORIA.Ruleset.Keywords.Deployable",
+      }),
       equip: new fields.NumberField({
         required: true,
         initial: 0,

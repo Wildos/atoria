@@ -67,125 +67,169 @@ export function isSkill(data) {
   return skill_field.validate(data) === undefined;
 }
 
-export function armorField() {
+export function armorField(parent = undefined) {
   return new foundry.data.fields.SchemaField(
     {
-      main: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Armor.Main",
-      }),
-      bludgeoning: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Armor.Bludgeoning",
-      }),
-      piercing: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Armor.Piercing",
-      }),
-      slashing: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Armor.Slashing",
-      }),
+      main: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Armor.Main",
+        },
+        { name: "main" },
+      ),
+      bludgeoning: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Armor.Bludgeoning",
+        },
+        { name: "bludgeoning" },
+      ),
+      piercing: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Armor.Piercing",
+        },
+        { name: "piercing" },
+      ),
+      slashing: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Armor.Slashing",
+        },
+        { name: "slashing" },
+      ),
     },
     {
       label: "ATORIA.Ruleset.Armor",
       required: true,
       nullable: false,
     },
+    { name: "armor", parent: parent },
   );
 }
 
-export function resistanceField() {
+export function resistanceField(parent = undefined) {
   return new foundry.data.fields.SchemaField(
     {
-      main: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Main",
-      }),
-      acid: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Acid",
-      }),
-      arcanic: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Arcanic",
-      }),
-      fire: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Fire",
-      }),
-      lightning: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Lightning",
-      }),
-      cold: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Cold",
-      }),
-      necrotic: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Necrotic",
-      }),
-      poison: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Poison",
-      }),
-      psychic: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Psychic",
-      }),
-      radiant: new foundry.data.fields.NumberField({
-        required: true,
-        nullable: false,
-        integer: true,
-        initial: 0,
-        label: "ATORIA.Ruleset.Resistance.Radiant",
-      }),
+      main: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Main",
+        },
+        { name: "main" },
+      ),
+      acid: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Acid",
+        },
+        { name: "acid" },
+      ),
+      arcanic: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Arcanic",
+        },
+        { name: "arcanic" },
+      ),
+      fire: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Fire",
+        },
+        { name: "fire" },
+      ),
+      lightning: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Lightning",
+        },
+        { name: "lightning" },
+      ),
+      cold: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Cold",
+        },
+        { name: "cold" },
+      ),
+      necrotic: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Necrotic",
+        },
+        { name: "necrotic" },
+      ),
+      poison: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Poison",
+        },
+        { name: "poison" },
+      ),
+      psychic: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Psychic",
+        },
+        { name: "psychic" },
+      ),
+      radiant: new foundry.data.fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          integer: true,
+          initial: 0,
+          label: "ATORIA.Ruleset.Resistance.Radiant",
+        },
+        { name: "radiant" },
+      ),
     },
     {
       label: "ATORIA.Ruleset.Resistance",
       required: true,
       nullable: false,
     },
+    { name: "resistance", parent: parent },
   );
 }
 
@@ -195,31 +239,41 @@ export function defineTimePhaseLimitation() {
 
   return new fields.SchemaField(
     {
-      regain_type: new fields.StringField({
-        required: true,
-        nullable: false,
-        blank: false,
-        label: "ATORIA.Model.Time_phase_limitation.Regain_type",
-        choices: utils.ruleset.time_phases,
-        initial: Object.keys(utils.ruleset.time_phases)[0],
-      }),
-      usage_left: new fields.NumberField({
-        ...requiredInteger,
-        initial: 0,
-        label: "ATORIA.Model.Time_phase_limitation.Usage_left",
-      }),
-      usage_max: new fields.NumberField({
-        ...requiredInteger,
-        initial: 1,
-        min: 1,
-        label: "ATORIA.Model.Time_phase_limitation.Usage_max",
-      }),
+      regain_type: new fields.StringField(
+        {
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Model.Time_phase_limitation.Regain_type",
+          choices: utils.ruleset.time_phases,
+          initial: Object.keys(utils.ruleset.time_phases)[0],
+        },
+        { name: "regain_type" },
+      ),
+      usage_left: new fields.NumberField(
+        {
+          ...requiredInteger,
+          initial: 0,
+          label: "ATORIA.Model.Time_phase_limitation.Usage_left",
+        },
+        { name: "usage_left" },
+      ),
+      usage_max: new fields.NumberField(
+        {
+          ...requiredInteger,
+          initial: 1,
+          min: 1,
+          label: "ATORIA.Model.Time_phase_limitation.Usage_max",
+        },
+        { name: "usage_max" },
+      ),
     },
     {
       required: true,
       nullable: false,
       label: "ATORIA.Model.Time_phase_limitation.Label",
     },
+    { name: "time_phase_limitation" },
   );
 }
 
@@ -259,30 +313,40 @@ export function defineAlteration() {
 
   return new fields.SchemaField(
     {
-      dos_mod: new fields.NumberField({
-        required: true,
-        nullable: false,
-        initial: 0,
-        label: "ATORIA.Model.Skill_alteration.DoS_mod",
-      }),
-      adv_amount: new fields.NumberField({
-        required: true,
-        nullable: false,
-        initial: 0,
-        label: "ATORIA.Model.Skill_alteration.Advantage_amount",
-      }),
-      disadv_amount: new fields.NumberField({
-        required: true,
-        nullable: false,
-        initial: 0,
-        label: "ATORIA.Model.Skill_alteration.Disadvantage_amount",
-      }),
+      dos_mod: new fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          initial: 0,
+          label: "ATORIA.Model.Skill_alteration.DoS_mod",
+        },
+        { name: "dos_mod" },
+      ),
+      adv_amount: new fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          initial: 0,
+          label: "ATORIA.Model.Skill_alteration.Advantage_amount",
+        },
+        { name: "advantage_amount" },
+      ),
+      disadv_amount: new fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          initial: 0,
+          label: "ATORIA.Model.Skill_alteration.Disadvantage_amount",
+        },
+        { name: "disadvantage_amount" },
+      ),
     },
     {
       required: true,
       nullable: false,
       label: "ATORIA.Model.Alteration.Label",
     },
+    { name: "alteration" },
   );
 }
 
@@ -291,47 +355,64 @@ export function defineSkillAlteration() {
 
   return new fields.SchemaField(
     {
-      associated_skill: new fields.StringField({
-        required: true,
-        nullable: false,
-        blank: true,
-        initial: "",
-        label: "ATORIA.Model.Skill_alteration.Skill_associated",
-      }),
-      dos_mod: new fields.NumberField({
-        required: true,
-        nullable: false,
-        initial: 0,
-        label: "ATORIA.Model.Skill_alteration.DoS_mod",
-      }),
-      adv_amount: new fields.NumberField({
-        required: true,
-        nullable: false,
-        initial: 0,
-        label: "ATORIA.Model.Skill_alteration.Advantage_amount",
-      }),
-      disadv_amount: new fields.NumberField({
-        required: true,
-        nullable: false,
-        initial: 0,
-        label: "ATORIA.Model.Skill_alteration.Disadvantage_amount",
-      }),
+      associated_skill: new fields.StringField(
+        {
+          required: true,
+          nullable: false,
+          blank: true,
+          initial: "",
+          label: "ATORIA.Model.Skill_alteration.Skill_associated",
+        },
+        { name: "skill_associated" },
+      ),
+      dos_mod: new fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          initial: 0,
+          label: "ATORIA.Model.Skill_alteration.DoS_mod",
+        },
+        { name: "dos_mod" },
+      ),
+      adv_amount: new fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          initial: 0,
+          label: "ATORIA.Model.Skill_alteration.Advantage_amount",
+        },
+        { name: "advantage_amount" },
+      ),
+      disadv_amount: new fields.NumberField(
+        {
+          required: true,
+          nullable: false,
+          initial: 0,
+          label: "ATORIA.Model.Skill_alteration.Disadvantage_amount",
+        },
+        { name: "disadvantage_amount" },
+      ),
     },
     {
       required: true,
       nullable: false,
       label: "ATORIA.Model.Skill_alteration.Label",
     },
+    { name: "alteration" },
   );
 }
 
 export function define_skills_alterations_list() {
   const fields = foundry.data.fields;
-  return new fields.ArrayField(defineSkillAlteration(), {
-    required: true,
-    nullable: false,
-    label: "ATORIA.Model.Skill_alteration.Label_pl",
-  });
+  return new fields.ArrayField(
+    defineSkillAlteration(),
+    {
+      required: true,
+      nullable: false,
+      label: "ATORIA.Model.Skill_alteration.Label_pl",
+    },
+    { name: "skill_alterations" },
+  );
 }
 
 export function defineCostField() {

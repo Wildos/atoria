@@ -17,9 +17,7 @@ const defaultOptions = {
 
 export default class AtoriaDOSRoll extends Roll {
   constructor(data = {}, options = {}) {
-    console.debug("base options :", options);
     options = foundry.utils.mergeObject(defaultOptions, options);
-    console.debug("merged options :", options);
     const adv_minus_disadv =
       (options.advantage_amount ?? 0) - (options.disadvantage_amount ?? 0);
     let dice_keep_rule = "";

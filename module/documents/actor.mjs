@@ -16,18 +16,28 @@ export default class AtoriaActor extends Actor {
 
   prepareBaseData() {
     const actorData = this;
+
     actorData.system.encumbrance.value = 0;
     actorData.system.regain_rest_mana_mod = 0;
     switch (this.type) {
+      case "hero":
+        break;
+      case "non-player-character":
+        break;
+
       case "player-character":
         actorData.system.movement = utils.default_values.character.movement;
         actorData.system.armor_fields =
-          utils.default_values.models.helpers.armorField();
+          utils.default_values.models.helpers.armorField(
+            actorData.effect_fields,
+          );
         actorData.system.armor = utils.default_values.models.helpers
           .armorField()
           .getInitialValue({});
         actorData.system.resistance_fields =
-          utils.default_values.models.helpers.resistanceField();
+          utils.default_values.models.helpers.resistanceField(
+            actorData.effect_fields,
+          );
         actorData.system.resistance = utils.default_values.models.helpers
           .resistanceField()
           .getInitialValue({});
@@ -57,6 +67,36 @@ export default class AtoriaActor extends Actor {
     }
     actorData.system.encumbrance.level =
       RULESET.character.get_encumbrance_level(actorData);
+  }
+
+  get_effect_fields() {
+    return {
+      "system.encumbrance.max": "ATORIA.Model.Encumbrance.Max",
+      "system.endurance.max": "ATORIA.Model.Endurance.Max",
+      "system.health.max": "ATORIA.Model.Health.Max",
+      "system.mana.max": "ATORIA.Model.Mana.Max",
+      "system.sanity.max": "ATORIA.Model.Sanity.Max",
+      "system.stamina.max": "ATORIA.Model.Stamina.Max",
+
+      "system.initiative": "ATORIA.Ruleset.Initiative",
+      "system.movement": "ATORIA.Ruleset.Movement",
+
+      "system.armor.main": "ATORIA.Ruleset.Armor.Main",
+      "system.armor.bludgeoning": "ATORIA.Ruleset.Armor.Bludgeoning",
+      "system.armor.piercing": "ATORIA.Ruleset.Armor.Piercing",
+      "system.armor.slashing": "ATORIA.Ruleset.Armor.Slashing",
+
+      "system.resistance.main": "ATORIA.Ruleset.Resistance.Main",
+      "system.resistance.acid": "ATORIA.Ruleset.Resistance.Acid",
+      "system.resistance.arcanic": "ATORIA.Ruleset.Resistance.Arcanic",
+      "system.resistance.fire": "ATORIA.Ruleset.Resistance.Fire",
+      "system.resistance.lightning": "ATORIA.Ruleset.Resistance.Lightning",
+      "system.resistance.cold": "ATORIA.Ruleset.Resistance.Cold",
+      "system.resistance.necrotic": "ATORIA.Ruleset.Resistance.Necrotic",
+      "system.resistance.poison": "ATORIA.Ruleset.Resistance.Poison",
+      "system.resistance.psychic": "ATORIA.Ruleset.Resistance.Psychic",
+      "system.resistance.radiant": "ATORIA.Ruleset.Resistance.Radiant",
+    };
   }
 
   getRollData() {
@@ -345,7 +385,6 @@ export default class AtoriaActor extends Actor {
       });
     }
 
-    console.debug(roll_config.used_keywords);
     for (let keyword of roll_config.used_keywords) {
       keyword.id = keyword.name;
       this.takeOneKeywordUse(keyword);
@@ -477,7 +516,6 @@ export default class AtoriaActor extends Actor {
       return;
     }
     await effect.sheet.render(true);
-    effect.sheet.bringToFront();
   }
 
   async deleteEffect(effect_id) {

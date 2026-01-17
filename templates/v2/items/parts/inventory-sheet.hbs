@@ -17,6 +17,11 @@
                     input=@root.atoria_inputs.visualNumberInput
                     }}
 
+                    {{ formInput systemFields.keywords.fields.deployable
+                    value=system.keywords.deployable disabled=(not @root.editable)
+                    input=@root.atoria_inputs.visualNumberInput
+                    }}
+
                     {{ formInput systemFields.keywords.fields.equip
                     value=system.keywords.equip disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
