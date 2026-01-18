@@ -108,7 +108,7 @@ export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
   static migrateData(source) {
     const supplementaries_list = source.supplementaries_list ?? [];
     for (let supp of supplementaries_list) {
-      if (!("effect" in Object.keys(supp))) {
+      if (supp.description && !("effect" in Object.keys(supp))) {
         supp.effect = foundry.utils.deepClone(supp.description);
       }
     }
