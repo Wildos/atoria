@@ -49,7 +49,7 @@ export default class AtoriaFeatureItem extends atoria_models.AtoriaItemBase {
     const old_skill_alteration =
       foundry.utils.deepClone(source.skill_alteration) ?? undefined;
 
-    if (old_skill_alteration) {
+    if (old_skill_alteration && source.skill_alterations === undefined) {
       let new_alteration = {
         associated_skill: old_skill_alteration.associated_skill,
         dos_mod: 0,
