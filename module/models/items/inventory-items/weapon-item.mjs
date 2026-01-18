@@ -124,7 +124,9 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
 
     if (
       old_usable_actable_modifiers.length > 0 &&
-      typeof old_usable_actable_modifiers[0] == "string"
+      typeof old_usable_actable_modifiers[0] == "string" &&
+      (source.usable_actable_modifiers_typed === undefined ||
+        source.usable_actable_modifiers_typed.length === 0)
     ) {
       source.usable_actable_modifiers_typed = [];
       for (let uuid of old_usable_actable_modifiers) {

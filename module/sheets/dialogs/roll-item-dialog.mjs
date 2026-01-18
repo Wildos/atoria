@@ -506,6 +506,9 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
                 let usable_actable = this.item.actor.items.get(id);
                 return usable_actable !== undefined ? usable_actable : [];
               });
+            sub_context.available_actable_modifiers.sort(
+              (a, b) => (a.sort || 0) - (b.sort || 0),
+            );
             context.available_skills_data.push(sub_context);
           }
 
@@ -585,6 +588,9 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
                   return usable_actable !== undefined ? usable_actable : [];
                 });
             }
+            sub_context.available_actable_modifiers.sort(
+              (a, b) => (a.sort || 0) - (b.sort || 0),
+            );
             context.available_skills_data.push(sub_context);
           }
         }

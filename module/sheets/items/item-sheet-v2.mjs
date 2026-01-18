@@ -182,8 +182,13 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         context.associated_saves_skills =
           this.actor?.getOpposedSkillList() ??
           utils.default_values.get_opposed_skills();
+
         context.available_actable_modifiers =
           utils.ruleset.item.getActableModifiersApplicable(this.item);
+        context.available_actable_modifiers.sort(
+          (a, b) => (a.sort || 0) - (b.sort || 0),
+        );
+
         context.associated_skills =
           this.actor?.getAssociatedSkillList() ??
           foundry.utils.deepClone(utils.default_values.get_associated_skills());
@@ -227,8 +232,16 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
           utils.default_values.get_opposed_skills();
         context.available_actable_modifiers =
           utils.ruleset.item.getActableModifiersApplicable(this.item);
+        context.available_actable_modifiers.sort(
+          (a, b) => (a.sort || 0) - (b.sort || 0),
+        );
+
         context.available_actable_modifiers_typed =
           utils.ruleset.item.getActableModifiersTypedApplicable(this.item);
+        context.available_actable_modifiers_typed.sort(
+          (a, b) => (a.actable.sort || 0) - (b.actable.sort || 0),
+        );
+
         context.weapon_associated_skills =
           this.actor?.getWeaponSkillList() ??
           foundry.utils.deepClone(

@@ -42,7 +42,7 @@ export default class AtoriaActableModifierItem extends atoria_models.AtoriaItemB
     const old_skill_alteration =
       foundry.utils.deepClone(source.skill_alteration) ?? undefined;
 
-    if (old_skill_alteration) {
+    if (old_skill_alteration && source.alteration === undefined) {
       source.alteration = {
         dos_mod: 0,
         adv_amount: 0,
