@@ -2,7 +2,7 @@
     <label>{{localize systemFields.associated_skill.label}}</label>
     <select name="system.associated_skill"
     data-tooltip="{{localize systemFields.associated_skill.label}}">
-        {{selectOptions associated_skills selected=item.system.associated_skill sort=true localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
+        {{selectOptions weapon_associated_skills selected=item.system.associated_skill sort=true localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
     </select>
 
     <label>{{localize systemFields.range.label}}</label>
@@ -13,6 +13,9 @@
         {{>"atoria.v2.commons_partials.rollfield-input" rollfield=item.system.damage_roll systemFields=systemFields.damage_roll.fields
         data_path="system.damage_roll" hide_name=true disabled=(not @root.editable)}}
     </fieldset>
+
+
+    {{>"atoria.v2.commons_partials.textarea-input" value=item.system.critical_effect systemFields=systemFields.critical_effect data_path="system.critical_effect" data_name="critical_effect" cssClasses="double-col-field" disabled=(not @root.editable)}}
 
     <label>{{localize systemFields.is_focuser.label}}</label>
     {{ formInput systemFields.is_focuser value=item.system.is_focuser disabled=(not @root.editable)}}
@@ -35,19 +38,58 @@
         {{ formInput systemFields.modificators.fields.critical_fumble value=item.system.modificators.critical_fumble disabled=(not @root.editable)}}
     </fieldset>
 
+    <fieldset class="double-col-field">
+        <legend>{{localize systemFields.skill_alterations.label}}
+            <a class="atoria-create-button" data-action="createSubItem" data-sub-element-path="skill_alterations" data-tooltip="{{localize systemFields.skill_alterations.label}}">
+                <i class="fas fa-plus"></i>
+            </a></legend>
+
+        {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation systemFields=systemFields.limitation.fields
+        data_path="system.limitation" cssClasses="double-col-field"}}
+
+        {{#each item.system.skill_alterations as |skill_alteration key|}}
+            <div class="flexrow double-col-field">
+                {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=skill_alteration
+                item_actor=../item.actor associated_skills=@root.associated_skills
+                data_path=(concat "system.skill_alterations." key) systemFields=../systemFields.skill_alterations.element.fields
+                cssClasses=""}}
+
+                <a class="atoria-delete-button" data-action="deleteSubItem" data-sub-element-path="skill_alterations" data-sub-element-index="{{key}}"
+                data-tooltip="{{localize 'ATORIA.Sheet.Actable.Skill_Alterations.Delete'}}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        {{/each}}
+    </fieldset>
+
 
     <fieldset class="double-col-field">
-        <legend>{{localize systemFields.usable_actable_modifiers.label}}</legend>
+        <legend>{{localize systemFields.usable_actable_modifiers_typed.label}}</legend>
         {{#if item.actor}}
             <ul class="actable-mod-list">
-                {{#each available_actable_modifiers as |actable_mod idx|}}
+                {{#each available_actable_modifiers_typed as |actable_mod idx|}}
                     <li class="flexrow">
-                        <h5>{{actable_mod.name}}</h5>
+                        <h5>{{actable_mod.actable.name}}</h5>
                         <input class="actable-modifier-toggle" type="checkbox" data-dtype="Boolean"
                         data-action="handleUsableActableModifier"
-                        data-actable-modifier-id="{{actable_mod._id}}"
-                        {{checked (includes ../item.system.usable_actable_modifiers actable_mod._id)}}
-                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers.element.label}}"/>
+                        data-actable-modifier-id="{{actable_mod.actable._id}}"
+                        data-actable-type="main"
+                        {{checked actable_mod.main}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.main.label}}"/>
+
+                        <input class="actable-modifier-toggle focuser-icon" type="checkbox" data-dtype="Boolean"
+                        data-action="handleUsableActableModifier"
+                        data-actable-modifier-id="{{actable_mod.actable._id}}"
+                        data-actable-type="focuser"
+                        {{checked actable_mod.focuser}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.focuser.label}}"/>
+
+                        <input class="actable-modifier-toggle throw-icon" type="checkbox" data-dtype="Boolean"
+                        data-action="handleUsableActableModifier"
+                        data-actable-modifier-id="{{actable_mod.actable._id}}"
+                        data-actable-type="throw"
+                        {{checked actable_mod.throw}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.throw.label}}"/>
                     </li>
                 {{/each}}
             </ul>

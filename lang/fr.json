@@ -18,6 +18,7 @@
       "Description": "Description",
       "Quantity": "Quantité",
       "Effect": "Effet",
+      "Critical_effect": "Effet critique",
       "Additional_css_class": "Class(es) CSS additionnel(s)",
       "Color": {
         "Label": "Couleur",
@@ -25,18 +26,11 @@
       },
       "Skill_alteration": {
         "Label": "Altération de compétence",
-        "Has_skill_alteration": "Compétence associée",
+        "Label_pl": "Altérations de compétence",
         "Skill_associated": "Compétence associée",
-        "Type": "Type d'altération",
-        "One_degree_of_success_gain": "DR +1",
-        "One_degree_of_success_loss": "DR -1",
-        "Two_degree_of_success_gain": "DR +2",
-        "Two_degree_of_success_loss": "DR -2",
-        "Advantage": "Avantage",
-        "Disadvantage": "Désavantage",
-        "Advantage_n_One_degree_of_success_gain": "Avantage & DR +1",
-        "Disadvantage_n_One_degree_of_success_loss": "Désavantage & DR -1",
-        "Hand_handled": "Non automatisé"
+        "Advantage_amount": "Avantage",
+        "Disadvantage_amount": "Désavantage",
+        "DoS_mod": "DR"
       },
       "Health": {
         "Value": "Valeur de Santé",
@@ -136,6 +130,9 @@
       "Actable": {
         "Usable_actable_modifiers": "Techniques ou Ajouts",
         "Actable_modifiers": "Techniques ou Ajouts",
+        "Actable_modifiers_main": "Techniques ou Ajouts sur jet primaire",
+        "Actable_modifiers_throw": "Techniques ou Ajouts sur jet",
+        "Actable_modifiers_focuser": "Techniques ou Ajouts sur focalisateur",
         "Actable_modifiers_types": "Type de modificateur d'action",
         "Rolls_asked": "Oppositions",
         "Roll_asked": "Opposition"
@@ -155,8 +152,7 @@
         "Supplementaries": {
           "Label": "Supplémentaire",
           "Cost_list": "Coût disponible",
-          "Cumul_max": "Cumul maximum",
-          "Description": "Effet"
+          "Cumul_max": "Cumul maximum"
         }
       },
       "Magic": {
@@ -322,7 +318,8 @@
         "Critical_failure": "Échec critique",
         "Success": "Réussite",
         "Critical_success": "Réussite critique",
-        "Dos": "DR"
+        "Dos": "DR",
+        "Is_Danger": "Danger"
       },
       "Skill": {
         "Used_features": "Aptitudes",
@@ -349,6 +346,7 @@
         "Disadvantage_amount": "Désavantage",
         "Luck_applied": "Chance",
         "DoS_mod": "DR",
+        "Is_danger": "Danger",
         "Roll_visibility": {
           "Label": "Visibilité du jet",
           "Self": "Personnel",
@@ -416,6 +414,7 @@
           "Feet": "Pieds",
           "Rings": "Anneau"
         },
+        "Worn_encumbrance": "Encombrement quand porté",
         "Type": {
           "Label": "Type d'armure",
           "Without": "Sans",
@@ -1095,6 +1094,7 @@
         "PreserveStamina": "Vigeur préservé",
         "PreserveEndurance": "Endurance préservé",
         "PreserveSanity": "Sanité préservé",
+        "Deployable": "Déployable",
         "Equip": "Équipé",
         "Two_handed": "2 mains",
         "Light": "Léger",
@@ -1111,10 +1111,11 @@
         "Smash": "Fracasse",
         "Penetrating": "Pénétrant",
         "Sly": "Sournois",
+        "Sly_amount": "Sournois valeur",
         "Direct": "Direct",
         "Direct_recap": "{type} direct",
         "Direct_type": "Direct Type",
-        "Versatile": "Polyvalent",
+        "Versatile": "Polyvalence",
         "Reach": "Allonge",
         "Throwable": "Jeté",
         "Recharge": "Recharge",
@@ -1128,98 +1129,102 @@
       },
       "Keywords_description": {
         "Label": "Description du Mot-clef",
-        "Two_handed": "L'action \"Attaquer\" a coût Seconde +1.</br>L'arme nécessite les deux mains pour être utilisée.</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"Allonge\")",
-        "Two_handed+": "L'arme nécessite les deux mains pour être utilisée.</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"Allonge\")",
+        "Two_handed": "<i>Attaquer</i> : coût Seconde +1.</br>Nécessite deux mains pour <i>Attaquer</i>.</br>Technique - Coup large : Jusqu'à Cible +1. (Non-cumulable avec <b>Allonge</b>)",
+        "Two_handed+": "Nécessite deux mains pour <i>Attaquer</i>.</br>Technique - Coup large : Jusqu'à Cible +1. (Non-cumulable avec <b>Allonge</b>)",
 
-        "Reach": "Donne \"Opportunité d'allonge\".</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")",
-        "Reach+": "Donne \"Opportunité d'allonge\".</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")</br>Une fois par combat, \"Opportunité d'allonge\" peut être utilisée sans Réflexe - Opportunité.",
-        "Reach++": "Donne \"Opportunité d'allonge\".</br>\"Coup large\" a jusqu'à Cible +1. (Non-cumulable avec \"2 mains\")</br>Une fois par combat, \"Opportunité d'allonge\" peut être utilisée sans Réflexe - Opportunité.</br>Une fois par combat, \"Opportunité d'allonge\" peut être utilisée même avec 1 ennemi adjacent.",
+        "Reach": "Vous avez l'opportunité <i>Allonge</i>.</br>Technique - Coup large : Jusqu'à Cible +1. (Non-cumulable avec <b>2 mains</b>)",
+        "Reach+": "Vous avez l'opportunité <i>Allonge</i>.</br>Technique - Coup large : Jusqu'à Cible +1. (Non-cumulable avec <b>2 mains</b>)</br>1 / Combat : <i>Allonge</i> peut être utilisée sans Réflexe - Opportunité.",
 
-        "Brute": "Lorsque vous infligez Dégât Arme minimum +1, vous avez l'état \"Brutal\".",
-        "Brute+": "Lorsque vous infligez Dégât Arme minimum +1, vous avez l'état \"Brutal\".</br>Une fois par combat, lorsque vous perdez l'état \"Brutal\", vous gardez l'état \"Brutal\".",
+        "Brute": "Lorsque vous infligez Dégât Arme > Minimum, vous avez \"Brutal\".",
+        "Brute+": "Lorsque vous infligez Dégât Arme > Minimum, vous avez \"Brutal\".</br>1 / combat, lorsque vous perdez l'état \"Brutal\", vous gardez l'état \"Brutal\".",
 
-        "Equip": "L'objet n'a pas besoin d'être degainée ou sortie du sac.",
+        "Deployable": "Peut être <i>Déployer</i>.",
+
+        "Equip": "Est considéré dégainé.",
 
         "Fluxian": "Les dégâts varient en fonction des écoles de magie utilisée par le personnage et une école peut donner accès à plusieurs types de dégâts",
 
-        "Smash": "L'attaque applique DR Réflexe - Parade -1.",
-        "Smash+": "L'attaque applique DR Réflexe - Parade -1.</br>La cible ne peut parer qu'avec un bouclier.",
-        "Smash++": "L'attaque applique Désavantage Réflexe - Parade et ne peut être parer qu'avec un bouclier.",
+        "Smash": "Applique DR Réflexe - Parade -1.",
+        "Smash+": "Applique DR Réflexe - Parade -1.</br>Parable uniquement avec un bouclier.",
+        "Smash++": "Applique Désavantage Réflexe - Parade.</br>Parable uniquement avec un bouclier.",
 
-        "Guard": "DR Réflexe - Parade +1 contre les attaques au corps à corps.",
-        "Guard+": "DR Réflexe - Parade +1 contre les attaques au corps à corps.</br>Une fois par combat, lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
+        "Guard": "DR Réflexe - Parade +1 au contact.",
+        "Guard+": "DR Réflexe - Parade +1 au contact.</br>1 / Combat : Lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
 
         "Throwable": "DR Jet +1, Portée effective +1m et Portée maximale +3m.",
         "Throwable+": "DR Jet +2, Portée effective +1m et Portée maximale +3m.",
 
-        "Light": "Peut être portée en main secondaire.",
+        "Light": "Peut être utilisé en main secondaire.",
 
-        "Heavy": "L'action \"Dégainer\" a coût Seconde +1",
-        "Heavy+": "L'action \"Dégainer\" a coût Seconde +2",
+        "Heavy": "<i>Dégainer</i> : Coût Seconde +1",
+        "Heavy+": "<i>Dégainer</i> : Coût Seconde +2",
 
         "Penetrating": "Pénétration +1",
-        "Penetrating+": "Pénétration +1</br>Une fois par combat, ignore l'armure et la résistance.",
+        "Penetrating+": "Pénétration +1</br>1 / Sommeil : Ignore l'armure et la résistance.",
 
-        "Versatile": "L'arme peut être prise à 2 mains pour Dégât Arme +1.",
+        "Versatile": "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
 
-        "Protect": "Une fois par sommeil, donne une parade supplémentaire hors limite.",
-        "Protect+": "Une fois par combat, donne une parade supplémentaire hors limite.",
+        "Protect": "1 / Sommeil : 1 Parade hors limite.",
+        "Protect+": "1 / Combat : 1 Parade hors limite.",
 
-        "Protection": "DR Réflexe - Parade +1 contre les attaques à distance.",
-        "Protection+": "L'avantage DR Réflexe - Parade contre les attaques à distance.",
+        "Protection": "DR Réflexe - Parade +1 à distance.",
+        "Protection+": "DR Réflexe - Parade +1 à distance.</br>1 / Combat : Lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
 
-        "Quick": "L'action \"Dégainer\" a coût Seconde -1 sur cette arme.",
-        "Quick+": "L'action \"Dégainer\" a coût Seconde -2 sur cette arme.",
+        "Quick": "<i>Dégainer</i> : Coût Seconde -1",
+        "Quick+": "<i>Dégainer</i> : Coût Seconde -2",
 
-        "Recharge": "Nécessite l'action \"Recharger\" avant de pouvoir attaquer.",
+        "Recharge": "Nécessite <i>Recharger</i> après chaque attaque.",
 
-        "Somatic": "La ou les mains qui tiennent l'objet sont considérées comme libres quant il s'agit de Composantes - Somatiques.",
+        "Somatic": "Les mains sur l'objet sont considérées comme libres pour les Composantes - Somatiques.",
 
-        "Reserve": "Le focalisateur peut contenir un maximum de X mana. Lors d'un repos, vous pouvez dépenser du mana pour le remplir.",
+        "Reserve": "Peut contenir jusqu'à X mana. Lors d'un repos, vous pouvez dépenser du mana pour le remplir.",
 
-        "Sly": "En cas de surprise, augmente le % de dégâts supplémentaire, ignore l'armure et applique \"Saignement\".",
+        "Sly": "Surprise : Dégât maximum +xX ,ignore l'armure et applique \"Saignement\".",
 
-        "Gruff": "Une fois par lune longue, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
-        "Gruff+": "Une fois par lune courte, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
-        "Gruff++": "Une fois par sommeil, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
-        "Gruff+++": "Une fois par combat, lors de l'action \"Bousculer\", vous avez DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff": "1 / Lune longue : <i>Bousculer</i> : DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff+": "1 / Lune courte : <i>Bousculer</i> : DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff++": "1 / Sommeil : <i>Bousculer</i> : DR Robustesse - Force +1 et coût Vigueur -1.",
+        "Gruff+++": "1 / Combat : <i>Bousculer</i> : DR Robustesse - Force +1 et coût Vigueur -1.",
 
-        "Noisy": "DR Discrétion - Silence / Furtivité -1 lorsque le personnage se déplace.",
-        "Noisy+": "Désavantage Discrétion - Silence / Furtivité lorsque le personnage se déplace.",
-        "Noisy++": "Désavantage et DR Discrétion - Silence / Furtivité -1 lorsque le personnage se déplace.",
+        "Noisy": "DR Discrétion - Silence / Furtivité -1 en déplacement.",
+        "Noisy+": "Désavantage Discrétion - Silence / Furtivité en déplacement.",
+        "Noisy++": "Désavantage DR Discrétion - Silence / Furtivité -1 en déplacement.",
 
-        "Tough": "Une fois par lune longue, ignore \"Saignement\".",
-        "Tough+": "Une fois par lune courte, ignore \"Saignement\".",
-        "Tough++": "Une fois par sommeil, ignore \"Saignement\".",
-        "Tough+++": "Une fois par combat, ignore \"Saignement\".",
+        "Tough": "1 / Lune longue: Ignore \"Saignement\".",
+        "Tough+": "1 / Lune courte: Ignore \"Saignement\".",
+        "Tough++": "1 / Sommeil: Ignore \"Saignement\".",
+        "Tough+++": "1 / Combat: Ignore \"Saignement\".",
 
         "Obstruct": "Initiative -1.",
         "Obstruct+": "Initiative -1D2.",
 
-        "Grip": "Une fois par lune longue, vous avez DR Arme +1. (Hors pugilat)",
-        "Grip+": "Une fois par lune courte, vous avez DR Arme +1. (Hors pugilat)",
-        "Grip++": "Une fois par sommeil, vous avez DR Arme +1. (Hors pugilat)",
-        "Grip+++": "Une fois par combat, vous avez DR Arme +1. (Hors pugilat)",
+        "Grip": "1 / Lune longue: Vous avez DR Arme +1. (Hors pugilat)",
+        "Grip+": "1 / Lune courte: Vous avez DR Arme +1. (Hors pugilat)",
+        "Grip++": "1 / Sommeil: Vous avez DR Arme +1. (Hors pugilat)",
+        "Grip+++": "1 / Combat: Vous avez DR Arme +1. (Hors pugilat)",
 
-        "Resistant": "Une fois par lune longue, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
-        "Resistant+": "Une fois par lune courte, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
-        "Resistant++": "Une fois par sommeil, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
-        "Resistant+++": "Une fois par combat, se voir infliger Dégâts > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant": "1 / Lune longue: Se voir infliger Dégât > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant+": "1 / Lune courte: Se voir infliger Dégât > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant++": "1 / Sommeil: Se voir infliger Dégât > 6 donne Résistance +1 contre l'attaque.",
+        "Resistant+++": "1 / Combat: Se voir infliger Dégât > 6 donne Résistance +1 contre l'attaque.",
 
-        "Sturdy": "Une fois par lune longue, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
-        "Sturdy+": "Une fois par lune courte, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
-        "Sturdy++": "Une fois par sommeil, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
-        "Sturdy+++": "Une fois par combat, se voir infliger Dégâts > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy": "1 / Lune longue: Se voir infliger Dégât > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy+": "1 / Lune courte: Se voir infliger Dégât > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy++": "1 / Sommeil: Se voir infliger Dégât > 6 donne Armure +1 contre l'attaque.",
+        "Sturdy+++": "1 / Combat: Se voir infliger Dégât > 6 donne Armure +1 contre l'attaque.",
 
-        "Stable": "Une fois par lune longue, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
-        "Stable+": "Une fois par lune courte, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
-        "Stable++": "Une fois par sommeil, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
-        "Stable+++": "Une fois par combat, lorsqu'on vous repousse, vous avez DR Robustesse - Ténacité +1.",
+        "Stable": "1 / Lune longue: Lors d'un déplacement forcé, vous avez DR Robustesse - Ténacité +1.",
+        "Stable+": "1 / Lune courte: Lors d'un déplacement forcé, vous avez DR Robustesse - Ténacité +1.",
+        "Stable++": "1 / Sommeil: Lors d'un déplacement forcé, vous avez DR Robustesse - Ténacité +1.",
+        "Stable+++": "1 / Combat: Lors d'un déplacement forcé, vous avez DR Robustesse - Ténacité +1.",
 
-        "Direct": "Une fois par sommeil, \"Attaquer\" avec X a coût Seconde -1.",
-        "Direct+": "Une fois par combat, \"Attaquer\" avec X a coût Seconde -1.",
+        "Direct": "1 / Sommeil : Attaquer avec X : Coût Seconde -1.",
+        "Direct+": "1 / Combat : Attaquer avec X : Coût Seconde -1.",
 
-        "Preserve": "L'objet peut conserver une quantité maximale X d'une ressource qui s'accumule à hauteur de Y. Cette ressource ne peut être utilisée que pour une réussite d'un sort. 5 endurance sont considérés comme une seule quantité X."
+        "Preserve": "Peut contenir jusqu'à X d'une ressource qui augmente de Y. </br>Peut être utilisée pour payer le coût d'une réussite de sort. </br>5 endurance sont considérés comme une seule quantité X."
+      },
+      "Keywords_effect": {
+        "Versatile": "Polyvalence: Dégât"
       },
       "Actable": {
         "Require_immobile": "Immobile",
@@ -1229,7 +1234,7 @@
         "Material": "Matériel",
         "Duration": "Durée",
         "Range": "Portée",
-        "Target": "Cible",
+        "Target": "Ciblage",
         "Area": "Zone",
         "Restriction": "Restriction"
       },
@@ -1263,119 +1268,119 @@
       "Status_effect": {
         "Preparing": {
           "Label": "Préparation",
-          "Description": "Le sort demande de préparer sa magie. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir le sort."
+          "Description": "Le sort demande de préparer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort.</br>Incompatible avec “Évocation” et “Préparation”."
         },
         "Evocation": {
           "Label": "Évocation",
-          "Description": "Le sort demande de continuer à évoquer sa magie. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir le sort."
+          "Description": "Le sort demande de continuer à évoquer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort."
         },
         "Channelling": {
           "Label": "Canalisation",
-          "Description": "Le sort demande de continuer à canaliser sa magie. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir le sort."
+          "Description": "Le sort demande de continuer à canaliser sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort."
         },
         "Concentration": {
           "Label": "Concentration",
-          "Description": "L'action demande un certain temps de concentration. Ainsi, un personnage doit faire un jet lorsque l'état est perturbé pour maintenir l'action."
+          "Description": "L'action demande un temps de concentration. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir l'action.</br>Incompatible avec “Évocation” et “Préparation”."
         },
         "Unconscious": {
           "Label": "Inconscient",
-          "Description": "Un personnage affecté ne peut rien faire et n'a pas conscience de ce qui l'entoure."
+          "Description": "Ne peut rien faire et ignore son environnement."
         },
         "Bleeding": {
           "Label": "Saignement",
-          "Description": "Un personnage affecté a Santé -1 / round.\nLorsque \"Saignement\" est appliqué à un personnage affecté par \"Saignement\", il subit Santé -1."
+          "Description": "Santé -1 / round.</br>Application supplémentaire : Santé -1"
         },
         "Brutal": {
           "Label": "Brutal",
-          "Description": "Vous avez Dégât Arme +1 lors de votre prochaine instance de Dégât."
+          "Description": "Dégât Arme +1 lors de la prochaine instance de Dégât.</br>Perdu si paré ou lors de la \"Préparation\" d'un sort.</br>1 fois par tour"
         },
         "Slowed": {
           "Label": "Ralenti",
-          "Description": "Un personnage affecté a coût Mouvement +1 pour se déplacer."
+          "Description": "Coûts en mouvement : Coût Mouvement +1"
         },
         "Prone": {
           "Label": "Renversé",
-          "Description": "Un personnage affecté a un “Léger couvert” et l'attaquer au corps à corps donne l'avantage."
+          "Description": "Applique un Léger couvert. Attaquant au corps à corps : Avantage"
         },
         "Immobilised": {
           "Label": "Immobilisé",
-          "Description": "Un personnage affecté ne peut pas utiliser de Mouvement. Il a le désavantage pour esquiver."
+          "Description": "Ne peut pas utiliser de Mouvement. Désavantage pour Esquiver."
         },
         "Disability": {
           "Label": "Incapacité",
-          "Description": "Un personnage affecté ne peut rien faire à part utiliser un sort sans composantes verbales et somatiques."
+          "Description": "Ne peut rien faire hors utiliser un sort sans composantes verbales et somatiques.</br>Supplante \"Immobilisé\""
         },
         "Moist": {
           "Label": "Humide",
-          "Description": "Résistance foudre -1 feu +1. Dissipe \"Enflammé\". Les zones appliquant l'état dissipe les cases vides ardentes."
+          "Description": "Résistance foudre -1 feu +1. S'annule avec \"Enflammé\".</br>Zones appliquant l'état dissipe les cases vides ardentes."
         },
         "Frostbite": {
           "Label": "Gelure",
-          "Description": "Un personnage affecté subit Dégât froid 1 / round. L'état dure +1 round si la cible est \"Humide\"."
+          "Description": "Applique \"Engourdi\" 1 tour et se dissipe lorsque Dégât froid subi."
         },
         "Burning": {
           "Label": "Enflammé",
-          "Description": "Dégât feu 1 / round. Dissipe l'état \"Humide\". Les zones appliquant l'état dissipe les cases gelées."
+          "Description": "Dégât feu 1 / round. S'annule avec \"Humide\". Dissipe \"Gelure\".</br>Zones appliquant l'état dissipent les cases gelées.</br>Seconde application : Effet+"
         },
         "Burning+": {
           "Label": "Enflammé+",
-          "Description": "Dégât feu 2 / round. Dissipe l'état \"Humide\" et \"Gelure\". Les zones appliquant l'état dissipe les cases gelées."
+          "Description": "Dégât feu 2 / round. S'annule avec \"Humide\". Dissipe \"Gelure\".</br>Zones appliquant l'état dissipent les cases gelées."
         },
         "Radiate": {
           "Label": "Irradié",
-          "Description": "Une cible affectée éclaire clairement sur 1m et l'attaquer au corps à corps donne DR +1. "
+          "Description": "Éclaire clairement sur 1m. Attaquant au corps à corps : DR +1."
         },
         "Conductive": {
           "Label": "Conducteur",
-          "Description": "Lorsqu'un sort Foudre cible Autrui affecté ou un objet affecté, il a Supp. coût Mana -1.\nLorsqu'un sort Foudre cible un objet affecté, le porteur n'est pas affecté par le sort."
+          "Description": "Sorts Foudre ciblant : Supp. coût Mana -1."
         },
         "Dazed": {
           "Label": "Hébété",
-          "Description": "Un personnage affecté joue son tour en dernier lors du round suivant."
+          "Description": "/!\\ Retiré, voir règles Atoria /!\\"
         },
         "Shocked": {
           "Label": "Choqué",
-          "Description": "Un personnage affecté a DR -1 à tous les jets."
+          "Description": "DR -1 à tous les jets."
         },
         "Stunned": {
           "Label": "Étourdi",
-          "Description": "Un personnage affecté ne peut rien faire et n'a pas conscience de ce qui l'entoure puis il a l’avantage pour résister à l'état jusqu'à son tour."
+          "Description": "Ne peut rien faire et ignore son environnement.</br>Avantage pour résister à l'état 1 tour."
         },
         "Banished": {
           "Label": "Banni",
-          "Description": "Le personnage disparaît, il ne peut pas être ciblé, prendre d'opportunité et passe son tour. Lorsqu'il perd \"Banni\", si un personnage se trouve sur la case, il réapparait sur une case adjacente à l'appréciation du MJ."
+          "Description": "Disparaît et ne peut rien faire.</br>Lorsque \"Banni\" est perdu, si un personnage se trouve sur la case, réapparait sur une case adjacente, à l'appréciation du MJ."
         },
         "Drunk": {
           "Label": "Ébriété",
-          "Description": "Un personnage affecté a DR -1 à tous les jets. L’état se dissipe après une sommeil. À l'appréciation du MJ, il faut faire un Robustesse - Ténacité pour ne pas recevoir l’état “Gueule de bois”."
+          "Description": "DR -1 à tous les jets.</br>Se dissipe après Sommeil. À l'appréciation du MJ, Robustesse - Ténacité pour ignorer l’état “Gueule de bois”. "
         },
         "Hangover": {
           "Label": "Gueule de bois",
-          "Description": "Un personnage affecté a DR -1 aux compétences combatives et aux perceptions. L’état se dissipe après une phase de repos ou une phase de sommeil si l’état \"Ébriété\" était cumulé."
+          "Description": "DR -1 aux compétences combatives et aux perceptions.</br>Se dissipe après Repos."
         },
         "Tired": {
           "Label": "Fatigué",
-          "Description": "Un personnage affecté a DR -1 aux compétences combatives, physiques et aux connaissances. (Toujours appliqué Endurance < 25)"
+          "Description": "DR -1 aux compétences combatives, physiques et aux connaissances.</br>S'applique à Endurance < 25"
         },
         "Hungry": {
           "Label": "Affamé",
-          "Description": "Un personnage affecté a DR -1 aux compétences physiques et combatives."
+          "Description": "DR -1 aux compétences physiques et combatives. Peut se cumuler avec \"Déshydraté\"."
         },
         "Dehydrated": {
           "Label": "Déshydraté",
-          "Description": "Un personnage affecté a DR -1 aux compétences physiques et combatives."
+          "Description": "DR -1 aux compétences physiques et combatives. Peut se cumuler avec \"Affamé\"."
         },
         "Rested": {
           "Label": "Reposé",
-          "Description": "Un personnage affecté a Initiative +1."
+          "Description": "Donne Initiative +1."
         },
         "Deaf": {
           "Label": "Surdité",
-          "Description": "Un personnage affecté n'entend plus rien."
+          "Description": "N'entend plus rien."
         },
         "Silenced": {
           "Label": "Silence",
-          "Description": "Un personnage affecté ne peut plus émettre de son avec sa voix. Elle ne peut pas utiliser de sort à composante verbale."
+          "Description": "Ne peut pas émettre de son avec la voix et ne peut pas utiliser de sort à composante verbale."
         },
         "Numb": {
           "Label": "Engourdi",
@@ -1383,35 +1388,35 @@
         },
         "Numb+": {
           "Label": "Engourdi+",
-          "Description": "Désavantage attaque lorsqu'une main ou plus est nécessaire."
+          "Description": "Désavantage Attaque lorsqu'une main ou plus est nécessaire."
         },
         "Blindness": {
           "Label": "Cécité",
-          "Description": "Un personnage affecté ne voit plus. Il est considéré dans l'obscurité."
+          "Description": "Ne voit plus. Est considéré dans l'obscurité."
         },
         "Invisible": {
           "Label": "Invisible",
-          "Description": "Un personnage affecté ne peut pas être perçu et ciblé. Un personnage qui attaque un personnage invisible a le désavantage."
+          "Description": "Ne peut pas être perçu et ciblé.</br>Attaquer un personnage invisible applique le désavantage."
         },
         "Incurable": {
           "Label": "Incurable",
-          "Description": "Un personnage affecté ne peut pas avoir de soin de Santé."
+          "Description": "Ne peut obtenir de Soin ou de Médication."
         },
         "Incurable+": {
           "Label": "Incurable+",
-          "Description": "Un personnage affecté ne peut pas regagner de Santé."
+          "Description": "Ne peut obtenir de Regain de Santé."
         },
         "Afraid": {
           "Label": "Effrayé",
-          "Description": "Un personnage affecté ne peut pas approcher l'émetteur et a le désavantage pour l'attaquer."
+          "Description": "Ne peut pas approcher l'émetteur et désavantage pour l'attaquer."
         },
         "Panic": {
           "Label": "Paniqué",
-          "Description": "Un personnage affecté doit fuir le plus loin possible de l'émetteur."
+          "Description": "Doit fuir le plus loin possible de l'émetteur.</br>Supplante “Effrayé”"
         },
         "Terrified": {
           "Label": "Terrifié",
-          "Description": "Un personnage affecté ne peut plus se déplacer ou attaquer. Il a le désavantage aux esquives et aux parades."
+          "Description": "Ne peut plus se déplacer ou attaquer. Désavantage aux esquives et aux parades.</br>Supplante \"Effrayé\" et “Paniqué”"
         },
         "Dead": {
           "Label": "Mort",
@@ -1419,31 +1424,31 @@
         },
         "Seduced": {
           "Label": "Séduit",
-          "Description": "Un personnage affecté a le désavantage contre l'émetteur."
+          "Description": "Désavantage contre l'émetteur."
         },
         "Charmed": {
           "Label": "Charmé",
-          "Description": "Un personnage affecté considère l'émetteur comme son ami proche, il ne peut pas entreprendre d’action néfaste contre lui et il l'aide de son mieux."
+          "Description": "Considère l'émetteur comme son ami proche, ne peut pas entreprendre d’action néfaste contre lui et l'aide de son mieux.</br>Supplante “Séduit” avec le même émetteur."
         },
         "Captivated": {
           "Label": "Subjugué",
-          "Description": "Un personnage affecté obéit à l'émetteur. Il fait ce qu'il lui demande si cela ne comprend pas de se blesser."
+          "Description": "Obéit à l'émetteur tant que cela ne comprend pas de se blesser.</br>Supplante “Séduit” ou \"Charmé\" avec le même émetteur."
         },
         "Control": {
           "Label": "Contrôlé",
-          "Description": "Un personnage affecté obéit à l'émetteur. Il fait ce qu'il lui demande si cela ne comprend pas le suicide."
+          "Description": "Sous contrôle de l'émetteur tant que cela ne comprend pas le suicide."
         },
         "Enraged": {
           "Label": "Enragé",
-          "Description": "Un personnage affecté attaque la cible la plus proche dans sa ligne de vue ou dont il a connaissance à proximité."
+          "Description": "Doit attaquer la cible connue la plus proche.</br>Immunise à la \"Peur\" et au \"Charme\"."
         },
         "Provoked": {
           "Label": "Provoqué",
-          "Description": "Un personnage affecté a DR -1 tant qu'il ne suit pas la provocation."
+          "Description": "DR -1 si la provocation n'est pas suivie."
         },
         "Provoked+": {
           "Label": "Provoqué+",
-          "Description": "Un personnage affecté a le désavantage tant qu'il ne suit pas la provocation."
+          "Description": "Désavantage si la provocation n'est pas suivie."
         }
       }
     }

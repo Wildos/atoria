@@ -1,5 +1,6 @@
 import * as utils from "../utils/module.mjs";
 import * as rolls from "../rolls/module.mjs";
+import RULESET from "../utils/ruleset.mjs";
 
 export default class AtoriaItem extends Item {
   // Prepare data for the item execute the following, in order:
@@ -25,7 +26,8 @@ export default class AtoriaItem extends Item {
           CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["supplementary"],
           {
             supplementary: supp,
-            systemFields: this.system.schema.fields.supplementaries_list.fields,
+            systemFields:
+              this.system.schema.fields.supplementaries_list.element.fields,
           },
         );
       }
@@ -37,6 +39,36 @@ export default class AtoriaItem extends Item {
       });
       for (const id of invalid_ids) {
         this.disableActableModifier(id);
+      }
+    }
+    if (this.system.usable_actable_modifiers_typed !== undefined) {
+      let invalid_ids = this.system.usable_actable_modifiers_typed.flatMap(
+        (data) => {
+          let usable_actable = this.actor.items.get(data.uuid);
+          return usable_actable !== undefined
+            ? []
+            : data?.uuid !== undefined
+              ? data.uuid
+              : data;
+        },
+      );
+      if (!invalid_ids.length == 0) {
+        this.system.usable_actable_modifiers_typed =
+          this.system.usable_actable_modifiers_typed.filter(
+            (data) => !invalid_ids.includes(data.uuid),
+          );
+      }
+    }
+  }
+
+  prepareEmbeddedDocuments() {
+    if (["armor", "weapon"].includes(this.type)) {
+      for (const collectionName of Object.keys(
+        this.constructor.hierarchy || {},
+      )) {
+        for (let e of this.getEmbeddedCollection(collectionName)) {
+          e.disabled = !this.system.is_worn;
+        }
       }
     }
   }
@@ -185,58 +217,199 @@ export default class AtoriaItem extends Item {
     if (!inventory_item_types.includes(this.type)) return 0.0;
     if (this.type === "kit")
       return this.system.encumbrance * this.system.quantity;
+    if (this.type === "armor")
+      return this.system.is_worn
+        ? this.system.worn_encumbrance
+        : this.system.encumbrance;
     return this.system.encumbrance;
   }
 
-  enableActableModifier(action_modifier_id) {
+  enableActableModifier(action_modifier_id, actable_type = undefined) {
     if (action_modifier_id === undefined) {
       console.warn(
         `Invalid action_modifier_id given for handling: '${action_modifier_id}'`,
       );
       return;
     }
-    const new_usable_actable_modifiers = foundry.utils.deepClone(
-      this.system.usable_actable_modifiers,
-    );
-    if (this.system.usable_actable_modifiers.includes(action_modifier_id)) {
-      console.warn(
-        `Addition error: action_modifier_id '${action_modifier_id}' already present in list of item ${this._id}`,
+    if (actable_type === undefined) {
+      const new_usable_actable_modifiers = foundry.utils.deepClone(
+        this.system.usable_actable_modifiers,
       );
-      return;
+      if (this.system.usable_actable_modifiers.includes(action_modifier_id)) {
+        console.warn(
+          `Addition error: action_modifier_id '${action_modifier_id}' already present in list of item ${this._id}`,
+        );
+        return;
+      }
+      new_usable_actable_modifiers.push(action_modifier_id);
+      this.update({
+        "system.usable_actable_modifiers": new_usable_actable_modifiers,
+      });
+    } else {
+      const new_usable_actable_modifiers_typed = foundry.utils.deepClone(
+        this.system.usable_actable_modifiers_typed,
+      );
+      let found_entry = new_usable_actable_modifiers_typed.find(
+        (element) => element.uuid == action_modifier_id,
+      );
+      if (found_entry === undefined) {
+        found_entry = {
+          uuid: action_modifier_id,
+          main: false,
+          throw: false,
+          focuser: false,
+        };
+        new_usable_actable_modifiers_typed.push(found_entry);
+      }
+      switch (actable_type) {
+        case "main":
+          found_entry.main = true;
+          break;
+        case "throw":
+          found_entry.throw = true;
+          break;
+        case "focuser":
+          found_entry.focuser = true;
+          break;
+        default:
+          console.error("Invalid type");
+          break;
+      }
+      this.update({
+        "system.usable_actable_modifiers_typed":
+          new_usable_actable_modifiers_typed,
+      });
     }
-    new_usable_actable_modifiers.push(action_modifier_id);
-    this.update({
-      "system.usable_actable_modifiers": new_usable_actable_modifiers,
-    });
   }
 
-  disableActableModifier(action_modifier_id) {
+  disableActableModifier(action_modifier_id, actable_type = undefined) {
     if (action_modifier_id === undefined) {
       console.warn(
         `Invalid action_modifier_id given for handling: '${action_modifier_id}'`,
       );
       return;
     }
-    const new_usable_actable_modifiers = foundry.utils.deepClone(
-      this.system.usable_actable_modifiers,
-    );
-    if (!this.system.usable_actable_modifiers.includes(action_modifier_id)) {
-      console.warn(
-        `Removal error: action_modifier_id '${action_modifier_id}' not present in list of item ${this._id}`,
+
+    if (actable_type === undefined) {
+      const new_usable_actable_modifiers = foundry.utils.deepClone(
+        this.system.usable_actable_modifiers,
       );
-      return;
+      if (!this.system.usable_actable_modifiers.includes(action_modifier_id)) {
+        console.warn(
+          `Removal error: action_modifier_id '${action_modifier_id}' not present in list of item ${this._id}`,
+        );
+        return;
+      }
+      new_usable_actable_modifiers.splice(
+        new_usable_actable_modifiers.indexOf(action_modifier_id),
+        1,
+      );
+      this.update({
+        "system.usable_actable_modifiers": new_usable_actable_modifiers,
+      });
+    } else {
+      const new_usable_actable_modifiers_typed = foundry.utils.deepClone(
+        this.system.usable_actable_modifiers_typed,
+      );
+      let found_entry = new_usable_actable_modifiers_typed.find(
+        (element) => element.uuid == action_modifier_id,
+      );
+      if (found_entry === undefined) {
+        found_entry = {
+          uuid: action_modifier_id,
+          main: false,
+          throw: false,
+          focuser: false,
+        };
+        new_usable_actable_modifiers_typed.push(found_entry);
+      }
+      switch (actable_type) {
+        case "main":
+          found_entry.main = false;
+          break;
+        case "throw":
+          found_entry.throw = false;
+          break;
+        case "focuser":
+          found_entry.focuser = false;
+          break;
+        default:
+          console.error("Invalid type");
+          break;
+      }
+      this.update({
+        "system.usable_actable_modifiers_typed":
+          new_usable_actable_modifiers_typed,
+      });
     }
-    new_usable_actable_modifiers.splice(
-      new_usable_actable_modifiers.indexOf(action_modifier_id),
-      1,
-    );
-    this.update({
-      "system.usable_actable_modifiers": new_usable_actable_modifiers,
-    });
   }
 
   getAvailableActableModifiers() {
     return utils.ruleset.item.getActableModifiersApplicable(this);
+  }
+
+  isLimitationUsable() {
+    return (
+      this.system.limitation.regain_type === "permanent" ||
+      this.system.limitation.usage_left > 0
+    );
+  }
+
+  async takeOneLimitationUse() {
+    if (
+      [
+        "weapon",
+        "kit",
+        "armor",
+        "feature",
+        "technique",
+        "incantatory-addition",
+        "action",
+        "opportunity",
+      ].includes(this.type)
+    ) {
+      if (this.system.limitation.regain_type != "permanent") {
+        await this.update({
+          "system.limitation.usage_left": this.system.limitation.usage_left - 1,
+        });
+      }
+    }
+  }
+
+  getAlterations(skill_path) {
+    const item_with_alterations = [
+      "kit",
+      "armor",
+      "weapon",
+      "feature",
+      "technique",
+      "incantatory-addition",
+    ];
+    if (!item_with_alterations.includes(this.type)) return [];
+    switch (this.type) {
+      case "kit":
+      case "armor":
+      case "weapon":
+      case "feature":
+        return this.system.skill_alterations
+          .filter(
+            (skill_alteration) =>
+              skill_alteration.associated_skill === skill_path,
+          )
+          .map((skill_alteration) => {
+            let result = {
+              dos_mod: skill_alteration.dos_mod,
+              adv_amount: skill_alteration.adv_amount,
+              disadv_amount: skill_alteration.disadv_amount,
+            };
+            return result;
+          });
+      case "technique":
+      case "incantatory-addition":
+        return [this.system.alteration];
+      default:
+        return [];
+    }
   }
 
   async applyTimePhase(time_phase_type) {
@@ -247,6 +420,9 @@ export default class AtoriaItem extends Item {
       "action",
       "opportunity",
       "spell",
+      "kit",
+      "armor",
+      "weapon",
     ];
     if (!item_with_time_limitation.includes(this.type)) return [];
     let changelog_messages = [];
@@ -314,89 +490,23 @@ export default class AtoriaItem extends Item {
     const action_item_types = ["weapon", "action", "spell", "opportunity"];
     if (!action_item_types.includes(this.type)) return;
 
-    const roll_data = await utils.itemRollDialog(this);
-    if (roll_data === null) return;
+    const used_ressources = await utils.itemRollDialog(this);
+    if (used_ressources === null) return;
 
-    const saves_asked = foundry.utils.deepClone(this.system.saves_asked) ?? [];
-    if (
-      this.type === "weapon" ||
-      (this.type === "spell" && this.system.markers.is_attack)
-    ) {
-      saves_asked.push(...utils.ruleset.character.getAttackSaves());
+    for (let keyword of used_ressources.used_keywords) {
+      this.actor.takeOneKeywordUse(keyword);
     }
 
-    let supplementaries_list = this.system.supplementaries_list;
-    const used_supplementaries = roll_data.used_supplementaries.map(
-      (supp_idx) => {
-        return supplementaries_list[supp_idx];
-      },
-    );
-
-    const critical_effect =
-      this.type === "spell" ? this.system.critical_effect : "";
-    ChatMessage.create(
-      {
-        type: "interactable",
-        speaker: ChatMessage.getSpeaker({ actor: this }),
-        user: game.user.id,
-        sound: CONFIG.sounds.dice,
-        flavor: roll_data.flavor,
-        rolls: roll_data.chat_rolls,
-        system: {
-          flavor_tooltip: roll_data.flavor_tooltip,
-          owning_actor_id: this.actor?._id,
-          related_items: [
-            {
-              type: "feature",
-              items_id: roll_data.used_features,
-            },
-            {
-              type: "supplementary",
-              items: used_supplementaries,
-            },
-            {
-              type: "keyword",
-              items: roll_data.used_keywords.map((keyword) => {
-                return {
-                  descriptive_tooltip: utils.ruleset.keywords.get_description(
-                    keyword,
-                    utils.ruleset.character.getActiveKeywordsData(this.actor)[
-                      keyword
-                    ] || 0,
-                  ),
-                  name: utils.ruleset.keywords.get_localized_name(
-                    keyword,
-                    utils.ruleset.character.getActiveKeywordsData(this.actor)[
-                      keyword
-                    ] || 0,
-                  ),
-                };
-              }),
-            },
-            {
-              type: "actable-modifier",
-              items_id: roll_data.used_actable_modifiers,
-            },
-          ],
-          critical_effect: critical_effect,
-          effect: roll_data.effect,
-          savesAsked: saves_asked,
-        },
-      },
-      { rollMode: roll_data.roll_mode },
-    );
-
-    for (let feature_uuid of roll_data.used_features) {
+    for (let feature_uuid of used_ressources.used_features) {
       let feature = fromUuidSync(feature_uuid);
-      if (feature.system.limitation.regain_type != "permanent") {
-        feature.update({
-          "system.limitation.usage_left":
-            feature.system.limitation.usage_left - 1,
-        });
-      }
+      feature.takeOneLimitationUse();
     }
-    if (used_supplementaries.length != 0) {
-      for (let supplementary of used_supplementaries) {
+    if (Object.keys(used_ressources.used_supplementaries).length != 0) {
+      let supplementaries_list = this.system.supplementaries_list;
+      for (let [supplementary_idx, amount] of Object.entries(
+        used_ressources.used_supplementaries,
+      )) {
+        let supplementary = supplementaries_list[supplementary_idx];
         if (supplementary.limitation.regain_type != "permanent") {
           supplementary.limitation.usage_left -= 1;
         }
@@ -405,34 +515,13 @@ export default class AtoriaItem extends Item {
         "system.supplementaries_list": supplementaries_list,
       });
     }
-    for (let actable_modifier_uuid of roll_data.used_actable_modifiers) {
+    for (let actable_modifier_uuid of used_ressources.used_actable_modifiers) {
       let actable_modifier = fromUuidSync(actable_modifier_uuid);
-      if (actable_modifier.system.limitation.regain_type != "permanent") {
-        actable_modifier.update({
-          "system.limitation.usage_left":
-            actable_modifier.system.limitation.usage_left - 1,
-        });
-      }
-    }
-    if (
-      this.type === "action" &&
-      this.system.limitation.regain_type != "permanent"
-    ) {
-      this.update({
-        "system.limitation.usage_left": this.system.limitation.usage_left - 1,
-      });
-    }
-    if (
-      this.type === "opportunity" &&
-      this.system.limitation.regain_type != "permanent"
-    ) {
-      this.update({
-        "system.limitation.usage_left": this.system.limitation.usage_left - 1,
-      });
+      actable_modifier.takeOneLimitationUse();
     }
 
     this.actor?.update({
-      "system.luck": this.actor.system.luck - roll_data.luck_applied,
+      "system.luck": this.actor.system.luck - used_ressources.luck,
     });
   }
 
@@ -444,6 +533,35 @@ export default class AtoriaItem extends Item {
         systemFields: this.system.schema.fields,
       },
     );
+  }
+
+  get_effect() {
+    const item_with_effect = [
+      "spell",
+      "feature",
+      "technique",
+      "incantatory-addition",
+      "action",
+      "opportunity",
+    ];
+    if (item_with_effect.includes(this.type)) {
+      return this.system.effect;
+    }
+    return "";
+  }
+
+  get_critical_effect() {
+    const item_with_critical_effect = [
+      "spell",
+      "weapon",
+      "feature",
+      "technique",
+      "incantatory-addition",
+    ];
+    if (item_with_critical_effect.includes(this.type)) {
+      return this.system.critical_effect;
+    }
+    return "";
   }
 
   getKeywordRecap() {
@@ -471,7 +589,7 @@ export default class AtoriaItem extends Item {
     );
     let keywords_list = [];
     let keywords_list_data = [];
-    const special_keyword = ["preserve", "reserve", "direct"];
+    const special_keyword = ["preserve", "reserve", "direct", "sly"];
     for (const keyword of active_keywords) {
       if (special_keyword.includes(keyword)) {
         switch (keyword) {
@@ -480,6 +598,27 @@ export default class AtoriaItem extends Item {
             break;
           case "reserve":
             keywords_recap.has_reserve = true;
+            break;
+          case "sly":
+            keywords_list.push(
+              utils.ruleset.keywords.get_localized_name(
+                keyword,
+                this.system.keywords[keyword],
+              ),
+            );
+            keywords_list_data.push({
+              label:
+                utils.ruleset.keywords.get_localized_name(
+                  keyword,
+                  this.system.keywords[keyword],
+                ) +
+                " " +
+                this.system.keywords["sly_amount"],
+              description: utils.ruleset.keywords.get_description(
+                keyword,
+                this.system.keywords[keyword],
+              ),
+            });
             break;
           case "direct":
             keywords_list.push(

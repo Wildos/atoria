@@ -803,7 +803,7 @@ async function migrateTo_0_3_24() {
         false,
       ]),
     );
-  update_items(game_items);
+  await update_items(game_items);
   // Migrate World Actors
   const actors = game.actors
     .map((a) => [a, true])
@@ -841,7 +841,7 @@ async function migrateTo_0_3_24() {
         recursive: !flags.persistSourceMigration,
         render: false,
       });
-      update_items(actor.items.map((a) => [a, true]));
+      await update_items(actor.items.map((a) => [a, true]));
     } catch (err) {
       err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
       console.error(err);
@@ -879,7 +879,7 @@ async function migrateTo_0_3_24() {
           recursive: !flags.persistSourceMigration,
           render: false,
         });
-        update_items(actor.items.map((a) => [a, true]));
+        await update_items(actor.items.map((a) => [a, true]));
       } catch (err) {
         err.message = `Failed atoria system migration for Actor ${actor.name}: ${err.message}`;
         console.error(err);

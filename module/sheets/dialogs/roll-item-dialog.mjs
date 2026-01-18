@@ -1,6 +1,7 @@
 import * as utils from "../../utils/module.mjs";
 import * as helpers from "../../utils/helpers.mjs";
 import * as rolls from "../../rolls/module.mjs";
+import RULESET from "../../utils/ruleset.mjs";
 
 const { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api;
 
@@ -193,7 +194,7 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
 
     let used_keywords = [];
     let used_features = [];
-    let used_supplementaries = [];
+    let used_supplementaries = {};
     let used_actable_modifiers = [];
 
     let skill_id = this.current_picked_skill_id() || "";
@@ -201,13 +202,16 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
     for (const [key, value] of Object.entries(form_values)) {
       if (key.startsWith("used_keywords_" + skill_id)) {
         if (value) {
-          used_keywords.push(key.split(".")[1]);
+          used_keywords.push({
+            id: key.split(".")[1],
+            type: key.split(".")[2] || "",
+          });
         }
         continue;
       }
       if (key.startsWith("used_supplementaries_" + skill_id)) {
-        if (value) {
-          used_supplementaries.push(key.split(".")[1]);
+        if (value > 0) {
+          used_supplementaries[key.split(".")[1]] = value;
         }
         continue;
       }
@@ -227,8 +231,8 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
 
     let chat_rolls = [];
 
-    let roll_effect = this.item.system.effect;
-    let out_used_supplementaries = [];
+    let roll_effect = this.item.get_effect();
+    let roll_critical_effect = this.item.get_critical_effect();
 
     let luck_applied = 0;
 
@@ -242,11 +246,15 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
         success_value: picked_skill_data.success,
         critical_success_amount: picked_skill_data.critical_success_amount,
         critical_fumble_amount: picked_skill_data.critical_fumble_amount,
-        title: picked_skill_data.label,
+        title:
+          this.item.type === "weapon"
+            ? this.item.name
+            : picked_skill_data.label,
         advantage_amount: form_values.advantage_amount,
         disadvantage_amount: form_values.disadvantage_amount,
         luck_applied: luck_applied,
         dos_mod: form_values.dos_mod,
+        is_danger: form_values.is_danger,
       };
 
       if (this.item.type === "weapon") {
@@ -269,19 +277,12 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
       }
 
       if (this.item.type === "spell") {
-        let supplementaries_list = foundry.utils.deepClone(
-          this.item.system.supplementaries_list,
-        );
-        for (let supplementary_idx of used_supplementaries) {
-          let supplementary = supplementaries_list[supplementary_idx];
-          if (supplementary.name === "") {
-            supplementary.name = game.i18n.format(
-              "ATORIA.Chat_message.Spell.Supplementary_name",
-              { key: supplementary_idx },
-            );
-          }
-          roll_effect += supplementary.description;
-          out_used_supplementaries.push(supplementary_idx);
+        for (let [supplementary_idx, amount] of Object.entries(
+          used_supplementaries,
+        )) {
+          let supplementary =
+            this.item.system.supplementaries_list[supplementary_idx];
+          roll_effect += supplementary.effect.repeat(amount);
         }
       }
       let actor_active_keyword =
@@ -290,27 +291,33 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
           this.item,
           picked_skill_data.path,
         );
-      for (const keyword in used_keywords) {
-        utils.applySkillAlteration(
+      for (const keyword_data of used_keywords) {
+        let keyword_idx = keyword_data["id"];
+        let actor_active_keyword_data = actor_active_keyword.find(
+          (elem) => elem["name"] === keyword_idx,
+        );
+        keyword_data.label = actor_active_keyword_data["label"];
+        keyword_data.description = actor_active_keyword_data["description"];
+        utils.applyAlteration(
           skill_roll_data,
-          actor_active_keyword[keyword].skill_alteration_type,
+          actor_active_keyword_data.alteration,
         );
       }
       for (const feature_uuid of used_features) {
         let feature = fromUuidSync(feature_uuid);
-        utils.applySkillAlteration(
+        utils.applyAlterationsToRollConfig(
           skill_roll_data,
-          feature.system.skill_alteration.skill_alteration_type,
+          feature.getAlterations(picked_skill_data.path),
         );
-        roll_effect += feature.system.description;
+        roll_critical_effect += feature.get_critical_effect();
       }
       for (const actable_uuid of used_actable_modifiers) {
         let actable_mod = fromUuidSync(actable_uuid);
-        utils.applySkillAlteration(
+        utils.applyAlterationsToRollConfig(
           skill_roll_data,
-          actable_mod.system.skill_alteration.skill_alteration_type,
+          actable_mod.getAlterations(null),
         );
-        roll_effect += actable_mod.system.description;
+        roll_critical_effect += actable_mod.get_critical_effect();
       }
 
       const roll = new rolls.AtoriaDOSRoll(
@@ -321,12 +328,26 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
       chat_rolls.push(roll);
     }
 
+    // Add effect
+    if (used_keywords.some((elem) => (elem.id = "versatile"))) {
+      roll_effect += RULESET.general.getVersatileEffect();
+    }
+
+    for (const feature_uuid of used_features) {
+      let feature = fromUuidSync(feature_uuid);
+      roll_effect += feature.get_effect();
+    }
+    for (const actable_uuid of used_actable_modifiers) {
+      let actable_mod = fromUuidSync(actable_uuid);
+      roll_effect += actable_mod.get_effect();
+    }
+
     const roll_data = {
       chat_rolls: chat_rolls,
       luck_applied: luck_applied,
       used_keywords: used_keywords,
       used_features: used_features, // uuid
-      used_supplementaries: out_used_supplementaries,
+      used_supplementaries: used_supplementaries,
       used_actable_modifiers: used_actable_modifiers, // uuid
       roll_mode: utils.convertDesiredVisibilityToRollMode(
         form_values.asked_visibility,
@@ -334,6 +355,7 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
       flavor: this.need_roll ? null : `<h5>${this.item.name}</h5>`,
       flavor_tooltip: this.need_roll ? null : this.item.descriptive_tooltip,
       effect: roll_effect,
+      critical_effect: roll_critical_effect,
     };
     await this.options.submit?.(roll_data);
     this.close();
@@ -491,6 +513,7 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
             let sub_context = {
               group: available_skill.group,
               tab: available_skill.id,
+              path: available_skill.path,
             };
 
             sub_context.available_supplementaries =
@@ -520,9 +543,6 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
                   available_skill.path,
                 )
                 .map((keyword_data) => {
-                  keyword_data["usable"] =
-                    this.item.actor.system.keywords_used[keyword_data.name] ||
-                    true;
                   keyword_data["time_phase"] =
                     utils.ruleset.keywords.get_time_phase(
                       keyword_data.name,
@@ -532,13 +552,39 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
                 });
 
               sub_context.available_features =
-                this.item.actor.getAssociatedFeatures(available_skill.path);
+                this.item.actor.getAssociatedFeature_n_ItemAlterations(
+                  available_skill.path,
+                );
             }
-            sub_context.available_actable_modifiers =
-              this.item.system.usable_actable_modifiers.flatMap((id) => {
-                let usable_actable = this.item.actor.items.get(id);
-                return usable_actable !== undefined ? usable_actable : [];
-              });
+            if (this.item.type === "weapon") {
+              sub_context.available_actable_modifiers =
+                this.item.system.usable_actable_modifiers_typed.flatMap(
+                  (data) => {
+                    let usable_actable = undefined;
+                    switch (available_skill?.path) {
+                      case "system.skills.combative.weapon.throw":
+                        if (data.throw)
+                          usable_actable = this.item.actor.items.get(data.uuid);
+                        break;
+                      case "system.skills.combative.weapon.focuser":
+                        if (data.focuser)
+                          usable_actable = this.item.actor.items.get(data.uuid);
+                        break;
+                      default:
+                        if (data.main)
+                          usable_actable = this.item.actor.items.get(data.uuid);
+                        break;
+                    }
+                    return usable_actable !== undefined ? usable_actable : [];
+                  },
+                );
+            } else {
+              sub_context.available_actable_modifiers =
+                this.item.system.usable_actable_modifiers.flatMap((id) => {
+                  let usable_actable = this.item.actor.items.get(id);
+                  return usable_actable !== undefined ? usable_actable : [];
+                });
+            }
             context.available_skills_data.push(sub_context);
           }
         }

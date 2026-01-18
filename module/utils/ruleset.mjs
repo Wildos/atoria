@@ -2,6 +2,8 @@ import { itemRollDialog } from "./helpers.mjs";
 import { default as default_values } from "./default-values.mjs";
 import { buildLocalizeString } from "../utils/atoria-lang.mjs";
 
+import { defineAlteration } from "../models/helpers.mjs";
+
 const RULESET = {};
 
 RULESET["general"] = class GeneralRuleset {
@@ -35,6 +37,14 @@ RULESET["general"] = class GeneralRuleset {
       attack_cost.time.second_amount += 1;
     }
     return attack_cost;
+  }
+
+  static getVersatileEffect() {
+    return (
+      "[[1]]{" +
+      game.i18n.localize("ATORIA.Ruleset.Keywords_effect.Versatile") +
+      "}"
+    );
   }
 };
 
@@ -141,8 +151,11 @@ RULESET["character"] = class ActorRuleset {
     return [
       "system.skills.combative.reflex.dodge",
       "system.skills.combative.reflex.parry",
+      "system.skills.combative.reflex.opportuneness",
       "system.skills.physical.sturdiness.tenacity",
+      "system.skills.physical.sturdiness.force",
       "system.skills.physical.agility.balance",
+      "system.skills.social.analyse.investigation",
       "system.skills.social.charisma.presence",
       "system.skills.social.spirit.will",
       "system.skills.social.spirit.guarding",
@@ -245,15 +258,35 @@ RULESET["character"] = class ActorRuleset {
   static getSkillAssociatedKeywordsData(actor, item, skill_path) {
     const skill_associated_keywords_data = [];
 
-    if (skill_path === "") return skill_associated_keywords_data;
+    if (skill_path === "") {
+      if (item.type === "spell" && item.system.versatile) {
+        skill_associated_keywords_data.push({
+          name: "versatile",
+          usable: true,
+          label: RULESET.keywords.get_localized_name("versatile", 1),
+          description: RULESET.keywords.get_description("versatile", 1),
+          alteration: {
+            dos_mod: 0,
+            adv_amount: 0,
+            disadv_amount: 0,
+          },
+          systemFields: defineAlteration(),
+        });
+      }
+      return skill_associated_keywords_data;
+    }
 
-    const add_keyword_data = (keyword, keyword_amount, alteration_type) => {
+    const add_keyword_data = (keyword, keyword_amount, alteration) => {
       skill_associated_keywords_data.push({
         name: keyword,
+        usable: actor.is_keyword_effect_usable({
+          id: keyword + "+".repeat(keyword_amount - 1),
+          type: "",
+        }),
         label: RULESET.keywords.get_localized_name(keyword, keyword_amount),
         description: RULESET.keywords.get_description(keyword, keyword_amount),
-        skill_alteration_type: alteration_type,
-        skill_alteration_type_label: RULESET.skill_alterations[alteration_type],
+        alteration: alteration,
+        systemFields: defineAlteration(),
       });
     };
     const actor_active_keywords_data = this.getActiveKeywordsData(actor);
@@ -268,6 +301,21 @@ RULESET["character"] = class ActorRuleset {
         active_keywords_data[key] || 0 + item.system.keywords[key];
     });
 
+    if (active_keywords_data["versatile"] > 0) {
+      skill_associated_keywords_data.push({
+        name: "versatile",
+        usable: true,
+        label: RULESET.keywords.get_localized_name("versatile", 1),
+        description: RULESET.keywords.get_description("versatile", 1),
+        alteration: {
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+        systemFields: defineAlteration(),
+      });
+    }
+
     const PARRY = "system.skills.combative.reflex.parry";
     const THROW = "system.skills.combative.weapon.throw";
     const FORCE = "system.skills.physical.sturdiness.force";
@@ -278,42 +326,37 @@ RULESET["character"] = class ActorRuleset {
     const TENACITY = "system.skills.physical.sturdiness.tenacity";
 
     if (PARRY.startsWith(skill_path) && active_keywords_data["guard"] > 0) {
-      add_keyword_data(
-        "guard",
-        active_keywords_data["guard"],
-        "one_degree_of_success_gain",
-      );
+      add_keyword_data("guard", 1, {
+        dos_mod: 1,
+        adv_amount: 0,
+        disadv_amount: 0,
+      });
     }
-
     if (THROW.startsWith(skill_path) && active_keywords_data["throwable"] > 0) {
-      add_keyword_data(
-        "throwable",
-        active_keywords_data["throwable"],
-        active_keywords_data["throwable"] >= 2
-          ? "two_degree_of_success_gain"
-          : "one_degree_of_success_gain",
-      );
+      add_keyword_data("throwable", active_keywords_data["throwable"], {
+        dos_mod: active_keywords_data["throwable"] >= 2 ? 2 : 1,
+        adv_amount: 0,
+        disadv_amount: 0,
+      });
     }
 
     if (
       PARRY.startsWith(skill_path) &&
       active_keywords_data["protection"] > 0
     ) {
-      add_keyword_data(
-        "protection",
-        active_keywords_data["protection"],
-        active_keywords_data["protection"] >= 2
-          ? "advantage"
-          : "one_degree_of_success_gain",
-      );
+      add_keyword_data("protection", 1, {
+        dos_mod: 1,
+        adv_amount: 0,
+        disadv_amount: 0,
+      });
     }
 
     if (FORCE.startsWith(skill_path) && active_keywords_data["gruff"] > 0) {
-      add_keyword_data(
-        "gruff",
-        active_keywords_data["gruff"],
-        "one_degree_of_success_gain",
-      );
+      add_keyword_data("gruff", active_keywords_data["gruff"], {
+        dos_mod: 1,
+        adv_amount: 0,
+        disadv_amount: 0,
+      });
     }
 
     if (
@@ -324,10 +367,22 @@ RULESET["character"] = class ActorRuleset {
         "noisy",
         active_keywords_data["noisy"],
         active_keywords_data["noisy"] >= 3
-          ? "disadvantage_n_one_degree_of_success_loss"
+          ? {
+              dos_mod: -1,
+              adv_amount: 0,
+              disadv_amount: 1,
+            }
           : active_keywords_data["noisy"] >= 2
-            ? "disadvantage"
-            : "one_degree_of_success_loss",
+            ? {
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 1,
+              }
+            : {
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
       );
     }
 
@@ -336,19 +391,19 @@ RULESET["character"] = class ActorRuleset {
       BRAWL.localeCompare(skill_path) !== 0 &&
       active_keywords_data["grip"] > 0
     ) {
-      add_keyword_data(
-        "grip",
-        active_keywords_data["grip"],
-        "one_degree_of_success_gain",
-      );
+      add_keyword_data("grip", active_keywords_data["grip"], {
+        dos_mod: 1,
+        adv_amount: 0,
+        disadv_amount: 0,
+      });
     }
 
     if (TENACITY.startsWith(skill_path) && active_keywords_data["stable"] > 0) {
-      add_keyword_data(
-        "stable",
-        active_keywords_data["stable"],
-        "one_degree_of_success_gain",
-      );
+      add_keyword_data("stable", active_keywords_data["stable"], {
+        dos_mod: 1,
+        adv_amount: 0,
+        disadv_amount: 0,
+      });
     }
 
     return skill_associated_keywords_data;
@@ -378,6 +433,33 @@ RULESET["item"] = class ItemRuleset {
     return available_actable_modifiers;
   }
 
+  static getActableModifiersTypedApplicable(item) {
+    if (item.type !== "weapon") {
+      console.error("Invalid call, only weapon have typed modifier data");
+      return [];
+    }
+    let actable_mod_list = this.getActableModifiersApplicable(item);
+
+    return actable_mod_list.map((actable_mod) => {
+      let found_item = foundry.utils.deepClone(
+        item.system.usable_actable_modifiers_typed.find(
+          (data) => data.uuid === actable_mod._id,
+        ),
+      );
+      if (found_item === undefined) {
+        found_item = {
+          actable: actable_mod,
+          main: false,
+          throw: false,
+          focuser: false,
+        };
+      } else {
+        found_item.actable = actable_mod;
+      }
+      return found_item;
+    });
+  }
+
   static isActableModifierApplicable(item, actable_modifier) {
     if (!["technique", "incantatory-addition"].includes(actable_modifier.type))
       return false;
@@ -404,6 +486,7 @@ RULESET["item"] = class ItemRuleset {
     const ignored_key = [
       "reserve_max",
       "reserve_current",
+      "sly_amount",
       "direct_type",
       "preserve",
       "preserve_mana",
@@ -445,10 +528,6 @@ RULESET["item"] = class ItemRuleset {
     if (new_item.system.associated_skill || item.system.is_focuser) {
       new_item.system.cost_list.push(RULESET.general.getCostWeaponAttack(item));
     }
-
-    new_item.system.limitation = default_values.models.helpers
-      .defineTimePhaseLimitation()
-      .getInitialValue({});
 
     return new_item;
   }
@@ -502,8 +581,9 @@ RULESET["keywords"] = {
   },
   max_amount: {
     two_handed: 2,
-    reach: 3,
+    reach: 2,
     brute: 2,
+    deployable: 1,
     equip: 1,
     fluxian: 1,
     smash: 3,
@@ -533,11 +613,12 @@ RULESET["keywords"] = {
   },
   weapon_linked: [
     "two_handed",
+    "deployable",
+    "equip",
     "reach",
     "smash",
     "throwable",
     "heavy",
-    "penetrating",
     "versatile",
     "quick",
     "recharge",
@@ -546,7 +627,7 @@ RULESET["keywords"] = {
     "sly",
     "preserve",
   ],
-  get_time_phase: function (keyword, amount) {
+  get_time_phase: function (keyword_id, amount) {
     const four_phase_keywords = [
       "gruff",
       "tough",
@@ -555,7 +636,7 @@ RULESET["keywords"] = {
       "sturdy",
       "stable",
     ];
-    if (four_phase_keywords.includes(keyword)) {
+    if (four_phase_keywords.includes(keyword_id)) {
       switch (amount) {
         case 0:
           return "";
@@ -569,7 +650,7 @@ RULESET["keywords"] = {
           return "combat";
       }
     }
-    switch (keyword) {
+    switch (keyword_id) {
       case "reach":
         if (amount < 2) return "";
         else return "combat";
@@ -586,6 +667,9 @@ RULESET["keywords"] = {
         if (amount === 0) return "";
         else if (amount === 1) return "sleep";
         return "combat";
+      case "protection":
+        if (amount === 0) return "";
+        else return "combat";
       case "direct":
         if (amount === 0) return "";
         else if (amount === 1) return "sleep";
@@ -594,25 +678,29 @@ RULESET["keywords"] = {
         return "";
     }
   },
-  get_description: function (keyword, amount) {
+  get_description: function (keyword_id, amount) {
     let pluses = "";
     for (let i = 1; i < amount; i++) {
       pluses += "+";
     }
     return game.i18n.localize(
-      buildLocalizeString("Ruleset", "Keywords_description", keyword) + pluses,
+      buildLocalizeString("Ruleset", "Keywords_description", keyword_id) +
+        pluses,
     );
   },
-  get_localized_name: function (keyword, amount) {
+  get_localized_name: function (keyword_id, amount) {
     let pluses = "";
     for (let i = 1; i < amount; i++) {
       pluses += "+";
     }
     return (
-      game.i18n.localize(buildLocalizeString("Ruleset", "Keywords", keyword)) +
-      pluses
+      game.i18n.localize(
+        buildLocalizeString("Ruleset", "Keywords", keyword_id),
+      ) + pluses
     );
   },
+
+  //TODO: Protection dans la zone mots-clefs a cocher
 };
 
 RULESET["armor"] = {

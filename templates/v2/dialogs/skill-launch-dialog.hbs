@@ -5,18 +5,23 @@
     <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Disadvantage_amount" }}</label><input type="number" data-dtype="Number" name="disadvantage_amount" value="0"/></div>
     <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Luck_applied" }}</label><input type="number" data-dtype="Number" name="luck_applied" value="0"/></div>
     <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.DoS_mod" }}</label><input type="number" data-dtype="Number" name="dos_mod" value="0"/></div>
+    <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Is_danger" }}</label><input type="checkbox" data-dtype="Boolean" name="is_danger"/></div>
     <div class="double-col-field">
         <ul class="available-features double-col-field">
         {{#each associated_features as |feature key|}}
             <li class="flexrow atoria-expand-control"
             oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
                 <input type="checkbox" data-dtype="Boolean" name="associated_features.{{feature._id}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}} />
-
+<!--TODO: redo this part -->
                 <h5>{{feature.name}}</h5>
 
-                <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
-                <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
-                {{/if}}
+                <!--Alteration-->
+                {{#each feature.system.skill_alterations as |skill_alteration key|}}
+                    {{#if (eq skill_alteration.associated_skill ../../skill_path) }}
+                    {{>"atoria.v2.commons_partials.alteration-display" alteration=skill_alteration
+                    systemFields=feature.systemFields.skill_alterations.element.fields }}
+                    {{/if}}
+                {{/each}}
                 <!--Limitation-->
                 {{>"atoria.v2.commons_partials.time-limitation-display" limitation=feature.system.limitation
                 systemFields=feature.systemFields.limitation.fields }}
@@ -30,9 +35,10 @@
         {{#each associated_keywords as |keyword key|}}
             <li class="flexrow atoria-expand-control"
             oncontextmenu="if(window.event.button === 2){this.classList.toggle('expanded');}">
-                <input type="checkbox" data-dtype="Boolean" name="associated_keywords.{{keyword.name}}" />
+                <input type="checkbox" data-dtype="Boolean" name="associated_keywords.{{keyword.name}}" {{disabled (not keyword.usable)}}/>
                 <h5>{{localize keyword.label}}</h5>
-                <label>{{localize keyword.skill_alteration_type_label}}</label>
+                {{>"atoria.v2.commons_partials.alteration-display" alteration=keyword_data.alteration
+                systemFields=keyword_data.systemFields.fields }}
             </li>
             <li class="atoria-expand-direct-data">
                 <p style="white-space: pre-line; max-width: 100%;">{{{localize keyword.description}}}</p>

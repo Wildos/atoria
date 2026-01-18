@@ -4,6 +4,7 @@
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Disadvantage_amount" }}</label><input type="number" data-dtype="Number" name="disadvantage_amount" value="0"/></div>
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Luck_applied" }}</label><input type="number" data-dtype="Number" name="luck_applied" value="0"/></div>
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.DoS_mod" }}</label><input type="number" data-dtype="Number" name="dos_mod" value="0"/></div>
+        <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Is_danger" }}</label><input type="checkbox" data-dtype="Boolean" name="is_danger"/></div>
     </div>
 
     {{#each available_skills_data as |available_skill_data _key|}}
@@ -16,7 +17,8 @@
         <ul class="available-supplementaries double-col-field">
             {{#each available_skill_data.available_supplementaries as |supplementary key|}}
                 <li class="flexrow atoria-expand-control" data-expand-id="supplementaries.{{supplementary.name}}" data-action="expandSection">
-                    <input type="checkbox" data-dtype="Boolean" name="used_supplementaries_{{available_skill_data.tab}}.{{key}}"
+                    <input type="number" data-dtype="Number" name="used_supplementaries_{{available_skill_data.tab}}.{{key}}"
+                    value=0 min="0" max="{{supplementary.usage_max}}"
                     {{disabled (and (ne supplementary.limitation.regain_type "permanent") (lte supplementary.limitation.usage_left 0))}}/>
                     <h5>{{supplementary.name}}</h5>
                     {{>"atoria.v2.commons_partials.time-limitation-display" limitation=supplementary.limitation
@@ -35,7 +37,6 @@
             {{/each}}
         </ul>
         {{/if}}
-
         {{#if available_skill_data.available_keywords}}
         <ul class="available-keywords double-col-field">
             {{#each available_skill_data.available_keywords as |keyword_data key|}}
@@ -43,9 +44,10 @@
                     <input type="checkbox" data-dtype="Boolean" name="used_keywords_{{available_skill_data.tab}}.{{keyword_data.name}}"
                     {{disabled (not keyword_data.usable)}}/>
                     <h5>{{keyword_data.label}}</h5>
-                    {{#if keyword_data.skill_alteration_type_label}}
-                    <label>{{localize keyword_data.skill_alteration_type_label}}</label>
-                    {{/if}}
+
+                    {{>"atoria.v2.commons_partials.alteration-display" alteration=keyword_data.alteration
+                    systemFields=keyword_data.systemFields.fields }}
+
                     {{#if keyword_data.time_phase}}
                     <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
                     {{/if}}
@@ -63,10 +65,14 @@
                 <li class="flexrow atoria-expand-control"  data-expand-id="features.{{feature._id}}" data-action="expandSection">
                     <input type="checkbox" data-dtype="Boolean" name="used_features_{{available_skill_data.tab}}|{{feature.uuid}}" {{disabled (and (lte feature.system.limitation.usage_left 0) (ne feature.system.limitation.regain_type "permanent"))}}/>
                     <h5>{{feature.name}}</h5>
+                    <!--Alteration-->
+                    {{#each feature.system.skill_alterations as |skill_alteration key|}}
+                        {{#if (eq skill_alteration.associated_skill available_skill_data.path) }}
+                        {{>"atoria.v2.commons_partials.alteration-display" alteration=skill_alteration
+                        systemFields=feature.systemFields.skill_alterations.element.fields }}
+                        {{/if}}
+                    {{/each}}
 
-                    <!--Alteration-->{{#if feature.system.skill_alteration.has_skill_alteration}}
-                    <label>{{localize (lookup feature.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices feature.system.skill_alteration.skill_alteration_type)}}</label>
-                    {{/if}}
                     <!--Limitation-->
                     {{>"atoria.v2.commons_partials.time-limitation-display" limitation=feature.system.limitation
                     systemFields=feature.systemFields.limitation.fields }}
@@ -87,9 +93,9 @@
 
                     <h5>{{actable_mod.name}}</h5>
 
-                    <!--Alteration-->{{#if actable_mod.system.skill_alteration.has_skill_alteration}}
-                    <label>{{localize (lookup actable_mod.system.schema.fields.skill_alteration.fields.skill_alteration_type.choices actable_mod.system.skill_alteration.skill_alteration_type)}}</label>
-                    {{/if}}
+                    <!--Alteration-->
+                    {{>"atoria.v2.commons_partials.alteration-display" alteration=actable_mod.system.alteration
+                    systemFields=actable_mod.systemFields.alteration.fields }}
 
                     <!--Limitation-->
                     {{#unless (eq actable_mod.system.limitation.regain_type "permanent")}}
@@ -105,6 +111,9 @@
                         cost=actable_mod.system.cost
                         systemFields=actable_mod.systemFields.cost.fields
                     }}
+                    <label>{{localize actable_mod.systemFields.restriction.label}}</label>
+                    <p style="white-space: pre-line; max-width: 100%;">{{{actable_mod.system.restriction}}}</p>
+                    <label>{{localize actable_mod.systemFields.description.label}}</label>
                     <p style="white-space: pre-line; max-width: 100%;">{{{actable_mod.system.description}}}</p>
                 </li>
             {{/each}}

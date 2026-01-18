@@ -1,5 +1,8 @@
 <div class="atoria-item-armor-parts grid-2col">
 
+    <label>{{localize systemFields.worn_encumbrance.label}}</label>
+    {{ formInput systemFields.worn_encumbrance value=item.system.worn_encumbrance disabled=(not @root.editable)}}
+
     <label>{{localize systemFields.position.label}}</label>
     <select name="system.position"
     data-tooltip="{{localize systemFields.position.label}}">
@@ -11,5 +14,30 @@
     data-tooltip="{{localize systemFields.armor_type.label}}">
         {{selectOptions systemFields.armor_type.choices selected=item.system.armor_type localize=true}}
     </select>
+
+
+    <fieldset class="double-col-field">
+        <legend>{{localize systemFields.skill_alterations.label}}
+            <a class="atoria-create-button" data-action="createSubItem" data-sub-element-path="skill_alterations" data-tooltip="{{localize systemFields.skill_alterations.label}}">
+                <i class="fas fa-plus"></i>
+            </a></legend>
+
+        {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation systemFields=systemFields.limitation.fields
+        data_path="system.limitation" cssClasses="double-col-field"}}
+
+        {{#each item.system.skill_alterations as |skill_alteration key|}}
+            <div class="flexrow double-col-field">
+                {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=skill_alteration
+                item_actor=../item.actor associated_skills=@root.associated_skills
+                data_path=(concat "system.skill_alterations." key) systemFields=../systemFields.skill_alterations.element.fields
+                cssClasses=""}}
+
+                <a class="atoria-delete-button" data-action="deleteSubItem" data-sub-element-path="skill_alterations" data-sub-element-index="{{key}}"
+                data-tooltip="{{localize 'ATORIA.Sheet.Actable.Skill_Alterations.Delete'}}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        {{/each}}
+    </fieldset>
 
 </div>

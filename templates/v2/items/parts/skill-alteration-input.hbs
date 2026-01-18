@@ -3,25 +3,28 @@ skill_alteration
 systemFields
 data_path
 associated_skills
+idx
 -->
 <div class="atoria-skill-alteration-input grid-2col {{cssClasses}}">
-    <label>{{localize systemFields.has_skill_alteration.label}}</label>
-    {{ formInput systemFields.has_skill_alteration value=skill_alteration.has_skill_alteration disabled=(not @root.editable)}}
-
-    {{#if skill_alteration.has_skill_alteration}}
-        {{#if item_actor}}
-            {{#if associated_skills}}
-                <select name="{{data_path}}.associated_skill"
-                data-tooltip="{{localize systemFields.associated_skill.label}}">
-                    {{selectOptions associated_skills selected=skill_alteration.associated_skill sort=true localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
-                </select>
-            {{/if}}
-            <select name="{{data_path}}.skill_alteration_type"
-            data-tooltip="{{localize systemFields.skill_alteration_type.label}}">
-                {{selectOptions systemFields.skill_alteration_type.choices selected=skill_alteration.skill_alteration_type localize=true}}
+    {{#if item_actor }}
+        {{#if associated_skills}}
+            <label>{{localize systemFields.associated_skill.label}}</label>
+            <select name="{{data_path}}.associated_skill"
+            data-tooltip="{{localize systemFields.associated_skill.label}}">
+                {{selectOptions associated_skills selected=skill_alteration.associated_skill sort=true localize=true blank="ATORIA.Sheet.Associated_skill_blank"}}
             </select>
-        {{else}}
-            <label class="error double-col-field">{{localize "ATORIA.Sheet.Feature.Require_actor"}}</label>
         {{/if}}
+        <div class="flexrow double-col-field">
+            <label>{{localize systemFields.dos_mod.label}}</label>
+            <input type="number" name="{{data_path}}.dos_mod" value="{{skill_alteration.dos_mod}}" step="1" {{disabled (not @root.editable)}}>
+
+            <label>{{localize systemFields.adv_amount.label}}</label>
+            <input type="number" name="{{data_path}}.adv_amount" value="{{skill_alteration.adv_amount}}" step="1" {{disabled (not @root.editable)}}>
+
+            <label>{{localize systemFields.disadv_amount.label}}</label>
+            <input type="number" name="{{data_path}}.disadv_amount" value="{{skill_alteration.disadv_amount}}" step="1" {{disabled (not @root.editable)}}>
+        </div>
+    {{else}}
+        <label class="error double-col-field">{{localize "ATORIA.Sheet.Feature.Require_actor"}}</label>
     {{/if}}
 </div>

@@ -63,6 +63,7 @@ export default class AtoriaActorHeroSheetV2 extends AtoriaActorSheetV2 {
             "guard",
             "penetrating",
             "protect",
+            "protection",
             "gruff",
             "tough",
             "grip",

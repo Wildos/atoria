@@ -81,6 +81,7 @@ export default class AtoriaActorNonPlayerCharacterSheetV2 extends AtoriaActorShe
             "guard",
             "penetrating",
             "protect",
+            "protection",
             "gruff",
             "tough",
             "grip",

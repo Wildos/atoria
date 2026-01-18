@@ -17,6 +17,13 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
       "ATORIA.Model.Weapon.Damage_name",
     );
 
+    schema.critical_effect = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      label: "ATORIA.Model.Critical_effect",
+    });
+
     schema.is_focuser = new fields.BooleanField({
       required: true,
       nullable: false,
@@ -52,11 +59,31 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
       { label: "ATORIA.Model.Weapon.Modificators" },
     );
 
-    schema.usable_actable_modifiers = new fields.ArrayField(
-      new fields.StringField({
-        required: true,
-        label: "ATORIA.Model.Actable.Actable_modifiers",
-      }),
+    schema.usable_actable_modifiers_typed = new fields.ArrayField(
+      new fields.SchemaField(
+        {
+          uuid: new fields.StringField({
+            required: true,
+            label: "ATORIA.Model.Actable.Actable_modifiers",
+          }),
+          main: new fields.BooleanField({
+            required: true,
+            initial: false,
+            label: "ATORIA.Model.Actable.Actable_modifiers_main",
+          }),
+          focuser: new fields.BooleanField({
+            required: true,
+            initial: false,
+            label: "ATORIA.Model.Actable.Actable_modifiers_focuser",
+          }),
+          throw: new fields.BooleanField({
+            required: true,
+            initial: false,
+            label: "ATORIA.Model.Actable.Actable_modifiers_throw",
+          }),
+        },
+        { label: "ATORIA.Model.Spell.Supplementaries.Label" },
+      ),
       {
         required: true,
         label: "ATORIA.Model.Actable.Usable_actable_modifiers",
@@ -84,5 +111,33 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
     });
 
     return schema;
+  }
+
+  /**
+   * Migrate candidate source data for this DataModel which may require initial cleaning or transformations.
+   * @param {object} source           The candidate source data from which the model will be constructed
+   * @returns {object}                Migrated source data, if necessary
+   */
+  static migrateData(source) {
+    const old_usable_actable_modifiers =
+      foundry.utils.deepClone(source.usable_actable_modifiers) ?? [];
+
+    if (
+      old_usable_actable_modifiers.length > 0 &&
+      typeof old_usable_actable_modifiers[0] == "string"
+    ) {
+      source.usable_actable_modifiers_typed = [];
+      for (let uuid of old_usable_actable_modifiers) {
+        source.usable_actable_modifiers_typed.push({
+          uuid: uuid,
+          main: true,
+          throw: false,
+          focuser: false,
+        });
+      }
+      source.usable_actable_modifiers = [];
+      delete source.usable_actable_modifiers;
+    }
+    return super.migrateData(source);
   }
 }

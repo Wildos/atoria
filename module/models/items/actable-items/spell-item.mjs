@@ -60,6 +60,12 @@ export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
       { label: "ATORIA.Model.Spell.Markers" },
     );
 
+    schema.versatile = new fields.BooleanField({
+      required: true,
+      initial: false,
+      label: "ATORIA.Ruleset.Keywords.Versatile",
+    });
+
     schema.critical_effect = new fields.StringField({
       required: true,
       label: "ATORIA.Model.Spell.Critical_effect",
@@ -80,9 +86,9 @@ export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
             initial: 1,
             label: "ATORIA.Model.Spell.Supplementaries.Cumul_max",
           }),
-          description: new fields.StringField({
+          effect: new fields.StringField({
             required: true,
-            label: "ATORIA.Model.Spell.Supplementaries.Description",
+            label: "ATORIA.Model.Effect",
           }),
           limitation: atoria_models.helpers.defineTimePhaseLimitation(),
         },
@@ -92,5 +98,20 @@ export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
     );
 
     return schema;
+  }
+
+  /**
+   * Migrate source data from some prior format into a new specification.
+   * The source parameter is either original data retrieved from disk or provided by an update operation.
+   * @inheritDoc
+   */
+  static migrateData(source) {
+    const supplementaries_list = source.supplementaries_list ?? [];
+    for (let supp of supplementaries_list) {
+      if (!("effect" in Object.keys(supp))) {
+        supp.effect = foundry.utils.deepClone(supp.description);
+      }
+    }
+    return super.migrateData(source);
   }
 }

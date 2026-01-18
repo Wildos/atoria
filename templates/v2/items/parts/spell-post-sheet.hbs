@@ -19,21 +19,14 @@
                     <label>{{localize ../systemFields.supplementaries_list.element.fields.usage_max.label}}</label>
                     <input type="number" name="system.supplementaries_list.{{idx}}.usage_max" value="{{supplementary.usage_max}}" step="1" {{disabled (not @root.editable)}}>
 
-                    <label class="double-col-field">{{localize ../systemFields.supplementaries_list.element.fields.description.label}}</label>
-                    <div class="double-col-field" style="display: grid;">
-                        <textarea
-                            class="textarea-auto-resize"
-                            style="grid-area: 1 / 1 / 2/ 2;"
-                            rows="1"
-                            data-name="supplementaries_list.{{idx}}.description"
-                            data-dtype="String" name="system.supplementaries_list.{{idx}}.description"
-                            {{disabled (not @root.editable)}}>{{cleanLines supplementary.description}}</textarea>
-                        <div
-                        class="textarea-auto-resize-sibling"
-                        aria-hidden="true"
-                        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-                        >{{cleanLines supplementary.description}}</div>
-                    </div>
+
+                    {{>"atoria.v2.commons_partials.textarea-input"
+                    value=supplementary.effect
+                    systemFields=../systemFields.supplementaries_list.element.fields.effect
+                    data_path=(concat "system.supplementaries_list."  idx  ".effect")
+                    data_name=(concat "supplementaries_list." idx ".effect")
+                    cssClasses="double-col-field" disabled=(not @root.editable)}}
+
 
                     {{>"atoria.v2.commons_partials.time-limitation-input" limitation=supplementary.limitation
                     data_path=(concat "system.supplementaries_list." idx ".limitation")

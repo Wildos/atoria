@@ -6,6 +6,13 @@ export default class AtoriaArmorItem extends atoria_models.AtoriaInventoryItem {
     const fields = foundry.data.fields;
     const schema = super.defineSchema();
 
+    schema.worn_encumbrance = new fields.NumberField({
+      required: true,
+      nullable: false,
+      initial: 0,
+      label: "ATORIA.Ruleset.Armor.Worn_encumbrance",
+    });
+
     schema.position = new fields.StringField({
       required: true,
       nullable: false,

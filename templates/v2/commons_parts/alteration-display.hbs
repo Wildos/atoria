@@ -1,0 +1,18 @@
+<!--
+alteration
+systemFields
+data_path
+-->
+<div class="atoria-alteration-display {{cssClasses}}">
+    <div class="flexrow">
+        {{#if alteration.dos_mod}}
+        <label>{{localize systemFields.dos_mod.label}}: {{alteration.dos_mod}}</label>
+        {{/if}}
+        {{#if alteration.adv_amount}}
+        <label>{{localize systemFields.adv_amount.label}}: {{alteration.adv_amount}}</label>
+        {{/if}}
+        {{#if alteration.disadv_amount}}
+        <label>{{localize systemFields.disadv_amount.label}}: {{alteration.disadv_amount}}</label>
+        {{/if}}
+    </div>
+</div>

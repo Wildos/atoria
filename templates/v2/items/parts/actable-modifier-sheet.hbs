@@ -17,6 +17,12 @@
         >{{cleanLines item.system.restriction}}</div>
     </div>
 
+
+    {{>"atoria.v2.commons_partials.textarea-input" value=item.system.effect systemFields=systemFields.effect data_path="system.effect" data_name="effect" cssClasses="double-col-field" disabled=(not @root.editable)}}
+
+    {{>"atoria.v2.commons_partials.textarea-input" value=item.system.critical_effect systemFields=systemFields.critical_effect data_path="system.critical_effect" data_name="critical_effect" cssClasses="double-col-field" disabled=(not @root.editable)}}
+
+
     {{#if (eq item.type "incantatory-addition")}}
     <label>{{localize systemFields.require_verbal.label}}</label>
     {{ formInput systemFields.require_verbal value=item.system.require_verbal disabled=(not @root.editable)}}
@@ -45,8 +51,10 @@
     {{ formInput systemFields.charge_compatible value=item.system.charge_compatible disabled=(not @root.editable)}}
     {{/if}}
 
-    {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=item.system.skill_alteration
-    item_actor=true
-    data_path="system.skill_alteration" systemFields=systemFields.skill_alteration.fields cssClasses="double-col-field"}}
-
+    <div class="flexrow double-col-field">
+        {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=item.system.alteration
+        item_actor=item.actor
+        data_path="system.alteration" systemFields=systemFields.alteration.fields
+        cssClasses=""}}
+    </div>
 </div>
