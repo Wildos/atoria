@@ -329,7 +329,7 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
     }
 
     // Add effect
-    if (used_keywords.some((elem) => (elem.id = "versatile"))) {
+    if (used_keywords.some((elem) => elem.id == "versatile")) {
       roll_effect += RULESET.general.getVersatileEffect();
     }
 
