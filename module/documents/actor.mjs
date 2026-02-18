@@ -888,7 +888,13 @@ export default class AtoriaActor extends Actor {
     for (let i of this.items) {
       if (!["feature", "kit", "weapon", "armor"].includes(i.type)) continue;
       for (let alteration of i.system.skill_alterations) {
-        if (alteration.associated_skill == skill_path) {
+        if (
+          utils.isSkillPathsMatching(
+            alteration.associated_skill,
+            skill_path,
+            true,
+          )
+        ) {
           associated_features.push(i);
           break;
         }

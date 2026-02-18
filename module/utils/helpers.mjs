@@ -398,3 +398,15 @@ export function getInlineRollFromRollData(roll_data) {
   label += " " + active_keys.join(", ");
   return `[[${roll_data.formula}]]{${label}}`;
 }
+
+export function isSkillPathsMatching(path_a, path_b, accept_partial = false) {
+  if (path_a === path_b) {
+    return true;
+  }
+  if (
+    accept_partial &&
+    (path_a.startsWith(path_b) || path_b.startsWith(path_a))
+  )
+    return true;
+  return false;
+}
