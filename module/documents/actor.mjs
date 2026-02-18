@@ -340,43 +340,63 @@ export default class AtoriaActor extends Actor {
     });
     await roll.evaluate();
 
-    await ChatMessage.create(
-      {
-        type: "interactable",
-        speaker: ChatMessage.getSpeaker({ actor: this }),
-        user: game.user.id,
-        sound: CONFIG.sounds.dice,
-        rolls: [roll],
-        system: {
-          related_items: [
-            {
-              type: "feature",
-              items_id: used_features_id,
-            },
-            {
-              type: "keyword",
-              items: roll_config.used_keywords.map((keyword_data) => {
-                return {
-                  descriptive_tooltip: RULESET.keywords.get_description(
-                    keyword_data.name,
-                    RULESET.character.getActiveKeywordsData(this)[
-                      keyword_data.name
-                    ] || 0,
-                  ),
-                  name: RULESET.keywords.get_localized_name(
-                    keyword_data.name,
-                    RULESET.character.getActiveKeywordsData(this)[
-                      keyword_data.name
-                    ] || 0,
-                  ),
-                };
-              }),
-            },
-          ],
-        },
-      },
-      { rollMode: roll_mode },
+    const effect = used_features.reduce(
+      (acc, val) => acc + val.system.effect,
+      "",
     );
+    const critical_effect = used_features.reduce(
+      (acc, val) => acc + val.system.critical_effect,
+      "",
+    );
+
+    const roll_data = {
+      chat_rolls: [roll],
+      used_features: used_features_id,
+      used_keywords: roll_config.used_keywords,
+      critical_effect: critical_effect,
+      effect: effect,
+      roll_mode: roll_mode,
+    };
+    console.debug(utils);
+    await utils.sendChatMessageFromRollData(this, this._id, roll_data);
+
+    // await ChatMessage.create(
+    //   {
+    //     type: "interactable",
+    //     speaker: ChatMessage.getSpeaker({ actor: this }),
+    //     user: game.user.id,
+    //     sound: CONFIG.sounds.dice,
+    //     rolls: [roll],
+    //     system: {
+    //       related_items: [
+    //         {
+    //           type: "feature",
+    //           items_id: used_features_id,
+    //         },
+    //         {
+    //           type: "keyword",
+    //           items: roll_config.used_keywords.map((keyword_data) => {
+    //             return {
+    //               descriptive_tooltip: RULESET.keywords.get_description(
+    //                 keyword_data.name,
+    //                 RULESET.character.getActiveKeywordsData(this)[
+    //                   keyword_data.name
+    //                 ] || 0,
+    //               ),
+    //               name: RULESET.keywords.get_localized_name(
+    //                 keyword_data.name,
+    //                 RULESET.character.getActiveKeywordsData(this)[
+    //                   keyword_data.name
+    //                 ] || 0,
+    //               ),
+    //             };
+    //           }),
+    //         },
+    //       ],
+    //     },
+    //   },
+    //   { rollMode: roll_mode },
+    // );
 
     for (let feature of used_features) {
       feature.update({

@@ -129,36 +129,18 @@ export async function skillCreationDialog(actor, skill_cat) {
   return null;
 }
 
-async function sendChatMessageFromRollData(item, roll_data) {
-  const used_supplementaries_data = Object.entries(
-    roll_data.used_supplementaries,
-  ).map(([supp_idx, amount]) => {
-    let supplementary = foundry.utils.deepClone(
-      item.system.supplementaries_list[supp_idx],
-    );
-    if (supplementary.name === "") {
-      supplementary.name = game.i18n.format(
-        "ATORIA.Chat_message.Spell.Supplementary_name",
-        { key: supp_idx },
-      );
-    }
-    if (amount > 1) {
-      supplementary.name = amount + "x " + supplementary.name;
-    }
-    return supplementary;
-  });
-
+export async function sendChatMessageFromRollData(actor, actor_id, roll_data) {
   ChatMessage.create(
     {
       type: "interactable",
-      speaker: ChatMessage.getSpeaker({ actor: item.actor }),
+      speaker: ChatMessage.getSpeaker({ actor: actor }),
       user: game.user.id,
       sound: CONFIG.sounds.dice,
       flavor: roll_data.flavor,
       rolls: roll_data.chat_rolls,
       system: {
         flavor_tooltip: roll_data.flavor_tooltip,
-        owning_actor_id: item.actor?._id,
+        owning_actor_id: actor_id,
         related_items: [
           {
             type: "feature",
@@ -166,7 +148,7 @@ async function sendChatMessageFromRollData(item, roll_data) {
           },
           {
             type: "supplementary",
-            items: used_supplementaries_data,
+            items: roll_data.used_supplementaries_data,
           },
           {
             type: "keyword",
@@ -207,7 +189,25 @@ export async function itemRollDialog(item) {
     roll_data.saves_asked.push(...utils.ruleset.character.getAttackSaves());
   }
 
-  sendChatMessageFromRollData(item, roll_data);
+  roll_data.used_supplementaries_data = Object.entries(
+    roll_data.used_supplementaries,
+  ).map(([supp_idx, amount]) => {
+    let supplementary = foundry.utils.deepClone(
+      item.system.supplementaries_list[supp_idx],
+    );
+    if (supplementary.name === "") {
+      supplementary.name = game.i18n.format(
+        "ATORIA.Chat_message.Spell.Supplementary_name",
+        { key: supp_idx },
+      );
+    }
+    if (amount > 1) {
+      supplementary.name = amount + "x " + supplementary.name;
+    }
+    return supplementary;
+  });
+
+  sendChatMessageFromRollData(item.actor, item.actor?._id, roll_data);
 
   let used_ressources = {
     luck: roll_data.luck_applied,
