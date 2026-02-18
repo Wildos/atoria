@@ -615,7 +615,6 @@ RULESET["keywords"] = {
     "two_handed",
     "deployable",
     "equip",
-    "reach",
     "smash",
     "throwable",
     "heavy",
