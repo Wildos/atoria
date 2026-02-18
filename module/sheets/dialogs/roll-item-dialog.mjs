@@ -246,10 +246,9 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
         success_value: picked_skill_data.success,
         critical_success_amount: picked_skill_data.critical_success_amount,
         critical_fumble_amount: picked_skill_data.critical_fumble_amount,
-        title:
-          this.item.type === "weapon"
-            ? this.item.name
-            : picked_skill_data.label,
+        title: ["weapon", "opportunity", "action"].includes(this.item.type)
+          ? this.item.name
+          : picked_skill_data.label,
         advantage_amount: form_values.advantage_amount,
         disadvantage_amount: form_values.disadvantage_amount,
         luck_applied: luck_applied,
