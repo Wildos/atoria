@@ -1,4 +1,18 @@
 <section class='atoria tooltip'>
     <h5>{{item.name}}{{>"atoria.v2.tooltips_partials.time-limitation-tooltip" limitation=item.system.limitation}}</h5>
-    <p>Description: {{cleanLines item.system.description}}</p>
+
+    {{#if (ne item.system.limitation.regain_type "permanent")}}
+        {{>"atoria.v2.commons_partials.time-limitation-display" limitation=item.system.limitation
+        systemFields=systemFields.limitation.fields }}
+    {{/if}}
+
+    {{#if item.system.description}}
+    <p>{{localize systemFields.description.label}}: {{brNewLines item.system.description}}</p>
+    {{/if}}
+    {{#if item.system.effect}}
+    <p>{{localize systemFields.effect.label}}: {{brNewLines item.system.effect}}</p>
+    {{/if}}
+    {{#if item.system.critical_effect}}
+    <p>{{localize systemFields.critical_effect.label}}: {{brNewLines item.system.critical_effect}}</p>
+    {{/if}}
 </section>

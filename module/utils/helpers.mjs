@@ -2,7 +2,10 @@ import * as utils from "../utils/module.mjs";
 import * as models from "../models/module.mjs";
 import RULESET from "./ruleset.mjs";
 
-import { AtoriaRollItemDialogV2 } from "../sheets/module.mjs";
+import {
+  AtoriaRollItemDialogV2,
+  AtoriaRollSkillDialogV2,
+} from "../sheets/module.mjs";
 
 export function hasPopoutV2Module() {
   try {
@@ -224,76 +227,106 @@ export async function skillRollDialog(actor, skill_path) {
     console.warn("NO ACTOR, NO SKILL ROLL");
     return undefined;
   }
-  const associated_features =
-    actor.getAssociatedFeature_n_ItemAlterations(skill_path);
-  const associated_keywords =
-    utils.ruleset.character.getSkillAssociatedKeywordsData(
-      actor,
-      null,
-      skill_path,
-    );
-  const is_blind_roll = utils.ruleset.character.isBlindSkill(skill_path);
-  const content = await renderTemplate(
-    CONFIG.ATORIA.DIALOG_TEMPLATES.skill_launch,
-    {
-      skill_name: actor.getSkillTitle(skill_path),
-      skill_path,
-      associated_features: associated_features,
-      associated_keywords: associated_keywords,
-      is_blind_roll: is_blind_roll,
-      default_roll_mode: is_blind_roll
-        ? "blind"
-        : convertRollModeToDesiredVisibility(
-            game.settings.get("core", "rollMode"),
-          ),
-    },
-  );
-  const return_format = {
-    associated_skill: "<path>",
-    advantage_amount: 0,
-    disadvantage_amount: 0,
-    luck_applied: 0,
-    dos_mod: 0,
-    is_danger: false,
-    used_features: [],
-    used_keywords: [],
-    roll_mode: "public",
-  };
-  return await foundry.applications.api.DialogV2.prompt({
-    window: {
-      title: game.i18n.format("ATORIA.Dialog.Skill_roll.Title", {
-        actor_name: actor.name,
-      }),
-    },
-    rejectClose: false,
-    content: content,
-    ok: {
-      label: game.i18n.localize("ATORIA.Dialog.Launch"),
-      callback: (event, button, dialog) => {
-        const formElement = dialog.querySelector("form");
-        const formData = new FormDataExtended(formElement);
-        const formDataObject = formData.object;
-        formDataObject["used_features"] = [];
-        for (let feature of associated_features) {
-          if (formDataObject[`associated_features.${feature._id}`])
-            formDataObject["used_features"].push(feature._id);
-        }
-        formDataObject["used_keywords"] = [];
-        for (let keyword of associated_keywords) {
-          if (formDataObject[`associated_keywords.${keyword.name}`])
-            formDataObject["used_keywords"].push(keyword);
-        }
 
-        formDataObject["roll_mode"] = utils.convertDesiredVisibilityToRollMode(
-          formDataObject["asked_visibility"],
-        );
-        return foundry.utils.mergeObject(return_format, formDataObject, {
-          overwrite: true,
-          insertKeys: false,
-        });
-      },
-    },
+  let roll_data = await AtoriaRollSkillDialogV2.wait({
+    actor: actor,
+    skill: actor.getSkillFromPath(skill_path),
   });
+
+  if (roll_data === null) {
+    return null;
+  }
+
+  roll_data.saves_asked = [];
+
+  sendChatMessageFromRollData(actor, actor._id, roll_data);
+
+  let used_ressources = {
+    luck: roll_data.luck_applied,
+    used_features: roll_data.used_features,
+    used_keywords: roll_data.used_keywords,
+  };
+  return used_ressources;
+  // const associated_features =
+  //   actor.getAssociatedFeature_n_ItemAlterations(skill_path);
+  // const associated_keywords =
+  //   utils.ruleset.character.getSkillAssociatedKeywordsData(
+  //     actor,
+  //     null,
+  //     skill_path,
+  //   );
+  // const is_blind_roll = utils.ruleset.character.isBlindSkill(skill_path);
+  // const content = await renderTemplate(
+  //   CONFIG.ATORIA.DIALOG_TEMPLATES.skill_launch,
+  //   {
+  //     max_luck: actor.system.luck,
+  //     skill_name: actor.getSkillTitle(skill_path),
+  //     skill_path,
+  //     associated_features: associated_features,
+  //     associated_keywords: associated_keywords,
+  //     is_blind_roll: is_blind_roll,
+  //     default_roll_mode: is_blind_roll
+  //       ? "blind"
+  //       : convertRollModeToDesiredVisibility(
+  //           game.settings.get("core", "rollMode"),
+  //         ),
+  //   },
+  // );
+  // const return_format = {
+  //   associated_skill: "<path>",
+  //   advantage_amount: 0,
+  //   disadvantage_amount: 0,
+  //   luck_applied: 0,
+  //   dos_mod: 0,
+  //   is_danger: false,
+  //   used_features: [],
+  //   used_keywords: [],
+  //   roll_mode: "public",
+  // };
+  // try {
+  //   return await foundry.applications.api.DialogV2.prompt({
+  //     window: {
+  //       title: game.i18n.format("ATORIA.Dialog.Skill_roll.Title", {
+  //         actor_name: actor.name,
+  //       }),
+  //     },
+  //     rejectClose: false,
+  //     content: content,
+  //     ok: {
+  //       label: game.i18n.localize("ATORIA.Dialog.Launch"),
+  //       callback: (event, button, dialog) => {
+  //         if (!button.form.reportValidity()) {
+  //           return {};
+  //         }
+  //         const formElement = dialog.querySelector("form");
+  //         const formData = new FormDataExtended(formElement);
+  //         const formDataObject = formData.object;
+
+  //         formDataObject["used_features"] = [];
+  //         for (let feature of associated_features) {
+  //           if (formDataObject[`associated_features.${feature._id}`])
+  //             formDataObject["used_features"].push(feature._id);
+  //         }
+  //         formDataObject["used_keywords"] = [];
+  //         for (let keyword of associated_keywords) {
+  //           if (formDataObject[`associated_keywords.${keyword.name}`])
+  //             formDataObject["used_keywords"].push(keyword);
+  //         }
+
+  //         formDataObject["roll_mode"] =
+  //           utils.convertDesiredVisibilityToRollMode(
+  //             formDataObject["asked_visibility"],
+  //           );
+  //         return foundry.utils.mergeObject(return_format, formDataObject, {
+  //           overwrite: true,
+  //           insertKeys: false,
+  //         });
+  //       },
+  //     },
+  //   });
+  // } catch {
+  //   return null;
+  // }
 }
 
 export function convertDesiredVisibilityToRollMode(desired_visibility) {

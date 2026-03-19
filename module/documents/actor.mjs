@@ -288,77 +288,88 @@ export default class AtoriaActor extends Actor {
       return;
     }
 
-    const roll_config = await utils.skillRollDialog(this, skill_path);
-    if (roll_config === null) return;
+    const used_ressources = await utils.skillRollDialog(this, skill_path);
+    if (used_ressources === null) return;
 
-    const used_features = roll_config["used_features"].map((element_id) =>
-      this.items.get(element_id),
-    );
-    const used_features_id = used_features.map((element) => {
-      return element.uuid;
-    });
-
-    let used_alterations = [];
-    for (let feature of used_features) {
-      let alterations = feature.getAlterations(skill_path);
-      for (let alteration of alterations) {
-        used_alterations.push(alteration);
-      }
-    }
-    for (let keyword_data of roll_config["used_keywords"]) {
-      used_alterations.push(keyword_data.alteration);
+    for (let keyword of used_ressources.used_keywords) {
+      this.takeOneKeywordUse(keyword);
     }
 
-    const roll_config_altered = utils.applyAlterationsToRollConfig(
-      roll_config,
-      used_alterations,
-    );
+    for (let feature_uuid of used_ressources.used_features) {
+      let feature = fromUuidSync(feature_uuid);
+      feature.takeOneLimitationUse();
+    }
 
-    const {
-      roll_mode,
-      advantage_amount,
-      disadvantage_amount,
-      luck_applied,
-      dos_mod,
-      is_danger,
-    } = roll_config_altered;
-
-    const skill_title = this.getSkillTitle(skill_path);
-    const roll = new rolls.AtoriaDOSRoll(this.getRollData(), {
-      owning_actor_id: this._id,
-      success_value: skill.success,
-      critical_success_amount:
-        utils.ruleset.character.getSkillCriticalSuccessAmount(skill),
-      critical_fumble_amount:
-        utils.ruleset.character.getSkillCriticalFumbleAmount(skill),
-      title: skill_title,
-      advantage_amount,
-      disadvantage_amount,
-      luck_applied,
-      dos_mod,
-      is_danger,
+    this.update({
+      "system.luck": this.system.luck - used_ressources.luck,
     });
-    await roll.evaluate();
+    // const used_features = roll_config["used_features"].map((element_id) =>
+    //   this.items.get(element_id),
+    // );
+    // const used_features_id = used_features.map((element) => {
+    //   return element.uuid;
+    // });
 
-    const effect = used_features.reduce(
-      (acc, val) => acc + val.system.effect,
-      "",
-    );
-    const critical_effect = used_features.reduce(
-      (acc, val) => acc + val.system.critical_effect,
-      "",
-    );
+    // let used_alterations = [];
+    // for (let feature of used_features) {
+    //   let alterations = feature.getAlterations(skill_path);
+    //   for (let alteration of alterations) {
+    //     used_alterations.push(alteration);
+    //   }
+    // }
+    // for (let keyword_data of roll_config["used_keywords"]) {
+    //   used_alterations.push(keyword_data.alteration);
+    // }
 
-    const roll_data = {
-      chat_rolls: [roll],
-      used_features: used_features_id,
-      used_keywords: roll_config.used_keywords,
-      critical_effect: critical_effect,
-      effect: effect,
-      roll_mode: roll_mode,
-    };
-    console.debug(utils);
-    await utils.sendChatMessageFromRollData(this, this._id, roll_data);
+    // const roll_config_altered = utils.applyAlterationsToRollConfig(
+    //   roll_config,
+    //   used_alterations,
+    // );
+
+    // const {
+    //   roll_mode,
+    //   advantage_amount,
+    //   disadvantage_amount,
+    //   luck_applied,
+    //   dos_mod,
+    //   is_danger,
+    // } = roll_config_altered;
+
+    // const skill_title = this.getSkillTitle(skill_path);
+    // const roll = new rolls.AtoriaDOSRoll(this.getRollData(), {
+    //   owning_actor_id: this._id,
+    //   success_value: skill.success,
+    //   critical_success_amount:
+    //     utils.ruleset.character.getSkillCriticalSuccessAmount(skill),
+    //   critical_fumble_amount:
+    //     utils.ruleset.character.getSkillCriticalFumbleAmount(skill),
+    //   title: skill_title,
+    //   advantage_amount,
+    //   disadvantage_amount,
+    //   luck_applied,
+    //   dos_mod,
+    //   is_danger,
+    // });
+    // await roll.evaluate();
+
+    // const effect = used_features.reduce(
+    //   (acc, val) => acc + val.system.effect,
+    //   "",
+    // );
+    // const critical_effect = used_features.reduce(
+    //   (acc, val) => acc + val.system.critical_effect,
+    //   "",
+    // );
+
+    // const roll_data = {
+    //   chat_rolls: [roll],
+    //   used_features: used_features_id,
+    //   used_keywords: roll_config.used_keywords,
+    //   critical_effect: critical_effect,
+    //   effect: effect,
+    //   roll_mode: roll_mode,
+    // };
+    // await utils.sendChatMessageFromRollData(this, this._id, roll_data);
 
     // await ChatMessage.create(
     //   {
@@ -398,23 +409,23 @@ export default class AtoriaActor extends Actor {
     //   { rollMode: roll_mode },
     // );
 
-    for (let feature of used_features) {
-      feature.update({
-        "system.limitation.usage_left":
-          feature.system.limitation.usage_left - 1,
-      });
-    }
+    // for (let feature of used_features) {
+    //   feature.update({
+    //     "system.limitation.usage_left":
+    //       feature.system.limitation.usage_left - 1,
+    //   });
+    // }
 
-    for (let keyword of roll_config.used_keywords) {
-      keyword.id = keyword.name;
-      this.takeOneKeywordUse(keyword);
-    }
+    // for (let keyword of roll_config.used_keywords) {
+    //   keyword.id = keyword.name;
+    //   this.takeOneKeywordUse(keyword);
+    // }
 
-    this.update({
-      "system.luck": this.system.luck - luck_applied,
-    });
+    // this.update({
+    //   "system.luck": this.system.luck - luck_applied,
+    // });
 
-    return roll;
+    // return roll;
   }
 
   async createSkill(skill_cat_path, skill_key, skill_label) {

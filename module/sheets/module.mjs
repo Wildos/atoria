@@ -13,6 +13,7 @@ export { default as AtoriaActorNonPlayerCharacterSheetV2 } from "./actors/actor-
 export { default as AtoriaActorPlayerCharacterSheetV2 } from "./actors/actor-player-character-sheet-v2.mjs";
 
 export { default as AtoriaRollItemDialogV2 } from "./dialogs/roll-item-dialog.mjs";
+export { default as AtoriaRollSkillDialogV2 } from "./dialogs/roll-skill-dialog.mjs";
 
 export { default as AtoriaItemSheetV1 } from "./items/item-sheet.mjs";
 export { default as AtoriaItemSheet } from "./items/item-sheet-v2.mjs";
