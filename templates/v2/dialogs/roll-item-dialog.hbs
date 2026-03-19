@@ -5,6 +5,12 @@
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Luck_applied" }}</label><input type="number" data-dtype="Number" name="luck_applied" value="0" min="0" max="{{actor.system.luck}}"/></div>
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.DoS_mod" }}</label><input type="number" data-dtype="Number" name="dos_mod" value="0"/></div>
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Is_danger" }}</label><input type="checkbox" data-dtype="Boolean" name="is_danger"/></div>
+
+        <label>{{localize "ATORIA.Dialog.Roll.Is_danger" }}</label>
+        <select name="aiming_type">
+          {{selectOptions ruleset.aiming.type selected="none" localize=true}}
+        </select>
+
     </div>
 
     {{#each available_skills_data as |available_skill_data _key|}}

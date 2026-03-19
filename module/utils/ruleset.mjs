@@ -578,6 +578,46 @@ RULESET["skill_alterations"] = {
     "ATORIA.Model.Skill_alteration.Disadvantage_n_One_degree_of_success_loss",
 };
 
+RULESET["aiming"] = {
+  type: {
+    none: "ATORIA.Ruleset.Aiming.None.Label",
+    arm: "ATORIA.Ruleset.Aiming.Arm.Label",
+    hand: "ATORIA.Ruleset.Aiming.Hand.Label",
+    leg: "ATORIA.Ruleset.Aiming.Leg.Label",
+    foot: "ATORIA.Ruleset.Aiming.Foot.Label",
+    neck: "ATORIA.Ruleset.Aiming.Neck.Label",
+    joint: "ATORIA.Ruleset.Aiming.Joint.Label",
+    head: "ATORIA.Ruleset.Aiming.Head.Label",
+  },
+  description: {
+    none: "ATORIA.Ruleset.Aiming.None.Description",
+    arm: "ATORIA.Ruleset.Aiming.Arm.Description",
+    hand: "ATORIA.Ruleset.Aiming.Hand.Description",
+    leg: "ATORIA.Ruleset.Aiming.Leg.Description",
+    foot: "ATORIA.Ruleset.Aiming.Foot.Description",
+    neck: "ATORIA.Ruleset.Aiming.Neck.Description",
+    joint: "ATORIA.Ruleset.Aiming.Joint.Description",
+    head: "ATORIA.Ruleset.Aiming.Head.Description",
+  },
+  dos_mod: {
+    none: 0,
+    arm: -1,
+    hand: -2,
+    leg: -1,
+    foot: -2,
+    neck: -3,
+    joint: -2,
+    head: -3,
+  },
+  get_alteration: function (aiming_type) {
+    return {
+      dos_mod: this.dos_mod[aiming_type],
+      adv_amount: 0,
+      disadv_amount: 0,
+    };
+  },
+};
+
 RULESET["keywords"] = {
   with_type: {
     preserve: {

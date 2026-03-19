@@ -1394,6 +1394,16 @@
           "Label": "Provoked+",
           "Description": "You're Provoked+"
         }
+      },
+      "Aiming": {
+        "None": "None",
+        "Arm": "Arm",
+        "Hand": "Hand",
+        "Leg": "Leg",
+        "Foot": "Foot",
+        "Neck": "Neck",
+        "Joint": "Joint",
+        "Head": "Head"
       }
     }
   },

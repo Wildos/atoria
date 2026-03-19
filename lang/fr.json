@@ -1450,6 +1450,34 @@
           "Label": "Provoqué+",
           "Description": "Désavantage si la provocation n'est pas suivie."
         }
+      },
+      "Aiming": {
+        "None": { "Label": "Rien", "Description": "" },
+        "Arm": {
+          "Label": "Bras",
+          "Description": "DR Robustesse - Ténacité applique l’action “Lâcher” < 0"
+        },
+        "Hand": { "Label": "Main", "Description": "La cible lâche son arme" },
+        "Leg": {
+          "Label": "Jambe",
+          "Description": "DR Robustesse - Ténacité applique “Ralenti” < 0\nSoin de Santé dissipe ”Ralenti”."
+        },
+        "Foot": {
+          "Label": "Pied",
+          "Description": "Applique “Ralenti”\nSoin de Santé dissipe ”Ralenti”."
+        },
+        "Neck": {
+          "Label": "Cou",
+          "Description": "Dégâts maximum et applique “Saignement”."
+        },
+        "Joint": {
+          "Label": "Articulation",
+          "Description": "Applique “Saignement”."
+        },
+        "Head": {
+          "Label": "Tête",
+          "Description": "Dégâts maximum et DR Robustesse - Ténacité applique “Étourdi” 1 tour < 0"
+        }
       }
     }
   },

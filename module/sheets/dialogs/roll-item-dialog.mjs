@@ -319,6 +319,11 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
         roll_critical_effect += actable_mod.get_critical_effect();
       }
 
+      utils.applyAlteration(
+        skill_roll_data,
+        RULESET.aiming.get_alteration(form_values.aiming_type),
+      );
+
       const roll = new rolls.AtoriaDOSRoll(
         this.item.getRollData(),
         skill_roll_data,
