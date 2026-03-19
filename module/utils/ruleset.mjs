@@ -306,7 +306,21 @@ RULESET["character"] = class ActorRuleset {
         active_keywords_data[key] || 0 + item.system.keywords[key];
     });
 
-    if (active_keywords_data["versatile"] > 0) {
+    const FOCUSER = "system.skills.combative.weapon.focuser";
+    const PARRY = "system.skills.combative.reflex.parry";
+    const THROW = "system.skills.combative.weapon.throw";
+    const FORCE = "system.skills.physical.sturdiness.force";
+    const SILENCE = "system.skills.physical.slyness.silence";
+    const STEALTH = "system.skills.physical.slyness.stealth";
+    const WEAPON = "system.skills.combative.weapon";
+    const BRAWL = "system.skills.combative.weapon.brawl";
+    const TENACITY = "system.skills.physical.sturdiness.tenacity";
+
+    if (
+      active_keywords_data["versatile"] > 0 &&
+      !THROW.startsWith(skill_path) &&
+      !FOCUSER.startsWith(skill_path)
+    ) {
       skill_associated_keywords_data.push({
         name: "versatile",
         usable: true,
@@ -320,15 +334,6 @@ RULESET["character"] = class ActorRuleset {
         systemFields: defineAlteration(),
       });
     }
-
-    const PARRY = "system.skills.combative.reflex.parry";
-    const THROW = "system.skills.combative.weapon.throw";
-    const FORCE = "system.skills.physical.sturdiness.force";
-    const SILENCE = "system.skills.physical.slyness.silence";
-    const STEALTH = "system.skills.physical.slyness.stealth";
-    const WEAPON = "system.skills.combative.weapon";
-    const BRAWL = "system.skills.combative.weapon.brawl";
-    const TENACITY = "system.skills.physical.sturdiness.tenacity";
 
     if (PARRY.startsWith(skill_path) && active_keywords_data["guard"] > 0) {
       add_keyword_data("guard", 1, {
