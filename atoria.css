@@ -1272,6 +1272,9 @@
   align-items: center;
   height: 100%;
 }
+.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense input[type=checkbox]::after {
+  --checkbox-content: attr(data-letter) !important;
+}
 .system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense > textarea {
   min-height: 1lh;
 }

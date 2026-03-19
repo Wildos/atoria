@@ -170,6 +170,10 @@ function _tooltipToDataset(tooltip) {
   };
 }
 
+function _toDataset(args) {
+  return args.hash;
+}
+
 function _readonly(value) {
   if (value) return Handlebars.SafeString('readonly="readonly"');
   return "";
@@ -229,6 +233,7 @@ export const registerHandlebarsHelpers = async function () {
     enhancedNumberFormat: _enhancedNumberFormat,
     oneOf: _oneOf,
     tooltipToDataset: _tooltipToDataset,
+    toDataset: _toDataset,
     readonly: _readonly,
     sum: _sum,
     arraytize: _arraytize,

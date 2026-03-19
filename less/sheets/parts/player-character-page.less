@@ -84,6 +84,9 @@
                 align-items: center;
                 height: 100%;
             }
+            input[type=checkbox]::after {
+                --checkbox-content: attr(data-letter) !important;
+            }
 
             > textarea {
                 // line-height: var(--atoria-base-line-block-height);

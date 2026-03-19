@@ -56,6 +56,12 @@
             <div class="atoria-offense-defense">
                 <div class="flexrow">
                 <label>{{localize systemFields.offense.label}}</label>
+                {{ formInput systemFields.offense.fields.is_negative value=actor.system.offense.is_negative disabled=(not @root.editable)
+                    dataset=(toDataset tooltip=systemFields.offense.fields.is_negative.label letter=systemFields.offense.fields.is_negative.label)
+                }}
+                {{ formInput systemFields.offense.fields.is_positive value=actor.system.offense.is_positive disabled=(not @root.editable)
+                    dataset=(toDataset tooltip=systemFields.offense.fields.is_positive.label letter=systemFields.offense.fields.is_positive.label)
+                }}
                 {{ formInput systemFields.offense.fields.amount value=actor.system.offense.amount disabled=(not @root.editable)}}
                 </div>
                 <div style="display: grid;">
@@ -74,6 +80,12 @@
 
                 <div class="flexrow">
                 <label>{{localize systemFields.defense.label}}</label>
+                {{ formInput systemFields.defense.fields.is_negative value=actor.system.defense.is_negative disabled=(not @root.editable)
+                    dataset=(toDataset tooltip=systemFields.defense.fields.is_negative.label letter=systemFields.defense.fields.is_negative.label)
+                }}
+                {{ formInput systemFields.defense.fields.is_positive value=actor.system.defense.is_positive disabled=(not @root.editable)
+                    dataset=(toDataset tooltip=systemFields.defense.fields.is_positive.label letter=systemFields.defense.fields.is_positive.label)
+                }}
                 {{ formInput systemFields.defense.fields.amount value=actor.system.defense.amount disabled=(not @root.editable)}}
                 </div>
                 <div style="display: grid;">
