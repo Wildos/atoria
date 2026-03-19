@@ -353,7 +353,8 @@
           "Public": "Publique",
           "Private": "Privé",
           "Blind": "Aveugle"
-        }
+        },
+        "Aiming": "Viser"
       },
       "Item_roll": {
         "Title": "Jet pour {element_name}",

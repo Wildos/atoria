@@ -6,10 +6,11 @@
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.DoS_mod" }}</label><input type="number" data-dtype="Number" name="dos_mod" value="0"/></div>
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Is_danger" }}</label><input type="checkbox" data-dtype="Boolean" name="is_danger"/></div>
 
-        <label>{{localize "ATORIA.Dialog.Roll.Is_danger" }}</label>
+        <div class="flexrow double-col-field"><label>{{localize "ATORIA.Dialog.Roll.Aiming" }}</label>
         <select name="aiming_type">
           {{selectOptions ruleset.aiming.type selected="none" localize=true}}
         </select>
+        </div>
 
     </div>
 
