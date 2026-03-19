@@ -20,16 +20,17 @@
     <label>{{localize systemFields.require_verbal.label}}</label>
     {{ formInput systemFields.require_verbal value=item.system.require_verbal disabled=(not @root.editable)}}
 
+    <label>{{localize systemFields.somatic.label}}</label>
+    <select name="system.somatic">
+      {{selectOptions systemFields.somatic.choices selected=item.system.somatic localize=true}}
+    </select>
+
     <label>{{localize systemFields.require_immobile.label}}</label>
     {{ formInput systemFields.require_immobile value=item.system.require_immobile disabled=(not @root.editable)}}
 
     <label>{{localize systemFields.travel.label}}</label>
         {{ formInput systemFields.travel value=item.system.travel disabled=(not @root.editable)}}
 
-    <label>{{localize systemFields.somatic.label}}</label>
-    <select name="system.somatic">
-      {{selectOptions systemFields.somatic.choices selected=item.system.somatic localize=true}}
-    </select>
 
     <label>{{localize systemFields.material.label}}</label>
     {{ formInput systemFields.material value=item.system.material disabled=(not @root.editable)}}
