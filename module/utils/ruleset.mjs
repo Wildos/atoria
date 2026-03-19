@@ -83,17 +83,22 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getCurrentMaxMana(actor) {
-    if (actor.type === "player-character")
-      return Math.floor(
-        actor.system.mana.max * this._getEndurancePercentage(actor),
+    if (actor.type === "player-character") {
+      return Math.max(
+        1,
+        Math.floor(actor.system.mana.max * this._getEndurancePercentage(actor)),
       );
+    }
     return actor.system.mana.max;
   }
 
   static getCurrentMaxStamina(actor) {
     if (actor.type === "player-character")
-      return Math.floor(
-        actor.system.stamina.max * this._getEndurancePercentage(actor),
+      return Math.max(
+        1,
+        Math.floor(
+          actor.system.stamina.max * this._getEndurancePercentage(actor),
+        ),
       );
     return actor.system.stamina.max;
   }
