@@ -280,6 +280,10 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
 
           context.available_features =
             this.actor.getAssociatedFeature_n_ItemAlterations(this.skill.path);
+
+          context.available_features.sort(
+            (a, b) => (a.sort || 0) - (b.sort || 0),
+          );
         }
         break;
     }

@@ -557,6 +557,9 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
                 this.item.actor.getAssociatedFeature_n_ItemAlterations(
                   available_skill.path,
                 );
+              sub_context.available_features.sort(
+                (a, b) => (a.sort || 0) - (b.sort || 0),
+              );
             }
             if (this.item.type === "weapon") {
               sub_context.available_actable_modifiers =
