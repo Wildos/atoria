@@ -25,6 +25,11 @@
         {{#if (or message.system.critical_effect message.system.effect)}}
             <hr/>
         {{/if}}
+        {{#if message.system.aiming_type}}
+            <div class="message-post-content">
+                {{{message.system.aiming_type}}}
+            </div>
+        {{/if}}
 
         {{#if message.system.critical_effect}}
             <div class="message-post-content">

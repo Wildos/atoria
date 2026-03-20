@@ -170,6 +170,7 @@ export async function sendChatMessageFromRollData(actor, actor_id, roll_data) {
         critical_effect: roll_data.critical_effect,
         effect: roll_data.effect,
         savesAsked: roll_data.saves_asked,
+        aiming_type: roll_data.aiming_type,
       },
     },
     { rollMode: roll_data.roll_mode },
@@ -191,6 +192,12 @@ export async function itemRollDialog(item) {
   ) {
     roll_data.saves_asked.push(...utils.ruleset.character.getAttackSaves());
   }
+  roll_data.saves_asked.push(
+    ...RULESET.aiming.saves_asked[roll_data.aiming_type],
+  );
+  roll_data.aiming_type = RULESET.aiming.get_descriptive_html(
+    roll_data.aiming_type,
+  );
 
   roll_data.used_supplementaries_data = Object.entries(
     roll_data.used_supplementaries,

@@ -360,6 +360,7 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
       flavor_tooltip: this.need_roll ? null : this.item.descriptive_tooltip,
       effect: roll_effect,
       critical_effect: roll_critical_effect,
+      aiming_type: form_values.aiming_type,
     };
     await this.options.submit?.(roll_data);
     this.close();

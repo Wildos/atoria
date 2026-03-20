@@ -616,6 +616,24 @@ RULESET["aiming"] = {
       disadv_amount: 0,
     };
   },
+  saves_asked: {
+    none: [],
+    arm: ["system.skills.physical.sturdiness.tenacity"],
+    hand: [],
+    leg: ["system.skills.physical.sturdiness.tenacity"],
+    foot: [],
+    neck: [],
+    joint: [],
+    head: ["system.skills.physical.sturdiness.tenacity"],
+  },
+  get_descriptive_html: function (aiming_type) {
+    if (aiming_type === "none") {
+      return "";
+    }
+    return `
+    <label data-tooltip="${game.i18n.localize(this.description[aiming_type])}">${game.i18n.localize("ATORIA.Dialog.Roll.Aiming")}: ${game.i18n.localize(this.type[aiming_type])}</label>
+    `;
+  },
 };
 
 RULESET["keywords"] = {
