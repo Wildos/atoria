@@ -110,7 +110,14 @@
                     systemFields=feature.systemFields.limitation.fields }}
                 </li>
                 <li class="atoria-expand-direct-data">
+                    {{#if feature.system.description}}
+                    <label>{{localize feature.systemFields.description.label}}</label>
                     <p style="white-space: pre-line; max-width: 100%;">{{{feature.system.description}}}</p>
+                    {{/if}}
+                    {{#if feature.system.effect}}
+                    <label>{{localize feature.systemFields.effect.label}}</label>
+                    <p style="white-space: pre-line; max-width: 100%;">{{{feature.system.effect}}}</p>
+                    {{/if}}
                 </li>
             {{/each}}
         </ul>
