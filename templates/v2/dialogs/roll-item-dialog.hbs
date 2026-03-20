@@ -2,9 +2,15 @@
     <div class="grid-2col">
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Advantage_amount" }}</label><input type="number" data-dtype="Number" name="advantage_amount" value="0"/></div>
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Disadvantage_amount" }}</label><input type="number" data-dtype="Number" name="disadvantage_amount" value="0"/></div>
-        <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Luck_applied" }}</label><input type="number" data-dtype="Number" name="luck_applied" value="0"/></div>
+        <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Luck_applied" }}</label><input type="number" data-dtype="Number" name="luck_applied" value="0" min="0" max="{{actor.system.luck}}"/></div>
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.DoS_mod" }}</label><input type="number" data-dtype="Number" name="dos_mod" value="0"/></div>
         <div class="flexrow"><label>{{localize "ATORIA.Dialog.Roll.Is_danger" }}</label><input type="checkbox" data-dtype="Boolean" name="is_danger"/></div>
+
+        <div class="flexrow double-col-field"><label>{{localize "ATORIA.Dialog.Roll.Aiming" }}</label>
+        <select name="aiming_type">
+          {{selectOptions ruleset.aiming.type selected="none" localize=true}}
+        </select>
+        </div>
     </div>
 
     {{#each available_skills_data as |available_skill_data _key|}}
@@ -78,7 +84,14 @@
                     systemFields=feature.systemFields.limitation.fields }}
                 </li>
                 <li class="atoria-expand-direct-data">
+                    {{#if feature.system.description}}
+                    <label>{{localize feature.systemFields.description.label}}</label>
                     <p style="white-space: pre-line; max-width: 100%;">{{{feature.system.description}}}</p>
+                    {{/if}}
+                    {{#if feature.system.effect}}
+                    <label>{{localize feature.systemFields.effect.label}}</label>
+                    <p style="white-space: pre-line; max-width: 100%;">{{{feature.system.effect}}}</p>
+                    {{/if}}
                 </li>
             {{/each}}
         </ul>
@@ -111,10 +124,18 @@
                         cost=actable_mod.system.cost
                         systemFields=actable_mod.systemFields.cost.fields
                     }}
+                    {{#if actable_mod.system.restriction}}
                     <label>{{localize actable_mod.systemFields.restriction.label}}</label>
                     <p style="white-space: pre-line; max-width: 100%;">{{{actable_mod.system.restriction}}}</p>
+                    {{/if}}
+                    {{#if actable_mod.system.description}}
                     <label>{{localize actable_mod.systemFields.description.label}}</label>
                     <p style="white-space: pre-line; max-width: 100%;">{{{actable_mod.system.description}}}</p>
+                    {{/if}}
+                    {{#if actable_mod.system.effect}}
+                    <label>{{localize actable_mod.systemFields.effect.label}}</label>
+                    <p style="white-space: pre-line; max-width: 100%;">{{{actable_mod.system.effect}}}</p>
+                    {{/if}}
                 </li>
             {{/each}}
         </ul>

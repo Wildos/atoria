@@ -246,10 +246,9 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
         success_value: picked_skill_data.success,
         critical_success_amount: picked_skill_data.critical_success_amount,
         critical_fumble_amount: picked_skill_data.critical_fumble_amount,
-        title:
-          this.item.type === "weapon"
-            ? this.item.name
-            : picked_skill_data.label,
+        title: ["weapon", "opportunity", "action"].includes(this.item.type)
+          ? this.item.name
+          : picked_skill_data.label,
         advantage_amount: form_values.advantage_amount,
         disadvantage_amount: form_values.disadvantage_amount,
         luck_applied: luck_applied,
@@ -320,6 +319,11 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
         roll_critical_effect += actable_mod.get_critical_effect();
       }
 
+      utils.applyAlteration(
+        skill_roll_data,
+        RULESET.aiming.get_alteration(form_values.aiming_type),
+      );
+
       const roll = new rolls.AtoriaDOSRoll(
         this.item.getRollData(),
         skill_roll_data,
@@ -329,7 +333,7 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
     }
 
     // Add effect
-    if (used_keywords.some((elem) => (elem.id = "versatile"))) {
+    if (used_keywords.some((elem) => elem.id == "versatile")) {
       roll_effect += RULESET.general.getVersatileEffect();
     }
 
@@ -356,6 +360,7 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
       flavor_tooltip: this.need_roll ? null : this.item.descriptive_tooltip,
       effect: roll_effect,
       critical_effect: roll_critical_effect,
+      aiming_type: form_values.aiming_type,
     };
     await this.options.submit?.(roll_data);
     this.close();
@@ -558,6 +563,9 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
                 this.item.actor.getAssociatedFeature_n_ItemAlterations(
                   available_skill.path,
                 );
+              sub_context.available_features.sort(
+                (a, b) => (a.sort || 0) - (b.sort || 0),
+              );
             }
             if (this.item.type === "weapon") {
               sub_context.available_actable_modifiers =

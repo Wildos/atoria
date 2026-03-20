@@ -1,5 +1,6 @@
-export default class AtoriaInteractableChatMessage extends foundry.abstract
-  .DataModel {
+export default class AtoriaInteractableChatMessage
+  extends foundry.abstract.DataModel
+{
   static defineSchema() {
     const fields = foundry.data.fields;
     let schema = {};
@@ -67,6 +68,14 @@ export default class AtoriaInteractableChatMessage extends foundry.abstract
         label: "ATORIA.Model.Chat_message.Related_item",
       },
     );
+
+    schema.aiming_type = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      initial: "",
+      label: "ATORIA.Dialog.Roll.Aiming",
+    });
 
     schema.savesAsked = new fields.ArrayField(
       new fields.StringField({

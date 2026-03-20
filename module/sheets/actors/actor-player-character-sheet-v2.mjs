@@ -1,6 +1,8 @@
 import { AtoriaActorSheetV2 } from "../module.mjs";
 import * as utils from "../../utils/module.mjs";
 import * as helpers from "../../utils/helpers.mjs";
+import * as models_helpers from "../../models/helpers.mjs";
+import RULESET from "../../utils/ruleset.mjs";
 
 const DEFAULT_FEATURE_PLACE = "other";
 
@@ -43,6 +45,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
       createItem: this._createItem,
       onFixKnowledges: this._onFixKnowledges,
       onFixSkills: this._onFixSkills,
+      brawlRoll: this._brawlRoll,
     },
   };
 
@@ -112,6 +115,11 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
   static async _onFixSkills(event, _target) {
     event.stopPropagation();
     await this.actor.debug_fix_skills();
+  }
+
+  static async _brawlRoll(event, _target) {
+    event.stopPropagation();
+    await this.actor.rollSkill("system.skills.combative.weapon.brawl");
   }
 
   static async _applyTimePhase(_event, target) {
@@ -223,6 +231,12 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
   async _preparePartContext(partId, context, options) {
     await super._preparePartContext(partId, context, options);
 
+    let weapon_skill_categories = [
+      ...(utils.extract_leaf_from_player_skills_for_feature_cat(
+        this.actor?.getWeaponSkillList(),
+      ) ?? []),
+    ];
+
     let feature_skill_categories = [
       ...(utils.extract_leaf_from_player_skills_for_feature_cat(
         this.actor?.getSkillList(),
@@ -257,6 +271,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     ];
     const feature_items = [];
     const action_items = [];
+
     const equipped_items = {
       armors: {
         head: {
@@ -676,6 +691,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           combat: {
             Label: "ATORIA.Sheet.Player.Features.Combat.Label",
             children: [
+              ...weapon_skill_categories,
               {
                 id: "combatives",
                 Label: "ATORIA.Sheet.Player.Features.Combat.Combatives",

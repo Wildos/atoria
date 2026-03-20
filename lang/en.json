@@ -341,7 +341,8 @@
           "Public": "Public",
           "Private": "Private",
           "Blind": "Blind"
-        }
+        },
+        "Aiming": "Aiming"
       },
       "Item_roll": {
         "Title": "Roll of {element_name}",
@@ -1394,6 +1395,16 @@
           "Label": "Provoked+",
           "Description": "You're Provoked+"
         }
+      },
+      "Aiming": {
+        "None": "None",
+        "Arm": "Arm",
+        "Hand": "Hand",
+        "Leg": "Leg",
+        "Foot": "Foot",
+        "Neck": "Neck",
+        "Joint": "Joint",
+        "Head": "Head"
       }
     }
   },

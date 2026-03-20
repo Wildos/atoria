@@ -520,6 +520,8 @@ export default class AtoriaItem extends Item {
       actable_modifier.takeOneLimitationUse();
     }
 
+    this.takeOneLimitationUse();
+
     this.actor?.update({
       "system.luck": this.actor.system.luck - used_ressources.luck,
     });

@@ -2,7 +2,10 @@ import * as utils from "../utils/module.mjs";
 import * as models from "../models/module.mjs";
 import RULESET from "./ruleset.mjs";
 
-import { AtoriaRollItemDialogV2 } from "../sheets/module.mjs";
+import {
+  AtoriaRollItemDialogV2,
+  AtoriaRollSkillDialogV2,
+} from "../sheets/module.mjs";
 
 export function hasPopoutV2Module() {
   try {
@@ -129,36 +132,18 @@ export async function skillCreationDialog(actor, skill_cat) {
   return null;
 }
 
-async function sendChatMessageFromRollData(item, roll_data) {
-  const used_supplementaries_data = Object.entries(
-    roll_data.used_supplementaries,
-  ).map(([supp_idx, amount]) => {
-    let supplementary = foundry.utils.deepClone(
-      item.system.supplementaries_list[supp_idx],
-    );
-    if (supplementary.name === "") {
-      supplementary.name = game.i18n.format(
-        "ATORIA.Chat_message.Spell.Supplementary_name",
-        { key: supp_idx },
-      );
-    }
-    if (amount > 1) {
-      supplementary.name = amount + "x " + supplementary.name;
-    }
-    return supplementary;
-  });
-
+export async function sendChatMessageFromRollData(actor, actor_id, roll_data) {
   ChatMessage.create(
     {
       type: "interactable",
-      speaker: ChatMessage.getSpeaker({ actor: item.actor }),
+      speaker: ChatMessage.getSpeaker({ actor: actor }),
       user: game.user.id,
       sound: CONFIG.sounds.dice,
       flavor: roll_data.flavor,
       rolls: roll_data.chat_rolls,
       system: {
         flavor_tooltip: roll_data.flavor_tooltip,
-        owning_actor_id: item.actor?._id,
+        owning_actor_id: actor_id,
         related_items: [
           {
             type: "feature",
@@ -166,7 +151,7 @@ async function sendChatMessageFromRollData(item, roll_data) {
           },
           {
             type: "supplementary",
-            items: used_supplementaries_data,
+            items: roll_data.used_supplementaries_data,
           },
           {
             type: "keyword",
@@ -185,6 +170,7 @@ async function sendChatMessageFromRollData(item, roll_data) {
         critical_effect: roll_data.critical_effect,
         effect: roll_data.effect,
         savesAsked: roll_data.saves_asked,
+        aiming_type: roll_data.aiming_type,
       },
     },
     { rollMode: roll_data.roll_mode },
@@ -206,8 +192,32 @@ export async function itemRollDialog(item) {
   ) {
     roll_data.saves_asked.push(...utils.ruleset.character.getAttackSaves());
   }
+  roll_data.saves_asked.push(
+    ...RULESET.aiming.saves_asked[roll_data.aiming_type],
+  );
+  roll_data.aiming_type = RULESET.aiming.get_descriptive_html(
+    roll_data.aiming_type,
+  );
 
-  sendChatMessageFromRollData(item, roll_data);
+  roll_data.used_supplementaries_data = Object.entries(
+    roll_data.used_supplementaries,
+  ).map(([supp_idx, amount]) => {
+    let supplementary = foundry.utils.deepClone(
+      item.system.supplementaries_list[supp_idx],
+    );
+    if (supplementary.name === "") {
+      supplementary.name = game.i18n.format(
+        "ATORIA.Chat_message.Spell.Supplementary_name",
+        { key: supp_idx },
+      );
+    }
+    if (amount > 1) {
+      supplementary.name = amount + "x " + supplementary.name;
+    }
+    return supplementary;
+  });
+
+  sendChatMessageFromRollData(item.actor, item.actor?._id, roll_data);
 
   let used_ressources = {
     luck: roll_data.luck_applied,
@@ -224,76 +234,106 @@ export async function skillRollDialog(actor, skill_path) {
     console.warn("NO ACTOR, NO SKILL ROLL");
     return undefined;
   }
-  const associated_features =
-    actor.getAssociatedFeature_n_ItemAlterations(skill_path);
-  const associated_keywords =
-    utils.ruleset.character.getSkillAssociatedKeywordsData(
-      actor,
-      null,
-      skill_path,
-    );
-  const is_blind_roll = utils.ruleset.character.isBlindSkill(skill_path);
-  const content = await renderTemplate(
-    CONFIG.ATORIA.DIALOG_TEMPLATES.skill_launch,
-    {
-      skill_name: actor.getSkillTitle(skill_path),
-      skill_path,
-      associated_features: associated_features,
-      associated_keywords: associated_keywords,
-      is_blind_roll: is_blind_roll,
-      default_roll_mode: is_blind_roll
-        ? "blind"
-        : convertRollModeToDesiredVisibility(
-            game.settings.get("core", "rollMode"),
-          ),
-    },
-  );
-  const return_format = {
-    associated_skill: "<path>",
-    advantage_amount: 0,
-    disadvantage_amount: 0,
-    luck_applied: 0,
-    dos_mod: 0,
-    is_danger: false,
-    used_features: [],
-    used_keywords: [],
-    roll_mode: "public",
-  };
-  return await foundry.applications.api.DialogV2.prompt({
-    window: {
-      title: game.i18n.format("ATORIA.Dialog.Skill_roll.Title", {
-        actor_name: actor.name,
-      }),
-    },
-    rejectClose: false,
-    content: content,
-    ok: {
-      label: game.i18n.localize("ATORIA.Dialog.Launch"),
-      callback: (event, button, dialog) => {
-        const formElement = dialog.querySelector("form");
-        const formData = new FormDataExtended(formElement);
-        const formDataObject = formData.object;
-        formDataObject["used_features"] = [];
-        for (let feature of associated_features) {
-          if (formDataObject[`associated_features.${feature._id}`])
-            formDataObject["used_features"].push(feature._id);
-        }
-        formDataObject["used_keywords"] = [];
-        for (let keyword of associated_keywords) {
-          if (formDataObject[`associated_keywords.${keyword.name}`])
-            formDataObject["used_keywords"].push(keyword);
-        }
 
-        formDataObject["roll_mode"] = utils.convertDesiredVisibilityToRollMode(
-          formDataObject["asked_visibility"],
-        );
-        return foundry.utils.mergeObject(return_format, formDataObject, {
-          overwrite: true,
-          insertKeys: false,
-        });
-      },
-    },
+  let roll_data = await AtoriaRollSkillDialogV2.wait({
+    actor: actor,
+    skill: actor.getSkillFromPath(skill_path),
   });
+
+  if (roll_data === null) {
+    return null;
+  }
+
+  roll_data.saves_asked = [];
+
+  sendChatMessageFromRollData(actor, actor._id, roll_data);
+
+  let used_ressources = {
+    luck: roll_data.luck_applied,
+    used_features: roll_data.used_features,
+    used_keywords: roll_data.used_keywords,
+  };
+  return used_ressources;
+  // const associated_features =
+  //   actor.getAssociatedFeature_n_ItemAlterations(skill_path);
+  // const associated_keywords =
+  //   utils.ruleset.character.getSkillAssociatedKeywordsData(
+  //     actor,
+  //     null,
+  //     skill_path,
+  //   );
+  // const is_blind_roll = utils.ruleset.character.isBlindSkill(skill_path);
+  // const content = await renderTemplate(
+  //   CONFIG.ATORIA.DIALOG_TEMPLATES.skill_launch,
+  //   {
+  //     max_luck: actor.system.luck,
+  //     skill_name: actor.getSkillTitle(skill_path),
+  //     skill_path,
+  //     associated_features: associated_features,
+  //     associated_keywords: associated_keywords,
+  //     is_blind_roll: is_blind_roll,
+  //     default_roll_mode: is_blind_roll
+  //       ? "blind"
+  //       : convertRollModeToDesiredVisibility(
+  //           game.settings.get("core", "rollMode"),
+  //         ),
+  //   },
+  // );
+  // const return_format = {
+  //   associated_skill: "<path>",
+  //   advantage_amount: 0,
+  //   disadvantage_amount: 0,
+  //   luck_applied: 0,
+  //   dos_mod: 0,
+  //   is_danger: false,
+  //   used_features: [],
+  //   used_keywords: [],
+  //   roll_mode: "public",
+  // };
+  // try {
+  //   return await foundry.applications.api.DialogV2.prompt({
+  //     window: {
+  //       title: game.i18n.format("ATORIA.Dialog.Skill_roll.Title", {
+  //         actor_name: actor.name,
+  //       }),
+  //     },
+  //     rejectClose: false,
+  //     content: content,
+  //     ok: {
+  //       label: game.i18n.localize("ATORIA.Dialog.Launch"),
+  //       callback: (event, button, dialog) => {
+  //         if (!button.form.reportValidity()) {
+  //           return {};
+  //         }
+  //         const formElement = dialog.querySelector("form");
+  //         const formData = new FormDataExtended(formElement);
+  //         const formDataObject = formData.object;
+
+  //         formDataObject["used_features"] = [];
+  //         for (let feature of associated_features) {
+  //           if (formDataObject[`associated_features.${feature._id}`])
+  //             formDataObject["used_features"].push(feature._id);
+  //         }
+  //         formDataObject["used_keywords"] = [];
+  //         for (let keyword of associated_keywords) {
+  //           if (formDataObject[`associated_keywords.${keyword.name}`])
+  //             formDataObject["used_keywords"].push(keyword);
+  //         }
+
+  //         formDataObject["roll_mode"] =
+  //           utils.convertDesiredVisibilityToRollMode(
+  //             formDataObject["asked_visibility"],
+  //           );
+  //         return foundry.utils.mergeObject(return_format, formDataObject, {
+  //           overwrite: true,
+  //           insertKeys: false,
+  //         });
+  //       },
+  //     },
+  //   });
+  // } catch {
+  //   return null;
+  // }
 }
 
 export function convertDesiredVisibilityToRollMode(desired_visibility) {
@@ -397,4 +437,16 @@ export function getInlineRollFromRollData(roll_data) {
   }
   label += " " + active_keys.join(", ");
   return `[[${roll_data.formula}]]{${label}}`;
+}
+
+export function isSkillPathsMatching(path_a, path_b, accept_partial = false) {
+  if (path_a === path_b) {
+    return true;
+  }
+  if (
+    accept_partial &&
+    (path_a.startsWith(path_b) || path_b.startsWith(path_a))
+  )
+    return true;
+  return false;
 }

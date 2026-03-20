@@ -83,17 +83,22 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getCurrentMaxMana(actor) {
-    if (actor.type === "player-character")
-      return Math.floor(
-        actor.system.mana.max * this._getEndurancePercentage(actor),
+    if (actor.type === "player-character") {
+      return Math.max(
+        1,
+        Math.floor(actor.system.mana.max * this._getEndurancePercentage(actor)),
       );
+    }
     return actor.system.mana.max;
   }
 
   static getCurrentMaxStamina(actor) {
     if (actor.type === "player-character")
-      return Math.floor(
-        actor.system.stamina.max * this._getEndurancePercentage(actor),
+      return Math.max(
+        1,
+        Math.floor(
+          actor.system.stamina.max * this._getEndurancePercentage(actor),
+        ),
       );
     return actor.system.stamina.max;
   }
@@ -301,7 +306,21 @@ RULESET["character"] = class ActorRuleset {
         active_keywords_data[key] || 0 + item.system.keywords[key];
     });
 
-    if (active_keywords_data["versatile"] > 0) {
+    const FOCUSER = "system.skills.combative.weapon.focuser";
+    const PARRY = "system.skills.combative.reflex.parry";
+    const THROW = "system.skills.combative.weapon.throw";
+    const FORCE = "system.skills.physical.sturdiness.force";
+    const SILENCE = "system.skills.physical.slyness.silence";
+    const STEALTH = "system.skills.physical.slyness.stealth";
+    const WEAPON = "system.skills.combative.weapon";
+    const BRAWL = "system.skills.combative.weapon.brawl";
+    const TENACITY = "system.skills.physical.sturdiness.tenacity";
+
+    if (
+      active_keywords_data["versatile"] > 0 &&
+      !THROW.startsWith(skill_path) &&
+      !FOCUSER.startsWith(skill_path)
+    ) {
       skill_associated_keywords_data.push({
         name: "versatile",
         usable: true,
@@ -315,15 +334,6 @@ RULESET["character"] = class ActorRuleset {
         systemFields: defineAlteration(),
       });
     }
-
-    const PARRY = "system.skills.combative.reflex.parry";
-    const THROW = "system.skills.combative.weapon.throw";
-    const FORCE = "system.skills.physical.sturdiness.force";
-    const SILENCE = "system.skills.physical.slyness.silence";
-    const STEALTH = "system.skills.physical.slyness.stealth";
-    const WEAPON = "system.skills.combative.weapon";
-    const BRAWL = "system.skills.combative.weapon.brawl";
-    const TENACITY = "system.skills.physical.sturdiness.tenacity";
 
     if (PARRY.startsWith(skill_path) && active_keywords_data["guard"] > 0) {
       add_keyword_data("guard", 1, {
@@ -528,7 +538,6 @@ RULESET["item"] = class ItemRuleset {
     if (new_item.system.associated_skill || item.system.is_focuser) {
       new_item.system.cost_list.push(RULESET.general.getCostWeaponAttack(item));
     }
-
     return new_item;
   }
 };
@@ -566,6 +575,64 @@ RULESET["skill_alterations"] = {
     "ATORIA.Model.Skill_alteration.Advantage_n_One_degree_of_success_gain",
   disadvantage_n_one_degree_of_success_loss:
     "ATORIA.Model.Skill_alteration.Disadvantage_n_One_degree_of_success_loss",
+};
+
+RULESET["aiming"] = {
+  type: {
+    none: "ATORIA.Ruleset.Aiming.None.Label",
+    arm: "ATORIA.Ruleset.Aiming.Arm.Label",
+    hand: "ATORIA.Ruleset.Aiming.Hand.Label",
+    leg: "ATORIA.Ruleset.Aiming.Leg.Label",
+    foot: "ATORIA.Ruleset.Aiming.Foot.Label",
+    neck: "ATORIA.Ruleset.Aiming.Neck.Label",
+    joint: "ATORIA.Ruleset.Aiming.Joint.Label",
+    head: "ATORIA.Ruleset.Aiming.Head.Label",
+  },
+  description: {
+    none: "ATORIA.Ruleset.Aiming.None.Description",
+    arm: "ATORIA.Ruleset.Aiming.Arm.Description",
+    hand: "ATORIA.Ruleset.Aiming.Hand.Description",
+    leg: "ATORIA.Ruleset.Aiming.Leg.Description",
+    foot: "ATORIA.Ruleset.Aiming.Foot.Description",
+    neck: "ATORIA.Ruleset.Aiming.Neck.Description",
+    joint: "ATORIA.Ruleset.Aiming.Joint.Description",
+    head: "ATORIA.Ruleset.Aiming.Head.Description",
+  },
+  dos_mod: {
+    none: 0,
+    arm: -1,
+    hand: -2,
+    leg: -1,
+    foot: -2,
+    neck: -3,
+    joint: -2,
+    head: -3,
+  },
+  get_alteration: function (aiming_type) {
+    return {
+      dos_mod: this.dos_mod[aiming_type],
+      adv_amount: 0,
+      disadv_amount: 0,
+    };
+  },
+  saves_asked: {
+    none: [],
+    arm: ["system.skills.physical.sturdiness.tenacity"],
+    hand: [],
+    leg: ["system.skills.physical.sturdiness.tenacity"],
+    foot: [],
+    neck: [],
+    joint: [],
+    head: ["system.skills.physical.sturdiness.tenacity"],
+  },
+  get_descriptive_html: function (aiming_type) {
+    if (aiming_type === "none") {
+      return "";
+    }
+    return `
+    <label data-tooltip="${game.i18n.localize(this.description[aiming_type])}">${game.i18n.localize("ATORIA.Dialog.Roll.Aiming")}: ${game.i18n.localize(this.type[aiming_type])}</label>
+    `;
+  },
 };
 
 RULESET["keywords"] = {
@@ -615,7 +682,6 @@ RULESET["keywords"] = {
     "two_handed",
     "deployable",
     "equip",
-    "reach",
     "smash",
     "throwable",
     "heavy",

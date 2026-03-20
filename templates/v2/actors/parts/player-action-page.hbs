@@ -29,7 +29,8 @@
         </div>
 
 
-        <div class="atoria-horizontal-bar flexrow colored">
+        <div class="atoria-horizontal-bar flexrow colored atoria-expand-control"
+            data-action="expandSection" data-expand-id="action_page_actions">
             <h5 class="title">
                 {{localize "ATORIA.Sheet.Player.Action_area.Action.Title"}}
             </h5>
@@ -40,7 +41,7 @@
             </a>
             {{/if}}
         </div>
-        <ul class="item-list">
+        <ul class="item-list atoria-expand-direct-data">
             {{#each actable_items.action as |item idx|}}
                 {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
             {{/each}}
@@ -48,7 +49,8 @@
 
 
 
-        <div class="atoria-horizontal-bar flexrow colored">
+        <div class="atoria-horizontal-bar flexrow colored atoria-expand-control"
+            data-action="expandSection" data-expand-id="action_page_opportunities">
             <h5 class="title">
                 {{localize "ATORIA.Sheet.Player.Action_area.Opportunity.Title"}}
             </h5>
@@ -58,7 +60,7 @@
             </a>
             {{/if}}
         </div>
-        <ul class="item-list">
+        <ul class="item-list atoria-expand-direct-data">
             {{#each actable_items.opportunity as |item idx|}}
                 {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
             {{/each}}
@@ -73,7 +75,8 @@
         </div>
         <ul class="item-list"> --}}
         {{#each actable_items.actable_modifier as |item_cat_data cat_idx|}}
-            <div class="atoria-horizontal-bar flexrow colored">
+            <div class="atoria-horizontal-bar flexrow colored atoria-expand-control"
+                data-action="expandSection" data-expand-id="action_page_act_mod_{{item_cat_data.type}}">
                 <h5 class="title">
                     {{localize item_cat_data.label}}
                 </h5>
@@ -83,7 +86,7 @@
                 </a>
                 {{/if}}
             </div>
-            <ul class="item-list">
+            <ul class="item-list atoria-expand-direct-data">
             {{#each item_cat_data.items as |item idx|}}
                 {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
             {{/each}}

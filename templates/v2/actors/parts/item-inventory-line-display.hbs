@@ -68,7 +68,13 @@
     {{/if}}
 </li>
 <li class="atoria-expand-direct-data flexcol" data-item-id="{{item._id}}">
-    <label>{{localize item.systemFields.encumbrance.label}}: {{item.system.encumbrance}}</label>
+    {{#if (and (eq item.type "armor") item.system.is_worn)}}
+        <label>{{localize item.systemFields.worn_encumbrance.label}}: {{item.system.worn_encumbrance}}</label>
+    {{else}}
+        <label>{{localize item.systemFields.encumbrance.label}}: {{item.system.encumbrance}}</label>
+    {{/if}}
+
+
     {{#if item.keywords_recap.list_data}}
     <label data-tooltip-class="atoria-tooltip" >{{localize item.systemFields.keywords.label}}:
         {{#each item.keywords_recap.list_data as |keyword_data idx|}}

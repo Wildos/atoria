@@ -10,10 +10,10 @@
   ],
   "url": "https://github.com/Wildos/atoria/",
   "manifest": "https://raw.githubusercontent.com/Wildos/atoria/main/system.json",
-  "download": "https://github.com/Wildos/atoria/releases/download/v0.3.26/atoria-0.3.26.zip",
+  "download": "https://github.com/Wildos/atoria/releases/download/v0.3.27/atoria-0.3.27.zip",
   "bugs": "",
   "media": [],
-  "version": "0.3.26",
+  "version": "0.3.27",
   "compatibility": {
     "minimum": "12.331",
     "verified": "12.331"

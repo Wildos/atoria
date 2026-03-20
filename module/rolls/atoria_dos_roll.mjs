@@ -60,7 +60,11 @@ export default class AtoriaDOSRoll extends Roll {
   }
 
   get is_critical_success() {
-    return this.is_success && this.is_critical;
+    return this.is_success && this.total <= this._critical_success_amount;
+  }
+
+  get is_critical_failure() {
+    return !this.is_success && this.total >= 101 - this._critical_fumble_amount;
   }
 
   get is_success() {
@@ -69,10 +73,7 @@ export default class AtoriaDOSRoll extends Roll {
   }
 
   get is_critical() {
-    return (
-      this.total <= this._critical_success_amount ||
-      this.total >= 101 - this._critical_fumble_amount
-    );
+    return this.is_critical_failure || this.is_critical_success;
   }
 
   static fromData(data) {
@@ -187,8 +188,9 @@ export default class AtoriaDOSRoll extends Roll {
       margin_of_success: isPrivate ? "" : this.margin_of_success,
       degree_of_success: isPrivate ? "" : this.degree_of_success,
       success_value: isPrivate ? "" : this._success_value,
-      is_success: isPrivate ? "" : this.is_success,
-      is_critical: isPrivate ? "" : this.is_critical,
+      is_success: isPrivate ? false : this.is_success,
+      is_critical_success: isPrivate ? false : this.is_critical_success,
+      is_critical_failure: isPrivate ? false : this.is_critical_failure,
       adv_disadv: isPrivate ? "" : adv_disadv_string,
       is_danger: isPrivate ? "" : this._is_danger,
       luck_applied: isPrivate ? "" : this._luck_applied,
