@@ -223,6 +223,12 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
   async _preparePartContext(partId, context, options) {
     await super._preparePartContext(partId, context, options);
 
+    let weapon_skill_categories = [
+      ...(utils.extract_leaf_from_player_skills_for_feature_cat(
+        this.actor?.getWeaponSkillList(),
+      ) ?? []),
+    ];
+
     let feature_skill_categories = [
       ...(utils.extract_leaf_from_player_skills_for_feature_cat(
         this.actor?.getSkillList(),
@@ -676,6 +682,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           combat: {
             Label: "ATORIA.Sheet.Player.Features.Combat.Label",
             children: [
+              ...weapon_skill_categories,
               {
                 id: "combatives",
                 Label: "ATORIA.Sheet.Player.Features.Combat.Combatives",
