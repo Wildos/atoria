@@ -17,6 +17,9 @@
                         </h5>
                     </div>
                     <ul class="item-list">
+                        <li class="item atoria-item-line-display atoria-horizontal-bar" data-action="brawlRoll" >
+                            <label>{{localize "ATORIA.Ruleset.Skills.Combative.Weapon.Brawl.Label"}}</label>
+                        </li>
                     {{#each action_items as |item idx|}}
                         {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
                     {{/each}}

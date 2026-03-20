@@ -538,7 +538,6 @@ RULESET["item"] = class ItemRuleset {
     if (new_item.system.associated_skill || item.system.is_focuser) {
       new_item.system.cost_list.push(RULESET.general.getCostWeaponAttack(item));
     }
-
     return new_item;
   }
 };
