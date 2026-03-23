@@ -1269,7 +1269,7 @@
       "Status_effect": {
         "Preparing": {
           "Label": "Préparation",
-          "Description": "Le sort demande de préparer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort.</br>Incompatible avec “Évocation” et “Préparation”."
+          "Description": "Le sort demande de préparer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort.\nIncompatible avec “Évocation” et “Préparation”."
         },
         "Evocation": {
           "Label": "Évocation",
@@ -1281,7 +1281,7 @@
         },
         "Concentration": {
           "Label": "Concentration",
-          "Description": "L'action demande un temps de concentration. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir l'action.</br>Incompatible avec “Évocation” et “Préparation”."
+          "Description": "L'action demande un temps de concentration. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir l'action.\nIncompatible avec “Évocation” et “Préparation”."
         },
         "Unconscious": {
           "Label": "Inconscient",
@@ -1289,11 +1289,11 @@
         },
         "Bleeding": {
           "Label": "Saignement",
-          "Description": "Santé -1 / round.</br>Application supplémentaire : Santé -1"
+          "Description": "Santé -1 / round.\nApplication supplémentaire : Santé -1"
         },
         "Brutal": {
           "Label": "Brutal",
-          "Description": "Dégât Arme +1 lors de la prochaine instance de Dégât.</br>Perdu si paré ou lors de la \"Préparation\" d'un sort.</br>1 fois par tour"
+          "Description": "Dégât Arme +1 lors de la prochaine instance de Dégât.\nPerdu si paré ou lors de la \"Préparation\" d'un sort.\n1 fois par tour"
         },
         "Slowed": {
           "Label": "Ralenti",
@@ -1309,11 +1309,11 @@
         },
         "Disability": {
           "Label": "Incapacité",
-          "Description": "Ne peut rien faire hors utiliser un sort sans composantes verbales et somatiques.</br>Supplante \"Immobilisé\""
+          "Description": "Ne peut rien faire hors utiliser un sort sans composantes verbales et somatiques.\nSupplante \"Immobilisé\""
         },
         "Moist": {
           "Label": "Humide",
-          "Description": "Résistance foudre -1 feu +1. S'annule avec \"Enflammé\".</br>Zones appliquant l'état dissipe les cases vides ardentes."
+          "Description": "Résistance foudre -1 feu +1. S'annule avec \"Enflammé\".\nZones appliquant l'état dissipe les cases vides ardentes."
         },
         "Frostbite": {
           "Label": "Gelure",
@@ -1321,11 +1321,11 @@
         },
         "Burning": {
           "Label": "Enflammé",
-          "Description": "Dégât feu 1 / round. S'annule avec \"Humide\". Dissipe \"Gelure\".</br>Zones appliquant l'état dissipent les cases gelées.</br>Seconde application : Effet+"
+          "Description": "Dégât feu 1 / round. S'annule avec \"Humide\". Dissipe \"Gelure\".\nZones appliquant l'état dissipent les cases gelées.\nSeconde application : Effet+"
         },
         "Burning+": {
           "Label": "Enflammé+",
-          "Description": "Dégât feu 2 / round. S'annule avec \"Humide\". Dissipe \"Gelure\".</br>Zones appliquant l'état dissipent les cases gelées."
+          "Description": "Dégât feu 2 / round. S'annule avec \"Humide\". Dissipe \"Gelure\".\nZones appliquant l'état dissipent les cases gelées."
         },
         "Radiate": {
           "Label": "Irradié",
@@ -1345,23 +1345,23 @@
         },
         "Stunned": {
           "Label": "Étourdi",
-          "Description": "Ne peut rien faire et ignore son environnement.</br>Avantage pour résister à l'état 1 tour."
+          "Description": "Ne peut rien faire et ignore son environnement.\nAvantage pour résister à l'état 1 tour."
         },
         "Banished": {
           "Label": "Banni",
-          "Description": "Disparaît et ne peut rien faire.</br>Lorsque \"Banni\" est perdu, si un personnage se trouve sur la case, réapparait sur une case adjacente, à l'appréciation du MJ."
+          "Description": "Disparaît et ne peut rien faire.\nLorsque \"Banni\" est perdu, si un personnage se trouve sur la case, réapparait sur une case adjacente, à l'appréciation du MJ."
         },
         "Drunk": {
           "Label": "Ébriété",
-          "Description": "DR -1 à tous les jets.</br>Se dissipe après Sommeil. À l'appréciation du MJ, Robustesse - Ténacité pour ignorer l’état “Gueule de bois”. "
+          "Description": "DR -1 à tous les jets.\nSe dissipe après Sommeil. À l'appréciation du MJ, Robustesse - Ténacité pour ignorer l’état “Gueule de bois”. "
         },
         "Hangover": {
           "Label": "Gueule de bois",
-          "Description": "DR -1 aux compétences combatives et aux perceptions.</br>Se dissipe après Repos."
+          "Description": "DR -1 aux compétences combatives et aux perceptions.\nSe dissipe après Repos."
         },
         "Tired": {
           "Label": "Fatigué",
-          "Description": "DR -1 aux compétences combatives, physiques et aux connaissances.</br>S'applique à Endurance < 25"
+          "Description": "DR -1 aux compétences combatives, physiques et aux connaissances.\nS'applique à Endurance < 25"
         },
         "Hungry": {
           "Label": "Affamé",
@@ -1397,7 +1397,7 @@
         },
         "Invisible": {
           "Label": "Invisible",
-          "Description": "Ne peut pas être perçu et ciblé.</br>Attaquer un personnage invisible applique le désavantage."
+          "Description": "Ne peut pas être perçu et ciblé.\nAttaquer un personnage invisible applique le désavantage."
         },
         "Incurable": {
           "Label": "Incurable",
@@ -1413,11 +1413,11 @@
         },
         "Panic": {
           "Label": "Paniqué",
-          "Description": "Doit fuir le plus loin possible de l'émetteur.</br>Supplante “Effrayé”"
+          "Description": "Doit fuir le plus loin possible de l'émetteur.\nSupplante “Effrayé”"
         },
         "Terrified": {
           "Label": "Terrifié",
-          "Description": "Ne peut plus se déplacer ou attaquer. Désavantage aux esquives et aux parades.</br>Supplante \"Effrayé\" et “Paniqué”"
+          "Description": "Ne peut plus se déplacer ou attaquer. Désavantage aux esquives et aux parades.\nSupplante \"Effrayé\" et “Paniqué”"
         },
         "Dead": {
           "Label": "Mort",
@@ -1429,11 +1429,11 @@
         },
         "Charmed": {
           "Label": "Charmé",
-          "Description": "Considère l'émetteur comme son ami proche, ne peut pas entreprendre d’action néfaste contre lui et l'aide de son mieux.</br>Supplante “Séduit” avec le même émetteur."
+          "Description": "Considère l'émetteur comme son ami proche, ne peut pas entreprendre d’action néfaste contre lui et l'aide de son mieux.\nSupplante “Séduit” avec le même émetteur."
         },
         "Captivated": {
           "Label": "Subjugué",
-          "Description": "Obéit à l'émetteur tant que cela ne comprend pas de se blesser.</br>Supplante “Séduit” ou \"Charmé\" avec le même émetteur."
+          "Description": "Obéit à l'émetteur tant que cela ne comprend pas de se blesser.\nSupplante “Séduit” ou \"Charmé\" avec le même émetteur."
         },
         "Control": {
           "Label": "Contrôlé",
@@ -1441,7 +1441,7 @@
         },
         "Enraged": {
           "Label": "Enragé",
-          "Description": "Doit attaquer la cible connue la plus proche.</br>Immunise à la \"Peur\" et au \"Charme\"."
+          "Description": "Doit attaquer la cible connue la plus proche.\nImmunise à la \"Peur\" et au \"Charme\"."
         },
         "Provoked": {
           "Label": "Provoqué",
@@ -1453,7 +1453,7 @@
         },
         "Sharpened": {
           "Label": "Aiguisé",
-          "Description": "Arme perforante : Pénétration +1</br>Arme tranchante : Applique \"Saignement\" sur différence DR > 4.</br>Se dissipe à la fin d'un combat."
+          "Description": "Arme perforante : Pénétration +1.\nArme tranchante : Applique \"Saignement\" sur différence DR > 4.\nSe dissipe à la fin d'un combat."
         }
       },
       "Aiming": {

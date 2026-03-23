@@ -206,8 +206,8 @@ Hooks.once("init", function () {
 });
 
 Hooks.once("ready", function () {
-  utils.ruleset.localized_effects(CONFIG.statusEffects);
   CONFIG.statusEffects = CONFIG.statusEffects.sort(RULESET.sort_effects);
+  utils.ruleset.localized_effects(CONFIG.statusEffects);
 
   // Migration check is only for GM
   if (!game.user.isGM) return;
