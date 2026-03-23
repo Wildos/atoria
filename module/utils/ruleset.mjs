@@ -318,8 +318,8 @@ RULESET["character"] = class ActorRuleset {
 
     if (
       active_keywords_data["versatile"] > 0 &&
-      !THROW.startsWith(skill_path) &&
-      !FOCUSER.startsWith(skill_path)
+      THROW != skill_path &&
+      FOCUSER != skill_path
     ) {
       skill_associated_keywords_data.push({
         name: "versatile",
