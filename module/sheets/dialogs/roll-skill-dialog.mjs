@@ -130,8 +130,12 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
     let skill_roll_data = {
       owning_actor_id: this.actor._id,
       success_value: this.skill.success,
-      critical_success_amount: this.skill.critical_success_amount,
-      critical_fumble_amount: this.skill.critical_fumble_amount,
+      critical_success_amount: RULESET.character.getSkillCriticalSuccessAmount(
+        this.skill,
+      ),
+      critical_fumble_amount: RULESET.character.getSkillCriticalFumbleAmount(
+        this.skill,
+      ),
       title: game.i18n.localize(this.skill.label),
       advantage_amount: form_values.advantage_amount,
       disadvantage_amount: form_values.disadvantage_amount,
