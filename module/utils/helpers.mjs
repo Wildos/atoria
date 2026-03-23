@@ -192,6 +192,10 @@ export async function itemRollDialog(item) {
   ) {
     roll_data.saves_asked.push(...utils.ruleset.character.getAttackSaves());
   }
+  for (let actable_uuid of roll_data.used_actable_modifiers) {
+    let actable_mod = fromUuidSync(actable_uuid);
+    roll_data.saves_asked.push(...actable_mod.system.saves_asked);
+  }
   roll_data.saves_asked.push(
     ...RULESET.aiming.saves_asked[roll_data.aiming_type],
   );

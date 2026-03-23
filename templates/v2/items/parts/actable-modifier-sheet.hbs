@@ -57,4 +57,27 @@
         data_path="system.alteration" systemFields=systemFields.alteration.fields
         cssClasses=""}}
     </div>
+
+
+    <fieldset class="atoria-saves-area double-col-field sub-element-category">
+        <legend>{{localize systemFields.saves_asked.label}}
+            <a class="atoria-create-button" data-action="createSubItem" data-sub-element-path="saves_asked" data-tooltip="{{localize systemFields.saves_asked.label}}">
+                <i class="fas fa-plus"></i>
+            </a>
+        </legend>
+        <ul>
+        {{#each item.system.saves_asked as |save_data idx|}}
+            <li class="flexrow">
+                <select name="system.saves_asked.{{idx}}"
+                data-tooltip="{{localize ../systemFields.saves_asked.element.label}}">
+                    {{selectOptions ../associated_saves_skills selected=(lookup ../item.system.saves_asked idx) sort=true localize=true}}
+                </select>
+                <a class="atoria-delete-button" data-action="deleteSubItem" data-sub-element-path="saves_asked" data-sub-element-index="{{idx}}"
+                data-tooltip="{{localize 'ATORIA.Sheet.Actable.Saves_asked.Delete'}}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </li>
+        {{/each}}
+        </ul>
+    </fieldset>
 </div>
