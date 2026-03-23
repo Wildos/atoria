@@ -267,6 +267,9 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
           context.default_roll_mode = utils.convertRollModeToDesiredVisibility(
             game.settings.get("core", "rollMode"),
           );
+          context.is_main_blind_roll =
+            this.skill.path.startsWith("system.perceptions");
+
           context.roll_config = this.#roll_config;
           let active_keywords = utils.ruleset.character.getActiveKeywordsData(
             this.actor,

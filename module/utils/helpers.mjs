@@ -439,13 +439,26 @@ export function getInlineRollFromRollData(roll_data) {
   return `[[${roll_data.formula}]]{${label}}`;
 }
 
-export function isSkillPathsMatching(path_a, path_b, accept_partial = false) {
-  if (path_a === path_b) {
+export function isSkillPathsMatchingAssociatedOne(
+  asso_path_a,
+  skill_path_b,
+  accept_partial = false,
+) {
+  if (asso_path_a === skill_path_b) {
     return true;
   }
+
+  if (skill_path_b.length === 0) {
+    return asso_path_a.length === 0;
+  }
+  if (asso_path_a.length === 0) {
+    return skill_path_b.length === 0;
+  }
+
   if (
     accept_partial &&
-    (path_a.startsWith(path_b) || path_b.startsWith(path_a))
+    (asso_path_a.startsWith(skill_path_b) ||
+      skill_path_b.startsWith(asso_path_a))
   )
     return true;
   return false;

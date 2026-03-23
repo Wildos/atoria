@@ -96,6 +96,8 @@ export default class AtoriaActor extends Actor {
       "system.resistance.poison": "ATORIA.Ruleset.Resistance.Poison",
       "system.resistance.psychic": "ATORIA.Ruleset.Resistance.Psychic",
       "system.resistance.radiant": "ATORIA.Ruleset.Resistance.Radiant",
+
+      "system.regain_rest_mana_mod": "ATORIA.Ruleset.Rest.Mana_regain",
     };
   }
 
@@ -900,7 +902,7 @@ export default class AtoriaActor extends Actor {
       if (!["feature", "kit", "weapon", "armor"].includes(i.type)) continue;
       for (let alteration of i.system.skill_alterations) {
         if (
-          utils.isSkillPathsMatching(
+          utils.isSkillPathsMatchingAssociatedOne(
             alteration.associated_skill,
             skill_path,
             true,
