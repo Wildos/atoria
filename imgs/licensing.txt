@@ -62,3 +62,5 @@ lamellar.svg: https://game-icons.net/1x1/lorc/lamellar.html, by Lorc under CC BY
 
 
 crossed-sword.svg: https://game-icons.net/1x1/lorc/crossed-swords.html, by Lorc under CC BY 3.0
+
+sparkling-sabre.svg: https://game-icons.net/1x1/lorc/sparkling-sabre.html, by Lorc under CC BT 3.0

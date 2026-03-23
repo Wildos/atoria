@@ -1465,6 +1465,15 @@ RULESET["status_effects"] = [
       round: 0,
     },
   },
+  {
+    id: "sharpened",
+    name: "ATORIA.Ruleset.Status_effect.Sharpened.Label",
+    img: "systems/atoria/imgs/sparkling-sabre.svg",
+    description: "ATORIA.Ruleset.Status_effect.Sharpened.Description",
+    duration: {
+      round: 0,
+    },
+  },
 ];
 
 RULESET.localized_effects = (status_effects) => {
@@ -1472,6 +1481,12 @@ RULESET.localized_effects = (status_effects) => {
     status_effect.description = game.i18n.localize(status_effect.description);
   }
   return status_effects;
+};
+
+RULESET.sort_effects = (status_effect_a, status_effect_b) => {
+  return game.i18n
+    .localize(status_effect_a.name)
+    .localeCompare(game.i18n.localize(status_effect_b.name));
 };
 
 RULESET.localized_damage_type = (damage_type) => {

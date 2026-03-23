@@ -1450,6 +1450,10 @@
         "Provoked+": {
           "Label": "Provoqué+",
           "Description": "Désavantage si la provocation n'est pas suivie."
+        },
+        "Sharpened": {
+          "Label": "Aiguisé",
+          "Description": "Arme perforante : Pénétration +1</br>Arme tranchante : Applique \"Saignement\" sur différence DR > 4.</br>Se dissipe à la fin d'un combat."
         }
       },
       "Aiming": {
