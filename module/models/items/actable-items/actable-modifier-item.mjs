@@ -1,6 +1,9 @@
 import * as atoria_models from "../../module.mjs";
+import RULESET from "../../../utils/ruleset.mjs";
 
-export default class AtoriaActableModifierItem extends atoria_models.AtoriaItemBase {
+export default class AtoriaActableModifierItem
+  extends atoria_models.AtoriaItemBase
+{
   static defineSchema() {
     const fields = foundry.data.fields;
     const schema = super.defineSchema();
@@ -29,6 +32,17 @@ export default class AtoriaActableModifierItem extends atoria_models.AtoriaItemB
     });
 
     schema.alteration = atoria_models.helpers.defineAlteration();
+
+    schema.saves_asked = new fields.ArrayField(
+      new fields.StringField({
+        required: true,
+        nullable: false,
+        blank: false,
+        initial: RULESET.character.getOpposingSaves()[0],
+        label: "ATORIA.Model.Magic.Save_asked",
+      }),
+      { required: true, label: "ATORIA.Model.Magic.Saves_asked" },
+    );
 
     return schema;
   }

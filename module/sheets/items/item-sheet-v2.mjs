@@ -293,6 +293,11 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         context.effects.sort((a, b) => (a.sort || 0) - (b.sort || 0));
         context.isEditingMode = true; // Enable deletion of effect
         break;
+      case "actable_modifier":
+        context.associated_saves_skills =
+          this.actor?.getOpposedSkillList() ??
+          utils.default_values.get_opposed_skills();
+        break;
     }
     return context;
   }

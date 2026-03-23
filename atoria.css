@@ -1066,6 +1066,9 @@
   height: var(--atoria-base-line-block-height);
   border: none;
 }
+.system-atoria .atoria-item-line-display.effect-base + li.atoria-expand-direct-data p {
+  white-space: pre-line;
+}
 .system-atoria .atoria-item-line-display + .atoria-expand-direct-data {
   margin: 0;
   border: var(--atoria-border-style);

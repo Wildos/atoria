@@ -177,6 +177,7 @@ Hooks.once("init", function () {
     label: "ATORIA.SheetLabels.Item",
   });
 
+  // CONFIG.statusEffects = RULESET.status_effects;
   CONFIG.statusEffects = RULESET.status_effects;
 
   // Internal System Last Migration Version
@@ -205,6 +206,7 @@ Hooks.once("init", function () {
 });
 
 Hooks.once("ready", function () {
+  CONFIG.statusEffects = CONFIG.statusEffects.sort(RULESET.sort_effects);
   utils.ruleset.localized_effects(CONFIG.statusEffects);
 
   // Migration check is only for GM
