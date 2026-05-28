@@ -40,7 +40,6 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
     position: {},
     window: {},
     actions: {
-      onPopoutV2: this._onPopoutV2,
       expandSection: {
         handler: this._expandSection,
         buttons: [0, 2],
@@ -166,18 +165,6 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
     return `${this.item.actor.name}: ${game.i18n.localize(this.item.name)}`;
   }
 
-  static async _onPopoutV2(event, _target) {
-    if (!helpers.hasPopoutV2Module()) return;
-    if (helpers.isPoppedOut(this)) {
-      event.stopPropagation();
-      await this.close();
-      this.render(true);
-    } else {
-      await this.render();
-      PopoutV2Module.popoutv2App(this);
-    }
-  }
-
   /** @override */
   _getHeaderControls() {
     const controls = this.options.window.controls;
@@ -185,7 +172,6 @@ export default class AtoriaRollItemDialogV2 extends HandlebarsApplicationMixin(
   }
 
   async close(options = {}) {
-    this.is_popouted = false;
     return super.close(options);
   }
 

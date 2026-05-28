@@ -28,7 +28,7 @@ Hooks.once("init", function () {
     },
   };
 
-  CONFIG.ChatMessage.documentClass = documents.AtoriaChatMessage;
+  // CONFIG.ChatMessage.documentClass = documents.AtoriaChatMessage;
   CONFIG.ChatMessage.dataModels["interactable"] =
     models.AtoriaInteractableChatMessage;
   CONFIG.ChatMessage.template =
@@ -128,54 +128,62 @@ Hooks.once("init", function () {
 
   foundry.dice.terms.Die.MODIFIERS["dgr"] = danger_roll_func;
   CONFIG.Dice.rolls.push(rolls.AtoriaDOSRoll);
+  CONFIG.Dice.rolls.push(rolls.AtoriaEffectRoll);
 
-  Actors.unregisterSheet("core", ActorSheet);
-  // Actors.registerSheet("atoria", sheets.AtoriaActorChestSheet, {
-  //     types: ["chest"],
-  //     makeDefault: true,
-  //     label: "ATORIA.SheetLabels.Actor",
-  // });
-  // Actors.registerSheet("atoria", sheets.AtoriaActorHeroSheet, {
-  //     types: ["hero"],
-  //     makeDefault: true,
-  //     label: "ATORIA.SheetLabels.Actor",
-  // });
-  // Actors.registerSheet("atoria", sheets.AtoriaActorCharacterSheet, {
-  //     types: ["player-character", "non-player-character"],
-  //     makeDefault: true,
-  //     label: "ATORIA.SheetLabels.Actor",
-  // });
+  foundry.documents.collections.Actors.unregisterSheet(
+    "core",
+    foundry.appv1.sheets.ActorSheet,
+  );
 
-  Actors.registerSheet("atoria", sheets.AtoriaActorChestSheetV2, {
-    types: ["chest"],
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.ActorV2",
-  });
-  Actors.registerSheet("atoria", sheets.AtoriaActorHeroSheetV2, {
-    types: ["hero"],
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.ActorV2",
-  });
-  Actors.registerSheet("atoria", sheets.AtoriaActorNonPlayerCharacterSheetV2, {
-    types: ["non-player-character"],
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.ActorV2",
-  });
-  Actors.registerSheet("atoria", sheets.AtoriaActorPlayerCharacterSheetV2, {
-    types: ["player-character"],
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.ActorV2",
-  });
+  foundry.documents.collections.Actors.registerSheet(
+    "atoria",
+    sheets.AtoriaActorChestSheetV2,
+    {
+      types: ["chest"],
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.ActorV2",
+    },
+  );
+  foundry.documents.collections.Actors.registerSheet(
+    "atoria",
+    sheets.AtoriaActorHeroSheetV2,
+    {
+      types: ["hero"],
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.ActorV2",
+    },
+  );
+  foundry.documents.collections.Actors.registerSheet(
+    "atoria",
+    sheets.AtoriaActorNonPlayerCharacterSheetV2,
+    {
+      types: ["non-player-character"],
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.ActorV2",
+    },
+  );
+  foundry.documents.collections.Actors.registerSheet(
+    "atoria",
+    sheets.AtoriaActorPlayerCharacterSheetV2,
+    {
+      types: ["player-character"],
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.ActorV2",
+    },
+  );
 
-  Items.unregisterSheet("core", ItemSheet);
-  // Items.registerSheet("atoria", sheets.AtoriaItemSheetV1, {
-  //   makeDefault: true,
-  //   label: "ATORIA.SheetLabels.Item",
-  // });
-  Items.registerSheet("atoria", sheets.AtoriaItemSheet, {
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.Item",
-  });
+  foundry.documents.collections.Items.unregisterSheet(
+    "core",
+    foundry.appv1.sheets.ItemSheet,
+  );
+  foundry.documents.collections.Items.registerSheet(
+    "atoria",
+    sheets.AtoriaItemSheet,
+    {
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.Item",
+    },
+  );
 
   // CONFIG.statusEffects = RULESET.status_effects;
   CONFIG.statusEffects = RULESET.status_effects;

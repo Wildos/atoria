@@ -200,6 +200,6 @@ export default class AtoriaDOSRoll extends Roll {
       observer: user_level === CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
       limited: user_level === CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED,
     };
-    return renderTemplate(template, chatData);
+    return foundry.applications.handlebars.renderTemplate(template, chatData);
   }
 }

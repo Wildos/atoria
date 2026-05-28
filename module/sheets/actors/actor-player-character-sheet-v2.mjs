@@ -18,7 +18,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     classes: ["player-character"],
     window: {
       controls: [
-        ...AtoriaActorSheetV2.DEFAULT_OPTIONS.window.controls,
         {
           action: "onFixKnowledges",
           icon: "fa-solid fa-wrench",
@@ -88,11 +87,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     );
     controls.find((c) => c.action === "showTokenArtwork").visible =
       show_token_art;
-
-    // PopOutV2
-    controls.find(
-      (c) => c.action === "onPopoutV2" && c.label === "POPOUT.PopOut",
-    ).visible = helpers.hasPopoutV2Module();
 
     // DEBUG
     controls.find(
@@ -903,7 +897,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         siblings.push(items.get(el.dataset.itemId));
     }
 
-    const sortUpdates = SortingHelpers.performIntegerSort(item, {
+    const sortUpdates = foundry.utils.performIntegerSort(item, {
       target: target_item,
       siblings,
     });

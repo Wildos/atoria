@@ -10,7 +10,8 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
 ) {
   constructor(options = {}) {
     super(options);
-    this.#actor = options.actor;
+    console.debug(options);
+    // this.#actor = options.actor;
     this.#skill = options.skill;
     this.isEditingMode = false;
   }
@@ -41,7 +42,6 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
     position: {},
     window: {},
     actions: {
-      onPopoutV2: this._onPopoutV2,
       expandSection: {
         handler: this._expandSection,
         buttons: [0, 2],
@@ -62,9 +62,12 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
    * @type {ClientDocument}
    */
   get actor() {
-    return this.#actor;
+    return fromUuidSync(
+      "Scene.VaFe3puLEM2KervZ.Token.FKoPfkPBT3H5twi1.Actor.D5Q2yxOYM4BKYACx",
+    );
   }
-  #actor;
+  #actor_uuid;
+  // #actor;
 
   get skill() {
     return this.#skill;
@@ -75,18 +78,6 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
     return `${this.actor.name}: ${game.i18n.localize(this.#skill.label)}`;
   }
 
-  static async _onPopoutV2(event, _target) {
-    if (!helpers.hasPopoutV2Module()) return;
-    if (helpers.isPoppedOut(this)) {
-      event.stopPropagation();
-      await this.close();
-      this.render(true);
-    } else {
-      await this.render();
-      PopoutV2Module.popoutv2App(this);
-    }
-  }
-
   /** @override */
   _getHeaderControls() {
     const controls = this.options.window.controls;
@@ -94,7 +85,6 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
   }
 
   async close(options = {}) {
-    this.is_popouted = false;
     return super.close(options);
   }
 
@@ -146,7 +136,7 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
 
     let actor_active_keyword =
       utils.ruleset.character.getSkillAssociatedKeywordsData(
-        this.actor,
+        this.actor_source,
         null,
         this.skill.path,
       );
@@ -227,6 +217,7 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
   }
 
   async _prepareContext(options) {
+    super._prepareContext(options);
     const context = {
       isEditingMode: false,
 
@@ -240,7 +231,6 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
       skill: this.skill,
 
       system: this.actor.system,
-      systemSource: this.actor.system._source,
       flags: this.actor.flags,
 
       fields: this.actor.schema.fields,
@@ -260,7 +250,7 @@ export default class AtoriaRollSkillDialogV2 extends HandlebarsApplicationMixin(
   }
 
   async _preparePartContext(partId, context, options) {
-    await super._preparePartContext(partId, context, options);
+    context = await super._preparePartContext(partId, context, options);
     switch (partId) {
       case "body":
         {

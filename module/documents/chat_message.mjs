@@ -155,25 +155,35 @@ export default class AtoriaChatMessage extends ChatMessage {
   async getHTML() {
     // Determine some metadata
     const data = this.toObject(false);
-    data.content = await TextEditor.enrichHTML(this.content, {
-      rollData: this.getRollData(),
-    });
+    data.content = await foundry.applications.ux.TextEditor.enrichHTML(
+      this.content,
+      {
+        rollData: this.getRollData(),
+      },
+    );
 
     data.system.effect = "";
     data.system.critical_effect = "";
     data.system.postContent = "";
     if (this.isContentVisible) {
-      data.system.postContent = await TextEditor.enrichHTML(
-        this.system.postContent,
-        { rollData: this.getRollData() },
+      data.system.postContent =
+        await foundry.applications.ux.TextEditor.enrichHTML(
+          this.system.postContent,
+          { rollData: this.getRollData() },
+        );
+      data.system.effect = await foundry.applications.ux.TextEditor.enrichHTML(
+        this.system.effect,
+        {
+          rollData: this.getRollData(),
+        },
       );
-      data.system.effect = await TextEditor.enrichHTML(this.system.effect, {
-        rollData: this.getRollData(),
-      });
       data.system.critical_effect = this.is_critical_success
-        ? await TextEditor.enrichHTML(this.system.critical_effect, {
-            rollData: this.getRollData(),
-          })
+        ? await foundry.applications.ux.TextEditor.enrichHTML(
+            this.system.critical_effect,
+            {
+              rollData: this.getRollData(),
+            },
+          )
         : "";
     }
 
@@ -234,7 +244,10 @@ export default class AtoriaChatMessage extends ChatMessage {
       messageData.borderColor = this.author?.color.css;
 
     // Render the chat message
-    let html = await renderTemplate(CONFIG.ChatMessage.template, messageData);
+    let html = await foundry.applications.handlebars.renderTemplate(
+      CONFIG.ChatMessage.template,
+      messageData,
+    );
     html = $(html);
 
     // Flag expanded state of dice rolls
@@ -244,7 +257,7 @@ export default class AtoriaChatMessage extends ChatMessage {
   }
 
   static async chatListeners(html) {
-    html.on("click", "[data-action=rollable]", (event) => {
+    $(html).on("click", (event) => {
       event.preventDefault();
       const skill_title = event.currentTarget;
       const { skillPath } = skill_title.dataset;

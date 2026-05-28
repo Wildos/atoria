@@ -15,6 +15,7 @@ export default class AtoriaActor extends Actor {
   }
 
   prepareBaseData() {
+    super.prepareBaseData();
     const actorData = this;
 
     actorData.system.encumbrance.value = 0;
@@ -46,6 +47,7 @@ export default class AtoriaActor extends Actor {
   }
 
   prepareDerivedData() {
+    super.prepareDerivedData();
     const actorData = this;
     for (let i of this.items) {
       actorData.system.encumbrance.value += i.getEncumbrance();
@@ -121,7 +123,7 @@ export default class AtoriaActor extends Actor {
   toPlainObject() {
     const result = { ...this };
 
-    result.system = this.system.toPlainObject();
+    // result.system = this.system.toPlainObject();
     result.items = this.items?.size > 0 ? this.items.contents : [];
     result.effects = this.effects?.size > 0 ? this.effects.contents : [];
 
@@ -290,21 +292,25 @@ export default class AtoriaActor extends Actor {
       return;
     }
 
-    const used_ressources = await utils.skillRollDialog(this, skill_path);
-    if (used_ressources === null) return;
+    // -----------------
+    utils.test_chat_message(this);
+    // -----------------
 
-    for (let keyword of used_ressources.used_keywords) {
-      this.takeOneKeywordUse(keyword);
-    }
+    // const used_ressources = await utils.skillRollDialog(this, skill_path);
+    // if (used_ressources === null) return;
 
-    for (let feature_uuid of used_ressources.used_features) {
-      let feature = fromUuidSync(feature_uuid);
-      feature.takeOneLimitationUse();
-    }
+    // for (let keyword of used_ressources.used_keywords) {
+    //   this.takeOneKeywordUse(keyword);
+    // }
 
-    this.update({
-      "system.luck": this.system.luck - used_ressources.luck,
-    });
+    // for (let feature_uuid of used_ressources.used_features) {
+    //   let feature = fromUuidSync(feature_uuid);
+    //   feature.takeOneLimitationUse();
+    // }
+
+    // this.update({
+    //   "system.luck": this.system.luck - used_ressources.luck,
+    // });
     // const used_features = roll_config["used_features"].map((element_id) =>
     //   this.items.get(element_id),
     // );

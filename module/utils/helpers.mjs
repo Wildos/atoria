@@ -1,27 +1,12 @@
 import * as utils from "../utils/module.mjs";
 import * as models from "../models/module.mjs";
 import RULESET from "./ruleset.mjs";
+import * as rolls from "../rolls/module.mjs";
 
 import {
   AtoriaRollItemDialogV2,
   AtoriaRollSkillDialogV2,
 } from "../sheets/module.mjs";
-
-export function hasPopoutV2Module() {
-  try {
-    return PopoutV2Module !== undefined;
-  } catch (e) {
-    return false;
-  }
-}
-
-export function isPoppedOut(app) {
-  if (hasPopoutV2Module())
-    return PopoutV2Module.singleton.poppedOut.has(app.appId);
-  else {
-    return false;
-  }
-}
 
 export async function confirmDeletion(element_name) {
   element_name =
@@ -239,10 +224,39 @@ export async function skillRollDialog(actor, skill_path) {
     return undefined;
   }
 
-  let roll_data = await AtoriaRollSkillDialogV2.wait({
-    actor: actor,
-    skill: actor.getSkillFromPath(skill_path),
-  });
+  // let roll_data = await AtoriaRollSkillDialogV2.wait({
+  //   actor: actor,
+  //   skill: actor.getSkillFromPath(skill_path),
+  // });
+
+  let skill = actor.getSkillFromPath(skill_path);
+  let skill_roll_data = {
+    owning_actor_id: actor._id,
+    success_value: skill.success,
+    critical_success_amount:
+      RULESET.character.getSkillCriticalSuccessAmount(skill),
+    critical_fumble_amount:
+      RULESET.character.getSkillCriticalFumbleAmount(skill),
+    title: game.i18n.localize(skill.label),
+    advantage_amount: 0,
+    disadvantage_amount: 0,
+    luck_applied: 0,
+    dos_mod: 0,
+    is_danger: false,
+  };
+  const roll = new rolls.AtoriaDOSRoll(actor.getRollData(), skill_roll_data);
+  await roll.evaluate();
+  let roll_data = {
+    chat_rolls: [roll],
+    luck_applied: 0,
+    used_keywords: [],
+    used_features: [], // uuid
+    roll_mode: utils.convertDesiredVisibilityToRollMode("public"),
+    flavor: null,
+    flavor_tooltip: null,
+    effect: "",
+    critical_effect: "",
+  };
 
   if (roll_data === null) {
     return null;

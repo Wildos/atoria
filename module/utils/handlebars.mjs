@@ -1,45 +1,6 @@
 import ruleset from "./ruleset.mjs";
 
 export const preloadHandlebarsTemplates = async function () {
-  // const commons_partials = [
-  //     "simple-header.hbs",
-  //     "rollfield.hbs"
-  // ]
-  // const actors_partials = [
-  //     "skill-display.hbs",
-  //     "skill-cat-display.hbs",
-  //     "skill-group-display.hbs",
-  //     "skill-type-display.hbs",
-  //     "armor-display.hbs",
-  //     "resistance-display.hbs"
-  // ];
-  // const items_partials = [
-  //     "inventory-item-display.hbs",
-  //     "feature-item-display.hbs",
-  //     "actable-item-display.hbs",
-  //     "actable-modifier-item-display.hbs",
-  //     "limitation-input.hbs",
-  //     "keywords-input.hbs",
-  //     "cost-input.hbs",
-  //     "supplementary-input.hbs"
-  // ];
-  // const tooltips_partials = [
-  //     "cost-tooltip.hbs",
-  //     "limitation-tooltip.hbs",
-  // ];
-  // for (const path of commons_partials) {
-  //     paths[`atoria.commons.${path.replace(".hbs", "")}`] = `systems/atoria/templates/commons/${path}`;
-  // }
-  // for (const path of actors_partials) {
-  //     paths[`atoria.actors_partials.${path.replace(".hbs", "")}`] = `systems/atoria/templates/actors/parts/${path}`;
-  // }
-  // for (const path of items_partials) {
-  //     paths[`atoria.items_partials.${path.replace(".hbs", "")}`] = `systems/atoria/templates/items/parts/${path}`;
-  // }
-  // for (const path of tooltips_partials) {
-  //     paths[`atoria.tooltips_partials.${path.replace(".hbs", "")}`] = `systems/atoria/templates/tooltips/parts/${path}`;
-  // }
-
   const paths = {};
   const v2_commons_partials = [
     "simple-header.hbs",
@@ -104,7 +65,7 @@ export const preloadHandlebarsTemplates = async function () {
       `systems/atoria/templates/v2/chat_messages/parts/${path}`;
   }
 
-  return loadTemplates(paths);
+  return foundry.applications.handlebars.loadTemplates(paths);
 };
 
 function _cleanLines(text) {

@@ -9,7 +9,6 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
 ) {
   constructor(options = {}) {
     super(options);
-    this.#dragDrop = this.#createDragDropHandlers();
     this.isEditingMode = false;
   }
 
@@ -24,15 +23,6 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     },
     window: {
       resizable: true,
-      controls: [
-        ...ActorSheetV2.DEFAULT_OPTIONS.window.controls,
-        {
-          action: "onPopoutV2",
-          icon: "fas fa-external-link-alt",
-          label: "POPOUT.PopOut",
-          ownership: "OWNER",
-        },
-      ],
     },
     form: {
       submitOnChange: true,
@@ -40,8 +30,6 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     actions: {
       toggleEditingMode: this._toggleEditingMode,
       onEditImage: this._onEditImage,
-      onPopoutV2: this._onPopoutV2,
-      onPopinV2: this._onPopinV2,
       createItem: this._createItem,
       editItem: this._editItem,
       deleteItem: this._deleteItem,
@@ -58,25 +46,12 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       toggleAttribute: this._toggleAttribute,
       toggleEffect: this._toggleEffect,
     },
-    dragDrop: [{ dragSelector: "[data-drag]", dropSelector: null }],
   };
 
   get title() {
     const is_token = this.document?.isToken ?? false;
     const token_string = is_token ? "[Token] " : "";
     return `${token_string}${game.i18n.localize(this.document.name)}`;
-  }
-
-  static async _onPopoutV2(event, _target) {
-    if (!helpers.hasPopoutV2Module()) return;
-    if (helpers.isPoppedOut(this)) {
-      event.stopPropagation();
-      await this.close();
-      this.render(true);
-    } else {
-      await this.render();
-      PopoutV2Module.popoutv2App(this);
-    }
   }
 
   /** @override */
@@ -97,16 +72,10 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     controls.find((c) => c.action === "showTokenArtwork").visible =
       show_token_art;
 
-    // PopOutV2
-    controls.find(
-      (c) => c.action === "onPopoutV2" && c.label === "POPOUT.PopOut",
-    ).visible = helpers.hasPopoutV2Module();
-
     return controls;
   }
 
   async close(options = {}) {
-    this.is_popouted = false;
     return super.close(options);
   }
 
@@ -305,7 +274,6 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
 
   _onRender(context, options) {
     super._onRender(context, options);
-    this.#dragDrop.forEach((d) => d.bind(this.element));
 
     const html = $(this.element);
 
@@ -327,6 +295,29 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     });
 
     if (!this.isEditable) return;
+
+    new foundry.applications.ux.DragDrop.implementation({
+      dragSelector: "[data-drag][data-item-id]",
+      permissions: {
+        dragstart: this._canDragStart.bind(this),
+        drop: this._canDragDrop.bind(this),
+      },
+      callbacks: {
+        dragstart: this._onDragStart.bind(this),
+        drop: this._onDropItem.bind(this),
+      },
+    }).bind(this.element);
+    new foundry.applications.ux.DragDrop.implementation({
+      dragSelector: "[data-drag][data-effect-id]",
+      permissions: {
+        dragstart: this._canDragStart.bind(this),
+        drop: this._canDragDrop.bind(this),
+      },
+      callbacks: {
+        dragstart: this._onDragStart.bind(this),
+        drop: this._onDropActiveEffect.bind(this),
+      },
+    }).bind(this.element);
 
     html.on("change", ".item-update", async (event) => {
       event.preventDefault();
@@ -383,27 +374,6 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     }
   }
 
-  #createDragDropHandlers() {
-    return this.options.dragDrop.map((d) => {
-      d.permissions = {
-        dragstart: this._canDragStart.bind(this),
-        drop: this._canDragDrop.bind(this),
-      };
-      d.callbacks = {
-        dragstart: this._onDragStart.bind(this),
-        dragover: this._onDragOver.bind(this),
-        drop: this._onDrop.bind(this),
-      };
-      return new DragDrop(d);
-    });
-  }
-
-  #dragDrop;
-
-  get dragDrop() {
-    return this.#dragDrop;
-  }
-
   _canDragStart(selector) {
     return this.isEditable;
   }
@@ -433,19 +403,6 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
 
-  _onDragOver(event) {}
-
-  async _onDrop(event) {
-    const data = TextEditor.getDragEventData(event);
-
-    switch (data.type) {
-      case "Item":
-        return this._onDropItem(event, data);
-      case "ActiveEffect":
-        return this._onDropActiveEffect(event, data);
-    }
-  }
-
   async _onDropItem(event, data) {
     if (!this.actor.isOwner) return false;
     const item = await Item.implementation.fromDropData(data);
@@ -462,7 +419,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     if (!this.actor.isOwner || !effect) return false;
 
     if (this.actor.uuid === effect.parent?.uuid)
-      return this._onEffectSort(event, effect);
+      return this._onSortEffect(event, effect);
     return aeCls.create(effect, { parent: this.actor });
   }
 
@@ -486,7 +443,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
         siblings.push(items.get(el.dataset.itemId));
     }
 
-    const sortUpdates = SortingHelpers.performIntegerSort(item, {
+    const sortUpdates = foundry.utils.performIntegerSort(item, {
       target,
       siblings,
     });
@@ -514,7 +471,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
         siblings.push(effects.get(el.dataset.effectId));
     }
 
-    const sortUpdates = SortingHelpers.performIntegerSort(effect, {
+    const sortUpdates = foundry.utils.performIntegerSort(effect, {
       target,
       siblings,
     });

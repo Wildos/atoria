@@ -9,27 +9,32 @@ export default class AtoriaItem extends Item {
   // prepareEmbeddedDocuments() (including active effects),
   // prepareDerivedData().
 
-  prepareBaseData() {}
+  prepareBaseData() {
+    super.prepareBaseData();
+  }
 
   async prepareDerivedData() {
-    this.descriptive_tooltip = await renderTemplate(
-      CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES[this.type],
-      {
-        item: this,
-        systemFields: this.system.schema.fields,
-        keywords_recap: this.getKeywordRecap(),
-      },
-    );
+    await super.prepareDerivedData();
+    this.descriptive_tooltip =
+      await foundry.applications.handlebars.renderTemplate(
+        CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES[this.type],
+        {
+          item: this,
+          systemFields: this.system.schema.fields,
+          keywords_recap: this.getKeywordRecap(),
+        },
+      );
     if (this.type === "spell") {
       for (let supp of this.system.supplementaries_list) {
-        supp.descriptive_tooltip = await renderTemplate(
-          CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["supplementary"],
-          {
-            supplementary: supp,
-            systemFields:
-              this.system.schema.fields.supplementaries_list.element.fields,
-          },
-        );
+        supp.descriptive_tooltip =
+          await foundry.applications.handlebars.renderTemplate(
+            CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["supplementary"],
+            {
+              supplementary: supp,
+              systemFields:
+                this.system.schema.fields.supplementaries_list.element.fields,
+            },
+          );
       }
     }
     if (this.system.usable_actable_modifiers !== undefined) {
@@ -62,6 +67,7 @@ export default class AtoriaItem extends Item {
   }
 
   prepareEmbeddedDocuments() {
+    super.prepareEmbeddedDocuments();
     if (["armor", "weapon"].includes(this.type)) {
       for (const collectionName of Object.keys(
         this.constructor.hierarchy || {},
