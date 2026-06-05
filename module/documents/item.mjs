@@ -382,6 +382,20 @@ export default class AtoriaItem extends Item {
     }
   }
 
+  getSavesAsked() {
+    switch (this.type) {
+      case "weapon":
+      case "technique":
+      case "incantatory-addition":
+      case "spell":
+      case "opportunity":
+      case "action":
+        return utils.ruleset.item.getSavesAsked(this);
+      default:
+        return [];
+    }
+  }
+
   getAlterations(skill_path) {
     const item_with_alterations = [
       "kit",
@@ -534,7 +548,7 @@ export default class AtoriaItem extends Item {
   }
 
   async getTooltipHTML() {
-    return await renderTemplate(
+    return await foundry.applications.handlebars.renderTemplate(
       CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES[this.type],
       {
         item: this,
@@ -553,9 +567,19 @@ export default class AtoriaItem extends Item {
       "opportunity",
     ];
     if (item_with_effect.includes(this.type)) {
-      return this.system.effect;
+      const matches = this.system.effect.matchAll(
+        /\[\[(.*?)]{2,3}(?:{([^}]+)})?/gi,
+      );
+      let effects = [];
+      for (const match of Array.from(matches)) {
+        effects.push({
+          flavor: match[2],
+          formula: match[1],
+        });
+      }
+      return effects;
     }
-    return "";
+    return [];
   }
 
   get_critical_effect() {
@@ -567,9 +591,19 @@ export default class AtoriaItem extends Item {
       "incantatory-addition",
     ];
     if (item_with_critical_effect.includes(this.type)) {
-      return this.system.critical_effect;
+      const matches = this.system.critical_effect.matchAll(
+        /\[\[(.*?)]{2,3}(?:{([^}]+)})?/gi,
+      );
+      let effects = [];
+      for (const match of Array.from(matches)) {
+        effects.push({
+          flavor: match[2],
+          formula: match[1],
+        });
+      }
+      return effects;
     }
-    return "";
+    return [];
   }
 
   getKeywordRecap() {

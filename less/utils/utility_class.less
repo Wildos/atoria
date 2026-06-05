@@ -135,6 +135,17 @@
             grid-column: 1 / span 2;
         }
     }
+    .grid-3col {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+        .double-col-field {
+            grid-column: 1 / span 2;
+        }
+        .triple-col-field {
+            grid-column: 1 / span 3;
+        }
+    }
 
     .flex0 {
         flex: 0;

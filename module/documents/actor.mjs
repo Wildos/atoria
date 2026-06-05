@@ -3,6 +3,7 @@ import * as rolls from "../rolls/module.mjs";
 import RULESET from "../utils/ruleset.mjs";
 import DEFAULT_VALUES from "../utils/default-values.mjs";
 import { helpers } from "../models/module.mjs";
+import { AtoriaRollDialog } from "../sheets/module.mjs";
 
 export default class AtoriaActor extends Actor {
   /**
@@ -146,6 +147,15 @@ export default class AtoriaActor extends Actor {
     }
     if (!utils.isSkill(target_skill)) return undefined;
     target_skill["path"] = effective_skill_path_parts.join(".");
+
+    target_skill["critical_success_amount"] =
+      utils.ruleset.character.getSkillCriticalSuccessAmount(target_skill);
+    target_skill["critical_fumble_amount"] =
+      utils.ruleset.character.getSkillCriticalFumbleAmount(target_skill);
+    target_skill["proper_label"] = utils.getSkillTitle(
+      target_skill.path,
+      target_skill.label,
+    );
     return target_skill;
   }
 
@@ -274,7 +284,7 @@ export default class AtoriaActor extends Actor {
       console.warn(`Couldn't generate skill title for path: '${skill_path}'`);
       return "";
     }
-    return utils.getSkillTitle(skill.path, skill.label);
+    return skill.proper_label;
   }
 
   async rollSkill(skill_path) {
@@ -293,147 +303,115 @@ export default class AtoriaActor extends Actor {
     }
 
     // -----------------
-    utils.test_chat_message(this);
-    // -----------------
+    // Get roll parameters
+    let roll_parameters = await AtoriaRollDialog.ask({
+      actor_id: this._id,
+      action_cost: undefined,
+      skill: skill,
+      usable_keywords: await utils.get_usable_keywords(this, skill_path),
+      usable_perks: utils.get_usable_perks_for_skill(this, skill_path),
+    });
 
-    // const used_ressources = await utils.skillRollDialog(this, skill_path);
-    // if (used_ressources === null) return;
+    if (roll_parameters === null) return;
 
-    // for (let keyword of used_ressources.used_keywords) {
-    //   this.takeOneKeywordUse(keyword);
-    // }
+    // Create message roll
+    let roll_data = utils.get_roll_data(roll_parameters, skill_path);
 
-    // for (let feature_uuid of used_ressources.used_features) {
-    //   let feature = fromUuidSync(feature_uuid);
-    //   feature.takeOneLimitationUse();
-    // }
+    let effects_data = utils.get_effects_data(roll_parameters);
+    let critical_effects_data =
+      utils.get_critical_effects_data(roll_parameters);
 
-    // this.update({
-    //   "system.luck": this.system.luck - used_ressources.luck,
-    // });
-    // const used_features = roll_config["used_features"].map((element_id) =>
-    //   this.items.get(element_id),
-    // );
-    // const used_features_id = used_features.map((element) => {
-    //   return element.uuid;
-    // });
+    let used_perks_data = {
+      keywords: {
+        length: roll_parameters.used_keywords.length,
+        description: roll_parameters.used_keywords
+          .map((keyword) => keyword.descriptive_tooltip)
+          .join(""),
+      },
+      supplementaries: {
+        length: roll_parameters.used_supplementaries.length,
+        description: roll_parameters.used_supplementaries
+          .map((supplementary) => supplementary.descriptive_tooltip)
+          .join(""),
+      },
+      act_mod: {
+        length: 0,
+        description: "",
+      },
+      feature: {
+        length: 0,
+        description: "",
+      },
+    };
+    for (let item of roll_parameters.used_perks) {
+      if (item.type === "feature") {
+        used_perks_data["feature"].length += 1;
+        used_perks_data["feature"].description += await item.getTooltipHTML();
+      } else if (["technique", "incantatory-addition"].includes(item.type)) {
+        used_perks_data["act_mod"].length += 1;
+        used_perks_data["act_mod"].description += await item.getTooltipHTML();
+      } else {
+        //TODO: handle enchantment
+        console.error("Unknown type found in used_perks");
+      }
+    }
+    let used_perks = [];
+    if (used_perks_data.keywords.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.Keywords", {
+          amount: used_perks_data.keywords.length,
+        }),
+        description: used_perks_data.keywords.description,
+      });
+    }
+    if (used_perks_data.supplementaries.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.Supplementaries", {
+          amount: used_perks_data.supplementaries.length,
+        }),
+        description: used_perks_data.supplementaries.description,
+      });
+    }
+    if (used_perks_data.act_mod.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.ActableModifiers", {
+          amount: used_perks_data.act_mod.length,
+        }),
+        description: used_perks_data.act_mod.description,
+      });
+    }
+    if (used_perks_data.feature.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.Features", {
+          amount: used_perks_data.feature.length,
+        }),
+        description: used_perks_data.feature.description,
+      });
+    }
+    let system_data = {
+      used_perks: used_perks,
+      saves_asked: utils.get_asked_saves(roll_parameters),
+    };
 
-    // let used_alterations = [];
-    // for (let feature of used_features) {
-    //   let alterations = feature.getAlterations(skill_path);
-    //   for (let alteration of alterations) {
-    //     used_alterations.push(alteration);
-    //   }
-    // }
-    // for (let keyword_data of roll_config["used_keywords"]) {
-    //   used_alterations.push(keyword_data.alteration);
-    // }
+    await utils.chat_message_from_roll(
+      this,
+      roll_parameters.message_mode,
+      roll_data,
+      effects_data,
+      critical_effects_data,
+      system_data,
+    );
 
-    // const roll_config_altered = utils.applyAlterationsToRollConfig(
-    //   roll_config,
-    //   used_alterations,
-    // );
-
-    // const {
-    //   roll_mode,
-    //   advantage_amount,
-    //   disadvantage_amount,
-    //   luck_applied,
-    //   dos_mod,
-    //   is_danger,
-    // } = roll_config_altered;
-
-    // const skill_title = this.getSkillTitle(skill_path);
-    // const roll = new rolls.AtoriaDOSRoll(this.getRollData(), {
-    //   owning_actor_id: this._id,
-    //   success_value: skill.success,
-    //   critical_success_amount:
-    //     utils.ruleset.character.getSkillCriticalSuccessAmount(skill),
-    //   critical_fumble_amount:
-    //     utils.ruleset.character.getSkillCriticalFumbleAmount(skill),
-    //   title: skill_title,
-    //   advantage_amount,
-    //   disadvantage_amount,
-    //   luck_applied,
-    //   dos_mod,
-    //   is_danger,
-    // });
-    // await roll.evaluate();
-
-    // const effect = used_features.reduce(
-    //   (acc, val) => acc + val.system.effect,
-    //   "",
-    // );
-    // const critical_effect = used_features.reduce(
-    //   (acc, val) => acc + val.system.critical_effect,
-    //   "",
-    // );
-
-    // const roll_data = {
-    //   chat_rolls: [roll],
-    //   used_features: used_features_id,
-    //   used_keywords: roll_config.used_keywords,
-    //   critical_effect: critical_effect,
-    //   effect: effect,
-    //   roll_mode: roll_mode,
-    // };
-    // await utils.sendChatMessageFromRollData(this, this._id, roll_data);
-
-    // await ChatMessage.create(
-    //   {
-    //     type: "interactable",
-    //     speaker: ChatMessage.getSpeaker({ actor: this }),
-    //     user: game.user.id,
-    //     sound: CONFIG.sounds.dice,
-    //     rolls: [roll],
-    //     system: {
-    //       related_items: [
-    //         {
-    //           type: "feature",
-    //           items_id: used_features_id,
-    //         },
-    //         {
-    //           type: "keyword",
-    //           items: roll_config.used_keywords.map((keyword_data) => {
-    //             return {
-    //               descriptive_tooltip: RULESET.keywords.get_description(
-    //                 keyword_data.name,
-    //                 RULESET.character.getActiveKeywordsData(this)[
-    //                   keyword_data.name
-    //                 ] || 0,
-    //               ),
-    //               name: RULESET.keywords.get_localized_name(
-    //                 keyword_data.name,
-    //                 RULESET.character.getActiveKeywordsData(this)[
-    //                   keyword_data.name
-    //                 ] || 0,
-    //               ),
-    //             };
-    //           }),
-    //         },
-    //       ],
-    //     },
-    //   },
-    //   { rollMode: roll_mode },
-    // );
-
-    // for (let feature of used_features) {
-    //   feature.update({
-    //     "system.limitation.usage_left":
-    //       feature.system.limitation.usage_left - 1,
-    //   });
-    // }
-
-    // for (let keyword of roll_config.used_keywords) {
-    //   keyword.id = keyword.name;
-    //   this.takeOneKeywordUse(keyword);
-    // }
-
-    // this.update({
-    //   "system.luck": this.system.luck - luck_applied,
-    // });
-
-    // return roll;
+    // Consume resource used
+    for (let keyword of roll_parameters.used_keywords) {
+      this.takeOneKeywordUse(keyword);
+    }
+    for (let perk_item of roll_parameters.used_perks) {
+      perk_item.takeOneLimitationUse();
+    }
+    this.update({
+      "system.luck": this.system.luck - roll_parameters.roll_data.luck_applied,
+    });
   }
 
   async createSkill(skill_cat_path, skill_key, skill_label) {

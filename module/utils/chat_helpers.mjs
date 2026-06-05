@@ -2,12 +2,12 @@ import * as my_rolls from "../rolls/module.mjs";
 
 export async function createInteractableChatMessage(
   message_mode,
-  content,
-  is_emote,
-  flavor_text,
-  rolls,
   actor,
+  content,
+  rolls,
   system_data,
+  flavor_text = "",
+  is_emote = false,
 ) {
   let message_data = {
     content: content,
@@ -30,6 +30,59 @@ export async function createInteractableChatMessage(
   ChatMessage.create(message_data);
 }
 
+export async function chat_message_from_roll(
+  actor,
+  message_mode,
+  roll_data,
+  effects_data,
+  critical_effects_data,
+  system_data,
+) {
+  const roll = new my_rolls.AtoriaDOSRoll(actor.getRollData(), roll_data);
+  await roll.evaluate();
+
+  let rolls = [roll];
+
+  for (let effect_data of effects_data) {
+    let effect_roll = new my_rolls.AtoriaEffectRoll(
+      effect_data.formula,
+      {},
+      {
+        flavor: effect_data.flavor,
+      },
+    );
+    await effect_roll.evaluate({ maximize: roll.is_critical_success });
+    rolls.push(effect_roll);
+  }
+  if (roll.is_critical_success) {
+    for (let effect_data of critical_effects_data) {
+      let effect_roll = new my_rolls.AtoriaEffectRoll(
+        effect_data.formula,
+        {},
+        {
+          flavor: effect_data.flavor,
+        },
+      );
+      await effect_roll.evaluate();
+      rolls.push(effect_roll);
+    }
+  }
+
+  let content = "";
+  let is_emote = false;
+  let flavor_text = "";
+
+  return createInteractableChatMessage(
+    message_mode,
+    actor,
+    content,
+    rolls,
+    system_data,
+    flavor_text,
+    is_emote,
+  );
+}
+
 export async function test_chat_message(actor) {
   let skill_roll_data = {
     owning_actor_id: actor._id,
@@ -43,39 +96,35 @@ export async function test_chat_message(actor) {
     dos_mod: 0,
     is_danger: false,
   };
-  const roll = new my_rolls.AtoriaDOSRoll(actor.getRollData(), skill_roll_data);
-  await roll.evaluate();
 
-  let damage_roll = new my_rolls.AtoriaEffectRoll(
-    "2d6+1+1d8",
-    {},
+  let effects_data = [
     {
-      flavor: "damage",
+      formula: "1d6+2",
+      flavor: "Dégat",
     },
-  );
-  await damage_roll.evaluate();
-  let heal_roll = new my_rolls.AtoriaEffectRoll(
-    "1d4-2",
-    {},
     {
-      flavor: "healing is good it keep people alive",
+      formula: "2d4-1",
+      flavor: "Santé",
     },
-  );
-  await heal_roll.evaluate();
+  ];
+
+  let system_data = {
+    used_perks: [{ name: "supp one", description: "check this out" }],
+    saves_asked: [
+      {
+        name: "ATORIA.Ruleset.Skills.Combative.Reflex.Dodge.Label",
+        skill_path: "system.skills.combative.reflex.dodge",
+      },
+    ],
+  };
 
   let message_mode = game.settings.get("core", "messageMode");
-  let content = "";
-  let is_emote = false;
-  let flavor_text = "";
-  let rolls = [roll, damage_roll, heal_roll];
-  let system_data = {};
-  createInteractableChatMessage(
-    message_mode,
-    content,
-    is_emote,
-    flavor_text,
-    rolls,
+
+  await chat_message_from_roll(
     actor,
+    message_mode,
+    skill_roll_data,
+    effects_data,
     system_data,
   );
 }

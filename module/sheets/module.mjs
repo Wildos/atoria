@@ -9,5 +9,6 @@ export { default as AtoriaActorPlayerCharacterSheetV2 } from "./actors/actor-pla
 
 export { default as AtoriaRollItemDialogV2 } from "./dialogs/roll-item-dialog.mjs";
 export { default as AtoriaRollSkillDialogV2 } from "./dialogs/roll-skill-dialog.mjs";
+export { default as AtoriaRollDialog } from "./dialogs/roll-dialog.mjs";
 
 export { default as AtoriaItemSheet } from "./items/item-sheet-v2.mjs";

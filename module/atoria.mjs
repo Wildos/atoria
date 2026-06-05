@@ -71,6 +71,7 @@ Hooks.once("init", function () {
 
     supplementary:
       "systems/atoria/templates/v2/tooltips/supplementary-tooltip.hbs",
+    keyword: "systems/atoria/templates/v2/tooltips/keyword-tooltip.hbs",
   };
   CONFIG.ATORIA.EFFECT_TOOLTIP_TEMPLATES =
     "systems/atoria/templates/v2/tooltips/effects/effect-tooltip.hbs";
@@ -224,7 +225,7 @@ Hooks.once("ready", function () {
 });
 
 // Activate chat listeners
-Hooks.on("renderChatLog", (log, html, data) => {
+Hooks.on("renderChatMessageHTML", (message, html, context) => {
   documents.AtoriaChatMessage.chatListeners(html);
 });
 

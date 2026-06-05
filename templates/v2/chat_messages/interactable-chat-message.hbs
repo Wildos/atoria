@@ -1,4 +1,4 @@
-<li class="chat-message message flexcol {{cssClass}}" data-message-id="{{message._id}}"
+<li class="chat-message interactable message flexcol {{cssClass}}" data-message-id="{{message._id}}"
     {{#if borderColor}}style="border-color:{{borderColor}}"{{/if}}>
     <header class="message-header flexrow">
         <h4 class="message-sender">{{alias}}</h4>
@@ -25,7 +25,24 @@
         {{#if (and (or (eq user._id author._id) (user.igGm)) message.system.flavor_tooltip)}}data-tooltip="{{{message.system.flavor_tooltip}}}"{{/if}}>{{{message.flavor}}}</span>
         {{/if}}
     </header>
+
     <div class="message-content">
         {{{message.content}}}
     </div>
+
+    {{#if (and (or (eq user._id author._id) (user.igGm)) message.system.used_perks)}}
+        {{#each message.system.used_perks}}
+        <label class="used-perk" data-tooltip="{{this.description}}">{{localize this.name}}</label>
+        {{/each}}
+    {{/if}}
+
+    {{#if message.system.saves_asked}}
+    <div class="interactable-content">
+        <ul class="saves-asked">
+        {{#each message.system.saves_asked}}
+            <li data-action="rollable" data-skill-path="{{this.skill_path}}">{{localize this.name}}</li>
+        {{/each}}
+        </ul>
+    </div>
+    {{/if}}
 </li>

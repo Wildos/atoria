@@ -330,6 +330,12 @@
         "Used_actable_modifiers": "Techniques ou Ajouts",
         "No_used_actable_modifiers": "Aucune techniques ou ajouts utilisé",
         "Saves_asked": "Oppositions"
+      },
+      "Used": {
+        "Keywords": "{amount} mot-clef(s)",
+        "Supplementaries": "{amount} supplémentaire",
+        "ActableModifiers": "{amount} technique(s) et ajout(s)",
+        "Features": "{amount} aptitude(s) et enchantement(s)"
       }
     },
     "Dialog": {

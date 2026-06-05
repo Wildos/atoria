@@ -68,11 +68,6 @@ export function getSkillData(item, skill_path) {
   if (skill_data === undefined) {
     return undefined;
   }
-  skill_data.critical_success_amount =
-    utils.ruleset.character.getSkillCriticalSuccessAmount(skill_data);
-  skill_data.critical_fumble_amount =
-    utils.ruleset.character.getSkillCriticalFumbleAmount(skill_data);
-  skill_data.label = item.actor.getSkillTitle(skill_path);
   return skill_data;
 }
 
@@ -233,11 +228,9 @@ export async function skillRollDialog(actor, skill_path) {
   let skill_roll_data = {
     owning_actor_id: actor._id,
     success_value: skill.success,
-    critical_success_amount:
-      RULESET.character.getSkillCriticalSuccessAmount(skill),
-    critical_fumble_amount:
-      RULESET.character.getSkillCriticalFumbleAmount(skill),
-    title: game.i18n.localize(skill.label),
+    critical_success_amount: skill.critical_success_amount,
+    critical_fumble_amount: skill.critical_fumble_amount,
+    title: skill.label,
     advantage_amount: 0,
     disadvantage_amount: 0,
     luck_applied: 0,
@@ -480,4 +473,17 @@ export function isSkillPathsMatchingAssociatedOne(
   )
     return true;
   return false;
+}
+
+export function get_empty_cost() {
+  let cost_field = models.utils.defineCostField();
+  return cost_field.getInitialValue({});
+}
+
+export function add_costs(cost_a, cost_b) {
+  let res = foundry.deepClone(cost_a);
+  for (let key in cost_b) {
+    res[key] = (res[key] ?? 0) + cost_b[key];
+  }
+  return res;
 }

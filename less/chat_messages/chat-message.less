@@ -1,62 +1,57 @@
-& .atoria.chat-message {
+& .chat-message{
+    &.interactable {
+        font-size: var(--font-size);
+    }
+    .atoria {
+        &.critical.success .title {
+            color: green;
+        }
+        &.success .title {
+            color: color-mix(in srgb, green 40%, var(--color-dark-1););
+        }
+        &.failure .title {
+            color: color-mix(in srgb, red 40%, var(--color-dark-1););
+        }
+        &.critical.failure .title {
+            color: red;
+        }
 
-    ul {
-        &.used_supplementaries, &.used_features,
-        &.used_keywords, &.saves_asked,
-        &.used_actable_modifiers {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
+        .title {
+            min-width: fit-content;
+        }
+        .result-degree {
+            flex:0;
+            min-width: 6em;
+            width: fit-content;
+        }
 
-            li {
-                margin: 0;
+        .message-content {
+            .inline-roll {
+                white-space: normal;
+                word-break: normal;
+                background: none;
+                border: none;
             }
         }
-    }
 
-    .critial_success-title {
-        color: green;
-    }
-    .success-title {
-        color: color-mix(in srgb, green 40%, var(--color-text-dark-primary););
-    }
-    .failure-title {
-        color: color-mix(in srgb, red 40%, var(--color-text-dark-primary););
-    }
-    .critial_failure-title {
-        color: red;
-    }
-
-    .alteration-label {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 2px;
-    }
-
-    hr {
-        height: 1px;
-        border-top: 1px solid black;
-        width: 100%;
-        margin: 2px;
-    }
-
-    .message-content, .message-post-content {
-        .inline-roll {
-            white-space: normal;
-            word-break: normal;
-            background: none;
-            border: none;
+        hr {
+            height: 1px;
+            border-top: 1px solid black;
+            width: 100%;
+            margin: 2px;
         }
-    }
 
-    ul.saves_asked {
-        /* display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        justify-items: center; */
+        ul {
+            &.saves-asked{
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
 
-        li {
-            padding: 0 0.5em;
+                li {
+                    margin: 0;
+                }
+            }
         }
-    }
 
+    }
 }

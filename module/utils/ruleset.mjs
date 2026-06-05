@@ -2,7 +2,10 @@ import { itemRollDialog } from "./helpers.mjs";
 import { default as default_values } from "./default-values.mjs";
 import { buildLocalizeString } from "../utils/atoria-lang.mjs";
 
-import { defineAlteration } from "../models/helpers.mjs";
+import {
+  defineAlteration,
+  defineTimePhaseLimitation,
+} from "../models/helpers.mjs";
 
 const RULESET = {};
 
@@ -540,6 +543,13 @@ RULESET["item"] = class ItemRuleset {
     }
     return new_item;
   }
+
+  static getSavesAsked(item) {
+    if (item.type === "weapon") {
+      return RULESET.character.getAttackSaves();
+    }
+    return item.system.savesAsked ?? [];
+  }
 };
 
 RULESET["time_phases"] = {
@@ -705,7 +715,7 @@ RULESET["keywords"] = {
     if (four_phase_keywords.includes(keyword_id)) {
       switch (amount) {
         case 0:
-          return "";
+          return "permanent";
         case 1:
           return "long-moon";
         case 2:
@@ -741,7 +751,7 @@ RULESET["keywords"] = {
         else if (amount === 1) return "sleep";
         return "combat";
       default:
-        return "";
+        return "permanent";
     }
   },
   get_description: function (keyword_id, amount) {

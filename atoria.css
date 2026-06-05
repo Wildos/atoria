@@ -380,6 +380,17 @@
 .system-atoria .grid-2col .double-col-field {
   grid-column: 1 / span 2;
 }
+.system-atoria .grid-3col {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+}
+.system-atoria .grid-3col .double-col-field {
+  grid-column: 1 / span 2;
+}
+.system-atoria .grid-3col .triple-col-field {
+  grid-column: 1 / span 3;
+}
 .system-atoria .flex0 {
   flex: 0;
   min-width: fit-content;
@@ -1749,59 +1760,48 @@
   align-items: center;
   gap: 1rem;
 }
-.system-atoria .atoria.chat-message ul.used_supplementaries,
-.system-atoria .atoria.chat-message ul.used_features,
-.system-atoria .atoria.chat-message ul.used_keywords,
-.system-atoria .atoria.chat-message ul.saves_asked,
-.system-atoria .atoria.chat-message ul.used_actable_modifiers {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.system-atoria .chat-message.interactable {
+  font-size: var(--font-size);
 }
-.system-atoria .atoria.chat-message ul.used_supplementaries li,
-.system-atoria .atoria.chat-message ul.used_features li,
-.system-atoria .atoria.chat-message ul.used_keywords li,
-.system-atoria .atoria.chat-message ul.saves_asked li,
-.system-atoria .atoria.chat-message ul.used_actable_modifiers li {
-  margin: 0;
-}
-.system-atoria .atoria.chat-message .critial_success-title {
+.system-atoria .chat-message .atoria.critical.success .title {
   color: green;
 }
-.system-atoria .atoria.chat-message .success-title {
-  color: color-mix(in srgb, green 40%, var(--color-text-dark-primary));
+.system-atoria .chat-message .atoria.success .title {
+  color: color-mix(in srgb, green 40%, var(--color-dark-1));
 }
-.system-atoria .atoria.chat-message .failure-title {
-  color: color-mix(in srgb, red 40%, var(--color-text-dark-primary));
+.system-atoria .chat-message .atoria.failure .title {
+  color: color-mix(in srgb, red 40%, var(--color-dark-1));
 }
-.system-atoria .atoria.chat-message .critial_failure-title {
+.system-atoria .chat-message .atoria.critical.failure .title {
   color: red;
 }
-.system-atoria .atoria.chat-message .alteration-label {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2px;
+.system-atoria .chat-message .atoria .title {
+  min-width: fit-content;
 }
-.system-atoria .atoria.chat-message hr {
-  height: 1px;
-  border-top: 1px solid black;
-  width: 100%;
-  margin: 2px;
+.system-atoria .chat-message .atoria .result-degree {
+  flex: 0;
+  min-width: 6em;
+  width: fit-content;
 }
-.system-atoria .atoria.chat-message .message-content .inline-roll,
-.system-atoria .atoria.chat-message .message-post-content .inline-roll {
+.system-atoria .chat-message .atoria .message-content .inline-roll {
   white-space: normal;
   word-break: normal;
   background: none;
   border: none;
 }
-.system-atoria .atoria.chat-message ul.saves_asked {
-  /* display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        justify-items: center; */
+.system-atoria .chat-message .atoria hr {
+  height: 1px;
+  border-top: 1px solid black;
+  width: 100%;
+  margin: 2px;
 }
-.system-atoria .atoria.chat-message ul.saves_asked li {
-  padding: 0 0.5em;
+.system-atoria .chat-message .atoria ul.saves-asked {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.system-atoria .chat-message .atoria ul.saves-asked li {
+  margin: 0;
 }
 .system-atoria .cost-tooltip {
   justify-content: flex-start;

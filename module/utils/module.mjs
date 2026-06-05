@@ -1,6 +1,7 @@
 export * from "./atoria-lang.mjs";
 export * from "./helpers.mjs";
 export * from "./chat_helpers.mjs";
+export * from "./roll_helpers.mjs";
 export * from "./tools.mjs";
 export * as handlebars from "./handlebars.mjs";
 export * as form_inputs from "./form-inputs.mjs";
