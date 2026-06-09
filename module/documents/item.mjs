@@ -1,6 +1,7 @@
 import * as utils from "../utils/module.mjs";
 import * as rolls from "../rolls/module.mjs";
 import RULESET from "../utils/ruleset.mjs";
+import { AtoriaRollDialog } from "../sheets/module.mjs";
 
 export default class AtoriaItem extends Item {
   // Prepare data for the item execute the following, in order:
@@ -506,45 +507,272 @@ export default class AtoriaItem extends Item {
     return changelog_messages;
   }
 
+  getAssociatedSkillsPath() {
+    const action_item_types = ["weapon", "action", "spell", "opportunity"];
+    if (!action_item_types.includes(this.type)) return [];
+    if (this.type == "opportunity")
+      return [utils.ruleset.character.OPPORTUNITY_SKILL_PATH];
+
+    let skills_path = [];
+    if (
+      this.system.associated_skill != undefined &&
+      this.system.associated_skill != ""
+    ) {
+      skills_path.push(this.system.associated_skill);
+    }
+    if (this.type == "weapon") {
+      if (this.system.is_focuser) {
+        skills_path.push(utils.ruleset.character.FOCUSER_SKILL_PATH);
+      }
+      skills_path.push(utils.ruleset.character.THROW_SKILL_PATH);
+    }
+    return skills_path;
+  }
+
+  getAssociatedSkills() {
+    if (this.type == "spell")
+      return [
+        {
+          success: this.system.success,
+          critical_success_amount: this.system.critical_success,
+          critical_fumble_amount: this.system.critical_fumble,
+          label: this.name,
+          path: "",
+          proper_label: this.name,
+          type: "spell",
+        },
+      ];
+    let skills_path = this.getAssociatedSkillsPath();
+    let skills =
+      skills_path.length == 0
+        ? []
+        : skills_path.map((skill_path) =>
+            this.actor.getSkillFromPath(skill_path),
+          );
+    return skills;
+  }
+
+  getSupplementaries() {
+    if (this.type != "spell") return [];
+    return this.system.supplementaries_list;
+  }
+
+  takeOneSupplementaryUse(supp_id) {
+    if (this.type != "spell") return;
+    let supplementaries_list = this.system.supplementaries_list;
+    let supp = supplementaries_list.at(supp_id);
+    if (supp == undefined) return;
+
+    if (supp.limitation.regain_type != "permanent") {
+      supp.limitation.usage_left -= 1;
+    }
+    this.update({
+      "system.supplementaries_list": supplementaries_list,
+    });
+  }
+
   async rollAction() {
     const action_item_types = ["weapon", "action", "spell", "opportunity"];
     if (!action_item_types.includes(this.type)) return;
+    let skills = this.getAssociatedSkills();
 
-    const used_ressources = await utils.itemRollDialog(this);
-    if (used_ressources === null) return;
-
-    for (let keyword of used_ressources.used_keywords) {
-      this.actor.takeOneKeywordUse(keyword);
-    }
-
-    for (let feature_uuid of used_ressources.used_features) {
-      let feature = fromUuidSync(feature_uuid);
-      feature.takeOneLimitationUse();
-    }
-    if (Object.keys(used_ressources.used_supplementaries).length != 0) {
-      let supplementaries_list = this.system.supplementaries_list;
-      for (let [supplementary_idx, amount] of Object.entries(
-        used_ressources.used_supplementaries,
-      )) {
-        let supplementary = supplementaries_list[supplementary_idx];
-        if (supplementary.limitation.regain_type != "permanent") {
-          supplementary.limitation.usage_left -= 1;
-        }
+    if (skills.length != 0) {
+      for (const skill_data of skills) {
+        skill_data.usable_keywords = await utils.get_usable_keywords(
+          this.actor,
+          skill_data.path,
+        );
+        skill_data.usable_perks = utils.get_usable_perks_for_skill(
+          this.actor,
+          skill_data.path,
+        );
+        skill_data.usable_supplementaries = this.getSupplementaries().map(
+          (supp_data, idx) => {
+            supp_data.id = idx;
+            return supp_data;
+          },
+        );
       }
-      this.update({
-        "system.supplementaries_list": supplementaries_list,
+    }
+
+    // Get roll parameters
+    let roll_parameters = await AtoriaRollDialog.ask({
+      actor_uuid: this.actor.uuid,
+      roll_label: this.name,
+      skills: skills,
+    });
+
+    if (roll_parameters === null) return;
+    console.debug(roll_parameters);
+
+    // Create message roll
+    let roll_data = utils.get_roll_data(
+      roll_parameters,
+      roll_parameters.roll_data.path,
+    );
+    utils.ruleset.item.applyRollDataRules(this, roll_data);
+    roll_data.title = this.name;
+
+    let effects_data = utils.get_effects_data(roll_parameters);
+    let critical_effects_data =
+      utils.get_critical_effects_data(roll_parameters);
+
+    let used_perks_data = {
+      keywords: {
+        length: roll_parameters.used_keywords.length,
+        description: roll_parameters.used_keywords
+          .map((keyword) => keyword.descriptive_tooltip)
+          .join(""),
+      },
+      supplementaries: {
+        length: roll_parameters.used_supplementaries.length,
+        description: roll_parameters.used_supplementaries
+          .map((supplementary) => supplementary.descriptive_tooltip)
+          .join(""),
+      },
+      act_mod: {
+        length: 0,
+        description: "",
+      },
+      feature: {
+        length: 0,
+        description: "",
+      },
+    };
+    for (let item of roll_parameters.used_perks) {
+      if (item.type === "feature") {
+        used_perks_data["feature"].length += 1;
+        used_perks_data["feature"].description += await item.getTooltipHTML();
+      } else if (["technique", "incantatory-addition"].includes(item.type)) {
+        used_perks_data["act_mod"].length += 1;
+        used_perks_data["act_mod"].description += await item.getTooltipHTML();
+      } else {
+        //TODO: handle enchantment
+        console.error("Unknown type found in used_perks");
+      }
+    }
+    let used_perks = [];
+    if (used_perks_data.keywords.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.Keywords", {
+          amount: used_perks_data.keywords.length,
+        }),
+        description: used_perks_data.keywords.description,
       });
     }
-    for (let actable_modifier_uuid of used_ressources.used_actable_modifiers) {
-      let actable_modifier = fromUuidSync(actable_modifier_uuid);
-      actable_modifier.takeOneLimitationUse();
+    if (used_perks_data.supplementaries.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.Supplementaries", {
+          amount: used_perks_data.supplementaries.length,
+        }),
+        description: used_perks_data.supplementaries.description,
+      });
+    }
+    if (used_perks_data.act_mod.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.ActableModifiers", {
+          amount: used_perks_data.act_mod.length,
+        }),
+        description: used_perks_data.act_mod.description,
+      });
+    }
+    if (used_perks_data.feature.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.Features", {
+          amount: used_perks_data.feature.length,
+        }),
+        description: used_perks_data.feature.description,
+      });
+    }
+    let system_data = {
+      used_perks: used_perks,
+      saves_asked: utils.get_asked_saves(roll_parameters),
+    };
+
+    if (roll_data.path != undefined) {
+      let rolls = await utils.create_rolls_with_effect(
+        this,
+        roll_data,
+        effects_data,
+        critical_effects_data,
+      );
+      let main_roll_is_success = rolls[0].is_success;
+
+      await utils.chat_message_from_roll(
+        this,
+        roll_parameters.message_mode,
+        rolls,
+        system_data,
+      );
+      if (main_roll_is_success) {
+        for (let supp of roll_parameters.used_supplementaries) {
+          this.takeOneSupplementaryUse(supp.id);
+        }
+      }
+    } else {
+      let rolls = await utils.create_simple_effect_rolls(effects_data);
+      await utils.chat_message_from_non_roll(
+        this,
+        roll_parameters.message_mode,
+        game.i18n.format("ATORIA.Chat_message.Used.Actable", {
+          name: this.name,
+        }),
+        rolls,
+        system_data,
+      );
     }
 
-    this.takeOneLimitationUse();
+    // Consume resource used
+    for (let keyword of roll_parameters.used_keywords) {
+      this.actor.takeOneKeywordUse(keyword);
+    }
+    for (let perk_item of roll_parameters.used_perks) {
+      perk_item.takeOneLimitationUse();
+    }
 
-    this.actor?.update({
-      "system.luck": this.actor.system.luck - used_ressources.luck,
+    this.update({
+      "system.luck": this.system.luck - roll_parameters.roll_data.luck_applied,
     });
+
+    // ----------------------------------------
+    // ----------------------------------------
+    // ----------------------------------------
+
+    // const used_ressources = await utils.itemRollDialog(this);
+    // if (used_ressources === null) return;
+
+    // for (let keyword of used_ressources.used_keywords) {
+    //   this.actor.takeOneKeywordUse(keyword);
+    // }
+
+    // for (let feature_uuid of used_ressources.used_features) {
+    //   let feature = fromUuidSync(feature_uuid);
+    //   feature.takeOneLimitationUse();
+    // }
+    // if (Object.keys(used_ressources.used_supplementaries).length != 0) {
+    //   let supplementaries_list = this.system.supplementaries_list;
+    //   for (let [supplementary_idx, amount] of Object.entries(
+    //     used_ressources.used_supplementaries,
+    //   )) {
+    //     let supplementary = supplementaries_list[supplementary_idx];
+    //     if (supplementary.limitation.regain_type != "permanent") {
+    //       supplementary.limitation.usage_left -= 1;
+    //     }
+    //   }
+    //   this.update({
+    //     "system.supplementaries_list": supplementaries_list,
+    //   });
+    // }
+    // for (let actable_modifier_uuid of used_ressources.used_actable_modifiers) {
+    //   let actable_modifier = fromUuidSync(actable_modifier_uuid);
+    //   actable_modifier.takeOneLimitationUse();
+    // }
+
+    // this.takeOneLimitationUse();
+
+    // this.actor?.update({
+    //   "system.luck": this.actor.system.luck - used_ressources.luck,
+    // });
   }
 
   async getTooltipHTML() {

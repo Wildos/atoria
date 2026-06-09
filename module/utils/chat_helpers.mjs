@@ -30,13 +30,11 @@ export async function createInteractableChatMessage(
   ChatMessage.create(message_data);
 }
 
-export async function chat_message_from_roll(
+export async function create_rolls_with_effect(
   actor,
-  message_mode,
   roll_data,
   effects_data,
   critical_effects_data,
-  system_data,
 ) {
   const roll = new my_rolls.AtoriaDOSRoll(actor.getRollData(), roll_data);
   await roll.evaluate();
@@ -67,8 +65,55 @@ export async function chat_message_from_roll(
       rolls.push(effect_roll);
     }
   }
+  return rolls;
+}
 
+export async function create_simple_effect_rolls(effects_data) {
+  let rolls = [];
+
+  for (let effect_data of effects_data) {
+    let effect_roll = new my_rolls.AtoriaEffectRoll(
+      effect_data.formula,
+      {},
+      {
+        flavor: effect_data.flavor,
+      },
+    );
+    await effect_roll.evaluate({});
+    rolls.push(effect_roll);
+  }
+  return rolls;
+}
+
+export async function chat_message_from_roll(
+  actor,
+  message_mode,
+  rolls,
+  system_data,
+) {
   let content = "";
+  let is_emote = false;
+  let flavor_text = "";
+
+  return createInteractableChatMessage(
+    message_mode,
+    actor,
+    content,
+    rolls,
+    system_data,
+    flavor_text,
+    is_emote,
+  );
+}
+
+export async function chat_message_from_non_roll(
+  actor,
+  message_mode,
+  message_content,
+  rolls,
+  system_data,
+) {
+  let content = message_content;
   let is_emote = false;
   let flavor_text = "";
 

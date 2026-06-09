@@ -332,6 +332,7 @@
         "Saves_asked": "Oppositions"
       },
       "Used": {
+        "Actable": "{name}",
         "Keywords": "{amount} mot-clef(s)",
         "Supplementaries": "{amount} supplémentaire",
         "ActableModifiers": "{amount} technique(s) et ajout(s)",

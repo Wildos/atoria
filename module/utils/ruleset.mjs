@@ -52,6 +52,11 @@ RULESET["general"] = class GeneralRuleset {
 };
 
 RULESET["character"] = class ActorRuleset {
+  static OPPORTUNITY_SKILL_PATH =
+    "system.skills.combative.reflex.opportuneness";
+  static FOCUSER_SKILL_PATH = "system.skills.combative.weapon.focuser";
+  static THROW_SKILL_PATH = "system.skills.combative.weapon.throw";
+
   // Return the amount/value that must be restored for the time_phase (doesn't take in consideration the current amount/value)
   static getRestoredAttributes(actor, time_phase_type) {
     const restored_attributes = {};
@@ -118,6 +123,7 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static isBlindSkill(skill_path) {
+    if (skill_path == undefined || skill_path == "") return false;
     const path_keys = skill_path.split(".");
     if (path_keys[0] !== "system") {
       console.warn("Invalid skill path");
@@ -549,6 +555,15 @@ RULESET["item"] = class ItemRuleset {
       return RULESET.character.getAttackSaves();
     }
     return item.system.savesAsked ?? [];
+  }
+
+  static applyRollDataRules(item, roll_data) {
+    if (
+      item.type == "weapon" &&
+      roll_data.path == RULESET.character.THROW_SKILL_PATH
+    ) {
+      roll_data.dos_mod -= 2;
+    }
   }
 };
 

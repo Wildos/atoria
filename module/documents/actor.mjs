@@ -139,12 +139,16 @@ export default class AtoriaActor extends Actor {
       effective_skill_path_parts = [];
       for (let p of skill_path.split(".")) {
         const t = foundry.utils.getType(target_skill);
-        if (!(t === "Object" || t === "Array")) break; // Invalid path
+        if (!(t === "Object" || t === "Array" || t === "Unknown")) break; // Invalid path
         if (p in target_skill) target_skill = target_skill[p];
         else break; // Can't traverse anymore
         effective_skill_path_parts.push(p);
       }
     }
+    console.debug("skill_path / target_skill");
+    console.debug(skill_path);
+    console.debug(effective_skill_path_parts);
+    console.debug(target_skill);
     if (!utils.isSkill(target_skill)) return undefined;
     target_skill["path"] = effective_skill_path_parts.join(".");
 
@@ -303,13 +307,14 @@ export default class AtoriaActor extends Actor {
     }
 
     // -----------------
+    skill.usable_keywords = await utils.get_usable_keywords(this, skill_path);
+    skill.usable_perks = utils.get_usable_perks_for_skill(this, skill_path);
+
     // Get roll parameters
     let roll_parameters = await AtoriaRollDialog.ask({
-      actor_id: this._id,
-      action_cost: undefined,
-      skill: skill,
-      usable_keywords: await utils.get_usable_keywords(this, skill_path),
-      usable_perks: utils.get_usable_perks_for_skill(this, skill_path),
+      actor_uuid: this.uuid,
+      roll_label: skill.proper_label,
+      skills: [skill],
     });
 
     if (roll_parameters === null) return;
@@ -329,10 +334,8 @@ export default class AtoriaActor extends Actor {
           .join(""),
       },
       supplementaries: {
-        length: roll_parameters.used_supplementaries.length,
-        description: roll_parameters.used_supplementaries
-          .map((supplementary) => supplementary.descriptive_tooltip)
-          .join(""),
+        length: 0,
+        description: "",
       },
       act_mod: {
         length: 0,
@@ -347,9 +350,6 @@ export default class AtoriaActor extends Actor {
       if (item.type === "feature") {
         used_perks_data["feature"].length += 1;
         used_perks_data["feature"].description += await item.getTooltipHTML();
-      } else if (["technique", "incantatory-addition"].includes(item.type)) {
-        used_perks_data["act_mod"].length += 1;
-        used_perks_data["act_mod"].description += await item.getTooltipHTML();
       } else {
         //TODO: handle enchantment
         console.error("Unknown type found in used_perks");
@@ -362,22 +362,6 @@ export default class AtoriaActor extends Actor {
           amount: used_perks_data.keywords.length,
         }),
         description: used_perks_data.keywords.description,
-      });
-    }
-    if (used_perks_data.supplementaries.length !== 0) {
-      used_perks.push({
-        name: game.i18n.format("ATORIA.Chat_message.Used.Supplementaries", {
-          amount: used_perks_data.supplementaries.length,
-        }),
-        description: used_perks_data.supplementaries.description,
-      });
-    }
-    if (used_perks_data.act_mod.length !== 0) {
-      used_perks.push({
-        name: game.i18n.format("ATORIA.Chat_message.Used.ActableModifiers", {
-          amount: used_perks_data.act_mod.length,
-        }),
-        description: used_perks_data.act_mod.description,
       });
     }
     if (used_perks_data.feature.length !== 0) {
@@ -393,12 +377,17 @@ export default class AtoriaActor extends Actor {
       saves_asked: utils.get_asked_saves(roll_parameters),
     };
 
-    await utils.chat_message_from_roll(
+    let rolls = await utils.create_rolls_with_effect(
       this,
-      roll_parameters.message_mode,
       roll_data,
       effects_data,
       critical_effects_data,
+    );
+
+    await utils.chat_message_from_roll(
+      this,
+      roll_parameters.message_mode,
+      rolls,
       system_data,
     );
 

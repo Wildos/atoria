@@ -1,6 +1,7 @@
 import * as utils from "../utils/module.mjs";
 
 export async function get_usable_keywords(actor, skill_path) {
+  if (skill_path == undefined || skill_path == "") return [];
   const active_keywords = utils.ruleset.character.getActiveKeywordsData(actor);
   let available_keywords = await Promise.all(
     utils.ruleset.character
@@ -21,6 +22,7 @@ export async function get_usable_keywords(actor, skill_path) {
 }
 
 export function get_usable_perks_for_skill(actor, skill_path) {
+  if (skill_path == undefined) return [];
   let available_features =
     actor.getAssociatedFeature_n_ItemAlterations(skill_path);
   available_features.sort((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -51,6 +53,17 @@ export function get_effects_data(roll_parameters) {
   let effects = [];
   for (let item_perk of roll_parameters.used_perks) {
     effects.push(...item_perk.get_effect());
+  }
+  for (let supp of roll_parameters.used_supplementaries) {
+    const matches = supp.effect.matchAll(/\[\[(.*?)]{2,3}(?:{([^}]+)})?/gi);
+    let supp_effects = [];
+    for (const match of Array.from(matches)) {
+      supp_effects.push({
+        flavor: match[2],
+        formula: match[1],
+      });
+    }
+    effects.push(...supp_effects);
   }
   return effects;
 }
