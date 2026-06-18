@@ -2,6 +2,8 @@ import * as atoria_models from "../module.mjs";
 import * as utils from "../../utils/module.mjs";
 
 export default class AtoriaPC extends atoria_models.AtoriaActorBase {
+  static type = "player-character";
+
   static defineSchema() {
     const fields = foundry.data.fields;
     const requiredInteger = { required: true, nullable: false, integer: true };
@@ -143,27 +145,6 @@ export default class AtoriaPC extends atoria_models.AtoriaActorBase {
       max: 100,
       label: "ATORIA.Ruleset.Luck",
     });
-
-    schema.skills = new fields.SchemaField(
-      this._fullSkillSchema(utils.default_values.character.skills, "skills"),
-      {
-        required: true,
-        nullable: false,
-        label: "ATORIA.Model.Skills",
-      },
-    );
-
-    schema.knowledges = new fields.SchemaField(
-      this._fullSkillSchema(
-        utils.default_values.character.knowledges,
-        "knowledges",
-      ),
-      {
-        required: true,
-        nullable: false,
-        label: "ATORIA.Model.Knowledges",
-      },
-    );
 
     return schema;
   }

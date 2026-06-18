@@ -199,15 +199,148 @@ Hooks.once("init", function () {
   });
 
   game.settings.register("atoria", "display_player_sheet_horizontally", {
-    name: game.i18n.localize("ATORIA.Settings.DisplayPlayerSheetHorizontally"),
-    hint: game.i18n.localize(
-      "ATORIA.Settings.DisplayPlayerSheetHorizontallyHint",
-    ),
+    name: "ATORIA.Settings.DisplayPlayerSheetHorizontally",
+    hint: "ATORIA.Settings.DisplayPlayerSheetHorizontallyHint",
     scope: "client",
     config: true,
     type: new foundry.data.fields.BooleanField(),
     default: false,
-    // requiresReload: false, // TODO: Maybe it need
+  });
+
+  game.settings.register("atoria", "languages", {
+    name: "ATORIA.Settings.Knowledges.Languages.Label",
+    hint: "ATORIA.Settings.Knowledges.Languages.Hint",
+    scope: "world",
+    config: false,
+    requiresReload: true,
+    type: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.SchemaField({
+        id: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Languages.Id",
+        }),
+        label: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Languages.LabelValue",
+        }),
+      }),
+      { label: "ATORIA.Settings.Knowledges.Languages.Label" },
+    ),
+    default: [],
+  });
+  game.settings.registerMenu("atoria", "languages", {
+    name: "ATORIA.Settings.Knowledges.Languages.Label",
+    label: "ATORIA.Settings.Knowledges.Languages.Label",
+    hint: "ATORIA.Settings.Knowledges.Languages.Hint",
+    icon: "fa-solid fa-scroll",
+    type: models.settings.LanguageKnowledgeArrayField,
+    restricted: true,
+  });
+
+  game.settings.register("atoria", "civilisations", {
+    name: "ATORIA.Settings.Knowledges.Civilisation.Label",
+    hint: "ATORIA.Settings.Knowledges.Civilisation.Hint",
+    scope: "world",
+    config: false,
+    requiresReload: true,
+    type: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.SchemaField({
+        id: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Civilisation.Id",
+        }),
+        label: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Civilisation.LabelValue",
+        }),
+      }),
+      { label: "ATORIA.Settings.Knowledges.Civilisation.Label" },
+    ),
+    default: [],
+  });
+  game.settings.registerMenu("atoria", "civilisations", {
+    name: "ATORIA.Settings.Knowledges.Civilisation.Label",
+    label: "ATORIA.Settings.Knowledges.Civilisation.Label",
+    hint: "ATORIA.Settings.Knowledges.Civilisation.Hint",
+    icon: "fa-solid fa-scroll",
+    type: models.settings.CivilisationKnowledgeArrayField,
+    restricted: true,
+  });
+
+  game.settings.register("atoria", "monstrologies", {
+    name: "ATORIA.Settings.Knowledges.Monstrology.Label",
+    hint: "ATORIA.Settings.Knowledges.Monstrology.Hint",
+    scope: "world",
+    config: false,
+    requiresReload: true,
+    type: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.SchemaField({
+        id: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Monstrology.Id",
+        }),
+        label: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Monstrology.LabelValue",
+        }),
+      }),
+      { label: "ATORIA.Settings.Knowledges.Monstrology.Label" },
+    ),
+    default: [],
+  });
+  game.settings.registerMenu("atoria", "monstrologies", {
+    name: "ATORIA.Settings.Knowledges.Monstrology.Label",
+    label: "ATORIA.Settings.Knowledges.Monstrology.Label",
+    hint: "ATORIA.Settings.Knowledges.Monstrology.Hint",
+    icon: "fa-solid fa-scroll",
+    type: models.settings.MonstrologyKnowledgeArrayField,
+    restricted: true,
+  });
+
+  game.settings.register("atoria", "zoologies", {
+    name: "ATORIA.Settings.Knowledges.Zoology.Label",
+    hint: "ATORIA.Settings.Knowledges.Zoology.Hint",
+    scope: "world",
+    config: false,
+    requiresReload: true,
+    type: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.SchemaField({
+        id: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Zoology.Id",
+        }),
+        label: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Zoology.LabelValue",
+        }),
+      }),
+      { label: "ATORIA.Settings.Knowledges.Zoology.Label" },
+    ),
+    default: [],
+  });
+  game.settings.registerMenu("atoria", "zoologies", {
+    name: "ATORIA.Settings.Knowledges.Zoology.Label",
+    label: "ATORIA.Settings.Knowledges.Zoology.Label",
+    hint: "ATORIA.Settings.Knowledges.Zoology.Hint",
+    icon: "fa-solid fa-scroll",
+    type: models.settings.ZoologyKnowledgeArrayField,
+    restricted: true,
   });
 
   utils.handlebars.registerHandlebarsHelpers();

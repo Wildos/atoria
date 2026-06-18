@@ -1,6 +1,6 @@
 {{#if (or force_display @root.isEditingMode (not (includes @root.flags.atoria.hidden_skills data_path)))}}
 <div class="atoria-skill-display">
-    <label data-action="rollable" data-skill-path="{{data_path}}">{{localize skill.label}}</label>
+    <label data-action="rollable" data-skill-path="{{data_path}}">{{localize systemFields.label}}</label>
     <input type="number" name="{{data_path}}.success"
     value="{{skill.success}}"
     data-tooltip="{{localize systemFields.success.label}}"

@@ -17,7 +17,7 @@
             {{>"atoria.v2.actors_partials.skill-display"
             skill=(lookup ../skill_cat_skills skill_id)
             data_path=(concat ../data_path "." skill_id)
-            systemFields=../model.sub_element.fields
+            systemFields=(lookup ../model.fields skill_id)
             force_display=../force_display
             prevent_hide_action=../prevent_hide_action
             deletable=(and @root.editable @root.isEditingMode (includes @root.extendable_skill ../data_path))
@@ -29,7 +29,7 @@
             {{>"atoria.v2.actors_partials.skill-display"
             skill=skill
             data_path=(concat ../data_path "." key)
-            systemFields=../model.sub_element.fields
+            systemFields=(lookup ../model.fields key)
             force_display=../force_display
             prevent_hide_action=../prevent_hide_action
             deletable=(and @root.editable @root.isEditingMode (includes @root.extendable_skill ../data_path))

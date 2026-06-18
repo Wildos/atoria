@@ -1,6 +1,7 @@
 import { itemRollDialog } from "./helpers.mjs";
 import { default as default_values } from "./default-values.mjs";
 import { buildLocalizeString } from "../utils/atoria-lang.mjs";
+import * as models_settings from "../models/settings.mjs";
 
 import {
   defineAlteration,
@@ -56,6 +57,289 @@ RULESET["character"] = class ActorRuleset {
     "system.skills.combative.reflex.opportuneness";
   static FOCUSER_SKILL_PATH = "system.skills.combative.weapon.focuser";
   static THROW_SKILL_PATH = "system.skills.combative.weapon.throw";
+
+  static getSkillsTree(type) {
+    switch (type) {
+      case "non-player-character":
+        return {
+          perceptions: [
+            "sight",
+            "earing",
+            "smell",
+            "taste",
+            "instinct",
+            "magice",
+          ],
+          physical: [
+            "agility",
+            "athletic",
+            "slyness",
+            "environment",
+            "reflex",
+            "sturdiness",
+          ],
+          social: ["analyse", "charisma", "eloquence", "spirit", "trickery"],
+        };
+      case "player-character":
+        return {
+          perceptions: [
+            "sight",
+            "earing",
+            "smell",
+            "taste",
+            "instinct",
+            "magice",
+          ],
+          physical: {
+            agility: ["balance", "dexterity"],
+            athletic: ["hiking", "running", "jump"],
+            slyness: ["silence", "stealth", "concealment"],
+            environment: ["climbing", "nage", "fortitude"],
+            reflex: ["dodge", "parry", "opportuneness"],
+            sturdiness: ["force", "tenacity"],
+          },
+          social: {
+            analyse: ["insight", "investigation"],
+            charisma: ["intimidation", "presence", "seduction"],
+            eloquence: ["persuasion", "calming", "negotiation"],
+            spirit: ["will", "guarding"],
+            trickery: ["acting", "lying", "provocation"],
+          },
+        };
+
+      case "hero":
+        return ["perceptions", "physical", "social"];
+
+      default:
+        return {};
+    }
+  }
+
+  static getSkillInitialSuccess(key) {
+    switch (key) {
+      case "sight":
+        return 50;
+      case "earing":
+        return 50;
+      case "smell":
+        return 50;
+      case "taste":
+        return 50;
+      case "instinct":
+        return 25;
+      case "magice":
+        return 15;
+      default:
+        return 10;
+    }
+  }
+
+  static getKnowledgesTree(type) {
+    switch (type) {
+      case "non-player-character":
+        return {
+          craftmanship: [
+            "alchemy",
+            "artistic",
+            "jewellery",
+            "sewing",
+            "cuisine",
+            "cabinet-making",
+            "forge",
+            "engineering",
+            "leatherworking",
+          ],
+          erudition: [
+            "civilisation",
+            "language",
+            "medecine",
+            "monstrology",
+            "runic",
+            "science",
+            "strategy",
+            "symbolism",
+            "zoology",
+          ],
+          utilitarian: [
+            "song",
+            "hunting",
+            "construction",
+            "dance",
+            "dressage",
+            "theft",
+            "nature",
+            "fishing",
+            "transport",
+          ],
+          magic: [
+            "air",
+            "mental",
+            "druidic",
+            "water",
+            "fire",
+            "occult",
+            "holy",
+            "blood",
+            "earth",
+          ],
+        };
+      case "player-character":
+        return {
+          craftmanship: {
+            alchemy: ["mixture", "transformation"],
+            artistic: ["ceramic", "sculpture", "graphic"],
+            jewellery: ["finery", "seaming", "glassware"],
+            sewing: ["fashion", "domestic"],
+            cuisine: ["meal", "baking"],
+            "cabinet-making": ["gear", "woodworking"],
+            forge: ["weaponry", "armoury", "goldsmithery"],
+            engineering: ["mechanism", "siege"],
+            leatherworking: ["tanning", "manufacture"],
+          },
+          erudition: {
+            civilisation: game.settings
+              .get("atoria", "civilisations")
+              .map((elem) => elem.id),
+            language: game.settings
+              .get("atoria", "languages")
+              .map((elem) => elem.id),
+            medecine: ["treatment", "mortuary"],
+            monstrology: game.settings
+              .get("atoria", "monstrologies")
+              .map((elem) => elem.id),
+            runic: ["enchantment", "inscription", "tattoo"],
+            science: ["astronomy", "geology", "mathematic"],
+            strategy: ["battle", "expedition"],
+            symbolism: ["heraldry", "cryptography", "cartography"],
+            zoology: game.settings
+              .get("atoria", "zoologies")
+              .map((elem) => elem.id),
+          },
+          utilitarian: {
+            song: ["entertaining", "martial"],
+            hunting: ["tracking", "cutting"],
+            construction: ["masonry", "carpentry"],
+            dance: ["aesthetics", "spinning"],
+            dressage: ["taming", "war"],
+            theft: ["pickpocketing", "lock-picking"],
+            nature: ["farming", "herbalist", "fungus"],
+            fishing: ["bank", "high-sea"],
+            transport: ["mounting", "land", "sea"],
+          },
+          magic: {
+            air: ["dazzling", "breeze", "lightning"],
+            mental: ["kinetic", "illusion", "power", "enchanted"],
+            druidic: ["astral", "solicitude", "changeforme", "mutation"],
+            water: ["ablution", "source", "ice"],
+            fire: ["torch", "ignition", "destruction"],
+            occult: ["toxic", "curse", "ethereal", "necromancy"],
+            holy: ["blessing", "piety", "glory", "purification"],
+            blood: ["sacrifice", "puncture", "drain"],
+            earth: ["bastion", "telluric", "metallic"],
+          },
+        };
+
+      case "hero":
+        return [
+          "alchemy",
+          "artistic",
+          "jewellery",
+          "sewing",
+          "cuisine",
+          "cabinet-making",
+          "forge",
+          "engineering",
+          "leatherworking",
+          "song",
+          "dance",
+          "music",
+          "civilisation",
+          "language",
+          "monstrology",
+          "runic",
+          "science",
+          "symbolism",
+          "zoology",
+          "strategy",
+          "hunting",
+          "construction",
+          "dressage",
+          "nature",
+          "fishing",
+          "transport",
+          "theft",
+          "medecine",
+          "air",
+          "druidic",
+          "water",
+          "fire",
+          "occult",
+          "mental",
+          "holy",
+          "blood",
+          "earth",
+        ];
+
+      default:
+        return {};
+    }
+  }
+
+  static getKnowledgeLabel(path_to_key) {
+    let knowledges_with_extenstion = [
+      "civilisation",
+      "language",
+      "monstrology",
+      "zoology",
+    ];
+    if (
+      path_to_key.length == 4 &&
+      knowledges_with_extenstion.includes(path_to_key[2])
+    ) {
+      switch (path_to_key[2]) {
+        case "civilisation":
+          return models_settings.KnowledgeArrayField.getKnowledgeLabelFromId(
+            game.settings.get("atoria", "civilisations"),
+            path_to_key[3],
+          );
+        case "language":
+          return models_settings.KnowledgeArrayField.getKnowledgeLabelFromId(
+            game.settings.get("atoria", "languages"),
+            path_to_key[3],
+          );
+        case "monstrology":
+          return models_settings.KnowledgeArrayField.getKnowledgeLabelFromId(
+            game.settings.get("atoria", "monstrologies"),
+            path_to_key[3],
+          );
+        case "zoology":
+          return models_settings.KnowledgeArrayField.getKnowledgeLabelFromId(
+            game.settings.get("atoria", "zoologies"),
+            path_to_key[3],
+          );
+      }
+    }
+    let final_local_path = ["Ruleset", ...path_to_key, "Label"];
+    return buildLocalizeString(...final_local_path);
+  }
+
+  static getKnowledgeInitialSuccess(key) {
+    switch (key) {
+      case "air":
+      case "druidic":
+      case "water":
+      case "fire":
+      case "occult":
+      case "mental":
+      case "holy":
+      case "blood":
+      case "earth":
+        return 0;
+
+      default:
+        return 10;
+    }
+  }
 
   // Return the amount/value that must be restored for the time_phase (doesn't take in consideration the current amount/value)
   static getRestoredAttributes(actor, time_phase_type) {
@@ -173,15 +457,6 @@ RULESET["character"] = class ActorRuleset {
       "system.skills.social.charisma.presence",
       "system.skills.social.spirit.will",
       "system.skills.social.spirit.guarding",
-    ];
-  }
-
-  static getExtendableSkill() {
-    return [
-      "system.knowledges.erudition.civilisation",
-      "system.knowledges.erudition.language",
-      "system.knowledges.erudition.monstrology",
-      "system.knowledges.erudition.zoology",
     ];
   }
 

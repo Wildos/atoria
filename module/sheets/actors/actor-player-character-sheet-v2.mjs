@@ -426,23 +426,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           "display_player_sheet_horizontally",
         );
         context.skill_n_knowledge_sorting_list = {
-          "system.skills": ["combative", "physical", "social"],
-
-          "system.skills.combative": ["reflex", "weapon"],
-          "system.skills.combative.reflex": ["dodge", "parry", "opportuneness"],
-          "system.skills.combative.weapon": [
-            "brawl",
-            "blade",
-            "haft-slashing",
-            "haft-bludgeonning-piercing",
-            "polearm",
-            "shield",
-            "throw",
-            "shooting",
-            "focuser",
-            "instrument",
-          ],
-
+          "system.skills": ["physical", "social"],
           "system.skills.social": [
             "analyse",
             "charisma",
@@ -469,6 +453,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "athletic",
             "slyness",
             "environment",
+            "reflex",
             "sturdiness",
           ],
           "system.skills.physical.agility": ["balance", "dexterity"],
@@ -483,6 +468,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "nage",
             "fortitude",
           ],
+          "system.skills.physical.reflex": ["dodge", "parry", "opportuneness"],
           "system.skills.physical.sturdiness": ["force", "tenacity"],
           "system.knowledges": [
             "craftmanship",
@@ -641,14 +627,8 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           "system.knowledges.magic.blood": ["sacrifice", "puncture", "drain"],
           "system.knowledges.magic.earth": ["bastion", "telluric", "metallic"],
         };
-        context.reflex_skills = {
-          skill_cat: this.actor.system.skills.combative.reflex,
-          path: "system.skills.combative.reflex",
-          model: context.systemFields.skills.fields.combative.fields.reflex,
-        };
-        context.filtered_skills_group = ["combative"];
 
-        context.extendable_skill = utils.ruleset.character.getExtendableSkill();
+        context.extendable_skill = [];
 
         context.items = await Promise.all(
           this.actor.items.map(async (i) => {

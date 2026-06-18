@@ -16,24 +16,6 @@ export function skillInitialValue(
 export function skillField(skill_label, initial_value, required = true) {
   return new foundry.data.fields.SchemaField(
     {
-      type: new foundry.data.fields.StringField({
-        required: true,
-        nullable: false,
-        trim: false,
-        blank: false,
-        textSearch: false,
-        initial: "skill",
-        label: "Skill",
-      }),
-      label: new foundry.data.fields.StringField({
-        required: true,
-        nullable: false,
-        blank: false,
-        trim: false,
-        textSearch: false,
-        initial: skill_label,
-        label: "ATORIA.Model.Skill.Label",
-      }),
       success: new foundry.data.fields.NumberField({
         required: true,
         nullable: false,

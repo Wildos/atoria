@@ -3,6 +3,10 @@ export * as helpers from "./helpers.mjs";
 
 // -----
 
+export * as settings from "./settings.mjs";
+
+// -----
+
 export { default as AtoriaDataModel } from "./base-model.mjs";
 
 // -----
@@ -10,7 +14,6 @@ export { default as AtoriaDataModel } from "./base-model.mjs";
 export { default as AtoriaInteractableChatMessage } from "./chat_messages/interactable_chat_message.mjs";
 
 // -----
-
 
 export { default as AtoriaActorBase } from "./actors/base-actor.mjs";
 export { default as AtoriaPC } from "./actors/actor-character.mjs";
@@ -36,12 +39,6 @@ export { default as AtoriaActionItem } from "./items/actable-items/action-item.m
 export { default as AtoriaOpportunityItem } from "./items/actable-items/opportunity-item.mjs";
 export { default as AtoriaSpellItem } from "./items/actable-items/spell-item.mjs";
 
-export {
-    default as AtoriaActableModifierItem
-} from "./items/actable-items/actable-modifier-item.mjs";
-export {
-    default as AtoriaTechniqueItem
-} from "./items/actable-items/technique-item.mjs";
-export {
-    default as AtoriaIncantatoryAdditionItem
-} from "./items/actable-items/incantatory-addition-item.mjs";
+export { default as AtoriaActableModifierItem } from "./items/actable-items/actable-modifier-item.mjs";
+export { default as AtoriaTechniqueItem } from "./items/actable-items/technique-item.mjs";
+export { default as AtoriaIncantatoryAdditionItem } from "./items/actable-items/incantatory-addition-item.mjs";

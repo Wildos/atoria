@@ -84,20 +84,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
       { label: "ATORIA.Ruleset.Encumbrance" },
     );
 
-    schema.perceptions = new atoria_models.fields.TypedDictionaryField(
-      helpers.skillField(
-        "ATORIA.Model.New_name",
-        utils.default_values.character.skill.success,
-        true,
-      ),
-      {
-        required: true,
-        nullable: false,
-        initial: this._perceptions_initials(),
-        label: "ATORIA.Ruleset.Perceptions.Label",
-      },
-    );
-
     schema.coins = new fields.SchemaField(
       {
         copper: new fields.NumberField({
@@ -227,36 +213,171 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
         },
       ),
     });
+
+    schema.skills = new fields.SchemaField(this._skillsFields(), {
+      required: true,
+      nullable: false,
+      label: "ATORIA.Ruleset.Skills.Label",
+    });
+    schema.knowledges = new fields.SchemaField(this._knowledgesFields(), {
+      required: true,
+      nullable: false,
+      label: "ATORIA.Ruleset.Knowledges.Label",
+    });
+
     return schema;
   }
 
-  static _perceptions_initials() {
-    return {
-      sight: helpers.skillInitialValue(
-        utils.buildLocalizeString("Ruleset", "Perceptions", "sight"),
-        utils.default_values.character.perceptions.sight,
-      ),
-      earing: helpers.skillInitialValue(
-        utils.buildLocalizeString("Ruleset", "Perceptions", "earing"),
-        utils.default_values.character.perceptions.earing,
-      ),
-      smell: helpers.skillInitialValue(
-        utils.buildLocalizeString("Ruleset", "Perceptions", "smell"),
-        utils.default_values.character.perceptions.smell,
-      ),
-      taste: helpers.skillInitialValue(
-        utils.buildLocalizeString("Ruleset", "Perceptions", "taste"),
-        utils.default_values.character.perceptions.taste,
-      ),
-      instinct: helpers.skillInitialValue(
-        utils.buildLocalizeString("Ruleset", "Perceptions", "instinct"),
-        utils.default_values.character.perceptions.instinct,
-      ),
-      magice: helpers.skillInitialValue(
-        utils.buildLocalizeString("Ruleset", "Perceptions", "magice"),
-        utils.default_values.character.perceptions.magice,
-      ),
-    };
+  static _skillsFields() {
+    const fields = foundry.data.fields;
+    let result_fields = {};
+    let skills_tree = utils.ruleset.character.getSkillsTree(this.type);
+
+    if (Array.isArray(skills_tree)) {
+      for (const key of skills_tree) {
+        result_fields[key] = helpers.skillField(
+          utils.buildLocalizeString("Ruleset", "skills", key, "Label"),
+          utils.ruleset.character.getSkillInitialSuccess(key),
+        );
+      }
+    } else {
+      for (const parent_key in skills_tree) {
+        let top_data = skills_tree[parent_key];
+        let parent_fields = {};
+        if (Array.isArray(top_data)) {
+          for (const key of top_data) {
+            parent_fields[key] = helpers.skillField(
+              utils.buildLocalizeString(
+                "Ruleset",
+                "skills",
+                parent_key,
+                key,
+                "Label",
+              ),
+              utils.ruleset.character.getSkillInitialSuccess(key),
+            );
+          }
+        } else {
+          for (const mid_key in top_data) {
+            let mid_data = skills_tree[parent_key][mid_key];
+            let mid_fields = {};
+            if (Array.isArray(mid_data)) {
+              for (const key of mid_data) {
+                mid_fields[key] = helpers.skillField(
+                  utils.buildLocalizeString(
+                    "Ruleset",
+                    "skills",
+                    parent_key,
+                    mid_key,
+                    key,
+                    "Label",
+                  ),
+                  utils.ruleset.character.getSkillInitialSuccess(key),
+                );
+              }
+            } else {
+              console.error("SkillsTree is not valid");
+            }
+
+            parent_fields[mid_key] = new fields.SchemaField(mid_fields, {
+              required: true,
+              nullable: false,
+              label: utils.buildLocalizeString(
+                "Ruleset",
+                "skills",
+                parent_key,
+                mid_key,
+                "Label",
+              ),
+            });
+          }
+        }
+
+        result_fields[parent_key] = new fields.SchemaField(parent_fields, {
+          required: true,
+          nullable: false,
+          label: utils.buildLocalizeString(
+            "Ruleset",
+            "skills",
+            parent_key,
+            "Label",
+          ),
+        });
+      }
+    }
+    return result_fields;
+  }
+
+  static _knowledgesFields() {
+    const fields = foundry.data.fields;
+    let result_fields = {};
+    let knowledges_tree = utils.ruleset.character.getKnowledgesTree(this.type);
+
+    if (Array.isArray(knowledges_tree)) {
+      for (const key of knowledges_tree) {
+        result_fields[key] = helpers.skillField(
+          utils.ruleset.character.getKnowledgeLabel(["knowledges", key]),
+          utils.ruleset.character.getKnowledgeInitialSuccess(key),
+        );
+      }
+    } else {
+      for (const parent_key in knowledges_tree) {
+        let top_data = knowledges_tree[parent_key];
+        let parent_fields = {};
+        if (Array.isArray(top_data)) {
+          for (const key of top_data) {
+            parent_fields[key] = helpers.skillField(
+              utils.ruleset.character.getKnowledgeLabel([
+                "knowledges",
+                parent_key,
+                key,
+              ]),
+              utils.ruleset.character.getKnowledgeInitialSuccess(key),
+            );
+          }
+        } else {
+          for (const mid_key in top_data) {
+            let mid_data = knowledges_tree[parent_key][mid_key];
+            let mid_fields = {};
+            if (Array.isArray(mid_data)) {
+              for (const key of mid_data) {
+                mid_fields[key] = helpers.skillField(
+                  utils.ruleset.character.getKnowledgeLabel([
+                    "knowledges",
+                    parent_key,
+                    mid_key,
+                    key,
+                  ]),
+                  utils.ruleset.character.getKnowledgeInitialSuccess(key),
+                );
+              }
+            } else {
+              console.error("KnowledgesTree is not valid");
+            }
+
+            parent_fields[mid_key] = new fields.SchemaField(mid_fields, {
+              required: true,
+              nullable: false,
+              label: utils.ruleset.character.getKnowledgeLabel([
+                "knowledges",
+                parent_key,
+                mid_key,
+              ]),
+            });
+          }
+        }
+
+        result_fields[parent_key] = new fields.SchemaField(parent_fields, {
+          required: true,
+          nullable: false,
+          label: utils.ruleset.character.getKnowledgeLabel([
+            "knowledges",
+            parent_key,
+          ]),
+        });
+      }
+    }
+    return result_fields;
   }
 
   static _fullSkillSchema(skill_type_data, skill_holder_label) {

@@ -46,6 +46,7 @@ DEFAULT_VALUES["character"] = {
       athletic: ["hiking", "running", "jump"],
       slyness: ["silence", "stealth", "concealment"],
       environment: ["climbing", "nage", "fortitude"],
+      reflex: ["dodge", "parry", "opportuneness"],
       sturdiness: ["force", "tenacity"],
     },
     social: {
@@ -56,7 +57,6 @@ DEFAULT_VALUES["character"] = {
       trickery: ["acting", "lying", "provocation"],
     },
     combative: {
-      reflex: ["dodge", "parry", "opportuneness"],
       weapon: [
         "brawl",
         "blade",

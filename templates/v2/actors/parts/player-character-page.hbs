@@ -2,14 +2,6 @@
     <div class="atoria-player-character-page {{#if is_forced_horizontally}}is_forced_horizontally{{/if}}">
         <div class="first-col">
             <div class="flexrow">
-                {{#unless @root.isEditingMode }}
-                {{>"atoria.v2.actors_partials.skill-cat-display"
-                    skill_cat_skills=reflex_skills.skill_cat
-                    data_path=reflex_skills.path
-                    model=reflex_skills.model
-                    cssClass="atoria-skill-area"
-                }}
-                {{/unless}}
                 <div class="flexcol">
                     <div class="atoria-horizontal-bar flexrow">
                         <h5 class="title">

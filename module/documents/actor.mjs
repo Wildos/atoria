@@ -145,10 +145,6 @@ export default class AtoriaActor extends Actor {
         effective_skill_path_parts.push(p);
       }
     }
-    console.debug("skill_path / target_skill");
-    console.debug(skill_path);
-    console.debug(effective_skill_path_parts);
-    console.debug(target_skill);
     if (!utils.isSkill(target_skill)) return undefined;
     target_skill["path"] = effective_skill_path_parts.join(".");
 
