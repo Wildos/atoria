@@ -386,6 +386,10 @@ export default class AtoriaActor extends Actor {
     });
   }
 
+  async rollCombatSkill(type) {
+    //TODO: dialog to select the weapon (or brawl)
+  }
+
   async createSkill(skill_cat_path, skill_key, skill_label) {
     const actor_with_skill = ["player-character", "non-player-character"];
     if (!actor_with_skill.includes(this.type)) return;

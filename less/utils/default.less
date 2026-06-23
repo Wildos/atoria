@@ -129,10 +129,6 @@
         font-size: var(--font-size);
     }
 
-    h6 {
-        font-family: var(--font-h5);
-    }
-
     .item-list {
         list-style-type: none;
         padding: 0;
@@ -168,6 +164,10 @@
         height: auto;
     }
 
+    h5 {
+        font-family: var
+    }
+
     button {
         line-height: 1.5em;
     }
@@ -186,14 +186,14 @@
         background-color: color-mix(in lab, var(--background) 50%, transparent);
     }
 
-    input:not([type=checkbox]) {
+    input:not([type=checkbox]):not([type=radio]) {
         min-width: var(--atoria-input-width);
         max-width: var(--atoria-input-width);
         padding: 0px 2px;
     }
 
     --checkbox-size: var(--atoria-base-line-block-height);
-    input[type=checkbox] {
+    input[type=checkbox], input[type=radio] {
         --checkbox-size: var(--atoria-base-line-block-height);
         display: inline-block;
         position: relative;
@@ -212,12 +212,12 @@
     }
 
     --checkbox-content: "";
-    input[type=checkbox]::after {
-        // position: absolute;
-        // top: 0;
-        // left: 0;
-        // right: 0;
-        // bottom: 0;
+    --checkbox-background: "";
+    input[type=radio]::before {
+        content: var(--checkbox-background);
+    }
+
+    input[type=checkbox]::after, input[type=radio]::after {
         overflow: hidden;
 
         display: flex;
@@ -235,7 +235,7 @@
         min-height: var(--checkbox-size);
         max-height: var(--checkbox-size);
     }
-    input[type=checkbox]:checked::after {
+    input[type=checkbox]:checked::after, input[type=radio]:checked::after {
         --checkbox-content: "\f00c";
         color: var(--atoria-color-checkbox-checked);
         // text-shadow: 0 0 8px var(--atoria-color-checkbox-unchecked);

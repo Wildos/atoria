@@ -62,15 +62,13 @@ export default class AtoriaPC extends atoria_models.AtoriaActorBase {
           min: 0,
           label: "ATORIA.Model.Offense.Amount",
         }),
-        is_positive: new fields.BooleanField({
+        type: new fields.StringField({
           required: true,
           nullable: false,
-          label: "+",
-        }),
-        is_negative: new fields.BooleanField({
-          required: true,
-          nullable: false,
-          label: "-",
+          blank: false,
+          initial: "minus",
+          choices: { minus: "-", plus: "+" },
+          label: "ATORIA.Model.Offense.Type",
         }),
         description: new fields.StringField({
           required: true,
@@ -89,15 +87,13 @@ export default class AtoriaPC extends atoria_models.AtoriaActorBase {
           min: 0,
           label: "ATORIA.Model.Defense.Amount",
         }),
-        is_positive: new fields.BooleanField({
+        type: new fields.StringField({
           required: true,
           nullable: false,
-          label: "+",
-        }),
-        is_negative: new fields.BooleanField({
-          required: true,
-          nullable: false,
-          label: "-",
+          blank: false,
+          initial: "minus",
+          choices: { minus: "-", plus: "+" },
+          label: "ATORIA.Model.Offense.Type",
         }),
         description: new fields.StringField({
           required: true,

@@ -152,12 +152,10 @@
   --font-h6-size: var(--font-size-15);
   --checkbox-size: var(--atoria-base-line-block-height);
   --checkbox-content: "";
+  --checkbox-background: "";
 }
 .system-atoria .atoria * {
   font-size: var(--font-size);
-}
-.system-atoria .atoria h6 {
-  font-family: var(--font-h5);
 }
 .system-atoria .atoria .item-list {
   list-style-type: none;
@@ -201,6 +199,9 @@
   white-space: nowrap;
   height: auto;
 }
+.system-atoria .atoria h5 {
+  font-family: var;
+}
 .system-atoria .atoria button {
   line-height: 1.5em;
 }
@@ -219,12 +220,13 @@
 .system-atoria .atoria textarea:disabled {
   background-color: color-mix(in lab, var(--background) 50%, transparent);
 }
-.system-atoria .atoria input:not([type=checkbox]) {
+.system-atoria .atoria input:not([type=checkbox]):not([type=radio]) {
   min-width: var(--atoria-input-width);
   max-width: var(--atoria-input-width);
   padding: 0px 2px;
 }
-.system-atoria .atoria input[type=checkbox] {
+.system-atoria .atoria input[type=checkbox],
+.system-atoria .atoria input[type=radio] {
   --checkbox-size: var(--atoria-base-line-block-height);
   display: inline-block;
   position: relative;
@@ -239,7 +241,11 @@
   display: none;
   content: "";
 }
-.system-atoria .atoria input[type=checkbox]::after {
+.system-atoria .atoria input[type=radio]::before {
+  content: var(--checkbox-background);
+}
+.system-atoria .atoria input[type=checkbox]::after,
+.system-atoria .atoria input[type=radio]::after {
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -253,7 +259,8 @@
   min-height: var(--checkbox-size);
   max-height: var(--checkbox-size);
 }
-.system-atoria .atoria input[type=checkbox]:checked::after {
+.system-atoria .atoria input[type=checkbox]:checked::after,
+.system-atoria .atoria input[type=radio]:checked::after {
   --checkbox-content: "\f00c";
   color: var(--atoria-color-checkbox-checked);
 }
@@ -412,6 +419,12 @@
   min-width: 1lh;
   max-width: 1lh;
 }
+.system-atoria .atoria-exponent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.7em;
+}
 .system-atoria .atoria-cost-input,
 .system-atoria .atoria-cost-display {
   display: flex;
@@ -508,6 +521,7 @@
   border: none;
 }
 .system-atoria .atoria-skill-display > label {
+  position: relative;
   padding: 0px 3px;
   border: var(--atoria-border-style);
   border-radius: var(--atoria-border-style-radius);
@@ -567,18 +581,33 @@
 .system-atoria .atoria-skill-type-display h5 > input[type=checkbox].atoria-skill-shown-control {
   float: right;
 }
-.system-atoria .is_forced_horizontally .atoria-skill-group-display {
+.system-atoria .is_forced_horizontally .atoria-skill-group-display,
+.system-atoria .is_forced_horizontally .atoria-skill-type-display,
+.system-atoria .is_forced_horizontally .atoria-skill-cat-display {
   max-width: fit-content;
 }
-.system-atoria .is_forced_horizontally .atoria-skill-group-display > h5 {
+.system-atoria .is_forced_horizontally .atoria-skill-group-display > h5,
+.system-atoria .is_forced_horizontally .atoria-skill-type-display > h5,
+.system-atoria .is_forced_horizontally .atoria-skill-cat-display > h5,
+.system-atoria .is_forced_horizontally .atoria-skill-group-display > h6,
+.system-atoria .is_forced_horizontally .atoria-skill-type-display > h6,
+.system-atoria .is_forced_horizontally .atoria-skill-cat-display > h6 {
   max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
 }
-.system-atoria .is_forced_horizontally .atoria-skill-group-display > .atoria-skill-cat-area > .atoria-skill-cat-display {
+.system-atoria .is_forced_horizontally .atoria-skill-group-display > .atoria-skill-cat-area > .atoria-skill-cat-display,
+.system-atoria .is_forced_horizontally .atoria-skill-type-display > .atoria-skill-cat-area > .atoria-skill-cat-display,
+.system-atoria .is_forced_horizontally .atoria-skill-cat-display > .atoria-skill-cat-area > .atoria-skill-cat-display {
   display: flex;
   flex-direction: row;
   max-width: fit-content;
 }
-.system-atoria .is_forced_horizontally .atoria-skill-group-display > .atoria-skill-cat-area > .atoria-skill-cat-display > h6 {
+.system-atoria .is_forced_horizontally .atoria-skill-group-display > .atoria-skill-cat-area > .atoria-skill-cat-display > h6,
+.system-atoria .is_forced_horizontally .atoria-skill-type-display > .atoria-skill-cat-area > .atoria-skill-cat-display > h6,
+.system-atoria .is_forced_horizontally .atoria-skill-cat-display > .atoria-skill-cat-area > .atoria-skill-cat-display > h6 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1234,6 +1263,80 @@
 .system-atoria .atoria-player-character-page > .first-col .flexrow {
   align-items: flex-start;
 }
+.system-atoria .atoria-player-character-page > .first-col .atoria-combat {
+  min-width: 7em;
+  max-width: 7em;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-combat > h5 {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-combat > div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+  flex: 0 1 auto;
+  border: none;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-combat > div > label {
+  padding: 0px 3px;
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-combat > div > label input {
+  display: none;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-offense,
+.system-atoria .atoria-player-character-page > .first-col .atoria-defense {
+  /* display: grid; */
+  /* grid-template-columns: min-content auto @ofde-fense-text-area-width; */
+  display: flex;
+  flex-direction: column;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-offense > div.flexrow,
+.system-atoria .atoria-player-character-page > .first-col .atoria-defense > div.flexrow {
+  min-height: calc(2px + var(--atoria-base-line-block-height));
+  max-height: calc(2px + var(--atoria-base-line-block-height));
+  /* border: var(--atoria-border-style); */
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-offense > div.flexrow label,
+.system-atoria .atoria-player-character-page > .first-col .atoria-defense > div.flexrow label {
+  flex: 0;
+  min-width: fit-content;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-offense input[type=checkbox]::after,
+.system-atoria .atoria-player-character-page > .first-col .atoria-defense input[type=checkbox]::after,
+.system-atoria .atoria-player-character-page > .first-col .atoria-offense input[type=radio]::after,
+.system-atoria .atoria-player-character-page > .first-col .atoria-defense input[type=radio]::after {
+  --checkbox-content: attr(data-letter) !important;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-offense input.atoria-offense-amount,
+.system-atoria .atoria-player-character-page > .first-col .atoria-defense input.atoria-offense-amount,
+.system-atoria .atoria-player-character-page > .first-col .atoria-offense input.atoria-defense-amount,
+.system-atoria .atoria-player-character-page > .first-col .atoria-defense input.atoria-defense-amount {
+  margin-left: auto;
+}
+.system-atoria .atoria-player-character-page > .first-col .atoria-offense textarea,
+.system-atoria .atoria-player-character-page > .first-col .atoria-defense textarea {
+  line-height: normal;
+  min-height: 3lh;
+}
 .system-atoria .atoria-player-character-page > .first-col .atoria-character-skill-n-knowledge {
   display: flex;
   flex-direction: row;
@@ -1263,34 +1366,6 @@
 .system-atoria .atoria-player-character-page > .second-col {
   min-width: 20em;
   width: 100%;
-}
-.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense {
-  /* display: grid; */
-  /* grid-template-columns: min-content auto @ofde-fense-text-area-width; */
-  display: flex;
-  flex-direction: column;
-  flex: 0;
-}
-.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense > div.flexrow {
-  min-height: calc(2px + var(--atoria-base-line-block-height));
-  max-height: calc(2px + var(--atoria-base-line-block-height));
-  /* border: var(--atoria-border-style); */
-}
-.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense > label {
-  min-width: 5em;
-  padding: 0 5px;
-  border: var(--atoria-border-style);
-  border-radius: var(--atoria-border-style-radius);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense input[type=checkbox]::after {
-  --checkbox-content: attr(data-letter) !important;
-}
-.system-atoria .atoria-player-character-page > .second-col .atoria-offense-defense > textarea {
-  min-height: 1lh;
 }
 .system-atoria .atoria-player-inventory-page > .flexrow {
   align-items: flex-start;

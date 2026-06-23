@@ -45,6 +45,7 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       toggleSkillVisibility: this._toggleSkillVisibility,
       toggleAttribute: this._toggleAttribute,
       toggleEffect: this._toggleEffect,
+      combatRoll: this._combarRoll,
     },
   };
 
@@ -270,6 +271,11 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     await effect.update({
       disabled: !effect.disabled,
     });
+  }
+
+  static async _combarRoll(_event, target) {
+    const { type } = target.dataset;
+    this.actor.rollCombatSkill(type);
   }
 
   _onRender(context, options) {

@@ -9,20 +9,71 @@
                 cssClass=""
                 prevent_hide_action=true
                 }}
-                <div class="flexcol">
-                    <div class="atoria-horizontal-bar flexrow">
-                        <h5 class="title">
-                            {{localize "ATORIA.Sheet.Attack.Title"}}
-                        </h5>
+                <div class="atoria-combat">
+                    <h5>
+                        {{localize "ATORIA.Sheet.Combat.Title"}}
+                    </h5>
+                    <div data-action="combatRoll" data-type="contact" >
+                        <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Contact.Label"}}</label>
                     </div>
-                    <ul class="item-list">
-                        <li class="item atoria-item-line-display atoria-horizontal-bar" data-action="brawlRoll" >
-                            <label>{{localize "ATORIA.Ruleset.Skills.Combative.Weapon.Brawl.Label"}}</label>
-                        </li>
-                    {{#each action_items as |item idx|}}
-                        {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
-                    {{/each}}
-                    </ul>
+                    <div data-action="combatRoll" data-type="apart" >
+                        <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Apart.Label"}}</label>
+                    </div>
+                    <div data-action="combatRoll" data-type="instrument" >
+                        <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Instrument.Label"}}</label>
+                    </div>
+                </div>
+                <div class="atoria-offense">
+                    <div class="flexrow">
+                        <label>{{localize systemFields.offense.label}}</label>
+
+                        {{#each systemFields.offense.fields.type.choices as |display key|}}
+                            <input class="checkbox" type="radio" name="system.offense.type" value="{{key}}"
+                            data-letter="{{display}}" {{checked (eq key ../actor.system.offense.type)}}
+                            />
+                        {{/each}}
+
+                        {{ formInput systemFields.offense.fields.amount value=actor.system.offense.amount disabled=(not @root.editable) classes="atoria-offense-amount"}}
+                    </div>
+                    <div style="display: grid;">
+                        <textarea
+                            class="textarea-auto-resize"
+                            style="grid-area: 1 / 1 / 2/ 2;"
+                            rows="1"
+                            data-name="offense-description" data-dtype="String" name="system.offense.description"
+                            {{disabled (not @root.editable)}}>{{cleanLines system.offense.description}}</textarea>
+                        <div
+                        class="textarea-auto-resize-sibling"
+                        aria-hidden="true"
+                        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+                        >{{cleanLines system.offense.description}}</div>
+                    </div>
+                </div>
+                <div class="atoria-defense">
+                    <div class="flexrow">
+                        <label>{{localize systemFields.defense.label}}</label>
+
+                        {{#each systemFields.defense.fields.type.choices as |display key|}}
+                            <input class="checkbox" type="radio" name="system.defense.type" value="{{key}}"
+                            data-letter="{{display}}" {{checked (eq key ../actor.system.defense.type)}}
+                            />
+                        {{/each}}
+
+                        {{ formInput systemFields.defense.fields.amount value=actor.system.defense.amount disabled=(not @root.editable) classes="atoria-defense-amount"}}
+                    </div>
+                    <div style="display: grid;">
+                        <textarea
+                            class="textarea-auto-resize"
+                            style="grid-area: 1 / 1 / 2/ 2;"
+                            rows="1"
+                            data-name="defense-description" data-dtype="String" name="system.defense.description"
+                            {{disabled (not @root.editable)}}>{{cleanLines system.defense.description}}</textarea>
+                        <div
+                        class="textarea-auto-resize-sibling"
+                        aria-hidden="true"
+                        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+                        >{{cleanLines system.defense.description}}</div>
+                    </div>
                 </div>
             </div>
             <div class="atoria-character-skill-n-knowledge">
@@ -54,55 +105,6 @@
                     <i class="fas fa-plus"></i>
                 </a>
                 {{/if}}
-            </div>
-            <div class="atoria-offense-defense">
-                <div class="flexrow">
-                <label>{{localize systemFields.offense.label}}</label>
-                {{ formInput systemFields.offense.fields.is_negative value=actor.system.offense.is_negative disabled=(not @root.editable)
-                    dataset=(toDataset tooltip=systemFields.offense.fields.is_negative.label letter=systemFields.offense.fields.is_negative.label)
-                }}
-                {{ formInput systemFields.offense.fields.is_positive value=actor.system.offense.is_positive disabled=(not @root.editable)
-                    dataset=(toDataset tooltip=systemFields.offense.fields.is_positive.label letter=systemFields.offense.fields.is_positive.label)
-                }}
-                {{ formInput systemFields.offense.fields.amount value=actor.system.offense.amount disabled=(not @root.editable)}}
-                </div>
-                <div style="display: grid;">
-                    <textarea
-                        class="textarea-auto-resize"
-                        style="grid-area: 1 / 1 / 2/ 2;"
-                        rows="1"
-                        data-name="offense-description" data-dtype="String" name="system.offense.description"
-                        {{disabled (not @root.editable)}}>{{cleanLines system.offense.description}}</textarea>
-                    <div
-                    class="textarea-auto-resize-sibling"
-                    aria-hidden="true"
-                    style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-                    >{{cleanLines system.offense.description}}</div>
-                </div>
-
-                <div class="flexrow">
-                <label>{{localize systemFields.defense.label}}</label>
-                {{ formInput systemFields.defense.fields.is_negative value=actor.system.defense.is_negative disabled=(not @root.editable)
-                    dataset=(toDataset tooltip=systemFields.defense.fields.is_negative.label letter=systemFields.defense.fields.is_negative.label)
-                }}
-                {{ formInput systemFields.defense.fields.is_positive value=actor.system.defense.is_positive disabled=(not @root.editable)
-                    dataset=(toDataset tooltip=systemFields.defense.fields.is_positive.label letter=systemFields.defense.fields.is_positive.label)
-                }}
-                {{ formInput systemFields.defense.fields.amount value=actor.system.defense.amount disabled=(not @root.editable)}}
-                </div>
-                <div style="display: grid;">
-                    <textarea
-                        class="textarea-auto-resize"
-                        style="grid-area: 1 / 1 / 2/ 2;"
-                        rows="1"
-                        data-name="defense-description" data-dtype="String" name="system.defense.description"
-                        {{disabled (not @root.editable)}}>{{cleanLines system.defense.description}}</textarea>
-                    <div
-                    class="textarea-auto-resize-sibling"
-                    aria-hidden="true"
-                    style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-                    >{{cleanLines system.defense.description}}</div>
-                </div>
             </div>
             <ul class="item-list">
             {{#each effects as |effect idx|}}
