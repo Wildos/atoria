@@ -58,6 +58,10 @@ RULESET["character"] = class ActorRuleset {
   static FOCUSER_SKILL_PATH = "system.skills.combative.weapon.focuser";
   static THROW_SKILL_PATH = "system.skills.combative.weapon.throw";
 
+  static MARTIAL_CONTACT_PATH = "system.knowledges.magic.martial.contact";
+  static MARTIAL_APART_PATH = "system.knowledges.magic.martial.apart";
+  static MARTIAL_INSTRUMENT_PATH = "system.knowledges.magic.martial.instrument";
+
   static getSkillsTree(type) {
     switch (type) {
       case "non-player-character":
@@ -172,6 +176,7 @@ RULESET["character"] = class ActorRuleset {
             "transport",
           ],
           magic: [
+            "martial",
             "air",
             "mental",
             "druidic",
@@ -227,6 +232,7 @@ RULESET["character"] = class ActorRuleset {
             transport: ["mounting", "land", "sea"],
           },
           magic: {
+            martial: ["contact", "apart", "instrument"],
             air: ["dazzling", "breeze", "lightning"],
             mental: ["kinetic", "illusion", "power", "enchanted"],
             druidic: ["astral", "solicitude", "changeforme", "mutation"],
@@ -269,6 +275,7 @@ RULESET["character"] = class ActorRuleset {
           "transport",
           "theft",
           "medecine",
+          "martial",
           "air",
           "druidic",
           "water",
@@ -339,6 +346,25 @@ RULESET["character"] = class ActorRuleset {
       default:
         return 10;
     }
+  }
+
+  static getSkillOrKnowledgeTitle(actor, path) {
+    let path_parts = path.split(".");
+    path_parts.shift();
+    let skill_label =
+      actor.system.schema.getField(path_parts)?.label ??
+      this.getKnowledgeLabel(path_parts);
+
+    return skill_label;
+  }
+
+  static getSkillOrKnowledgeCategoryTitle(actor, path) {
+    let path_parts = path.split(".");
+    path_parts.shift();
+    path_parts.pop();
+    let skill_cat_label = actor.system.schema.getField(path_parts)?.label;
+
+    return skill_cat_label;
   }
 
   // Return the amount/value that must be restored for the time_phase (doesn't take in consideration the current amount/value)
@@ -413,7 +439,7 @@ RULESET["character"] = class ActorRuleset {
       console.warn("Invalid skill path");
       return false;
     }
-    return path_keys[1] === "perceptions";
+    return path_keys[2] === "perceptions";
   }
 
   static getMainArmorValue(item) {
@@ -438,18 +464,26 @@ RULESET["character"] = class ActorRuleset {
     return 4 - (100 - Math.min(actor.system.endurance.value, 100)) / 25;
   }
 
+  static getWeaponSkills(_actor) {
+    return [
+      this.MARTIAL_CONTACT_PATH,
+      this.MARTIAL_APART_PATH,
+      this.MARTIAL_INSTRUMENT_PATH,
+    ];
+  }
+
   static getAttackSaves() {
     return [
-      "system.skills.combative.reflex.dodge",
-      "system.skills.combative.reflex.parry",
+      "system.skills.physical.reflex.dodge",
+      "system.skills.physical.reflex.parry",
     ];
   }
 
   static getOpposingSaves() {
     return [
-      "system.skills.combative.reflex.dodge",
-      "system.skills.combative.reflex.parry",
-      "system.skills.combative.reflex.opportuneness",
+      "system.skills.physical.reflex.dodge",
+      "system.skills.physical.reflex.parry",
+      "system.skills.physical.reflex.opportuneness",
       "system.skills.physical.sturdiness.tenacity",
       "system.skills.physical.sturdiness.force",
       "system.skills.physical.agility.balance",

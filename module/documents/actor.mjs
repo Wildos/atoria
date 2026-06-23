@@ -132,11 +132,10 @@ export default class AtoriaActor extends Actor {
   }
 
   getSkillFromPath(skill_path) {
-    let effective_skill_path_parts = skill_path.split(".");
     let target_skill = foundry.utils.getProperty(this, skill_path);
     if (target_skill === undefined) {
       target_skill = this;
-      effective_skill_path_parts = [];
+      let effective_skill_path_parts = [];
       for (let p of skill_path.split(".")) {
         const t = foundry.utils.getType(target_skill);
         if (!(t === "Object" || t === "Array" || t === "Unknown")) break; // Invalid path
@@ -144,19 +143,35 @@ export default class AtoriaActor extends Actor {
         else break; // Can't traverse anymore
         effective_skill_path_parts.push(p);
       }
+      target_skill["path"] = effective_skill_path_parts.join(".");
+    } else {
+      target_skill["path"] = skill_path;
     }
     if (!utils.isSkill(target_skill)) return undefined;
-    target_skill["path"] = effective_skill_path_parts.join(".");
 
     target_skill["critical_success_amount"] =
       utils.ruleset.character.getSkillCriticalSuccessAmount(target_skill);
     target_skill["critical_fumble_amount"] =
       utils.ruleset.character.getSkillCriticalFumbleAmount(target_skill);
-    target_skill["proper_label"] = utils.getSkillTitle(
-      target_skill.path,
-      target_skill.label,
-    );
+    target_skill["proper_label"] = this.getSkillTitle(target_skill.path);
     return target_skill;
+  }
+
+  getSkillLabel(skill_path) {
+    return utils.ruleset.character.getSkillOrKnowledgeTitle(this, skill_path);
+  }
+
+  getSkillTitle(skill_path) {
+    let skill_cat_label = game.i18n.localize(
+      utils.ruleset.character.getSkillOrKnowledgeCategoryTitle(
+        this,
+        skill_path,
+      ),
+    );
+
+    let skill_label = game.i18n.localize(this.getSkillLabel(skill_path));
+
+    return skill_cat_label + " - " + skill_label;
   }
 
   getSkillnKnowledgeList() {
@@ -170,7 +185,7 @@ export default class AtoriaActor extends Actor {
   getOpposedSkillList() {
     const skill_list = {};
     for (const skill_path of RULESET.character.getOpposingSaves()) {
-      skill_list[skill_path] = utils.getSkillTitle(skill_path, undefined);
+      skill_list[skill_path] = this.getSkillTitle(skill_path);
     }
     return skill_list;
   }
@@ -185,16 +200,17 @@ export default class AtoriaActor extends Actor {
 
     if (this.type === "hero") {
       if (Object.keys(skill_types).includes("skills")) {
-        skill_list["system.skills.physical"] =
-          this.system.skills.physical.label;
-        skill_list["system.skills.social"] = this.system.skills.social.label;
-        skill_list["system.skills.combative"] =
-          this.system.skills.combative.label;
+        skill_list["system.skills.physical"] = this.getSkillLabel(
+          "system.skills.physical",
+        );
+        skill_list["system.skills.social"] = this.getSkillLabel(
+          "system.skills.social",
+        );
       }
       if (Object.keys(skill_types).includes("knowledges")) {
         for (let knowledge_group_key in this.system.knowledges) {
           skill_list[`system.knowledges.${knowledge_group_key}`] =
-            this.system.knowledges[knowledge_group_key].label;
+            this.getSkillLabel(`system.knowledges.${knowledge_group_key}`);
         }
       }
       return skill_list;
@@ -207,36 +223,29 @@ export default class AtoriaActor extends Actor {
           const skill_cat = skill_group[skill_cat_key];
           for (let skill_key in skill_cat) {
             const skill_path = `system.${skill_group_key}.${skill_cat_key}.${skill_key}`;
-            skill_list[skill_path] =
-              game.i18n.localize(
-                this.system.schema.fields[skill_group_key].fields[skill_cat_key]
-                  .label,
-              ) +
-              " - " +
-              game.i18n.localize(skill_group[skill_cat_key][skill_key].label);
+            skill_list[skill_path] = this.getSkillTitle(skill_path);
           }
         }
       }
       return skill_list;
     }
+
     for (let skill_type_key in skill_types) {
       const skill_type = skill_types[skill_type_key];
       for (let skill_group_key in skill_type) {
         const skill_group = skill_type[skill_group_key];
+        if (skill_group_key == "perceptions") {
+          for (let skill_key in skill_group) {
+            const skill_path = `system.${skill_type_key}.${skill_group_key}.${skill_key}`;
+            skill_list[skill_path] = this.getSkillTitle(skill_path);
+          }
+          continue;
+        }
         for (let skill_cat_key in skill_group) {
           const skill_cat = skill_group[skill_cat_key];
           for (let skill_key in skill_cat) {
             const skill_path = `system.${skill_type_key}.${skill_group_key}.${skill_cat_key}.${skill_key}`;
-            skill_list[skill_path] =
-              game.i18n.localize(
-                this.system.schema.fields[skill_type_key].fields[
-                  skill_group_key
-                ].fields[skill_cat_key].label,
-              ) +
-              " - " +
-              game.i18n.localize(
-                skill_type[skill_group_key][skill_cat_key][skill_key].label,
-              );
+            skill_list[skill_path] = this.getSkillTitle(skill_path);
           }
         }
       }
@@ -244,28 +253,8 @@ export default class AtoriaActor extends Actor {
     return skill_list;
   }
 
-  getPerceptionSkillList() {
-    const perception_list = {};
-    if (this.type === "hero") {
-      perception_list["perception"] = this.system.perceptions.label;
-    } else {
-      for (let perception in this.system.perceptions) {
-        const skill_path = `system.perceptions.${perception}`;
-        perception_list[skill_path] =
-          game.i18n.localize(this.system.schema.fields.perceptions.label) +
-          " - " +
-          game.i18n.localize(this.system.perceptions[perception].label);
-      }
-    }
-    return perception_list;
-  }
-
   getAssociatedSkillList() {
-    return Object.assign(
-      {},
-      this.getSkillnKnowledgeList(),
-      this.getPerceptionSkillList(),
-    );
+    return Object.assign({}, this.getSkillnKnowledgeList());
   }
 
   getWeaponSkillList() {
@@ -275,23 +264,21 @@ export default class AtoriaActor extends Actor {
     )
       return skill_list;
 
-    return DEFAULT_VALUES.get_weapon_associated_skills();
-  }
+    let skill_paths = utils.ruleset.character.getWeaponSkills(this);
 
-  getSkillTitle(skill_path) {
-    const skill = this.getSkillFromPath(skill_path);
-    if (skill === undefined) {
-      console.warn(`Couldn't generate skill title for path: '${skill_path}'`);
-      return "";
+    for (const skill_path of skill_paths) {
+      let skill = this.getSkillFromPath(skill_path);
+      skill_list[skill_path] = skill?.proper_label;
     }
-    return skill.proper_label;
+
+    return skill_list;
   }
 
   async rollSkill(skill_path) {
     const skill = this.getSkillFromPath(skill_path);
     if (skill === undefined) {
       // console.warn(`Unknown skill: '${skill_path}'`);
-      const skill_name = utils.getSkillTitle(skill_path);
+      const skill_name = this.getSkillTitle(skill_path);
       const speaker = ChatMessage.getSpeaker({ actor: this });
       ChatMessage.create({
         speaker: speaker,

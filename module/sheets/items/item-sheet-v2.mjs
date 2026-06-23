@@ -243,10 +243,7 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         );
 
         context.weapon_associated_skills =
-          this.actor?.getWeaponSkillList() ??
-          foundry.utils.deepClone(
-            utils.default_values.get_weapon_associated_skills(),
-          );
+          this.actor?.getWeaponSkillList() ?? {};
         break;
       case "action_opportunity_pre":
       case "action_opportunity_post":

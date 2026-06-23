@@ -16,22 +16,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
 
   static DEFAULT_OPTIONS = {
     classes: ["player-character"],
-    window: {
-      controls: [
-        {
-          action: "onFixKnowledges",
-          icon: "fa-solid fa-wrench",
-          label: "ATORIA.DEBUG.FixKnowledges",
-          ownership: "OWNER",
-        },
-        {
-          action: "onFixSkills",
-          icon: "fa-solid fa-wrench",
-          label: "ATORIA.DEBUG.FixSkills",
-          ownership: "OWNER",
-        },
-      ],
-    },
+    window: {},
     actions: {
       applyTimePhase: {
         handler: this._applyTimePhase,
@@ -39,12 +24,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
       },
       editHealingInactive: this._editHealingInactive,
       toggle_keyword_direct: this._toggle_keyword_direct,
-      createSkill: this._createSkill,
-      deleteSkill: this._deleteSkill,
       createItem: this._createItem,
-      onFixKnowledges: this._onFixKnowledges,
-      onFixSkills: this._onFixSkills,
-      brawlRoll: this._brawlRoll,
     },
   };
 
@@ -88,32 +68,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     controls.find((c) => c.action === "showTokenArtwork").visible =
       show_token_art;
 
-    // DEBUG
-    controls.find(
-      (c) =>
-        c.action === "onFixKnowledges" &&
-        c.label === "ATORIA.DEBUG.FixKnowledges",
-    ).visible = game.user?.isGM;
-    controls.find(
-      (c) => c.action === "onFixSkills" && c.label === "ATORIA.DEBUG.FixSkills",
-    ).visible = game.user?.isGM;
-
     return controls;
-  }
-
-  static async _onFixKnowledges(event, _target) {
-    event.stopPropagation();
-    await this.actor.debug_fix_knowledges();
-  }
-
-  static async _onFixSkills(event, _target) {
-    event.stopPropagation();
-    await this.actor.debug_fix_skills();
-  }
-
-  static async _brawlRoll(event, _target) {
-    event.stopPropagation();
-    await this.actor.rollSkill("system.skills.combative.weapon.brawl");
   }
 
   static async _applyTimePhase(_event, target) {
@@ -145,24 +100,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     await this.actor.update({
       "system.keywords_used.direct": new_value,
     });
-  }
-
-  static async _createSkill(_event, target) {
-    const { skillCatPath } = target.dataset;
-    const result = await utils.skillCreationDialog(this.actor, skillCatPath);
-    if (!result) {
-      return;
-    }
-    const { skill_key, skill_label } = result;
-    await this.actor.createSkill(skillCatPath, skill_key, skill_label);
-  }
-
-  static async _deleteSkill(_event, target) {
-    const { skillPath } = target.dataset;
-    const split_elements = skillPath.split(".");
-    const skill_key = split_elements.pop();
-    const skill_cat_path = split_elements.join(".");
-    await this.actor.deleteSkill(skill_cat_path, skill_key);
   }
 
   static async _createItem(_event, target) {
@@ -453,7 +390,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "athletic",
             "slyness",
             "environment",
-            "reflex",
             "sturdiness",
           ],
           "system.skills.physical.agility": ["balance", "dexterity"],
@@ -586,6 +522,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           ],
 
           "system.knowledges.magic": [
+            "martial",
             "air",
             "mental",
             "druidic",
@@ -596,6 +533,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "blood",
             "earth",
           ],
+          "system.knowledges.magic.martial": ["contact", "apart", "instrument"],
 
           "system.knowledges.magic.air": ["dazzling", "breeze", "lightning"],
           "system.knowledges.magic.mental": [
@@ -627,8 +565,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           "system.knowledges.magic.blood": ["sacrifice", "puncture", "drain"],
           "system.knowledges.magic.earth": ["bastion", "telluric", "metallic"],
         };
-
-        context.extendable_skill = [];
 
         context.items = await Promise.all(
           this.actor.items.map(async (i) => {

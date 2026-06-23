@@ -25,6 +25,13 @@ export function skillField(skill_label, initial_value, required = true) {
         initial: initial_value,
         label: "ATORIA.Model.Skill.Success",
       }),
+      mastery: new foundry.data.fields.NumberField({
+        required: true,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        label: "ATORIA.Model.Skill.Mastery",
+      }),
       critical_success_modifier: new foundry.data.fields.NumberField({
         required: true,
         nullable: false,

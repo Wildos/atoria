@@ -71,47 +71,6 @@ export function getSkillData(item, skill_path) {
   return skill_data;
 }
 
-export async function skillCreationDialog(actor, skill_cat) {
-  const content = await renderTemplate(
-    CONFIG.ATORIA.DIALOG_TEMPLATES.skill_creation,
-    {},
-  );
-  const return_format = {
-    skill_key: "",
-    skill_label: "",
-  };
-  return await foundry.applications.api.DialogV2.prompt({
-    window: {
-      title: game.i18n.format("ATORIA.Dialog.Skill_creation.Title", {
-        skill_cat: getSkillTitle(skill_cat),
-      }),
-    },
-    rejectClose: false,
-    content: content,
-    ok: {
-      label: game.i18n.localize("ATORIA.Dialog.Confirm"),
-      callback: (event, button, dialog) => {
-        const formElement = dialog.querySelector("form");
-        const formData = new FormDataExtended(formElement);
-        const formDataObject = formData.object;
-
-        formDataObject["skill_key"] = Array.from(
-          formDataObject["skill_name"].toLowerCase(),
-        )
-          .filter((char) => char >= "a" && char <= "z")
-          .join("");
-
-        formDataObject["skill_label"] = formDataObject["skill_name"];
-        return foundry.utils.mergeObject(return_format, formDataObject, {
-          overwrite: true,
-          insertKeys: false,
-        });
-      },
-    },
-  });
-  return null;
-}
-
 export async function sendChatMessageFromRollData(actor, actor_id, roll_data) {
   ChatMessage.create(
     {
@@ -380,18 +339,15 @@ export function convertRollModeToDesiredVisibility(desired_roll_mod) {
 
 export function getSkillTitle(skill_path, skill_label = undefined) {
   const skill_path_parts = skill_path.split(".");
-  skill_path_parts[0] = "Ruleset"; // System => Ruleset
 
   if (skill_label === undefined) {
-    skill_label =
-      skill_path_parts.length > 1
-        ? utils.buildLocalizeString(...skill_path_parts, "Label")
-        : undefined;
-    if (skill_label === undefined) {
-      console.warn("Invalid skill path given, invalid name returned");
-      skill_label = "ATORIA.Model.Invalid_name";
+    if (skill_path_parts[1] === "knowledges") {
+      skill_label = RULESET.character.getKnowledgeLabel(skill_path_parts);
+    } else {
+      skill_label = RULESET.character.getSkillLabel(skill_path_parts);
     }
   }
+  skill_path_parts[0] = "Ruleset"; // System => Ruleset
 
   let skill_name = game.i18n.localize(skill_label);
 

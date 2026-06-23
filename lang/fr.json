@@ -466,16 +466,31 @@
       },
       "Perception": "Perception",
       "Perceptions": {
-        "Label": "Perception",
-        "Sight": "Vue",
-        "Earing": "Ouïe",
-        "Smell": "Odorat",
-        "Taste": "Goût",
-        "Instinct": "Instinct",
-        "Magice": "Magice"
+        "Label": "Perception"
       },
       "Skills": {
         "Label": "Compétences",
+        "Perceptions": {
+          "Label": "Perceptions",
+          "Sight": {
+            "Label": "Vue"
+          },
+          "Earing": {
+            "Label": "Ouïe"
+          },
+          "Smell": {
+            "Label": "Odorat"
+          },
+          "Taste": {
+            "Label": "Goût"
+          },
+          "Instinct": {
+            "Label": "Instinct"
+          },
+          "Magice": {
+            "Label": "Magice"
+          }
+        },
         "Physical": {
           "Label": "Physiques",
           "Agility": {
@@ -521,6 +536,18 @@
             },
             "Fortitude": {
               "Label": "Fortitude"
+            }
+          },
+          "Reflex": {
+            "Label": "Réflexe",
+            "Dodge": {
+              "Label": "Esquive"
+            },
+            "Parry": {
+              "Label": "Parade"
+            },
+            "Opportuneness": {
+              "Label": "Opportunité"
             }
           },
           "Sturdiness": {
@@ -592,18 +619,6 @@
         },
         "Combative": {
           "Label": "Combatives",
-          "Reflex": {
-            "Label": "Réflexe",
-            "Dodge": {
-              "Label": "Esquive"
-            },
-            "Parry": {
-              "Label": "Parade"
-            },
-            "Opportuneness": {
-              "Label": "Opportunité"
-            }
-          },
           "Weapon": {
             "Label": "Arme",
             "Brawl": {
@@ -907,7 +922,22 @@
           }
         },
         "Magic": {
-          "Label": "Magiques",
+          "Label": "Combat et Magies",
+          "Martial": {
+            "Label": "Martiale",
+            "Contact": {
+              "Label": "Contact",
+              "Full_label": "Martial - Contact"
+            },
+            "Apart": {
+              "Label": "Distant",
+              "Full_label": "Martial - Distant"
+            },
+            "Instrument": {
+              "Label": "Instrument",
+              "Full_label": "Martial - Instrument"
+            }
+          },
           "Air": {
             "Label": "Air",
             "Dazzling": {
