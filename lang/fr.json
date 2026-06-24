@@ -78,10 +78,11 @@
       "Skill": {
         "Label": "Compétence",
         "Success": "Réussite",
+        "Mastery": "Maitrise",
         "Modifier": {
           "Success": "Réussite",
-          "Critical_success": "Mod. RC",
-          "Critical_fumble": "Mod. EC"
+          "Critical_success": "Modificateur de RC",
+          "Critical_fumble": "Modificateur de EC"
         }
       },
       "Time_phase_limitation": {
@@ -242,6 +243,11 @@
           "Character": "Personnage",
           "Inventory": "Inventaire",
           "Action": "Action"
+        },
+        "Skill": {
+          "Mastery": "M.",
+          "Critical_success": "Mod. RC",
+          "Critical_fumble": "Mod. EC"
         },
         "Time_phase_buttons": "Phases",
         "Features": {

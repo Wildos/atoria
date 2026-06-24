@@ -425,6 +425,11 @@
   left: 0;
   font-size: 0.7em;
 }
+.system-atoria .fit-width {
+  width: fit-content;
+  min-width: fit-content;
+  max-width: fit-content;
+}
 .system-atoria .atoria-cost-input,
 .system-atoria .atoria-cost-display {
   display: flex;
@@ -1367,6 +1372,9 @@
   min-width: 20em;
   width: 100%;
 }
+.system-atoria .atoria-player-character-page > .second-col > .atoria-header-side {
+  min-height: calc(var(--atoria-skill-height) * 7 + var(--atoria-skill-height) * 4 + var(--atoria-rows-gap));
+}
 .system-atoria .atoria-player-inventory-page > .flexrow {
   align-items: flex-start;
 }
@@ -1689,6 +1697,25 @@
 }
 .system-atoria .sheet.non-player-character.editing-mode .window-content {
   grid-template-columns: var(--atoria-skill-width) max-content;
+}
+.system-atoria .sheet.player-character .window-content {
+  display: grid;
+  grid-template-areas: "nav nav" "header side" "main side";
+  grid-auto-rows: min-content;
+  grid-auto-columns: min-content;
+}
+.system-atoria .sheet.player-character .window-content > .sheet-tabs {
+  grid-area: nav;
+  max-height: fit-content;
+}
+.system-atoria .sheet.player-character .window-content > .atoria-player-header {
+  grid-area: header;
+}
+.system-atoria .sheet.player-character .window-content > .tab:not(.atoria-side-panel) {
+  grid-area: main;
+}
+.system-atoria .sheet.player-character .window-content > .tab.atoria-side-panel {
+  grid-area: side;
 }
 .system-atoria .sheet.player-character .window-content div:not(.colored) > h5,
 .system-atoria .sheet.player-character .window-content ul:not(.colored) > h5,

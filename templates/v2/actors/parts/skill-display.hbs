@@ -16,19 +16,19 @@
 </div>
 {{#unless (or limited (not @root.isEditingMode))}}
     <div class="atoria-skill-display">
-        <label>{{localize systemFields.fields.mastery.label}}</label>
+        <label class="fit-width" data-tooltip="{{systemFields.fields.mastery.label}}">{{localize "ATORIA.Sheet.Player.Skill.Mastery"}}</label>
         <input type="number" data-dtype="Number" name="{{data_path}}.mastery"
         value="{{skill.mastery}}"
         data-tooltip="{{localize systemFields.fields.mastery.label}}"
         {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
 
-        <label>{{localize systemFields.fields.critical_success_modifier.label}}</label>
+        <label data-tooltip="{{systemFields.fields.critical_success_modifier.label}}">{{localize "ATORIA.Sheet.Player.Skill.Critical_success"}}</label>
         <input type="number" data-dtype="Number" name="{{data_path}}.critical_success_modifier"
         value="{{skill.critical_success_modifier}}"
         data-tooltip="{{localize systemFields.fields.critical_success_modifier.label}}"
         {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
 
-        <label>{{localize systemFields.fields.critical_fumble_modifier.label}}</label>
+        <label data-tooltip="{{systemFields.fields.critical_fumble_modifier.label}}">{{localize "ATORIA.Sheet.Player.Skill.Critical_fumble"}}</label>
         <input type="number" data-dtype="Number" name="{{data_path}}.critical_fumble_modifier"
         value="{{skill.critical_fumble_modifier}}"
         data-tooltip="{{localize systemFields.fields.critical_fumble_modifier.label}}"

@@ -1,7 +1,7 @@
-<h5 class="title atoria-expand-control" data-expand-id="atoria-sheet-keywords" data-action="expandSection">
+<h5 class="title">
     {{localize "ATORIA.Ruleset.Keywords.Label"}}
 </h5>
-<div class="atoria-keywords atoria-expand-direct-data">
+<div class="atoria-keywords">
     {{#each tracked_keywords as |keyword idx|}}
         {{#with (lookup ../tracked_keywords_data keyword) as |keyword_data|}}
             {{#if (ne keyword "direct")}}

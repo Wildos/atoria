@@ -36,9 +36,13 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     header: {
       template: "systems/atoria/templates/v2/actors/parts/player-header.hbs",
     },
-    character_page: {
+    character_main_page: {
       template:
-        "systems/atoria/templates/v2/actors/parts/player-character-page.hbs",
+        "systems/atoria/templates/v2/actors/parts/player-character-main-page.hbs",
+    },
+    character_side_page: {
+      template:
+        "systems/atoria/templates/v2/actors/parts/player-character-side-page.hbs",
     },
     inventory_page: {
       template:
@@ -355,7 +359,8 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         context.equipped_items = equipped_items;
         context.inventory_items_sort = inventory_items_sort;
         break;
-      case "character_page":
+      case "character_main_page":
+      case "character_side_page":
         context.is_active_page = this.tabGroups["primary"] === "character";
 
         context.is_forced_horizontally = game.settings.get(
