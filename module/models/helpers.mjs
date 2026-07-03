@@ -1,4 +1,5 @@
 import * as utils from "../utils/module.mjs";
+import RULESET from "../utils/ruleset.mjs";
 
 export function skillInitialValue(
   skill_label,
@@ -605,6 +606,20 @@ export function defineRollField(
     },
     { required: true, label: field_label },
   );
+}
+
+export function rollFieldToEffect(roll_data) {
+  let label = roll_data.name;
+  let active_keys = [];
+  for (let key in roll_data.types) {
+    if (roll_data.types[key])
+      active_keys.push(RULESET.localized_damage_type(key));
+  }
+  label += " " + active_keys.join(", ");
+  return {
+    flavor: label,
+    formula: roll_data.formula,
+  };
 }
 
 export function getInitialFullSkillSchema(skill_type_data, skill_holder_label) {

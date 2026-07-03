@@ -1,0 +1,9 @@
+<div class="flexcol">
+    {{log @root}}
+    {{#if (eq type "contact")}}
+        <button type="button" data-action="rollFistFight" >{{localize "ATORIA.Dialog.Combat_roll.FistFight"}}</button>
+    {{/if}}
+    {{#each items}}
+        <button type="button" data-action="rollItem" data-uuid="{{this.uuid}}">{{localize this.name}}</button>
+    {{/each}}
+</div>

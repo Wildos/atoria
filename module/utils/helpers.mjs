@@ -3,11 +3,6 @@ import * as models from "../models/module.mjs";
 import RULESET from "./ruleset.mjs";
 import * as rolls from "../rolls/module.mjs";
 
-import {
-  AtoriaRollItemDialogV2,
-  AtoriaRollSkillDialogV2,
-} from "../sheets/module.mjs";
-
 export async function confirmDeletion(element_name) {
   element_name =
     element_name ?? game.i18n.localize("ATORIA.Dialog.Selected_element");

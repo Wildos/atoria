@@ -3,7 +3,7 @@ import * as rolls from "../rolls/module.mjs";
 import RULESET from "../utils/ruleset.mjs";
 import DEFAULT_VALUES from "../utils/default-values.mjs";
 import { helpers } from "../models/module.mjs";
-import { AtoriaRollDialog } from "../sheets/module.mjs";
+import { AtoriaRollDialog, AtoriaRollCombatDialog } from "../sheets/module.mjs";
 
 export default class AtoriaActor extends Actor {
   /**
@@ -154,6 +154,7 @@ export default class AtoriaActor extends Actor {
     target_skill["critical_fumble_amount"] =
       utils.ruleset.character.getSkillCriticalFumbleAmount(target_skill);
     target_skill["proper_label"] = this.getSkillTitle(target_skill.path);
+    target_skill["label"] = this.getSkillLabel(target_skill.path);
     return target_skill;
   }
 
@@ -268,31 +269,13 @@ export default class AtoriaActor extends Actor {
 
     for (const skill_path of skill_paths) {
       let skill = this.getSkillFromPath(skill_path);
-      skill_list[skill_path] = skill?.proper_label;
+      skill_list[skill_path] = skill?.label;
     }
 
     return skill_list;
   }
 
-  async rollSkill(skill_path) {
-    const skill = this.getSkillFromPath(skill_path);
-    if (skill === undefined) {
-      // console.warn(`Unknown skill: '${skill_path}'`);
-      const skill_name = this.getSkillTitle(skill_path);
-      const speaker = ChatMessage.getSpeaker({ actor: this });
-      ChatMessage.create({
-        speaker: speaker,
-        whisper: [game.user.id],
-        blind: false,
-        content: `${this.name} doesn't know the skill '${skill_name}'`,
-      });
-      return;
-    }
-
-    // -----------------
-    skill.usable_keywords = await utils.get_usable_keywords(this, skill_path);
-    skill.usable_perks = utils.get_usable_perks_for_skill(this, skill_path);
-
+  async _rollSkill(skill, skill_path) {
     // Get roll parameters
     let roll_parameters = await AtoriaRollDialog.ask({
       actor_uuid: this.uuid,
@@ -331,6 +314,9 @@ export default class AtoriaActor extends Actor {
     };
     for (let item of roll_parameters.used_perks) {
       if (item.type === "feature") {
+        used_perks_data["feature"].length += 1;
+        used_perks_data["feature"].description += await item.getTooltipHTML();
+      } else if (["weapon", "armor", "kit"].includes(item.type)) {
         used_perks_data["feature"].length += 1;
         used_perks_data["feature"].description += await item.getTooltipHTML();
       } else {
@@ -386,8 +372,92 @@ export default class AtoriaActor extends Actor {
     });
   }
 
+  async rollFistFight() {
+    const martial_skill = this.getSkillFromPath(
+      utils.ruleset.character.MARTIAL_CONTACT_PATH,
+    );
+    const weapon_skill = this.getSkillFromPath(
+      utils.ruleset.character.FISTFIGHT_SKILL_PATH,
+    );
+    if (martial_skill === undefined || weapon_skill === undefined) {
+      // console.warn(`Unknown skill: '${skill_path}'`);
+      const skill_name = this.getSkillTitle(
+        utils.ruleset.character.FISTFIGHT_SKILL_PATH,
+      );
+      const speaker = ChatMessage.getSpeaker({ actor: this });
+      ChatMessage.create({
+        speaker: speaker,
+        whisper: [game.user.id],
+        blind: false,
+        content: `${this.name} doesn't know the skill '${skill_name}'`,
+      });
+      return;
+    }
+
+    // -----------------
+    martial_skill.usable_keywords = await utils.get_usable_keywords(
+      this,
+      utils.ruleset.character.MARTIAL_CONTACT_PATH,
+    );
+    martial_skill.usable_perks = utils.get_usable_perks_for_skill(
+      this,
+      utils.ruleset.character.MARTIAL_CONTACT_PATH,
+    );
+
+    weapon_skill.usable_keywords = await utils.get_usable_keywords(
+      this,
+      utils.ruleset.character.FISTFIGHT_SKILL_PATH,
+    );
+    weapon_skill.usable_perks = utils.get_usable_perks_for_skill(
+      this,
+      utils.ruleset.character.FISTFIGHT_SKILL_PATH,
+    );
+
+    let skill = utils.ruleset.item.getFinalSkillDataFromKnowledgeAndWeapon(
+      martial_skill,
+      weapon_skill,
+    );
+
+    this._rollSkill(skill, utils.ruleset.character.FISTFIGHT_SKILL_PATH);
+  }
+
+  async rollSkill(skill_path) {
+    const skill = this.getSkillFromPath(skill_path);
+    if (skill === undefined) {
+      // console.warn(`Unknown skill: '${skill_path}'`);
+      const skill_name = this.getSkillTitle(skill_path);
+      const speaker = ChatMessage.getSpeaker({ actor: this });
+      ChatMessage.create({
+        speaker: speaker,
+        whisper: [game.user.id],
+        blind: false,
+        content: `${this.name} doesn't know the skill '${skill_name}'`,
+      });
+      return;
+    }
+
+    // -----------------
+    skill.usable_keywords = await utils.get_usable_keywords(this, skill_path);
+    skill.usable_perks = utils.get_usable_perks_for_skill(this, skill_path);
+
+    this._rollSkill(skill, skill_path);
+  }
+
   async rollCombatSkill(type) {
-    //TODO: dialog to select the weapon (or brawl)
+    let dialog = new AtoriaRollCombatDialog(
+      {
+        type: type,
+        actor_uuid: this.uuid,
+        items: this.items.filter(
+          (item) =>
+            utils.ruleset.item.isCompatibleItemFromMartialRoll(item, type) &&
+            item.type == "weapon" &&
+            item.system.is_worn,
+        ),
+      },
+      {},
+    );
+    dialog.render({ force: true });
   }
 
   async createSkill(skill_cat_path, skill_key, skill_label) {

@@ -42,7 +42,10 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     this.#actor_name = fromUuidSync(this.data.actor_uuid).name;
 
     this.data.skills.forEach((skill_data) => {
+      console.debug(skill_data);
       skill_data.usable_perks.sort((a, b) => {
+        console.debug(a);
+        console.debug(b);
         const types_ord = [
           "supplementary",
           "technique",
@@ -106,6 +109,9 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
   }
 
   get title() {
+    if (this.#current_skill != undefined) {
+      return `${this.#actor_name}: ${game.i18n.localize(this.data.roll_label)} | ${this.#current_skill.success}`;
+    }
     return `${this.#actor_name}: ${game.i18n.localize(this.data.roll_label)}`;
   }
 

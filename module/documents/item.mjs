@@ -1,6 +1,7 @@
 import * as utils from "../utils/module.mjs";
 import * as rolls from "../rolls/module.mjs";
 import RULESET from "../utils/ruleset.mjs";
+import * as model_utils from "../models/helpers.mjs";
 import { AtoriaRollDialog } from "../sheets/module.mjs";
 
 export default class AtoriaItem extends Item {
@@ -386,6 +387,8 @@ export default class AtoriaItem extends Item {
   getSavesAsked() {
     switch (this.type) {
       case "weapon":
+      case "armor":
+      case "kit":
       case "technique":
       case "incantatory-addition":
       case "spell":
@@ -507,29 +510,31 @@ export default class AtoriaItem extends Item {
     return changelog_messages;
   }
 
-  getAssociatedSkillsPath() {
-    const action_item_types = ["weapon", "action", "spell", "opportunity"];
-    if (!action_item_types.includes(this.type)) return [];
-    if (this.type == "opportunity")
-      return [utils.ruleset.character.OPPORTUNITY_SKILL_PATH];
+  // getAssociatedSkillsPath(forced_martial_type = undefined) {
+  //   const action_item_types = ["weapon", "action", "spell", "opportunity"];
+  //   if (!action_item_types.includes(this.type)) return [];
+  //   if (this.type == "opportunity")
+  //     return [utils.ruleset.character.OPPORTUNITY_SKILL_PATH];
 
-    let skills_path = [];
-    if (
-      this.system.associated_skill != undefined &&
-      this.system.associated_skill != ""
-    ) {
-      skills_path.push(this.system.associated_skill);
-    }
-    if (this.type == "weapon") {
-      if (this.system.is_focuser) {
-        skills_path.push(utils.ruleset.character.FOCUSER_SKILL_PATH);
-      }
-      skills_path.push(utils.ruleset.character.THROW_SKILL_PATH);
-    }
-    return skills_path;
-  }
+  //   let skills_path = [];
 
-  getAssociatedSkills() {
+  //   if (this.type == "weapon") {
+  //     skills_path.push(
+  //       ...utils.ruleset.item.getApplicableWeaponSkillFromKnowledge(
+  //         this,
+  //         forced_martial_type,
+  //       ),
+  //     );
+  //   } else if (
+  //     this.system.associated_skill != undefined &&
+  //     this.system.associated_skill != ""
+  //   ) {
+  //     skills_path.push(this.system.associated_skill);
+  //   }
+  //   return skills_path;
+  // }
+
+  getAssociatedSkills(forced_martial_type = undefined) {
     if (this.type == "spell")
       return [
         {
@@ -542,13 +547,30 @@ export default class AtoriaItem extends Item {
           type: "spell",
         },
       ];
-    let skills_path = this.getAssociatedSkillsPath();
-    let skills =
-      skills_path.length == 0
-        ? []
-        : skills_path.map((skill_path) =>
-            this.actor.getSkillFromPath(skill_path),
-          );
+
+    let skills = [];
+    if (this.type == "opportunity")
+      skills = [
+        this.actor.getSkillFromPath(
+          utils.ruleset.character.OPPORTUNITY_SKILL_PATH,
+        ),
+      ];
+
+    if (this.type == "weapon") {
+      skills.push(
+        ...utils.ruleset.item.getApplicableWeaponSkillFromKnowledge(
+          this.actor,
+          this,
+          forced_martial_type,
+        ),
+      );
+    } else if (
+      this.system.associated_skill != undefined &&
+      this.system.associated_skill != ""
+    ) {
+      skills.push(this.actor.getSkillFromPath(this.system.associated_skill));
+    }
+
     return skills;
   }
 
@@ -571,34 +593,94 @@ export default class AtoriaItem extends Item {
     });
   }
 
-  async rollAction() {
+  async fillSkillWithUsableData(skill_data) {
+    skill_data.usable_keywords = await utils.get_usable_keywords(
+      this.actor,
+      skill_data.path,
+    );
+    skill_data.usable_perks = utils.get_usable_perks_for_skill(
+      this.actor,
+      skill_data.path,
+    );
+    skill_data.usable_supplementaries = this.getSupplementaries().map(
+      (supp_data, idx) => {
+        supp_data.id = idx;
+        return supp_data;
+      },
+    );
+  }
+
+  _getEffectForSkillPath(skill_path_used) {
+    if (this.type == "weapon") {
+      let skills_path = skill_path_used.split("///");
+      let martial_path = skills_path[0];
+      let weapon_path = skills_path[1];
+      switch (martial_path) {
+        case utils.ruleset.character.MARTIAL_APART_PATH: {
+          if (weapon_path == utils.ruleset.character.ENCHANTED_SKILL_PATH) {
+            // Foca effect needed
+            return [
+              model_utils.rollFieldToEffect(this.system.focuser_damage_roll),
+            ];
+          }
+        }
+      }
+      // base effect needed
+      return [model_utils.rollFieldToEffect(this.system.damage_roll)];
+    }
+    return this.get_effect();
+  }
+
+  async rollAction(forced_martial_type = undefined) {
     const action_item_types = ["weapon", "action", "spell", "opportunity"];
     if (!action_item_types.includes(this.type)) return;
-    let skills = this.getAssociatedSkills();
+
+    let roll_label = this.name;
+
+    let skills = this.getAssociatedSkills(forced_martial_type);
 
     if (skills.length != 0) {
       for (const skill_data of skills) {
-        skill_data.usable_keywords = await utils.get_usable_keywords(
-          this.actor,
-          skill_data.path,
-        );
-        skill_data.usable_perks = utils.get_usable_perks_for_skill(
-          this.actor,
-          skill_data.path,
-        );
-        skill_data.usable_supplementaries = this.getSupplementaries().map(
-          (supp_data, idx) => {
-            supp_data.id = idx;
-            return supp_data;
-          },
-        );
+        await this.fillSkillWithUsableData(skill_data);
       }
+    }
+
+    if (this.type == "weapon") {
+      if (forced_martial_type == undefined) {
+        return [];
+      }
+      let forced_martial_type_path = undefined;
+      switch (forced_martial_type) {
+        case "contact":
+          forced_martial_type_path =
+            utils.ruleset.character.MARTIAL_CONTACT_PATH;
+          break;
+        case "apart":
+          forced_martial_type_path = utils.ruleset.character.MARTIAL_APART_PATH;
+          break;
+        case "instrument":
+          forced_martial_type_path =
+            utils.ruleset.character.MARTIAL_INSTRUMENT_PATH;
+          break;
+      }
+
+      let martial_skill = this.actor.getSkillFromPath(forced_martial_type_path);
+      await this.fillSkillWithUsableData(martial_skill);
+
+      skills = skills.map((skill) =>
+        utils.ruleset.item.getFinalSkillDataFromKnowledgeAndWeapon(
+          martial_skill,
+          skill,
+        ),
+      );
+
+      roll_label = game.i18n.localize(martial_skill.label) + " - " + roll_label;
     }
 
     // Get roll parameters
     let roll_parameters = await AtoriaRollDialog.ask({
       actor_uuid: this.actor.uuid,
-      roll_label: this.name,
+      roll_label: roll_label,
       skills: skills,
     });
 
@@ -611,11 +693,16 @@ export default class AtoriaItem extends Item {
       roll_parameters.roll_data.path,
     );
     utils.ruleset.item.applyRollDataRules(this, roll_data);
-    roll_data.title = this.name;
+    roll_data.title = roll_label;
 
-    let effects_data = utils.get_effects_data(roll_parameters);
-    let critical_effects_data =
-      utils.get_critical_effects_data(roll_parameters);
+    let effects_data = this._getEffectForSkillPath(
+      roll_parameters.roll_data.path,
+    );
+    effects_data.push(...utils.get_effects_data(roll_parameters));
+    let critical_effects_data = this.get_critical_effect();
+    critical_effects_data.push(
+      ...utils.get_critical_effects_data(roll_parameters),
+    );
 
     let used_perks_data = {
       keywords: {
@@ -646,6 +733,9 @@ export default class AtoriaItem extends Item {
       } else if (["technique", "incantatory-addition"].includes(item.type)) {
         used_perks_data["act_mod"].length += 1;
         used_perks_data["act_mod"].description += await item.getTooltipHTML();
+      } else if (["weapon", "armor", "kit"].includes(item.type)) {
+        used_perks_data["feature"].length += 1;
+        used_perks_data["feature"].description += await item.getTooltipHTML();
       } else {
         //TODO: handle enchantment
         console.error("Unknown type found in used_perks");

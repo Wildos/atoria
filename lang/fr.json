@@ -385,6 +385,9 @@
       "Skill_creation": {
         "Title": "Création de compétence dans {skill_cat}",
         "Name_selection": "Nom:"
+      },
+      "Combat_roll": {
+        "FistFight": "Pugilat"
       }
     },
     "Ruleset": {
@@ -626,40 +629,127 @@
             }
           }
         },
-        "Combative": {
-          "Label": "Combatives",
-          "Weapon": {
-            "Label": "Arme",
-            "Brawl": {
-              "Label": "Pugilat"
+        "Weapon": {
+          "Label": "Armes",
+          "Contact": {
+            "Label": "Contact",
+            "Fist_fight": {
+              "Label": "Main nue / Ceste / Ceste pointu"
             },
-            "Blade": {
-              "Label": "Lame"
+            "Buckler": {
+              "Label": "Bocle"
             },
-            "Polearm": {
-              "Label": "Hast"
-            },
-            "Haft-slashing": {
-              "Label": "Emmanchée tranchant"
-            },
-            "Haft-bludgeonning-piercing": {
-              "Label": "Emmanchée contondant et perforant"
+            "Rondache": {
+              "Label": "Rondache / Targe"
             },
             "Shield": {
-              "Label": "Bouclier"
+              "Label": "Écu / Pavois"
             },
-            "Shooting": {
-              "Label": "Tir"
+            "Dagger": {
+              "Label": "Dague"
             },
-            "Throw": {
-              "Label": "Jet"
+            "Seax": {
+              "Label": "Seax / Kledyv"
             },
-            "Focuser": {
-              "Label": "Focalisateur"
+            "Sabre": {
+              "Label": "Sabre / Gladius / Épée courte"
             },
-            "Instrument": {
-              "Label": "Instrument"
+            "Rapier": {
+              "Label": "Rapière"
+            },
+            "Long_sword": {
+              "Label": "Épée longue"
+            },
+            "Bastard_sword": {
+              "Label": "Épée bâtarde"
+            },
+            "Staff": {
+              "Label": "Bâton"
+            },
+            "Spear": {
+              "Label": "Lance"
+            },
+            "Trident": {
+              "Label": "Fuscina / Trident"
+            },
+            "Guisarme": {
+              "Label": "Guisarme"
+            },
+            "Bardiche": {
+              "Label": "Bardiche"
+            },
+            "Sickle": {
+              "Label": "Serpe / Faucille"
+            },
+            "Scythe": {
+              "Label": "Faux"
+            },
+            "Battle_hatchet": {
+              "Label": "Hachette de bataille"
+            },
+            "Bearded_axe": {
+              "Label": "Hache barbue"
+            },
+            "War_axe": {
+              "Label": "Hache de guerre"
+            },
+            "Gestrox": {
+              "Label": "Gestrøx"
+            },
+            "Club": {
+              "Label": "Gourdin / Massue / Sceptre"
+            },
+            "Hammer": {
+              "Label": "Masse d'arme / Marteau"
+            },
+            "Mallet": {
+              "Label": "Maillet"
+            },
+            "Flail": {
+              "Label": "Fléau / Goupillon"
+            },
+            "Morning_star": {
+              "Label": "Étoile du matin"
+            },
+            "Pickaxe": {
+              "Label": "Pioche"
             }
+          },
+          "Apart": {
+            "Label": "Distant",
+            "Throwing_knife": {
+              "Label": "Couteau de lancer"
+            },
+            "Throwing_hatchet": {
+              "Label": "Hachette de jet / Francisque"
+            },
+            "Javelin": {
+              "Label": "Javelot / Cateia"
+            },
+            "Short_bow": {
+              "Label": "Arc court"
+            },
+            "Composite_bow": {
+              "Label": "Arc composite"
+            },
+            "Long_bow": {
+              "Label": "Arc long / Arc wexais"
+            },
+            "Crossbow": {
+              "Label": "Arbalète / Arbalère lourde"
+            },
+            "Hand_crossbow": {
+              "Label": "Arbalète de poing"
+            },
+            "Wand": {
+              "Label": "Baguette"
+            },
+            "Enchanted": {
+              "Label": "Enchantée"
+            }
+          },
+          "Instrument": {
+            "Label": "Instrument"
           }
         }
       },
@@ -1532,6 +1622,9 @@
       },
       "Rest": {
         "Mana_regain": "Regain mana en repos"
+      },
+      "Attack": {
+        "Throw": "Jet"
       }
     }
   },

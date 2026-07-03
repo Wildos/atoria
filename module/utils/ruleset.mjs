@@ -53,14 +53,18 @@ RULESET["general"] = class GeneralRuleset {
 };
 
 RULESET["character"] = class ActorRuleset {
-  static OPPORTUNITY_SKILL_PATH =
-    "system.skills.combative.reflex.opportuneness";
-  static FOCUSER_SKILL_PATH = "system.skills.combative.weapon.focuser";
-  static THROW_SKILL_PATH = "system.skills.combative.weapon.throw";
+  static OPPORTUNITY_SKILL_PATH = "system.skills.physical.reflex.opportuneness";
+  static WAND_SKILL_PATH = "system.skills.weapon.apart.wand";
+  static ENCHANTED_SKILL_PATH = "system.skills.weapon.apart.enchanted";
+  static FISTFIGHT_SKILL_PATH = "system.skills.weapon.contact.fist_fight";
 
   static MARTIAL_CONTACT_PATH = "system.knowledges.magic.martial.contact";
   static MARTIAL_APART_PATH = "system.knowledges.magic.martial.apart";
   static MARTIAL_INSTRUMENT_PATH = "system.knowledges.magic.martial.instrument";
+
+  static MARTIAL_CONTACT_WEAPON_PATH = "system.skills.weapon.contact";
+  static MARTIAL_APART_WEAPON_PATH = "system.skills.weapon.apart";
+  static MARTIAL_INSTRUMENT_WEAPON_PATH = "system.skills.weapon.instrument";
 
   static getSkillsTree(type) {
     switch (type) {
@@ -83,6 +87,7 @@ RULESET["character"] = class ActorRuleset {
             "sturdiness",
           ],
           social: ["analyse", "charisma", "eloquence", "spirit", "trickery"],
+          weapon: ["contact", "apart", "instrument"],
         };
       case "player-character":
         return {
@@ -109,10 +114,54 @@ RULESET["character"] = class ActorRuleset {
             spirit: ["will", "guarding"],
             trickery: ["acting", "lying", "provocation"],
           },
+          weapon: {
+            contact: [
+              "fist_fight",
+              "buckler",
+              "rondache",
+              "shield",
+              "dagger",
+              "seax",
+              "sabre",
+              "rapier",
+              "long_sword",
+              "bastard_sword",
+              "staff",
+              "spear",
+              "trident",
+              "guisarme",
+              "bardiche",
+              "sickle",
+              "scythe",
+              "battle_hatchet",
+              "bearded_axe",
+              "war_axe",
+              "gestrox",
+              "club",
+              "hammer",
+              "mallet",
+              "flail",
+              "morning_star",
+              "pickaxe",
+            ],
+            apart: [
+              "throwing_knife",
+              "throwing_hatchet",
+              "javelin",
+              "short_bow",
+              "composite_bow",
+              "long_bow",
+              "crossbow",
+              "hand_crossbow",
+              "wand",
+              "enchanted",
+            ],
+            instrument: [],
+          },
         };
 
       case "hero":
-        return ["perceptions", "physical", "social"];
+        return ["perceptions", "physical", "social", "weapon"];
 
       default:
         return {};
@@ -465,11 +514,19 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getWeaponSkills(_actor) {
-    return [
-      this.MARTIAL_CONTACT_PATH,
-      this.MARTIAL_APART_PATH,
-      this.MARTIAL_INSTRUMENT_PATH,
-    ];
+    let weapon_skill_tree =
+      RULESET.character.getSkillsTree("player-character").weapon;
+    let weapon_skills = [];
+
+    for (const martial_type in weapon_skill_tree) {
+      for (const weapon_type of weapon_skill_tree[martial_type]) {
+        weapon_skills.push(
+          "system.skills.weapon." + martial_type + "." + weapon_type,
+        );
+      }
+    }
+
+    return weapon_skills;
   }
 
   static getAttackSaves() {
@@ -860,9 +917,6 @@ RULESET["item"] = class ItemRuleset {
   }
 
   static getSavesAsked(item) {
-    if (item.type === "weapon") {
-      return RULESET.character.getAttackSaves();
-    }
     return item.system.savesAsked ?? [];
   }
 
@@ -873,6 +927,133 @@ RULESET["item"] = class ItemRuleset {
     ) {
       roll_data.dos_mod -= 2;
     }
+  }
+
+  static isCompatibleItemFromMartialRoll(item, martial_type) {
+    if (item.type != "weapon") return false;
+    console.debug("isCompatibleItemFromMartialRoll");
+    console.debug(martial_type);
+    switch (martial_type) {
+      case "contact":
+        return item.system.associated_skill.startsWith(
+          RULESET.character.MARTIAL_CONTACT_WEAPON_PATH,
+        );
+
+      case "apart":
+        return true;
+
+      case "instrument":
+        return item.system.associated_skill.startsWith(
+          RULESET.character.MARTIAL_INSTRUMENT_WEAPON_PATH,
+        );
+
+      default:
+        return false;
+    }
+  }
+
+  static getApplicableWeaponSkillFromKnowledge(
+    actor,
+    weapon_data,
+    martial_knowledge_type,
+  ) {
+    let skills = [];
+
+    switch (martial_knowledge_type) {
+      case "contact":
+        if (
+          weapon_data.system.associated_skill.startsWith(
+            RULESET.character.MARTIAL_CONTACT_WEAPON_PATH,
+          )
+        ) {
+          skills.push(
+            actor.getSkillFromPath(weapon_data.system.associated_skill),
+          );
+        }
+        break;
+      case "apart":
+        if (
+          weapon_data.system.is_focuser &&
+          weapon_data.system.associated_skill !=
+            RULESET.character.WAND_SKILL_PATH
+        ) {
+          skills.push(
+            actor.getSkillFromPath(RULESET.character.ENCHANTED_SKILL_PATH),
+          );
+        }
+        {
+          let asso_skill = foundry.utils.deepClone(
+            actor.getSkillFromPath(weapon_data.system.associated_skill),
+          );
+          if (
+            !weapon_data.system.associated_skill.startsWith(
+              RULESET.character.MARTIAL_APART_WEAPON_PATH,
+            )
+          ) {
+            asso_skill.label = game.i18n.localize(
+              "ATORIA.Ruleset.Attack.Throw",
+            );
+          }
+          skills.push(asso_skill);
+        }
+        break;
+      case "instrument":
+        if (
+          weapon_data.system.associated_skill.startsWith(
+            RULESET.character.MARTIAL_INSTRUMENT_WEAPON_PATH,
+          )
+        ) {
+          skills.push(
+            actor.getSkillFromPath(weapon_data.system.associated_skill),
+          );
+        }
+        break;
+    }
+    return skills;
+  }
+
+  static getFinalSkillDataFromKnowledgeAndWeapon(
+    knowledge_skill,
+    weapon_skill,
+  ) {
+    let skill_data = {
+      success: knowledge_skill.success + weapon_skill.success,
+      mastery: knowledge_skill.mastery + weapon_skill.mastery,
+      critical_success_modifier:
+        knowledge_skill.critical_success_modifier +
+        weapon_skill.critical_success_modifier,
+      critical_fumble_modifier:
+        knowledge_skill.critical_fumble_modifier +
+        weapon_skill.critical_fumble_modifier,
+    };
+
+    skill_data.usable_keywords = [];
+    if (knowledge_skill.usable_keywords.length > 0)
+      skill_data.usable_keywords.push(...knowledge_skill.usable_keywords);
+    if (weapon_skill.usable_keywords.length > 0)
+      skill_data.usable_keywords.push(...weapon_skill.usable_keywords);
+
+    skill_data.usable_perks = [];
+    if (knowledge_skill.usable_perks.length > 0)
+      skill_data.usable_perks.push(...knowledge_skill.usable_perks);
+    if (weapon_skill.usable_perks.length > 0)
+      skill_data.usable_perks.push(...weapon_skill.usable_perks);
+
+    return {
+      success: skill_data.success,
+      critical_success_amount:
+        RULESET.character.getSkillCriticalSuccessAmount(skill_data),
+      critical_fumble_amount:
+        RULESET.character.getSkillCriticalFumbleAmount(skill_data),
+      label: weapon_skill.label,
+      path: knowledge_skill.path + "///" + weapon_skill.path,
+      proper_label: weapon_skill.proper_label,
+
+      usable_keywords: skill_data.usable_keywords,
+      usable_perks: skill_data.usable_perks,
+
+      type: "skill",
+    };
   }
 };
 
@@ -913,6 +1094,7 @@ RULESET["skill_alterations"] = {
 
 RULESET["aiming"] = {
   type: {
+    //TODO: adapt to new ruleset
     none: "ATORIA.Ruleset.Aiming.None.Label",
     arm: "ATORIA.Ruleset.Aiming.Arm.Label",
     hand: "ATORIA.Ruleset.Aiming.Hand.Label",
