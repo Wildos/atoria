@@ -421,6 +421,37 @@ export default class AtoriaActor extends Actor {
     this._rollSkill(skill, utils.ruleset.character.FISTFIGHT_SKILL_PATH);
   }
 
+  async rollThrow() {
+    const skill_path = utils.ruleset.character.MARTIAL_APART_PATH;
+    const martial_skill = this.getSkillFromPath(skill_path);
+    if (martial_skill === undefined) {
+      // console.warn(`Unknown skill: '${skill_path}'`);
+      const skill_name = this.getSkillTitle(skill_path);
+      const speaker = ChatMessage.getSpeaker({ actor: this });
+      ChatMessage.create({
+        speaker: speaker,
+        whisper: [game.user.id],
+        blind: false,
+        content: `${this.name} doesn't know the skill '${skill_name}'`,
+      });
+      return;
+    }
+
+    // -----------------
+    martial_skill.usable_keywords = await utils.get_usable_keywords(
+      this,
+      skill_path,
+    );
+    martial_skill.usable_perks = utils.get_usable_perks_for_skill(
+      this,
+      skill_path,
+    );
+
+    let skill = foundry.utils.deepClone(martial_skill);
+    skill.label = game.i18n.localize("ATORIA.Ruleset.Attack.Throw");
+    this._rollSkill(skill, skill_path);
+  }
+
   async rollSkill(skill_path) {
     const skill = this.getSkillFromPath(skill_path);
     if (skill === undefined) {

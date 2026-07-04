@@ -21,6 +21,7 @@ export default class AtoriaRollCombatDialog extends HandlebarsApplicationMixin(
     actions: {
       rollItem: this._rollItem,
       rollFistFight: this._rollFistFight,
+      rollThrow: this._rollThrow,
     },
   };
 
@@ -49,6 +50,10 @@ export default class AtoriaRollCombatDialog extends HandlebarsApplicationMixin(
   static async _rollFistFight(event, target) {
     this.close({ submitted: true });
     fromUuidSync(this.data.actor_uuid).rollFistFight();
+  }
+  static async _rollThrow(event, target) {
+    this.close({ submitted: true });
+    fromUuidSync(this.data.actor_uuid).rollThrow();
   }
 
   static async _rollItem(event, target) {

@@ -385,9 +385,6 @@
       "Skill_creation": {
         "Title": "Création de compétence dans {skill_cat}",
         "Name_selection": "Nom:"
-      },
-      "Combat_roll": {
-        "FistFight": "Pugilat"
       }
     },
     "Ruleset": {
@@ -1624,7 +1621,8 @@
         "Mana_regain": "Regain mana en repos"
       },
       "Attack": {
-        "Throw": "Jet"
+        "Throw": "Jet",
+        "FistFight": "Pugilat"
       }
     }
   },
