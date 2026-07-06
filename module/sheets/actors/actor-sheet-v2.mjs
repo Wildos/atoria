@@ -45,7 +45,13 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       toggleSkillVisibility: this._toggleSkillVisibility,
       toggleAttribute: this._toggleAttribute,
       toggleEffect: this._toggleEffect,
-      combatRoll: this._combarRoll,
+      combatRoll: this._combatRoll,
+      applyTimePhase: {
+        handler: this._applyTimePhase,
+        buttons: [0],
+      },
+      editHealingInactive: this._editHealingInactive,
+      editIncurable: this._editIncurable,
     },
   };
 
@@ -273,9 +279,34 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     });
   }
 
-  static async _combarRoll(_event, target) {
+  static async _combatRoll(_event, target) {
     const { type } = target.dataset;
     this.actor.rollCombatSkill(type);
+  }
+
+  static async _applyTimePhase(_event, target) {
+    const { timePhase } = target.dataset;
+    if (!timePhase) return;
+    await this.actor.applyTimePhase(timePhase);
+  }
+
+  static async _editHealingInactive(_event, target) {
+    const { amount } = target.dataset;
+    let new_amount = amount;
+    if (new_amount == this.actor.system.healing_inactive.amount)
+      new_amount -= 1;
+    await this.actor.update({
+      "system.healing_inactive.amount": new_amount,
+    });
+  }
+  static async _editIncurable(_event, target) {
+    const { amount } = target.dataset;
+    let new_amount = amount;
+    if (new_amount == this.actor.system.healing_inactive.incurable)
+      new_amount -= 1;
+    await this.actor.update({
+      "system.healing_inactive.incurable": new_amount,
+    });
   }
 
   _onRender(context, options) {

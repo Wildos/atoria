@@ -456,14 +456,11 @@ export default class AtoriaItem extends Item {
         return [];
 
       changelog_messages.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: this.name,
-            previous: this.system.limitation.usage_left,
-            new: this.system.limitation.usage_max,
-          },
-        ),
+        game.i18n.format("ATORIA.Chat_message.Changelog.Regain", {
+          type: this.name,
+          previous: this.system.limitation.usage_left,
+          new: this.system.limitation.usage_max,
+        }),
       );
 
       await this.update({
@@ -490,14 +487,11 @@ export default class AtoriaItem extends Item {
             : supplementary.name;
 
         changelog_messages.push(
-          game.i18n.format(
-            game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-            {
-              type: `${this.name} - ${supp_name}`,
-              previous: supplementary.limitation.usage_left,
-              new: supplementary.limitation.usage_max,
-            },
-          ),
+          game.i18n.format("ATORIA.Chat_message.Changelog.Regain", {
+            type: `${this.name} - ${supp_name}`,
+            previous: supplementary.limitation.usage_left,
+            new: supplementary.limitation.usage_max,
+          }),
         );
 
         new_supplementaries_list[idx].limitation.usage_left =
@@ -509,30 +503,6 @@ export default class AtoriaItem extends Item {
     }
     return changelog_messages;
   }
-
-  // getAssociatedSkillsPath(forced_martial_type = undefined) {
-  //   const action_item_types = ["weapon", "action", "spell", "opportunity"];
-  //   if (!action_item_types.includes(this.type)) return [];
-  //   if (this.type == "opportunity")
-  //     return [utils.ruleset.character.OPPORTUNITY_SKILL_PATH];
-
-  //   let skills_path = [];
-
-  //   if (this.type == "weapon") {
-  //     skills_path.push(
-  //       ...utils.ruleset.item.getApplicableWeaponSkillFromKnowledge(
-  //         this,
-  //         forced_martial_type,
-  //       ),
-  //     );
-  //   } else if (
-  //     this.system.associated_skill != undefined &&
-  //     this.system.associated_skill != ""
-  //   ) {
-  //     skills_path.push(this.system.associated_skill);
-  //   }
-  //   return skills_path;
-  // }
 
   getAssociatedSkills(forced_martial_type = undefined) {
     if (this.type == "spell")
@@ -596,6 +566,7 @@ export default class AtoriaItem extends Item {
   async fillSkillWithUsableData(skill_data) {
     skill_data.usable_keywords = await utils.get_usable_keywords(
       this.actor,
+      this,
       skill_data.path,
     );
     skill_data.usable_perks = utils.get_usable_perks_for_skill(
@@ -707,9 +678,14 @@ export default class AtoriaItem extends Item {
     let used_perks_data = {
       keywords: {
         length: roll_parameters.used_keywords.length,
-        description: roll_parameters.used_keywords
-          .map((keyword) => keyword.descriptive_tooltip)
-          .join(""),
+        description: (
+          await Promise.all(
+            roll_parameters.used_keywords.map(
+              async (keyword) =>
+                await this.actor.getKeywordTooltipHTML(keyword),
+            ),
+          )
+        ).join(""),
       },
       supplementaries: {
         length: roll_parameters.used_supplementaries.length,
@@ -737,7 +713,6 @@ export default class AtoriaItem extends Item {
         used_perks_data["feature"].length += 1;
         used_perks_data["feature"].description += await item.getTooltipHTML();
       } else {
-        //TODO: handle enchantment
         console.error("Unknown type found in used_perks");
       }
     }

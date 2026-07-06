@@ -7,89 +7,83 @@
                     {{ formInput systemFields.keywords.fields.two_handed
                     value=system.keywords.two_handed disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
                     {{ formInput systemFields.keywords.fields.reach
                     value=system.keywords.reach disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
                     {{ formInput systemFields.keywords.fields.brute
                     value=system.keywords.brute disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.deployable
                     value=system.keywords.deployable disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
-                    }}
-
-                    {{ formInput systemFields.keywords.fields.equip
-                    value=system.keywords.equip disabled=(not @root.editable)
-                    input=@root.atoria_inputs.visualNumberInput
-                    }}
-
-                    {{ formInput systemFields.keywords.fields.fluxian
-                    value=system.keywords.fluxian disabled=(not @root.editable)
-                    input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.smash
                     value=system.keywords.smash disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.guard
                     value=system.keywords.guard disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.throwable
                     value=system.keywords.throwable disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.light
                     value=system.keywords.light disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.heavy
                     value=system.keywords.heavy disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.penetrating
                     value=system.keywords.penetrating disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.versatile
                     value=system.keywords.versatile disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
-                    }}
-
-                    {{ formInput systemFields.keywords.fields.protect
-                    value=system.keywords.protect disabled=(not @root.editable)
-                    input=@root.atoria_inputs.visualNumberInput
-                    }}
-
-                    {{ formInput systemFields.keywords.fields.protection
-                    value=system.keywords.protection disabled=(not @root.editable)
-                    input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.quick
                     value=system.keywords.quick disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.recharge
                     value=system.keywords.recharge disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.reserve
                     value=system.keywords.reserve disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     additional_fields=(
                         formInput systemFields.keywords.fields.reserve_max
                         value=system.keywords.reserve_max disabled=(not @root.editable)
@@ -99,11 +93,13 @@
                     {{ formInput systemFields.keywords.fields.somatic
                     value=system.keywords.somatic disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.sly
                     value=system.keywords.sly disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     additional_fields=(
                         formInput systemFields.keywords.fields.sly_amount
                         value=system.keywords.sly_amount disabled=(not @root.editable)
@@ -112,49 +108,65 @@
 
                 {{/if}}
                 {{# if (or (eq item.type "armor") (eq item.type "kit"))}}
-                    {{ formInput systemFields.keywords.fields.gruff
-                    value=system.keywords.gruff disabled=(not @root.editable)
-                    input=@root.atoria_inputs.visualNumberInput
-                    }}
-
                     {{ formInput systemFields.keywords.fields.noisy
                     value=system.keywords.noisy disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
-                    }}
-
-                    {{ formInput systemFields.keywords.fields.tough
-                    value=system.keywords.tough disabled=(not @root.editable)
-                    input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.obstruct
                     value=system.keywords.obstruct disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
+                    }}
+
+                    {{ formInput systemFields.keywords.fields.restrictive
+                    value=system.keywords.restrictive disabled=(not @root.editable)
+                    input=@root.atoria_inputs.visualNumberInput
+                    max=4
+                    }}
+
+
+                    {{ formInput systemFields.keywords.fields.gruff
+                    value=system.keywords.gruff disabled=(not @root.editable)
+                    input=@root.atoria_inputs.visualNumberInput
+                    max=4
+                    }}
+
+                    {{ formInput systemFields.keywords.fields.tough
+                    value=system.keywords.tough disabled=(not @root.editable)
+                    input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.grip
                     value=system.keywords.grip disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.resistant
                     value=system.keywords.resistant disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.sturdy
                     value=system.keywords.sturdy disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.somatic
                     value=system.keywords.somatic disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                     {{ formInput systemFields.keywords.fields.stable
                     value=system.keywords.stable disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
+                    max=4
                     }}
 
                 {{/if}}

@@ -105,36 +105,6 @@ export default class AtoriaPC extends atoria_models.AtoriaActorBase {
       { label: "ATORIA.Ruleset.Defense" },
     );
 
-    schema.healing_inactive = new fields.SchemaField(
-      {
-        amount: new fields.NumberField({
-          ...requiredInteger,
-          initial: 0,
-          min: 0,
-          label: "ATORIA.Ruleset.Healing_inactive.Amount",
-        }),
-        medical: new fields.BooleanField({
-          required: true,
-          nullable: false,
-          initial: false,
-          label: "ATORIA.Ruleset.Healing_inactive.Medical",
-        }),
-        medical_2: new fields.BooleanField({
-          required: true,
-          nullable: false,
-          initial: false,
-          label: "ATORIA.Ruleset.Healing_inactive.Medical",
-        }),
-        resurrection: new fields.BooleanField({
-          required: true,
-          nullable: false,
-          initial: false,
-          label: "ATORIA.Ruleset.Healing_inactive.Resurrection",
-        }),
-      },
-      { label: "ATORIA.Model.Healing_inactive" },
-    );
-
     schema.luck = new fields.NumberField({
       ...requiredInteger,
       initial: utils.default_values.character.luck,

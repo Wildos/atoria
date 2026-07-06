@@ -242,7 +242,8 @@
         "Pages": {
           "Character": "Personnage",
           "Inventory": "Inventaire",
-          "Action": "Action"
+          "Action": "Action",
+          "Keywords": "Mot-clefs"
         },
         "Skill": {
           "Mastery": "M.",
@@ -1216,6 +1217,7 @@
         "Label": "Mots-clefs",
         "Noisy": "Bruyant",
         "Obstruct": "Gênant",
+        "Restrictive": "Limitant",
         "Preserve": {
           "Label": "Préserver",
           "Recap": "Préserver {amount} {type} {increment}",

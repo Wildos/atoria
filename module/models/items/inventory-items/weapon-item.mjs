@@ -1,6 +1,8 @@
 import * as atoria_models from "../../module.mjs";
 
-export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem {
+export default class AtoriaWeaponItem
+  extends atoria_models.AtoriaInventoryItem
+{
   static defineSchema() {
     const fields = foundry.data.fields;
     const schema = super.defineSchema();
@@ -100,6 +102,19 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
       required: true,
       initial: false,
       label: "ATORIA.Sheet.Inventory.Secondary_weapon",
+    });
+
+    schema.secondary_weapon_keyword = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      initial: "",
+      choices: {
+        guard: "ATORIA.Ruleset.Keywords.Guard",
+        brute: "ATORIA.Ruleset.Keywords.Brute",
+        smash: "ATORIA.Ruleset.Keywords.Smash",
+      },
+      label: "ATORIA.Model.Weapon.SecondaryWeaponKeyword",
     });
 
     schema.range = new fields.StringField({

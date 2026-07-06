@@ -18,15 +18,17 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     classes: ["player-character"],
     window: {},
     actions: {
-      applyTimePhase: {
-        handler: this._applyTimePhase,
-        buttons: [0],
-      },
-      editHealingInactive: this._editHealingInactive,
-      toggle_keyword_direct: this._toggle_keyword_direct,
       createItem: this._createItem,
+      createKeywordAlteration: this._createKeywordAlteration,
+      deleteKeywordAlteration: this._deleteKeywordAlteration,
+
+      debugAction: this._debugAction,
     },
   };
+
+  static async _debugAction(event, target) {
+    console.debug("_debugAction");
+  }
 
   static PARTS = {
     tabs: {
@@ -47,6 +49,9 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     inventory_page: {
       template:
         "systems/atoria/templates/v2/actors/parts/player-inventory-page.hbs",
+    },
+    keywords_page: {
+      template: "systems/atoria/templates/v2/actors/parts/keywords_setup.hbs",
     },
     action_page: {
       template:
@@ -75,37 +80,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     return controls;
   }
 
-  static async _applyTimePhase(_event, target) {
-    const { timePhase } = target.dataset;
-    if (!timePhase) return;
-    await this.actor.applyTimePhase(timePhase);
-  }
-
-  static async _editHealingInactive(_event, target) {
-    const { amount } = target.dataset;
-    let new_amount = amount;
-    if (new_amount == this.actor.system.healing_inactive.amount)
-      new_amount -= 1;
-    await this.actor.update({
-      "system.healing_inactive.amount": new_amount,
-    });
-  }
-
-  static async _toggle_keyword_direct(_event, target) {
-    const { type } = target.dataset;
-    let new_value = this.actor.system.keywords_used.direct;
-    if (new_value.includes(type)) {
-      new_value = new_value.filter(function (item) {
-        return item !== type;
-      });
-    } else {
-      new_value.push(type);
-    }
-    await this.actor.update({
-      "system.keywords_used.direct": new_value,
-    });
-  }
-
   static async _createItem(_event, target) {
     const item_data = {};
     for (const [key, value] of Object.entries(target.dataset)) {
@@ -125,14 +99,26 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     if (target.dataset.open && item !== undefined) item.sheet.render(true);
   }
 
+  static async _createKeywordAlteration(_event, target) {
+    const { keywordId, level } = target.dataset;
+    const number_level = isNaN(Number(level)) ? 0 : Number(level);
+    await this.actor?.createKeywordAlteration(keywordId, number_level);
+  }
+
+  static async _deleteKeywordAlteration(_event, target) {
+    const { keywordId, level, index } = target.dataset;
+    const number_level = isNaN(Number(level)) ? 0 : Number(level);
+    await this.actor?.deleteKeywordAlteration(keywordId, number_level, index);
+  }
+
   async _prepareContext(options) {
+    if (!this.isEditingMode && this.tabGroups["primary"] == "keywords") {
+      this.tabGroups["primary"] = this.DEFAULT_PAGE;
+    }
     const context = super._prepareContext(options);
-    const skillPath = "system.skills.combative";
     const hidden_skills =
       this.document.getFlag("atoria", "hidden_skills") ?? [];
-    if (!hidden_skills.includes(skillPath)) {
-      hidden_skills.push(skillPath);
-    }
+
     this.document.setFlag("atoria", "hidden_skills", hidden_skills);
     return context;
   }
@@ -283,7 +269,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     };
 
     context.associated_skills = this.actor?.getAssociatedSkillList() ?? {};
-    // utils.default_values.associated_skills;
 
     switch (partId) {
       case "header":
@@ -296,6 +281,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           utils.ruleset.character.getMaxHealingInactive(this.actor);
         break;
       case "tabs":
+        context.active_page = this.tabGroups["primary"];
         context.tabs = [
           {
             cssClass: "",
@@ -318,7 +304,16 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             icon: "",
             label: "ATORIA.Sheet.Player.Pages.Action",
           },
+          {
+            cssClass: "",
+            group: "primary",
+            id: "keywords",
+            icon: "",
+            hidden: !this.isEditingMode,
+            label: "ATORIA.Sheet.Player.Pages.Keywords",
+          },
         ];
+
         break;
       case "inventory_page":
         context.is_active_page = this.tabGroups["primary"] === "inventory";
@@ -691,71 +686,42 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         context.action_items = action_items;
 
         {
-          const tracked_keywords = [
-            "reach",
-            "brute",
-            "guard",
-            "penetrating",
-            "protect",
-            "protection",
-            "gruff",
-            "tough",
-            "grip",
-            "resistant",
-            "sturdy",
-            "stable",
-            "direct",
-            "noisy",
-            "obstruct",
-          ];
-          context.tracked_keywords_data = {};
-          context.tracked_keywords = [];
-          for (let keyword in this.actor.active_keywords_data) {
-            if (tracked_keywords.includes(keyword)) {
-              if (keyword === "direct") {
-                context.tracked_keywords.push("direct");
-                context.tracked_keywords_data["direct"] = {};
-                for (let direct_type in this.actor.active_keywords_data[
-                  "direct"
-                ]) {
-                  context.tracked_keywords_data["direct"][direct_type] = {
-                    checked:
-                      this.actor.system.keywords_used.direct.includes(
-                        direct_type,
-                      ),
-                    time_phase: utils.ruleset.keywords.get_time_phase(
-                      "direct",
-                      this.actor.active_keywords_data["direct"][direct_type],
-                    ),
-                    description: utils.ruleset.keywords.get_description(
-                      "direct",
-                      this.actor.active_keywords_data["direct"][direct_type],
-                    ),
-                  };
+          let preserve_keyword_items = [];
+          for (const i of context.items) {
+            switch (i.type) {
+              case "weapon":
+              case "armor":
+                if (!i.system.is_worn) continue;
+                if (i.system.keywords.preserve.active) {
+                  preserve_keyword_items.push(
+                    utils.ruleset.item.attackFromWeapon(i),
+                  );
                 }
-              } else {
-                context.tracked_keywords.push(keyword);
-                context.tracked_keywords_data[keyword] = {
-                  label: utils.ruleset.keywords.get_localized_name(
-                    keyword,
-                    this.actor.active_keywords_data[keyword],
-                  ),
-                  time_phase: utils.ruleset.keywords.get_time_phase(
-                    keyword,
-                    this.actor.active_keywords_data[keyword],
-                  ),
-                  description: utils.ruleset.keywords.get_description(
-                    keyword,
-                    this.actor.active_keywords_data[keyword],
-                  ),
-                };
-              }
+                break;
+              case "kit":
+                if (i.system.keywords.preserve.active) {
+                  preserve_keyword_items.push(
+                    utils.ruleset.item.attackFromWeapon(i),
+                  );
+                }
+                break;
             }
           }
-          context.tracked_keywords.sort(function (key_a, key_b) {
-            return utils.ruleset.keywords
-              .get_localized_name(key_a)
-              .localeCompare(utils.ruleset.keywords.get_localized_name(key_b));
+          context.preserve_keyword_items = preserve_keyword_items;
+          context.tracked_keywords = utils.ruleset.keywords.sharable_keywords;
+
+          context.active_keywords_data = Object.entries(
+            utils.ruleset.character.getActiveSharableKeywordsLevel(this.actor),
+          ).map(([keyword_id, level]) => {
+            const eff = utils.ruleset.character.getKeywordEffect(
+              this.actor,
+              keyword_id,
+              level,
+            );
+            eff["limit_remaining"] =
+              this.actor.system.keywords[keyword_id].limit_remaining;
+            eff["level"] = level - 1;
+            return eff;
           });
         }
 
@@ -821,6 +787,29 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         }
         break;
       }
+      case "keywords_page":
+        context.is_active_page = this.tabGroups["primary"] === "keywords";
+
+        context.keywords_setup = this.actor.system.keywords;
+        for (const [keyword_id, keyword] of Object.entries(
+          context.keywords_setup,
+        )) {
+          keyword.effect_levels = [keyword.effect_level_1];
+          if (keyword.effect_level_2) {
+            keyword.effect_levels.push(keyword.effect_level_2);
+          }
+          if (keyword.effect_level_3) {
+            keyword.effect_levels.push(keyword.effect_level_3);
+          }
+          if (keyword.effect_level_4) {
+            keyword.effect_levels.push(keyword.effect_level_4);
+          }
+          if (keyword.effect_level_5) {
+            keyword.effect_levels.push(keyword.effect_level_5);
+          }
+        }
+
+        break;
       default:
         break;
     }

@@ -96,6 +96,10 @@ function _getProperty(object, property_path) {
   );
 }
 
+function _getField(objet, field_path) {
+  return objet.getField(field_path.string ?? field_path);
+}
+
 function _includes(array, element) {
   if (!array) return false;
   element = typeof element === "string" ? element : element.string;
@@ -184,12 +188,21 @@ function _shorten(localize_string) {
   return result_string;
 }
 
+function _multiplyString(string, amount) {
+  let repeat_amount = Number(amount);
+  if (isNaN(repeat_amount)) {
+    repeat_amount = 1;
+  }
+  return (string.string ?? string).repeat(repeat_amount);
+}
+
 export const registerHandlebarsHelpers = async function () {
   Handlebars.registerHelper({
     cleanLines: _cleanLines,
     isEmpty: _isEmpty,
     percentage: _percentage,
     getProperty: _getProperty,
+    getField: _getField,
     includes: _includes,
     enhancedNumberFormat: _enhancedNumberFormat,
     oneOf: _oneOf,
@@ -204,5 +217,6 @@ export const registerHandlebarsHelpers = async function () {
     localizeDamage: _localizeDamage,
     brNewLines: _brNewLines,
     shorten: _shorten,
+    multiplyString: _multiplyString,
   });
 };

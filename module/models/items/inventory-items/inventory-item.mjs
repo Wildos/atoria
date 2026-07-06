@@ -34,20 +34,6 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
         max: utils.ruleset.keywords.max_amount.deployable,
         label: "ATORIA.Ruleset.Keywords.Deployable",
       }),
-      equip: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-        max: utils.ruleset.keywords.max_amount.equip,
-        label: "ATORIA.Ruleset.Keywords.Equip",
-      }),
-      fluxian: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-        max: utils.ruleset.keywords.max_amount.fluxian,
-        label: "ATORIA.Ruleset.Keywords.Fluxian",
-      }),
       smash: new fields.NumberField({
         required: true,
         initial: 0,
@@ -97,20 +83,6 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
         max: utils.ruleset.keywords.max_amount.versatile,
         label: "ATORIA.Ruleset.Keywords.Versatile",
       }),
-      protect: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-        max: utils.ruleset.keywords.max_amount.protect,
-        label: "ATORIA.Ruleset.Keywords.Protect",
-      }),
-      protection: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-        max: utils.ruleset.keywords.max_amount.protection,
-        label: "ATORIA.Ruleset.Keywords.Protection",
-      }),
       quick: new fields.NumberField({
         required: true,
         initial: 0,
@@ -159,13 +131,6 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
       }),
 
       // Armor & Equipment related
-      gruff: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-        max: utils.ruleset.keywords.max_amount.gruff,
-        label: "ATORIA.Ruleset.Keywords.Gruff",
-      }),
       noisy: new fields.NumberField({
         required: true,
         initial: 0,
@@ -173,19 +138,34 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
         max: utils.ruleset.keywords.max_amount.noisy,
         label: "ATORIA.Ruleset.Keywords.Noisy",
       }),
-      tough: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-        max: utils.ruleset.keywords.max_amount.tough,
-        label: "ATORIA.Ruleset.Keywords.Tough",
-      }),
       obstruct: new fields.NumberField({
         required: true,
         initial: 0,
         min: 0,
         max: utils.ruleset.keywords.max_amount.obstruct,
         label: "ATORIA.Ruleset.Keywords.Obstruct",
+      }),
+      restrictive: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+        max: utils.ruleset.keywords.max_amount.restrictive,
+        label: "ATORIA.Ruleset.Keywords.Restrictive",
+      }),
+
+      gruff: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+        max: utils.ruleset.keywords.max_amount.gruff,
+        label: "ATORIA.Ruleset.Keywords.Gruff",
+      }),
+      tough: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+        max: utils.ruleset.keywords.max_amount.tough,
+        label: "ATORIA.Ruleset.Keywords.Tough",
       }),
       grip: new fields.NumberField({
         required: true,

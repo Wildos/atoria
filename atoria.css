@@ -264,7 +264,7 @@
   --checkbox-content: "\f00c";
   color: var(--atoria-color-checkbox-checked);
 }
-.system-atoria .sheet {
+.system-atoria .sheet:not(.minimized):not(.minimizing):not(.maximizing) {
   min-width: min-content;
 }
 .system-atoria .context-menu {
@@ -681,6 +681,39 @@
 .system-atoria .atoria-character-header > * {
   flex: 1;
 }
+.system-atoria .atoria-character-header .atoria-time-phase-buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.system-atoria .atoria-character-header .atoria-time-phase-buttons > input[name="name"] {
+  --atoria-input-width: 5fr;
+}
+.system-atoria .atoria-character-header .atoria-time-phase-buttons > h6 {
+  justify-content: center;
+  white-space: wrap;
+  height: calc(2*var(--atoria-base-line-block-height));
+  display: flex;
+  align-items: center;
+}
+.system-atoria .atoria-character-header .atoria-time-phase-buttons > label {
+  max-height: var(--atoria-skill-height);
+  align-items: stretch;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  border: var(--atoria-border-style);
+}
+.system-atoria .atoria-character-header .atoria-time-phase-buttons > label > img {
+  flex: 0;
+  max-width: var(--atoria-base-line-block-height);
+  max-height: var(--atoria-base-line-block-height);
+  border: none;
+  filter: var(--atoria-img-filter);
+}
+.system-atoria .atoria-character-header .atoria-time-phase-buttons > label > * {
+  flex: 1;
+}
 .system-atoria .atoria-character-header > .attribute-area > div > div > input,
 .system-atoria .atoria-character-header > .attribute-area > div > input,
 .system-atoria .atoria-character-header > .attribute-area > div > input,
@@ -703,6 +736,47 @@
 }
 .system-atoria .atoria-character-header > .attribute-area > .name-area > input[name="name"] {
   --atoria-input-width: 1fr;
+}
+.system-atoria .atoria-character-header > .attribute-area > .atoria-healing-inactive {
+  --checkbox-size: var(--atoria-base-line-block-height);
+  display: flex;
+  flex-wrap: no-wrap;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  justify-content: space-around;
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .atoria-character-header > .attribute-area > .atoria-healing-inactive > label {
+  min-height: calc(var(--atoria-skill-height) - 2px);
+  max-height: calc(var(--atoria-skill-height) - 2px);
+  width: fit-content;
+  max-width: fit-content;
+}
+.system-atoria .atoria-character-header > .attribute-area > .atoria-healing-inactive > .flexrow {
+  width: fit-content;
+  max-width: fit-content;
+}
+.system-atoria .atoria-character-header > .attribute-area > .atoria-healing-inactive img[data-action=editHealingInactive],
+.system-atoria .atoria-character-header > .attribute-area > .atoria-healing-inactive img[data-action=toggleAttribute],
+.system-atoria .atoria-character-header > .attribute-area > .atoria-healing-inactive input[type=checkbox] {
+  border: none;
+  margin: auto;
+  min-height: calc(var(--checkbox-size) - 2px);
+  max-height: calc(var(--checkbox-size) - 2px);
+}
+.system-atoria .atoria-character-header > .attribute-area > .atoria-healing-inactive img {
+  min-height: calc(var(--checkbox-size) - 2px);
+  max-height: calc(var(--checkbox-size) - 2px);
+  min-width: var(--checkbox-size);
+  max-width: var(--checkbox-size);
+}
+.system-atoria .atoria-character-header > .attribute-area > .atoria-healing-inactive img.checked {
+  color: var(--atoria-color-checkbox-checked);
+}
+.system-atoria .atoria-character-header > .attribute-area > .atoria-healing-inactive input[type=checkbox].resurrection::after {
+  --checkbox-content: "\f714" !important;
 }
 .system-atoria .atoria-character-header > .attribute-area > .atoria-initiative input {
   --atoria-input-width: var(--atoria-formula-input-width);
@@ -1200,6 +1274,11 @@
 .system-atoria > .item.sheet .atoria-keywords-area input[type=checkbox]:not(:checked) + input[type=checkbox].more {
   display: none;
 }
+.system-atoria > .item.sheet .atoria-keywords-area .visual-numbered-input {
+  display: flex;
+  direction: row;
+  min-width: fit-content;
+}
 .system-atoria > .item.sheet .atoria-keywords-area .visual-numbered-input .input-title {
   display: inline-block;
   min-width: 80px;
@@ -1228,6 +1307,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   row-gap: 3px;
+  min-width: fit-content;
 }
 .system-atoria > .item.sheet .atoria-keywords-area .complex-area {
   display: flex;
@@ -1246,6 +1326,8 @@
   margin-left: 3px;
 }
 .system-atoria > .item.sheet .atoria-keywords-area .complex-area .form-group {
+  display: flex;
+  flex-direction: row;
   flex: 0;
   min-width: fit-content;
 }

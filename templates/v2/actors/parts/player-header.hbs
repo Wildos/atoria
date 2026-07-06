@@ -46,11 +46,6 @@
                 src="systems/atoria/imgs/medical-pack{{#if system.healing_inactive.medical_2}}-checked{{/if}}.svg" /><!--Medic_2-->
             </div>
 
-            <div class="flexrow">
-                <img class="resurrection" data-action="toggleAttribute" data-name="system.healing_inactive.resurrection"
-                data-tooltip="{{localize systemFields.healing_inactive.fields.resurrection.label}}"
-                src="systems/atoria/imgs/telefrag{{#if system.healing_inactive.resurrection}}-checked{{/if}}.svg" /><!--Res-->
-            </div>
 
             <div class="flexrow">
                 <img class="amount" data-action="editHealingInactive" data-amount="1" data-tooltip="{{localize systemFields.healing_inactive.label}}"
@@ -65,6 +60,27 @@
                 <img class="amount" data-action="editHealingInactive" data-amount="4" data-tooltip="{{localize systemFields.healing_inactive.label}}"
                 src="systems/atoria/imgs/{{#if (gte 3 max_healing_inactive)}}death-juice{{else}}heart-drop{{/if}}{{#if (gte system.healing_inactive.amount 4)}}-checked{{/if}}.svg"
                 /><!--Healing inactive control-->
+            </div>
+
+            <div class="flexrow">
+                <img class="resurrection" data-action="toggleAttribute" data-name="system.healing_inactive.resurrection"
+                data-tooltip="{{localize systemFields.healing_inactive.fields.resurrection.label}}"
+                src="systems/atoria/imgs/telefrag{{#if system.healing_inactive.resurrection}}-checked{{/if}}.svg" /><!--Res-->
+            </div>
+
+            <div class="flexrow">
+                <img class="amount" data-action="editIncurable" data-amount="1" data-tooltip="{{localize systemFields.healing_inactive.fields.incurable.label}}"
+                src="systems/atoria/imgs/wrapped-heart{{#if (gte system.healing_inactive.incurable 1)}}+{{/if}}.svg"
+                /><!--Incurable control-->
+                <img class="amount" data-action="editIncurable" data-amount="2" data-tooltip="{{localize systemFields.healing_inactive.fields.incurable.label}}"
+                src="systems/atoria/imgs/wrapped-heart{{#if (gte system.healing_inactive.incurable 2)}}+{{/if}}.svg"
+                /><!--Incurable control-->
+                <img class="amount" data-action="editIncurable" data-amount="3" data-tooltip="{{localize systemFields.healing_inactive.fields.incurable.label}}"
+                src="systems/atoria/imgs/wrapped-heart{{#if (gte system.healing_inactive.incurable 3)}}+{{/if}}.svg"
+                /><!--Incurable control-->
+                <img class="amount" data-action="editIncurable" data-amount="4" data-tooltip="{{localize systemFields.healing_inactive.fields.incurable.label}}"
+                src="systems/atoria/imgs/wrapped-heart{{#if (gte system.healing_inactive.incurable 4)}}+{{/if}}.svg"
+                /><!--Incurable control-->
             </div>
         </div>
 

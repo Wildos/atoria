@@ -53,8 +53,9 @@ export default class AtoriaActor extends Actor {
     for (let i of this.items) {
       actorData.system.encumbrance.value += i.getEncumbrance();
     }
-    actorData.active_keywords_data =
-      utils.ruleset.character.getActiveKeywordsData(this);
+
+    actorData.system.active_sharable_keywords_level =
+      utils.ruleset.character.getActiveSharableKeywordsLevel(this);
 
     switch (this.type) {
       case "player-character":
@@ -109,15 +110,10 @@ export default class AtoriaActor extends Actor {
       ...super.getRollData(),
       ...(this.system.getRollData?.() ?? null),
     };
-    const active_keywords = utils.ruleset.character.getActiveKeywordsData(this);
 
-    if (active_keywords["obstruct"] >= 2) {
-      roll_data["initiative"] = roll_data["initiative"] + "-1d2";
-    } else if (active_keywords["obstruct"] >= 1) {
-      {
-        roll_data["initiative"] = roll_data["initiative"] + "-1";
-      }
-    }
+    roll_data["initiative"] =
+      utils.ruleset.character.get_usable_initiative(this);
+
     return roll_data;
   }
 
@@ -275,7 +271,21 @@ export default class AtoriaActor extends Actor {
     return skill_list;
   }
 
+  async getKeywordTooltipHTML(keyword_data) {
+    return await foundry.applications.handlebars.renderTemplate(
+      CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["keyword"],
+      {
+        item: keyword_data,
+        systemFields: this.system.schema
+          .getField("keywords")
+          .getField(keyword_data.id),
+      },
+    );
+  }
+
   async _rollSkill(skill, skill_path) {
+    console.debug("_rollSkill");
+    console.debug(skill);
     // Get roll parameters
     let roll_parameters = await AtoriaRollDialog.ask({
       actor_uuid: this.uuid,
@@ -286,6 +296,8 @@ export default class AtoriaActor extends Actor {
     if (roll_parameters === null) return;
 
     // Create message roll
+    console.debug("roll_parameters");
+    console.debug(roll_parameters);
     let roll_data = utils.get_roll_data(roll_parameters, skill_path);
 
     let effects_data = utils.get_effects_data(roll_parameters);
@@ -295,9 +307,13 @@ export default class AtoriaActor extends Actor {
     let used_perks_data = {
       keywords: {
         length: roll_parameters.used_keywords.length,
-        description: roll_parameters.used_keywords
-          .map((keyword) => keyword.descriptive_tooltip)
-          .join(""),
+        description: (
+          await Promise.all(
+            roll_parameters.used_keywords.map(
+              async (keyword) => await this.getKeywordTooltipHTML(keyword),
+            ),
+          )
+        ).join(""),
       },
       supplementaries: {
         length: 0,
@@ -320,7 +336,6 @@ export default class AtoriaActor extends Actor {
         used_perks_data["feature"].length += 1;
         used_perks_data["feature"].description += await item.getTooltipHTML();
       } else {
-        //TODO: handle enchantment
         console.error("Unknown type found in used_perks");
       }
     }
@@ -346,6 +361,10 @@ export default class AtoriaActor extends Actor {
       saves_asked: utils.get_asked_saves(roll_parameters),
     };
 
+    console.debug("roll_data");
+    console.debug(roll_data);
+    console.debug(effects_data);
+    console.debug(critical_effects_data);
     let rolls = await utils.create_rolls_with_effect(
       this,
       roll_data,
@@ -397,6 +416,7 @@ export default class AtoriaActor extends Actor {
     // -----------------
     martial_skill.usable_keywords = await utils.get_usable_keywords(
       this,
+      undefined,
       utils.ruleset.character.MARTIAL_CONTACT_PATH,
     );
     martial_skill.usable_perks = utils.get_usable_perks_for_skill(
@@ -406,6 +426,7 @@ export default class AtoriaActor extends Actor {
 
     weapon_skill.usable_keywords = await utils.get_usable_keywords(
       this,
+      undefined,
       utils.ruleset.character.FISTFIGHT_SKILL_PATH,
     );
     weapon_skill.usable_perks = utils.get_usable_perks_for_skill(
@@ -440,6 +461,7 @@ export default class AtoriaActor extends Actor {
     // -----------------
     martial_skill.usable_keywords = await utils.get_usable_keywords(
       this,
+      undefined,
       skill_path,
     );
     martial_skill.usable_perks = utils.get_usable_perks_for_skill(
@@ -468,7 +490,11 @@ export default class AtoriaActor extends Actor {
     }
 
     // -----------------
-    skill.usable_keywords = await utils.get_usable_keywords(this, skill_path);
+    skill.usable_keywords = await utils.get_usable_keywords(
+      this,
+      undefined,
+      skill_path,
+    );
     skill.usable_perks = utils.get_usable_perks_for_skill(this, skill_path);
 
     this._rollSkill(skill, skill_path);
@@ -852,100 +878,22 @@ export default class AtoriaActor extends Actor {
       return;
 
     let changelogs = [
-      game.i18n.format(
-        game.i18n.localize("ATORIA.Chat_message.Changelog.Time_phase_passed"),
-        {
-          time_phase: game.i18n.localize(
-            utils.ruleset.time_phases[time_phase_type],
-          ),
-        },
-      ),
+      game.i18n.format("ATORIA.Chat_message.Changelog.Time_phase_passed", {
+        time_phase: game.i18n.localize(
+          utils.ruleset.time_phases[time_phase_type],
+        ),
+      }),
     ];
-
-    const update_list = this._convertAttributeChangeToModChange(
-      utils.ruleset.character.getRestoredAttributes(this, time_phase_type),
-      changelogs,
-    );
 
     const time_phases_type_to_apply =
       utils.ruleset.general.getTimePhasesTypeToApply(time_phase_type);
 
-    const checkboxVisual = (is_true) => {
-      return `<input type='checkbox' ${is_true ? "checked" : ""} disabled>`;
-    };
-
-    update_list["system.keywords_used.direct"] =
-      this.system.keywords_used.direct;
-    for (let keyword_id in this.system.keywords_used) {
-      let keyword_value = this.active_keywords_data[keyword_id];
-
-      if (keyword_id === "direct") {
-        for (let keyword_type in keyword_value) {
-          if (
-            time_phases_type_to_apply.includes(
-              RULESET.keywords.get_time_phase(
-                keyword_id,
-                keyword_value[keyword_type],
-              ),
-            )
-          ) {
-            var index =
-              update_list["system.keywords_used.direct"].indexOf(keyword_type);
-            if (index !== -1) {
-              update_list["system.keywords_used.direct"].splice(index, 1);
-              changelogs.push(
-                game.i18n.format(
-                  game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-                  {
-                    type:
-                      keyword_type +
-                      " " +
-                      RULESET.keywords.get_localized_name(
-                        keyword_id,
-                        this.active_keywords_data[keyword_id][keyword_type],
-                      ),
-                    previous: checkboxVisual(true),
-                    new: checkboxVisual(false),
-                  },
-                ),
-              );
-            }
-          }
-        }
-      } else {
-        if (
-          this.system.keywords_used[keyword_id] &&
-          time_phases_type_to_apply.includes(
-            RULESET.keywords.get_time_phase(keyword_id, keyword_value),
-          )
-        ) {
-          update_list["system.keywords_used." + keyword_id] = false;
-          changelogs.push(
-            game.i18n.format(
-              game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-              {
-                type: RULESET.keywords.get_localized_name(
-                  keyword_id,
-                  keyword_value,
-                ),
-                previous: checkboxVisual(this.system.keywords_used[keyword_id]),
-                new: checkboxVisual(false),
-              },
-            ),
-          );
-        }
-      }
-    }
-
-    for (let time_phase_type of time_phases_type_to_apply) {
-      for (const [_, i] of this.items.entries()) {
-        const item_changelogs = await i.applyTimePhase(time_phase_type);
-        for (let e of item_changelogs) {
-          changelogs.push(e);
-        }
-      }
-    }
-    await this.update(update_list);
+    changelogs.push(
+      ...(await utils.ruleset.character.applyTimePhases(
+        this,
+        time_phases_type_to_apply,
+      )),
+    );
 
     const speaker = ChatMessage.getSpeaker({ actor: this });
     ChatMessage.create({
@@ -954,7 +902,6 @@ export default class AtoriaActor extends Actor {
       blind: false,
       content: changelogs.join("<br>"),
     });
-    await this.render();
   }
 
   getAssociatedFeature_n_ItemAlterations(skill_path) {
@@ -989,230 +936,95 @@ export default class AtoriaActor extends Actor {
     return actable_mod_list;
   }
 
-  is_keyword_effect_usable(keyword_data) {
-    switch (keyword_data.id) {
-      case "reach+":
-        return !this.system.keywords_used.reach;
-
-      case "brute+":
-        return !this.system.keywords_used.brute;
-
-      case "guard+":
-        return !this.system.keywords_used.guard;
-
-      case "penetrating+":
-        return !this.system.keywords_used.penetrating;
-
-      case "protect":
-      case "protect+":
-        return !this.system.keywords_used.protect;
-
-      case "protection+":
-        return !this.system.keywords_used.protection;
-
-      case "gruff":
-      case "gruff+":
-      case "gruff++":
-      case "gruff+++":
-        return !this.system.keywords_used.gruff;
-
-      case "tough":
-      case "tough+":
-      case "tough++":
-      case "tough+++":
-        return !this.system.keywords_used.tough;
-
-      case "grip":
-      case "grip+":
-      case "grip++":
-      case "grip+++":
-        return !this.system.keywords_used.grip;
-
-      case "resistant":
-      case "resistant+":
-      case "resistant++":
-      case "resistant+++":
-        return !this.system.keywords_used.resistant;
-
-      case "sturdy":
-      case "sturdy+":
-      case "sturdy++":
-      case "sturdy+++":
-        return !this.system.keywords_used.sturdy;
-
-      case "stable":
-      case "stable+":
-      case "stable++":
-      case "stable+++":
-        return !this.system.keywords_used.stable;
-
-      case "direct":
-      case "direct+":
-        var index = this.system.keywords_used.direct.indexOf(keyword_data.type);
-        if (index !== -1) {
-          return false;
-        }
-        break;
-    }
-    return true;
+  takeOneKeywordUse(keyword_data) {
+    console.debug("takeOneKeywordUse");
+    let keyword_id = keyword_data.id;
+    this.update({
+      [`system.keywords.${keyword_id}.limit_remaining`]:
+        this.system.keywords[keyword_id].limit_remaining - 1,
+    });
   }
 
-  takeOneKeywordUse(keyword_data) {
-    let keyword_id = keyword_data.id;
-    switch (keyword_id) {
-      case "reach+":
-        this.update({ "system.keywords_used.reach": true });
+  createKeywordAlteration(keyword_id, level) {
+    let effect_level = {};
+    let effect_level_path = "";
+    switch (level) {
+      case 0:
+        effect_level = this.system.keywords[keyword_id].effect_level_1;
+        effect_level_path = "effect_level_1";
         break;
-      case "brute+":
-        this.update({ "system.keywords_used.brute": true });
+      case 1:
+        effect_level = this.system.keywords[keyword_id].effect_level_2;
+        effect_level_path = "effect_level_2";
         break;
-      case "guard+":
-        this.update({ "system.keywords_used.guard": true });
+      case 2:
+        effect_level = this.system.keywords[keyword_id].effect_level_3;
+        effect_level_path = "effect_level_3";
         break;
-      case "penetrating+":
-        this.update({ "system.keywords_used.penetrating": true });
+      case 3:
+        effect_level = this.system.keywords[keyword_id].effect_level_4;
+        effect_level_path = "effect_level_4";
         break;
-      case "protect":
-      case "protect+":
-        this.update({ "system.keywords_used.protect": true });
+      case 4:
+        effect_level = this.system.keywords[keyword_id].effect_level_5;
+        effect_level_path = "effect_level_5";
         break;
-      case "protection+":
-        this.update({ "system.keywords_used.protection": true });
-        break;
-      case "gruff":
-      case "gruff+":
-      case "gruff++":
-      case "gruff+++":
-        this.update({ "system.keywords_used.gruff": true });
-        break;
-      case "tough":
-      case "tough+":
-      case "tough++":
-      case "tough+++":
-        this.update({ "system.keywords_used.tough": true });
-        break;
-      case "grip":
-      case "grip+":
-      case "grip++":
-      case "grip+++":
-        this.update({ "system.keywords_used.grip": true });
-        break;
-      case "resistant":
-      case "resistant+":
-      case "resistant++":
-      case "resistant+++":
-        this.update({ "system.keywords_used.resistant": true });
-        break;
-      case "sturdy":
-      case "sturdy+":
-      case "sturdy++":
-      case "sturdy+++":
-        this.update({ "system.keywords_used.sturdy": true });
-        break;
-      case "stable":
-      case "stable+":
-      case "stable++":
-      case "stable+++":
-        this.update({ "system.keywords_used.stable": true });
-        break;
-      case "direct":
-      case "direct+":
-        let new_array = foundry.utils.deepClone(
-          this.system.keywords_used.direct,
-        );
-
-        var index = new_array.indexOf(keyword_data.type);
-        if (index === -1) {
-          new_array.push(keyword_data.type);
-        } else {
-          new_array.splice(index, 1);
-        }
-
-        this.update({ "system.keywords_used.direct": new_array });
-        break;
+      default:
+        return;
     }
+    effect_level.skill_alterations.push(
+      this.system.schema
+        .getField(
+          "keywords." +
+            keyword_id +
+            "." +
+            effect_level_path +
+            ".skill_alterations",
+        )
+        .element.getInitialValue(),
+    );
+    let value_path = `system.keywords.${keyword_id}.${effect_level_path}`;
+    let update_dict = {};
+    update_dict[value_path] = effect_level;
+    this.update(update_dict);
+  }
+
+  deleteKeywordAlteration(keyword_id, level, index) {
+    let effect_level = {};
+    let effect_level_path = "";
+    switch (level) {
+      case 0:
+        effect_level = this.system.keywords[keyword_id].effect_level_1;
+        effect_level_path = "effect_level_1";
+        break;
+      case 1:
+        effect_level = this.system.keywords[keyword_id].effect_level_2;
+        effect_level_path = "effect_level_2";
+        break;
+      case 2:
+        effect_level = this.system.keywords[keyword_id].effect_level_3;
+        effect_level_path = "effect_level_3";
+        break;
+      case 3:
+        effect_level = this.system.keywords[keyword_id].effect_level_4;
+        effect_level_path = "effect_level_4";
+        break;
+      case 4:
+        effect_level = this.system.keywords[keyword_id].effect_level_5;
+        effect_level_path = "effect_level_5";
+        break;
+      default:
+        return;
+    }
+    effect_level.skill_alterations.splice(Number(index), 1);
+    let value_path = `system.keywords.${keyword_id}.${effect_level_path}`;
+    let update_dict = {};
+    update_dict[value_path] = effect_level;
+    this.update(update_dict);
   }
 
   onChatButton(data) {
     console.log("Actor");
     console.dir(data);
-  }
-
-  // Debug functions
-  async debug_fix_knowledges() {
-    let updated_knowledges = helpers.getInitialFullSkillSchema(
-      utils.default_values.character.knowledges,
-      "knowledges",
-    );
-
-    Object.keys(this.system.knowledges).forEach((group_key) => {
-      Object.keys(this.system.knowledges[group_key]).forEach((cat_key) => {
-        if (
-          foundry.utils.getType(this.system.knowledges[group_key][cat_key]) ===
-          "Object"
-        ) {
-          Object.keys(this.system.knowledges[group_key][cat_key]).forEach(
-            (skill_key) => {
-              if (
-                skill_key in updated_knowledges[group_key][cat_key] &&
-                this.system.knowledges[group_key][cat_key][skill_key] !==
-                  undefined
-              ) {
-                delete updated_knowledges[group_key][cat_key][skill_key][
-                  "success"
-                ];
-                delete updated_knowledges[group_key][cat_key][skill_key][
-                  "critical_success_modifier"
-                ];
-                delete updated_knowledges[group_key][cat_key][skill_key][
-                  "critical_fumble_modifier"
-                ];
-              }
-            },
-          );
-        }
-      });
-    });
-
-    this.update({
-      "system.knowledges": updated_knowledges,
-    });
-  }
-  // Debug functions
-  async debug_fix_skills() {
-    let updated_skills = helpers.getInitialFullSkillSchema(
-      utils.default_values.character.skills,
-      "skills",
-    );
-
-    Object.keys(this.system.skills).forEach((group_key) => {
-      Object.keys(this.system.skills[group_key]).forEach((cat_key) => {
-        if (
-          foundry.utils.getType(this.system.skills[group_key][cat_key]) ===
-          "Object"
-        ) {
-          Object.keys(this.system.skills[group_key][cat_key]).forEach(
-            (skill_key) => {
-              if (
-                skill_key in updated_skills[group_key][cat_key] &&
-                this.system.skills[group_key][cat_key][skill_key] !== undefined
-              ) {
-                delete updated_skills[group_key][cat_key][skill_key]["success"];
-                delete updated_skills[group_key][cat_key][skill_key][
-                  "critical_success_modifier"
-                ];
-                delete updated_skills[group_key][cat_key][skill_key][
-                  "critical_fumble_modifier"
-                ];
-              }
-            },
-          );
-        }
-      });
-    });
-
-    this.update({
-      "system.skills": updated_skills,
-    });
   }
 }

@@ -19,15 +19,20 @@
         <li class="flexrow">
         <input
         type="checkbox" data-dtype="Boolean"
-        {{disabled (not this.usable)}}
+        {{disabled (and (lte this.limitation.usage_left 0) (ne this.limitation.regain_type "permanent"))}}
         name="usable_keywords.{{@index}}"
         id="usable_keywords.{{@index}}"/>
-        <label for="usable_keywords.{{@index}}" data-tooltip="{{this.description}}" >{{this.label}}</label>
+        <label for="usable_keywords.{{@index}}" data-tooltip="{{this.description}}" >{{this.name}}</label>
 
         <div style="display:flex;flex:0;min-width: fit-content;">
         <!--Alteration-->
-        {{>"atoria.v2.commons_partials.alteration-display" alteration=this.alteration
-        systemFields=this.systemFields.fields }}
+        {{#each this.skill_alterations as |skill_alteration key|}}
+            {{>"atoria.v2.commons_partials.alteration-display" alteration=skill_alteration
+            systemFields=../this.systemFields.skill_alterations.element.fields }}
+        {{/each}}
+
+        {{>"atoria.v2.commons_partials.time-limitation-display" limitation=this.limitation
+        systemFields=this.systemFields.limitation.fields }}
         </div>
         </li>
     {{/each}}

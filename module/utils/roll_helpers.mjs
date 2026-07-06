@@ -1,24 +1,21 @@
 import * as utils from "../utils/module.mjs";
+import * as model_helper from "../models/helpers.mjs";
 
-export async function get_usable_keywords(actor, skill_path) {
-  if (skill_path == undefined || skill_path == "") return [];
-  const active_keywords = utils.ruleset.character.getActiveKeywordsData(actor);
-  let available_keywords = await Promise.all(
-    utils.ruleset.character
-      .getSkillAssociatedKeywordsData(actor, null, skill_path)
-      .filter((keyword) => Object.keys(active_keywords).includes(keyword.name))
-      .map(async (keyword_data) => {
-        keyword_data["descriptive_tooltip"] =
-          await foundry.applications.handlebars.renderTemplate(
-            CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["keyword"],
-            {
-              keyword: keyword_data,
-            },
-          );
-        return keyword_data;
-      }),
+export function makeTimeLimitationForKeyword(keyword_effect) {
+  return {
+    regain_type: keyword_effect.limit_amount != 0 ? "combat" : "permanent",
+    usage_left: keyword_effect.limit_remaining ?? 0,
+    usage_max: keyword_effect.limit_amount ?? 0,
+  };
+}
+
+export async function get_usable_keywords(actor, item, skill_path) {
+  if (skill_path == undefined) return [];
+  return utils.ruleset.character.getSkillAssociatedKeywordsEffects(
+    actor,
+    item,
+    skill_path,
   );
-  return available_keywords;
 }
 
 export function get_usable_perks_for_skill(actor, skill_path) {
@@ -37,16 +34,45 @@ export function get_asked_saves(roll_parameters) {
   return saves_asked;
 }
 export function get_roll_data(roll_parameters, skill_path) {
+  let skill_paths = skill_path.includes("///")
+    ? skill_path.split("///")
+    : [skill_path];
   for (let keyword_data of roll_parameters.used_keywords) {
-    utils.applyAlteration(roll_parameters.roll_data, keyword_data.alteration);
+    let alteration = keyword_data.skill_alterations
+      .filter((skill_alteration) =>
+        skill_paths.includes(skill_alteration.associated_skill),
+      )
+      .map((skill_alteration) => {
+        let result = {
+          dos_mod: skill_alteration.dos_mod,
+          adv_amount: skill_alteration.adv_amount,
+          disadv_amount: skill_alteration.disadv_amount,
+        };
+        return result;
+      });
+    utils.applyAlterationsToRollConfig(roll_parameters.roll_data, alteration);
   }
   for (let item_perk of roll_parameters.used_perks) {
     utils.applyAlterationsToRollConfig(
       roll_parameters.roll_data,
-      item_perk.getAlterations(skill_path),
+      skill_paths
+        .map((skill_path) => item_perk.getAlterations(skill_path))
+        .flat(),
     );
   }
   return roll_parameters.roll_data;
+}
+
+export function extract_effect_from_string(str) {
+  const matches = str.matchAll(/\[\[(.*?)]{2,3}(?:{([^}]+)})?/gi);
+  let effects = [];
+  for (const match of Array.from(matches)) {
+    effects.push({
+      flavor: match[2],
+      formula: match[1],
+    });
+  }
+  return effects;
 }
 
 export function get_effects_data(roll_parameters) {
@@ -54,15 +80,12 @@ export function get_effects_data(roll_parameters) {
   for (let item_perk of roll_parameters.used_perks) {
     effects.push(...item_perk.get_effect());
   }
+  for (let keyword_data of roll_parameters.used_keywords) {
+    let keyword_effects = extract_effect_from_string(keyword_data.effect);
+    effects.push(...keyword_effects);
+  }
   for (let supp of roll_parameters.used_supplementaries) {
-    const matches = supp.effect.matchAll(/\[\[(.*?)]{2,3}(?:{([^}]+)})?/gi);
-    let supp_effects = [];
-    for (const match of Array.from(matches)) {
-      supp_effects.push({
-        flavor: match[2],
-        formula: match[1],
-      });
-    }
+    let supp_effects = extract_effect_from_string(supp.effect);
     effects.push(...supp_effects);
   }
   return effects;

@@ -2,7 +2,7 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 import RULESET from "../../utils/ruleset.mjs";
 import * as utils from "../../utils/module.mjs";
-import * as models from "../../models/module.mjs";
+import * as model_helper from "../../models/helpers.mjs";
 
 //
 // By default, a button will trigger the submit process of whatever form it is in.
@@ -236,9 +236,39 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         break;
       case "skill_setup":
         {
+          let skill_paths = skill_path.includes("///")
+            ? skill_path.split("///")
+            : [skill_path];
           context.skill_path = skill_path;
           context.aiming = RULESET.aiming;
-          context.usable_keywords = this.#current_skill.usable_keywords;
+          context.usable_keywords = await Promise.all(
+            this.#current_skill.usable_keywords.map(async (keyword_data) => {
+              return {
+                name: keyword_data.label,
+                limitation: utils.makeTimeLimitationForKeyword(keyword_data),
+                skill_alterations: keyword_data.skill_alterations
+                  .filter((skill_alteration) => {
+                    return skill_paths.includes(
+                      skill_alteration.associated_skill,
+                    );
+                  })
+                  .map((skill_alteration) => {
+                    let result = {
+                      dos_mod: skill_alteration.dos_mod,
+                      adv_amount: skill_alteration.adv_amount,
+                      disadv_amount: skill_alteration.disadv_amount,
+                    };
+                    return result;
+                  }),
+                description: keyword_data.effect,
+                systemFields: {
+                  limitation: model_helper.defineTimePhaseLimitation(),
+                  skill_alterations:
+                    model_helper.define_skills_alterations_list(),
+                },
+              };
+            }),
+          );
           context.usable_supplementaries =
             this.#current_skill.usable_supplementaries;
           context.usable_perks = await Promise.all(
@@ -246,7 +276,9 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
               return {
                 name: item_perk.name,
                 limitation: item_perk.system.limitation,
-                skill_alterations: item_perk.getAlterations(skill_path),
+                skill_alterations: skill_paths
+                  .map((skill_path) => item_perk.getAlterations(skill_path))
+                  .flat(),
                 description: await item_perk.getTooltipHTML(),
                 systemFields: item_perk.systemFields,
               };
