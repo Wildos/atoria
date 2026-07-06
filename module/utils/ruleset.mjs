@@ -827,11 +827,10 @@ RULESET["character"] = class ActorRuleset {
           update[`system.keywords.${keyword_id}.limit_remaining`] = new_value;
           changelog_messages.push(
             game.i18n.format("ATORIA.Chat_message.Changelog.Regain", {
-              type: game.i18n.localize(
-                actor.system.schema.getField(
-                  `keywords.${keyword_id}.limit_remaining`,
-                ).label,
-              ),
+              type:
+                game.i18n.localize(
+                  actor.system.schema.getField(`keywords.${keyword_id}`).label,
+                ) + "+".repeat(level - 1),
               previous: previous,
               new: new_value,
             }),

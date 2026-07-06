@@ -424,20 +424,24 @@ export default class AtoriaActor extends Actor {
       utils.ruleset.character.MARTIAL_CONTACT_PATH,
     );
 
-    weapon_skill.usable_keywords = await utils.get_usable_keywords(
-      this,
-      undefined,
-      utils.ruleset.character.FISTFIGHT_SKILL_PATH,
-    );
-    weapon_skill.usable_perks = utils.get_usable_perks_for_skill(
-      this,
-      utils.ruleset.character.FISTFIGHT_SKILL_PATH,
-    );
+    let skill = martial_skill;
 
-    let skill = utils.ruleset.item.getFinalSkillDataFromKnowledgeAndWeapon(
-      martial_skill,
-      weapon_skill,
-    );
+    if (this.type == "player-character") {
+      weapon_skill.usable_keywords = await utils.get_usable_keywords(
+        this,
+        undefined,
+        utils.ruleset.character.FISTFIGHT_SKILL_PATH,
+      );
+      weapon_skill.usable_perks = utils.get_usable_perks_for_skill(
+        this,
+        utils.ruleset.character.FISTFIGHT_SKILL_PATH,
+      );
+
+      skill = utils.ruleset.item.getFinalSkillDataFromKnowledgeAndWeapon(
+        martial_skill,
+        weapon_skill,
+      );
+    }
 
     this._rollSkill(skill, utils.ruleset.character.FISTFIGHT_SKILL_PATH);
   }
