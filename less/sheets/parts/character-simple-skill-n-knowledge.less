@@ -7,8 +7,52 @@
 
     min-width: var(--atoria-character-simple-skill-n-knowledge-width);
     max-width: var(--atoria-character-simple-skill-n-knowledge-width);
-    
 
+
+    .atoria-combat{
+        > h5 {
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: normal;
+        }
+        > div {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+
+            min-height: var(--atoria-skill-height);
+            max-height: var(--atoria-skill-height);
+
+            flex: 0 1 auto;
+            border: none;
+            > label {
+                padding: 0px 3px;
+                border: var(--atoria-border-style);
+                border-radius: var(--atoria-border-style-radius);
+
+                text-align: center;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                flex: 1;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                height: var(--atoria-skill-height);
+                max-height: var(--atoria-skill-height);
+
+                input{
+                    display:none;
+                }
+            }
+        }
+    }
     .atoria-skill-group-display {
         min-width: var(--atoria-skill-width);
         max-width: var(--atoria-skill-width);

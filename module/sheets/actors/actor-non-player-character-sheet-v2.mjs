@@ -105,17 +105,36 @@ export default class AtoriaActorNonPlayerCharacterSheetV2 extends AtoriaActorShe
 
           context.active_keywords_data = Object.entries(
             utils.ruleset.character.getActiveSharableKeywordsLevel(this.actor),
-          ).map(([keyword_id, level]) => {
-            const eff = utils.ruleset.character.getKeywordEffect(
-              this.actor,
-              keyword_id,
-              level,
-            );
-            eff["limit_remaining"] =
-              this.actor.system.keywords[keyword_id].limit_remaining;
-            eff["level"] = level - 1;
-            return eff;
-          });
+          )
+            .map(([keyword_id, level]) => {
+              if (keyword_id == "direct") {
+                for (const [direct_type, direct_level] of Object.entries(
+                  level,
+                )) {
+                  const eff = utils.ruleset.character.getKeywordEffect(
+                    this.actor,
+                    keyword_id,
+                    direct_level,
+                  );
+                  eff["label"] = eff["label"] + " " + direct_type;
+                  eff["limit_remaining"] =
+                    this.actor.system.keywords[keyword_id].limit_remaining;
+                  eff["level"] = direct_level - 1;
+                  return eff;
+                }
+              } else {
+                const eff = utils.ruleset.character.getKeywordEffect(
+                  this.actor,
+                  keyword_id,
+                  level,
+                );
+                eff["limit_remaining"] =
+                  this.actor.system.keywords[keyword_id].limit_remaining;
+                eff["level"] = level - 1;
+                return eff;
+              }
+            })
+            .flat();
         }
         context.keywords_setup = this.actor.system.keywords;
         for (const [keyword_id, keyword] of Object.entries(

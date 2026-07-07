@@ -184,6 +184,35 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
       }
     }
 
+    let skill_path = this.#current_skill?.path;
+    let skill_paths = skill_path.includes("///")
+      ? skill_path.split("///")
+      : [skill_path];
+    let is_thrown_weapon =
+      skill_paths.length > 1 &&
+      skill_paths[0] == utils.ruleset.character.MARTIAL_APART_PATH &&
+      skill_paths[1].startsWith(
+        utils.ruleset.character.MARTIAL_CONTACT_WEAPON_PATH,
+      );
+
+    let final_dos_mod = form_data_obj.dos_mod ?? 0;
+    if (is_thrown_weapon) {
+      final_dos_mod += -2;
+    }
+
+    let roll_setup = {
+      dos_mod: final_dos_mod,
+      advantage_amount: form_data_obj.advantage_amount ?? 0,
+      disadvantage_amount: form_data_obj.disadvantage_amount ?? 0,
+    };
+    let saves_asked = [];
+
+    // Apply aim
+    utils.ruleset.aiming.applyToRoll(roll_setup, form_data_obj.aiming_type);
+    saves_asked.push(
+      ...utils.ruleset.aiming.saves_asked[form_data_obj.aiming_type],
+    );
+
     this.#roll_parameters = {
       message_mode: form_data_obj.asked_visibility,
       roll_data: {
@@ -195,12 +224,13 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         critical_fumble_amount: this.#current_skill?.critical_fumble_amount,
         path: this.#current_skill?.path,
 
-        advantage_amount: form_data_obj.advantage_amount ?? 0,
-        disadvantage_amount: form_data_obj.disadvantage_amount ?? 0,
+        advantage_amount: roll_setup.advantage_amount,
+        disadvantage_amount: roll_setup.disadvantage_amount,
         luck_applied: form_data_obj.luck_applied ?? 0,
-        dos_mod: form_data_obj.dos_mod ?? 0,
+        dos_mod: roll_setup.dos_mod,
         is_danger: form_data_obj.is_danger ?? false,
       },
+      saves_asked: saves_asked,
       used_keywords: used_keywords,
       used_supplementaries: used_supplementaries,
       used_perks: used_perks,
@@ -241,6 +271,12 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
             : [skill_path];
           context.skill_path = skill_path;
           context.aiming = RULESET.aiming;
+          context.is_thrown_weapon =
+            skill_paths.length > 1 &&
+            skill_paths[0] == utils.ruleset.character.MARTIAL_APART_PATH &&
+            skill_paths[1].startsWith(
+              utils.ruleset.character.MARTIAL_CONTACT_WEAPON_PATH,
+            );
           context.usable_keywords = await Promise.all(
             this.#current_skill.usable_keywords.map(async (keyword_data) => {
               return {

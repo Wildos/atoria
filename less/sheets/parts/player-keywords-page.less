@@ -1,0 +1,31 @@
+.atoria-player-keywords-page {
+    .atoria-keywords-list{
+
+        display: flex;
+        flex-direction: column;
+        row-gap: 4em;
+
+        .atoria-keyword-setup.flexrow {
+            align-items: flex-start;
+
+            >.flexcol {
+                >fieldset.double-col-field {
+                    >.div {
+                        min-width: fit-content;
+
+                    }
+                }
+            }
+        }
+
+
+        .atoria-skill-alteration-input {
+            grid-template-columns: auto auto;
+            min-width: fit-content;
+            >select{
+                min-width: 12em;
+            }
+        }
+    }
+
+}

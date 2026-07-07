@@ -55,6 +55,23 @@ RULESET["general"] = class GeneralRuleset {
 
 RULESET["character"] = class ActorRuleset {
   static OPPORTUNITY_SKILL_PATH = "system.skills.physical.reflex.opportuneness";
+  static PARRY_SKILL_PATH = "system.skills.physical.reflex.parry";
+
+  static SILENCE_SKILL_PATH = "system.skills.physical.slyness.silence";
+  static STEALTH_SKILL_PATH = "system.skills.physical.slyness.stealth";
+
+  static SIGHT_PERCEPTION_SKILL_PATH = "system.skills.physical.slyness.sight";
+  static EARTING_PERCEPTION_SKILL_PATH =
+    "system.skills.physical.slyness.earing";
+  static SMELL_PERCEPTION_SKILL_PATH = "system.skills.physical.slyness.smell";
+  static TASTE_PERCEPTION_SKILL_PATH = "system.skills.physical.slyness.taste";
+  static INSTINCT_PERCEPTION_SKILL_PATH =
+    "system.skills.physical.slyness.instinct";
+  static MAGICE_PERCEPTION_SKILL_PATH = "system.skills.physical.slyness.magice";
+
+  static FORCE_SKILL_PATH = "system.skills.physical.sturdiness.force";
+  static TENACITY_SKILL_PATH = "system.skills.physical.sturdiness.tenacity";
+
   static WAND_SKILL_PATH = "system.skills.weapon.apart.wand";
   static ENCHANTED_SKILL_PATH = "system.skills.weapon.apart.enchanted";
   static FISTFIGHT_SKILL_PATH = "system.skills.weapon.contact.fist_fight";
@@ -661,19 +678,45 @@ RULESET["character"] = class ActorRuleset {
       item_active_keywords_data,
     );
 
+    let skill_path_is_martial_knowledge = [
+      RULESET.character.MARTIAL_CONTACT_PATH,
+      RULESET.character.MARTIAL_APART_PATH,
+    ].includes(skill_path);
+
     for (const keyword_id in active_keywords) {
-      let keyword_effect = RULESET.character.getKeywordEffect(
-        actor,
-        keyword_id,
-        active_keywords[keyword_id],
-      );
-      if (
-        keyword_effect.is_shown_on_attack ||
-        keyword_effect.skill_alterations.some(
-          (skill_alt) => skill_alt.associated_skill == skill_path,
-        )
-      ) {
-        skill_associated_keywords_data.push(keyword_effect);
+      if (keyword_id == "direct") {
+        if (
+          skill_path_is_martial_knowledge &&
+          item !== undefined &&
+          item.type == "weapon" &&
+          item.system.keywords.direct > 0 &&
+          active_keywords["direct"][item.system.keywords.direct_type]
+        ) {
+          let keyword_effect = RULESET.character.getKeywordEffect(
+            actor,
+            keyword_id,
+            active_keywords[keyword_id][item.system.keywords.direct_type],
+          );
+          keyword_effect.direct_type = item.system.keywords.direct_type;
+          console.debug("direct added: " + keyword_effect.direct_type);
+          skill_associated_keywords_data.push(keyword_effect);
+        }
+      } else {
+        let keyword_effect = RULESET.character.getKeywordEffect(
+          actor,
+          keyword_id,
+          active_keywords[keyword_id],
+        );
+        if (
+          (keyword_effect.is_shown_on_attack &&
+            item !== undefined &&
+            item.type == "weapon") ||
+          keyword_effect.skill_alterations.some(
+            (skill_alt) => skill_alt.associated_skill == skill_path,
+          )
+        ) {
+          skill_associated_keywords_data.push(keyword_effect);
+        }
       }
     }
 
@@ -712,7 +755,17 @@ RULESET["character"] = class ActorRuleset {
       const item_active_keywords = RULESET.item.getActiveKeywords(item);
 
       for (let keyword of item_active_keywords) {
-        if (RULESET.keywords.sharable_keywords.includes(keyword)) {
+        if (keyword == "direct") {
+          if (item.type == "weapon") {
+            continue; // On weapon direct is meant to inform on what type they are
+          }
+          if (keywords_active["direct"] == undefined) {
+            keywords_active["direct"] = {};
+          }
+          keywords_active["direct"][item.system.keywords["direct_type"]] =
+            (keywords_active["direct"][item.system.keywords["direct_type"]] ||
+              0) + item.system.keywords[keyword];
+        } else if (RULESET.keywords.sharable_keywords.includes(keyword)) {
           keywords_active[keyword] =
             (keywords_active[keyword] || 0) + item.system.keywords[keyword];
         }
@@ -731,6 +784,7 @@ RULESET["character"] = class ActorRuleset {
       return undefined;
     }
     let keyword_field = actor.system.keywords[keyword_id];
+    if (keyword_field == undefined) return undefined;
     let effect = null;
     switch (wanted_level) {
       case 1:
@@ -748,7 +802,6 @@ RULESET["character"] = class ActorRuleset {
       case 5:
         effect = keyword_field.effect_level_5;
         break;
-      default:
     }
     if (effect == null) {
       return this.getKeywordEffect(actor, keyword_id, wanted_level - 1);
@@ -815,26 +868,60 @@ RULESET["character"] = class ActorRuleset {
       const active_keywords =
         RULESET.character.getActiveSharableKeywordsLevel(actor);
       for (const [keyword_id, level] of Object.entries(active_keywords)) {
-        let effect = RULESET.character.getKeywordEffect(
-          actor,
-          keyword_id,
-          level,
-        );
-        let previous = actor.system.keywords[keyword_id].limit_remaining;
-        let new_value = effect.limit_amount;
+        if (keyword_id == "direct") {
+          for (const [direct_type, direct_level] of Object.entries(level)) {
+            let effect = RULESET.character.getKeywordEffect(
+              actor,
+              keyword_id,
+              direct_level,
+            );
+            let previous =
+              actor.system.keywords[keyword_id].limit_remaining[direct_type];
+            let new_value = effect.limit_amount;
 
-        if (previous != new_value) {
-          update[`system.keywords.${keyword_id}.limit_remaining`] = new_value;
-          changelog_messages.push(
-            game.i18n.format("ATORIA.Chat_message.Changelog.Regain", {
-              type:
-                game.i18n.localize(
-                  actor.system.schema.getField(`keywords.${keyword_id}`).label,
-                ) + "+".repeat(level - 1),
-              previous: previous,
-              new: new_value,
-            }),
+            if (previous != new_value) {
+              update[
+                `system.keywords.${keyword_id}.limit_remaining.${direct_type}`
+              ] = new_value;
+              changelog_messages.push(
+                game.i18n.format("ATORIA.Chat_message.Changelog.Regain", {
+                  type:
+                    game.i18n.localize(
+                      actor.system.schema.getField(`keywords.${keyword_id}`)
+                        .label,
+                    ) +
+                    "+".repeat(level - 1) +
+                    " " +
+                    direct_type,
+                  previous: previous,
+                  new: new_value,
+                }),
+              );
+            }
+          }
+        } else {
+          let effect = RULESET.character.getKeywordEffect(
+            actor,
+            keyword_id,
+            level,
           );
+          let previous = actor.system.keywords[keyword_id].limit_remaining;
+          let new_value = effect.limit_amount;
+
+          if (previous != new_value) {
+            update[`system.keywords.${keyword_id}.limit_remaining`] = new_value;
+            changelog_messages.push(
+              game.i18n.format("ATORIA.Chat_message.Changelog.Regain", {
+                type:
+                  game.i18n.localize(
+                    actor.system.schema.getField(`keywords.${keyword_id}`)
+                      .label,
+                  ) + "+".repeat(level - 1),
+                previous: previous,
+                new: new_value,
+              }),
+            );
+          }
         }
       }
     }
@@ -1071,6 +1158,9 @@ RULESET["item"] = class ItemRuleset {
             continue;
         }
       } else {
+        if (keyword == "direct" && item.type == "weapon") {
+          continue; // direct is a marker and not a keywords on weapons
+        }
         if (Number(item.system.keywords[keyword]) > 0) {
           keywords_active.add(keyword);
         }
@@ -1285,51 +1375,64 @@ RULESET["skill_alterations"] = {
 
 RULESET["aiming"] = {
   type: {
-    //TODO: adapt to new ruleset
     none: "ATORIA.Ruleset.Aiming.None.Label",
+    joint: "ATORIA.Ruleset.Aiming.Joint.Label",
+
     arm: "ATORIA.Ruleset.Aiming.Arm.Label",
     hand: "ATORIA.Ruleset.Aiming.Hand.Label",
+
     leg: "ATORIA.Ruleset.Aiming.Leg.Label",
     foot: "ATORIA.Ruleset.Aiming.Foot.Label",
-    neck: "ATORIA.Ruleset.Aiming.Neck.Label",
-    joint: "ATORIA.Ruleset.Aiming.Joint.Label",
+
     head: "ATORIA.Ruleset.Aiming.Head.Label",
   },
   description: {
     none: "ATORIA.Ruleset.Aiming.None.Description",
+    joint: "ATORIA.Ruleset.Aiming.Joint.Description",
+
     arm: "ATORIA.Ruleset.Aiming.Arm.Description",
     hand: "ATORIA.Ruleset.Aiming.Hand.Description",
+
     leg: "ATORIA.Ruleset.Aiming.Leg.Description",
     foot: "ATORIA.Ruleset.Aiming.Foot.Description",
-    neck: "ATORIA.Ruleset.Aiming.Neck.Description",
-    joint: "ATORIA.Ruleset.Aiming.Joint.Description",
+
     head: "ATORIA.Ruleset.Aiming.Head.Description",
   },
-  dos_mod: {
-    none: 0,
-    arm: -1,
-    hand: -2,
-    leg: -1,
-    foot: -2,
-    neck: -3,
-    joint: -2,
-    head: -3,
-  },
-  get_alteration: function (aiming_type) {
-    return {
-      dos_mod: this.dos_mod[aiming_type],
-      adv_amount: 0,
-      disadv_amount: 0,
-    };
+  applyToRoll: function (roll_setup, aiming_type) {
+    switch (aiming_type) {
+      case "joint":
+        roll_setup.dos_mod -= 2;
+        break;
+
+      case "arm":
+        roll_setup.dos_mod -= 1;
+        break;
+      case "hand":
+        roll_setup.dos_mod -= 2;
+        break;
+
+      case "leg":
+        roll_setup.dos_mod -= 1;
+        break;
+      case "foot":
+        roll_setup.dos_mod -= 2;
+        break;
+
+      case "head":
+        roll_setup.dos_mod -= 3;
+        break;
+    }
   },
   saves_asked: {
     none: [],
+    joint: [],
+
     arm: ["system.skills.physical.sturdiness.tenacity"],
     hand: [],
+
     leg: ["system.skills.physical.sturdiness.tenacity"],
     foot: [],
-    neck: [],
-    joint: [],
+
     head: ["system.skills.physical.sturdiness.tenacity"],
   },
   get_descriptive_html: function (aiming_type) {
@@ -1424,6 +1527,7 @@ RULESET["keywords"] = {
   },
 
   sharable_keywords: [
+    "reach",
     "brute",
     "guard",
     "smash",
@@ -1442,11 +1546,64 @@ RULESET["keywords"] = {
   getKeywordsList: function () {
     return [
       {
-        id: "brute",
+        id: "two_handed",
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect: "Utilises ta brute ! Opportunité de qualité",
+            effect:
+              "</i>Attaquer</i> : Coût Seconde +1.</br>\
+            Nécessite deux mains pour Attaquer.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Nécessite deux mains pour Attaquer.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Nécessite deux mains pour Attaquer.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Nécessite deux mains pour Attaquer.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Nécessite deux mains pour Attaquer.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Two_handed",
+      },
+      {
+        id: "reach",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect:
+              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
+            Vous avez DR Réflexe - Opportunité +1 pour l'opportunité <i>Allonge</i>.",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.OPPORTUNITY_SKILL_PATH,
@@ -1454,89 +1611,620 @@ RULESET["keywords"] = {
                 adv_amount: 0,
                 disadv_amount: 0,
               },
-              {
-                associated_skill: RULESET.character.ENCHANTED_SKILL_PATH,
-                dos_mod: 2,
-                adv_amount: 1,
-                disadv_amount: 0,
-              },
             ],
-            limit_amount: 1,
+            limit_amount: 0,
           },
           {
-            effect: "Utilises ta brute !!!!!!!!! Opportunité de qualité",
+            effect:
+              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
+            Vous avez l'avantage Réflexe - Opportunité pour l'opportunité <i>Allonge</i>.",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.OPPORTUNITY_SKILL_PATH,
-                dos_mod: 10,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-              {
-                associated_skill: RULESET.character.ENCHANTED_SKILL_PATH,
-                dos_mod: 20,
+                dos_mod: 0,
                 adv_amount: 1,
                 disadv_amount: 0,
               },
             ],
-            limit_amount: 1,
+            limit_amount: 0,
           },
           {
-            effect: "Utilises ta brute !!!!!!!!! Opportunité de qualité",
+            effect:
+              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
+            Vous avez l'avantage Réflexe - Opportunité pour l'opportunité <i>Allonge</i>.",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.OPPORTUNITY_SKILL_PATH,
-                dos_mod: 10,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-              {
-                associated_skill: RULESET.character.ENCHANTED_SKILL_PATH,
-                dos_mod: 20,
+                dos_mod: 0,
                 adv_amount: 1,
                 disadv_amount: 0,
               },
             ],
-            limit_amount: 1,
+            limit_amount: 0,
           },
           {
-            effect: "Utilises ta brute !!!!!!!!! Opportunité de qualité",
+            effect:
+              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
+            Vous avez l'avantage Réflexe - Opportunité pour l'opportunité <i>Allonge</i>.",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.OPPORTUNITY_SKILL_PATH,
-                dos_mod: 10,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-              {
-                associated_skill: RULESET.character.ENCHANTED_SKILL_PATH,
-                dos_mod: 20,
+                dos_mod: 0,
                 adv_amount: 1,
                 disadv_amount: 0,
               },
             ],
-            limit_amount: 1,
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Reach",
+      },
+      {
+        id: "brute",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect:
+              'Lorsque vous infligez Dégât Arme > Minimum, vous avez "Brutal".</br>\
+            Dissipe "Brutal" si votre attaque est esquivée, parée ou si "Préparation".',
+            skill_alterations: [],
+            limit_amount: 0,
           },
           {
-            effect: "Utilises ta brute !!!!!!!!! Opportunité de qualité",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.OPPORTUNITY_SKILL_PATH,
-                dos_mod: 10,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-              {
-                associated_skill: RULESET.character.ENCHANTED_SKILL_PATH,
-                dos_mod: 20,
-                adv_amount: 1,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
+            effect:
+              'Lorsque vous infligez Dégât Arme > Minimum, vous avez "Brutal".</br>\
+            Dissipe "Brutal" si votre attaque est parée ou si "Préparation".',
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              'Lorsque vous infligez Dégât Arme > Minimum, vous avez "Brutal".</br>\
+            Dissipe "Brutal" si votre attaque est parée".',
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              'Lorsque vous infligez Dégât Arme > 1, vous avez "Brutal".</br>\
+            Dissipe "Brutal" si votre attaque est parée".',
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              'Lorsque vous infligez Dégât Arme > 1, vous avez "Brutal".</br>\
+            Dissipe "Brutal" si votre attaque est parée".',
+            skill_alterations: [],
+            limit_amount: 0,
           },
         ],
         label: "ATORIA.Ruleset.Keywords.Brute",
+      },
+      {
+        id: "deployable",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "Peut être <i>Déployer</i>.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Deployable",
+      },
+      {
+        id: "smash",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect: "Cible : DR Réflexe - Parade -1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Cible : DR Réflexe - Parade -1</br>\
+            Parable uniquement avec un bouclier.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Cible : Désavantage Réflexe - Parade</br>\
+            Parable uniquement avec un bouclier.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Cible : Désavantage Réflexe - Parade</br>\
+            Parable uniquement avec un bouclier.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Cible : Désavantage Réflexe - Parade</br>\
+            Parable uniquement avec un bouclier.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Smash",
+      },
+      {
+        id: "guard",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "Attaque subit au corps à corps : DR Réflexe - Parade +1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.PARRY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Attaque subit au corps à corps : DR Réflexe - Parade +1</br>\
+            DR Réflexe - Parade avec différence < 2 : Armure +1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.PARRY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Attaque subit : DR Réflexe - Parade +1</br>\
+            DR Réflexe - Parade avec différence < 2 : Armure +1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.PARRY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Attaque subit : DR Réflexe - Parade +1</br>\
+            DR Réflexe - Parade avec différence < 4 : Armure +1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.PARRY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Attaque subit : DR Réflexe - Parade +1</br>\
+            DR Réflexe - Parade : Armure +1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.PARRY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Guard",
+      },
+      {
+        id: "throwable",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect:
+              "DR Distant +1, Portée effective +1m et Portée maximale +3m.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "DR Distant +2, Portée effective +1m et Portée maximale +3m.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 2,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "DR Distant +2, Portée effective +1m et Portée maximale +3m.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 2,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "DR Distant +2, Portée effective +1m et Portée maximale +3m.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 2,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "DR Distant +2, Portée effective +1m et Portée maximale +3m.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 2,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Throwable",
+      },
+      {
+        id: "light",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "Peut être utilisé en main secondaire.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Light",
+      },
+      {
+        id: "heavy",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect: "<i>Dégainer</i> : Coût Seconde +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: "<i>Dégainer</i> : Coût Seconde +2",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: "<i>Dégainer</i> : Coût Seconde +2",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: "<i>Dégainer</i> : Coût Seconde +2",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: "<i>Dégainer</i> : Coût Seconde +2",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Heavy",
+      },
+      {
+        id: "penetrating",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect: "Pénétration +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Pénétration +1</br>\
+            Viser : Pénétration +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Pénétration +1</br>\
+            Viser : Pénétration +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Pénétration +1</br>\
+            Viser : Pénétration +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Pénétration +1</br>\
+            Viser : Pénétration +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Penetrating",
+      },
+      {
+        id: "versatile",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Versatile",
+      },
+      {
+        id: "quick",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect: "<i>Dégainer</i> : Coût Seconde -1",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "<i>Dégainer</i> : Coût Seconde -1</br>\
+            Vous pouvez utiliser une technique le tour où vous dégainez ou récupérez votre arme.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "<i>Dégainer</i> : Coût Seconde -2</br>\
+            Vous pouvez utiliser une technique le tour où vous dégainez ou récupérez votre arme.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "<i>Dégainer</i> : Coût Seconde -2</br>\
+            Vous pouvez utiliser une technique le tour où vous dégainez ou récupérez votre arme.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "<i>Dégainer</i> : Coût Seconde -2</br>\
+            Vous pouvez utiliser une technique le tour où vous dégainez ou récupérez votre arme.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Quick",
+      },
+      {
+        id: "recharge",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "Nécessite <i>Recharger</i> après chaque attaque.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Recharge",
+      },
+      {
+        id: "somatic",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect:
+              "Les mains sur l'objet sont considérées comme libres pour les Composantes - Somatiques.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Somatic",
+      },
+      {
+        id: "reserve",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect:
+              "Peut contenir jusqu'à X mana.</br>\
+            Lors d'un repos, vous pouvez dépenser du mana pour le remplir.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Peut contenir jusqu'à X mana.</br>\
+            Lors d'un repos, vous pouvez dépenser du mana pour le remplir.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Reserve",
+      },
+      {
+        id: "sly",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect:
+              'Surprise : Dégât maximum +*X, ignore l\'armure et applique "Saignement".',
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              'Surprise : Dégât maximum +*X, ignore l\'armure et applique "Saignement".',
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Sly",
+      },
+      // ---
+      {
+        id: "noisy",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "DR Discrétion - Silence / Furtivité -1 en déplacement.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.SILENCE_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.STEALTH_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Désavantage Discrétion - Silence / Furtivité en déplacement.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.SILENCE_SKILL_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 1,
+              },
+              {
+                associated_skill: RULESET.character.STEALTH_SKILL_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 1,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Désavantage DR Discrétion - Silence / Furtivité -1 en déplacement.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.SILENCE_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 1,
+              },
+              {
+                associated_skill: RULESET.character.STEALTH_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 1,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Désavantage DR Discrétion - Silence / Furtivité -1 en déplacement.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.SILENCE_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 1,
+              },
+              {
+                associated_skill: RULESET.character.STEALTH_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 1,
+              },
+            ],
+            limit_amount: 0,
+          },
+          {
+            effect:
+              "Désavantage DR Discrétion - Silence / Furtivité -1 en déplacement.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.SILENCE_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 1,
+              },
+              {
+                associated_skill: RULESET.character.STEALTH_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 1,
+              },
+            ],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Noisy",
       },
       {
         id: "obstruct",
@@ -1554,6 +2242,374 @@ RULESET["keywords"] = {
           },
         ],
         label: "ATORIA.Ruleset.Keywords.Obstruct",
+      },
+      {
+        id: "restrictive",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "DR Perception -1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.SIGHT_PERCEPTION_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill:
+                  RULESET.character.EARTING_PERCEPTION_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.SMELL_PERCEPTION_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.TASTE_PERCEPTION_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill:
+                  RULESET.character.INSTINCT_PERCEPTION_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill:
+                  RULESET.character.MAGICE_PERCEPTION_SKILL_PATH,
+                dos_mod: -1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Restrictive",
+      },
+      // --------------------------------
+      {
+        id: "gruff",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "<i>Bousculer</i> : DR Robustesse - Force +1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.FORCE_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "<i>Bousculer</i> : DR Robustesse - Force +1</br>\
+            Cible : Initiative -1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.FORCE_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "<i>Bousculer</i> : DR Robustesse - Force +1</br>\
+            Coût Vigueur -1</br>\
+            Cible : Initiative -1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.FORCE_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "<i>Bousculer</i> : DR Robustesse - Force +1</br>\
+            Coût Vigueur -1</br>\
+            Cible : Initiative -1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.FORCE_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 2,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Gruff",
+      },
+      {
+        id: "tough",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: 'Ignore 1 effet "Saignement"',
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: 'Ignore 1 effet "Saignement"',
+            skill_alterations: [],
+            limit_amount: 2,
+          },
+          {
+            effect: 'Ignore 1 effet "Saignement"',
+            skill_alterations: [],
+            limit_amount: 3,
+          },
+          {
+            effect: 'Ignore 1 effet "Saignement"',
+            skill_alterations: [],
+            limit_amount: 5,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Tough",
+      },
+      {
+        id: "grip",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "DR Robustesse - Ténacité +1 contre <i>Lâcher</i>",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: "Avantage Robustesse - Ténacité contre <i>Lâcher</i>",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 0,
+                adv_amount: 1,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "Avantage Robustesse - Ténacité contre <i>Lâcher</i></br>\
+            Viser : DR Arme +1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 0,
+                adv_amount: 1,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "Avantage Robustesse - Ténacité contre <i>Lâcher</i></br>\
+            DR Arme +1",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 0,
+                adv_amount: 1,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Grip",
+      },
+      {
+        id: "resistant",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect:
+              "Attaquant : Dégât > 8</br>\
+            Vous : Résistance +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "Attaquant : Dégât > 7</br>\
+            Vous : Résistance +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "Attaquant : Dégât > 6</br>\
+            Vous : Résistance +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "Attaquant : Dégât > 5</br>\
+            Vous : Résistance +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Resistant",
+      },
+      {
+        id: "sturdy",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect:
+              "Attaquant : Dégât > 8</br>\
+            Vous : Armure +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "Attaquant : Dégât > 7</br>\
+            Vous : Armure +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "Attaquant : Dégât > 6</br>\
+            Vous : Armure +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect:
+              "Attaquant : Dégât > 5</br>\
+            Vous : Armure +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Sturdy",
+      },
+      {
+        id: "stable",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "Repousse : Vous : DR Robustesse - Ténacité +1.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: "Pousse : Vous : DR Robustesse - Ténacité +1.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: "Déplacement forcé : Vous : DR Robustesse - Ténacité +1.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: "Déplacement forcé : Vous : DR Robustesse - Ténacité +1.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 2,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Stable",
+      },
+      {
+        id: "direct",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: "Attaquer avec X : Coût Seconde -1.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: "Attaquer avec X : Coût Seconde -1.",
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Direct",
       },
     ];
   },

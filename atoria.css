@@ -200,7 +200,7 @@
   height: auto;
 }
 .system-atoria .atoria h5 {
-  font-family: var;
+  font-family: var(--font-primary);
 }
 .system-atoria .atoria button {
   line-height: 1.5em;
@@ -1002,6 +1002,41 @@
   min-width: var(--atoria-character-simple-skill-n-knowledge-width);
   max-width: var(--atoria-character-simple-skill-n-knowledge-width);
 }
+.system-atoria .atoria-character-simple-skill-n-knowledge .atoria-combat > h5 {
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
+}
+.system-atoria .atoria-character-simple-skill-n-knowledge .atoria-combat > div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+  flex: 0 1 auto;
+  border: none;
+}
+.system-atoria .atoria-character-simple-skill-n-knowledge .atoria-combat > div > label {
+  padding: 0px 3px;
+  border: var(--atoria-border-style);
+  border-radius: var(--atoria-border-style-radius);
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--atoria-skill-height);
+  max-height: var(--atoria-skill-height);
+}
+.system-atoria .atoria-character-simple-skill-n-knowledge .atoria-combat > div > label input {
+  display: none;
+}
 .system-atoria .atoria-character-simple-skill-n-knowledge .atoria-skill-group-display {
   min-width: var(--atoria-skill-width);
   max-width: var(--atoria-skill-width);
@@ -1228,6 +1263,13 @@
   max-height: var(--atoria-base-line-block-height);
   border: none;
   filter: var(--atoria-img-filter);
+}
+.system-atoria .atoria-keywords .atoria-time-limitation-display {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+.system-atoria .atoria-keywords .atoria-time-limitation-display * {
+  flex: 0;
 }
 .system-atoria .atoria-spell-marker::after {
   --checkbox-content: attr(data-letter) !important;
@@ -1485,6 +1527,24 @@
 }
 .system-atoria .atoria-player-action-page > .spell-area {
   margin: 0;
+}
+.system-atoria .atoria-player-keywords-page .atoria-keywords-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4em;
+}
+.system-atoria .atoria-player-keywords-page .atoria-keywords-list .atoria-keyword-setup.flexrow {
+  align-items: flex-start;
+}
+.system-atoria .atoria-player-keywords-page .atoria-keywords-list .atoria-keyword-setup.flexrow > .flexcol > fieldset.double-col-field > .div {
+  min-width: fit-content;
+}
+.system-atoria .atoria-player-keywords-page .atoria-keywords-list .atoria-skill-alteration-input {
+  grid-template-columns: auto auto;
+  min-width: fit-content;
+}
+.system-atoria .atoria-player-keywords-page .atoria-keywords-list .atoria-skill-alteration-input > select {
+  min-width: 12em;
 }
 .system-atoria .sheet.chest > .window-content div:not(.colored) > h5,
 .system-atoria .sheet.chest > .window-content ul:not(.colored) > h5,

@@ -6,15 +6,21 @@
     {{#each keywords_data}}
     <div class="atoria-time-limitation-display flexrow">
         {{#if this.limit_amount}}
-            <input type="text" inputmode="numeric" data-dtype="Number" name={{concat "system.keywords." this.id ".limit_remaining"}} value="{{this.limit_remaining}}"
-                data-tooltip="{{localize (getProperty (getField ../keywords_fields (concat this.id ".effect_level_" (sum this.level 1) ".limit_remaining")) "label")}}"
-                {{disabled (not @root.editable)}}/>
-
+            {{#if this.direct_type}}
+                <input type="number" inputmode="numeric" data-dtype="Number" name={{concat "system.keywords." this.id ".limit_remaining." this.direct_type}} value="{{lookup this.limit_remaining this.direct_type}}"
+                    data-tooltip="{{localize (getProperty (getField ../keywords_fields (concat this.id ".effect_level_" (sum this.level 1) ".limit_remaining")) "label")}}"
+                    {{disabled (not @root.editable)}}/>
+            {{else}}
+                <input type="number" inputmode="numeric" data-dtype="Number" name={{concat "system.keywords." this.id ".limit_remaining"}} value="{{this.limit_remaining}}"
+                    data-tooltip="{{localize (getProperty (getField ../keywords_fields (concat this.id ".effect_level_" (sum this.level 1) ".limit_remaining")) "label")}}"
+                    {{disabled (not @root.editable)}}/>
+            {{/if}}
             <label>/{{this.limit_amount}}</label>
 
             <img src='systems/atoria/imgs/regain-type-combat.svg' title='{{localize "ATORIA.Ruleset.Time_phase.Combat"}}'/>
         {{/if}}
-        <label>{{localize this.label}}{{multiplyString "+" this.level}}</label>
+        <label data-tooltip="{{this.effect}}">{{localize this.label}}{{multiplyString "+" this.level}}
+            {{#if this.direct_type}} {{this.direct_type}}{{/if}}</label>
     </div>
     {{/each}}
 </div>

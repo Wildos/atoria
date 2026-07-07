@@ -677,206 +677,6 @@ export default class AtoriaActor extends Actor {
     console.warn("'manageItem' is deprecated, please inform Wildos");
   }
 
-  _convertAttributeChangeToModChange(attribute_changes, changelogs) {
-    if (!["player-character", "non-player-character"].includes(this.type))
-      return;
-
-    const update_list = {};
-    // Health
-    let tmp_value = this.system.health.value;
-    let tmp_max = this.system.health.max;
-    let tmp_new_value = Math.min(
-      tmp_max,
-      tmp_value + attribute_changes["health"],
-    );
-    if (!Number.isNaN(tmp_new_value) && tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(this.system.schema.fields.health.label),
-            previous: tmp_value,
-            new: tmp_new_value,
-          },
-        ),
-      );
-      update_list["system.health.value"] = tmp_new_value;
-    }
-    // Stamina
-    tmp_value = this.system.stamina.value;
-    tmp_max = utils.ruleset.character.getCurrentMaxStamina(this);
-    tmp_new_value = Math.min(tmp_max, tmp_value + attribute_changes["stamina"]);
-    if (!Number.isNaN(tmp_new_value) && tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(this.system.schema.fields.stamina.label),
-            previous: tmp_value,
-            new: tmp_new_value,
-          },
-        ),
-      );
-      update_list["system.stamina.value"] = tmp_new_value;
-    }
-    // Mana
-    tmp_value = this.system.mana.value;
-    tmp_max = utils.ruleset.character.getCurrentMaxMana(this);
-    tmp_new_value = Math.min(tmp_max, tmp_value + attribute_changes["mana"]);
-    if (!Number.isNaN(tmp_new_value) && tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(this.system.schema.fields.mana.label),
-            previous: tmp_value,
-            new: tmp_new_value,
-          },
-        ),
-      );
-      update_list["system.mana.value"] = tmp_new_value;
-    }
-
-    if (this.type !== "player-character") return update_list;
-
-    // Healing inactive amount
-    tmp_value = this.system.healing_inactive.amount;
-    tmp_new_value = Math.max(
-      0,
-      tmp_value + attribute_changes["healing_inactive.amount"],
-    );
-    if (!Number.isNaN(tmp_new_value) && tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(
-              this.system.schema.fields.healing_inactive.label,
-            ),
-            previous: tmp_value,
-            new: tmp_new_value,
-          },
-        ),
-      );
-      update_list["system.healing_inactive.amount"] = tmp_new_value;
-    }
-
-    const checkboxVisual = (is_true) => {
-      return `<input type='checkbox' ${is_true ? "checked" : ""} disabled>`;
-    };
-
-    // Medical inactive
-    tmp_value = this.system.healing_inactive.medical;
-    tmp_new_value =
-      "healing_inactive.medical" in attribute_changes
-        ? attribute_changes["healing_inactive.medical"]
-        : tmp_value;
-    if (tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(
-              this.system.schema.fields.healing_inactive.fields.medical.label,
-            ),
-            previous: checkboxVisual(tmp_value),
-            new: checkboxVisual(tmp_new_value),
-          },
-        ),
-      );
-      update_list["system.healing_inactive.medical"] = tmp_new_value;
-    }
-    // Medical inactive 2
-    tmp_value = this.system.healing_inactive.medical_2;
-    tmp_new_value =
-      "healing_inactive.medical_2" in attribute_changes
-        ? attribute_changes["healing_inactive.medical_2"]
-        : tmp_value;
-    if (tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(
-              this.system.schema.fields.healing_inactive.fields.medical_2.label,
-            ),
-            previous: checkboxVisual(tmp_value),
-            new: checkboxVisual(tmp_new_value),
-          },
-        ),
-      );
-      update_list["system.healing_inactive.medical_2"] = tmp_new_value;
-    }
-
-    // Resurrection inactive
-    tmp_value = this.system.healing_inactive.resurrection;
-    tmp_new_value =
-      "healing_inactive.resurrection" in attribute_changes
-        ? attribute_changes["healing_inactive.resurrection"]
-        : tmp_value;
-    if (tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(
-              this.system.schema.fields.healing_inactive.fields.resurrection
-                .label,
-            ),
-            previous: checkboxVisual(tmp_value),
-            new: checkboxVisual(tmp_new_value),
-          },
-        ),
-      );
-      update_list["system.healing_inactive.resurrection"] = tmp_new_value;
-    }
-
-    // Sanity inactive
-    tmp_value = this.system.sanity.regain_inactive;
-    tmp_new_value =
-      "sanity.regain_inactive" in attribute_changes
-        ? attribute_changes["sanity.regain_inactive"]
-        : tmp_value;
-    if (tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(
-              this.system.schema.fields.sanity.fields.regain_inactive.label,
-            ),
-            previous: checkboxVisual(tmp_value),
-            new: checkboxVisual(tmp_new_value),
-          },
-        ),
-      );
-      update_list["system.sanity.regain_inactive"] = tmp_new_value;
-    }
-
-    // Endurance inactive
-    tmp_value = this.system.endurance.regain_inactive;
-    tmp_new_value =
-      "endurance.regain_inactive" in attribute_changes
-        ? attribute_changes["endurance.regain_inactive"]
-        : tmp_value;
-    if (tmp_value != tmp_new_value) {
-      changelogs.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: game.i18n.localize(
-              this.system.schema.fields.endurance.fields.regain_inactive.label,
-            ),
-            previous: checkboxVisual(tmp_value),
-            new: checkboxVisual(tmp_new_value),
-          },
-        ),
-      );
-      update_list["system.endurance.regain_inactive"] = tmp_new_value;
-    }
-    return update_list;
-  }
-
   async applyTimePhase(time_phase_type) {
     if (!["player-character", "non-player-character"].includes(this.type))
       return;
@@ -943,10 +743,18 @@ export default class AtoriaActor extends Actor {
   takeOneKeywordUse(keyword_data) {
     console.debug("takeOneKeywordUse");
     let keyword_id = keyword_data.id;
-    this.update({
-      [`system.keywords.${keyword_id}.limit_remaining`]:
-        this.system.keywords[keyword_id].limit_remaining - 1,
-    });
+    if (keyword_id == "direct") {
+      let direct_type = keyword_data.direct_type;
+      this.update({
+        [`system.keywords.${keyword_id}.limit_remaining.${direct_type}`]:
+          this.system.keywords[keyword_id].limit_remaining[direct_type] - 1,
+      });
+    } else {
+      this.update({
+        [`system.keywords.${keyword_id}.limit_remaining`]:
+          this.system.keywords[keyword_id].limit_remaining - 1,
+      });
+    }
   }
 
   createKeywordAlteration(keyword_id, level) {

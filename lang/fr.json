@@ -126,6 +126,7 @@
           "Critical_success": "RC",
           "Critical_fumble": "EC"
         },
+        "SecondaryWeaponKeyword": "Mot clef arme secondaire",
         "Range": "Portée"
       },
       "Actable": {
@@ -176,7 +177,11 @@
         },
         "Owning_actor_id": "Identifiant de l'acteur proprietaire"
       },
-      "Actable_modifier": "Modificateur d'action"
+      "Actable_modifier": "Modificateur d'action",
+      "Keywords": {
+        "Effect": "Effet",
+        "LimitAmount": "Limitation par combat"
+      }
     },
     "Sheet": {
       "New_name": "Nouveau {type}",
@@ -236,7 +241,7 @@
         "Secondary_weapon": "Est une arme secondaire"
       },
       "Combat": {
-        "Title": "Combat"
+        "Title": "Martiale"
       },
       "Player": {
         "Pages": {
@@ -305,7 +310,8 @@
             "Technique": "Techniques",
             "Incantatory_addition": "Ajouts"
           }
-        }
+        },
+        "Keywords_setup": "Configuration des mots-clefs"
       }
     },
     "Chat_message": {
@@ -386,7 +392,8 @@
       "Skill_creation": {
         "Title": "Création de compétence dans {skill_cat}",
         "Name_selection": "Nom:"
-      }
+      },
+      "ItemChoice": "Choix de l'objet"
     },
     "Ruleset": {
       "All": "Tout",
@@ -1625,6 +1632,9 @@
       "Attack": {
         "Throw": "Jet",
         "FistFight": "Pugilat"
+      },
+      "Weapon": {
+        "Thrown_malus_message": "DR -2 appliqué (jeter son arme de contact)"
       }
     }
   },

@@ -182,6 +182,17 @@
                         value=system.keywords.direct_type disabled=(not @root.editable)
                     )
                     }}
+                {{else}}
+                    {{ formInput systemFields.keywords.fields.direct
+                    classes="flexrow"
+                    value=system.keywords.direct disabled=(not @root.editable)
+                    input=@root.atoria_inputs.visualNumberInput
+                    additional_fields=(
+                        formInput systemFields.keywords.fields.direct_type
+                        value=system.keywords.direct_type disabled=(not @root.editable)
+                    )
+                    max=1
+                    }}
                 {{/if}}
 
                 <div class="flexrow">

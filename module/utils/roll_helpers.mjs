@@ -2,9 +2,14 @@ import * as utils from "../utils/module.mjs";
 import * as model_helper from "../models/helpers.mjs";
 
 export function makeTimeLimitationForKeyword(keyword_effect) {
+  let limit_remaining = keyword_effect.limit_remaining ?? 0;
+  if (keyword_effect.id == "direct") {
+    limit_remaining =
+      keyword_effect.limit_remaining[keyword_effect.direct_type] ?? 0;
+  }
   return {
     regain_type: keyword_effect.limit_amount != 0 ? "combat" : "permanent",
-    usage_left: keyword_effect.limit_remaining ?? 0,
+    usage_left: limit_remaining,
     usage_max: keyword_effect.limit_amount ?? 0,
   };
 }
@@ -30,6 +35,7 @@ export function get_asked_saves(roll_parameters) {
   let saves_asked = roll_parameters.used_perks.map((item_perk) => {
     return item_perk.getSavesAsked();
   });
+  saves_asked.push(...(roll_parameters.saves_asked ?? []));
   saves_asked = [...new Set(saves_asked.flat())];
   return saves_asked;
 }

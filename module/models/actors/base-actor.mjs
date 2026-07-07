@@ -180,6 +180,158 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
     return schema;
   }
 
+  static direct_keyword_field(levels, is_shown_on_attack, label) {
+    const fields = foundry.data.fields;
+
+    return new fields.SchemaField(
+      {
+        is_shown_on_attack: new fields.BooleanField({
+          required: true,
+          initial: is_shown_on_attack,
+          persisted: false,
+          label: "ATORIA.Model.Keywords.IsShownOnAttack",
+        }),
+        limit_remaining: new fields.ObjectField({
+          required: true,
+          nullable: false,
+          initial: {},
+          label: "ATORIA.Model.Keywords.LimitRemaining",
+        }),
+        effect_level_1: new fields.SchemaField(
+          {
+            effect: new fields.StringField({
+              required: true,
+              label: "ATORIA.Model.Keywords.Effect",
+            }),
+            skill_alterations:
+              atoria_models.helpers.define_skills_alterations_list(),
+            limit_amount: new fields.NumberField({
+              required: true,
+              nullable: false,
+              integer: true,
+              initial: 1,
+              min: 0,
+              persisted: true,
+              label: "ATORIA.Model.Keywords.LimitAmount",
+            }),
+          },
+          {
+            required: true,
+            nullable: false,
+            initial: levels[0],
+            label: "ATORIA.Model.Keywords.EffectLevel1",
+          },
+        ),
+        effect_level_2: new fields.SchemaField(
+          {
+            effect: new fields.StringField({
+              required: true,
+              label: "ATORIA.Model.Keywords.Effect",
+            }),
+            skill_alterations:
+              atoria_models.helpers.define_skills_alterations_list(),
+            limit_amount: new fields.NumberField({
+              required: true,
+              nullable: false,
+              integer: true,
+              initial: 1,
+              min: 0,
+              persisted: true,
+              label: "ATORIA.Model.Keywords.LimitAmount",
+            }),
+          },
+          {
+            required: false,
+            nullable: true,
+            initial: levels.at(1) ?? null,
+            label: "ATORIA.Model.Keywords.EffectLevel2",
+          },
+        ),
+        effect_level_3: new fields.SchemaField(
+          {
+            effect: new fields.StringField({
+              required: true,
+              label: "ATORIA.Model.Keywords.Effect",
+            }),
+            skill_alterations:
+              atoria_models.helpers.define_skills_alterations_list(),
+            limit_amount: new fields.NumberField({
+              required: true,
+              nullable: false,
+              integer: true,
+              initial: 1,
+              min: 0,
+              persisted: true,
+              label: "ATORIA.Model.Keywords.LimitAmount",
+            }),
+          },
+          {
+            required: false,
+            nullable: true,
+            initial: levels.at(2) ?? null,
+            label: "ATORIA.Model.Keywords.EffectLevel3",
+          },
+        ),
+        effect_level_4: new fields.SchemaField(
+          {
+            effect: new fields.StringField({
+              required: true,
+              label: "ATORIA.Model.Keywords.Effect",
+            }),
+            skill_alterations:
+              atoria_models.helpers.define_skills_alterations_list(),
+            limit_amount: new fields.NumberField({
+              required: true,
+              nullable: false,
+              integer: true,
+              initial: 1,
+              min: 0,
+              persisted: true,
+              label: "ATORIA.Model.Keywords.LimitAmount",
+            }),
+          },
+          {
+            required: false,
+            nullable: true,
+            initial: levels.at(3) ?? null,
+            label: "ATORIA.Model.Keywords.EffectLevel4",
+          },
+        ),
+        effect_level_5: new fields.SchemaField(
+          {
+            effect: new fields.StringField({
+              required: true,
+              label: "ATORIA.Model.Keywords.Effect",
+            }),
+            skill_alterations:
+              atoria_models.helpers.define_skills_alterations_list(),
+            limit_amount: new fields.NumberField({
+              required: true,
+              nullable: false,
+              integer: true,
+              initial: 1,
+              min: 0,
+              persisted: true,
+              label: "ATORIA.Model.Keywords.LimitAmount",
+            }),
+          },
+          {
+            required: false,
+            nullable: true,
+            initial: levels.at(4) ?? null,
+            label: "ATORIA.Model.Keywords.EffectLevel5",
+          },
+        ),
+      },
+      {
+        required: true,
+        nullable: false,
+        persisted: true,
+        label: label,
+      },
+    );
+  }
+
   static keyword_field(levels, is_shown_on_attack, label) {
     const fields = foundry.data.fields;
 
@@ -338,47 +490,24 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
 
   static keywords_fields() {
     let keywords = utils.ruleset.keywords.getKeywordsList();
-    // TODO: add "direct" on weapon to mark when they are affected by direct
 
     const fields = {};
     for (const keyword_data of keywords) {
-      fields[keyword_data.id] = this.keyword_field(
-        keyword_data.initial_levels,
-        keyword_data.is_shown_on_attack,
-        keyword_data.label,
-      );
+      if (keyword_data.id == "direct") {
+        fields[keyword_data.id] = this.direct_keyword_field(
+          keyword_data.initial_levels,
+          keyword_data.is_shown_on_attack,
+          keyword_data.label,
+        );
+      } else {
+        fields[keyword_data.id] = this.keyword_field(
+          keyword_data.initial_levels,
+          keyword_data.is_shown_on_attack,
+          keyword_data.label,
+        );
+      }
     }
     return fields;
-    // return {
-    //   two_handed: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Two_handed"),
-    //   reach: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Reach"),
-    //   brute: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Brute"),
-    //   deployable: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Deployable"),
-    //   smash: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Smash"),
-    //   guard: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Guard"),
-    //   throwable: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Throwable"),
-    //   light: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Light"),
-    //   heavy: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Heavy"),
-    //   penetrating: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Penetrating"),
-    //   versatile: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Versatile"),
-    //   quick: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Quick"),
-    //   recharge: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Recharge"),
-    //   somatic: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Somatic"),
-    //   reserve: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Reserve"),
-    //   sly: this.keyword_field(5, "ATORIA.Ruleset.Keywords.Sly"),
-
-    //   noisy: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Noisy"),
-    //   obstruct: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Obstruct"),
-    //   restrictive: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Restrictive"),
-
-    //   gruff: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Gruff"),
-    //   tough: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Tough"),
-    //   grip: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Grip"),
-    //   resistant: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Resistant"),
-    //   sturdy: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Sturdy"),
-    //   stable: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Stable"),
-    //   direct: this.keyword_field(4, "ATORIA.Ruleset.Keywords.Direct"),
-    // };
   }
 
   static _skillsFields() {

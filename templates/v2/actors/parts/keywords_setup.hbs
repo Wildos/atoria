@@ -1,8 +1,8 @@
-<div class="tab {{#if is_active_page}}active{{/if}}" data-group="primary" data-tab="keywords">
-    <h1 data-action="debugAction" >KEYWORD SETUP</h1>
+<div class="tab {{#if is_active_page}}active{{/if}} atoria-player-keywords-page" data-group="primary" data-tab="keywords">
+    <h1 >{{localize "ATORIA.Sheet.Player.Keywords_setup"}}</h1>
+<div class="atoria-keywords-list">
 {{#each actor.system.keywords}}
-<div>
-    <div class="flexrow">
+    <div class="atoria-keyword-setup flexrow">
         {{#each this.effect_levels}}
         <div class="flexcol">
             <h5>{{localize (getProperty (getField @root.systemFields.keywords @../key) "label")}}{{multiplyString "+" @index}}</h5>
@@ -44,6 +44,6 @@
         </div>
         {{/each}}
     </div>
-</div>
 {{/each}}
+</div>
 </div>
