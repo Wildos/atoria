@@ -214,6 +214,11 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
       ...utils.ruleset.aiming.saves_asked[form_data_obj.aiming_type],
     );
 
+    // Is attack
+    if (skill_paths.length > 1) {
+      saves_asked.push(...utils.ruleset.character.getAttackSaves());
+    }
+
     this.#roll_parameters = {
       message_mode: form_data_obj.asked_visibility,
       roll_data: {

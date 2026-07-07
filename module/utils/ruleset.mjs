@@ -205,6 +205,11 @@ RULESET["character"] = class ActorRuleset {
     }
   }
 
+  static getSkillLabel(path_to_key) {
+    let final_local_path = ["Ruleset", ...path_to_key, "Label"];
+    return buildLocalizeString(...final_local_path);
+  }
+
   static getKnowledgesTree(type) {
     switch (type) {
       case "non-player-character":
@@ -314,44 +319,46 @@ RULESET["character"] = class ActorRuleset {
 
       case "hero":
         return [
-          "alchemy",
-          "artistic",
-          "jewellery",
-          "sewing",
-          "cuisine",
-          "cabinet-making",
-          "forge",
-          "engineering",
-          "leatherworking",
-          "song",
-          "dance",
-          "music",
-          "civilisation",
-          "language",
-          "monstrology",
-          "runic",
-          "science",
-          "symbolism",
-          "zoology",
-          "strategy",
-          "hunting",
-          "construction",
-          "dressage",
-          "nature",
-          "fishing",
-          "transport",
-          "theft",
-          "medecine",
-          "martial",
-          "air",
-          "druidic",
-          "water",
-          "fire",
-          "occult",
-          "mental",
-          "holy",
-          "blood",
-          "earth",
+          "craftmanship.alchemy",
+          "craftmanship.artistic",
+          "craftmanship.jewellery",
+          "craftmanship.sewing",
+          "craftmanship.cuisine",
+          "craftmanship.cabinet-making",
+          "craftmanship.forge",
+          "craftmanship.engineering",
+          "craftmanship.leatherworking",
+
+          "erudition.civilisation",
+          "erudition.language",
+          "erudition.medecine",
+          "erudition.monstrology",
+          "erudition.runic",
+          "erudition.science",
+          "erudition.strategy",
+          "erudition.symbolism",
+          "erudition.zoology",
+
+          "utilitarian.song",
+          "utilitarian.hunting",
+          "utilitarian.construction",
+          "utilitarian.dance",
+          "utilitarian.dressage",
+          "utilitarian.theft",
+          "utilitarian.nature",
+          "utilitarian.fishing",
+          "utilitarian.transport",
+
+          "magic.martial",
+          "magic.air",
+          "magic.mental",
+          "magic.druidic",
+          "magic.water",
+          "magic.fire",
+          "magic.occult",
+          "magic.holy",
+          "magic.blood",
+          "magic.earth",
         ];
 
       default:

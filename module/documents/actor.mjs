@@ -265,7 +265,17 @@ export default class AtoriaActor extends Actor {
 
     for (const skill_path of skill_paths) {
       let skill = this.getSkillFromPath(skill_path);
-      skill_list[skill_path] = skill?.label;
+      if (this.type == "player-character") {
+        skill_list[skill_path] = skill?.label;
+      } else {
+        let skill_path_parts = skill_path.split(".");
+        skill_path_parts.shift();
+        skill_list[skill_path] = utils.buildLocalizeString(
+          "Ruleset",
+          ...skill_path_parts,
+          "Label",
+        );
+      }
     }
 
     return skill_list;
@@ -284,8 +294,6 @@ export default class AtoriaActor extends Actor {
   }
 
   async _rollSkill(skill, skill_path) {
-    console.debug("_rollSkill");
-    console.debug(skill);
     // Get roll parameters
     let roll_parameters = await AtoriaRollDialog.ask({
       actor_uuid: this.uuid,
@@ -296,8 +304,6 @@ export default class AtoriaActor extends Actor {
     if (roll_parameters === null) return;
 
     // Create message roll
-    console.debug("roll_parameters");
-    console.debug(roll_parameters);
     let roll_data = utils.get_roll_data(roll_parameters, skill_path);
 
     let effects_data = utils.get_effects_data(roll_parameters);
@@ -358,13 +364,18 @@ export default class AtoriaActor extends Actor {
     }
     let system_data = {
       used_perks: used_perks,
-      saves_asked: utils.get_asked_saves(roll_parameters),
+      saves_asked: utils.get_asked_saves(roll_parameters).map((skill_path) => {
+        let skill_path_parts = skill_path.split(".");
+        skill_path_parts.shift();
+        let skill_label =
+          utils.ruleset.character.getSkillLabel(skill_path_parts);
+        return {
+          skill_path: skill_path,
+          name: skill_label,
+        };
+      }),
     };
 
-    console.debug("roll_data");
-    console.debug(roll_data);
-    console.debug(effects_data);
-    console.debug(critical_effects_data);
     let rolls = await utils.create_rolls_with_effect(
       this,
       roll_data,
@@ -426,7 +437,7 @@ export default class AtoriaActor extends Actor {
 
     let skill = martial_skill;
 
-    if (this.type == "player-character") {
+    if (["player-character", "non-player-character"].includes(this.type)) {
       weapon_skill.usable_keywords = await utils.get_usable_keywords(
         this,
         undefined,

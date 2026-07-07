@@ -753,10 +753,13 @@ export default class AtoriaItem extends Item {
     let system_data = {
       used_perks: used_perks,
       saves_asked: utils.get_asked_saves(roll_parameters).map((skill_path) => {
-        let skill = this.actor.getSkillFromPath(skill_path);
+        let skill_path_parts = skill_path.split(".");
+        skill_path_parts.shift();
+        let skill_label =
+          utils.ruleset.character.getSkillLabel(skill_path_parts);
         return {
           skill_path: skill_path,
-          name: skill.label,
+          name: skill_label,
         };
       }),
     };

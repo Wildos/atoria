@@ -597,9 +597,16 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
 
     if (Array.isArray(knowledges_tree)) {
       for (const key of knowledges_tree) {
-        result_fields[key] = helpers.skillField(
-          utils.ruleset.character.getKnowledgeLabel(["knowledges", key]),
-          utils.ruleset.character.getKnowledgeInitialSuccess(key),
+        let key_parts = key.split(".");
+        let real_key = key_parts[1];
+        let cat_key = key_parts[0];
+        result_fields[real_key] = helpers.skillField(
+          utils.ruleset.character.getKnowledgeLabel([
+            "knowledges",
+            cat_key,
+            real_key,
+          ]),
+          utils.ruleset.character.getKnowledgeInitialSuccess(real_key),
         );
       }
     } else {
