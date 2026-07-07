@@ -46,11 +46,11 @@
     {{#each usable_supplementaries}}
         <li class="flexrow">
         <input
-        type="checkbox" data-dtype="Boolean"
+        type="number" max="{{this.usage_max}}" value="0"
         {{disabled (and (lte this.limitation.usage_left 0) (ne this.limitation.regain_type "permanent"))}}
         name="usable_supplementaries.{{@index}}"
-        id="usable_supplementaries.{{@index}}"/>
-        <label for="usable_supplementaries.{{@index}}" data-tooltip="{{this.descriptive_tooltip}}" >{{this.name}}</label>
+        id="usable_supplementaries.{{@index}}" />
+        <label for="usable_supplementaries.{{@index}}" data-tooltip="{{>"atoria.v2.tooltips_partials.supplementary-tooltip" supplementary=this }}" >{{this.name}}</label>
 
         <div style="display:flex;flex:0;min-width: fit-content;">
 

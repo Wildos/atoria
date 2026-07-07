@@ -24,6 +24,7 @@ import * as model_helper from "../../models/helpers.mjs";
 //     critical_success_amount: 0,
 //     critical_fumble_amount: 0,
 //
+//     saves_asked: [],
 //     usable_keywords: [],
 //     usable_supplementaries: [],
 //     usable_perks: [],
@@ -167,9 +168,9 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         if (value_key.startsWith("usable_supplementaries.")) {
           let index = parseInt((value_key.split(".") ?? [undefined])[1]);
           if (!Number.isNaN(index) && form_data_obj[value_key]) {
-            used_supplementaries.push(
-              this.#current_skill.usable_supplementaries[index],
-            );
+            let supp = this.#current_skill.usable_supplementaries[index];
+            supp.cumul = parseInt(form_data_obj[value_key]);
+            used_supplementaries.push(supp);
           }
         }
       }

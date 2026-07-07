@@ -70,7 +70,7 @@ Hooks.once("init", function () {
       "systems/atoria/templates/v2/tooltips/items/actable-modifier-tooltip.hbs",
 
     supplementary:
-      "systems/atoria/templates/v2/tooltips/supplementary-tooltip.hbs",
+      "systems/atoria/templates/v2/tooltips/parts/supplementary-tooltip.hbs",
     keyword: "systems/atoria/templates/v2/tooltips/keyword-tooltip.hbs",
   };
   CONFIG.ATORIA.EFFECT_TOOLTIP_TEMPLATES =
@@ -362,15 +362,24 @@ Hooks.on("renderChatMessageHTML", (message, html, context) => {
  * Adds a datalist helper for suggesting valid Actor attribute keys in the ActiveEffect config dialog.
  */
 Hooks.on("renderActiveEffectConfig", (activeEffectConfig, html, data) => {
-  const effectsSection = html[0].querySelector("section[data-tab='effects']");
+  console.debug("renderActiveEffectConfig");
+  console.debug(activeEffectConfig);
+  console.debug(html);
+  console.debug(data);
+
+  const effectsSection = html.querySelector("section.tab.changes");
   if (!effectsSection) return;
+  console.debug("effectsSection");
+  console.debug(effectsSection);
   const datalist = document.createElement("datalist");
   datalist.id = "attribute-key-list";
   const inputFields = effectsSection.querySelectorAll(".key input");
+  console.debug("inputFields");
+  console.debug(inputFields);
   inputFields.forEach((input) => input.setAttribute("list", datalist.id));
   const attributeKeys = [];
 
-  let parent_document = activeEffectConfig.object?.parent;
+  let parent_document = activeEffectConfig.document?.parent;
   let parent_character = data.isActorEffect
     ? parent_document
     : parent_document.actor;

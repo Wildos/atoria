@@ -91,7 +91,11 @@ export function get_effects_data(roll_parameters) {
     effects.push(...keyword_effects);
   }
   for (let supp of roll_parameters.used_supplementaries) {
-    let supp_effects = extract_effect_from_string(supp.effect);
+    let supp_effects = extract_effect_from_string(supp.effect).map((effect) => {
+      effect["formula"] =
+        effect["formula"] + ("+ " + effect["formula"]).repeat(supp.cumul - 1);
+      return effect;
+    });
     effects.push(...supp_effects);
   }
   return effects;

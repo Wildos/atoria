@@ -26,19 +26,6 @@ export default class AtoriaItem extends Item {
           keywords_recap: this.getKeywordRecap(),
         },
       );
-    if (this.type === "spell") {
-      for (let supp of this.system.supplementaries_list) {
-        supp.descriptive_tooltip =
-          await foundry.applications.handlebars.renderTemplate(
-            CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["supplementary"],
-            {
-              supplementary: supp,
-              systemFields:
-                this.system.schema.fields.supplementaries_list.element.fields,
-            },
-          );
-      }
-    }
     if (this.system.usable_actable_modifiers !== undefined) {
       let invalid_ids = this.system.usable_actable_modifiers.flatMap((id) => {
         let usable_actable = this.actor.items.get(id);
@@ -670,6 +657,7 @@ export default class AtoriaItem extends Item {
       roll_parameters.roll_data.path,
     );
     effects_data.push(...utils.get_effects_data(roll_parameters));
+
     let critical_effects_data = this.get_critical_effect();
     critical_effects_data.push(
       ...utils.get_critical_effects_data(roll_parameters),
@@ -689,9 +677,22 @@ export default class AtoriaItem extends Item {
       },
       supplementaries: {
         length: roll_parameters.used_supplementaries.length,
-        description: roll_parameters.used_supplementaries
-          .map((supplementary) => supplementary.descriptive_tooltip)
-          .join(""),
+        description: (
+          await Promise.all(
+            roll_parameters.used_supplementaries.map(
+              async (supplementary) =>
+                await foundry.applications.handlebars.renderTemplate(
+                  CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["supplementary"],
+                  {
+                    supplementary: supplementary,
+                    systemFields:
+                      this.system.schema.fields.supplementaries_list.element
+                        .fields,
+                  },
+                ),
+            ),
+          )
+        ).join(""),
       },
       act_mod: {
         length: 0,
