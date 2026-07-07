@@ -1409,57 +1409,65 @@
         }
       },
       "Status_effect": {
-        "Preparing": {
-          "Label": "Préparation",
-          "Description": "Le sort demande de préparer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort.\nIncompatible avec “Évocation” et “Préparation”."
+        "Sharpened": {
+          "Label": "Aiguisé",
+          "Description": "Arme perforante : Pénétration +1.\nArme tranchante : Applique \"Saignement\" sur différence DR > 4.\nSe dissipe à la fin d'un combat."
         },
-        "Evocation": {
-          "Label": "Évocation",
-          "Description": "Le sort demande de continuer à évoquer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort."
+        "Hungry": {
+          "Label": "Affamé",
+          "Description": "DR -1 aux compétences physiques et armes.\nPeut se cumuler avec \"Déshydraté\"."
+        },
+        "Dehydrated": {
+          "Label": "Déshydraté",
+          "Description": "DR -1 aux compétences physiques et armes. Peut se cumuler avec \"Affamé\"."
+        },
+        "Banished": {
+          "Label": "Banni",
+          "Description": "Disparaît et ne peut rien faire.\nLorsque \"Banni\" est perdu, si un personnage se trouve sur la case, réapparait sur une case adjacente, à l'appréciation du MJ."
+        },
+        "Shattered": {
+          "Label": "Brisé",
+          "Description": "Armure -1"
+        },
+        "Brutal": {
+          "Label": "Brutal",
+          "Description": "Dégât Arme +1\nDissiper après 1 application.\n1 fois par tour"
         },
         "Channelling": {
           "Label": "Canalisation",
           "Description": "Le sort demande de continuer à canaliser sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort."
         },
+        "Blindness": {
+          "Label": "Cécité",
+          "Description": "Ne voit plus. Est considéré dans l'obscurité."
+        },
+        "Charmed": {
+          "Label": "Charmé",
+          "Description": "Considère l'émetteur comme son ami proche, ne peut pas entreprendre d’action néfaste contre lui et l'aide de son mieux.\nSupplante “Séduit” avec le même émetteur."
+        },
+        "Shocked": {
+          "Label": "Choqué",
+          "Description": "DR -1 à tous les jets."
+        },
         "Concentration": {
           "Label": "Concentration",
           "Description": "L'action demande un temps de concentration. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir l'action.\nIncompatible avec “Évocation” et “Préparation”."
         },
-        "Unconscious": {
-          "Label": "Inconscient",
-          "Description": "Ne peut rien faire et ignore son environnement."
+        "Control": {
+          "Label": "Contrôlé",
+          "Description": "Sous contrôle de l'émetteur tant que cela ne comprend pas le suicide."
         },
-        "Bleeding": {
-          "Label": "Saignement",
-          "Description": "Santé -1 / round.\nApplication supplémentaire : Santé -1"
+        "Conductive": {
+          "Label": "Conducteur",
+          "Description": "Sorts Foudre ciblant : Supp. coût Mana -1\nSubir des dégâts foudre ou un soin dissipe l'état."
         },
-        "Brutal": {
-          "Label": "Brutal",
-          "Description": "Dégât Arme +1 lors de la prochaine instance de Dégât.\nPerdu si paré ou lors de la \"Préparation\" d'un sort.\n1 fois par tour"
+        "Drunk": {
+          "Label": "Ébriété",
+          "Description": "DR -1 à tous les jets.\nSe dissipe après Sommeil. À l'appréciation du MJ, Robustesse - Ténacité pour ignorer l’état “Veisalgie”."
         },
-        "Slowed": {
-          "Label": "Ralenti",
-          "Description": "Coûts en mouvement : Coût Mouvement +1"
-        },
-        "Prone": {
-          "Label": "Renversé",
-          "Description": "Applique un Léger couvert. Attaquant au corps à corps : Avantage"
-        },
-        "Immobilised": {
-          "Label": "Immobilisé",
-          "Description": "Ne peut pas utiliser de Mouvement. Désavantage pour Esquiver."
-        },
-        "Disability": {
-          "Label": "Incapacité",
-          "Description": "Ne peut rien faire hors utiliser un sort sans composantes verbales et somatiques.\nSupplante \"Immobilisé\""
-        },
-        "Moist": {
-          "Label": "Humide",
-          "Description": "Résistance foudre -1 feu +1. S'annule avec \"Enflammé\".\nZones appliquant l'état dissipe les cases vides ardentes."
-        },
-        "Frostbite": {
-          "Label": "Gelure",
-          "Description": "Applique \"Engourdi\" 1 tour et se dissipe lorsque Dégât froid subi."
+        "Afraid": {
+          "Label": "Effrayé",
+          "Description": "Ne peut pas approcher l'émetteur et désavantage pour l'attaquer."
         },
         "Burning": {
           "Label": "Enflammé",
@@ -1469,62 +1477,6 @@
           "Label": "Enflammé+",
           "Description": "Dégât feu 2 / round. S'annule avec \"Humide\". Dissipe \"Gelure\".\nZones appliquant l'état dissipent les cases gelées."
         },
-        "Radiate": {
-          "Label": "Irradié",
-          "Description": "Éclaire clairement sur 1m. Attaquant au corps à corps : DR +1."
-        },
-        "Conductive": {
-          "Label": "Conducteur",
-          "Description": "Sorts Foudre ciblant : Supp. coût Mana -1."
-        },
-        "Dazed": {
-          "Label": "Hébété",
-          "Description": "/!\\ Retiré, voir règles Atoria /!\\"
-        },
-        "Shocked": {
-          "Label": "Choqué",
-          "Description": "DR -1 à tous les jets."
-        },
-        "Stunned": {
-          "Label": "Étourdi",
-          "Description": "Ne peut rien faire et ignore son environnement.\nAvantage pour résister à l'état 1 tour."
-        },
-        "Banished": {
-          "Label": "Banni",
-          "Description": "Disparaît et ne peut rien faire.\nLorsque \"Banni\" est perdu, si un personnage se trouve sur la case, réapparait sur une case adjacente, à l'appréciation du MJ."
-        },
-        "Drunk": {
-          "Label": "Ébriété",
-          "Description": "DR -1 à tous les jets.\nSe dissipe après Sommeil. À l'appréciation du MJ, Robustesse - Ténacité pour ignorer l’état “Gueule de bois”. "
-        },
-        "Hangover": {
-          "Label": "Gueule de bois",
-          "Description": "DR -1 aux compétences combatives et aux perceptions.\nSe dissipe après Repos."
-        },
-        "Tired": {
-          "Label": "Fatigué",
-          "Description": "DR -1 aux compétences combatives, physiques et aux connaissances.\nS'applique à Endurance < 25"
-        },
-        "Hungry": {
-          "Label": "Affamé",
-          "Description": "DR -1 aux compétences physiques et combatives. Peut se cumuler avec \"Déshydraté\"."
-        },
-        "Dehydrated": {
-          "Label": "Déshydraté",
-          "Description": "DR -1 aux compétences physiques et combatives. Peut se cumuler avec \"Affamé\"."
-        },
-        "Rested": {
-          "Label": "Reposé",
-          "Description": "Donne Initiative +1."
-        },
-        "Deaf": {
-          "Label": "Surdité",
-          "Description": "N'entend plus rien."
-        },
-        "Silenced": {
-          "Label": "Silence",
-          "Description": "Ne peut pas émettre de son avec la voix et ne peut pas utiliser de sort à composante verbale."
-        },
         "Numb": {
           "Label": "Engourdi",
           "Description": "DR Attaque -1 lorsqu'une main ou plus est nécessaire."
@@ -1533,57 +1485,69 @@
           "Label": "Engourdi+",
           "Description": "Désavantage Attaque lorsqu'une main ou plus est nécessaire."
         },
-        "Blindness": {
-          "Label": "Cécité",
-          "Description": "Ne voit plus. Est considéré dans l'obscurité."
+        "Enraged": {
+          "Label": "Enragé",
+          "Description": "Doit attaquer la cible connue la plus proche.\nImmunise à la \"Peur\" et au \"Charme\"."
+        },
+        "Stunned": {
+          "Label": "Étourdi",
+          "Description": "Ne peut rien faire et ignore son environnement.\nAvantage pour résister à l'état 1 tour."
+        },
+        "Evocation": {
+          "Label": "Évocation",
+          "Description": "Le sort demande de continuer à évoquer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort."
+        },
+        "Tired": {
+          "Label": "Fatigué",
+          "Description": "DR -1 aux compétences physiques et aux connaissances.\nS'applique à Endurance < 25"
+        },
+        "Frostbite": {
+          "Label": "Gelure",
+          "Description": "Aucun effet.\nSeconde application ou Application sur \"Humide\" : Effet+ : Si applique l'effet \"Gelure+\", dissipe l'état. Sinon, rien ne se passe."
+        },
+        "Dazed": {
+          "Label": "Hébété",
+          "Description": "Si dernier en initiative, Désavantage Réflexe - Opportunité 1 tour.\nEffet immédiat : Passe dernier en Initiative."
+        },
+        "Moist": {
+          "Label": "Humide",
+          "Description": "Résistance foudre -1 feu +1. S'annule avec \"Enflammé\".\nZones appliquant l'état dissipe les cases ardentes."
+        },
+        "Immobilised": {
+          "Label": "Immobilisé",
+          "Description": "Ne peut pas utiliser de Mouvement. Désavantage pour Esquiver."
+        },
+        "Disability": {
+          "Label": "Incapacité",
+          "Description": "Ne peut rien faire hormi utiliser un sort ou une action magique sans composantes verbales et somatiques.\nSupplante \"Immobilisé\""
+        },
+        "Unconscious": {
+          "Label": "Inconscient",
+          "Description": "Ne peut rien faire et ignore son environnement."
         },
         "Invisible": {
           "Label": "Invisible",
           "Description": "Ne peut pas être perçu et ciblé.\nAttaquer un personnage invisible applique le désavantage."
         },
-        "Incurable": {
-          "Label": "Incurable",
-          "Description": "Ne peut obtenir de Soin ou de Médication."
+        "Radiate": {
+          "Label": "Irradié",
+          "Description": "Éclaire clairement sur 1m. Attaquant au corps à corps : DR +1."
         },
-        "Incurable+": {
-          "Label": "Incurable+",
-          "Description": "Ne peut obtenir de Regain de Santé."
-        },
-        "Afraid": {
-          "Label": "Effrayé",
-          "Description": "Ne peut pas approcher l'émetteur et désavantage pour l'attaquer."
+        "Maimed": {
+          "Label": "Mutilé",
+          "Description": "Attaquant avec brutal : Dégât Arme +1.\nSe dissipe avec un soin ou une médication."
         },
         "Panic": {
           "Label": "Paniqué",
           "Description": "Doit fuir le plus loin possible de l'émetteur.\nSupplante “Effrayé”"
         },
-        "Terrified": {
-          "Label": "Terrifié",
-          "Description": "Ne peut plus se déplacer ou attaquer. Désavantage aux esquives et aux parades.\nSupplante \"Effrayé\" et “Paniqué”"
+        "Petrified": {
+          "Label": "Pétrifié",
+          "Description": "Ne peut rien faire."
         },
-        "Dead": {
-          "Label": "Mort",
-          "Description": "Vous ne pouvez rien faire et vous n'avez pas conscience de ce qui vous entoure. Faites que vos camarades trouvent une solution, ou préparer un nouveau personnage."
-        },
-        "Seduced": {
-          "Label": "Séduit",
-          "Description": "Désavantage contre l'émetteur."
-        },
-        "Charmed": {
-          "Label": "Charmé",
-          "Description": "Considère l'émetteur comme son ami proche, ne peut pas entreprendre d’action néfaste contre lui et l'aide de son mieux.\nSupplante “Séduit” avec le même émetteur."
-        },
-        "Captivated": {
-          "Label": "Subjugué",
-          "Description": "Obéit à l'émetteur tant que cela ne comprend pas de se blesser.\nSupplante “Séduit” ou \"Charmé\" avec le même émetteur."
-        },
-        "Control": {
-          "Label": "Contrôlé",
-          "Description": "Sous contrôle de l'émetteur tant que cela ne comprend pas le suicide."
-        },
-        "Enraged": {
-          "Label": "Enragé",
-          "Description": "Doit attaquer la cible connue la plus proche.\nImmunise à la \"Peur\" et au \"Charme\"."
+        "Preparing": {
+          "Label": "Préparation",
+          "Description": "Le sort demande de préparer sa magie. Ainsi, il faut faire un jet lorsque l'état est perturbé pour maintenir le sort.\nIncompatible avec “Évocation” et “Préparation”."
         },
         "Provoked": {
           "Label": "Provoqué",
@@ -1593,9 +1557,49 @@
           "Label": "Provoqué+",
           "Description": "Désavantage si la provocation n'est pas suivie."
         },
-        "Sharpened": {
-          "Label": "Aiguisé",
-          "Description": "Arme perforante : Pénétration +1.\nArme tranchante : Applique \"Saignement\" sur différence DR > 4.\nSe dissipe à la fin d'un combat."
+        "Slowed": {
+          "Label": "Ralenti",
+          "Description": "Coûts en mouvement : Coût Mouvement [+1]"
+        },
+        "Prone": {
+          "Label": "Renversé",
+          "Description": "Applique Léger couvert. | Attaquant au contact : Avantage. | Coûts en mouvement : Coût Mouvement +1 (Hors Se relever)"
+        },
+        "Rested": {
+          "Label": "Reposé",
+          "Description": "Donne Initiative +1."
+        },
+        "Bleeding": {
+          "Label": "Saignement",
+          "Description": "Santé -1 / round.\nApplication supplémentaire : Santé -1"
+        },
+        "Seduced": {
+          "Label": "Séduit",
+          "Description": "Désavantage contre l'émetteur."
+        },
+        "Silenced": {
+          "Label": "Silence",
+          "Description": "Ne peut pas émettre de son avec la voix et ne peut pas utiliser de sort à composante verbale."
+        },
+        "Captivated": {
+          "Label": "Subjugué",
+          "Description": "Obéit à l'émetteur tant que cela ne comprend pas de se blesser.\nSupplante “Séduit” ou \"Charmé\" avec le même émetteur."
+        },
+        "Deaf": {
+          "Label": "Surdité",
+          "Description": "N'entend plus rien."
+        },
+        "Terrified": {
+          "Label": "Terrifié",
+          "Description": "Ne peut plus se déplacer ou attaquer. Désavantage aux esquives et aux parades.\nSupplante \"Effrayé\" et “Paniqué”"
+        },
+        "Hangover": {
+          "Label": "Veisalgie",
+          "Description": "DR -1 aux armes et aux perceptions."
+        },
+        "Dead": {
+          "Label": "Mort",
+          "Description": "Vous ne pouvez rien faire et vous n'avez pas conscience de ce qui vous entoure. Faites que vos camarades trouvent une solution, ou préparer un nouveau personnage."
         }
       },
       "Aiming": {

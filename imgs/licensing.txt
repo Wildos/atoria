@@ -63,4 +63,10 @@ lamellar.svg: https://game-icons.net/1x1/lorc/lamellar.html, by Lorc under CC BY
 
 crossed-sword.svg: https://game-icons.net/1x1/lorc/crossed-swords.html, by Lorc under CC BY 3.0
 
-sparkling-sabre.svg: https://game-icons.net/1x1/lorc/sparkling-sabre.html, by Lorc under CC BT 3.0
+sparkling-sabre.svg: https://game-icons.net/1x1/lorc/sparkling-sabre.html, by Lorc under CC BY 3.0
+
+broken-skull.svg: https://game-icons.net/1x1/lorc/broken-skull.html, by Lorc under CC BY 3.0
+
+cracked-shield.svg: https://game-icons.net/1x1/lorc/cracked-shield.html, by Lorc under CC BY 3.0
+
+static-guard.svg: https://game-icons.net/1x1/lorc/static-guard.html, by Lorc under CC BY 3.0
