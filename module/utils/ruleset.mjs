@@ -60,14 +60,12 @@ RULESET["character"] = class ActorRuleset {
   static SILENCE_SKILL_PATH = "system.skills.physical.slyness.silence";
   static STEALTH_SKILL_PATH = "system.skills.physical.slyness.stealth";
 
-  static SIGHT_PERCEPTION_SKILL_PATH = "system.skills.physical.slyness.sight";
-  static EARTING_PERCEPTION_SKILL_PATH =
-    "system.skills.physical.slyness.earing";
-  static SMELL_PERCEPTION_SKILL_PATH = "system.skills.physical.slyness.smell";
-  static TASTE_PERCEPTION_SKILL_PATH = "system.skills.physical.slyness.taste";
-  static INSTINCT_PERCEPTION_SKILL_PATH =
-    "system.skills.physical.slyness.instinct";
-  static MAGICE_PERCEPTION_SKILL_PATH = "system.skills.physical.slyness.magice";
+  static SIGHT_PERCEPTION_SKILL_PATH = "system.skills.perceptions.sight";
+  static EARTING_PERCEPTION_SKILL_PATH = "system.skills.perceptions.earing";
+  static SMELL_PERCEPTION_SKILL_PATH = "system.skills.perceptions.smell";
+  static TASTE_PERCEPTION_SKILL_PATH = "system.skills.perceptions.taste";
+  static INSTINCT_PERCEPTION_SKILL_PATH = "system.skills.perceptions.instinct";
+  static MAGICE_PERCEPTION_SKILL_PATH = "system.skills.perceptions.magice";
 
   static FORCE_SKILL_PATH = "system.skills.physical.sturdiness.force";
   static TENACITY_SKILL_PATH = "system.skills.physical.sturdiness.tenacity";
@@ -1601,14 +1599,14 @@ RULESET["keywords"] = {
         initial_levels: [
           {
             effect:
-              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+              "Vous avez l'opportunité <i>Allonge</i>.</br>\
             Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)",
             skill_alterations: [],
             limit_amount: 0,
           },
           {
             effect:
-              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+              "Vous avez l'opportunité <i>Allonge</i>.</br>\
             Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
             Vous avez DR Réflexe - Opportunité +1 pour l'opportunité <i>Allonge</i>.",
             skill_alterations: [
@@ -1623,7 +1621,7 @@ RULESET["keywords"] = {
           },
           {
             effect:
-              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+              "Vous avez l'opportunité <i>Allonge</i>.</br>\
             Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
             Vous avez l'avantage Réflexe - Opportunité pour l'opportunité <i>Allonge</i>.",
             skill_alterations: [
@@ -1638,7 +1636,7 @@ RULESET["keywords"] = {
           },
           {
             effect:
-              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+              "Vous avez l'opportunité <i>Allonge</i>.</br>\
             Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
             Vous avez l'avantage Réflexe - Opportunité pour l'opportunité <i>Allonge</i>.",
             skill_alterations: [
@@ -1653,7 +1651,7 @@ RULESET["keywords"] = {
           },
           {
             effect:
-              "Vous avez l'opportunité <i>Allonge<i>.</br>\
+              "Vous avez l'opportunité <i>Allonge</i>.</br>\
             Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
             Vous avez l'avantage Réflexe - Opportunité pour l'opportunité <i>Allonge</i>.",
             skill_alterations: [

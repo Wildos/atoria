@@ -1606,28 +1606,27 @@
         "None": { "Label": "Rien", "Description": "" },
         "Arm": {
           "Label": "Bras",
-          "Description": "DR Robustesse - Ténacité applique l’action “Lâcher” < 0"
+          "Description": "DR Robustesse - Ténacité applique “Engourdi” < 0.\n“Soin inactif” ou “Médication” dissipe ”Engourdi”."
         },
-        "Hand": { "Label": "Main", "Description": "La cible lâche son arme" },
+        "Hand": {
+          "Label": "Main",
+          "Description": "Cible armée : La cible lâche son arme.\nCible sans arme : Applique “Engourdi”\n“Soin inactif” ou “Médication” dissipe ”Engourdi”."
+        },
         "Leg": {
           "Label": "Jambe",
-          "Description": "DR Robustesse - Ténacité applique “Ralenti” < 0\nSoin de Santé dissipe ”Ralenti”."
+          "Description": "DR Robustesse - Ténacité applique “Ralenti” < 0\n“Soin inactif” ou “Médication” dissipe ”Ralenti”."
         },
         "Foot": {
           "Label": "Pied",
-          "Description": "Applique “Ralenti”\nSoin de Santé dissipe ”Ralenti”."
-        },
-        "Neck": {
-          "Label": "Cou",
-          "Description": "Dégâts maximum et applique “Saignement”."
+          "Description": "Applique “Ralenti”\n“Soin inactif” ou “Médication” dissipe ”Ralenti”."
         },
         "Joint": {
           "Label": "Articulation",
-          "Description": "Applique “Saignement”."
+          "Description": "Arme tranchante et perforante : Applique “Saignement”.\nArme contondante : Applique “Engourdi”\n“Soin inactif” ou “Médication” dissipe ”Engourdi”."
         },
         "Head": {
-          "Label": "Tête",
-          "Description": "Dégâts maximum et DR Robustesse - Ténacité applique “Étourdi” 1 tour < 0"
+          "Label": "Cou / Tête",
+          "Description": "Dégâts maximum.\nAoïde sans casque : Ignore l’armure\nArme tranchante et perforante : Applique “Saignement”\nArme contondante : DR Robustesse - Ténacité applique “Étourdi” 1 tour < 0"
         }
       },
       "Rest": {

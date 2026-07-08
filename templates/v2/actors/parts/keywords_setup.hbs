@@ -31,7 +31,7 @@
                         {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=skill_alteration
                         item_actor=@root.actor associated_skills=@root.associated_skills
                         data_path=(concat "system.keywords." @../../key ".effect_level_" (sum @../index 1) ".skill_alterations." key )
-                        systemFields=(getProperty (getField @root.systemFields.keywords (concat @../../key ".effect_level_" (sum @index 1) ".skill_alterations")) "element.fields")
+                        systemFields=(getProperty (getField @root.systemFields.keywords (concat @../../key ".effect_level_" (sum @../index 1) ".skill_alterations")) "element.fields")
                         cssClasses=""}}
 
                         <a class="atoria-delete-button" data-action="deleteKeywordAlteration" data-keyword-id="{{@../../key}}" data-level="{{@../index}}" data-index="{{key}}"
