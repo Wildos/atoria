@@ -43,10 +43,7 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     this.#actor_name = fromUuidSync(this.data.actor_uuid).name;
 
     this.data.skills.forEach((skill_data) => {
-      console.debug(skill_data);
       skill_data.usable_perks.sort((a, b) => {
-        console.debug(a);
-        console.debug(b);
         const types_ord = [
           "supplementary",
           "technique",
@@ -109,9 +106,19 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     });
   }
 
+  get current_success() {
+    if (this.data.weapon != undefined) {
+      return (
+        this.#current_skill.success +
+        this.data.weapon.system.modificators.success
+      );
+    }
+    return this.#current_skill.success;
+  }
+
   get title() {
     if (this.#current_skill != undefined) {
-      return `${this.#actor_name}: ${game.i18n.localize(this.data.roll_label)} | ${this.#current_skill.success}`;
+      return `${this.#actor_name}: ${game.i18n.localize(this.data.roll_label)} | ${this.current_success}`;
     }
     return `${this.#actor_name}: ${game.i18n.localize(this.data.roll_label)}`;
   }
@@ -154,6 +161,7 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     let used_keywords = [];
     let used_supplementaries = [];
     let used_perks = [];
+    let used_act_mod = [];
     if (this.#current_skill != undefined) {
       for (let value_key in form_data_obj) {
         if (value_key.startsWith("usable_keywords.")) {
@@ -183,13 +191,22 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
           }
         }
       }
+
+      for (let value_key in form_data_obj) {
+        if (value_key.startsWith("usable_act_mod.")) {
+          let index = parseInt((value_key.split(".") ?? [undefined])[1]);
+          if (!Number.isNaN(index) && form_data_obj[value_key]) {
+            used_perks.push(this.#current_skill.usable_act_mod[index]);
+          }
+        }
+      }
     }
 
     let skill_path = this.#current_skill?.path;
     let skill_paths = skill_path.includes("///")
       ? skill_path.split("///")
       : [skill_path];
-    let is_thrown_weapon =
+    let is_thrown_attack =
       skill_paths.length > 1 &&
       skill_paths[0] == utils.ruleset.character.MARTIAL_APART_PATH &&
       skill_paths[1].startsWith(
@@ -197,11 +214,27 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
       );
 
     let final_dos_mod = form_data_obj.dos_mod ?? 0;
-    if (is_thrown_weapon) {
+    if (is_thrown_attack) {
       final_dos_mod += -2;
     }
 
     let roll_setup = {
+      success:
+        this.data.weapon != undefined
+          ? this.#current_skill.success +
+            this.data.weapon.system.modificators.success
+          : this.#current_skill.success,
+      critical_success_amount:
+        this.data.weapon != undefined
+          ? this.#current_skill.critical_success_amount +
+            this.data.weapon.system.modificators.critical_success
+          : this.#current_skill.critical_success_amount,
+      critical_fumble_amount:
+        this.data.weapon != undefined
+          ? this.#current_skill.critical_fumble_amount +
+            this.data.weapon.system.modificators.critical_fumble
+          : this.#current_skill.critical_fumble_amount,
+
       dos_mod: final_dos_mod,
       advantage_amount: form_data_obj.advantage_amount ?? 0,
       disadvantage_amount: form_data_obj.disadvantage_amount ?? 0,
@@ -225,9 +258,9 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         owning_actor_id: fromUuidSync(this.data.actor_uuid)._id,
 
         title: this.#current_skill?.label ?? this.data.roll_label,
-        success_value: this.#current_skill?.success,
-        critical_success_amount: this.#current_skill?.critical_success_amount,
-        critical_fumble_amount: this.#current_skill?.critical_fumble_amount,
+        success_value: roll_setup.success,
+        critical_success_amount: roll_setup.critical_success_amount,
+        critical_fumble_amount: roll_setup.critical_fumble_amount,
         path: this.#current_skill?.path,
 
         advantage_amount: roll_setup.advantage_amount,
@@ -277,7 +310,10 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
             : [skill_path];
           context.skill_path = skill_path;
           context.aiming = RULESET.aiming;
-          context.is_thrown_weapon =
+          context.is_apart_attack =
+            skill_paths.length > 1 &&
+            skill_paths[0] == utils.ruleset.character.MARTIAL_APART_PATH;
+          context.is_thrown_attack =
             skill_paths.length > 1 &&
             skill_paths[0] == utils.ruleset.character.MARTIAL_APART_PATH &&
             skill_paths[1].startsWith(
@@ -318,14 +354,26 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
               return {
                 name: item_perk.name,
                 limitation: item_perk.system.limitation,
-                skill_alterations: skill_paths
-                  .map((skill_path) => item_perk.getAlterations(skill_path))
-                  .flat(),
+                skill_alterations: item_perk.getAlterations(skill_paths),
                 description: await item_perk.getTooltipHTML(),
                 systemFields: item_perk.systemFields,
               };
             }),
           );
+          context.usable_act_mod =
+            this.#current_skill.usable_act_mod === undefined
+              ? []
+              : await Promise.all(
+                  this.#current_skill.usable_act_mod.map(async (item_perk) => {
+                    return {
+                      name: item_perk.name,
+                      system: item_perk.system,
+                      description: await item_perk.getTooltipHTML(),
+                      systemFields: item_perk.systemFields,
+                    };
+                  }),
+                );
+          context.weapon = this.data.weapon;
         }
         break;
     }

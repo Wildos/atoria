@@ -1,5 +1,5 @@
 <div class="flexrow">
     {{#each skills}}
-        <button type="button" data-action="skillChange" data-skill-id="{{@index}}">{{localize this.label}}</button>
+        <button type="button" data-action="skillChange" data-skill-id="{{@index}}" data-path="{{this.path}}">{{localize this.label}}</button>
     {{/each}}
 </div>

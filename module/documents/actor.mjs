@@ -143,6 +143,7 @@ export default class AtoriaActor extends Actor {
     } else {
       target_skill["path"] = skill_path;
     }
+
     if (!utils.isSkill(target_skill)) return undefined;
 
     target_skill["critical_success_amount"] =
@@ -752,7 +753,6 @@ export default class AtoriaActor extends Actor {
   }
 
   takeOneKeywordUse(keyword_data) {
-    console.debug("takeOneKeywordUse");
     let keyword_id = keyword_data.id;
     if (keyword_id == "direct") {
       let direct_type = keyword_data.direct_type;

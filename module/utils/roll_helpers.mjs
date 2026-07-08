@@ -27,6 +27,7 @@ export function get_usable_perks_for_skill(actor, skill_path) {
   if (skill_path == undefined) return [];
   let available_features =
     actor.getAssociatedFeature_n_ItemAlterations(skill_path);
+
   available_features.sort((a, b) => (a.sort || 0) - (b.sort || 0));
   return available_features;
 }
@@ -61,9 +62,7 @@ export function get_roll_data(roll_parameters, skill_path) {
   for (let item_perk of roll_parameters.used_perks) {
     utils.applyAlterationsToRollConfig(
       roll_parameters.roll_data,
-      skill_paths
-        .map((skill_path) => item_perk.getAlterations(skill_path))
-        .flat(),
+      item_perk.getAlterations(skill_paths),
     );
   }
   return roll_parameters.roll_data;

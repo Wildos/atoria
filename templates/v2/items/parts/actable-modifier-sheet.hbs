@@ -38,9 +38,6 @@
         {{selectOptions systemFields.somatic.choices selected=item.system.somatic localize=true}}
     </select>
 
-    <label>{{localize systemFields.material.label}}</label>
-    {{ formInput systemFields.material value=item.system.material disabled=(not @root.editable)}}
-
     {{/if}}
 
     {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation

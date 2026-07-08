@@ -339,8 +339,8 @@ export default class AtoriaItem extends Item {
     }
   }
 
-  getAvailableActableModifiers() {
-    return utils.ruleset.item.getActableModifiersApplicable(this);
+  getAvailableActableModifiers(skill_path) {
+    return utils.ruleset.item.getActableModifiersAvailable(this, skill_path);
   }
 
   isLimitationUsable() {
@@ -387,7 +387,7 @@ export default class AtoriaItem extends Item {
     }
   }
 
-  getAlterations(skill_path) {
+  getAlterations(skill_paths) {
     const item_with_alterations = [
       "kit",
       "armor",
@@ -403,9 +403,8 @@ export default class AtoriaItem extends Item {
       case "weapon":
       case "feature":
         return this.system.skill_alterations
-          .filter(
-            (skill_alteration) =>
-              skill_alteration.associated_skill === skill_path,
+          .filter((skill_alteration) =>
+            skill_paths.includes(skill_alteration.associated_skill),
           )
           .map((skill_alteration) => {
             let result = {
@@ -635,15 +634,25 @@ export default class AtoriaItem extends Item {
       roll_label = game.i18n.localize(martial_skill.label) + " - " + roll_label;
     }
 
+    if (["spell", "weapon", "action"].includes(this.type)) {
+      if (skills.length != 0) {
+        for (const skill_data of skills) {
+          skill_data.usable_act_mod = this.getAvailableActableModifiers(
+            skill_data.path,
+          );
+        }
+      }
+    }
+
     // Get roll parameters
     let roll_parameters = await AtoriaRollDialog.ask({
       actor_uuid: this.actor.uuid,
       roll_label: roll_label,
       skills: skills,
+      weapon: this.type === "weapon" ? this : undefined,
     });
 
     if (roll_parameters === null) return;
-    console.debug(roll_parameters);
 
     // Create message roll
     let roll_data = utils.get_roll_data(

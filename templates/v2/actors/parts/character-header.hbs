@@ -93,16 +93,18 @@
             <input type="text" data-dtype="Number" name="system.movement" value="{{actor.system.movement}}"
             data-tooltip="{{systemFields.movement.label}}" {{disabled (or (not editable) (not isEditingMode))}}/>
         </div>
-        {{>"atoria.v2.actors_partials.armor-display"
-            armor=actor.system.armor
-            model=systemFields.armor
-            data_path="system.armor"
-        }}
-        {{>"atoria.v2.actors_partials.resistance-display"
-            resistance=actor.system.resistance
-            model=systemFields.resistance
-            data_path="system.resistance"
-        }}
+        <div class="flexrow">
+            {{>"atoria.v2.actors_partials.armor-display"
+                armor=actor.system.armor
+                model=systemFields.armor
+                data_path="system.armor"
+            }}
+            {{>"atoria.v2.actors_partials.resistance-display"
+                resistance=actor.system.resistance
+                model=systemFields.resistance
+                data_path="system.resistance"
+            }}
+        </div>
     </div>
     {{>"atoria.v2.actors_partials.skill-cat-display"
     skill_cat_skills=actor.system.skills.perceptions

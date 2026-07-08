@@ -1637,7 +1637,7 @@
         "FistFight": "Pugilat"
       },
       "Weapon": {
-        "Thrown_malus_message": "DR -2 appliqué (jeter son arme de contact)"
+        "Thrown_malus_message": "DR -2 appliqué"
       }
     }
   },

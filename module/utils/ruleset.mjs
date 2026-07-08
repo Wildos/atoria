@@ -4,6 +4,9 @@ import { buildLocalizeString } from "../utils/atoria-lang.mjs";
 import * as models_settings from "../models/settings.mjs";
 import * as roll_helpers from "../utils/roll_helpers.mjs";
 
+// TODO: sur NPC, aptitude et permanent: tooltip au hover en plus de pouvoir les ouvrir
+// TODO: NPC check lancement arme distant focalisatrice => Affiche distant | Distant au lieu de Enchantée | Arc
+
 import {
   defineAlteration,
   defineTimePhaseLimitation,
@@ -659,20 +662,10 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getSkillAssociatedKeywordsEffects(actor, item, skill_path) {
-    const skill_associated_keywords_data = [];
-
     if (skill_path === "") {
-      if (
-        item !== undefined &&
-        item.type === "spell" &&
-        item.system.versatile
-      ) {
-        skill_associated_keywords_data.push(
-          RULESET.character.getKeywordEffect(actor, "versatile", 1),
-        );
-      }
-      return skill_associated_keywords_data;
+      return [];
     }
+    const skill_associated_keywords_data = [];
 
     const actor_active_sharable_keywords_data =
       this.getActiveSharableKeywordsLevel(actor);
@@ -703,7 +696,6 @@ RULESET["character"] = class ActorRuleset {
             active_keywords[keyword_id][item.system.keywords.direct_type],
           );
           keyword_effect.direct_type = item.system.keywords.direct_type;
-          console.debug("direct added: " + keyword_effect.direct_type);
           skill_associated_keywords_data.push(keyword_effect);
         }
       } else {
@@ -1089,6 +1081,60 @@ RULESET["item"] = class ItemRuleset {
     return available_actable_modifiers;
   }
 
+  static getActableModifiersAvailable(item, skill_path) {
+    if (!["spell", "action", "weapon"].includes(item.type)) return [];
+
+    switch (item.type) {
+      case "action":
+      case "spell":
+        return item.system.usable_actable_modifiers.map((id) => {
+          return item.actor.items.get(id);
+        });
+      case "weapon": {
+        let skill_paths = skill_path.includes("///")
+          ? skill_path.split("///")
+          : [skill_path];
+        let is_thrown_attack =
+          skill_paths.length > 1 &&
+          skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
+          skill_paths[1].startsWith(
+            RULESET.character.MARTIAL_CONTACT_WEAPON_PATH,
+          );
+        let is_enchanted_attack =
+          item.system.is_focuser &&
+          skill_paths.length > 1 &&
+          skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
+          skill_paths[1] == RULESET.character.ENCHANTED_SKILL_PATH;
+
+        let usable_actable_modifiers = [];
+        if (is_enchanted_attack) {
+          usable_actable_modifiers.push(
+            ...item.system.usable_actable_modifiers_typed.filter(
+              (act_mod_id_data) => act_mod_id_data.focuser,
+            ),
+          );
+        } else if (is_thrown_attack) {
+          usable_actable_modifiers.push(
+            ...item.system.usable_actable_modifiers_typed.filter(
+              (act_mod_id_data) => act_mod_id_data.throw,
+            ),
+          );
+        } else {
+          usable_actable_modifiers.push(
+            ...item.system.usable_actable_modifiers_typed.filter(
+              (act_mod_id_data) => act_mod_id_data.main,
+            ),
+          );
+        }
+        return usable_actable_modifiers.map((act_mod_id_data) => {
+          return item.actor.items.get(act_mod_id_data.uuid);
+        });
+      }
+    }
+
+    return [];
+  }
+
   static getActableModifiersTypedApplicable(item) {
     if (item.type !== "weapon") {
       console.error("Invalid call, only weapon have typed modifier data");
@@ -1217,8 +1263,6 @@ RULESET["item"] = class ItemRuleset {
 
   static isCompatibleItemFromMartialRoll(item, martial_type) {
     if (item.type != "weapon") return false;
-    console.debug("isCompatibleItemFromMartialRoll");
-    console.debug(martial_type);
     switch (martial_type) {
       case "contact":
         return item.system.associated_skill.startsWith(

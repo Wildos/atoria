@@ -41,7 +41,6 @@ export class KnowledgeArrayField extends HandlebarsApplicationMixin(
   }
 
   get title() {
-    console.debug();
     return (
       game.settings.settings.get("atoria." + this.type)?.name ??
       "<Setting not found>"
@@ -92,8 +91,6 @@ export class KnowledgeArrayField extends HandlebarsApplicationMixin(
    * @returns {Promise<void>}
    */
   static async #onAdd(event, form, formData) {
-    console.debug(event);
-
     if (this.#knowledges == undefined) {
       this.#knowledges = [];
     }
@@ -147,15 +144,6 @@ export class KnowledgeArrayField extends HandlebarsApplicationMixin(
   }
 
   static getKnowledgeLabelFromId(array, id) {
-    console.debug("getKnowledgeLabelFromId: " + id);
-    console.debug(array);
-    console.debug(
-      array.find((elem) => {
-        console.debug("elem");
-        console.debug(elem);
-        return elem.id == id;
-      }),
-    );
     return array.find((elem) => elem.id == id)?.label;
   }
 }

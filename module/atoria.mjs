@@ -362,20 +362,11 @@ Hooks.on("renderChatMessageHTML", (message, html, context) => {
  * Adds a datalist helper for suggesting valid Actor attribute keys in the ActiveEffect config dialog.
  */
 Hooks.on("renderActiveEffectConfig", (activeEffectConfig, html, data) => {
-  console.debug("renderActiveEffectConfig");
-  console.debug(activeEffectConfig);
-  console.debug(html);
-  console.debug(data);
-
   const effectsSection = html.querySelector("section.tab.changes");
   if (!effectsSection) return;
-  console.debug("effectsSection");
-  console.debug(effectsSection);
   const datalist = document.createElement("datalist");
   datalist.id = "attribute-key-list";
   const inputFields = effectsSection.querySelectorAll(".key input");
-  console.debug("inputFields");
-  console.debug(inputFields);
   inputFields.forEach((input) => input.setAttribute("list", datalist.id));
   const attributeKeys = [];
 
