@@ -1,0 +1,23 @@
+<table>
+    <thead>
+        <tr>
+            <th scope="col"><label>{{ localize "ATORIA.Settings.KnowledgeArray.Id" }}</label></th>
+            <th scope="col"><label>{{ localize "ATORIA.Settings.KnowledgeArray.LabelValue" }}</label></th>
+            <th scope="col"></th>
+        </tr>
+        <tr>
+            <th scope="row"><input type="text" id="new_knowledge_id" name="id" value="" placeholder="{{localize "<identifiant>"}}" pattern="[a-z]+" minlength="3" required/></th>
+            <th scope="row"><input type="text" name="label" value="" placeholder="{{localize "<label>"}}" minlength="3" required/></th>
+            <th scope="row"><button data-action="add">{{localize "add"}}</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each knowledges as |p|}}
+        <tr class="knowledge">
+            <th scope="row"><label class="index">{{ localize p.id }}</label></th>
+            <th scope="row"><label class="label">{{ localize p.label }}</label></th>
+            <th scope="row"><button type="remove" data-action="remove" data-id="{{p.id}}">{{localize "remove"}}</button></th>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

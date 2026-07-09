@@ -5,10 +5,10 @@
     {{#if item.system.restriction}}
     <p>{{localize systemFields.restriction.label}}: {{brNewLines item.system.restriction}}</p>
     {{/if}}
-    {{#if item.system.description}}
-    <p>{{localize systemFields.description.label}}: {{brNewLines item.system.description}}</p>
-    {{/if}}
     {{#if item.system.effect}}
     <p>{{localize systemFields.effect.label}}: {{brNewLines item.system.effect}}</p>
+    {{/if}}
+    {{#if item.system.critical_effect}}
+    <p>{{localize systemFields.critical_effect.label}}: {{brNewLines item.system.critical_effect}}</p>
     {{/if}}
 </section>

@@ -3,6 +3,8 @@
 
 @action-n-feature-width: 20em;
 
+@combat-width: 7em;
+
 .atoria-player-character-page {
     display: flex;
     flex-direction: row;
@@ -17,6 +19,86 @@
         .flexrow {
             align-items: flex-start;
         }
+
+        .atoria-combat{
+            min-width: @combat-width;
+            max-width: @combat-width;
+            > h5 {
+                max-width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                line-height: normal;
+            }
+            > div {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: flex-start;
+
+                min-height: var(--atoria-skill-height);
+                max-height: var(--atoria-skill-height);
+
+                flex: 0 1 auto;
+                border: none;
+                > label {
+                    padding: 0px 3px;
+                    border: var(--atoria-border-style);
+                    border-radius: var(--atoria-border-style-radius);
+
+                    text-align: center;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+
+                    flex: 1;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    height: var(--atoria-skill-height);
+                    max-height: var(--atoria-skill-height);
+
+                    input{
+                        display:none;
+                    }
+                }
+            }
+        }
+
+
+        .atoria-offense, .atoria-defense {
+            /* display: grid; */
+            /* grid-template-columns: min-content auto @ofde-fense-text-area-width; */
+
+            display: flex;
+            flex-direction: column;
+
+            > div.flexrow {
+                min-height: calc(2px + var(--atoria-base-line-block-height));
+                max-height: calc(2px + var(--atoria-base-line-block-height));
+                /* border: var(--atoria-border-style); */
+
+                label {
+                    flex:0;
+                    min-width:fit-content;
+                }
+            }
+            input[type=checkbox]::after, input[type=radio]::after
+            {
+                --checkbox-content: attr(data-letter) !important;
+            }
+            input.atoria-offense-amount, input.atoria-defense-amount {
+                margin-left:auto;
+            }
+
+            textarea {
+                line-height: normal;
+                min-height: 3lh;
+            }
+        }
+
 
         .atoria-character-skill-n-knowledge {
             display: flex;
@@ -54,44 +136,16 @@
                 }
             }
         }
+
+
     }
     > .second-col {
         min-width: @action-n-feature-width;
         width: 100%;
 
-        .atoria-offense-defense {
-            /* display: grid; */
-            /* grid-template-columns: min-content auto @ofde-fense-text-area-width; */
-
-            display: flex;
-            flex-direction: column;
-
-            flex: 0;
-
-            > div.flexrow {
-                min-height: calc(2px + var(--atoria-base-line-block-height));
-                max-height: calc(2px + var(--atoria-base-line-block-height));
-                /* border: var(--atoria-border-style); */
-            }
-            > label {
-                min-width: @ofde-fense-label-area-width;
-                padding: 0 5px;
-
-                border: var(--atoria-border-style);
-                border-radius: var(--atoria-border-style-radius);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
-            }
-            input[type=checkbox]::after {
-                --checkbox-content: attr(data-letter) !important;
-            }
-
-            > textarea {
-                // line-height: var(--atoria-base-line-block-height);
-                min-height: 1lh;
-            }
+        > .atoria-header-side {
+         min-height: calc(var(--atoria-skill-height) * 7 + var(--atoria-skill-height) * 4 + var(--atoria-rows-gap));
         }
+
     }
 }

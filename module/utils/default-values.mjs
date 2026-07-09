@@ -46,6 +46,7 @@ DEFAULT_VALUES["character"] = {
       athletic: ["hiking", "running", "jump"],
       slyness: ["silence", "stealth", "concealment"],
       environment: ["climbing", "nage", "fortitude"],
+      reflex: ["dodge", "parry", "opportuneness"],
       sturdiness: ["force", "tenacity"],
     },
     social: {
@@ -56,7 +57,6 @@ DEFAULT_VALUES["character"] = {
       trickery: ["acting", "lying", "provocation"],
     },
     combative: {
-      reflex: ["dodge", "parry", "opportuneness"],
       weapon: [
         "brawl",
         "blade",
@@ -120,56 +120,5 @@ DEFAULT_VALUES["character"] = {
 };
 
 DEFAULT_VALUES["models"] = models;
-
-DEFAULT_VALUES["get_opposed_skills"] = () => {
-  const skill_list = {};
-  for (const skill_path of RULESET.character.getOpposingSaves()) {
-    skill_list[skill_path] = utils.getSkillTitle(skill_path, undefined);
-  }
-  return skill_list;
-};
-
-DEFAULT_VALUES["get_associated_skills"] = () => {
-  const skill_list = {};
-  for (const skill_group in DEFAULT_VALUES.character.skills) {
-    for (const skill_cat in DEFAULT_VALUES.character.skills[skill_group]) {
-      for (const skill_name of DEFAULT_VALUES.character.skills[skill_group][
-        skill_cat
-      ]) {
-        let skill_path = `system.skills.${skill_group}.${skill_cat}.${skill_name}`;
-        skill_list[skill_path] = utils.getSkillTitle(skill_path, undefined);
-      }
-    }
-  }
-  for (const skill_group in DEFAULT_VALUES.character.knowledges) {
-    for (const skill_cat in DEFAULT_VALUES.character.knowledges[skill_group]) {
-      for (const skill_name of DEFAULT_VALUES.character.knowledges[skill_group][
-        skill_cat
-      ]) {
-        let skill_path = `system.knowledges.${skill_group}.${skill_cat}.${skill_name}`;
-        skill_list[skill_path] = utils.getSkillTitle(skill_path, undefined);
-      }
-    }
-  }
-  return skill_list;
-};
-
-DEFAULT_VALUES["get_weapon_associated_skills"] = () => {
-  const skill_list = {};
-  for (const skill_cat in DEFAULT_VALUES.character.skills.combative) {
-    if (skill_cat == "reflex") {
-      continue;
-    }
-    for (const skill_name of DEFAULT_VALUES.character.skills.combative[
-      skill_cat
-    ]) {
-      let skill_path = `system.skills.combative.${skill_cat}.${skill_name}`;
-      skill_list[skill_path] = utils
-        .getSkillTitle(skill_path, undefined)
-        .split("-")[1];
-    }
-  }
-  return skill_list;
-};
 
 export default DEFAULT_VALUES;

@@ -5,57 +5,23 @@ export default class AtoriaInteractableChatMessage
     const fields = foundry.data.fields;
     let schema = {};
 
-    schema.additionalCssClass = new fields.ArrayField(
-      new fields.StringField({
-        required: true,
-        nullable: false,
-        blank: false,
-        initial: "",
-        label: "ATORIA.Model.Additional_css_class",
-      }),
-      { required: true, label: "ATORIA.Model.Additional_css_class" },
-    );
-
-    schema.flavor_tooltip = new fields.HTMLField({ textSearch: true });
-
-    schema.postContent = new fields.HTMLField({ textSearch: true });
-
-    schema.effect = new fields.HTMLField({ textSearch: true });
-    schema.critical_effect = new fields.HTMLField({ textSearch: true });
-
-    schema.related_items = new fields.ArrayField(
+    schema.used_perks = new fields.ArrayField(
       new fields.SchemaField(
         {
-          type: new fields.StringField({
+          name: new fields.StringField({
+            required: true,
+            nullable: false,
+            blank: false,
+            initial: "<Unamed related item>",
+            label: "ATORIA.Model.Chat_message.Related_item_data.Name",
+          }),
+          description: new fields.StringField({
             required: true,
             nullable: false,
             blank: true,
             initial: "",
-            label: "ATORIA.Model.Chat_message.Related_item_data.Type",
+            label: "ATORIA.Model.Chat_message.Related_item_data.Description",
           }),
-          items_id: new fields.ArrayField(
-            new fields.StringField({
-              required: true,
-              nullable: false,
-              blank: false,
-              initial: "",
-              label: "ATORIA.Model.Chat_message.Related_item_data.Item_id",
-            }),
-            {
-              required: false,
-              label: "ATORIA.Model.Chat_message.Related_item_data.Items_id",
-            },
-          ),
-          items: new fields.ArrayField(
-            new fields.ObjectField({
-              required: true,
-              label: "ATORIA.Model.Chat_message.Related_item_data.Item",
-            }),
-            {
-              required: false,
-              label: "ATORIA.Model.Chat_message.Related_item_data.Items",
-            },
-          ),
         },
         {
           required: false,
@@ -69,32 +35,31 @@ export default class AtoriaInteractableChatMessage
       },
     );
 
-    schema.aiming_type = new fields.StringField({
-      required: true,
-      nullable: false,
-      blank: true,
-      initial: "",
-      label: "ATORIA.Dialog.Roll.Aiming",
-    });
-
-    schema.savesAsked = new fields.ArrayField(
-      new fields.StringField({
-        required: true,
-        nullable: false,
-        blank: false,
-        initial: "",
-        label: "ATORIA.Model.Magic.Save_data.Skill_path",
-      }),
+    schema.saves_asked = new fields.ArrayField(
+      new fields.SchemaField(
+        {
+          name: new fields.StringField({
+            required: true,
+            nullable: false,
+            blank: false,
+            initial: "<Unamed related item>",
+            label: "ATORIA.Model.Chat_message.Saves_Asked.Name",
+          }),
+          skill_path: new fields.StringField({
+            required: true,
+            nullable: false,
+            blank: true,
+            initial: "",
+            label: "ATORIA.Model.Chat_message.Saves_Asked.Description",
+          }),
+        },
+        {
+          required: false,
+          label: "ATORIA.Model.Chat_message.Saves_Asked.Label",
+        },
+      ),
       { required: false, label: "ATORIA.Model.Magic.Saves_asked" },
     );
-
-    schema.owning_actor_id = new fields.StringField({
-      required: true,
-      nullable: false,
-      blank: true,
-      initial: "",
-      label: "ATORIA.Model.Chat_message.Owning_actor_id",
-    });
 
     return schema;
   }

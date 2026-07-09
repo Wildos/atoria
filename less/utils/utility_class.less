@@ -135,6 +135,17 @@
             grid-column: 1 / span 2;
         }
     }
+    .grid-3col {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+        .double-col-field {
+            grid-column: 1 / span 2;
+        }
+        .triple-col-field {
+            grid-column: 1 / span 3;
+        }
+    }
 
     .flex0 {
         flex: 0;
@@ -159,5 +170,17 @@
         max-width: 1lh;
     }
 
+    .atoria-exponent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 0.7em;
+    }
+
+    .fit-width{
+        width: fit-content;
+        min-width: fit-content;
+        max-width: fit-content;
+    }
 
 }

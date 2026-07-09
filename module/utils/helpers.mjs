@@ -1,27 +1,7 @@
 import * as utils from "../utils/module.mjs";
 import * as models from "../models/module.mjs";
 import RULESET from "./ruleset.mjs";
-
-import {
-  AtoriaRollItemDialogV2,
-  AtoriaRollSkillDialogV2,
-} from "../sheets/module.mjs";
-
-export function hasPopoutV2Module() {
-  try {
-    return PopoutV2Module !== undefined;
-  } catch (e) {
-    return false;
-  }
-}
-
-export function isPoppedOut(app) {
-  if (hasPopoutV2Module())
-    return PopoutV2Module.singleton.poppedOut.has(app.appId);
-  else {
-    return false;
-  }
-}
+import * as rolls from "../rolls/module.mjs";
 
 export async function confirmDeletion(element_name) {
   element_name =
@@ -83,53 +63,7 @@ export function getSkillData(item, skill_path) {
   if (skill_data === undefined) {
     return undefined;
   }
-  skill_data.critical_success_amount =
-    utils.ruleset.character.getSkillCriticalSuccessAmount(skill_data);
-  skill_data.critical_fumble_amount =
-    utils.ruleset.character.getSkillCriticalFumbleAmount(skill_data);
-  skill_data.label = item.actor.getSkillTitle(skill_path);
   return skill_data;
-}
-
-export async function skillCreationDialog(actor, skill_cat) {
-  const content = await renderTemplate(
-    CONFIG.ATORIA.DIALOG_TEMPLATES.skill_creation,
-    {},
-  );
-  const return_format = {
-    skill_key: "",
-    skill_label: "",
-  };
-  return await foundry.applications.api.DialogV2.prompt({
-    window: {
-      title: game.i18n.format("ATORIA.Dialog.Skill_creation.Title", {
-        skill_cat: getSkillTitle(skill_cat),
-      }),
-    },
-    rejectClose: false,
-    content: content,
-    ok: {
-      label: game.i18n.localize("ATORIA.Dialog.Confirm"),
-      callback: (event, button, dialog) => {
-        const formElement = dialog.querySelector("form");
-        const formData = new FormDataExtended(formElement);
-        const formDataObject = formData.object;
-
-        formDataObject["skill_key"] = Array.from(
-          formDataObject["skill_name"].toLowerCase(),
-        )
-          .filter((char) => char >= "a" && char <= "z")
-          .join("");
-
-        formDataObject["skill_label"] = formDataObject["skill_name"];
-        return foundry.utils.mergeObject(return_format, formDataObject, {
-          overwrite: true,
-          insertKeys: false,
-        });
-      },
-    },
-  });
-  return null;
 }
 
 export async function sendChatMessageFromRollData(actor, actor_id, roll_data) {
@@ -239,10 +173,37 @@ export async function skillRollDialog(actor, skill_path) {
     return undefined;
   }
 
-  let roll_data = await AtoriaRollSkillDialogV2.wait({
-    actor: actor,
-    skill: actor.getSkillFromPath(skill_path),
-  });
+  // let roll_data = await AtoriaRollSkillDialogV2.wait({
+  //   actor: actor,
+  //   skill: actor.getSkillFromPath(skill_path),
+  // });
+
+  let skill = actor.getSkillFromPath(skill_path);
+  let skill_roll_data = {
+    owning_actor_id: actor._id,
+    success_value: skill.success,
+    critical_success_amount: skill.critical_success_amount,
+    critical_fumble_amount: skill.critical_fumble_amount,
+    title: skill.label,
+    advantage_amount: 0,
+    disadvantage_amount: 0,
+    luck_applied: 0,
+    dos_mod: 0,
+    is_danger: false,
+  };
+  const roll = new rolls.AtoriaDOSRoll(actor.getRollData(), skill_roll_data);
+  await roll.evaluate();
+  let roll_data = {
+    chat_rolls: [roll],
+    luck_applied: 0,
+    used_keywords: [],
+    used_features: [], // uuid
+    roll_mode: utils.convertDesiredVisibilityToRollMode("public"),
+    flavor: null,
+    flavor_tooltip: null,
+    effect: "",
+    critical_effect: "",
+  };
 
   if (roll_data === null) {
     return null;
@@ -373,18 +334,15 @@ export function convertRollModeToDesiredVisibility(desired_roll_mod) {
 
 export function getSkillTitle(skill_path, skill_label = undefined) {
   const skill_path_parts = skill_path.split(".");
-  skill_path_parts[0] = "Ruleset"; // System => Ruleset
 
   if (skill_label === undefined) {
-    skill_label =
-      skill_path_parts.length > 1
-        ? utils.buildLocalizeString(...skill_path_parts, "Label")
-        : undefined;
-    if (skill_label === undefined) {
-      console.warn("Invalid skill path given, invalid name returned");
-      skill_label = "ATORIA.Model.Invalid_name";
+    if (skill_path_parts[1] === "knowledges") {
+      skill_label = RULESET.character.getKnowledgeLabel(skill_path_parts);
+    } else {
+      skill_label = RULESET.character.getSkillLabel(skill_path_parts);
     }
   }
+  skill_path_parts[0] = "Ruleset"; // System => Ruleset
 
   let skill_name = game.i18n.localize(skill_label);
 
@@ -466,4 +424,17 @@ export function isSkillPathsMatchingAssociatedOne(
   )
     return true;
   return false;
+}
+
+export function get_empty_cost() {
+  let cost_field = models.utils.defineCostField();
+  return cost_field.getInitialValue({});
+}
+
+export function add_costs(cost_a, cost_b) {
+  let res = foundry.deepClone(cost_a);
+  for (let key in cost_b) {
+    res[key] = (res[key] ?? 0) + cost_b[key];
+  }
+  return res;
 }

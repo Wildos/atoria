@@ -33,7 +33,9 @@ export function visualNumberInput(field, config) {
   label.innerHTML = game.i18n.localize(field.label);
   input.append(label);
 
-  for (const i in [...Array(field.max).keys()]) {
+  const amount_max = config.max ?? field.max;
+
+  for (const i in [...Array(amount_max).keys()]) {
     let value_amount = Number(i) + 1;
     const checked_input = document.createElement("input");
     checked_input.type = "checkbox";

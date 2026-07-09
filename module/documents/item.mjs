@@ -1,6 +1,8 @@
 import * as utils from "../utils/module.mjs";
 import * as rolls from "../rolls/module.mjs";
 import RULESET from "../utils/ruleset.mjs";
+import * as model_utils from "../models/helpers.mjs";
+import { AtoriaRollDialog } from "../sheets/module.mjs";
 
 export default class AtoriaItem extends Item {
   // Prepare data for the item execute the following, in order:
@@ -9,29 +11,21 @@ export default class AtoriaItem extends Item {
   // prepareEmbeddedDocuments() (including active effects),
   // prepareDerivedData().
 
-  prepareBaseData() {}
+  prepareBaseData() {
+    super.prepareBaseData();
+  }
 
   async prepareDerivedData() {
-    this.descriptive_tooltip = await renderTemplate(
-      CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES[this.type],
-      {
-        item: this,
-        systemFields: this.system.schema.fields,
-        keywords_recap: this.getKeywordRecap(),
-      },
-    );
-    if (this.type === "spell") {
-      for (let supp of this.system.supplementaries_list) {
-        supp.descriptive_tooltip = await renderTemplate(
-          CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["supplementary"],
-          {
-            supplementary: supp,
-            systemFields:
-              this.system.schema.fields.supplementaries_list.element.fields,
-          },
-        );
-      }
-    }
+    await super.prepareDerivedData();
+    this.descriptive_tooltip =
+      await foundry.applications.handlebars.renderTemplate(
+        CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES[this.type],
+        {
+          item: this,
+          systemFields: this.system.schema.fields,
+          keywords_recap: this.getKeywordRecap(),
+        },
+      );
     if (this.system.usable_actable_modifiers !== undefined) {
       let invalid_ids = this.system.usable_actable_modifiers.flatMap((id) => {
         let usable_actable = this.actor.items.get(id);
@@ -62,6 +56,7 @@ export default class AtoriaItem extends Item {
   }
 
   prepareEmbeddedDocuments() {
+    super.prepareEmbeddedDocuments();
     if (["armor", "weapon"].includes(this.type)) {
       for (const collectionName of Object.keys(
         this.constructor.hierarchy || {},
@@ -344,8 +339,8 @@ export default class AtoriaItem extends Item {
     }
   }
 
-  getAvailableActableModifiers() {
-    return utils.ruleset.item.getActableModifiersApplicable(this);
+  getAvailableActableModifiers(skill_path) {
+    return utils.ruleset.item.getActableModifiersAvailable(this, skill_path);
   }
 
   isLimitationUsable() {
@@ -376,7 +371,23 @@ export default class AtoriaItem extends Item {
     }
   }
 
-  getAlterations(skill_path) {
+  getSavesAsked() {
+    switch (this.type) {
+      case "weapon":
+      case "armor":
+      case "kit":
+      case "technique":
+      case "incantatory-addition":
+      case "spell":
+      case "opportunity":
+      case "action":
+        return utils.ruleset.item.getSavesAsked(this);
+      default:
+        return [];
+    }
+  }
+
+  getAlterations(skill_paths) {
     const item_with_alterations = [
       "kit",
       "armor",
@@ -392,9 +403,8 @@ export default class AtoriaItem extends Item {
       case "weapon":
       case "feature":
         return this.system.skill_alterations
-          .filter(
-            (skill_alteration) =>
-              skill_alteration.associated_skill === skill_path,
+          .filter((skill_alteration) =>
+            skill_paths.includes(skill_alteration.associated_skill),
           )
           .map((skill_alteration) => {
             let result = {
@@ -432,14 +442,11 @@ export default class AtoriaItem extends Item {
         return [];
 
       changelog_messages.push(
-        game.i18n.format(
-          game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-          {
-            type: this.name,
-            previous: this.system.limitation.usage_left,
-            new: this.system.limitation.usage_max,
-          },
-        ),
+        game.i18n.format("ATORIA.Chat_message.Changelog.Regain", {
+          type: this.name,
+          previous: this.system.limitation.usage_left,
+          new: this.system.limitation.usage_max,
+        }),
       );
 
       await this.update({
@@ -466,14 +473,11 @@ export default class AtoriaItem extends Item {
             : supplementary.name;
 
         changelog_messages.push(
-          game.i18n.format(
-            game.i18n.localize("ATORIA.Chat_message.Changelog.Regain"),
-            {
-              type: `${this.name} - ${supp_name}`,
-              previous: supplementary.limitation.usage_left,
-              new: supplementary.limitation.usage_max,
-            },
-          ),
+          game.i18n.format("ATORIA.Chat_message.Changelog.Regain", {
+            type: `${this.name} - ${supp_name}`,
+            previous: supplementary.limitation.usage_left,
+            new: supplementary.limitation.usage_max,
+          }),
         );
 
         new_supplementaries_list[idx].limitation.usage_left =
@@ -486,49 +490,377 @@ export default class AtoriaItem extends Item {
     return changelog_messages;
   }
 
-  async rollAction() {
-    const action_item_types = ["weapon", "action", "spell", "opportunity"];
-    if (!action_item_types.includes(this.type)) return;
+  getAssociatedSkills(forced_martial_type = undefined) {
+    if (this.type == "spell")
+      return [
+        {
+          success: this.system.success,
+          critical_success_amount: this.system.critical_success,
+          critical_fumble_amount: this.system.critical_fumble,
+          label: this.name,
+          path: "",
+          proper_label: this.name,
+          type: "spell",
+        },
+      ];
 
-    const used_ressources = await utils.itemRollDialog(this);
-    if (used_ressources === null) return;
+    let skills = [];
+    if (this.type == "opportunity")
+      skills = [
+        this.actor.getSkillFromPath(
+          utils.ruleset.character.OPPORTUNITY_SKILL_PATH,
+        ),
+      ];
 
-    for (let keyword of used_ressources.used_keywords) {
-      this.actor.takeOneKeywordUse(keyword);
+    if (this.type == "weapon") {
+      skills.push(
+        ...utils.ruleset.item.getApplicableWeaponSkillFromKnowledge(
+          this.actor,
+          this,
+          forced_martial_type,
+        ),
+      );
+    } else if (
+      this.system.associated_skill != undefined &&
+      this.system.associated_skill != ""
+    ) {
+      skills.push(this.actor.getSkillFromPath(this.system.associated_skill));
     }
 
-    for (let feature_uuid of used_ressources.used_features) {
-      let feature = fromUuidSync(feature_uuid);
-      feature.takeOneLimitationUse();
-    }
-    if (Object.keys(used_ressources.used_supplementaries).length != 0) {
-      let supplementaries_list = this.system.supplementaries_list;
-      for (let [supplementary_idx, amount] of Object.entries(
-        used_ressources.used_supplementaries,
-      )) {
-        let supplementary = supplementaries_list[supplementary_idx];
-        if (supplementary.limitation.regain_type != "permanent") {
-          supplementary.limitation.usage_left -= 1;
-        }
-      }
-      this.update({
-        "system.supplementaries_list": supplementaries_list,
-      });
-    }
-    for (let actable_modifier_uuid of used_ressources.used_actable_modifiers) {
-      let actable_modifier = fromUuidSync(actable_modifier_uuid);
-      actable_modifier.takeOneLimitationUse();
-    }
+    return skills.filter((skill) => skill != undefined);
+  }
 
-    this.takeOneLimitationUse();
+  getSupplementaries() {
+    if (this.type != "spell") return [];
+    return this.system.supplementaries_list;
+  }
 
-    this.actor?.update({
-      "system.luck": this.actor.system.luck - used_ressources.luck,
+  takeOneSupplementaryUse(supp_id) {
+    if (this.type != "spell") return;
+    let supplementaries_list = this.system.supplementaries_list;
+    let supp = supplementaries_list.at(supp_id);
+    if (supp == undefined) return;
+
+    if (supp.limitation.regain_type != "permanent") {
+      supp.limitation.usage_left -= 1;
+    }
+    this.update({
+      "system.supplementaries_list": supplementaries_list,
     });
   }
 
+  async fillSkillWithUsableData(skill_data) {
+    skill_data.usable_keywords = await utils.get_usable_keywords(
+      this.actor,
+      this,
+      skill_data.path,
+    );
+    skill_data.usable_perks = utils.get_usable_perks_for_skill(
+      this.actor,
+      skill_data.path,
+    );
+    skill_data.usable_supplementaries = this.getSupplementaries().map(
+      (supp_data, idx) => {
+        supp_data.id = idx;
+        return supp_data;
+      },
+    );
+  }
+
+  _getEffectForSkillPath(skill_path_used) {
+    if (this.type == "weapon") {
+      let skills_path = skill_path_used.split("///");
+      let martial_path = skills_path[0];
+      let weapon_path = skills_path[1];
+      switch (martial_path) {
+        case utils.ruleset.character.MARTIAL_APART_PATH: {
+          if (weapon_path == utils.ruleset.character.ENCHANTED_SKILL_PATH) {
+            // Foca effect needed
+            return [
+              model_utils.rollFieldToEffect(this.system.focuser_damage_roll),
+            ];
+          }
+        }
+      }
+      // base effect needed
+      return [model_utils.rollFieldToEffect(this.system.damage_roll)];
+    }
+    return this.get_effect();
+  }
+
+  async rollAction(forced_martial_type = undefined) {
+    const action_item_types = ["weapon", "action", "spell", "opportunity"];
+    if (!action_item_types.includes(this.type)) return;
+
+    let roll_label = this.name;
+
+    let skills = this.getAssociatedSkills(forced_martial_type);
+
+    if (skills.length != 0) {
+      for (const skill_data of skills) {
+        await this.fillSkillWithUsableData(skill_data);
+      }
+    }
+
+    if (this.type == "weapon") {
+      if (forced_martial_type == undefined) {
+        return [];
+      }
+      let forced_martial_type_path = undefined;
+      switch (forced_martial_type) {
+        case "contact":
+          forced_martial_type_path =
+            utils.ruleset.character.MARTIAL_CONTACT_PATH;
+          break;
+        case "apart":
+          forced_martial_type_path = utils.ruleset.character.MARTIAL_APART_PATH;
+          break;
+        case "instrument":
+          forced_martial_type_path =
+            utils.ruleset.character.MARTIAL_INSTRUMENT_PATH;
+          break;
+      }
+
+      let martial_skill = this.actor.getSkillFromPath(forced_martial_type_path);
+      await this.fillSkillWithUsableData(martial_skill);
+
+      skills = skills.map((skill) =>
+        utils.ruleset.item.getFinalSkillDataFromKnowledgeAndWeapon(
+          martial_skill,
+          skill,
+        ),
+      );
+
+      roll_label = game.i18n.localize(martial_skill.label) + " - " + roll_label;
+    }
+
+    if (["spell", "weapon", "action"].includes(this.type)) {
+      if (skills.length != 0) {
+        for (const skill_data of skills) {
+          skill_data.usable_act_mod = this.getAvailableActableModifiers(
+            skill_data.path,
+          );
+        }
+      }
+    }
+
+    // Get roll parameters
+    let roll_parameters = await AtoriaRollDialog.ask({
+      actor_uuid: this.actor.uuid,
+      roll_label: roll_label,
+      skills: skills,
+      weapon: this.type === "weapon" ? this : undefined,
+    });
+
+    if (roll_parameters === null) return;
+
+    // Create message roll
+    let roll_data = utils.get_roll_data(
+      roll_parameters,
+      roll_parameters.roll_data.path,
+    );
+    utils.ruleset.item.applyRollDataRules(this, roll_data);
+    roll_data.title = roll_label;
+
+    let effects_data = this._getEffectForSkillPath(
+      roll_parameters.roll_data.path,
+    );
+    effects_data.push(...utils.get_effects_data(roll_parameters));
+
+    let critical_effects_data = this.get_critical_effect();
+    critical_effects_data.push(
+      ...utils.get_critical_effects_data(roll_parameters),
+    );
+
+    let used_perks_data = {
+      keywords: {
+        length: roll_parameters.used_keywords.length,
+        description: (
+          await Promise.all(
+            roll_parameters.used_keywords.map(
+              async (keyword) =>
+                await this.actor.getKeywordTooltipHTML(keyword),
+            ),
+          )
+        ).join(""),
+      },
+      supplementaries: {
+        length: roll_parameters.used_supplementaries.length,
+        description: (
+          await Promise.all(
+            roll_parameters.used_supplementaries.map(
+              async (supplementary) =>
+                await foundry.applications.handlebars.renderTemplate(
+                  CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES["supplementary"],
+                  {
+                    supplementary: supplementary,
+                    systemFields:
+                      this.system.schema.fields.supplementaries_list.element
+                        .fields,
+                  },
+                ),
+            ),
+          )
+        ).join(""),
+      },
+      act_mod: {
+        length: 0,
+        description: "",
+      },
+      feature: {
+        length: 0,
+        description: "",
+      },
+    };
+    for (let item of roll_parameters.used_perks) {
+      if (item.type === "feature") {
+        used_perks_data["feature"].length += 1;
+        used_perks_data["feature"].description += await item.getTooltipHTML();
+      } else if (["technique", "incantatory-addition"].includes(item.type)) {
+        used_perks_data["act_mod"].length += 1;
+        used_perks_data["act_mod"].description += await item.getTooltipHTML();
+      } else if (["weapon", "armor", "kit"].includes(item.type)) {
+        used_perks_data["feature"].length += 1;
+        used_perks_data["feature"].description += await item.getTooltipHTML();
+      } else {
+        console.error("Unknown type found in used_perks");
+      }
+    }
+    let used_perks = [];
+    if (used_perks_data.keywords.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.Keywords", {
+          amount: used_perks_data.keywords.length,
+        }),
+        description: used_perks_data.keywords.description,
+      });
+    }
+    if (used_perks_data.supplementaries.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.Supplementaries", {
+          amount: used_perks_data.supplementaries.length,
+        }),
+        description: used_perks_data.supplementaries.description,
+      });
+    }
+    if (used_perks_data.act_mod.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.ActableModifiers", {
+          amount: used_perks_data.act_mod.length,
+        }),
+        description: used_perks_data.act_mod.description,
+      });
+    }
+    if (used_perks_data.feature.length !== 0) {
+      used_perks.push({
+        name: game.i18n.format("ATORIA.Chat_message.Used.Features", {
+          amount: used_perks_data.feature.length,
+        }),
+        description: used_perks_data.feature.description,
+      });
+    }
+    let system_data = {
+      used_perks: used_perks,
+      saves_asked: utils.get_asked_saves(roll_parameters).map((skill_path) => {
+        let skill_path_parts = skill_path.split(".");
+        skill_path_parts.shift();
+        let skill_label =
+          utils.ruleset.character.getSkillLabel(skill_path_parts);
+        return {
+          skill_path: skill_path,
+          name: skill_label,
+        };
+      }),
+    };
+
+    if (roll_data.path != undefined) {
+      let rolls = await utils.create_rolls_with_effect(
+        this,
+        roll_data,
+        effects_data,
+        critical_effects_data,
+      );
+      let main_roll_is_success = rolls[0].is_success;
+
+      await utils.chat_message_from_roll(
+        this,
+        roll_parameters.message_mode,
+        rolls,
+        system_data,
+      );
+      if (main_roll_is_success) {
+        for (let supp of roll_parameters.used_supplementaries) {
+          this.takeOneSupplementaryUse(supp.id);
+        }
+      }
+    } else {
+      let rolls = await utils.create_simple_effect_rolls(effects_data);
+      await utils.chat_message_from_non_roll(
+        this,
+        roll_parameters.message_mode,
+        game.i18n.format("ATORIA.Chat_message.Used.Actable", {
+          name: this.name,
+        }),
+        rolls,
+        system_data,
+      );
+    }
+
+    // Consume resource used
+    for (let keyword of roll_parameters.used_keywords) {
+      this.actor.takeOneKeywordUse(keyword);
+    }
+    for (let perk_item of roll_parameters.used_perks) {
+      perk_item.takeOneLimitationUse();
+    }
+
+    this.update({
+      "system.luck": this.system.luck - roll_parameters.roll_data.luck_applied,
+    });
+
+    // ----------------------------------------
+    // ----------------------------------------
+    // ----------------------------------------
+
+    // const used_ressources = await utils.itemRollDialog(this);
+    // if (used_ressources === null) return;
+
+    // for (let keyword of used_ressources.used_keywords) {
+    //   this.actor.takeOneKeywordUse(keyword);
+    // }
+
+    // for (let feature_uuid of used_ressources.used_features) {
+    //   let feature = fromUuidSync(feature_uuid);
+    //   feature.takeOneLimitationUse();
+    // }
+    // if (Object.keys(used_ressources.used_supplementaries).length != 0) {
+    //   let supplementaries_list = this.system.supplementaries_list;
+    //   for (let [supplementary_idx, amount] of Object.entries(
+    //     used_ressources.used_supplementaries,
+    //   )) {
+    //     let supplementary = supplementaries_list[supplementary_idx];
+    //     if (supplementary.limitation.regain_type != "permanent") {
+    //       supplementary.limitation.usage_left -= 1;
+    //     }
+    //   }
+    //   this.update({
+    //     "system.supplementaries_list": supplementaries_list,
+    //   });
+    // }
+    // for (let actable_modifier_uuid of used_ressources.used_actable_modifiers) {
+    //   let actable_modifier = fromUuidSync(actable_modifier_uuid);
+    //   actable_modifier.takeOneLimitationUse();
+    // }
+
+    // this.takeOneLimitationUse();
+
+    // this.actor?.update({
+    //   "system.luck": this.actor.system.luck - used_ressources.luck,
+    // });
+  }
+
   async getTooltipHTML() {
-    return await renderTemplate(
+    return await foundry.applications.handlebars.renderTemplate(
       CONFIG.ATORIA.ITEM_TOOLTIP_TEMPLATES[this.type],
       {
         item: this,
@@ -547,9 +879,19 @@ export default class AtoriaItem extends Item {
       "opportunity",
     ];
     if (item_with_effect.includes(this.type)) {
-      return this.system.effect;
+      const matches = this.system.effect.matchAll(
+        /\[\[(.*?)]{2,3}(?:{([^}]+)})?/gi,
+      );
+      let effects = [];
+      for (const match of Array.from(matches)) {
+        effects.push({
+          flavor: match[2],
+          formula: match[1],
+        });
+      }
+      return effects;
     }
-    return "";
+    return [];
   }
 
   get_critical_effect() {
@@ -561,9 +903,19 @@ export default class AtoriaItem extends Item {
       "incantatory-addition",
     ];
     if (item_with_critical_effect.includes(this.type)) {
-      return this.system.critical_effect;
+      const matches = this.system.critical_effect.matchAll(
+        /\[\[(.*?)]{2,3}(?:{([^}]+)})?/gi,
+      );
+      let effects = [];
+      for (const match of Array.from(matches)) {
+        effects.push({
+          flavor: match[2],
+          formula: match[1],
+        });
+      }
+      return effects;
     }
-    return "";
+    return [];
   }
 
   getKeywordRecap() {

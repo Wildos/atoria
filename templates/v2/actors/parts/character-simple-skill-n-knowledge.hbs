@@ -1,4 +1,19 @@
 <div class="atoria-character-simple-skill-n-knowledge">
+    <div class="atoria-combat">
+        <h5>
+            {{localize "ATORIA.Sheet.Combat.Title"}}
+        </h5>
+        <div data-action="combatRoll" data-type="contact" >
+            <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Contact.Label"}}</label>
+        </div>
+        <div data-action="combatRoll" data-type="apart" >
+            <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Apart.Label"}}</label>
+        </div>
+        <div data-action="combatRoll" data-type="instrument" >
+            <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Instrument.Label"}}</label>
+        </div>
+    </div>
+
     {{>"atoria.v2.actors_partials.skill-group-display"
         skill_group_data=actor.system.skills
         data_path="system.skills"

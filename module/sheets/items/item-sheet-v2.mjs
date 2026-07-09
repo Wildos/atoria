@@ -172,6 +172,26 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
     return context;
   }
 
+  _getFilteredAssociatedSkillList() {
+    let associated_skills =
+      this.actor?.getAssociatedSkillList() ??
+      foundry.utils.deepClone(utils.default_values.get_associated_skills());
+    if (this.actor === null) {
+      return associated_skills;
+    }
+    for (const matching_skills of Object.keys(associated_skills)) {
+      for (const hidden_skill of this.actor?.getFlag(
+        "atoria",
+        "hidden_skills",
+      ) ?? []) {
+        if (matching_skills.startsWith(hidden_skill)) {
+          delete associated_skills[matching_skills];
+        }
+      }
+    }
+    return associated_skills;
+  }
+
   async _preparePartContext(partId, context, options) {
     await super._preparePartContext(partId, context, options);
     switch (partId) {
@@ -189,9 +209,7 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
           (a, b) => (a.sort || 0) - (b.sort || 0),
         );
 
-        context.associated_skills =
-          this.actor?.getAssociatedSkillList() ??
-          foundry.utils.deepClone(utils.default_values.get_associated_skills());
+        context.associated_skills = this._getFilteredAssociatedSkillList();
         if (this.actor === null) {
           break;
         }
@@ -213,19 +231,13 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         }
         break;
       case "kit":
-        context.associated_skills =
-          this.actor?.getAssociatedSkillList() ??
-          foundry.utils.deepClone(utils.default_values.get_associated_skills());
+        context.associated_skills = this._getFilteredAssociatedSkillList();
         break;
       case "armor":
-        context.associated_skills =
-          this.actor?.getAssociatedSkillList() ??
-          foundry.utils.deepClone(utils.default_values.get_associated_skills());
+        context.associated_skills = this._getFilteredAssociatedSkillList();
         break;
       case "weapon":
-        context.associated_skills =
-          this.actor?.getAssociatedSkillList() ??
-          foundry.utils.deepClone(utils.default_values.get_associated_skills());
+        context.associated_skills = this._getFilteredAssociatedSkillList();
 
         context.associated_saves_skills =
           this.actor?.getOpposedSkillList() ??
@@ -243,36 +255,12 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         );
 
         context.weapon_associated_skills =
-          this.actor?.getWeaponSkillList() ??
-          foundry.utils.deepClone(
-            utils.default_values.get_weapon_associated_skills(),
-          );
+          this.actor?.getWeaponSkillList() ?? {};
         break;
       case "action_opportunity_pre":
       case "action_opportunity_post":
       case "feature":
-        context.associated_skills =
-          this.actor?.getAssociatedSkillList() ??
-          foundry.utils.deepClone(utils.default_values.get_associated_skills());
-        if (this.actor === null) {
-          break;
-        }
-        for (const matching_skills of Object.keys(context.associated_skills)) {
-          for (const hidden_skill of this.actor?.getFlag(
-            "atoria",
-            "hidden_skills",
-          ) ?? []) {
-            if (
-              this.actor?.type === "player-character" &&
-              hidden_skill === "system.skills.combative"
-            ) {
-              continue;
-            }
-            if (matching_skills.startsWith(hidden_skill)) {
-              delete context.associated_skills[matching_skills];
-            }
-          }
-        }
+        context.associated_skills = this._getFilteredAssociatedSkillList();
         break;
       case "header":
         context.small_image = true;

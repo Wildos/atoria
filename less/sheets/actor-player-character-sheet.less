@@ -3,6 +3,30 @@
 .sheet.player-character {
 
     .window-content {
+        display: grid;
+        grid-template-areas:
+        "nav nav"
+        "header side"
+        "main side";
+        grid-auto-rows: min-content;
+        grid-auto-columns: min-content;
+
+        > .sheet-tabs {
+            grid-area: nav;
+            max-height: fit-content;
+        }
+        > .atoria-player-header {
+            grid-area: header;
+        }
+        > .tab:not(.atoria-side-panel) {
+            grid-area: main;
+        }
+        > .tab.atoria-side-panel {
+            grid-area: side;
+        }
+
+
+
         div:not(.colored) > h5, ul:not(.colored) > h5, div.colored:has(h5) {
             background-color: #0000ff55;
         }

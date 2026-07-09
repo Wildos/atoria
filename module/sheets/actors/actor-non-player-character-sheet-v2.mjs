@@ -74,85 +74,94 @@ export default class AtoriaActorNonPlayerCharacterSheetV2 extends AtoriaActorShe
           }
         }
 
-        {
-          const tracked_keywords = [
-            "reach",
-            "brute",
-            "guard",
-            "penetrating",
-            "protect",
-            "protection",
-            "gruff",
-            "tough",
-            "grip",
-            "resistant",
-            "sturdy",
-            "stable",
-            "direct",
-            "noisy",
-            "obstruct",
-          ];
-          context.tracked_keywords_data = {};
-          context.tracked_keywords = [];
-          for (let keyword in this.actor.active_keywords_data) {
-            if (tracked_keywords.includes(keyword)) {
-              if (keyword === "direct") {
-                context.tracked_keywords.push("direct");
-                context.tracked_keywords_data["direct"] = {};
-                for (let direct_type in this.actor.active_keywords_data[
-                  "direct"
-                ]) {
-                  context.tracked_keywords_data["direct"][direct_type] = {
-                    checked:
-                      this.actor.system.keywords_used.direct.includes(
-                        direct_type,
-                      ),
-                    time_phase: utils.ruleset.keywords.get_time_phase(
-                      "direct",
-                      this.actor.active_keywords_data["direct"][direct_type],
-                    ),
-                    description: utils.ruleset.keywords.get_description(
-                      "direct",
-                      this.actor.active_keywords_data["direct"][direct_type],
-                    ),
-                  };
-                }
-              } else {
-                context.tracked_keywords.push(keyword);
-                context.tracked_keywords_data[keyword] = {
-                  label: utils.ruleset.keywords.get_localized_name(
-                    keyword,
-                    this.actor.active_keywords_data[keyword],
-                  ),
-                  time_phase: utils.ruleset.keywords.get_time_phase(
-                    keyword,
-                    this.actor.active_keywords_data[keyword],
-                  ),
-                  description: utils.ruleset.keywords.get_description(
-                    keyword,
-                    this.actor.active_keywords_data[keyword],
-                  ),
-                };
-              }
-            }
-          }
-          context.tracked_keywords.sort(function (key_a, key_b) {
-            return utils.ruleset.keywords
-              .get_localized_name(key_a)
-              .localeCompare(utils.ruleset.keywords.get_localized_name(key_b));
-          });
-        }
-
         context.feature_items = feature_items;
         context.action_items = action_items;
         context.inventory_items = inventory_items;
         context.actable_modifier_items = actable_modifier_items;
+        {
+          let preserve_keyword_items = [];
+          for (const i of context.items) {
+            switch (i.type) {
+              case "weapon":
+              case "armor":
+                if (!i.system.is_worn) continue;
+                if (i.system.keywords.preserve.active) {
+                  preserve_keyword_items.push(
+                    utils.ruleset.item.attackFromWeapon(i),
+                  );
+                }
+                break;
+              case "kit":
+                if (i.system.keywords.preserve.active) {
+                  preserve_keyword_items.push(
+                    utils.ruleset.item.attackFromWeapon(i),
+                  );
+                }
+                break;
+            }
+          }
+          context.preserve_keyword_items = preserve_keyword_items;
+          context.tracked_keywords = utils.ruleset.keywords.sharable_keywords;
+
+          context.active_keywords_data = Object.entries(
+            utils.ruleset.character.getActiveSharableKeywordsLevel(this.actor),
+          )
+            .map(([keyword_id, level]) => {
+              if (keyword_id == "direct") {
+                for (const [direct_type, direct_level] of Object.entries(
+                  level,
+                )) {
+                  const eff = utils.ruleset.character.getKeywordEffect(
+                    this.actor,
+                    keyword_id,
+                    direct_level,
+                  );
+                  eff["label"] = eff["label"] + " " + direct_type;
+                  eff["limit_remaining"] =
+                    this.actor.system.keywords[keyword_id].limit_remaining;
+                  eff["level"] = direct_level - 1;
+                  return eff;
+                }
+              } else {
+                const eff = utils.ruleset.character.getKeywordEffect(
+                  this.actor,
+                  keyword_id,
+                  level,
+                );
+                eff["limit_remaining"] =
+                  this.actor.system.keywords[keyword_id].limit_remaining;
+                eff["level"] = level - 1;
+                return eff;
+              }
+            })
+            .flat();
+        }
+        context.keywords_setup = this.actor.system.keywords;
+        for (const [keyword_id, keyword] of Object.entries(
+          context.keywords_setup,
+        )) {
+          keyword.effect_levels = [keyword.effect_level_1];
+          if (keyword.effect_level_2) {
+            keyword.effect_levels.push(keyword.effect_level_2);
+          }
+          if (keyword.effect_level_3) {
+            keyword.effect_levels.push(keyword.effect_level_3);
+          }
+          if (keyword.effect_level_4) {
+            keyword.effect_levels.push(keyword.effect_level_4);
+          }
+          if (keyword.effect_level_5) {
+            keyword.effect_levels.push(keyword.effect_level_5);
+          }
+        }
         break;
       case "skill_n_knowledge":
         context.skill_n_knowledge_sorting_list = {
-          "system.skills": ["combative", "physical", "social"],
+          "system.skills": this.isEditingMode
+            ? ["weapon", "physical", "social"]
+            : ["physical", "social"],
 
-          "system.skills.combative": ["reflex", "weapon"],
+          "system.skills.weapon": ["contact", "apart", "instrument"],
           "system.skills.social": [
             "analyse",
             "charisma",
@@ -165,6 +174,7 @@ export default class AtoriaActorNonPlayerCharacterSheetV2 extends AtoriaActorShe
             "athletic",
             "slyness",
             "environment",
+            "reflex",
             "sturdiness",
           ],
         };

@@ -60,7 +60,9 @@
         }
 
         .visual-numbered-input{
-
+            display:flex;
+            direction: row;
+            min-width: fit-content;
             .input-title{
                 display: inline-block;
                 min-width: 80px;
@@ -91,6 +93,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             row-gap: 3px;
+            min-width: fit-content;
         }
         .complex-area {
             display: flex;
@@ -108,6 +111,8 @@
                 margin-left: 3px;
             }
             .form-group {
+                display: flex;
+                flex-direction: row;
                 flex: 0;
                 min-width: fit-content;
                 label {

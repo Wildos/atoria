@@ -10,13 +10,13 @@
   ],
   "url": "https://github.com/Wildos/atoria/",
   "manifest": "https://raw.githubusercontent.com/Wildos/atoria/main/system.json",
-  "download": "https://github.com/Wildos/atoria/releases/download/v0.3.28/atoria-0.3.28.zip",
+  "download": "https://github.com/Wildos/atoria/releases/download/v0.3.29/atoria-0.3.29.zip",
   "bugs": "",
   "media": [],
-  "version": "0.3.28",
+  "version": "0.3.29",
   "compatibility": {
-    "minimum": "12.331",
-    "verified": "12.331"
+    "minimum": "14.364",
+    "verified": "14.364"
   },
   "esmodules": ["module/atoria.mjs"],
   "styles": ["atoria.css"],

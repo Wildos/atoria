@@ -1,36 +1,26 @@
-<h5 class="title atoria-expand-control" data-expand-id="atoria-sheet-keywords" data-action="expandSection">
+<h5 class="title">
     {{localize "ATORIA.Ruleset.Keywords.Label"}}
 </h5>
-<div class="atoria-keywords atoria-expand-direct-data">
-    {{#each tracked_keywords as |keyword idx|}}
-        {{#with (lookup ../tracked_keywords_data keyword) as |keyword_data|}}
-            {{#if (ne keyword "direct")}}
-                    <div class="keyword_block">
-                        {{#if keyword_data.time_phase}}
-                        {{formInput (lookup ../../systemFields.keywords_used.fields keyword) value=(lookup ../../actor.system.keywords_used keyword)  disabled=(not @root.editable) }}
-                        <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
-                        {{/if}}
-
-                        <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{keyword_data.label}}}</label>
-                    </div>
+<!-- tracked_keywords & keywords_data & keywords_fields-->
+<div class="atoria-keywords">
+    {{#each keywords_data}}
+    <div class="atoria-time-limitation-display flexrow">
+        {{#if this.limit_amount}}
+            {{#if this.direct_type}}
+                <input type="number" inputmode="numeric" data-dtype="Number" name={{concat "system.keywords." this.id ".limit_remaining." this.direct_type}} value="{{lookup this.limit_remaining this.direct_type}}"
+                    data-tooltip="{{localize (getProperty (getField ../keywords_fields (concat this.id ".effect_level_" (sum this.level 1) ".limit_remaining")) "label")}}"
+                    {{disabled (not @root.editable)}}/>
+            {{else}}
+                <input type="number" inputmode="numeric" data-dtype="Number" name={{concat "system.keywords." this.id ".limit_remaining"}} value="{{this.limit_remaining}}"
+                    data-tooltip="{{localize (getProperty (getField ../keywords_fields (concat this.id ".effect_level_" (sum this.level 1) ".limit_remaining")) "label")}}"
+                    {{disabled (not @root.editable)}}/>
             {{/if}}
-        {{/with}}
+            <label>/{{this.limit_amount}}</label>
+
+            <img src='systems/atoria/imgs/regain-type-combat.svg' title='{{localize "ATORIA.Ruleset.Time_phase.Combat"}}'/>
+        {{/if}}
+        <label data-tooltip="{{this.effect}}">{{localize this.label}}{{multiplyString "+" this.level}}
+            {{#if this.direct_type}} {{this.direct_type}}{{/if}}</label>
+    </div>
     {{/each}}
-    {{#if (lookup tracked_keywords_data "direct")}}
-        {{#with (lookup tracked_keywords_data "direct") as |keyword_type_data|}}
-            {{#each keyword_type_data as |keyword_data direct_type|}}
-                <div class="keyword_block">
-                    <input type="checkbox"
-                    data-action="toggle_keyword_direct"
-                    data-type="{{direct_type}}"
-                    {{#if keyword_data.checked}}checked{{/if}}
-                    >
-                    {{#if keyword_data.time_phase}}
-                    <img src='systems/atoria/imgs/regain-type-{{keyword_data.time_phase}}.svg' title='{{localize (lookup @root.ruleset.time_phases keyword_data.time_phase)}}'/>
-                    {{/if}}
-                    <label data-tooltip-class="atoria-tooltip" data-tooltip="{{keyword_data.description}}">{{{direct_type}}} {{localize "ATORIA.Ruleset.Keywords.Direct"}}</label>
-                </div>
-            {{/each}}
-        {{/with}}
-    {{/if}}
 </div>

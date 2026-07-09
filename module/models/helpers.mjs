@@ -1,4 +1,5 @@
 import * as utils from "../utils/module.mjs";
+import RULESET from "../utils/ruleset.mjs";
 
 export function skillInitialValue(
   skill_label,
@@ -16,24 +17,6 @@ export function skillInitialValue(
 export function skillField(skill_label, initial_value, required = true) {
   return new foundry.data.fields.SchemaField(
     {
-      type: new foundry.data.fields.StringField({
-        required: true,
-        nullable: false,
-        trim: false,
-        blank: false,
-        textSearch: false,
-        initial: "skill",
-        label: "Skill",
-      }),
-      label: new foundry.data.fields.StringField({
-        required: true,
-        nullable: false,
-        blank: false,
-        trim: false,
-        textSearch: false,
-        initial: skill_label,
-        label: "ATORIA.Model.Skill.Label",
-      }),
       success: new foundry.data.fields.NumberField({
         required: true,
         nullable: false,
@@ -42,6 +25,13 @@ export function skillField(skill_label, initial_value, required = true) {
         max: 100,
         initial: initial_value,
         label: "ATORIA.Model.Skill.Success",
+      }),
+      mastery: new foundry.data.fields.NumberField({
+        required: true,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        label: "ATORIA.Model.Skill.Mastery",
       }),
       critical_success_modifier: new foundry.data.fields.NumberField({
         required: true,
@@ -616,6 +606,20 @@ export function defineRollField(
     },
     { required: true, label: field_label },
   );
+}
+
+export function rollFieldToEffect(roll_data) {
+  let label = roll_data.name;
+  let active_keys = [];
+  for (let key in roll_data.types) {
+    if (roll_data.types[key])
+      active_keys.push(RULESET.localized_damage_type(key));
+  }
+  label += " " + active_keys.join(", ");
+  return {
+    flavor: label,
+    formula: roll_data.formula,
+  };
 }
 
 export function getInitialFullSkillSchema(skill_type_data, skill_holder_label) {

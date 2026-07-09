@@ -1,9 +1,9 @@
 {{#unless is_private}}
 <div class="atoria dice dos-dice flexcol
-{{#if is_success}}success{{/if}}
+{{#if is_success}}success{{else}}failure{{/if}}
 {{#if (or is_critical_success is_critical_failure)}}critical{{/if}}
 ">
-    <h5 {{#if owner_or_gm}}data-tooltip-class="atoria-tooltip" data-tooltip="{{{descriptive_tooltip}}}"{{/if}}>{{title}}{{#if owner_or_gm}}: {{success_value}}{{/if}}</h5>
+    <h5 {{#if owner_or_gm}}data-tooltip-class="atoria-tooltip" data-tooltip="{{{descriptive_tooltip}}}"{{/if}}>{{localize title}}{{#if owner_or_gm}}: {{success_value}}{{/if}}</h5>
     <label class="alteration-label">
         {{#if adv_disadv}}
         <span>{{adv_disadv}}</span>
@@ -22,32 +22,23 @@
         <hr/>
     {{/if}}
     <div class="flexrow">
+        <label class="title" data-tooltip='{{{dice_tooltip}}}'>
         {{#if is_success}}
             {{#if is_critical_success}}
-                <label class="critial_success-title">{{localize "ATORIA.Chat_message.Dice.Critical_success"}}: {{dice_value}}</label>
+                {{localize "ATORIA.Chat_message.Dice.Critical_success"}}
             {{else}}
-                <label class="success-title">{{localize "ATORIA.Chat_message.Dice.Success"}}: {{dice_value}}</label>
+                {{localize "ATORIA.Chat_message.Dice.Success"}}
             {{/if}}
         {{else}}
             {{#if is_critical_failure}}
-                <label class="critial_failure-title">{{localize "ATORIA.Chat_message.Dice.Critical_failure"}}: {{dice_value}}</label>
+                {{localize "ATORIA.Chat_message.Dice.Critical_failure"}}
             {{else}}
-                <label class="failure-title">{{localize "ATORIA.Chat_message.Dice.Failure"}}: {{dice_value}}</label>
+                {{localize "ATORIA.Chat_message.Dice.Failure"}}
             {{/if}}
         {{/if}}
+        : {{dice_value}}</label>
 
         <label class="result-degree" data-tooltip='{{{dice_tooltip}}}'>DR: {{degree_of_success}} ({{margin_of_success}})</label>
     </div>
-    {{#if owner_or_gm}}
-        <div class="used-features-area">
-            {{{used_features}}}
-        </div>
-        <div class="used-supplementaries-area">
-            {{{used_supplementaries}}}
-        </div>
-        <div class="used-actable-modifiers-area">
-            {{{used_actable_modifiers}}}
-        </div>
-    {{/if}}
 </div>
 {{/unless}}

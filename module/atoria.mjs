@@ -28,7 +28,7 @@ Hooks.once("init", function () {
     },
   };
 
-  CONFIG.ChatMessage.documentClass = documents.AtoriaChatMessage;
+  // CONFIG.ChatMessage.documentClass = documents.AtoriaChatMessage;
   CONFIG.ChatMessage.dataModels["interactable"] =
     models.AtoriaInteractableChatMessage;
   CONFIG.ChatMessage.template =
@@ -70,7 +70,8 @@ Hooks.once("init", function () {
       "systems/atoria/templates/v2/tooltips/items/actable-modifier-tooltip.hbs",
 
     supplementary:
-      "systems/atoria/templates/v2/tooltips/supplementary-tooltip.hbs",
+      "systems/atoria/templates/v2/tooltips/parts/supplementary-tooltip.hbs",
+    keyword: "systems/atoria/templates/v2/tooltips/keyword-tooltip.hbs",
   };
   CONFIG.ATORIA.EFFECT_TOOLTIP_TEMPLATES =
     "systems/atoria/templates/v2/tooltips/effects/effect-tooltip.hbs";
@@ -128,57 +129,64 @@ Hooks.once("init", function () {
 
   foundry.dice.terms.Die.MODIFIERS["dgr"] = danger_roll_func;
   CONFIG.Dice.rolls.push(rolls.AtoriaDOSRoll);
+  CONFIG.Dice.rolls.push(rolls.AtoriaEffectRoll);
 
-  Actors.unregisterSheet("core", ActorSheet);
-  // Actors.registerSheet("atoria", sheets.AtoriaActorChestSheet, {
-  //     types: ["chest"],
-  //     makeDefault: true,
-  //     label: "ATORIA.SheetLabels.Actor",
-  // });
-  // Actors.registerSheet("atoria", sheets.AtoriaActorHeroSheet, {
-  //     types: ["hero"],
-  //     makeDefault: true,
-  //     label: "ATORIA.SheetLabels.Actor",
-  // });
-  // Actors.registerSheet("atoria", sheets.AtoriaActorCharacterSheet, {
-  //     types: ["player-character", "non-player-character"],
-  //     makeDefault: true,
-  //     label: "ATORIA.SheetLabels.Actor",
-  // });
+  foundry.documents.collections.Actors.unregisterSheet(
+    "core",
+    foundry.appv1.sheets.ActorSheet,
+  );
 
-  Actors.registerSheet("atoria", sheets.AtoriaActorChestSheetV2, {
-    types: ["chest"],
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.ActorV2",
-  });
-  Actors.registerSheet("atoria", sheets.AtoriaActorHeroSheetV2, {
-    types: ["hero"],
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.ActorV2",
-  });
-  Actors.registerSheet("atoria", sheets.AtoriaActorNonPlayerCharacterSheetV2, {
-    types: ["non-player-character"],
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.ActorV2",
-  });
-  Actors.registerSheet("atoria", sheets.AtoriaActorPlayerCharacterSheetV2, {
-    types: ["player-character"],
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.ActorV2",
-  });
+  foundry.documents.collections.Actors.registerSheet(
+    "atoria",
+    sheets.AtoriaActorChestSheetV2,
+    {
+      types: ["chest"],
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.ActorV2",
+    },
+  );
+  foundry.documents.collections.Actors.registerSheet(
+    "atoria",
+    sheets.AtoriaActorHeroSheetV2,
+    {
+      types: ["hero"],
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.ActorV2",
+    },
+  );
+  foundry.documents.collections.Actors.registerSheet(
+    "atoria",
+    sheets.AtoriaActorNonPlayerCharacterSheetV2,
+    {
+      types: ["non-player-character"],
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.ActorV2",
+    },
+  );
+  foundry.documents.collections.Actors.registerSheet(
+    "atoria",
+    sheets.AtoriaActorPlayerCharacterSheetV2,
+    {
+      types: ["player-character"],
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.ActorV2",
+    },
+  );
 
-  Items.unregisterSheet("core", ItemSheet);
-  // Items.registerSheet("atoria", sheets.AtoriaItemSheetV1, {
-  //   makeDefault: true,
-  //   label: "ATORIA.SheetLabels.Item",
-  // });
-  Items.registerSheet("atoria", sheets.AtoriaItemSheet, {
-    makeDefault: true,
-    label: "ATORIA.SheetLabels.Item",
-  });
+  foundry.documents.collections.Items.unregisterSheet(
+    "core",
+    foundry.appv1.sheets.ItemSheet,
+  );
+  foundry.documents.collections.Items.registerSheet(
+    "atoria",
+    sheets.AtoriaItemSheet,
+    {
+      makeDefault: true,
+      label: "ATORIA.SheetLabels.Item",
+    },
+  );
 
-  // CONFIG.statusEffects = RULESET.status_effects;
-  CONFIG.statusEffects = RULESET.status_effects;
+  CONFIG.statusEffects = RULESET.status_effects.sort(RULESET.sort_effects);
 
   // Internal System Last Migration Version
   game.settings.register("atoria", "worldLastMigrationVersion", {
@@ -190,15 +198,148 @@ Hooks.once("init", function () {
   });
 
   game.settings.register("atoria", "display_player_sheet_horizontally", {
-    name: game.i18n.localize("ATORIA.Settings.DisplayPlayerSheetHorizontally"),
-    hint: game.i18n.localize(
-      "ATORIA.Settings.DisplayPlayerSheetHorizontallyHint",
-    ),
+    name: "ATORIA.Settings.DisplayPlayerSheetHorizontally",
+    hint: "ATORIA.Settings.DisplayPlayerSheetHorizontallyHint",
     scope: "client",
     config: true,
     type: new foundry.data.fields.BooleanField(),
     default: false,
-    // requiresReload: false, // TODO: Maybe it need
+  });
+
+  game.settings.register("atoria", "languages", {
+    name: "ATORIA.Settings.Knowledges.Languages.Label",
+    hint: "ATORIA.Settings.Knowledges.Languages.Hint",
+    scope: "world",
+    config: false,
+    requiresReload: true,
+    type: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.SchemaField({
+        id: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Languages.Id",
+        }),
+        label: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Languages.LabelValue",
+        }),
+      }),
+      { label: "ATORIA.Settings.Knowledges.Languages.Label" },
+    ),
+    default: [],
+  });
+  game.settings.registerMenu("atoria", "languages", {
+    name: "ATORIA.Settings.Knowledges.Languages.Label",
+    label: "ATORIA.Settings.Knowledges.Languages.Label",
+    hint: "ATORIA.Settings.Knowledges.Languages.Hint",
+    icon: "fa-solid fa-scroll",
+    type: models.settings.LanguageKnowledgeArrayField,
+    restricted: true,
+  });
+
+  game.settings.register("atoria", "civilisations", {
+    name: "ATORIA.Settings.Knowledges.Civilisation.Label",
+    hint: "ATORIA.Settings.Knowledges.Civilisation.Hint",
+    scope: "world",
+    config: false,
+    requiresReload: true,
+    type: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.SchemaField({
+        id: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Civilisation.Id",
+        }),
+        label: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Civilisation.LabelValue",
+        }),
+      }),
+      { label: "ATORIA.Settings.Knowledges.Civilisation.Label" },
+    ),
+    default: [],
+  });
+  game.settings.registerMenu("atoria", "civilisations", {
+    name: "ATORIA.Settings.Knowledges.Civilisation.Label",
+    label: "ATORIA.Settings.Knowledges.Civilisation.Label",
+    hint: "ATORIA.Settings.Knowledges.Civilisation.Hint",
+    icon: "fa-solid fa-scroll",
+    type: models.settings.CivilisationKnowledgeArrayField,
+    restricted: true,
+  });
+
+  game.settings.register("atoria", "monstrologies", {
+    name: "ATORIA.Settings.Knowledges.Monstrology.Label",
+    hint: "ATORIA.Settings.Knowledges.Monstrology.Hint",
+    scope: "world",
+    config: false,
+    requiresReload: true,
+    type: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.SchemaField({
+        id: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Monstrology.Id",
+        }),
+        label: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Monstrology.LabelValue",
+        }),
+      }),
+      { label: "ATORIA.Settings.Knowledges.Monstrology.Label" },
+    ),
+    default: [],
+  });
+  game.settings.registerMenu("atoria", "monstrologies", {
+    name: "ATORIA.Settings.Knowledges.Monstrology.Label",
+    label: "ATORIA.Settings.Knowledges.Monstrology.Label",
+    hint: "ATORIA.Settings.Knowledges.Monstrology.Hint",
+    icon: "fa-solid fa-scroll",
+    type: models.settings.MonstrologyKnowledgeArrayField,
+    restricted: true,
+  });
+
+  game.settings.register("atoria", "zoologies", {
+    name: "ATORIA.Settings.Knowledges.Zoology.Label",
+    hint: "ATORIA.Settings.Knowledges.Zoology.Hint",
+    scope: "world",
+    config: false,
+    requiresReload: true,
+    type: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.SchemaField({
+        id: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Zoology.Id",
+        }),
+        label: new foundry.data.fields.StringField({
+          required: true,
+          nullable: false,
+          blank: false,
+          label: "ATORIA.Settings.Knowledges.Zoology.LabelValue",
+        }),
+      }),
+      { label: "ATORIA.Settings.Knowledges.Zoology.Label" },
+    ),
+    default: [],
+  });
+  game.settings.registerMenu("atoria", "zoologies", {
+    name: "ATORIA.Settings.Knowledges.Zoology.Label",
+    label: "ATORIA.Settings.Knowledges.Zoology.Label",
+    hint: "ATORIA.Settings.Knowledges.Zoology.Hint",
+    icon: "fa-solid fa-scroll",
+    type: models.settings.ZoologyKnowledgeArrayField,
+    restricted: true,
   });
 
   utils.handlebars.registerHandlebarsHelpers();
@@ -206,17 +347,14 @@ Hooks.once("init", function () {
 });
 
 Hooks.once("ready", function () {
-  CONFIG.statusEffects = CONFIG.statusEffects.sort(RULESET.sort_effects);
-  utils.ruleset.localized_effects(CONFIG.statusEffects);
-
   // Migration check is only for GM
-  if (!game.user.isGM) return;
+  if (!game.users.activeGM?.isSelf) return;
 
-  utils.migration.migrateWorld();
+  game.settings.set("atoria", "worldLastMigrationVersion", game.system.version);
 });
 
 // Activate chat listeners
-Hooks.on("renderChatLog", (log, html, data) => {
+Hooks.on("renderChatMessageHTML", (message, html, context) => {
   documents.AtoriaChatMessage.chatListeners(html);
 });
 
@@ -224,7 +362,7 @@ Hooks.on("renderChatLog", (log, html, data) => {
  * Adds a datalist helper for suggesting valid Actor attribute keys in the ActiveEffect config dialog.
  */
 Hooks.on("renderActiveEffectConfig", (activeEffectConfig, html, data) => {
-  const effectsSection = html[0].querySelector("section[data-tab='effects']");
+  const effectsSection = html.querySelector("section.tab.changes");
   if (!effectsSection) return;
   const datalist = document.createElement("datalist");
   datalist.id = "attribute-key-list";
@@ -232,7 +370,7 @@ Hooks.on("renderActiveEffectConfig", (activeEffectConfig, html, data) => {
   inputFields.forEach((input) => input.setAttribute("list", datalist.id));
   const attributeKeys = [];
 
-  let parent_document = activeEffectConfig.object?.parent;
+  let parent_document = activeEffectConfig.document?.parent;
   let parent_character = data.isActorEffect
     ? parent_document
     : parent_document.actor;

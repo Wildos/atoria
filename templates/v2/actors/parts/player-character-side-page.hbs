@@ -1,118 +1,25 @@
-<div class="tab {{#if is_active_page}}active{{/if}}" data-group="primary" data-tab="character">
-    <div class="atoria-player-character-page {{#if is_forced_horizontally}}is_forced_horizontally{{/if}}">
-        <div class="first-col">
-            <div class="flexrow">
-                {{#unless @root.isEditingMode }}
-                {{>"atoria.v2.actors_partials.skill-cat-display"
-                    skill_cat_skills=reflex_skills.skill_cat
-                    data_path=reflex_skills.path
-                    model=reflex_skills.model
-                    cssClass="atoria-skill-area"
-                }}
-                {{/unless}}
-                <div class="flexcol">
-                    <div class="atoria-horizontal-bar flexrow">
-                        <h5 class="title">
-                            {{localize "ATORIA.Sheet.Attack.Title"}}
-                        </h5>
-                    </div>
-                    <ul class="item-list">
-                        <li class="item atoria-item-line-display atoria-horizontal-bar" data-action="brawlRoll" >
-                            <label>{{localize "ATORIA.Ruleset.Skills.Combative.Weapon.Brawl.Label"}}</label>
-                        </li>
-                    {{#each action_items as |item idx|}}
-                        {{>"atoria.v2.actors_partials.item-line-display" item=item as="actable"}}
-                    {{/each}}
-                    </ul>
-                </div>
-            </div>
-            <div class="atoria-character-skill-n-knowledge">
-                {{>"atoria.v2.actors_partials.skill-type-display"
-                    skill_type_data=actor.system.skills
-                    data_path="system.skills"
-                    model=systemFields.skills
-                    cssClass="atoria-skill-area"
-                    filtered_skills_group=filtered_skills_group
-                    force_display=false
-                    prevent_hide_action=false
-                }}
-
-                {{>"atoria.v2.actors_partials.skill-type-display"
-                    skill_type_data=actor.system.knowledges
-                    data_path="system.knowledges"
-                    model=systemFields.knowledges
-                    cssClass="atoria-knowledge-area"
-                }}
-            </div>
-        </div>
+<div class="tab atoria-side-panel {{#if is_active_page}}active{{/if}}" data-group="primary" data-tab="character">
+    <div class="atoria-player-character-page">
         <div class="second-col">
-            <div class="atoria-horizontal-bar flexrow colored">
-                <h5 class="title">
-                    {{localize "ATORIA.Sheet.Effect.Title"}}
-                </h5>
-                {{#if @root.editable}}
-                <a class="atoria-create-button" data-action="createItem" data-type="effect" data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.effect" )}}">
-                    <i class="fas fa-plus"></i>
-                </a>
-                {{/if}}
+            <div class="atoria-header-side">
+                <div class="atoria-horizontal-bar flexrow colored">
+                    <h5 class="title">
+                        {{localize "ATORIA.Sheet.Effect.Title"}}
+                    </h5>
+                    {{#if @root.editable}}
+                    <a class="atoria-create-button" data-action="createItem" data-type="effect" data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.effect" )}}">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    {{/if}}
+                </div>
+                <ul class="item-list">
+                {{#each effects as |effect idx|}}
+                    {{>"atoria.v2.actors_partials.item-effect-line-display" effect=effect compact=compact}}
+                {{/each}}
+                </ul>
+
+                {{>"atoria.v2.actors_partials.keywords-recap" tracked_keywords=tracked_keywords keywords_data=active_keywords_data keywords_fields=systemFields.keywords}}
             </div>
-            <div class="atoria-offense-defense">
-                <div class="flexrow">
-                <label>{{localize systemFields.offense.label}}</label>
-                {{ formInput systemFields.offense.fields.is_negative value=actor.system.offense.is_negative disabled=(not @root.editable)
-                    dataset=(toDataset tooltip=systemFields.offense.fields.is_negative.label letter=systemFields.offense.fields.is_negative.label)
-                }}
-                {{ formInput systemFields.offense.fields.is_positive value=actor.system.offense.is_positive disabled=(not @root.editable)
-                    dataset=(toDataset tooltip=systemFields.offense.fields.is_positive.label letter=systemFields.offense.fields.is_positive.label)
-                }}
-                {{ formInput systemFields.offense.fields.amount value=actor.system.offense.amount disabled=(not @root.editable)}}
-                </div>
-                <div style="display: grid;">
-                    <textarea
-                        class="textarea-auto-resize"
-                        style="grid-area: 1 / 1 / 2/ 2;"
-                        rows="1"
-                        data-name="offense-description" data-dtype="String" name="system.offense.description"
-                        {{disabled (not @root.editable)}}>{{cleanLines system.offense.description}}</textarea>
-                    <div
-                    class="textarea-auto-resize-sibling"
-                    aria-hidden="true"
-                    style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-                    >{{cleanLines system.offense.description}}</div>
-                </div>
-
-                <div class="flexrow">
-                <label>{{localize systemFields.defense.label}}</label>
-                {{ formInput systemFields.defense.fields.is_negative value=actor.system.defense.is_negative disabled=(not @root.editable)
-                    dataset=(toDataset tooltip=systemFields.defense.fields.is_negative.label letter=systemFields.defense.fields.is_negative.label)
-                }}
-                {{ formInput systemFields.defense.fields.is_positive value=actor.system.defense.is_positive disabled=(not @root.editable)
-                    dataset=(toDataset tooltip=systemFields.defense.fields.is_positive.label letter=systemFields.defense.fields.is_positive.label)
-                }}
-                {{ formInput systemFields.defense.fields.amount value=actor.system.defense.amount disabled=(not @root.editable)}}
-                </div>
-                <div style="display: grid;">
-                    <textarea
-                        class="textarea-auto-resize"
-                        style="grid-area: 1 / 1 / 2/ 2;"
-                        rows="1"
-                        data-name="defense-description" data-dtype="String" name="system.defense.description"
-                        {{disabled (not @root.editable)}}>{{cleanLines system.defense.description}}</textarea>
-                    <div
-                    class="textarea-auto-resize-sibling"
-                    aria-hidden="true"
-                    style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-                    >{{cleanLines system.defense.description}}</div>
-                </div>
-            </div>
-            <ul class="item-list">
-            {{#each effects as |effect idx|}}
-                {{>"atoria.v2.actors_partials.item-effect-line-display" effect=effect compact=compact}}
-            {{/each}}
-            </ul>
-
-            {{>"atoria.v2.actors_partials.keywords-recap" tracked_keywords=tracked_keywords tracked_keywords_data=tracked_keywords_data}}
-
             <div class="atoria-horizontal-bar flexrow colored">
                 <h5 class="title">
                     {{localize "ATORIA.Sheet.Feature.Title"}}

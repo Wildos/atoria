@@ -1,0 +1,12 @@
+<footer class="form-footer flexcol">
+    <div class="flexrow">
+        <label>{{localize "ATORIA.Dialog.Roll.Roll_visibility.Label"}}</label>
+        <select name="asked_visibility">
+            {{selectOptions message_modes selected=selected_message_mode localize=true}}
+        </select>
+    </div>
+    <button type="submit" data-action="ok" class="" autofocus="">
+        <i class="fas fa-check"></i>
+        <span>{{localize "ATORIA.Dialog.Launch"}}</span>
+    </button>
+</footer>

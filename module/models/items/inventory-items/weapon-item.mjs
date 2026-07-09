@@ -1,6 +1,8 @@
 import * as atoria_models from "../../module.mjs";
 
-export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem {
+export default class AtoriaWeaponItem
+  extends atoria_models.AtoriaInventoryItem
+{
   static defineSchema() {
     const fields = foundry.data.fields;
     const schema = super.defineSchema();
@@ -102,6 +104,19 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
       label: "ATORIA.Sheet.Inventory.Secondary_weapon",
     });
 
+    schema.secondary_weapon_keyword = new fields.StringField({
+      required: true,
+      nullable: false,
+      blank: true,
+      initial: "",
+      choices: {
+        guard: "ATORIA.Ruleset.Keywords.Guard",
+        brute: "ATORIA.Ruleset.Keywords.Brute",
+        smash: "ATORIA.Ruleset.Keywords.Smash",
+      },
+      label: "ATORIA.Model.Weapon.SecondaryWeaponKeyword",
+    });
+
     schema.range = new fields.StringField({
       required: true,
       nullable: false,
@@ -113,33 +128,18 @@ export default class AtoriaWeaponItem extends atoria_models.AtoriaInventoryItem 
     return schema;
   }
 
-  /**
-   * Migrate candidate source data for this DataModel which may require initial cleaning or transformations.
-   * @param {object} source           The candidate source data from which the model will be constructed
-   * @returns {object}                Migrated source data, if necessary
-   */
-  static migrateData(source) {
-    const old_usable_actable_modifiers =
-      foundry.utils.deepClone(source.usable_actable_modifiers) ?? [];
-
-    if (
-      old_usable_actable_modifiers.length > 0 &&
-      typeof old_usable_actable_modifiers[0] == "string" &&
-      (source.usable_actable_modifiers_typed === undefined ||
-        source.usable_actable_modifiers_typed.length === 0)
-    ) {
-      source.usable_actable_modifiers_typed = [];
-      for (let uuid of old_usable_actable_modifiers) {
-        source.usable_actable_modifiers_typed.push({
-          uuid: uuid,
-          main: true,
-          throw: false,
-          focuser: false,
-        });
-      }
-      source.usable_actable_modifiers = [];
-      delete source.usable_actable_modifiers;
+  static migrateData(source, options) {
+    const current_version = game.settings.get(
+      "atoria",
+      "worldLastMigrationVersion",
+    );
+    const version = game.system.version;
+    if (current_version === version) {
+      return super.migrateData(source, options);
     }
-    return super.migrateData(source);
+    if (foundry.utils.isNewerVersion("0.3.29", current_version)) {
+      source.associated_skill = "";
+    }
+    return super.migrateData(source, options);
   }
 }

@@ -168,9 +168,7 @@ export default class AtoriaDOSRoll extends Roll {
     const adv_disadv_localize_string_plural =
       adv_minus_disadv === 0 || adv_disadv_amount === 1 ? "" : "s";
     const adv_disadv_string = game.i18n.format(
-      game.i18n.localize(
-        adv_disadv_localize_string.concat(adv_disadv_localize_string_plural),
-      ),
+      adv_disadv_localize_string.concat(adv_disadv_localize_string_plural),
       { amount: adv_disadv_amount },
     );
     const user_level = game.actors.get(this._owning_actor_id)?.getUserLevel();
@@ -200,6 +198,6 @@ export default class AtoriaDOSRoll extends Roll {
       observer: user_level === CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
       limited: user_level === CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED,
     };
-    return renderTemplate(template, chatData);
+    return foundry.applications.handlebars.renderTemplate(template, chatData);
   }
 }
