@@ -348,9 +348,9 @@ Hooks.once("init", function () {
 
 Hooks.once("ready", function () {
   // Migration check is only for GM
-  if (!game.user.isGM) return;
+  if (!game.users.activeGM?.isSelf) return;
 
-  utils.migration.migrateWorld();
+  game.settings.set("atoria", "worldLastMigrationVersion", game.system.version);
 });
 
 // Activate chat listeners

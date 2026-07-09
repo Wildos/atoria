@@ -6,6 +6,27 @@ import * as roll_helpers from "../utils/roll_helpers.mjs";
 
 // TODO: sur NPC, aptitude et permanent: tooltip au hover en plus de pouvoir les ouvrir
 // TODO: NPC check lancement arme distant focalisatrice => Affiche distant | Distant au lieu de Enchantée | Arc
+// TODO: check affichage supp dans les roll dialog
+// TODO: limité le nombre de '+' affiché dans les mots clefs des arme/armures pour les mot-clefs qui n'auront jamais plus d'1 niveau
+// FIX: les saves_asked des techniques ne sont pas ajouté dans les jets
+
+// DEGAT de la migration
+// Hero: perception perdu
+// Hero: duplication de martial: En compétence (Arme) et en connaissance (Martiale)
+//
+// NPC: perception perdu
+// NPC: reflex perdu
+// NPC: combative perdu => arme - 10 et laissé martial à 10
+// NPC: distant - les armes de contact on leur techniques de base en toute circonstance /!\ Tenter de mettre full path in skill retrieved to se if fix it without breaking
+// /!\ NPC: check utilisation de contact en sortie de migration voir si les armes bug
+//
+// Arme: vider associated_weapon_skill pour eviter des soucis
+//
+// PC: contact/distant pose problème avec les armes qui ne sont pas corrigé en sortie de migration
+// PC: perception perdu
+// PC: reflex perdu
+//
+// OVERALL: perte des utilisations des mot-clefs
 
 import {
   defineAlteration,
@@ -773,6 +794,10 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getKeywordEffect(actor, keyword_id, asked_level = undefined) {
+    if (keyword_id == "preserve") {
+      asked_level = 1;
+    }
+
     let wanted_level =
       asked_level != undefined
         ? asked_level
@@ -811,6 +836,7 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static get_usable_initiative(actor) {
+    if (["chest"].includes(actor.type)) return "";
     let initiative = actor.system.initiative;
 
     let obstruct_effect = this.getKeywordEffect(actor, "obstruct");
@@ -1316,6 +1342,7 @@ RULESET["item"] = class ItemRuleset {
             actor.getSkillFromPath(weapon_data.system.associated_skill),
           );
           if (
+            asso_skill !== undefined &&
             !weapon_data.system.associated_skill.startsWith(
               RULESET.character.MARTIAL_APART_WEAPON_PATH,
             )
@@ -1339,7 +1366,7 @@ RULESET["item"] = class ItemRuleset {
         }
         break;
     }
-    return skills;
+    return skills.filter((skill) => skill != undefined);
   }
 
   static getFinalSkillDataFromKnowledgeAndWeapon(
@@ -2659,6 +2686,21 @@ RULESET["keywords"] = {
           },
         ],
         label: "ATORIA.Ruleset.Keywords.Direct",
+      },
+      {
+        id: "preserve",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect:
+              "Peut contenir jusqu'à X d'une ressource qui augmente de Y.</br>\
+            Peut être utilisée pour payer le coût d'une réussite de sort.</br>\
+            5 endurance sont considérés comme une seule quantité X.",
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Preserve",
       },
     ];
   },

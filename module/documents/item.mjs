@@ -527,7 +527,7 @@ export default class AtoriaItem extends Item {
       skills.push(this.actor.getSkillFromPath(this.system.associated_skill));
     }
 
-    return skills;
+    return skills.filter((skill) => skill != undefined);
   }
 
   getSupplementaries() {

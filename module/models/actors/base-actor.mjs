@@ -767,4 +767,37 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
     });
     return skill_type_schema;
   }
+
+  static migrateData(source, options) {
+    const current_version = game.settings.get(
+      "atoria",
+      "worldLastMigrationVersion",
+    );
+    const version = game.system.version;
+    if (current_version === version) {
+      return super.migrateData(source, options);
+    }
+    if (foundry.utils.isNewerVersion("0.3.29", current_version)) {
+      if (this.type === "hero") {
+        source.skills.perceptions = source.perceptions;
+        source.skills.weapon = source.skills.combative;
+      } else if (this.type === "non-player-character") {
+        source.skills.perceptions = source.perceptions;
+        source.skills.physical.reflex = source.skills.combative.reflex;
+
+        let old_combative_weapon = source.skills.combative.weapon;
+        old_combative_weapon.success = old_combative_weapon.success - 10;
+
+        source.skills.weapon = {
+          contact: old_combative_weapon,
+          apart: old_combative_weapon,
+          instrument: old_combative_weapon,
+        };
+      } else if (this.type === "player-character") {
+        source.skills.perceptions = source.perceptions;
+        source.skills.physical.reflex = source.skills.combative.reflex;
+      }
+    }
+    return super.migrateData(source, options);
+  }
 }

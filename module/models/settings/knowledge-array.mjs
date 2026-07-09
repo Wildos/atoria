@@ -155,16 +155,16 @@ export class LanguageKnowledgeArrayField extends KnowledgeArrayField {
 }
 export class CivilisationKnowledgeArrayField extends KnowledgeArrayField {
   get type() {
-    return "languages";
+    return "civilisations";
   }
 }
 export class MonstrologyKnowledgeArrayField extends KnowledgeArrayField {
   get type() {
-    return "languages";
+    return "monstrologies";
   }
 }
 export class ZoologyKnowledgeArrayField extends KnowledgeArrayField {
   get type() {
-    return "languages";
+    return "zoologies";
   }
 }
