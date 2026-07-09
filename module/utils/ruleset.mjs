@@ -4,29 +4,8 @@ import { buildLocalizeString } from "../utils/atoria-lang.mjs";
 import * as models_settings from "../models/settings.mjs";
 import * as roll_helpers from "../utils/roll_helpers.mjs";
 
-// TODO: sur NPC, aptitude et permanent: tooltip au hover en plus de pouvoir les ouvrir
 // TODO: NPC check lancement arme distant focalisatrice => Affiche distant | Distant au lieu de Enchantée | Arc
-// TODO: check affichage supp dans les roll dialog
-// TODO: limité le nombre de '+' affiché dans les mots clefs des arme/armures pour les mot-clefs qui n'auront jamais plus d'1 niveau
-// FIX: les saves_asked des techniques ne sont pas ajouté dans les jets
-
-// DEGAT de la migration
-// Hero: perception perdu
-// Hero: duplication de martial: En compétence (Arme) et en connaissance (Martiale)
-//
-// NPC: perception perdu
-// NPC: reflex perdu
-// NPC: combative perdu => arme - 10 et laissé martial à 10
-// NPC: distant - les armes de contact on leur techniques de base en toute circonstance /!\ Tenter de mettre full path in skill retrieved to se if fix it without breaking
-// /!\ NPC: check utilisation de contact en sortie de migration voir si les armes bug
-//
-// Arme: vider associated_weapon_skill pour eviter des soucis
-//
-// PC: contact/distant pose problème avec les armes qui ne sont pas corrigé en sortie de migration
-// PC: perception perdu
-// PC: reflex perdu
-//
-// OVERALL: perte des utilisations des mot-clefs
+// FIX: NPC: distant - les armes de contact on leur techniques de base en toute circonstance /!\ Tenter de mettre full path in skill retrieved to se if fix it without breaking
 
 import {
   defineAlteration,
@@ -1275,7 +1254,7 @@ RULESET["item"] = class ItemRuleset {
   }
 
   static getSavesAsked(item) {
-    return item.system.savesAsked ?? [];
+    return item.system.saves_asked ?? [];
   }
 
   static applyRollDataRules(item, roll_data) {

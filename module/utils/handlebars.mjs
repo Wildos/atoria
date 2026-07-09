@@ -37,6 +37,7 @@ export const preloadHandlebarsTemplates = async function () {
     "cost-tooltip.hbs",
     "time-limitation-tooltip.hbs",
     "supplementary-tooltip.hbs",
+    "feature-tooltip.hbs",
   ];
   const v2_chat_message_partials = [
     "related-items.hbs",

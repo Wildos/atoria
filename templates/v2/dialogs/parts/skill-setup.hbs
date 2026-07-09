@@ -51,15 +51,24 @@
     {{#each usable_supplementaries}}
         <li class="flexrow">
         <input
-        type="number" max="{{this.usage_max}}" value="0"
+        type="number"
+        {{#if this.usage_max}}
+            max="{{this.usage_max}}"
+        {{/if}}
+        value="0"
         {{disabled (and (lte this.limitation.usage_left 0) (ne this.limitation.regain_type "permanent"))}}
         name="usable_supplementaries.{{@index}}"
         id="usable_supplementaries.{{@index}}" />
-        <!-- TODO: ajouter le cumul max ici pour donner l'info -->
+        {{#if this.usage_max}}
+        <label>/{{this.usage_max}}</label>
+        {{/if}}
         <label for="usable_supplementaries.{{@index}}" data-tooltip="{{>"atoria.v2.tooltips_partials.supplementary-tooltip" supplementary=this }}" >{{this.name}}</label>
 
         <div style="display:flex;flex:0;min-width: fit-content;">
-        <!-- TODO: ajouter le cout ici -->
+        {{>"atoria.v2.commons_partials.cost-display"
+            cost=this.cost
+            systemFields=this.systemFields.cost.fields
+        }}
 
         <!--Limitation-->
         {{>"atoria.v2.commons_partials.time-limitation-display" limitation=this.limitation

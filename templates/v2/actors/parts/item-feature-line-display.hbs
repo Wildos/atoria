@@ -1,5 +1,10 @@
 <li class="item atoria-item-line-display {{item.type}} atoria-horizontal-bar atoria-expand-control"
 data-action="expandSection"  data-expand-id="{{item._id}}" data-drag="Item" data-item-id="{{item._id}}"
+
+{{#if (eq @root.actor.type "non-player-character")}}
+data-tooltip="{{>"atoria.v2.tooltips_partials.feature-tooltip" feature=item systemFields=item.systemFields }}"
+{{/if}}
+
 {{#if item.system.use_color}}style="background-color: {{item.system.color}};"{{/if}}>
     <label class="name" >{{item.name}}</label>
 

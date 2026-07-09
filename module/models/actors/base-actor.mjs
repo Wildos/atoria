@@ -785,7 +785,9 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
         source.skills.perceptions = source.perceptions;
         source.skills.physical.reflex = source.skills.combative.reflex;
 
-        let old_combative_weapon = source.skills.combative.weapon;
+        let old_combative_weapon = foundry.utils.deepClone(
+          source.skills.combative.weapon,
+        );
         old_combative_weapon.success = old_combative_weapon.success - 10;
 
         source.skills.weapon = {

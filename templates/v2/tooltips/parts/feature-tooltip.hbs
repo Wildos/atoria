@@ -1,0 +1,17 @@
+<section class='atoria tooltip'>
+    <div class='flexrow'>
+        <h5>{{item.name}}</h5>
+        {{#if (ne item.system.limitation.regain_type "permanent")}}
+            {{>"atoria.v2.commons_partials.time-limitation-display" limitation=item.system.limitation
+            systemFields=systemFields.limitation.fields }}
+        {{/if}}
+    </div>
+    <!-- Afficher l'effet -->
+    {{#if item.system.effect}}
+    <p>{{localize systemFields.effect.label}}: {{brNewLines item.system.effect}}</p>
+    {{/if}}
+    {{#if item.system.critical_effect}}
+    <p>{{localize systemFields.critical_effect.label}}: {{brNewLines item.system.critical_effect}}</p>
+    {{/if}}
+    <!-- Afficher les alterations [Filtrer les alterations avant d'envoyer en ChatMessage] -->
+</section>
