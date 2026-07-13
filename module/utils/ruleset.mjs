@@ -7,6 +7,8 @@ import * as roll_helpers from "../utils/roll_helpers.mjs";
 // TODO: NPC check lancement arme distant focalisatrice => Affiche distant | Distant au lieu de Enchantée | Arc
 // FIX: NPC: distant - les armes de contact on leur techniques de base en toute circonstance /!\ Tenter de mettre full path in skill retrieved to se if fix it without breaking
 
+// TODO: show skill_alterations in tooltips (features, item-enchant etc...) so it can be confirmed on chat-roll
+
 import {
   defineAlteration,
   defineTimePhaseLimitation,
@@ -426,8 +428,9 @@ RULESET["character"] = class ActorRuleset {
   static getSkillOrKnowledgeTitle(actor, path) {
     let path_parts = path.split(".");
     path_parts.shift();
+
     let skill_label =
-      actor.system.schema.getField(path_parts)?.label ??
+      actor?.system?.schema?.getField(path_parts)?.label ??
       this.getKnowledgeLabel(path_parts);
 
     return skill_label;
@@ -3277,5 +3280,51 @@ RULESET.localized_damage_type = (damage_type) => {
 };
 
 RULESET.ration_encumbrance = 0.5;
+
+RULESET["default_values"] = class DefaultValues {
+  static convert_tree_to_array(tree) {
+    let result = [];
+    if (Array.isArray(tree)) {
+      return tree;
+    } else {
+      for (const key in tree) {
+        result.push(
+          this.convert_tree_to_array(tree[key]).map((path) => key + "." + path),
+        );
+      }
+    }
+    return result.flat();
+  }
+
+  static get_associated_skills() {
+    let paths_list = [
+      ...this.convert_tree_to_array(
+        RULESET.character.getSkillsTree("player-character"),
+      ),
+      ...this.convert_tree_to_array(
+        RULESET.character.getKnowledgesTree("player-character"),
+      ),
+    ];
+    let result = {};
+    for (const path of paths_list) {
+      result[path] = RULESET.character.getSkillOrKnowledgeTitle(
+        undefined,
+        path,
+      );
+    }
+    return result;
+  }
+
+  static get_opposed_skills() {
+    const skill_list = {};
+    for (const skill_path of RULESET.character.getOpposingSaves()) {
+      skill_list[skill_path] = RULESET.character.getSkillOrKnowledgeTitle(
+        undefined,
+        skill_path,
+      );
+    }
+    return skill_list;
+  }
+};
 
 export default RULESET;

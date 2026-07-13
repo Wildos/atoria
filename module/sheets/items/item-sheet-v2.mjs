@@ -175,7 +175,9 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
   _getFilteredAssociatedSkillList() {
     let associated_skills =
       this.actor?.getAssociatedSkillList() ??
-      foundry.utils.deepClone(utils.default_values.get_associated_skills());
+      foundry.utils.deepClone(
+        utils.ruleset.default_values.get_associated_skills(),
+      );
     if (this.actor === null) {
       return associated_skills;
     }
@@ -201,7 +203,7 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
         );
         context.associated_saves_skills =
           this.actor?.getOpposedSkillList() ??
-          utils.default_values.get_opposed_skills();
+          utils.ruleset.default_values.get_opposed_skills();
 
         context.available_actable_modifiers =
           utils.ruleset.item.getActableModifiersApplicable(this.item);
@@ -241,7 +243,7 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
 
         context.associated_saves_skills =
           this.actor?.getOpposedSkillList() ??
-          utils.default_values.get_opposed_skills();
+          utils.ruleset.default_values.get_opposed_skills();
         context.available_actable_modifiers =
           utils.ruleset.item.getActableModifiersApplicable(this.item);
         context.available_actable_modifiers.sort(
@@ -284,7 +286,7 @@ export default class AtoriaItemSheet extends HandlebarsApplicationMixin(
       case "actable_modifier":
         context.associated_saves_skills =
           this.actor?.getOpposedSkillList() ??
-          utils.default_values.get_opposed_skills();
+          utils.ruleset.default_values.get_opposed_skills();
         break;
     }
     return context;

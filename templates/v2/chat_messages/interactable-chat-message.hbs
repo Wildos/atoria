@@ -22,7 +22,11 @@
 
         {{#if message.flavor}}
         <span class="flavor-text"
-        {{#if (and (or (eq user._id author._id) (user.igGm)) message.system.flavor_tooltip)}}data-tooltip="{{{message.system.flavor_tooltip}}}"{{/if}}>{{{message.flavor}}}</span>
+        {{#if message.system.flavor_tooltip}}
+            {{#if (or (eq user._id author._id) user.isGM)}}
+            data-tooltip="{{{message.system.flavor_tooltip}}}"
+            {{/if}}
+        {{/if}}>{{{message.flavor}}}</span>
         {{/if}}
     </header>
 
@@ -30,10 +34,12 @@
         {{{message.content}}}
     </div>
 
-    {{#if (and (or (eq user._id author._id) (user.igGm)) message.system.used_perks)}}
-        {{#each message.system.used_perks}}
-        <label class="used-perk" data-tooltip="{{this.description}}">{{localize this.name}}</label>
-        {{/each}}
+    {{#if message.system.used_perks}}
+        {{#if (or (eq user._id author._id) user.isGM)}}
+            {{#each message.system.used_perks}}
+            <label class="used-perk" data-tooltip="{{this.description}}">{{localize this.name}}</label>
+            {{/each}}
+        {{/if}}
     {{/if}}
 
     {{#if message.system.saves_asked}}

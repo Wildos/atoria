@@ -659,7 +659,6 @@ export default class AtoriaItem extends Item {
       roll_parameters,
       roll_parameters.roll_data.path,
     );
-    utils.ruleset.item.applyRollDataRules(this, roll_data);
     roll_data.title = roll_label;
 
     let effects_data = this._getEffectForSkillPath(
@@ -774,6 +773,8 @@ export default class AtoriaItem extends Item {
     };
 
     if (roll_data.path != undefined) {
+      utils.ruleset.item.applyRollDataRules(this, roll_data);
+
       let rolls = await utils.create_rolls_with_effect(
         this,
         roll_data,

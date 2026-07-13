@@ -202,20 +202,26 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
       }
     }
 
-    let skill_path = this.#current_skill?.path;
-    let skill_paths = skill_path.includes("///")
-      ? skill_path.split("///")
-      : [skill_path];
-    let is_thrown_attack =
-      skill_paths.length > 1 &&
-      skill_paths[0] == utils.ruleset.character.MARTIAL_APART_PATH &&
-      skill_paths[1].startsWith(
-        utils.ruleset.character.MARTIAL_CONTACT_WEAPON_PATH,
-      );
-
     let final_dos_mod = form_data_obj.dos_mod ?? 0;
-    if (is_thrown_attack) {
-      final_dos_mod += -2;
+    let is_attack = false;
+
+    let skill_path = this.#current_skill?.path;
+    if (skill_path != undefined) {
+      let skill_paths = skill_path.includes("///")
+        ? skill_path.split("///")
+        : [skill_path];
+      let is_thrown_attack =
+        skill_paths.length > 1 &&
+        skill_paths[0] == utils.ruleset.character.MARTIAL_APART_PATH &&
+        skill_paths[1].startsWith(
+          utils.ruleset.character.MARTIAL_CONTACT_WEAPON_PATH,
+        );
+
+      if (is_thrown_attack) {
+        final_dos_mod += -2;
+      }
+
+      is_attack = skill_paths.length > 1;
     }
 
     let roll_setup = {
@@ -223,17 +229,17 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         this.data.weapon != undefined
           ? this.#current_skill.success +
             this.data.weapon.system.modificators.success
-          : this.#current_skill.success,
+          : (this.#current_skill?.success ?? 0),
       critical_success_amount:
         this.data.weapon != undefined
           ? this.#current_skill.critical_success_amount +
             this.data.weapon.system.modificators.critical_success
-          : this.#current_skill.critical_success_amount,
+          : (this.#current_skill?.critical_success_amount ?? 0),
       critical_fumble_amount:
         this.data.weapon != undefined
           ? this.#current_skill.critical_fumble_amount +
             this.data.weapon.system.modificators.critical_fumble
-          : this.#current_skill.critical_fumble_amount,
+          : (this.#current_skill?.critical_fumble_amount ?? 0),
 
       dos_mod: final_dos_mod,
       advantage_amount: form_data_obj.advantage_amount ?? 0,
@@ -241,14 +247,15 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     };
     let saves_asked = [];
 
-    // Apply aim
-    utils.ruleset.aiming.applyToRoll(roll_setup, form_data_obj.aiming_type);
-    saves_asked.push(
-      ...utils.ruleset.aiming.saves_asked[form_data_obj.aiming_type],
-    );
-
+    if (skill_path != undefined) {
+      // Apply aim
+      utils.ruleset.aiming.applyToRoll(roll_setup, form_data_obj.aiming_type);
+      saves_asked.push(
+        ...utils.ruleset.aiming.saves_asked[form_data_obj.aiming_type],
+      );
+    }
     // Is attack
-    if (skill_paths.length > 1) {
+    if (is_attack) {
       saves_asked.push(...utils.ruleset.character.getAttackSaves());
     }
 

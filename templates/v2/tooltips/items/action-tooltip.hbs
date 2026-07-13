@@ -43,17 +43,17 @@
 
         <label style='flex: 1 1 content;'>
             {{#if item.system.require_verbal}}
-                <b>{{localize systemFields.require_verbal.label}}</b><!--require_verbal-->
+               {{localize systemFields.require_verbal.label}}<!--require_verbal-->
             {{/if}}
 
             {{#if item.system.require_immobile}}
                 {{#if item.system.require_verbal}}, {{/if}}
-                <b>{{localize systemFields.require_immobile.label}}</b><!--require_immobile-->
+               {{localize systemFields.require_immobile.label}}<!--require_immobile-->
             {{/if}}
 
             {{#if item.system.travel}}
                 {{#if (or item.system.require_immobile item.system.require_verbal)}}, {{/if}}
-                <b>{{localize systemFields.travel.label}}: {{item.system.travel}}</b><!--require_immobile-->
+               {{localize systemFields.travel.label}}: {{item.system.travel}}<!--require_verbal-->
             {{/if}}
 
             {{#if (ne item.system.somatic 'none')}}
