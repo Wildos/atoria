@@ -20,7 +20,6 @@ export default class AtoriaRollCombatDialog extends HandlebarsApplicationMixin(
     tag: "div",
     actions: {
       rollItem: this._rollItem,
-      rollFistFight: this._rollFistFight,
       rollThrow: this._rollThrow,
     },
   };
@@ -35,22 +34,6 @@ export default class AtoriaRollCombatDialog extends HandlebarsApplicationMixin(
     return `${this.#actor_name}: ${game.i18n.localize("ATORIA.Dialog.ItemChoice")}`;
   }
 
-  // /** @override */
-  // _configureRenderOptions(options) {
-  //   // This fills in `options.parts` with an array of ALL part keys by default
-  //   // So we need to call `super` first
-  //   super._configureRenderOptions(options);
-  //   // Completely overriding the parts
-  //   let parts = [];
-  //   // launch_options
-  //   parts.push("launch_options");
-  //   options.parts = parts;
-  // }
-
-  static async _rollFistFight(event, target) {
-    this.close({ submitted: true });
-    fromUuidSync(this.data.actor_uuid).rollFistFight();
-  }
   static async _rollThrow(event, target) {
     this.close({ submitted: true });
     fromUuidSync(this.data.actor_uuid).rollThrow();
