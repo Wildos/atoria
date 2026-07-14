@@ -569,7 +569,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           ],
 
           "system.knowledges.magic": [
-            "martial",
             "air",
             "mental",
             "druidic",

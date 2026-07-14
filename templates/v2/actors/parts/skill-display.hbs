@@ -14,7 +14,7 @@
         {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
     {{/if}}
 </div>
-{{#unless (or limited (not @root.isEditingMode))}}
+{{#unless (or limited (not @root.isEditingMode) (includes @root.flags.atoria.hidden_skills data_path))}}
     <div class="atoria-skill-display">
         <label class="fit-width" data-tooltip="{{systemFields.fields.mastery.label}}">{{localize "ATORIA.Sheet.Player.Skill.Mastery"}}</label>
         <input type="number" data-dtype="Number" name="{{data_path}}.mastery"
