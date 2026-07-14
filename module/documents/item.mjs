@@ -815,6 +815,10 @@ export default class AtoriaItem extends Item {
       perk_item.takeOneLimitationUse();
     }
 
+    if (["action", "opportunity"].includes(this.type)) {
+      await this.takeOneLimitationUse();
+    }
+
     this.update({
       "system.luck": this.system.luck - roll_parameters.roll_data.luck_applied,
     });
