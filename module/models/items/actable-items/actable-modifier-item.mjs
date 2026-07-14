@@ -12,9 +12,13 @@ export default class AtoriaActableModifierItem
 
     schema.limitation = atoria_models.helpers.defineTimePhaseLimitation();
 
-    schema.restriction = new fields.StringField({
+    schema.requirement = new fields.StringField({
       required: true,
-      label: "ATORIA.Ruleset.Actable.Restriction",
+      label: "ATORIA.Ruleset.Actable.Requirement",
+    });
+    schema.incompatible = new fields.StringField({
+      required: true,
+      label: "ATORIA.Ruleset.Actable.Incompatible",
     });
 
     schema.effect = new fields.StringField({
@@ -52,49 +56,18 @@ export default class AtoriaActableModifierItem
    * @param {object} source           The candidate source data from which the model will be constructed
    * @returns {object}                Migrated source data, if necessary
    */
-  static migrateData(source) {
-    const old_skill_alteration =
-      foundry.utils.deepClone(source.skill_alteration) ?? undefined;
-
-    if (old_skill_alteration && source.alteration === undefined) {
-      source.alteration = {
-        dos_mod: 0,
-        adv_amount: 0,
-        disadv_amount: 0,
-      };
-      switch (old_skill_alteration.skill_alteration_type) {
-        case "hand_handled":
-          break;
-        case "one_degree_of_success_gain":
-          source.alteration.dos_mod = 1;
-          break;
-        case "one_degree_of_success_loss":
-          source.alteration.dos_mod = -1;
-          break;
-        case "two_degree_of_success_gain":
-          source.alteration.dos_mod = 2;
-          break;
-        case "two_degree_of_success_loss":
-          source.alteration.dos_mod = -2;
-          break;
-        case "advantage":
-          source.alteration.adv_amount = 1;
-          break;
-        case "disadvantage":
-          source.alteration.disadv_amount = 1;
-          break;
-        case "advantage_n_one_degree_of_success_gain":
-          source.alteration.dos_mod = 1;
-          source.alteration.adv_amount = 1;
-          break;
-        case "disadvantage_n_one_degree_of_success_loss":
-          source.alteration.dos_mod = -1;
-          source.alteration.disadv_amount = 1;
-          break;
-      }
-      source.skill_alteration = "hand_handled";
-      delete source.skill_alteration;
+  static migrateData(source, options) {
+    const current_version = game.settings.get(
+      "atoria",
+      "worldLastMigrationVersion",
+    );
+    const version = game.system.version;
+    if (current_version === version) {
+      return super.migrateData(source, options);
     }
-    return super.migrateData(source);
+    if (foundry.utils.isNewerVersion("0.3.31", current_version)) {
+      source.requirement = source.restriction;
+    }
+    return super.migrateData(source, options);
   }
 }

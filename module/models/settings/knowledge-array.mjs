@@ -42,8 +42,9 @@ export class KnowledgeArrayField extends HandlebarsApplicationMixin(
 
   get title() {
     return (
-      game.settings.settings.get("atoria." + this.type)?.name ??
-      "<Setting not found>"
+      game.i18n.localize(
+        game.settings.settings.get("atoria." + this.type)?.name,
+      ) ?? "<Setting not found>"
     );
   }
 

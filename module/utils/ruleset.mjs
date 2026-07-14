@@ -203,6 +203,45 @@ RULESET["character"] = class ActorRuleset {
         return 25;
       case "magice":
         return 15;
+
+      case "fist_fight":
+      case "buckler":
+      case "rondache":
+      case "shield":
+      case "dagger":
+      case "seax":
+      case "sabre":
+      case "rapier":
+      case "long_sword":
+      case "bastard_sword":
+      case "staff":
+      case "spear":
+      case "trident":
+      case "guisarme":
+      case "bardiche":
+      case "sickle":
+      case "scythe":
+      case "battle_hatchet":
+      case "bearded_axe":
+      case "war_axe":
+      case "gestrox":
+      case "club":
+      case "hammer":
+      case "mallet":
+      case "flail":
+      case "morning_star":
+      case "pickaxe":
+      case "throwing_knife":
+      case "throwing_hatchet":
+      case "javelin":
+      case "short_bow":
+      case "composite_bow":
+      case "long_bow":
+      case "crossbow":
+      case "hand_crossbow":
+      case "wand":
+      case "enchanted":
+        return 0;
       default:
         return 10;
     }
@@ -1102,37 +1141,54 @@ RULESET["item"] = class ItemRuleset {
         let skill_paths = skill_path.includes("///")
           ? skill_path.split("///")
           : [skill_path];
-        let is_thrown_attack =
-          skill_paths.length > 1 &&
-          skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
-          skill_paths[1].startsWith(
-            RULESET.character.MARTIAL_CONTACT_WEAPON_PATH,
-          );
-        let is_enchanted_attack =
-          item.system.is_focuser &&
-          skill_paths.length > 1 &&
-          skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
-          skill_paths[1] == RULESET.character.ENCHANTED_SKILL_PATH;
+        // let is_thrown_attack =
+        //   skill_paths.length > 1 &&
+        //   skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
+        //   skill_paths[1].startsWith(
+        //     RULESET.character.MARTIAL_CONTACT_WEAPON_PATH,
+        //   );
+        // let is_enchanted_attack =
+        //   item.system.is_focuser &&
+        //   skill_paths.length > 1 &&
+        //   skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
+        //   skill_paths[1] == RULESET.character.ENCHANTED_SKILL_PATH;
 
         let usable_actable_modifiers = [];
-        if (is_enchanted_attack) {
-          usable_actable_modifiers.push(
-            ...item.system.usable_actable_modifiers_typed.filter(
-              (act_mod_id_data) => act_mod_id_data.focuser,
-            ),
-          );
-        } else if (is_thrown_attack) {
-          usable_actable_modifiers.push(
-            ...item.system.usable_actable_modifiers_typed.filter(
-              (act_mod_id_data) => act_mod_id_data.throw,
-            ),
-          );
-        } else {
-          usable_actable_modifiers.push(
-            ...item.system.usable_actable_modifiers_typed.filter(
-              (act_mod_id_data) => act_mod_id_data.main,
-            ),
-          );
+        // if (is_enchanted_attack) {
+        //   usable_actable_modifiers.push(
+        //     ...item.system.usable_actable_modifiers_typed.filter(
+        //       (act_mod_id_data) => act_mod_id_data.focuser,
+        //     ),
+        //   );
+        // } else if (is_thrown_attack) {
+        //   usable_actable_modifiers.push(
+        //     ...item.system.usable_actable_modifiers_typed.filter(
+        //       (act_mod_id_data) => act_mod_id_data.throw,
+        //     ),
+        //   );
+        // } else {
+        //   usable_actable_modifiers.push(
+        //     ...item.system.usable_actable_modifiers_typed.filter(
+        //       (act_mod_id_data) => act_mod_id_data.main,
+        //     ),
+        //   );
+        // }
+        //
+        switch (skill_paths[0]) {
+          case RULESET.character.MARTIAL_CONTACT_PATH:
+            usable_actable_modifiers.push(
+              ...item.system.usable_actable_modifiers_typed.filter(
+                (act_mod_id_data) => act_mod_id_data.contact,
+              ),
+            );
+            break;
+          case RULESET.character.MARTIAL_APART_PATH:
+            usable_actable_modifiers.push(
+              ...item.system.usable_actable_modifiers_typed.filter(
+                (act_mod_id_data) => act_mod_id_data.apart,
+              ),
+            );
+            break;
         }
         return usable_actable_modifiers.map((act_mod_id_data) => {
           return item.actor.items.get(act_mod_id_data.uuid);

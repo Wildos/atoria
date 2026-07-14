@@ -74,23 +74,17 @@
                         <input class="actable-modifier-toggle" type="checkbox" data-dtype="Boolean"
                         data-action="handleUsableActableModifier"
                         data-actable-modifier-id="{{actable_mod.actable._id}}"
-                        data-actable-type="main"
-                        {{checked actable_mod.main}}
-                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.main.label}}"/>
+                        data-actable-type="contact"
+                        {{checked actable_mod.contact}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.contact.label}}"/>
 
                         <input class="actable-modifier-toggle focuser-icon" type="checkbox" data-dtype="Boolean"
                         data-action="handleUsableActableModifier"
                         data-actable-modifier-id="{{actable_mod.actable._id}}"
-                        data-actable-type="focuser"
-                        {{checked actable_mod.focuser}}
-                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.focuser.label}}"/>
+                        data-actable-type="apart"
+                        {{checked actable_mod.apart}}
+                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.apart.label}}"/>
 
-                        <input class="actable-modifier-toggle throw-icon" type="checkbox" data-dtype="Boolean"
-                        data-action="handleUsableActableModifier"
-                        data-actable-modifier-id="{{actable_mod.actable._id}}"
-                        data-actable-type="throw"
-                        {{checked actable_mod.throw}}
-                        data-tooltip="{{localize ../systemFields.usable_actable_modifiers_typed.element.fields.throw.label}}"/>
                     </li>
                 {{/each}}
             </ul>

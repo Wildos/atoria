@@ -68,20 +68,15 @@ export default class AtoriaWeaponItem
             required: true,
             label: "ATORIA.Model.Actable.Actable_modifiers",
           }),
-          main: new fields.BooleanField({
+          contact: new fields.BooleanField({
             required: true,
             initial: false,
-            label: "ATORIA.Model.Actable.Actable_modifiers_main",
+            label: "ATORIA.Model.Actable.Actable_modifiers_contact",
           }),
-          focuser: new fields.BooleanField({
+          apart: new fields.BooleanField({
             required: true,
             initial: false,
-            label: "ATORIA.Model.Actable.Actable_modifiers_focuser",
-          }),
-          throw: new fields.BooleanField({
-            required: true,
-            initial: false,
-            label: "ATORIA.Model.Actable.Actable_modifiers_throw",
+            label: "ATORIA.Model.Actable.Actable_modifiers_apart",
           }),
         },
         { label: "ATORIA.Model.Spell.Supplementaries.Label" },

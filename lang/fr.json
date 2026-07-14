@@ -6,7 +6,29 @@
     },
     "Settings": {
       "DisplayPlayerSheetHorizontally": "Forcer l'affichage horizontal de la fiche de personnage joueur",
-      "DisplayPlayerSheetHorizontallyHint": "Change l'affichage des compétences sur les feuilles de personnage joueur"
+      "DisplayPlayerSheetHorizontallyHint": "Change l'affichage des compétences sur les feuilles de personnage joueur",
+      "Knowledges": {
+        "Languages": {
+          "Label": "Langues",
+          "Hint": "Configuration des langues accessibles aux joueurs"
+        },
+        "Civilisation": {
+          "Label": "Civilisations",
+          "Hint": "Configuration des civilisations accessibles aux joueurs"
+        },
+        "Monstrology": {
+          "Label": "Monstrologie",
+          "Hint": "Configuration des monstrologies accessibles aux joueurs"
+        },
+        "Zoology": {
+          "Label": "Zoologie",
+          "Hint": "Configuration des zoologies accessibles aux joueurs"
+        }
+      },
+      "KnowledgeArray": {
+        "Id": "Identifiant",
+        "LabelValue": "Nom affiché"
+      }
     },
     "Error": {
       "Require_selected_actor": "Cette action nécessite un acteur selectionné"
@@ -132,9 +154,9 @@
       "Actable": {
         "Usable_actable_modifiers": "Techniques ou Ajouts",
         "Actable_modifiers": "Techniques ou Ajouts",
-        "Actable_modifiers_main": "Techniques ou Ajouts sur jet primaire",
-        "Actable_modifiers_throw": "Techniques ou Ajouts sur jet",
-        "Actable_modifiers_focuser": "Techniques ou Ajouts sur focalisateur",
+        "Actable_modifiers_contact": "Techniques ou Ajouts au contact",
+        "Actable_modifiers_apart": "Techniques ou Ajouts à distance",
+
         "Actable_modifiers_types": "Type de modificateur d'action",
         "Rolls_asked": "Oppositions",
         "Roll_asked": "Opposition"
@@ -360,6 +382,8 @@
       "Confirm": "Confirmer",
       "Cancel": "Annuler",
       "Launch": "Lancer",
+      "Reset": "Réinitialisation",
+      "Save": "Sauvegarder",
       "Delete": {
         "Title": "Suppression {element_name}",
         "Content": "Confirmez-vous la suppression de '{element_name}'?"
@@ -1385,7 +1409,9 @@
         "Range": "Portée",
         "Target": "Ciblage",
         "Area": "Zone",
-        "Restriction": "Restriction"
+        "Restriction": "Restriction",
+        "Requirement": "Nécessité",
+        "Incompatible": "Incompatible"
       },
       "Somatic": {
         "None": "Aucun",

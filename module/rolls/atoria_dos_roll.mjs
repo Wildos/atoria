@@ -13,6 +13,7 @@ const defaultOptions = {
   luck_applied: 0,
   dos_mod: 0,
   is_danger: false,
+  mastery: 0,
 };
 
 export default class AtoriaDOSRoll extends Roll {
@@ -42,6 +43,7 @@ export default class AtoriaDOSRoll extends Roll {
     this._luck_applied = options.luck_applied;
     this._dos_mod = options.dos_mod;
     this._is_danger = options.is_danger;
+    this._mastery = options.mastery;
 
     this._owning_actor_id = options.owning_actor_id;
   }
@@ -102,6 +104,7 @@ export default class AtoriaDOSRoll extends Roll {
       roll._luck_applied = data.luck_applied;
       roll._dos_mod = data.dos_mod;
       roll._is_danger = data.is_danger;
+      roll._mastery = data.mastery;
 
       roll._owning_actor_id = data.owning_actor_id;
     }
@@ -127,6 +130,7 @@ export default class AtoriaDOSRoll extends Roll {
       luck_applied: this._luck_applied,
       dos_mod: this._dos_mod,
       is_danger: this._is_danger,
+      mastery: this._mastery,
       owning_actor_id: this._owning_actor_id,
     };
   }
@@ -180,6 +184,7 @@ export default class AtoriaDOSRoll extends Roll {
       formula: isPrivate ? "" : this._formula,
       title: isPrivate ? "" : this._title,
       descriptive_tooltip: isPrivate ? "" : this._descriptive_tooltip,
+      mastery: isPrivate ? 0 : this._mastery,
 
       dice_value: isPrivate ? "" : Math.round(this.total * 100) / 100,
       dice_tooltip: isPrivate ? "" : await this.getTooltip(),

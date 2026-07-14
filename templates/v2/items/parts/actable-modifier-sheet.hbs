@@ -2,19 +2,33 @@
     {{>"atoria.v2.commons_partials.cost-input" cost=item.system.cost
     data_path="system.cost" systemFields=systemFields.cost.fields cssClasses="double-col-field" complete_cost=true}}
 
-    <label class="double-col-field">{{localize systemFields.restriction.label}}</label>
+    <label class="double-col-field">{{localize systemFields.requirement.label}}</label>
     <div class="double-col-field" style="display: grid;">
         <textarea
             class="textarea-auto-resize"
             style="grid-area: 1 / 1 / 2/ 2;"
             rows="1"
-            data-name="restriction" data-dtype="String" name="system.restriction"
-            {{disabled (not @root.editable)}}>{{cleanLines item.system.restriction}}</textarea>
+            data-name="requirement" data-dtype="String" name="system.requirement"
+            {{disabled (not @root.editable)}}>{{cleanLines item.system.requirement}}</textarea>
         <div
         class="textarea-auto-resize-sibling"
         aria-hidden="true"
         style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-        >{{cleanLines item.system.restriction}}</div>
+        >{{cleanLines item.system.requirement}}</div>
+    </div>
+    <label class="double-col-field">{{localize systemFields.incompatible.label}}</label>
+    <div class="double-col-field" style="display: grid;">
+        <textarea
+            class="textarea-auto-resize"
+            style="grid-area: 1 / 1 / 2/ 2;"
+            rows="1"
+            data-name="incompatible" data-dtype="String" name="system.incompatible"
+            {{disabled (not @root.editable)}}>{{cleanLines item.system.incompatible}}</textarea>
+        <div
+        class="textarea-auto-resize-sibling"
+        aria-hidden="true"
+        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+        >{{cleanLines item.system.incompatible}}</div>
     </div>
 
 

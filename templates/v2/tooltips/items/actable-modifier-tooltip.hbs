@@ -2,8 +2,11 @@
     <h5>{{item.name}}{{>"atoria.v2.tooltips_partials.time-limitation-tooltip" limitation=item.system.limitation}}</h5>
     {{>"atoria.v2.tooltips_partials.cost-tooltip" cost=item.system.cost systemFields=systemFields.cost.fields}}
 
-    {{#if item.system.restriction}}
-    <p>{{localize systemFields.restriction.label}}: {{brNewLines item.system.restriction}}</p>
+    {{#if item.system.requirement}}
+    <p>{{localize systemFields.requirement.label}}: {{brNewLines item.system.requirement}}</p>
+    {{/if}}
+    {{#if item.system.incompatible}}
+    <p>{{localize systemFields.incompatible.label}}: {{brNewLines item.system.incompatible}}</p>
     {{/if}}
     {{#if item.system.effect}}
     <p>{{localize systemFields.effect.label}}: {{brNewLines item.system.effect}}</p>

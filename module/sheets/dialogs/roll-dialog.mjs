@@ -241,6 +241,8 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
             this.data.weapon.system.modificators.critical_fumble
           : (this.#current_skill?.critical_fumble_amount ?? 0),
 
+      mastery: this.#current_skill?.mastery ?? 0,
+
       dos_mod: final_dos_mod,
       advantage_amount: form_data_obj.advantage_amount ?? 0,
       disadvantage_amount: form_data_obj.disadvantage_amount ?? 0,
@@ -269,6 +271,8 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         critical_success_amount: roll_setup.critical_success_amount,
         critical_fumble_amount: roll_setup.critical_fumble_amount,
         path: this.#current_skill?.path,
+
+        mastery: roll_setup.mastery,
 
         advantage_amount: roll_setup.advantage_amount,
         disadvantage_amount: roll_setup.disadvantage_amount,

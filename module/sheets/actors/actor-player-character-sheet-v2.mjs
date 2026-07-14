@@ -565,8 +565,8 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           "system.knowledges.erudition.strategy": ["battle", "expedition"],
           "system.knowledges.erudition.symbolism": [
             "heraldry",
-            "cryptography",
             "cartography",
+            "cryptography",
           ],
 
           "system.knowledges.utilitarian": [
