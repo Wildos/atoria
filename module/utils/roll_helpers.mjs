@@ -41,6 +41,9 @@ export function get_asked_saves(roll_parameters) {
   return saves_asked;
 }
 export function get_roll_data(roll_parameters, skill_path) {
+  if (skill_path == undefined) {
+    return {};
+  }
   let skill_paths = skill_path.includes("///")
     ? skill_path.split("///")
     : [skill_path];

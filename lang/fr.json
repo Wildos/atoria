@@ -393,7 +393,13 @@
         "Title": "Création de compétence dans {skill_cat}",
         "Name_selection": "Nom:"
       },
-      "ItemChoice": "Choix de l'objet"
+      "ItemChoice": "Choix de l'objet",
+      "Skill_setup": {
+        "Keywords": "Mot-Clefs",
+        "Supplementaries": "Supplementaires",
+        "Features": "Aptitudes et Enchantement",
+        "Actable_mod": "Techniques et Ajouts"
+      }
     },
     "Ruleset": {
       "All": "Tout",
