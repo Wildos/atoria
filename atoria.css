@@ -1842,7 +1842,7 @@
 }
 .system-atoria .sheet.player-character .window-content {
   display: grid;
-  grid-template-areas: "nav nav" "header side" "main side";
+  grid-template-areas: "nav nav" "header side" "main   side" "x      side";
   grid-auto-rows: min-content;
   grid-auto-columns: min-content;
 }

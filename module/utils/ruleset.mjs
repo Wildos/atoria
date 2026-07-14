@@ -1444,6 +1444,8 @@ RULESET["item"] = class ItemRuleset {
       path: knowledge_skill.path + "///" + weapon_skill.path,
       proper_label: weapon_skill.proper_label,
 
+      mastery: skill_data.mastery,
+
       usable_keywords: skill_data.usable_keywords,
       usable_perks: skill_data.usable_perks,
 
