@@ -12,29 +12,31 @@
         {{disabled (or (not @root.editable) (not @root.isEditingMode))}} />
     {{/if}}</h6>
     <div class="atoria-skill-area">
-    {{#if (lookup @root.skill_n_knowledge_sorting_list data_path)}}
-        {{#each (lookup @root.skill_n_knowledge_sorting_list data_path) as |skill_id key|}}
-            {{>"atoria.v2.actors_partials.skill-display"
-            skill=(lookup ../skill_cat_skills skill_id)
-            data_path=(concat ../data_path "." skill_id)
-            systemFields=(lookup ../model.fields skill_id)
-            force_display=../force_display
-            prevent_hide_action=../prevent_hide_action
-            deletable=(and @root.editable @root.isEditingMode (includes @root.extendable_skill ../data_path))
-            }}
+    {{#if (not (includes @root.flags.atoria.hidden_skills data_path))}}
+        {{#if (lookup @root.skill_n_knowledge_sorting_list data_path)}}
+            {{#each (lookup @root.skill_n_knowledge_sorting_list data_path) as |skill_id key|}}
+                {{>"atoria.v2.actors_partials.skill-display"
+                skill=(lookup ../skill_cat_skills skill_id)
+                data_path=(concat ../data_path "." skill_id)
+                systemFields=(lookup ../model.fields skill_id)
+                force_display=../force_display
+                prevent_hide_action=../prevent_hide_action
+                deletable=(and @root.editable @root.isEditingMode (includes @root.extendable_skill ../data_path))
+                }}
 
-        {{/each}}
-    {{else}}
-        {{#each skill_cat_skills as |skill key|}}
-            {{>"atoria.v2.actors_partials.skill-display"
-            skill=skill
-            data_path=(concat ../data_path "." key)
-            systemFields=(lookup ../model.fields key)
-            force_display=../force_display
-            prevent_hide_action=../prevent_hide_action
-            deletable=(and @root.editable @root.isEditingMode (includes @root.extendable_skill ../data_path))
-            }}
-        {{/each}}
+            {{/each}}
+        {{else}}
+            {{#each skill_cat_skills as |skill key|}}
+                {{>"atoria.v2.actors_partials.skill-display"
+                skill=skill
+                data_path=(concat ../data_path "." key)
+                systemFields=(lookup ../model.fields key)
+                force_display=../force_display
+                prevent_hide_action=../prevent_hide_action
+                deletable=(and @root.editable @root.isEditingMode (includes @root.extendable_skill ../data_path))
+                }}
+            {{/each}}
+        {{/if}}
     {{/if}}
     </div>
 </div>

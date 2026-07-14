@@ -139,8 +139,10 @@ export default class AtoriaActor extends Actor {
         else break; // Can't traverse anymore
         effective_skill_path_parts.push(p);
       }
+      target_skill = foundry.utils.deepClone(target_skill);
       target_skill["path"] = effective_skill_path_parts.join(".");
     } else {
+      target_skill = foundry.utils.deepClone(target_skill);
       target_skill["path"] = skill_path;
     }
 

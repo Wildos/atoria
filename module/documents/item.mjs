@@ -250,21 +250,17 @@ export default class AtoriaItem extends Item {
       if (found_entry === undefined) {
         found_entry = {
           uuid: action_modifier_id,
-          main: false,
-          throw: false,
-          focuser: false,
+          contact: false,
+          apart: false,
         };
         new_usable_actable_modifiers_typed.push(found_entry);
       }
       switch (actable_type) {
-        case "main":
-          found_entry.main = true;
+        case "contact":
+          found_entry.contact = true;
           break;
-        case "throw":
-          found_entry.throw = true;
-          break;
-        case "focuser":
-          found_entry.focuser = true;
+        case "apart":
+          found_entry.apart = true;
           break;
         default:
           console.error("Invalid type");
@@ -312,21 +308,17 @@ export default class AtoriaItem extends Item {
       if (found_entry === undefined) {
         found_entry = {
           uuid: action_modifier_id,
-          main: false,
-          throw: false,
-          focuser: false,
+          contact: false,
+          apart: false,
         };
         new_usable_actable_modifiers_typed.push(found_entry);
       }
       switch (actable_type) {
-        case "main":
-          found_entry.main = false;
+        case "contact":
+          found_entry.contact = false;
           break;
-        case "throw":
-          found_entry.throw = false;
-          break;
-        case "focuser":
-          found_entry.focuser = false;
+        case "apart":
+          found_entry.apart = false;
           break;
         default:
           console.error("Invalid type");
@@ -635,12 +627,10 @@ export default class AtoriaItem extends Item {
     }
 
     if (["spell", "weapon", "action"].includes(this.type)) {
-      if (skills.length != 0) {
-        for (const skill_data of skills) {
-          skill_data.usable_act_mod = this.getAvailableActableModifiers(
-            skill_data.path,
-          );
-        }
+      for (const skill_data of skills) {
+        skill_data.usable_act_mod = this.getAvailableActableModifiers(
+          skill_data.path,
+        );
       }
     }
 

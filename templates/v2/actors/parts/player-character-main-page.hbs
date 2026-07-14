@@ -9,20 +9,36 @@
                 cssClass=""
                 prevent_hide_action=true
                 }}
-                <div class="atoria-combat">
-                    <h5>
-                        {{localize "ATORIA.Sheet.Combat.Title"}}
-                    </h5>
-                    <div data-action="combatRoll" data-type="contact" >
-                        <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Contact.Label"}}</label>
+                {{#if @root.isEditingMode}}
+                    {{>"atoria.v2.actors_partials.skill-cat-display"
+                    skill_cat_skills=actor.system.knowledges.magic.martial
+                    data_path="system.knowledges.magic.martial"
+                    model=systemFields.knowledges.fields.magic.fields.martial
+                    cssClass=""
+                    prevent_hide_action=false
+                    }}
+                {{else}}
+                    <div class="atoria-combat">
+                        <h6>
+                            {{localize "ATORIA.Sheet.Combat.Title"}}
+                        </h6>
+                        {{#if (not (includes @root.flags.atoria.hidden_skills "system.knowledges.magic.martial.contact"))}}
+                        <div data-action="combatRoll" data-type="contact" >
+                            <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Contact.Label"}}</label>
+                        </div>
+                        {{/if}}
+                        {{#if (not (includes @root.flags.atoria.hidden_skills "system.knowledges.magic.martial.apart"))}}
+                        <div data-action="combatRoll" data-type="apart" >
+                            <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Apart.Label"}}</label>
+                        </div>
+                        {{/if}}
+                        {{#if (not (includes @root.flags.atoria.hidden_skills "system.knowledges.magic.martial.instrument"))}}
+                        <div data-action="combatRoll" data-type="instrument" >
+                            <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Instrument.Label"}}</label>
+                        </div>
+                        {{/if}}
                     </div>
-                    <div data-action="combatRoll" data-type="apart" >
-                        <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Apart.Label"}}</label>
-                    </div>
-                    <div data-action="combatRoll" data-type="instrument" >
-                        <label>{{localize "ATORIA.Ruleset.Knowledges.Magic.Martial.Instrument.Label"}}</label>
-                    </div>
-                </div>
+                {{/if}}
                 <div class="atoria-offense">
                     <div class="flexrow">
                         <label>{{localize systemFields.offense.label}}</label>

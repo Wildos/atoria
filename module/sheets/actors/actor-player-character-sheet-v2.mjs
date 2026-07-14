@@ -149,18 +149,43 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     return formatted_feature_items;
   }
 
+  _filter_out_keys(in_dict, filter) {
+    let current_paths = Object.keys(in_dict);
+
+    let keys_to_remove = [];
+    for (const path of current_paths) {
+      for (const filtered_path of filter) {
+        if (path.startsWith(filtered_path)) {
+          keys_to_remove.push(path);
+          break;
+        }
+      }
+    }
+
+    for (const key of keys_to_remove) {
+      delete in_dict[key];
+    }
+    return in_dict;
+  }
+
   async _preparePartContext(partId, context, options) {
     await super._preparePartContext(partId, context, options);
 
     let weapon_skill_categories = [
       ...(utils.extract_leaf_from_player_skills_for_feature_cat(
-        this.actor?.getWeaponSkillList(),
+        this._filter_out_keys(
+          this.actor?.getWeaponSkillList(),
+          this.actor.flags.atoria.hidden_skills,
+        ),
       ) ?? []),
     ];
 
     let feature_skill_categories = [
       ...(utils.extract_leaf_from_player_skills_for_feature_cat(
-        this.actor?.getSkillList(),
+        this._filter_out_keys(
+          this.actor?.getSkillList(),
+          this.actor.flags.atoria.hidden_skills,
+        ),
       ) ?? []),
       {
         id: "perceptions",
@@ -173,7 +198,13 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     ];
     let feature_magic_categories = [
       ...(utils.extract_leaf_from_player_magic_skills_for_feature_cat(
-        this.actor.system.knowledges,
+        this._filter_out_keys(
+          this.actor?.getSkillList({
+            knowledges: { magic: this.actor.system.knowledges.magic },
+          }),
+          this.actor.flags.atoria.hidden_skills,
+        ),
+        this.actor,
       ) ?? []),
       {
         id: "other",
@@ -182,7 +213,12 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     ];
     let feature_knowledge_categories = [
       ...(utils.extract_leaf_from_player_knowledges_for_feature_cat(
-        this.actor?.getSkillList({ knowledges: this.actor.system.knowledges }),
+        this._filter_out_keys(
+          this.actor?.getSkillList({
+            knowledges: this.actor.system.knowledges,
+          }),
+          this.actor.flags.atoria.hidden_skills,
+        ),
         this.actor,
       ) ?? []),
       {
@@ -529,8 +565,8 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           "system.knowledges.erudition.strategy": ["battle", "expedition"],
           "system.knowledges.erudition.symbolism": [
             "heraldry",
-            "cryptography",
             "cartography",
+            "cryptography",
           ],
 
           "system.knowledges.utilitarian": [
@@ -569,7 +605,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           ],
 
           "system.knowledges.magic": [
-            "martial",
             "air",
             "mental",
             "druidic",

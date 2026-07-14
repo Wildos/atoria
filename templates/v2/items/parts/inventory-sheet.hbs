@@ -3,7 +3,7 @@
         <legend class="atoria-expand-control" data-action="expandSection" data-expand-id="system.keywords">{{localize systemFields.keywords.label}}</legend>
         <div class="atoria-expand-direct-data atoria-keywords-area">
             <div class="simple-area">
-                {{# if (eq item.type "weapon")}}
+                {{#if (eq item.type "weapon")}}
                     {{ formInput systemFields.keywords.fields.two_handed
                     value=system.keywords.two_handed disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
@@ -107,7 +107,7 @@
                     }}
 
                 {{/if}}
-                {{# if (or (eq item.type "armor") (eq item.type "kit"))}}
+                {{#if (or (eq item.type "armor") (eq item.type "kit"))}}
                     {{ formInput systemFields.keywords.fields.noisy
                     value=system.keywords.noisy disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
@@ -172,7 +172,7 @@
                 {{/if}}
             </div>
             <div class="complex-area">
-                {{# if (or (eq item.type "armor") (eq item.type "kit"))}}
+                {{#if (or (eq item.type "armor") (eq item.type "kit"))}}
                     {{ formInput systemFields.keywords.fields.direct
                     classes="flexrow"
                     value=system.keywords.direct disabled=(not @root.editable)
@@ -209,6 +209,12 @@
                     value=system.keywords.preserve.increment disabled=(not @root.editable) localize=true
                     }}
                 </div>
+                {{#if (eq item.type "weapon")}}
+                <div class="flexrow">
+                    <label>{{localize systemFields.secondary_weapon_keyword.label}}</label>
+                    {{ formInput systemFields.secondary_weapon_keyword value=item.system.secondary_weapon_keyword localize=true disabled=(not @root.editable)}}
+                </div>
+                {{/if}}
             </div>
         </div>
     </fieldset>

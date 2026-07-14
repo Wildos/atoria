@@ -35,25 +35,19 @@ export function extract_leaf_from_player_skills_for_feature_cat(skill_tree) {
 }
 
 export function extract_leaf_from_player_magic_skills_for_feature_cat(
-  knowledge_tree,
+  magic_tree,
+  reference_actor,
 ) {
   let leaf_list = [];
-  // let magic_tree = knowledge_tree.magic;
-  // for (const [magic_flux, flux_data] of Object.entries(magic_tree)) {
-  //   leaf_list.push({
-  //     id: magic_flux,
-  //     Label: utils.buildLocalizeString(
-  //       ...["Ruleset", "knowledges", "magic", magic_flux],
-  //       "Label",
-  //     ),
-  //   });
-  //   for (const [magic_school, school_data] of Object.entries(flux_data)) {
-  //     leaf_list.push({
-  //       id: magic_school,
-  //       Label: school_data.label,
-  //     });
-  //   }
-  // }
+  for (const [magic_school, _] of Object.entries(magic_tree)) {
+    if (magic_school.includes("martial")) {
+      continue;
+    }
+    leaf_list.push({
+      id: magic_school,
+      Label: reference_actor.getSkillFromPath(magic_school).label,
+    });
+  }
   return leaf_list;
 }
 
