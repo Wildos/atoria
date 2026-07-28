@@ -447,7 +447,9 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getKnowledgeInitialSuccess(key) {
+    console.debug(key);
     switch (key) {
+      case "magic":
       case "air":
       case "druidic":
       case "water":
@@ -457,6 +459,37 @@ RULESET["character"] = class ActorRuleset {
       case "holy":
       case "blood":
       case "earth":
+      case "dazzling":
+      case "breeze":
+      case "lightning":
+      case "kinetic":
+      case "illusion":
+      case "power":
+      case "enchanted":
+      case "astral":
+      case "solicitude":
+      case "changeforme":
+      case "mutation":
+      case "ablution":
+      case "source":
+      case "ice":
+      case "torch":
+      case "ignition":
+      case "destruction":
+      case "toxic":
+      case "curse":
+      case "ethereal":
+      case "necromancy":
+      case "blessing":
+      case "piety":
+      case "glory":
+      case "purification":
+      case "sacrifice":
+      case "puncture":
+      case "drain":
+      case "bastion":
+      case "telluric":
+      case "metallic":
         return 0;
 
       default:
