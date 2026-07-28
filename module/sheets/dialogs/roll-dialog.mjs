@@ -43,6 +43,7 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     this.#actor_name = fromUuidSync(this.data.actor_uuid).name;
 
     this.data.skills.forEach((skill_data) => {
+      if (skill_data.usable_perks == undefined) return 0;
       skill_data.usable_perks.sort((a, b) => {
         const types_ord = [
           "supplementary",

@@ -109,11 +109,10 @@ export async function chat_message_from_roll(
 export async function chat_message_from_non_roll(
   actor,
   message_mode,
-  message_content,
   rolls,
   system_data,
 ) {
-  let content = message_content;
+  let content = "";
   let is_emote = false;
   let flavor_text = "";
 

@@ -495,6 +495,16 @@ export default class AtoriaItem extends Item {
           type: "spell",
         },
       ];
+    if (this.type == "action" && this.system.associated_skill == "") {
+      return [
+        {
+          label: this.name,
+          path: "",
+          proper_label: this.name,
+          type: "action",
+        },
+      ];
+    }
 
     let skills = [];
     if (this.type == "opportunity")
@@ -762,7 +772,7 @@ export default class AtoriaItem extends Item {
       }),
     };
 
-    if (roll_data.path != undefined) {
+    if (roll_data.success != undefined) {
       utils.ruleset.item.applyRollDataRules(this, roll_data);
 
       let rolls = await utils.create_rolls_with_effect(
@@ -786,12 +796,11 @@ export default class AtoriaItem extends Item {
       }
     } else {
       let rolls = await utils.create_simple_effect_rolls(effects_data);
+      system_data.forced_title = this.name;
+      system_data.forced_tooltip = this.descriptive_tooltip;
       await utils.chat_message_from_non_roll(
         this,
         roll_parameters.message_mode,
-        game.i18n.format("ATORIA.Chat_message.Used.Actable", {
-          name: this.name,
-        }),
         rolls,
         system_data,
       );

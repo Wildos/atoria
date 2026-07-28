@@ -30,6 +30,12 @@
         {{/if}}
     </header>
 
+    {{#if message.system.forced_title}}
+    <div class="atoria">
+    <h5 {{#if (or (eq user._id author._id) user.isGM)}}data-tooltip-class="atoria-tooltip" data-tooltip="{{{message.system.forced_tooltip}}}" style="position:relative"{{/if}}>{{localize message.system.forced_title}}</h5>
+    </div>
+    {{/if}}
+
     <div class="message-content">
         {{{message.content}}}
     </div>
