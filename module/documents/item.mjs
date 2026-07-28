@@ -775,7 +775,7 @@ export default class AtoriaItem extends Item {
       }),
     };
 
-    if (roll_data.success != undefined) {
+    if (roll_data.success_value != undefined) {
       utils.ruleset.item.applyRollDataRules(this, roll_data);
 
       let rolls = await utils.create_rolls_with_effect(
@@ -804,6 +804,9 @@ export default class AtoriaItem extends Item {
       await utils.chat_message_from_non_roll(
         this,
         roll_parameters.message_mode,
+        game.i18n.localize("ATORIA.Chat_message.Dice.Aiming_type") +
+          " : " +
+          game.i18n.localize(roll_data.aiming_type),
         rolls,
         system_data,
       );

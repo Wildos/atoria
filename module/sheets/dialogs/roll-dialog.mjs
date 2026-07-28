@@ -230,7 +230,7 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         this.data.weapon != undefined
           ? this.#current_skill.success +
             this.data.weapon.system.modificators.success
-          : (this.#current_skill?.success ?? 0),
+          : this.#current_skill?.success,
       critical_success_amount:
         this.data.weapon != undefined
           ? this.#current_skill.critical_success_amount +
@@ -243,6 +243,10 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
           : (this.#current_skill?.critical_fumble_amount ?? 0),
 
       mastery: this.#current_skill?.mastery ?? 0,
+      aiming_type:
+        form_data_obj.aiming_type == "none"
+          ? undefined
+          : utils.ruleset.aiming.type[form_data_obj.aiming_type],
 
       dos_mod: final_dos_mod,
       advantage_amount: form_data_obj.advantage_amount ?? 0,
@@ -274,6 +278,8 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         path: this.#current_skill?.path,
 
         mastery: roll_setup.mastery,
+
+        aiming_type: roll_setup.aiming_type,
 
         advantage_amount: roll_setup.advantage_amount,
         disadvantage_amount: roll_setup.disadvantage_amount,

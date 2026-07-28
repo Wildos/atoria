@@ -360,6 +360,7 @@
         "Success": "Réussite",
         "Critical_success": "Réussite critique",
         "Dos": "DR",
+        "Aiming_type": "Viser",
         "Is_Danger": "Danger"
       },
       "Skill": {
