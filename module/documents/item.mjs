@@ -564,6 +564,9 @@ export default class AtoriaItem extends Item {
     skill_data.usable_supplementaries = this.getSupplementaries().map(
       (supp_data, idx) => {
         supp_data.id = idx;
+        supp_data.systemFields = this.system.schema.getField(
+          "supplementaries_list",
+        ).element.fields;
         return supp_data;
       },
     );

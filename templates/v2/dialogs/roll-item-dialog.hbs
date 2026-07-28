@@ -22,6 +22,7 @@
         {{#if available_skill_data.available_supplementaries}}
         <ul class="available-supplementaries double-col-field">
             {{#each available_skill_data.available_supplementaries as |supplementary key|}}
+                {{log supplementary}}
                 <li class="flexrow atoria-expand-control" data-expand-id="supplementaries.{{supplementary.name}}" data-action="expandSection">
                     <input type="number" data-dtype="Number" name="used_supplementaries_{{available_skill_data.tab}}.{{key}}"
                     value=0 min="0" max="{{supplementary.usage_max}}"
