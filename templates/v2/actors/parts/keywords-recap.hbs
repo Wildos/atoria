@@ -19,8 +19,7 @@
 
             <img src='systems/atoria/imgs/regain-type-combat.svg' title='{{localize "ATORIA.Ruleset.Time_phase.Combat"}}'/>
         {{/if}}
-        <label data-tooltip="{{this.effect}}">{{localize this.label}}{{multiplyString "+" this.level}}
-            {{#if this.direct_type}} {{this.direct_type}}{{/if}}</label>
+        <label data-tooltip="{{this.effect}}">{{localize this.label}}{{multiplyString "+" this.level}}{{#if this.direct_type}} {{this.direct_type}}{{/if}}</label>
     </div>
     {{/each}}
 </div>
