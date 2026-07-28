@@ -400,10 +400,11 @@
         "Is_danger": "Danger",
         "Roll_visibility": {
           "Label": "Visibilité du jet",
-          "Self": "Personnel",
-          "Public": "Publique",
-          "Private": "Privé",
-          "Blind": "Aveugle"
+          "self": "Personnel",
+          "public": "Publique",
+          "ic": "En personnage",
+          "gm": "Privé",
+          "blind": "Aveugle"
         },
         "Aiming": "Viser"
       },

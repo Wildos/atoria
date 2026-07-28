@@ -316,8 +316,17 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
                 blind: CONFIG.ChatMessage.modes["blind"],
               }
             : CONFIG.ChatMessage.modes;
+
+          Object.keys(available_message_mods).map((key) => {
+            available_message_mods[key].label = available_message_mods[
+              key
+            ].label.replace("CHAT.MODES", "ATORIA.Dialog.Roll.Roll_visibility");
+          });
+
           let selected_message_mode = game.settings.get("core", "messageMode");
           context.message_modes = available_message_mods;
+          console.debug("message_modes");
+          console.debug(context.message_modes);
           context.selected_message_mode = selected_message_mode;
         }
         break;
