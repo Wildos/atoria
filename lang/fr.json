@@ -265,6 +265,9 @@
       "Combat": {
         "Title": "Martiale"
       },
+      "Hero": {
+        "Combative": "Combative"
+      },
       "Player": {
         "Pages": {
           "Character": "Personnage",

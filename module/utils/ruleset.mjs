@@ -465,6 +465,10 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getSkillOrKnowledgeTitle(actor, path) {
+    if (actor.type == "hero" && path == "system.skills.weapon") {
+      return game.i18n.localize("ATORIA.Sheet.Hero.Combative");
+    }
+
     let path_parts = path.split(".");
     path_parts.shift();
 

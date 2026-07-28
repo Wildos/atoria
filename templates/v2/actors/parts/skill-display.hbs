@@ -1,6 +1,12 @@
 {{#if (or force_display @root.isEditingMode (not (includes @root.flags.atoria.hidden_skills data_path)))}}
 <div class="atoria-skill-display">
-    <label data-action="rollable" data-skill-path="{{data_path}}">{{localize systemFields.label}}
+    <label data-action="rollable" data-skill-path="{{data_path}}">
+        {{#if forced_title}}
+            {{localize forced_title}}
+        {{else}}
+            {{localize systemFields.label}}
+        {{/if}}
+
         {{#if (and (gt skill.mastery 0) (or limited (not @root.isEditingMode)))}}<div class="atoria-exponent">{{skill.mastery}}</div>{{/if}}
     </label>
     <input type="number" name="{{data_path}}.success"
