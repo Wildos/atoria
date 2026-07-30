@@ -265,6 +265,9 @@
       "Combat": {
         "Title": "Martiale"
       },
+      "Hero": {
+        "Combative": "Combative"
+      },
       "Player": {
         "Pages": {
           "Character": "Personnage",
@@ -357,6 +360,7 @@
         "Success": "Réussite",
         "Critical_success": "Réussite critique",
         "Dos": "DR",
+        "Aiming_type": "Viser",
         "Is_Danger": "Danger"
       },
       "Skill": {
@@ -396,10 +400,11 @@
         "Is_danger": "Danger",
         "Roll_visibility": {
           "Label": "Visibilité du jet",
-          "Self": "Personnel",
-          "Public": "Publique",
-          "Private": "Privé",
-          "Blind": "Aveugle"
+          "self": "Personnel",
+          "public": "Publique",
+          "ic": "En personnage",
+          "gm": "Privé",
+          "blind": "Aveugle"
         },
         "Aiming": "Viser"
       },
@@ -441,7 +446,8 @@
         "Amount": "Valeur de Soin inactif",
         "Herbs": "Herbes inactives",
         "Medical": "Médication",
-        "Resurrection": "Résurrection inactive"
+        "Resurrection": "Résurrection inactive",
+        "Incurable": "Incurable"
       },
       "Encumbrance": "Encombrement",
       "Luck": "Chance",
@@ -1324,8 +1330,8 @@
         "Guard": "DR Réflexe - Parade +1 au contact.",
         "Guard+": "DR Réflexe - Parade +1 au contact.</br>1 / Combat : Lorsque vous ratez une parade, vous avez Armure +1 contre l'attaque.",
 
-        "Throwable": "DR Jet +1, Portée effective +1m et Portée maximale +3m.",
-        "Throwable+": "DR Jet +2, Portée effective +1m et Portée maximale +3m.",
+        "Throwable": "DR Jet +1.",
+        "Throwable+": "DR Jet +2.",
 
         "Light": "Peut être utilisé en main secondaire.",
 
@@ -1410,7 +1416,7 @@
         "Target": "Ciblage",
         "Area": "Zone",
         "Restriction": "Restriction",
-        "Requirement": "Nécessité",
+        "Requirement": "Nécessite",
         "Incompatible": "Incompatible"
       },
       "Somatic": {

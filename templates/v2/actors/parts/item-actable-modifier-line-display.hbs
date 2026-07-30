@@ -86,18 +86,18 @@ data-action="expandSection" data-expand-id="{{item._id}}" data-drag="Item" data-
         >{{cleanLines item.system.restriction}}</div>
     </div>
 
-    <label class="double-col-field">{{localize systemFields.description.label}}</label>
+    <label class="double-col-field">{{localize systemFields.effect.label}}</label>
     <div style="display: grid;">
         <textarea
             class="textarea-auto-resize"
             style="grid-area: 1 / 1 / 2/ 2;"
             rows="1"
-            data-name="{{item._id}}_description" data-dtype="String"
-            disabled>{{cleanLines item.system.description}}</textarea>
+            data-name="{{item._id}}_effect" data-dtype="String"
+            disabled>{{cleanLines item.system.effect}}</textarea>
         <div
         class="textarea-auto-resize-sibling"
         aria-hidden="true"
         style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-        >{{cleanLines item.system.description}}</div>
+        >{{cleanLines item.system.effect}}</div>
     </div>
 </li>

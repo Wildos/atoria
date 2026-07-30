@@ -5,6 +5,15 @@ export default class AtoriaInteractableChatMessage
     const fields = foundry.data.fields;
     let schema = {};
 
+    schema.forced_title = new fields.StringField({
+      required: false,
+      label: "ATORIA.Model.ForcedTitle",
+    });
+    schema.forced_tooltip = new fields.StringField({
+      required: false,
+      label: "ATORIA.Model.ForcedTooltip",
+    });
+
     schema.used_perks = new fields.ArrayField(
       new fields.SchemaField(
         {

@@ -17,6 +17,10 @@
         {{#if dos_mod}}
         <span>{{localize "ATORIA.Chat_message.Dice.Dos"}}: {{dos_mod}}</span>
         {{/if}}
+        {{#if aiming_type}}
+        <span>{{localize "ATORIA.Chat_message.Dice.Aiming_type"}}: {{localize aiming_type}}</span>
+        {{/if}}
+
         {{#if is_danger}}
         <span>{{localize "ATORIA.Chat_message.Dice.Is_Danger"}}</span>
         {{/if}}

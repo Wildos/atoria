@@ -43,6 +43,7 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     this.#actor_name = fromUuidSync(this.data.actor_uuid).name;
 
     this.data.skills.forEach((skill_data) => {
+      if (skill_data.usable_perks == undefined) return 0;
       skill_data.usable_perks.sort((a, b) => {
         const types_ord = [
           "supplementary",
@@ -229,7 +230,7 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         this.data.weapon != undefined
           ? this.#current_skill.success +
             this.data.weapon.system.modificators.success
-          : (this.#current_skill?.success ?? 0),
+          : this.#current_skill?.success,
       critical_success_amount:
         this.data.weapon != undefined
           ? this.#current_skill.critical_success_amount +
@@ -242,6 +243,10 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
           : (this.#current_skill?.critical_fumble_amount ?? 0),
 
       mastery: this.#current_skill?.mastery ?? 0,
+      aiming_type:
+        form_data_obj.aiming_type == "none"
+          ? undefined
+          : utils.ruleset.aiming.type[form_data_obj.aiming_type],
 
       dos_mod: final_dos_mod,
       advantage_amount: form_data_obj.advantage_amount ?? 0,
@@ -273,6 +278,8 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         path: this.#current_skill?.path,
 
         mastery: roll_setup.mastery,
+
+        aiming_type: roll_setup.aiming_type,
 
         advantage_amount: roll_setup.advantage_amount,
         disadvantage_amount: roll_setup.disadvantage_amount,
@@ -309,8 +316,17 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
                 blind: CONFIG.ChatMessage.modes["blind"],
               }
             : CONFIG.ChatMessage.modes;
+
+          Object.keys(available_message_mods).map((key) => {
+            available_message_mods[key].label = available_message_mods[
+              key
+            ].label.replace("CHAT.MODES", "ATORIA.Dialog.Roll.Roll_visibility");
+          });
+
           let selected_message_mode = game.settings.get("core", "messageMode");
           context.message_modes = available_message_mods;
+          console.debug("message_modes");
+          console.debug(context.message_modes);
           context.selected_message_mode = selected_message_mode;
         }
         break;

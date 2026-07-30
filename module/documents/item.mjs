@@ -495,6 +495,16 @@ export default class AtoriaItem extends Item {
           type: "spell",
         },
       ];
+    if (this.type == "action" && this.system.associated_skill == "") {
+      return [
+        {
+          label: this.name,
+          path: "",
+          proper_label: this.name,
+          type: "action",
+        },
+      ];
+    }
 
     let skills = [];
     if (this.type == "opportunity")
@@ -554,6 +564,9 @@ export default class AtoriaItem extends Item {
     skill_data.usable_supplementaries = this.getSupplementaries().map(
       (supp_data, idx) => {
         supp_data.id = idx;
+        supp_data.systemFields = this.system.schema.getField(
+          "supplementaries_list",
+        ).element.fields;
         return supp_data;
       },
     );
@@ -762,7 +775,7 @@ export default class AtoriaItem extends Item {
       }),
     };
 
-    if (roll_data.path != undefined) {
+    if (roll_data.success_value != undefined) {
       utils.ruleset.item.applyRollDataRules(this, roll_data);
 
       let rolls = await utils.create_rolls_with_effect(
@@ -786,12 +799,14 @@ export default class AtoriaItem extends Item {
       }
     } else {
       let rolls = await utils.create_simple_effect_rolls(effects_data);
+      system_data.forced_title = this.name;
+      system_data.forced_tooltip = this.descriptive_tooltip;
       await utils.chat_message_from_non_roll(
         this,
         roll_parameters.message_mode,
-        game.i18n.format("ATORIA.Chat_message.Used.Actable", {
-          name: this.name,
-        }),
+        game.i18n.localize("ATORIA.Chat_message.Dice.Aiming_type") +
+          " : " +
+          game.i18n.localize(roll_data.aiming_type),
         rolls,
         system_data,
       );

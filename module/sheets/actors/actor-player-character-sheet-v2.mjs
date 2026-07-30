@@ -123,14 +123,25 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     return context;
   }
 
-  _format_feature_items(feature_items) {
+  _format_feature_items(feature_items, feature_categories) {
     let formatted_feature_items = {};
 
     for (const feature of feature_items) {
       let feature_place = feature.getFlag("atoria", "feature-category");
       if (feature_place === undefined || feature_place === "") {
         feature_place = DEFAULT_FEATURE_PLACE;
+      } else {
+        let feat_place_parts = feature_place.split(".");
+        let feat_cat_array =
+          feature_categories[feat_place_parts[0]]?.children ?? [];
+        if (
+          feat_cat_array.find((elem) => elem.id == feat_place_parts[1]) ==
+          undefined
+        ) {
+          feature_place = DEFAULT_FEATURE_PLACE;
+        }
       }
+
       let new_value = utils.retrieve_from_string(
         formatted_feature_items,
         feature_place,
@@ -675,10 +686,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
               break;
           }
         }
-        context.feature_items = feature_items;
-        context.formatted_feature_items =
-          this._format_feature_items(feature_items);
-
         context.feature_categories = {
           combat: {
             Label: "ATORIA.Sheet.Player.Features.Combat.Label",
@@ -718,6 +725,12 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             Label: "ATORIA.Sheet.Player.Features.Other.Label",
           },
         };
+        context.feature_items = feature_items;
+        context.formatted_feature_items = this._format_feature_items(
+          feature_items,
+          context.feature_categories,
+        );
+
         context.action_items = action_items;
 
         {
