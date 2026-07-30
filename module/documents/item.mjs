@@ -804,9 +804,11 @@ export default class AtoriaItem extends Item {
       await utils.chat_message_from_non_roll(
         this,
         roll_parameters.message_mode,
-        game.i18n.localize("ATORIA.Chat_message.Dice.Aiming_type") +
-          " : " +
-          game.i18n.localize(roll_data.aiming_type),
+        roll_data.aiming_type == undefined
+          ? ""
+          : game.i18n.localize("ATORIA.Chat_message.Dice.Aiming_type") +
+              " : " +
+              game.i18n.localize(roll_data.aiming_type),
         rolls,
         system_data,
       );
