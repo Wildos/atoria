@@ -657,6 +657,10 @@ export default class AtoriaItem extends Item {
 
     if (roll_parameters === null) return;
 
+    if (["spell", "action"].includes(this.type)) {
+      roll_parameters.saves_asked.push(...this.system.saves_asked);
+    }
+
     // Create message roll
     let roll_data = utils.get_roll_data(
       roll_parameters,
