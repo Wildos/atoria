@@ -237,7 +237,7 @@
       },
       "Limitation": "Limitations",
       "Feature": {
-        "Title": "Aptitudes et Permanents",
+        "Title": "Aptitudes et Enchantements",
         "Require_actor": "La configuration de cette partie nécessite qu'un acteur ait la propriété de cet objet"
       },
       "Weapon": {
@@ -266,7 +266,7 @@
         "Title": "Martiale"
       },
       "Hero": {
-        "Combative": "Combative"
+        "Combative": "Combatives"
       },
       "Player": {
         "Pages": {
@@ -426,7 +426,7 @@
       "Skill_setup": {
         "Keywords": "Mot-Clefs",
         "Supplementaries": "Supplementaires",
-        "Features": "Aptitudes et Enchantement",
+        "Features": "Aptitudes et Enchantements",
         "Actable_mod": "Techniques et Ajouts"
       }
     },
