@@ -205,9 +205,11 @@ data-drag="Item" data-item-id="{{item._id}}">
     <!-- Actable -->
 
     {{#if (ne item.type "weapon")}}
+        {{#if item.system.material}}
         <div class="flexrow">
             <label><b>{{localize item.systemFields.material.label}}:</b> {{item.system.material}}</label>
         </div>
+        {{/if}}
         {{#if (eq item.type "spell")}}
             {{#if item.system.critical_effect}}
                 <label><b>{{localize systemFields.critical_effect.label}}: </b></label>

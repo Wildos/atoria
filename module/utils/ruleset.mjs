@@ -787,8 +787,8 @@ RULESET["character"] = class ActorRuleset {
           (keyword_effect.is_shown_on_attack &&
             item !== undefined &&
             item.type == "weapon") ||
-          keyword_effect.skill_alterations.some(
-            (skill_alt) => skill_alt.associated_skill == skill_path,
+          keyword_effect.skill_alterations.some((skill_alt) =>
+            skill_alt.associated_skill.startsWith(skill_path),
           )
         ) {
           skill_associated_keywords_data.push(keyword_effect);
@@ -1989,8 +1989,7 @@ RULESET["keywords"] = {
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect:
-              "DR Distant +1, Portée effective +1m et Portée maximale +3m.",
+            effect: "DR Distant +1.",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_APART_PATH,
@@ -2002,8 +2001,7 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "DR Distant +2, Portée effective +1m et Portée maximale +3m.",
+            effect: "DR Distant +2.",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_APART_PATH,
@@ -2015,8 +2013,7 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "DR Distant +2, Portée effective +1m et Portée maximale +3m.",
+            effect: "DR Distant +2.",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_APART_PATH,
@@ -2028,8 +2025,7 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "DR Distant +2, Portée effective +1m et Portée maximale +3m.",
+            effect: "DR Distant +2.",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_APART_PATH,
@@ -2041,8 +2037,7 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "DR Distant +2, Portée effective +1m et Portée maximale +3m.",
+            effect: "DR Distant +2.",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_APART_PATH,

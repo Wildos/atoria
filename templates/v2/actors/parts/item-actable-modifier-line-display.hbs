@@ -6,6 +6,7 @@ data-action="expandSection" data-expand-id="{{item._id}}" data-drag="Item" data-
     {{>"atoria.v2.commons_partials.cost-display"
         cost=item.system.cost
         systemFields=systemFields.cost.fields
+        hide_material=true
     }}
 
     {{#if (eq item.type "technique")}}
@@ -67,24 +68,45 @@ data-action="expandSection" data-expand-id="{{item._id}}" data-drag="Item" data-
             {{localize (lookup systemFields.somatic.choices item.system.somatic)}}
         {{/if}}
     </label>
-    <div class="flexrow">
-        <label><b>{{localize item.systemFields.material.label}}:</b> {{item.system.material}}</label>
-    </div>
+        {{#if item.system.cost.material}}
+        <div class="flexrow">
+            <label><b>{{localize item.systemFields.cost.fields.material.label}}:</b> {{item.system.cost.material}}</label>
+        </div>
+        {{/if}}
     {{/if}}
-    <label class="double-col-field">{{localize systemFields.restriction.label}}</label>
+    {{#if item.system.requirement}}
+    <label class="double-col-field">{{localize systemFields.requirement.label}}</label>
     <div style="display: grid;">
         <textarea
             class="textarea-auto-resize"
             style="grid-area: 1 / 1 / 2/ 2;"
             rows="1"
-            data-name="{{item._id}}_restriction" data-dtype="String"
-            disabled>{{cleanLines item.system.restriction}}</textarea>
+            data-name="{{item._id}}_requirement" data-dtype="String"
+            disabled>{{cleanLines item.system.requirement}}</textarea>
         <div
         class="textarea-auto-resize-sibling"
         aria-hidden="true"
         style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
-        >{{cleanLines item.system.restriction}}</div>
+        >{{cleanLines item.system.requirement}}</div>
     </div>
+    {{/if}}
+
+    {{#if item.system.incompatible}}
+    <label class="double-col-field">{{localize systemFields.incompatible.label}}</label>
+    <div style="display: grid;">
+        <textarea
+            class="textarea-auto-resize"
+            style="grid-area: 1 / 1 / 2/ 2;"
+            rows="1"
+            data-name="{{item._id}}_incompatible" data-dtype="String"
+            disabled>{{cleanLines item.system.incompatible}}</textarea>
+        <div
+        class="textarea-auto-resize-sibling"
+        aria-hidden="true"
+        style="visibility: hidden; grid-area: 1 / 1 / 2 / 2;"
+        >{{cleanLines item.system.incompatible}}</div>
+    </div>
+    {{/if}}
 
     <label class="double-col-field">{{localize systemFields.effect.label}}</label>
     <div style="display: grid;">
