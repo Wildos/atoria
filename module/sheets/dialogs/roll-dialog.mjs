@@ -43,25 +43,47 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     this.#actor_name = fromUuidSync(this.data.actor_uuid).name;
 
     this.data.skills.forEach((skill_data) => {
-      if (skill_data.usable_perks == undefined) return 0;
-      skill_data.usable_perks.sort((a, b) => {
-        const types_ord = [
-          "supplementary",
-          "technique",
-          "incantatory-addition",
-          "feature",
-          "kit",
-          "armor",
-          "weapon",
-          undefined,
-          null,
-        ];
-        let type_ord = types_ord.indexOf(a.type) - types_ord.indexOf(b.type);
-        if (type_ord != 0) {
-          return type_ord;
-        }
-        return (a.sort || 0) - (b.sort || 0);
-      });
+      if (skill_data.usable_perks != undefined) {
+        skill_data.usable_perks.sort((a, b) => {
+          const types_ord = [
+            "supplementary",
+            "technique",
+            "incantatory-addition",
+            "feature",
+            "kit",
+            "armor",
+            "weapon",
+            undefined,
+            null,
+          ];
+          let type_ord = types_ord.indexOf(a.type) - types_ord.indexOf(b.type);
+          if (type_ord != 0) {
+            return type_ord;
+          }
+          return (a.sort || 0) - (b.sort || 0);
+        });
+      }
+
+      if (skill_data.usable_act_mod != undefined) {
+        skill_data.usable_act_mod.sort((a, b) => {
+          const types_ord = [
+            "supplementary",
+            "technique",
+            "incantatory-addition",
+            "feature",
+            "kit",
+            "armor",
+            "weapon",
+            undefined,
+            null,
+          ];
+          let type_ord = types_ord.indexOf(a.type) - types_ord.indexOf(b.type);
+          if (type_ord != 0) {
+            return type_ord;
+          }
+          return (a.sort || 0) - (b.sort || 0);
+        });
+      }
     });
   }
 
