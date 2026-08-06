@@ -45,7 +45,7 @@ export function extract_leaf_from_player_magic_skills_for_feature_cat(
     }
     leaf_list.push({
       id: magic_school,
-      Label: reference_actor.getSkillFromPath(magic_school).label,
+      Label: reference_actor.getSkillLabel(magic_school),
     });
   }
   return leaf_list;
@@ -62,7 +62,7 @@ export function extract_leaf_from_player_knowledges_for_feature_cat(
     }
     leaf_list.push({
       id: key,
-      Label: reference_actor.getSkillFromPath(key).label,
+      Label: reference_actor.getSkillLabel(key),
     });
   }
   return leaf_list;

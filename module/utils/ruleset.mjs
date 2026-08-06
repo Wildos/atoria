@@ -447,7 +447,6 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getKnowledgeInitialSuccess(key) {
-    console.debug(key);
     switch (key) {
       case "magic":
       case "air":

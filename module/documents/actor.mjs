@@ -190,7 +190,10 @@ export default class AtoriaActor extends Actor {
     return skill_list;
   }
 
-  getSkillList(skill_types = { skills: this.system.skills }) {
+  getSkillList(
+    skill_types = { skills: this.system.skills },
+    add_categories = false,
+  ) {
     const skill_list = {};
 
     if (
@@ -243,6 +246,10 @@ export default class AtoriaActor extends Actor {
         }
         for (let skill_cat_key in skill_group) {
           const skill_cat = skill_group[skill_cat_key];
+          if (add_categories) {
+            const skill_path = `system.${skill_type_key}.${skill_group_key}.${skill_cat_key}`;
+            skill_list[skill_path] = this.getSkillTitle(skill_path);
+          }
           for (let skill_key in skill_cat) {
             const skill_path = `system.${skill_type_key}.${skill_group_key}.${skill_cat_key}.${skill_key}`;
             skill_list[skill_path] = this.getSkillTitle(skill_path);
