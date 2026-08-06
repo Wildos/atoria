@@ -447,7 +447,6 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getKnowledgeInitialSuccess(key) {
-    console.debug(key);
     switch (key) {
       case "magic":
       case "air":
@@ -2531,6 +2530,11 @@ RULESET["keywords"] = {
             skill_alterations: [],
             limit_amount: 5,
           },
+          {
+            effect: 'Ignore 1 effet "Saignement"',
+            skill_alterations: [],
+            limit_amount: 7,
+          },
         ],
         label: "ATORIA.Ruleset.Keywords.Tough",
       },
@@ -2649,6 +2653,13 @@ RULESET["keywords"] = {
             skill_alterations: [],
             limit_amount: 1,
           },
+          {
+            effect:
+              "Attaquant : Dégât > 5</br>\
+            Vous : Résistance +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 2,
+          },
         ],
         label: "ATORIA.Ruleset.Keywords.Resistant",
       },
@@ -2683,6 +2694,13 @@ RULESET["keywords"] = {
             Vous : Armure +1 contre l'attaque.",
             skill_alterations: [],
             limit_amount: 1,
+          },
+          {
+            effect:
+              "Attaquant : Dégât > 5</br>\
+            Vous : Armure +1 contre l'attaque.",
+            skill_alterations: [],
+            limit_amount: 2,
           },
         ],
         label: "ATORIA.Ruleset.Keywords.Sturdy",

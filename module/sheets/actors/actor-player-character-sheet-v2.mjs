@@ -134,8 +134,10 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
         let feat_place_parts = feature_place.split(".");
         let feat_cat_array =
           feature_categories[feat_place_parts[0]]?.children ?? [];
+        feat_place_parts.shift();
+        let feat_place_remaining = feat_place_parts.join(".");
         if (
-          feat_cat_array.find((elem) => elem.id == feat_place_parts[1]) ==
+          feat_cat_array.find((elem) => elem.id == feat_place_remaining) ==
           undefined
         ) {
           feature_place = DEFAULT_FEATURE_PLACE;
@@ -210,9 +212,12 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     let feature_magic_categories = [
       ...(utils.extract_leaf_from_player_magic_skills_for_feature_cat(
         this._filter_out_keys(
-          this.actor?.getSkillList({
-            knowledges: { magic: this.actor.system.knowledges.magic },
-          }),
+          this.actor?.getSkillList(
+            {
+              knowledges: { magic: this.actor.system.knowledges.magic },
+            },
+            true,
+          ),
           this.actor.flags.atoria.hidden_skills,
         ),
         this.actor,
@@ -225,9 +230,12 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
     let feature_knowledge_categories = [
       ...(utils.extract_leaf_from_player_knowledges_for_feature_cat(
         this._filter_out_keys(
-          this.actor?.getSkillList({
-            knowledges: this.actor.system.knowledges,
-          }),
+          this.actor?.getSkillList(
+            {
+              knowledges: this.actor.system.knowledges,
+            },
+            true,
+          ),
           this.actor.flags.atoria.hidden_skills,
         ),
         this.actor,
