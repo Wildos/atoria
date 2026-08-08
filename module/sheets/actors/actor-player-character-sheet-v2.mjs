@@ -150,6 +150,22 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
       );
       if (new_value === undefined) {
         new_value = [];
+      } else if (
+        typeof new_value === "object" &&
+        !Array.isArray(new_value) &&
+        new_value !== null
+      ) {
+        if (new_value["_own"] === undefined) {
+          new_value["_own"] = [];
+        }
+        new_value = new_value["_own"];
+        new_value.push(feature);
+        utils.assignation_from_string(
+          formatted_feature_items,
+          feature_place + "._own",
+          new_value,
+        );
+        continue;
       }
       new_value.push(feature);
       utils.assignation_from_string(

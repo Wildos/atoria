@@ -60,19 +60,19 @@
                  <div class="atoria-expand-direct-data">
                     {{#each feature_categories.skills.children as |child|}}
                     {{#if (or (getProperty ../formatted_feature_items.skills child.id) @root.isEditingMode)}}
-                    <h6 class="title" data-item-id data-feature-cat="skills.{{child.id}}">{{localize child.Label}}
-                    {{#if (and @root.editable @root.isEditingMode)}}
-                        <a class="atoria-create-button" data-action="createItem" data-type="feature"
-                        data-feature-cat="skills.{{child.id}}"
-                        data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.feature" )}}">
-                            <i class="fas fa-plus"></i>
-                        </a>
-                        {{/if}}
-                    </h6>
-                    {{#each (getProperty ../formatted_feature_items.skills child.id) as |item idx|}}
-                                {{>"atoria.v2.actors_partials.item-line-display" item=item}}
-                            {{/each}}
-                        {{/if}}
+                        <h6 class="title" data-item-id data-feature-cat="skills.{{child.id}}">{{localize child.Label}}
+                            {{#if (and @root.editable @root.isEditingMode)}}
+                            <a class="atoria-create-button" data-action="createItem" data-type="feature"
+                            data-feature-cat="skills.{{child.id}}"
+                            data-tooltip="{{localize "ATORIA.Sheet.Item.Create" type=(localize "TYPES.Item.feature" )}}">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                            {{/if}}
+                        </h6>
+                        {{#each (getProperty ../formatted_feature_items.skills child.id) as |item idx|}}
+                            {{>"atoria.v2.actors_partials.item-line-display" item=item}}
+                        {{/each}}
+                    {{/if}}
                     {{/each}}
                     </div>
                 {{/if}}
@@ -115,7 +115,7 @@
                             </a>
                             {{/if}}
                         </h6>
-                        {{#each (getProperty ../formatted_feature_items.knowledges child.id) as |item idx|}}
+                        {{#each (getPropertyOwn ../formatted_feature_items.knowledges child.id) as |item idx|}}
                             {{>"atoria.v2.actors_partials.item-line-display" item=item}}
                         {{/each}}
                         {{/if}}

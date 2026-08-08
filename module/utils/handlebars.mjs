@@ -98,6 +98,23 @@ function _getProperty(object, property_path) {
   );
 }
 
+function _getPropertyOwn(object, property_path) {
+  let val = foundry.utils.getProperty(
+    object,
+    property_path.string ?? property_path,
+  );
+
+  if (typeof val === "object" && !Array.isArray(val) && val !== null) {
+    if (val["_own"] != undefined) {
+      val = val["_own"];
+    } else {
+      val = undefined;
+    }
+  }
+
+  return val;
+}
+
 function _getField(objet, field_path) {
   return objet.getField(field_path.string ?? field_path);
 }
@@ -204,6 +221,7 @@ export const registerHandlebarsHelpers = async function () {
     isEmpty: _isEmpty,
     percentage: _percentage,
     getProperty: _getProperty,
+    getPropertyOwn: _getPropertyOwn,
     getField: _getField,
     includes: _includes,
     enhancedNumberFormat: _enhancedNumberFormat,
