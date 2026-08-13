@@ -497,7 +497,7 @@ RULESET["character"] = class ActorRuleset {
   }
 
   static getSkillOrKnowledgeTitle(actor, path) {
-    if (actor.type == "hero" && path == "system.skills.weapon") {
+    if (actor?.type == "hero" && path == "system.skills.weapon") {
       return game.i18n.localize("ATORIA.Sheet.Hero.Combative");
     }
 
