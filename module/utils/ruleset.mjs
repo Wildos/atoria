@@ -1407,9 +1407,19 @@ RULESET["item"] = class ItemRuleset {
           weapon_data.system.associated_skill !=
             RULESET.character.WAND_SKILL_PATH
         ) {
-          skills.push(
-            actor.getSkillFromPath(RULESET.character.ENCHANTED_SKILL_PATH),
+          let enchant_skill = actor.getSkillFromPath(
+            RULESET.character.ENCHANTED_SKILL_PATH,
           );
+
+          if (
+            enchant_skill !== undefined &&
+            actor.type == "non-player-character"
+          ) {
+            enchant_skill.label = game.i18n.localize(
+              "ATORIA.Ruleset.Skills.Weapon.Apart.Enchanted.Label",
+            );
+          }
+          skills.push(enchant_skill);
         }
         {
           let asso_skill = foundry.utils.deepClone(
@@ -1478,6 +1488,8 @@ RULESET["item"] = class ItemRuleset {
         RULESET.character.getSkillCriticalFumbleAmount(skill_data),
       label: weapon_skill.label,
       path: knowledge_skill.path + "///" + weapon_skill.path,
+      wanted_path:
+        knowledge_skill.wanted_path + "///" + weapon_skill.wanted_path,
       proper_label: weapon_skill.proper_label,
 
       mastery: skill_data.mastery,

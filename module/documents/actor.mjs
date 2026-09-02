@@ -148,6 +148,8 @@ export default class AtoriaActor extends Actor {
 
     if (!utils.isSkill(target_skill)) return undefined;
 
+    target_skill["wanted_path"] = skill_path;
+
     target_skill["critical_success_amount"] =
       utils.ruleset.character.getSkillCriticalSuccessAmount(target_skill);
     target_skill["critical_fumble_amount"] =
