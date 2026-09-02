@@ -491,6 +491,7 @@ export default class AtoriaItem extends Item {
           critical_fumble_amount: this.system.critical_fumble,
           label: this.name,
           path: "",
+          wanted_path: "",
           proper_label: this.name,
           type: "spell",
         },
@@ -500,6 +501,7 @@ export default class AtoriaItem extends Item {
         {
           label: this.name,
           path: "",
+          wanted_path: "",
           proper_label: this.name,
           type: "action",
         },
@@ -642,7 +644,7 @@ export default class AtoriaItem extends Item {
     if (["spell", "weapon", "action"].includes(this.type)) {
       for (const skill_data of skills) {
         skill_data.usable_act_mod = this.getAvailableActableModifiers(
-          skill_data.path,
+          skill_data.wanted_path,
         );
       }
     }
@@ -669,7 +671,7 @@ export default class AtoriaItem extends Item {
     roll_data.title = roll_label;
 
     let effects_data = this._getEffectForSkillPath(
-      roll_parameters.roll_data.path,
+      roll_parameters.roll_data.wanted_path,
     );
     effects_data.push(...utils.get_effects_data(roll_parameters));
 

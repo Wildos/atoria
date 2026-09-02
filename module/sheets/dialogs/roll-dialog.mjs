@@ -298,6 +298,7 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
         critical_success_amount: roll_setup.critical_success_amount,
         critical_fumble_amount: roll_setup.critical_fumble_amount,
         path: this.#current_skill?.path,
+        wanted_path: this.#current_skill?.wanted_path,
 
         mastery: roll_setup.mastery,
 
