@@ -832,8 +832,9 @@ export default class AtoriaItem extends Item {
       await this.takeOneLimitationUse();
     }
 
-    this.update({
-      "system.luck": this.system.luck - roll_parameters.roll_data.luck_applied,
+    this.actor?.update({
+      "system.luck":
+        this.actor?.system.luck - roll_parameters.roll_data.luck_applied,
     });
 
     // ----------------------------------------

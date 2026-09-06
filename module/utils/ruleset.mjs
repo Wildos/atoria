@@ -279,10 +279,9 @@ RULESET["character"] = class ActorRuleset {
             "zoology",
           ],
           utilitarian: [
-            "song",
+            "song-n-dance",
             "hunting",
             "construction",
-            "dance",
             "dressage",
             "theft",
             "nature",
@@ -335,10 +334,9 @@ RULESET["character"] = class ActorRuleset {
               .map((elem) => elem.id),
           },
           utilitarian: {
-            song: ["entertaining", "martial"],
+            "song-n-dance": ["entertaining", "aesthetics"],
             hunting: ["tracking", "cutting"],
             construction: ["masonry", "carpentry"],
-            dance: ["aesthetics", "spinning"],
             dressage: ["taming", "war"],
             theft: ["pickpocketing", "lock-picking"],
             nature: ["farming", "herbalist", "fungus"],
@@ -381,10 +379,9 @@ RULESET["character"] = class ActorRuleset {
           "erudition.symbolism",
           "erudition.zoology",
 
-          "utilitarian.song",
+          "utilitarian.song-n-dance",
           "utilitarian.hunting",
           "utilitarian.construction",
-          "utilitarian.dance",
           "utilitarian.dressage",
           "utilitarian.theft",
           "utilitarian.nature",
@@ -446,7 +443,7 @@ RULESET["character"] = class ActorRuleset {
     return buildLocalizeString(...final_local_path);
   }
 
-  static getKnowledgeInitialSuccess(key) {
+  static getKnowledgeInitialSuccess(actor_type, key) {
     switch (key) {
       case "magic":
       case "air":
@@ -492,6 +489,9 @@ RULESET["character"] = class ActorRuleset {
         return 0;
 
       default:
+        if (actor_type == "non-player-character" && key == "martial") {
+          return 0;
+        }
         return 10;
     }
   }
@@ -1177,39 +1177,8 @@ RULESET["item"] = class ItemRuleset {
         let skill_paths = skill_path.includes("///")
           ? skill_path.split("///")
           : [skill_path];
-        // let is_thrown_attack =
-        //   skill_paths.length > 1 &&
-        //   skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
-        //   skill_paths[1].startsWith(
-        //     RULESET.character.MARTIAL_CONTACT_WEAPON_PATH,
-        //   );
-        // let is_enchanted_attack =
-        //   item.system.is_focuser &&
-        //   skill_paths.length > 1 &&
-        //   skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
-        //   skill_paths[1] == RULESET.character.ENCHANTED_SKILL_PATH;
 
         let usable_actable_modifiers = [];
-        // if (is_enchanted_attack) {
-        //   usable_actable_modifiers.push(
-        //     ...item.system.usable_actable_modifiers_typed.filter(
-        //       (act_mod_id_data) => act_mod_id_data.focuser,
-        //     ),
-        //   );
-        // } else if (is_thrown_attack) {
-        //   usable_actable_modifiers.push(
-        //     ...item.system.usable_actable_modifiers_typed.filter(
-        //       (act_mod_id_data) => act_mod_id_data.throw,
-        //     ),
-        //   );
-        // } else {
-        //   usable_actable_modifiers.push(
-        //     ...item.system.usable_actable_modifiers_typed.filter(
-        //       (act_mod_id_data) => act_mod_id_data.main,
-        //     ),
-        //   );
-        // }
-        //
         switch (skill_paths[0]) {
           case RULESET.character.MARTIAL_CONTACT_PATH:
             usable_actable_modifiers.push(
