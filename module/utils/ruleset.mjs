@@ -279,10 +279,9 @@ RULESET["character"] = class ActorRuleset {
             "zoology",
           ],
           utilitarian: [
-            "song",
+            "song-n-dance",
             "hunting",
             "construction",
-            "dance",
             "dressage",
             "theft",
             "nature",
@@ -335,10 +334,9 @@ RULESET["character"] = class ActorRuleset {
               .map((elem) => elem.id),
           },
           utilitarian: {
-            song: ["entertaining", "martial"],
+            "song-n-dance": ["entertaining", "aesthetics"],
             hunting: ["tracking", "cutting"],
             construction: ["masonry", "carpentry"],
-            dance: ["aesthetics", "spinning"],
             dressage: ["taming", "war"],
             theft: ["pickpocketing", "lock-picking"],
             nature: ["farming", "herbalist", "fungus"],
@@ -381,10 +379,9 @@ RULESET["character"] = class ActorRuleset {
           "erudition.symbolism",
           "erudition.zoology",
 
-          "utilitarian.song",
+          "utilitarian.song-n-dance",
           "utilitarian.hunting",
           "utilitarian.construction",
-          "utilitarian.dance",
           "utilitarian.dressage",
           "utilitarian.theft",
           "utilitarian.nature",
@@ -446,7 +443,7 @@ RULESET["character"] = class ActorRuleset {
     return buildLocalizeString(...final_local_path);
   }
 
-  static getKnowledgeInitialSuccess(key) {
+  static getKnowledgeInitialSuccess(actor_type, key) {
     switch (key) {
       case "magic":
       case "air":
@@ -492,6 +489,9 @@ RULESET["character"] = class ActorRuleset {
         return 0;
 
       default:
+        if (actor_type == "non-player-character" && key == "martial") {
+          return 0;
+        }
         return 10;
     }
   }

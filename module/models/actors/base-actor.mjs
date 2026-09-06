@@ -606,7 +606,10 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
             cat_key,
             real_key,
           ]),
-          utils.ruleset.character.getKnowledgeInitialSuccess(real_key),
+          utils.ruleset.character.getKnowledgeInitialSuccess(
+            this.type,
+            real_key,
+          ),
         );
       }
     } else {
@@ -621,7 +624,10 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
                 parent_key,
                 key,
               ]),
-              utils.ruleset.character.getKnowledgeInitialSuccess(key),
+              utils.ruleset.character.getKnowledgeInitialSuccess(
+                this.type,
+                key,
+              ),
             );
           }
         } else {
@@ -637,7 +643,10 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
                     mid_key,
                     key,
                   ]),
-                  utils.ruleset.character.getKnowledgeInitialSuccess(key),
+                  utils.ruleset.character.getKnowledgeInitialSuccess(
+                    this.type,
+                    key,
+                  ),
                 );
               }
             } else {
@@ -871,6 +880,62 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
           disadv_amount: 0,
         },
       ];
+      if (this.type === "player-character") {
+        source.knowledges.utilitarian["song-n-dance"] = {};
+        source.knowledges.utilitarian["song-n-dance"].entertaining =
+          foundry.utils.deepClone(
+            source.knowledges.utilitarian.song.entertaining,
+          );
+        source.knowledges.utilitarian["song-n-dance"].aesthetics =
+          foundry.utils.deepClone(
+            source.knowledges.utilitarian.dance.aesthetics,
+          );
+      } else if (this.type === "non-player-character") {
+        source.knowledges.utilitarian["song-n-dance"] = foundry.utils.deepClone(
+          source.knowledges.utilitarian.song,
+        );
+        source.knowledges.utilitarian["song-n-dance"].success = Math.max(
+          source.knowledges.utilitarian["song-n-dance"].success ?? 0,
+          source.knowledges.utilitarian.dance.success ?? 0,
+        );
+        source.knowledges.utilitarian["song-n-dance"].mastery = Math.max(
+          source.knowledges.utilitarian["song-n-dance"].mastery ?? 0,
+          source.knowledges.utilitarian.dance.mastery ?? 0,
+        );
+        source.knowledges.utilitarian["song-n-dance"].critical_fumble_modifier =
+          Math.max(
+            source.knowledges.utilitarian["song-n-dance"]
+              .critical_fumble_modifier ?? 0,
+            source.knowledges.utilitarian.dance.critical_fumble_modifier ?? 0,
+          );
+        source.knowledges.utilitarian[
+          "song-n-dance"
+        ].critical_success_modifier = Math.max(
+          source.knowledges.utilitarian["song-n-dance"]
+            .critical_success_modifier ?? 0,
+          source.knowledges.utilitarian.dance.critical_success_modifier ?? 0,
+        );
+      } else if (this.type === "hero") {
+        source.knowledges["song-n-dance"] = foundry.utils.deepClone(
+          source.knowledges.song,
+        );
+        source.knowledges["song-n-dance"].success = Math.max(
+          source.knowledges["song-n-dance"].success ?? 0,
+          source.knowledges.dance.success ?? 0,
+        );
+        source.knowledges["song-n-dance"].mastery = Math.max(
+          source.knowledges["song-n-dance"].mastery ?? 0,
+          source.knowledges.dance.mastery ?? 0,
+        );
+        source.knowledges["song-n-dance"].critical_fumble_modifier = Math.max(
+          source.knowledges["song-n-dance"].critical_fumble_modifier ?? 0,
+          source.knowledges.dance.critical_fumble_modifier ?? 0,
+        );
+        source.knowledges["song-n-dance"].critical_success_modifier = Math.max(
+          source.knowledges["song-n-dance"].critical_success_modifier ?? 0,
+          source.knowledges.dance.critical_success_modifier ?? 0,
+        );
+      }
     }
 
     return super.migrateData(source, options);

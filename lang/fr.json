@@ -973,6 +973,15 @@
             "Label": "Médecine",
             "Why": "Relicat pour les heros"
           },
+          "Song-n-dance": {
+            "Label": "Chant & Danse",
+            "Entertaining": {
+              "Label": "Divertissant"
+            },
+            "Aesthetics": {
+              "Label": "Esthétique"
+            }
+          },
           "Song": {
             "Label": "Chant",
             "Entertaining": {

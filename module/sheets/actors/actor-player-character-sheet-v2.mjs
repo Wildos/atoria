@@ -605,23 +605,28 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           ],
 
           "system.knowledges.utilitarian": [
+            "song-n-dance",
             "song",
+            "dance",
             "hunting",
             "construction",
-            "dance",
             "dressage",
             "theft",
             "nature",
             "fishing",
             "transport",
           ],
+          "system.knowledges.utilitarian.song-n-dance": [
+            "entertaining",
+            "aesthetics",
+          ],
           "system.knowledges.utilitarian.song": ["entertaining", "martial"],
+          "system.knowledges.utilitarian.dance": ["aesthetics", "spinning"],
           "system.knowledges.utilitarian.hunting": ["tracking", "cutting"],
           "system.knowledges.utilitarian.construction": [
             "masonry",
             "carpentry",
           ],
-          "system.knowledges.utilitarian.dance": ["aesthetics", "spinning"],
           "system.knowledges.utilitarian.dressage": ["taming", "war"],
           "system.knowledges.utilitarian.theft": [
             "pickpocketing",
