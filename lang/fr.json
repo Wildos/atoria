@@ -870,10 +870,10 @@
           "Forge": {
             "Label": "Forge",
             "Weaponry": {
-              "Label": "Armement"
+              "Label": "Armeur"
             },
             "Armoury": {
-              "Label": "Armure"
+              "Label": "Armurier"
             },
             "Goldsmithery": {
               "Label": "Orfèvrerie"

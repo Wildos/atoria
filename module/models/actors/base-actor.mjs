@@ -800,6 +800,79 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
         source.skills.physical.reflex = source.skills.combative.reflex;
       }
     }
+    if (foundry.utils.isNewerVersion("0.3.39", current_version)) {
+      source.keywords.versatile["effect_level_1"].skill_alterations = [
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_CONTACT_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_APART_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+      ];
+      source.keywords.versatile["effect_level_2"].skill_alterations = [
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_CONTACT_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_APART_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+      ];
+      source.keywords.versatile["effect_level_3"].skill_alterations = [
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_CONTACT_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_APART_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+      ];
+      source.keywords.versatile["effect_level_4"].skill_alterations = [
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_CONTACT_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_APART_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+      ];
+      source.keywords.versatile["effect_level_5"].skill_alterations = [
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_CONTACT_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+        {
+          associated_skill: utils.ruleset.character.MARTIAL_APART_PATH,
+          dos_mod: 0,
+          adv_amount: 0,
+          disadv_amount: 0,
+        },
+      ];
+    }
+
     return super.migrateData(source, options);
   }
 }

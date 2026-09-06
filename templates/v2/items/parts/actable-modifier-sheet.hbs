@@ -1,6 +1,6 @@
 <div class="atoria-item-actable-modifier-parts grid-2col">
     {{>"atoria.v2.commons_partials.cost-input" cost=item.system.cost
-    data_path="system.cost" systemFields=systemFields.cost.fields cssClasses="double-col-field" complete_cost=true}}
+    data_path="system.cost" systemFields=systemFields.cost.fields cssClasses="double-col-field" complete_cost=(not (eq item.type "incantatory-addition"))}}
 
     <label class="double-col-field">{{localize systemFields.requirement.label}}</label>
     <div class="double-col-field" style="display: grid;">
@@ -52,6 +52,9 @@
         {{selectOptions systemFields.somatic.choices selected=item.system.somatic localize=true}}
     </select>
 
+    <label>{{localize systemFields.cost.fields.material.label}}:</label>
+    <input class="atoria-material colored" type="text" name="system.cost.material" value="{{item.system.cost.material}}"
+        data-tooltip="{{localize systemFields.cost.fields.material.label}}" >
     {{/if}}
 
     {{>"atoria.v2.commons_partials.time-limitation-input" limitation=item.system.limitation

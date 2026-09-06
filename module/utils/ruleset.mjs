@@ -1177,39 +1177,8 @@ RULESET["item"] = class ItemRuleset {
         let skill_paths = skill_path.includes("///")
           ? skill_path.split("///")
           : [skill_path];
-        // let is_thrown_attack =
-        //   skill_paths.length > 1 &&
-        //   skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
-        //   skill_paths[1].startsWith(
-        //     RULESET.character.MARTIAL_CONTACT_WEAPON_PATH,
-        //   );
-        // let is_enchanted_attack =
-        //   item.system.is_focuser &&
-        //   skill_paths.length > 1 &&
-        //   skill_paths[0] == RULESET.character.MARTIAL_APART_PATH &&
-        //   skill_paths[1] == RULESET.character.ENCHANTED_SKILL_PATH;
 
         let usable_actable_modifiers = [];
-        // if (is_enchanted_attack) {
-        //   usable_actable_modifiers.push(
-        //     ...item.system.usable_actable_modifiers_typed.filter(
-        //       (act_mod_id_data) => act_mod_id_data.focuser,
-        //     ),
-        //   );
-        // } else if (is_thrown_attack) {
-        //   usable_actable_modifiers.push(
-        //     ...item.system.usable_actable_modifiers_typed.filter(
-        //       (act_mod_id_data) => act_mod_id_data.throw,
-        //     ),
-        //   );
-        // } else {
-        //   usable_actable_modifiers.push(
-        //     ...item.system.usable_actable_modifiers_typed.filter(
-        //       (act_mod_id_data) => act_mod_id_data.main,
-        //     ),
-        //   );
-        // }
-        //
         switch (skill_paths[0]) {
           case RULESET.character.MARTIAL_CONTACT_PATH:
             usable_actable_modifiers.push(
