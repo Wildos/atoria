@@ -184,7 +184,6 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     let used_keywords = [];
     let used_supplementaries = [];
     let used_perks = [];
-    let used_act_mod = [];
     if (this.#current_skill != undefined) {
       for (let value_key in form_data_obj) {
         if (value_key.startsWith("usable_keywords.")) {

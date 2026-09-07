@@ -11,7 +11,7 @@ DEFAULT_VALUES["character"] = {
   mana: 20,
 
   sanity: 10,
-  endurance: 100,
+  endurance: 105,
 
   encumbrance: 20,
 
