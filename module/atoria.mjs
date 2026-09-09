@@ -346,9 +346,11 @@ Hooks.once("init", function () {
   return utils.handlebars.preloadHandlebarsTemplates();
 });
 
-Hooks.once("ready", function () {
+Hooks.once("ready", async function () {
   // Migration check is only for GM
   if (!game.users.activeGM?.isSelf) return;
+
+  await utils.migration.migrateWorld();
 
   game.settings.set("atoria", "worldLastMigrationVersion", game.system.version);
 });
