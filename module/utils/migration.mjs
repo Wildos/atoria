@@ -9,9 +9,9 @@ export async function migrateWorld() {
     "worldLastMigrationVersion",
   );
   const version = game.system.version;
-  // if (current_version === version) {
-  //   return;
-  // }
+  if (current_version === version) {
+    return;
+  }
 
   if (foundry.utils.isNewerVersion("0.3.40", current_version)) {
     console.debug("isNewerVersion 0.3.40");
