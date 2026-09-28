@@ -224,15 +224,10 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
 
     if (event.type === "change") {
       if (this.data.weapon != undefined) {
-        console.debug("changed");
-        console.debug(used_perks);
         const new_cost = RULESET.general.getCostWeaponAttack(
           this.data.weapon,
           used_perks,
         );
-        console.debug(new_cost);
-        console.debug(form);
-        console.debug(form.getElementsByClassName("atoria-launch-cost-div"));
         const new_cost_html =
           await foundry.applications.handlebars.renderTemplate(
             "systems/atoria/templates/v2/dialogs/parts/item-cost.hbs",
@@ -247,9 +242,24 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
           elem.innerHTML = new_cost_html;
         }
       } else if (this.data.spell != undefined) {
-        console.debug("changed");
-        console.debug(used_supplementaries);
-        console.debug(used_perks);
+        const new_cost = RULESET.general.getCostSpell(
+          this.data.spell,
+          used_supplementaries,
+          used_perks,
+        );
+        const new_cost_html =
+          await foundry.applications.handlebars.renderTemplate(
+            "systems/atoria/templates/v2/dialogs/parts/item-cost.hbs",
+            {
+              cost: new_cost,
+              systemFields: { cost: helpers.defineCostField().fields },
+            },
+          );
+        for (const elem of form.getElementsByClassName(
+          "atoria-launch-cost-div",
+        )) {
+          elem.innerHTML = new_cost_html;
+        }
       }
       return;
     }

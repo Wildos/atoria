@@ -132,10 +132,29 @@ RULESET["general"] = class GeneralRuleset {
     }
 
     for (const perk of perks_used) {
-      attack_cost = this.add_cost(attack_cost, perk.system.cost);
+      if (perk.system.cost != undefined) {
+        attack_cost = this.add_cost(attack_cost, perk.system.cost);
+      }
     }
 
     return attack_cost;
+  }
+
+  static getCostSpell(spell_item, supp_used = [], perks_used = []) {
+    let spell_cost = spell_item.system.cost;
+
+    for (const supp of supp_used) {
+      for (let i = 0; i < supp.cumul; i++) {
+        spell_cost = this.add_cost(spell_cost, supp.cost);
+      }
+    }
+    for (const perk of perks_used) {
+      if (perk.system.cost != undefined) {
+        spell_cost = this.add_cost(spell_cost, perk.system.cost);
+      }
+    }
+
+    return spell_cost;
   }
 
   static getVersatileEffect() {
