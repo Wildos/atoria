@@ -655,6 +655,7 @@ export default class AtoriaItem extends Item {
       roll_label: roll_label,
       skills: skills,
       weapon: this.type === "weapon" ? this : undefined,
+      spell: this.type === "spell" ? this : undefined,
     });
 
     if (roll_parameters === null) return;
