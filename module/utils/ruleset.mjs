@@ -1908,7 +1908,7 @@ RULESET["keywords"] = {
           {
             effect:
               "Attaque subit au corps à corps : DR Réflexe - Parade +1</br>\
-            DR Réflexe - Parade avec différence < 2 : Armure +1",
+            DR Réflexe - Parade avec différence < 2 : Armure +1 contre l'attaque",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.PARRY_SKILL_PATH,
@@ -1922,7 +1922,7 @@ RULESET["keywords"] = {
           {
             effect:
               "Attaque subit : DR Réflexe - Parade +1</br>\
-            DR Réflexe - Parade avec différence < 2 : Armure +1",
+            DR Réflexe - Parade avec différence < 2 : Armure +1 contre l'attaque",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.PARRY_SKILL_PATH,
@@ -1936,7 +1936,7 @@ RULESET["keywords"] = {
           {
             effect:
               "Attaque subit : DR Réflexe - Parade +1</br>\
-            DR Réflexe - Parade avec différence < 4 : Armure +1",
+            DR Réflexe - Parade avec différence < 4 : Armure +1 contre l'attaque",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.PARRY_SKILL_PATH,
@@ -1950,7 +1950,7 @@ RULESET["keywords"] = {
           {
             effect:
               "Attaque subit : DR Réflexe - Parade +1</br>\
-            DR Réflexe - Parade : Armure +1",
+            DR Réflexe - Parade : Armure +1 contre l'attaque",
             skill_alterations: [
               {
                 associated_skill: RULESET.character.PARRY_SKILL_PATH,
@@ -2121,27 +2121,92 @@ RULESET["keywords"] = {
         initial_levels: [
           {
             effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
-            skill_alterations: [],
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
           {
             effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
-            skill_alterations: [],
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
           {
             effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
-            skill_alterations: [],
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
           {
             effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
-            skill_alterations: [],
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
           {
             effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
-            skill_alterations: [],
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
         ],
