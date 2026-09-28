@@ -3,6 +3,7 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 import RULESET from "../../utils/ruleset.mjs";
 import * as utils from "../../utils/module.mjs";
 import * as model_helper from "../../models/helpers.mjs";
+import { helpers } from "../../models/module.mjs";
 
 //
 // By default, a button will trigger the submit process of whatever form it is in.
@@ -95,7 +96,7 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
     tag: "form",
     form: {
       handler: AtoriaRollDialog.formHandler,
-      submitOnChange: false,
+      submitOnChange: true,
       closeOnSubmit: false,
     },
     actions: {
@@ -175,9 +176,6 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
    * @returns {Promise<void>}
    */
   static async formHandler(event, form, formData) {
-    if (event.type === "change") {
-      return;
-    }
     // Do things with the returned FormData
     let form_data_obj = formData.object;
 
@@ -222,6 +220,38 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
           }
         }
       }
+    }
+
+    if (event.type === "change") {
+      if (this.data.weapon != undefined) {
+        console.debug("changed");
+        console.debug(used_perks);
+        const new_cost = RULESET.general.getCostWeaponAttack(
+          this.data.weapon,
+          used_perks,
+        );
+        console.debug(new_cost);
+        console.debug(form);
+        console.debug(form.getElementsByClassName("atoria-launch-cost-div"));
+        const new_cost_html =
+          await foundry.applications.handlebars.renderTemplate(
+            "systems/atoria/templates/v2/dialogs/parts/item-cost.hbs",
+            {
+              cost: new_cost,
+              systemFields: { cost: helpers.defineCostField().fields },
+            },
+          );
+        for (const elem of form.getElementsByClassName(
+          "atoria-launch-cost-div",
+        )) {
+          elem.innerHTML = new_cost_html;
+        }
+      } else if (this.data.spell != undefined) {
+        console.debug("changed");
+        console.debug(used_supplementaries);
+        console.debug(used_perks);
+      }
+      return;
     }
 
     let final_dos_mod = form_data_obj.dos_mod ?? 0;
@@ -345,10 +375,16 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
             ].label.replace("CHAT.MODES", "ATORIA.Dialog.Roll.Roll_visibility");
           });
 
+          context.cost =
+            this.data.weapon != undefined
+              ? RULESET.general.getCostWeaponAttack(this.data.weapon)
+              : this.data.spell != undefined
+                ? this.data.spell.system.cost
+                : undefined;
+          context.systemFields = { cost: helpers.defineCostField().fields };
+
           let selected_message_mode = game.settings.get("core", "messageMode");
           context.message_modes = available_message_mods;
-          console.debug("message_modes");
-          console.debug(context.message_modes);
           context.selected_message_mode = selected_message_mode;
         }
         break;

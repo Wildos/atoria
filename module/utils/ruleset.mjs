@@ -37,7 +37,91 @@ RULESET["general"] = class GeneralRuleset {
     return time_phases_type_to_apply;
   }
 
-  static getCostWeaponAttack(weapon_item) {
+  static seconds_from_time_cost(time_cost) {
+    let sec_amount = time_cost.second_amount;
+    switch (time_cost.main_type) {
+      case "second":
+        sec_amount += time_cost.main_amount;
+        break;
+      case "turn":
+        sec_amount += time_cost.main_amount * 5;
+        break;
+      case "round":
+        sec_amount += time_cost.main_amount * 6;
+        break;
+      case "minute":
+        sec_amount += time_cost.main_amount * 60;
+        break;
+      case "hour":
+        sec_amount += time_cost.main_amount * 360;
+        break;
+    }
+    return sec_amount;
+  }
+
+  static time_cost_from_seconds(seconds) {
+    let main_amount = 0;
+    let main_type = "second";
+    let seconds_left = 0;
+    if (seconds >= 360) {
+      main_amount = Math.floor(seconds / 360);
+      main_type = "hour";
+      seconds_left = seconds % 360;
+    } else if (seconds >= 60) {
+      main_amount = Math.floor(seconds / 60);
+      main_type = "minutes";
+      seconds_left = seconds % 60;
+    } else if (seconds >= 6) {
+      main_amount = Math.floor(seconds / 6);
+      main_type = "round";
+      seconds_left = seconds % 6;
+    } else if (seconds >= 5) {
+      main_amount = Math.floor(seconds / 5);
+      main_type = "turn";
+      seconds_left = seconds % 5;
+    } else {
+      seconds_left = seconds;
+    }
+
+    return {
+      main_amount: main_amount,
+      main_type: main_type,
+      second_amount: seconds_left,
+    };
+  }
+
+  static add_cost(cost_a, cost_b) {
+    let new_cost = {};
+    for (const cost_type in cost_a) {
+      if (["time", "material"].includes(cost_type)) {
+        continue;
+      }
+      new_cost[cost_type] = cost_a[cost_type];
+    }
+    for (const cost_type in cost_b) {
+      if (["time", "material"].includes(cost_type)) {
+        continue;
+      }
+      if (cost_type in new_cost) {
+        new_cost[cost_type] += cost_b[cost_type];
+      } else {
+        new_cost[cost_type] = cost_b[cost_type];
+      }
+    }
+    new_cost["material"] = [
+      cost_a["material"] || "",
+      cost_b["material"] || "",
+    ].filterJoin(",");
+
+    new_cost["time"] = this.time_cost_from_seconds(
+      this.seconds_from_time_cost(cost_a["time"]) +
+        this.seconds_from_time_cost(cost_b["time"]),
+    );
+
+    return new_cost;
+  }
+
+  static getCostWeaponAttack(weapon_item, perks_used = []) {
     const cost_model = default_values.models.helpers.defineCostField();
     let attack_cost = cost_model.getInitialValue();
     attack_cost.time.second_amount = 3;
@@ -46,6 +130,11 @@ RULESET["general"] = class GeneralRuleset {
     if (weapon_keywords.two_handed == 1) {
       attack_cost.time.second_amount += 1;
     }
+
+    for (const perk of perks_used) {
+      attack_cost = this.add_cost(attack_cost, perk.system.cost);
+    }
+
     return attack_cost;
   }
 
