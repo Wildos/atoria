@@ -334,7 +334,8 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
     if (!this.isEditable) return;
 
     new foundry.applications.ux.DragDrop.implementation({
-      dragSelector: "[data-drag][data-item-id]",
+      dragSelector:
+        "[data-drag][data-item-id] > input, [data-drag][data-item-id]",
       permissions: {
         dragstart: this._canDragStart.bind(this),
         drop: this._canDragDrop.bind(this),
@@ -345,7 +346,8 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
       },
     }).bind(this.element);
     new foundry.applications.ux.DragDrop.implementation({
-      dragSelector: "[data-drag][data-effect-id]",
+      dragSelector:
+        "[data-drag][data-effect-id] > input, [data-drag][data-effect-id]",
       permissions: {
         dragstart: this._canDragStart.bind(this),
         drop: this._canDragDrop.bind(this),
@@ -421,6 +423,13 @@ export default class AtoriaActorSheetV2 extends HandlebarsApplicationMixin(
 
   _onDragStart(event) {
     const el = event.currentTarget;
+    const click_el = event.target;
+
+    if (click_el.tagName == "INPUT") {
+      event.preventDefault();
+      return;
+    }
+
     if ("link" in event.target.dataset) return;
 
     let dragData = undefined;
