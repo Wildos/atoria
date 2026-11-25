@@ -16,6 +16,14 @@ export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
       label: "ATORIA.Model.Action.Associated_magic_school",
     });
 
+    schema.mastery = new fields.NumberField({
+      required: true,
+      nullable: false,
+      integer: true,
+      initial: 0,
+      label: "ATORIA.Model.Skill.Mastery",
+    });
+
     schema.cost = atoria_models.helpers.defineCostField();
 
     schema.success = new fields.NumberField({

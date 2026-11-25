@@ -1,5 +1,6 @@
 <section class='atoria tooltip'>
     <h5>{{item.name}}</h5>
+    <div class='flexcol'>
     {{#if keywords_recap.list}}
     <label>{{localize systemFields.keywords.label}}:
         {{keywords_recap.list}}
@@ -10,4 +11,10 @@
         {{item.system.range}}
     </label>
     {{/if}}
+    {{#if item.system.critical_effect}}
+    <label>{{localize systemFields.critical_effect.label}}:
+        {{item.system.critical_effect}}
+    </label>
+    {{/if}}
+    </div>
 </section>

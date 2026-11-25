@@ -486,6 +486,7 @@ export default class AtoriaItem extends Item {
     if (this.type == "spell")
       return [
         {
+          mastery: this.system.mastery,
           success: this.system.success,
           critical_success_amount: this.system.critical_success,
           critical_fumble_amount: this.system.critical_fumble,

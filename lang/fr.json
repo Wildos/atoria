@@ -88,7 +88,8 @@
         "Amount": "Défense quantité",
         "Description": "Défense description"
       },
-      "Healing_inactive": "Soin",
+      "Healing_inactive": "Soin Inactif",
+      "Healing_area": "Soin",
       "Coins": "Pièces",
       "Unit_type": "Type d'unité",
       "Language": "Langues",
@@ -100,7 +101,7 @@
       "Skill": {
         "Label": "Compétence",
         "Success": "Réussite",
-        "Mastery": "Maitrise",
+        "Mastery": "Maîtrise",
         "Modifier": {
           "Success": "Réussite",
           "Critical_success": "Modificateur de RC",
