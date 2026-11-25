@@ -50,7 +50,9 @@ export function get_roll_data(roll_parameters, skill_path) {
   for (let keyword_data of roll_parameters.used_keywords) {
     let alteration = keyword_data.skill_alterations
       .filter((skill_alteration) =>
-        skill_paths.includes(skill_alteration.associated_skill),
+        skill_paths.some((path) =>
+          skill_alteration.associated_skill.startsWith(path),
+        ),
       )
       .map((skill_alteration) => {
         let result = {
