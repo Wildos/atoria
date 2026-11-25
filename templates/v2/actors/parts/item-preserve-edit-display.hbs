@@ -1,13 +1,15 @@
 <li class="item {{item.type}} atoria-horizontal-bar flexcol" data-item-id="{{item._id}}">
     <label class="name">{{item.name}}</label>
     {{#if item.keywords_recap.has_preserve}}
-    <div class="flexrow">
+    {{!-- <div class="flexrow"> --}}
         <label>
             {{localize item.systemFields.keywords.fields.preserve.label}}
             {{item.system.keywords.preserve.max_amount}}
             {{localize (lookup item.systemFields.keywords.fields.preserve.fields.type.choices
                 item.system.keywords.preserve.type)}}
             {{item.system.keywords.preserve.increment}}
+            <span style="margin: 0px 10px; border-left: dashed var(--color-text-primary) 1px"> </span>
+            {{item.system.keywords.preserve.trigger}}
         </label>
         {{#if (includes (arraytize "all" "mana") item.system.keywords.preserve.type)}}
         <label>{{localize item.systemFields.keywords.fields.preserve_mana.label}}:
@@ -44,7 +46,7 @@
             data-tooltip="{{localize item.systemFields.keywords.fields.preserve_sanity.label}}" {{disabled (not @root.editable)}}/>
         </label>
         {{/if}}
-    </div>
+    {{!-- </div> --}}
     {{/if}}
     {{#if item.keywords_recap.has_reserve}}
     <label>{{localize item.systemFields.keywords.fields.reserve.label}}

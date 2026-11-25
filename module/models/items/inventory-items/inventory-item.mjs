@@ -223,6 +223,11 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
             initial: false,
             label: "ATORIA.Ruleset.Keywords.Preserve.Label",
           }),
+          trigger: new fields.StringField({
+            required: true,
+            nullable: false,
+            label: "ATORIA.Ruleset.Keywords.Preserve.Trigger",
+          }),
           max_amount: new fields.NumberField({
             required: true,
             nullable: false,

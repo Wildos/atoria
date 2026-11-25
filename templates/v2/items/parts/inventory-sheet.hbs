@@ -199,14 +199,22 @@
                     {{ formGroup systemFields.keywords.fields.preserve.fields.active
                     value=system.keywords.preserve.active disabled=(not @root.editable) localize=true
                     }}
+
+                    {{ formInput systemFields.keywords.fields.preserve.fields.trigger
+                    value=system.keywords.preserve.trigger disabled=(not @root.editable) localize=true
+                    dataset=(object tooltip=(localize systemFields.keywords.fields.preserve.fields.trigger.label))
+                    }}
+
                     {{ formInput systemFields.keywords.fields.preserve.fields.max_amount
                     value=system.keywords.preserve.max_amount disabled=(not @root.editable) localize=true
+                    dataset=(object tooltip=(localize systemFields.keywords.fields.preserve.fields.max_amount.label))
                     }}
                     {{ formInput systemFields.keywords.fields.preserve.fields.type
                     value=system.keywords.preserve.type disabled=(not @root.editable) localize=true
                     }}
                     {{ formInput systemFields.keywords.fields.preserve.fields.increment
                     value=system.keywords.preserve.increment disabled=(not @root.editable) localize=true
+                    dataset=(object tooltip=(localize systemFields.keywords.fields.preserve.fields.increment.label))
                     }}
                 </div>
                 {{#if (eq item.type "weapon")}}

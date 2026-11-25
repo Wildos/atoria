@@ -86,7 +86,8 @@
     <label>{{localize item.systemFields.keywords.fields.preserve.label}} {{item.system.keywords.preserve.max_amount}}
         {{localize (lookup item.systemFields.keywords.fields.preserve.fields.type.choices
             item.system.keywords.preserve.type)}}
-        {{item.system.keywords.preserve.increment}}</label>
+        {{item.system.keywords.preserve.increment}}
+        {{item.system.keywords.preserve.trigger}}</label>
         {{#if (includes (arraytize "all" "mana") item.system.keywords.preserve.type)}}
         <label>{{localize item.systemFields.keywords.fields.preserve_mana.label}}:
             <input class="item-update float-input" data-name="system.keywords.preserve_mana"

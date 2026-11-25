@@ -1274,6 +1274,7 @@
         "Preserve": {
           "Label": "Préserver",
           "Recap": "Préserver {amount} {type} {increment}",
+          "Trigger": "Déclencheur",
           "Max_amount": "Quantité maximale",
           "Type": "Type",
           "Increment": "Incrément"
