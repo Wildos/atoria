@@ -309,9 +309,13 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
           ? undefined
           : utils.ruleset.aiming.type[form_data_obj.aiming_type],
 
-      dos_mod: final_dos_mod,
-      advantage_amount: form_data_obj.advantage_amount ?? 0,
-      disadvantage_amount: form_data_obj.disadvantage_amount ?? 0,
+      dos_mod: (this.#current_skill?.dos_mod ?? 0) + final_dos_mod,
+      advantage_amount:
+        (this.#current_skill?.advantage_amount ?? 0) +
+        (form_data_obj.advantage_amount ?? 0),
+      disadvantage_amount:
+        (this.#current_skill?.disadvantage_amount ?? 0) +
+        (form_data_obj.disadvantage_amount ?? 0),
     };
     let saves_asked = [];
 

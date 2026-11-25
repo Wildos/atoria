@@ -47,6 +47,31 @@ export function skillField(skill_label, initial_value, required = true) {
         initial: 0,
         label: "ATORIA.Model.Skill.Modifier.Critical_fumble",
       }),
+
+      dos_mod: new foundry.data.fields.NumberField({
+        required: true,
+        persisted: false,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        label: "ATORIA.Model.Skill_alteration.DoS_mod",
+      }),
+      advantage_amount: new foundry.data.fields.NumberField({
+        required: true,
+        persisted: false,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        label: "ATORIA.Model.Skill_alteration.Advantage_amount",
+      }),
+      disadvantage_amount: new foundry.data.fields.NumberField({
+        required: true,
+        persisted: false,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        label: "ATORIA.Model.Skill_alteration.Disadvantage_amount",
+      }),
     },
     { label: skill_label, required: required, nullable: false },
   );
