@@ -45,6 +45,7 @@ export function applyAlteration(roll_config, alteration) {
   roll_config["dos_mod"] += alteration.dos_mod;
   roll_config["advantage_amount"] += alteration.adv_amount;
   roll_config["disadvantage_amount"] += alteration.disadv_amount;
+  roll_config["is_danger"] |= alteration.is_danger;
   return roll_config;
 }
 

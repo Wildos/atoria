@@ -23,6 +23,9 @@ idx
 
             <label>{{localize systemFields.disadv_amount.label}}</label>
             <input type="number" name="{{data_path}}.disadv_amount" value="{{skill_alteration.disadv_amount}}" step="1" {{disabled (not @root.editable)}}>
+
+            <label>{{localize systemFields.is_danger.label}}</label>
+            <input type="checkbox" name="{{data_path}}.is_danger" {{checked skill_alteration.is_danger}} {{disabled (not @root.editable)}}>
         </div>
     {{else}}
         <label class="error double-col-field">{{localize "ATORIA.Sheet.Feature.Require_actor"}}</label>

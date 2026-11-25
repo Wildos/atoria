@@ -355,6 +355,15 @@ export function defineAlteration() {
         },
         { name: "disadvantage_amount" },
       ),
+      is_danger: new fields.BooleanField(
+        {
+          required: true,
+          nullable: false,
+          initial: false,
+          label: "ATORIA.Model.Skill_alteration.Is_danger",
+        },
+        { name: "is_danger" },
+      ),
     },
     {
       required: true,
@@ -406,6 +415,15 @@ export function defineSkillAlteration() {
           label: "ATORIA.Model.Skill_alteration.Disadvantage_amount",
         },
         { name: "disadvantage_amount" },
+      ),
+      is_danger: new fields.BooleanField(
+        {
+          required: false,
+          nullable: false,
+          initial: false,
+          label: "ATORIA.Model.Skill_alteration.Is_danger",
+        },
+        { name: "is_danger" },
       ),
     },
     {

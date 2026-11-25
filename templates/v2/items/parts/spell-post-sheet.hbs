@@ -31,6 +31,14 @@
                     {{>"atoria.v2.commons_partials.time-limitation-input" limitation=supplementary.limitation
                     data_path=(concat "system.supplementaries_list." idx ".limitation")
                     systemFields=../systemFields.supplementaries_list.element.fields.limitation.fields cssClasses="double-col-field"}}
+
+                    <div class="flexrow double-col-field">
+                        {{>"atoria.v2.items_partials.skill-alteration-input" skill_alteration=supplementary.skill_alteration
+                        item_actor=../item.actor
+                        data_path=(concat "system.supplementaries_list."  idx  ".skill_alteration") systemFields=../systemFields.supplementaries_list.element.fields.skill_alteration.fields
+                        cssClasses=""}}
+                    </div>
+
                 </div>
 
                 <a class="atoria-delete-button" data-action="deleteSubItem" data-sub-element-path="supplementaries_list" data-sub-element-index="{{idx}}"

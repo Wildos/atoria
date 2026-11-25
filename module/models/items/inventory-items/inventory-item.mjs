@@ -308,4 +308,21 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
 
     return schema;
   }
+
+  static migrateData(source, options) {
+    const current_version = game.settings.get(
+      "atoria",
+      "worldLastMigrationVersion",
+    );
+    const version = game.system.version;
+    if (current_version === version) {
+      return super.migrateData(source, options);
+    }
+    if (foundry.utils.isNewerVersion("0.3.42", current_version)) {
+      for (let skill_alt of source.skill_alterations) {
+        skill_alt["is_danger"] = false;
+      }
+    }
+    return super.migrateData(source, options);
+  }
 }

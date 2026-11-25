@@ -48,7 +48,7 @@ export function get_roll_data(roll_parameters, skill_path) {
     ? skill_path.split("///")
     : [skill_path];
   for (let keyword_data of roll_parameters.used_keywords) {
-    let alteration = keyword_data.skill_alterations
+    let alterations = keyword_data.skill_alterations
       .filter((skill_alteration) =>
         skill_paths.some((path) =>
           skill_alteration.associated_skill.startsWith(path),
@@ -59,16 +59,36 @@ export function get_roll_data(roll_parameters, skill_path) {
           dos_mod: skill_alteration.dos_mod,
           adv_amount: skill_alteration.adv_amount,
           disadv_amount: skill_alteration.disadv_amount,
+          is_danger: skill_alteration.is_danger,
         };
         return result;
       });
-    utils.applyAlterationsToRollConfig(roll_parameters.roll_data, alteration);
+    utils.applyAlterationsToRollConfig(roll_parameters.roll_data, alterations);
   }
   for (let item_perk of roll_parameters.used_perks) {
     utils.applyAlterationsToRollConfig(
       roll_parameters.roll_data,
       item_perk.getAlterations(skill_paths),
     );
+  }
+
+  console.debug(roll_parameters);
+  for (let supp_data of roll_parameters.used_supplementaries) {
+    let alterations = [supp_data.skill_alteration].map((skill_alteration) => {
+      let result = {
+        dos_mod: skill_alteration.dos_mod,
+        adv_amount: skill_alteration.adv_amount,
+        disadv_amount: skill_alteration.disadv_amount,
+        is_danger: skill_alteration.is_danger,
+      };
+      return result;
+    });
+    for (let i = 0; i < supp_data.cumul; i++) {
+      utils.applyAlterationsToRollConfig(
+        roll_parameters.roll_data,
+        alterations,
+      );
+    }
   }
   return roll_parameters.roll_data;
 }

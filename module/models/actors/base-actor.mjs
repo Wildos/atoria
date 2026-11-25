@@ -154,7 +154,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
     schema.keywords = new fields.SchemaField(this.keywords_fields(), {
       required: true,
       nullable: false,
-      persisted: true,
       label: "ATORIA.Model.Keywords.Label",
     });
 
@@ -211,7 +210,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -236,7 +234,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -261,7 +258,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -286,7 +282,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -311,7 +306,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -326,7 +320,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
       {
         required: true,
         nullable: false,
-        persisted: true,
         label: label,
       },
     );
@@ -340,7 +333,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
         is_shown_on_attack: new fields.BooleanField({
           required: true,
           initial: is_shown_on_attack,
-          persisted: false,
           label: "ATORIA.Model.Keywords.IsShownOnAttack",
         }),
         limit_remaining: new fields.NumberField({
@@ -349,7 +341,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
           integer: true,
           initial: 1,
           min: 0,
-          persisted: true,
           label: "ATORIA.Model.Keywords.LimitRemaining",
         }),
 
@@ -367,7 +358,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -392,7 +382,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -417,7 +406,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -442,7 +430,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -467,7 +454,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
               integer: true,
               initial: 1,
               min: 0,
-              persisted: true,
               label: "ATORIA.Model.Keywords.LimitAmount",
             }),
           },
@@ -482,7 +468,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
       {
         required: true,
         nullable: false,
-        persisted: true,
         label: label,
       },
     );
@@ -935,6 +920,43 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
           source.knowledges["song-n-dance"].critical_success_modifier ?? 0,
           source.knowledges.dance.critical_success_modifier ?? 0,
         );
+      }
+    }
+
+    if (foundry.utils.isNewerVersion("0.3.42", current_version)) {
+      if (Object.keys(source).includes("keywords")) {
+        for (const [_, keyword_data] of Object.entries(source.keywords)) {
+          if (keyword_data["effect_level_1"] != null) {
+            for (let skill_alt of keyword_data["effect_level_1"]
+              .skill_alterations) {
+              skill_alt["is_danger"] = false;
+            }
+          }
+          if (keyword_data["effect_level_2"] != null) {
+            for (let skill_alt of keyword_data["effect_level_2"]
+              .skill_alterations) {
+              skill_alt["is_danger"] = false;
+            }
+          }
+          if (keyword_data["effect_level_3"] != null) {
+            for (let skill_alt of keyword_data["effect_level_3"]
+              .skill_alterations) {
+              skill_alt["is_danger"] = false;
+            }
+          }
+          if (keyword_data["effect_level_4"] != null) {
+            for (let skill_alt of keyword_data["effect_level_4"]
+              .skill_alterations) {
+              skill_alt["is_danger"] = false;
+            }
+          }
+          if (keyword_data["effect_level_5"] != null) {
+            for (let skill_alt of keyword_data["effect_level_5"]
+              .skill_alterations) {
+              skill_alt["is_danger"] = false;
+            }
+          }
+        }
       }
     }
 

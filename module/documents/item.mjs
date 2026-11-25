@@ -403,6 +403,7 @@ export default class AtoriaItem extends Item {
               dos_mod: skill_alteration.dos_mod,
               adv_amount: skill_alteration.adv_amount,
               disadv_amount: skill_alteration.disadv_amount,
+              is_danger: skill_alteration.is_danger,
             };
             return result;
           });

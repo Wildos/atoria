@@ -40,56 +40,73 @@ export default class AtoriaFeatureItem extends atoria_models.AtoriaItemBase {
 
     return schema;
   }
-  /**
-   * Migrate candidate source data for this DataModel which may require initial cleaning or transformations.
-   * @param {object} source           The candidate source data from which the model will be constructed
-   * @returns {object}                Migrated source data, if necessary
-   */
-  static migrateData(source) {
-    const old_skill_alteration =
-      foundry.utils.deepClone(source.skill_alteration) ?? undefined;
+  // /**
+  //  * Migrate candidate source data for this DataModel which may require initial cleaning or transformations.
+  //  * @param {object} source           The candidate source data from which the model will be constructed
+  //  * @returns {object}                Migrated source data, if necessary
+  //  */
+  // static migrateData(source) {
+  //   const old_skill_alteration =
+  //     foundry.utils.deepClone(source.skill_alteration) ?? undefined;
 
-    if (old_skill_alteration && source.skill_alterations === undefined) {
-      let new_alteration = {
-        associated_skill: old_skill_alteration.associated_skill,
-        dos_mod: 0,
-        adv_amount: 0,
-        disadv_amount: 0,
-      };
-      switch (old_skill_alteration.skill_alteration_type) {
-        case "hand_handled":
-          break;
-        case "one_degree_of_success_gain":
-          new_alteration.dos_mod = 1;
-          break;
-        case "one_degree_of_success_loss":
-          new_alteration.dos_mod = -1;
-          break;
-        case "two_degree_of_success_gain":
-          new_alteration.dos_mod = 2;
-          break;
-        case "two_degree_of_success_loss":
-          new_alteration.dos_mod = -2;
-          break;
-        case "advantage":
-          new_alteration.adv_amount = 1;
-          break;
-        case "disadvantage":
-          new_alteration.disadv_amount = 1;
-          break;
-        case "advantage_n_one_degree_of_success_gain":
-          new_alteration.dos_mod = 1;
-          new_alteration.adv_amount = 1;
-          break;
-        case "disadvantage_n_one_degree_of_success_loss":
-          new_alteration.dos_mod = -1;
-          new_alteration.disadv_amount = 1;
-          break;
-      }
-      source.skill_alterations = [new_alteration];
-      source.skill_alteration = "hand_handled";
-      delete source.skill_alteration;
+  //   if (old_skill_alteration && source.skill_alterations === undefined) {
+  //     let new_alteration = {
+  //       associated_skill: old_skill_alteration.associated_skill,
+  //       dos_mod: 0,
+  //       adv_amount: 0,
+  //       disadv_amount: 0,
+  //     };
+  //     switch (old_skill_alteration.skill_alteration_type) {
+  //       case "hand_handled":
+  //         break;
+  //       case "one_degree_of_success_gain":
+  //         new_alteration.dos_mod = 1;
+  //         break;
+  //       case "one_degree_of_success_loss":
+  //         new_alteration.dos_mod = -1;
+  //         break;
+  //       case "two_degree_of_success_gain":
+  //         new_alteration.dos_mod = 2;
+  //         break;
+  //       case "two_degree_of_success_loss":
+  //         new_alteration.dos_mod = -2;
+  //         break;
+  //       case "advantage":
+  //         new_alteration.adv_amount = 1;
+  //         break;
+  //       case "disadvantage":
+  //         new_alteration.disadv_amount = 1;
+  //         break;
+  //       case "advantage_n_one_degree_of_success_gain":
+  //         new_alteration.dos_mod = 1;
+  //         new_alteration.adv_amount = 1;
+  //         break;
+  //       case "disadvantage_n_one_degree_of_success_loss":
+  //         new_alteration.dos_mod = -1;
+  //         new_alteration.disadv_amount = 1;
+  //         break;
+  //     }
+  //     source.skill_alterations = [new_alteration];
+  //     source.skill_alteration = "hand_handled";
+  //     delete source.skill_alteration;
+  //   }
+  //   return super.migrateData(source);
+  // }
+
+  static migrateData(source, options) {
+    const current_version = game.settings.get(
+      "atoria",
+      "worldLastMigrationVersion",
+    );
+    const version = game.system.version;
+    if (current_version === version) {
+      return super.migrateData(source, options);
     }
-    return super.migrateData(source);
+    if (foundry.utils.isNewerVersion("0.3.42", current_version)) {
+      for (let skill_alt of source.skill_alterations) {
+        skill_alt["is_danger"] = false;
+      }
+    }
+    return super.migrateData(source, options);
   }
 }

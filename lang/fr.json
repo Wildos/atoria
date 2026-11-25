@@ -52,7 +52,8 @@
         "Skill_associated": "Compétence associée",
         "Advantage_amount": "Avantage",
         "Disadvantage_amount": "Désavantage",
-        "DoS_mod": "DR"
+        "DoS_mod": "DR",
+        "Is_danger": "Danger"
       },
       "Health": {
         "Value": "Valeur de Santé",

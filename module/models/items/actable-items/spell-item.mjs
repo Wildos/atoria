@@ -93,6 +93,7 @@ export default class AtoriaSpellItem extends atoria_models.AtoriaActableItem {
             label: "ATORIA.Model.Effect",
           }),
           limitation: atoria_models.helpers.defineTimePhaseLimitation(),
+          skill_alteration: atoria_models.helpers.defineSkillAlteration(),
         },
         { label: "ATORIA.Model.Spell.Supplementaries.Label" },
       ),
