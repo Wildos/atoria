@@ -19,6 +19,13 @@
                 </ul>
 
                 {{>"atoria.v2.actors_partials.keywords-recap" tracked_keywords=tracked_keywords keywords_data=active_keywords_data keywords_fields=systemFields.keywords}}
+
+                <ul class="item-list">
+                    {{log preserve_keyword_items}}
+                {{#each preserve_keyword_items as |preserve_keyword_item idx|}}
+                    {{>"atoria.v2.actors_partials.item-preserve-edit-display" item=preserve_keyword_item}}
+                {{/each}}
+                </ul>
             </div>
             <div class="atoria-horizontal-bar flexrow colored">
                 <h5 class="title">

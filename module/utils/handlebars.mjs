@@ -22,6 +22,7 @@ export const preloadHandlebarsTemplates = async function () {
     "item-actable-modifier-line-display.hbs",
     "item-feature-line-display.hbs",
     "item-effect-line-display.hbs",
+    "item-preserve-edit-display.hbs",
     "coins-display.hbs",
     "skill-display.hbs",
     "skill-cat-display.hbs",

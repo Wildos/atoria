@@ -765,14 +765,20 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
               case "weapon":
               case "armor":
                 if (!i.system.is_worn) continue;
-                if (i.system.keywords.preserve.active) {
+                if (
+                  i.keywords_recap.has_preserve ||
+                  i.keywords_recap.has_reserve
+                ) {
                   preserve_keyword_items.push(
                     utils.ruleset.item.attackFromWeapon(i),
                   );
                 }
                 break;
               case "kit":
-                if (i.system.keywords.preserve.active) {
+                if (
+                  i.keywords_recap.has_preserve ||
+                  i.keywords_recap.has_reserve
+                ) {
                   preserve_keyword_items.push(
                     utils.ruleset.item.attackFromWeapon(i),
                   );
