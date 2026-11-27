@@ -765,18 +765,10 @@ export default class AtoriaActor extends Actor {
 
   takeOneKeywordUse(keyword_data) {
     let keyword_id = keyword_data.id;
-    if (keyword_id == "direct") {
-      let direct_type = keyword_data.direct_type;
-      this.update({
-        [`system.keywords.${keyword_id}.limit_remaining.${direct_type}`]:
-          this.system.keywords[keyword_id].limit_remaining[direct_type] - 1,
-      });
-    } else {
-      this.update({
-        [`system.keywords.${keyword_id}.limit_remaining`]:
-          this.system.keywords[keyword_id].limit_remaining - 1,
-      });
-    }
+    this.update({
+      [`system.keywords.${keyword_id}.limit_remaining`]:
+        this.system.keywords[keyword_id].limit_remaining - 1,
+    });
   }
 
   createKeywordAlteration(keyword_id, level) {

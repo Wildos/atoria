@@ -21,8 +21,15 @@
     .atoria-time-limitation-display{
         flex-wrap: nowrap;
         justify-content: flex-start;
-        *{
+        > label {
+            text-align: left;
+        }
+
+        *:not(.atoria-title){
             flex: 0;
         }
+        /* .atoria-title{
+            min-width: fit-content;
+        } */
     }
 }

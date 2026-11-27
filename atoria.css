@@ -1275,8 +1275,14 @@
 .system-atoria .atoria-keywords .atoria-time-limitation-display {
   flex-wrap: nowrap;
   justify-content: flex-start;
+  /* .atoria-title{
+            min-width: fit-content;
+        } */
 }
-.system-atoria .atoria-keywords .atoria-time-limitation-display * {
+.system-atoria .atoria-keywords .atoria-time-limitation-display > label {
+  text-align: left;
+}
+.system-atoria .atoria-keywords .atoria-time-limitation-display *:not(.atoria-title) {
   flex: 0;
 }
 .system-atoria .atoria-spell-marker::after {
