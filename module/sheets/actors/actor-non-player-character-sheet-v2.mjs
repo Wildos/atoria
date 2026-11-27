@@ -161,7 +161,7 @@ export default class AtoriaActorNonPlayerCharacterSheetV2 extends AtoriaActorShe
             ? ["weapon", "physical", "social"]
             : ["physical", "social"],
 
-          "system.skills.weapon": ["contact", "apart", "instrument"],
+          "system.skills.weapon": ["contact", "apart"],
           "system.skills.social": [
             "analyse",
             "charisma",

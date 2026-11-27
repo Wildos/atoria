@@ -629,9 +629,6 @@
             },
             "Focuser": {
               "Label": "Focuser"
-            },
-            "Instrument": {
-              "Label": "Instrument"
             }
           }
         }

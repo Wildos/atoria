@@ -438,7 +438,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             ? ["weapon", "physical", "social"]
             : ["physical", "social"],
 
-          "system.skills.weapon": ["contact", "apart", "instrument"],
+          "system.skills.weapon": ["contact", "apart"],
           "system.skills.weapon.contact": [
             "fist_fight",
             "buckler",
@@ -480,7 +480,6 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "wand",
             "enchanted",
           ],
-          "system.skills.weapon.instrument": [],
 
           "system.skills.social": [
             "analyse",
@@ -617,6 +616,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
           "system.knowledges.utilitarian.song-n-dance": [
             "entertaining",
             "aesthetics",
+            "instrument",
           ],
           "system.knowledges.utilitarian.hunting": ["tracking", "cutting"],
           "system.knowledges.utilitarian.construction": [
@@ -651,7 +651,7 @@ export default class AtoriaActorPlayerCharacterSheetV2 extends AtoriaActorSheetV
             "blood",
             "earth",
           ],
-          "system.knowledges.magic.martial": ["contact", "apart", "instrument"],
+          "system.knowledges.magic.martial": ["contact", "apart"],
 
           "system.knowledges.magic.air": ["dazzling", "breeze", "lightning"],
           "system.knowledges.magic.mental": [

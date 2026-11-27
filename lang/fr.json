@@ -790,9 +790,6 @@
             "Enchanted": {
               "Label": "Enchantée"
             }
-          },
-          "Instrument": {
-            "Label": "Instrument"
           }
         }
       },
@@ -982,6 +979,9 @@
             },
             "Aesthetics": {
               "Label": "Esthétique"
+            },
+            "Instrument": {
+              "Label": "Instrument"
             }
           },
           "Song": {
@@ -1083,10 +1083,6 @@
             "Apart": {
               "Label": "Distant",
               "Full_label": "Martial - Distant"
-            },
-            "Instrument": {
-              "Label": "Instrument",
-              "Full_label": "Martial - Instrument"
             }
           },
           "Air": {

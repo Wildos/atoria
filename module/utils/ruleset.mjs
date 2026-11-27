@@ -197,11 +197,9 @@ RULESET["character"] = class ActorRuleset {
 
   static MARTIAL_CONTACT_PATH = "system.knowledges.magic.martial.contact";
   static MARTIAL_APART_PATH = "system.knowledges.magic.martial.apart";
-  static MARTIAL_INSTRUMENT_PATH = "system.knowledges.magic.martial.instrument";
 
   static MARTIAL_CONTACT_WEAPON_PATH = "system.skills.weapon.contact";
   static MARTIAL_APART_WEAPON_PATH = "system.skills.weapon.apart";
-  static MARTIAL_INSTRUMENT_WEAPON_PATH = "system.skills.weapon.instrument";
 
   static getSkillsTree(type) {
     switch (type) {
@@ -224,7 +222,7 @@ RULESET["character"] = class ActorRuleset {
             "sturdiness",
           ],
           social: ["analyse", "charisma", "eloquence", "spirit", "trickery"],
-          weapon: ["contact", "apart", "instrument"],
+          weapon: ["contact", "apart"],
         };
       case "player-character":
         return {
@@ -293,7 +291,6 @@ RULESET["character"] = class ActorRuleset {
               "wand",
               "enchanted",
             ],
-            instrument: [],
           },
         };
 
@@ -450,7 +447,7 @@ RULESET["character"] = class ActorRuleset {
               .map((elem) => elem.id),
           },
           utilitarian: {
-            "song-n-dance": ["entertaining", "aesthetics"],
+            "song-n-dance": ["entertaining", "aesthetics", "instrument"],
             hunting: ["tracking", "cutting"],
             construction: ["masonry", "carpentry"],
             dressage: ["taming", "war"],
@@ -460,7 +457,7 @@ RULESET["character"] = class ActorRuleset {
             transport: ["mounting", "land", "sea"],
           },
           magic: {
-            martial: ["contact", "apart", "instrument"],
+            martial: ["contact", "apart"],
             air: ["dazzling", "breeze", "lightning"],
             mental: ["kinetic", "illusion", "power", "enchanted"],
             druidic: ["astral", "solicitude", "changeforme", "mutation"],
@@ -1457,11 +1454,6 @@ RULESET["item"] = class ItemRuleset {
       case "apart":
         return true;
 
-      case "instrument":
-        return item.system.associated_skill.startsWith(
-          RULESET.character.MARTIAL_INSTRUMENT_WEAPON_PATH,
-        );
-
       default:
         return false;
     }
@@ -1521,17 +1513,6 @@ RULESET["item"] = class ItemRuleset {
             );
           }
           skills.push(asso_skill);
-        }
-        break;
-      case "instrument":
-        if (
-          weapon_data.system.associated_skill.startsWith(
-            RULESET.character.MARTIAL_INSTRUMENT_WEAPON_PATH,
-          )
-        ) {
-          skills.push(
-            actor.getSkillFromPath(weapon_data.system.associated_skill),
-          );
         }
         break;
     }

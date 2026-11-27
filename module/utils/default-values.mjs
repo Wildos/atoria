@@ -67,7 +67,6 @@ DEFAULT_VALUES["character"] = {
         "shooting",
         "throw",
         "focuser",
-        "instrument",
       ],
     },
   },

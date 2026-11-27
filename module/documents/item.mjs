@@ -624,10 +624,6 @@ export default class AtoriaItem extends Item {
         case "apart":
           forced_martial_type_path = utils.ruleset.character.MARTIAL_APART_PATH;
           break;
-        case "instrument":
-          forced_martial_type_path =
-            utils.ruleset.character.MARTIAL_INSTRUMENT_PATH;
-          break;
       }
 
       let martial_skill = this.actor.getSkillFromPath(forced_martial_type_path);

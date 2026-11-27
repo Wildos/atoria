@@ -787,7 +787,6 @@ export default class AtoriaActorBase extends atoria_models.AtoriaDataModel {
         source.skills.weapon = {
           contact: old_combative_weapon,
           apart: old_combative_weapon,
-          instrument: old_combative_weapon,
         };
       } else if (this.type === "player-character") {
         source.skills.perceptions = source.perceptions;
