@@ -226,6 +226,7 @@ export default class AtoriaRollDialog extends HandlebarsApplicationMixin(
       if (this.data.weapon != undefined) {
         const new_cost = RULESET.general.getCostWeaponAttack(
           this.data.weapon,
+          used_keywords,
           used_perks,
         );
         const new_cost_html =

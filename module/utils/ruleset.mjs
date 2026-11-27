@@ -121,7 +121,7 @@ RULESET["general"] = class GeneralRuleset {
     return new_cost;
   }
 
-  static getCostWeaponAttack(weapon_item, perks_used = []) {
+  static getCostWeaponAttack(weapon_item, keywords_used = [], perks_used = []) {
     const cost_model = default_values.models.helpers.defineCostField();
     let attack_cost = cost_model.getInitialValue();
     attack_cost.time.second_amount = 3;
@@ -129,6 +129,14 @@ RULESET["general"] = class GeneralRuleset {
     const weapon_keywords = weapon_item.system.keywords;
     if (weapon_keywords.two_handed == 1) {
       attack_cost.time.second_amount += 1;
+    }
+
+    for (const keyword_effect of keywords_used) {
+      if (keyword_effect.id == "direct") {
+        let direct_cost = cost_model.getInitialValue();
+        direct_cost.time.second_amount = -1;
+        attack_cost = this.add_cost(attack_cost, direct_cost);
+      }
     }
 
     for (const perk of perks_used) {
@@ -1786,45 +1794,209 @@ RULESET["keywords"] = {
     "direct",
   ],
 
+  // "Equip": "Équipé",
+  // "Protect": "Protégé",
+  // "Protection": "Protection",
+  // "Fluxian": "Fluctuant"
   getKeywordsList: function () {
     return [
+      {
+        id: "deployable",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Deployable",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Deployable",
+      },
+      {
+        id: "light",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Light",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Light",
+      },
+      {
+        id: "heavy",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Heavy",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Heavy+",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Heavy+",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Heavy+",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Heavy+",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Heavy",
+      },
+      {
+        id: "reserve",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Reserve",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Reserve",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Reserve",
+      },
+      {
+        id: "quick",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Quick",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Quick+",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Quick++",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Quick++",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Quick++",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Quick",
+      },
+      {
+        id: "recharge",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Recharge",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Recharge",
+      },
+      {
+        id: "somatic",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Somatic",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Somatic",
+      },
       {
         id: "two_handed",
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect:
-              "</i>Attaquer</i> : Coût Seconde +1.</br>\
-            Nécessite deux mains pour Attaquer.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Two_handed",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Nécessite deux mains pour Attaquer.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Two_handed+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Nécessite deux mains pour Attaquer.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Two_handed+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Nécessite deux mains pour Attaquer.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Two_handed+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Nécessite deux mains pour Attaquer.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>Allonge</b>)",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Two_handed+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
@@ -1836,9 +2008,9 @@ RULESET["keywords"] = {
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect:
-              "Arme perforante ou tranchante : Pénétration +1</br>\
-              Dissipé après Combat.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Sharpened",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
@@ -1863,17 +2035,16 @@ RULESET["keywords"] = {
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect:
-              "Vous avez l'opportunité <i>Allonge</i>.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Reach",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Vous avez l'opportunité <i>Allonge</i>.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
-            Vous avez DR Réflexe - Opportunité +1 pour l'opportunité <i>Allonge</i>.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Reach+",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.OPPORTUNITY_SKILL_PATH,
@@ -1885,10 +2056,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Vous avez l'opportunité <i>Allonge</i>.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
-            Vous avez l'avantage Réflexe - Opportunité pour l'opportunité <i>Allonge</i>.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Reach++",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.OPPORTUNITY_SKILL_PATH,
@@ -1900,10 +2070,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Vous avez l'opportunité <i>Allonge</i>.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
-            Vous avez l'avantage Réflexe - Opportunité pour l'opportunité <i>Allonge</i>.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Reach++",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.OPPORTUNITY_SKILL_PATH,
@@ -1915,10 +2084,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Vous avez l'opportunité <i>Allonge</i>.</br>\
-            Technique - Coup large : Jusqu'à Cible [+1]. (Non-cumulable avec <b>2 mains</b>)</br>\
-            Vous avez l'avantage Réflexe - Opportunité pour l'opportunité <i>Allonge</i>.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Reach++",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.OPPORTUNITY_SKILL_PATH,
@@ -1937,37 +2105,37 @@ RULESET["keywords"] = {
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect:
-              'Lorsque vous infligez Dégât Arme > Minimum, vous avez "Brutal".</br>\
-            Dissipe "Brutal" si votre attaque est esquivée, parée ou si "Préparation".',
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Brute",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              'Lorsque vous infligez Dégât Arme > Minimum, vous avez "Brutal".</br>\
-            Dissipe "Brutal" si votre attaque est parée ou si "Préparation".',
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Brute+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              'Lorsque vous infligez Dégât Arme > Minimum, vous avez "Brutal".</br>\
-            Dissipe "Brutal" si votre attaque est parée".',
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Brute++",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              'Lorsque vous infligez Dégât Arme > 1, vous avez "Brutal".</br>\
-            Dissipe "Brutal" si votre attaque est parée".',
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Brute+++",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              'Lorsque vous infligez Dégât Arme > 1, vous avez "Brutal".</br>\
-            Dissipe "Brutal" si votre attaque est parée".',
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Brute++++",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
@@ -1975,51 +2143,41 @@ RULESET["keywords"] = {
         label: "ATORIA.Ruleset.Keywords.Brute",
       },
       {
-        id: "deployable",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect: "Peut être <i>Déployer</i>.",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Deployable",
-      },
-      {
         id: "smash",
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect: "Cible : DR Réflexe - Parade -1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Smash",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Cible : DR Réflexe - Parade -1</br>\
-            Parable uniquement avec un bouclier.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Smash+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Cible : Désavantage Réflexe - Parade</br>\
-            Parable uniquement avec un bouclier.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Smash++",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Cible : Désavantage Réflexe - Parade</br>\
-            Parable uniquement avec un bouclier.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Smash++",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Cible : Désavantage Réflexe - Parade</br>\
-            Parable uniquement avec un bouclier.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Smash++",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
@@ -2031,7 +2189,9 @@ RULESET["keywords"] = {
         is_shown_on_attack: false,
         initial_levels: [
           {
-            effect: "Attaque subit au corps à corps : DR Réflexe - Parade +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Guard",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.PARRY_SKILL_PATH,
@@ -2043,9 +2203,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Attaque subit au corps à corps : DR Réflexe - Parade +1</br>\
-            DR Réflexe - Parade avec différence < 2 : Armure +1 contre l'attaque",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Guard+",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.PARRY_SKILL_PATH,
@@ -2057,9 +2217,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Attaque subit : DR Réflexe - Parade +1</br>\
-            DR Réflexe - Parade avec différence < 2 : Armure +1 contre l'attaque",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Guard++",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.PARRY_SKILL_PATH,
@@ -2071,9 +2231,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Attaque subit : DR Réflexe - Parade +1</br>\
-            DR Réflexe - Parade avec différence < 4 : Armure +1 contre l'attaque",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Guard+++",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.PARRY_SKILL_PATH,
@@ -2085,9 +2245,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Attaque subit : DR Réflexe - Parade +1</br>\
-            DR Réflexe - Parade : Armure +1 contre l'attaque",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Guard++++",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.PARRY_SKILL_PATH,
@@ -2102,150 +2262,41 @@ RULESET["keywords"] = {
         label: "ATORIA.Ruleset.Keywords.Guard",
       },
       {
-        id: "throwable",
-        is_shown_on_attack: true,
-        initial_levels: [
-          {
-            effect: "DR Distant +1.",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.MARTIAL_APART_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 0,
-          },
-          {
-            effect: "DR Distant +2.",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.MARTIAL_APART_PATH,
-                dos_mod: 2,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 0,
-          },
-          {
-            effect: "DR Distant +2.",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.MARTIAL_APART_PATH,
-                dos_mod: 2,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 0,
-          },
-          {
-            effect: "DR Distant +2.",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.MARTIAL_APART_PATH,
-                dos_mod: 2,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 0,
-          },
-          {
-            effect: "DR Distant +2.",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.MARTIAL_APART_PATH,
-                dos_mod: 2,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 0,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Throwable",
-      },
-      {
-        id: "light",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect: "Peut être utilisé en main secondaire.",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Light",
-      },
-      {
-        id: "heavy",
-        is_shown_on_attack: true,
-        initial_levels: [
-          {
-            effect: "<i>Dégainer</i> : Coût Seconde +1",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-          {
-            effect: "<i>Dégainer</i> : Coût Seconde +2",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-          {
-            effect: "<i>Dégainer</i> : Coût Seconde +2",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-          {
-            effect: "<i>Dégainer</i> : Coût Seconde +2",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-          {
-            effect: "<i>Dégainer</i> : Coût Seconde +2",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Heavy",
-      },
-      {
         id: "penetrating",
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect: "Pénétration +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Penetrating",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Pénétration +1</br>\
-            Viser : Pénétration +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Penetrating+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Pénétration +1</br>\
-            Viser : Pénétration +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Penetrating+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Pénétration +1</br>\
-            Viser : Pénétration +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Penetrating+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              "Pénétration +1</br>\
-            Viser : Pénétration +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Penetrating+",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
@@ -2257,7 +2308,9 @@ RULESET["keywords"] = {
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Versatile",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
@@ -2275,7 +2328,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Versatile",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
@@ -2293,7 +2348,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Versatile",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
@@ -2311,7 +2368,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Versatile",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
@@ -2329,7 +2388,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect: "Peut avoir deux mains pour <i>Attaquer</i> : Dégât +1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Versatile",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
@@ -2350,109 +2411,411 @@ RULESET["keywords"] = {
         label: "ATORIA.Ruleset.Keywords.Versatile",
       },
       {
-        id: "quick",
+        id: "throwable",
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect: "<i>Dégainer</i> : Coût Seconde -1",
-            skill_alterations: [],
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Throwable",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
           {
-            effect:
-              "<i>Dégainer</i> : Coût Seconde -1</br>\
-            Vous pouvez utiliser une technique le tour où vous dégainez ou récupérez votre arme.",
-            skill_alterations: [],
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Throwable+",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 2,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
           {
-            effect:
-              "<i>Dégainer</i> : Coût Seconde -2</br>\
-            Vous pouvez utiliser une technique le tour où vous dégainez ou récupérez votre arme.",
-            skill_alterations: [],
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Throwable+",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 2,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
           {
-            effect:
-              "<i>Dégainer</i> : Coût Seconde -2</br>\
-            Vous pouvez utiliser une technique le tour où vous dégainez ou récupérez votre arme.",
-            skill_alterations: [],
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Throwable+",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 2,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
           {
-            effect:
-              "<i>Dégainer</i> : Coût Seconde -2</br>\
-            Vous pouvez utiliser une technique le tour où vous dégainez ou récupérez votre arme.",
-            skill_alterations: [],
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Throwable+",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 2,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
             limit_amount: 0,
           },
         ],
-        label: "ATORIA.Ruleset.Keywords.Quick",
-      },
-      {
-        id: "recharge",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect: "Nécessite <i>Recharger</i> après chaque attaque.",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Recharge",
-      },
-      {
-        id: "somatic",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect:
-              "Les mains sur l'objet sont considérées comme libres pour les Composantes - Somatiques.",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Somatic",
-      },
-      {
-        id: "reserve",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect:
-              "Peut contenir jusqu'à X mana.</br>\
-            Lors d'un repos, vous pouvez dépenser du mana pour le remplir.",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-          {
-            effect:
-              "Peut contenir jusqu'à X mana.</br>\
-            Lors d'un repos, vous pouvez dépenser du mana pour le remplir.",
-            skill_alterations: [],
-            limit_amount: 0,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Reserve",
+        label: "ATORIA.Ruleset.Keywords.Throwable",
       },
       {
         id: "sly",
         is_shown_on_attack: true,
         initial_levels: [
           {
-            effect:
-              'Surprise : Dégât maximum +*X, ignore l\'armure et applique "Saignement".',
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Sly",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect:
-              'Surprise : Dégât maximum +*X, ignore l\'armure et applique "Saignement".',
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Sly",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
         ],
         label: "ATORIA.Ruleset.Keywords.Sly",
+      },
+      {
+        id: "direct",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Direct",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Direct",
+            ),
+            skill_alterations: [],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Direct",
+      },
+      // ------
+      {
+        id: "gruff",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Gruff",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.FORCE_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Gruff+",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.FORCE_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Gruff++",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.FORCE_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Gruff+++",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.FORCE_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 2,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Gruff",
+      },
+      {
+        id: "tough",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Tough",
+            ),
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Tough+",
+            ),
+            skill_alterations: [],
+            limit_amount: 2,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Tough++",
+            ),
+            skill_alterations: [],
+            limit_amount: 3,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Tough+++",
+            ),
+            skill_alterations: [],
+            limit_amount: 5,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Tough++++",
+            ),
+            skill_alterations: [],
+            limit_amount: 7,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Tough",
+      },
+      {
+        id: "grip",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Grip",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Grip+",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 0,
+                adv_amount: 1,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Grip",
+      },
+      {
+        id: "resistant",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Resistant",
+            ),
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Resistant+",
+            ),
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Resistant++",
+            ),
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Resistant+++",
+            ),
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Resistant++++",
+            ),
+            skill_alterations: [],
+            limit_amount: 2,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Resistant",
+      },
+      {
+        id: "sturdy",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Sturdy",
+            ),
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Sturdy+",
+            ),
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Sturdy++",
+            ),
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Sturdy+++",
+            ),
+            skill_alterations: [],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Sturdy++++",
+            ),
+            skill_alterations: [],
+            limit_amount: 2,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Sturdy",
+      },
+      {
+        id: "stable",
+        is_shown_on_attack: false,
+        initial_levels: [
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Stable",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Stable+",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Stable++",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 1,
+          },
+          {
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Stable+++",
+            ),
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
+                dos_mod: 1,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 2,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Stable",
       },
       // ---
       {
@@ -2460,7 +2823,9 @@ RULESET["keywords"] = {
         is_shown_on_attack: false,
         initial_levels: [
           {
-            effect: "DR Discrétion - Silence / Furtivité -1 en déplacement.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Noisy",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.SILENCE_SKILL_PATH,
@@ -2478,8 +2843,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Désavantage Discrétion - Silence / Furtivité en déplacement.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Noisy+",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.SILENCE_SKILL_PATH,
@@ -2497,8 +2863,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Désavantage DR Discrétion - Silence / Furtivité -1 en déplacement.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Noisy++",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.SILENCE_SKILL_PATH,
@@ -2516,8 +2883,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Désavantage DR Discrétion - Silence / Furtivité -1 en déplacement.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Noisy++",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.SILENCE_SKILL_PATH,
@@ -2535,8 +2903,9 @@ RULESET["keywords"] = {
             limit_amount: 0,
           },
           {
-            effect:
-              "Désavantage DR Discrétion - Silence / Furtivité -1 en déplacement.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Noisy++",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.SILENCE_SKILL_PATH,
@@ -2561,12 +2930,16 @@ RULESET["keywords"] = {
         is_shown_on_attack: false,
         initial_levels: [
           {
-            effect: "[[-1]]{initiative}",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Obstruct",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
           {
-            effect: "[[-1d2]]{initiative}",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Obstruct",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
@@ -2578,7 +2951,9 @@ RULESET["keywords"] = {
         is_shown_on_attack: false,
         initial_levels: [
           {
-            effect: "DR Perception -1",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Restrictive",
+            ),
             skill_alterations: [
               {
                 associated_skill: RULESET.character.SIGHT_PERCEPTION_SKILL_PATH,
@@ -2625,355 +3000,19 @@ RULESET["keywords"] = {
         ],
         label: "ATORIA.Ruleset.Keywords.Restrictive",
       },
-      // --------------------------------
-      {
-        id: "gruff",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect: "<i>Bousculer</i> : DR Robustesse - Force +1",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.FORCE_SKILL_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "<i>Bousculer</i> : DR Robustesse - Force +1</br>\
-            Cible : Initiative -1",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.FORCE_SKILL_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "<i>Bousculer</i> : DR Robustesse - Force +1</br>\
-            Coût Vigueur -1</br>\
-            Cible : Initiative -1",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.FORCE_SKILL_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "<i>Bousculer</i> : DR Robustesse - Force +1</br>\
-            Coût Vigueur -1</br>\
-            Cible : Initiative -1",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.FORCE_SKILL_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 2,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Gruff",
-      },
-      {
-        id: "tough",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect: 'Ignore 1 effet "Saignement"',
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect: 'Ignore 1 effet "Saignement"',
-            skill_alterations: [],
-            limit_amount: 2,
-          },
-          {
-            effect: 'Ignore 1 effet "Saignement"',
-            skill_alterations: [],
-            limit_amount: 3,
-          },
-          {
-            effect: 'Ignore 1 effet "Saignement"',
-            skill_alterations: [],
-            limit_amount: 5,
-          },
-          {
-            effect: 'Ignore 1 effet "Saignement"',
-            skill_alterations: [],
-            limit_amount: 7,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Tough",
-      },
-      {
-        id: "grip",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect: "DR Robustesse - Ténacité +1 contre <i>Lâcher</i>",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-          {
-            effect: "Avantage Robustesse - Ténacité contre <i>Lâcher</i>",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
-                dos_mod: 0,
-                adv_amount: 1,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Avantage Robustesse - Ténacité contre <i>Lâcher</i></br>\
-            Viser : DR Arme +1",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
-                dos_mod: 0,
-                adv_amount: 1,
-                disadv_amount: 0,
-              },
-              {
-                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-              {
-                associated_skill: RULESET.character.MARTIAL_APART_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Avantage Robustesse - Ténacité contre <i>Lâcher</i></br>\
-            DR Arme +1",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
-                dos_mod: 0,
-                adv_amount: 1,
-                disadv_amount: 0,
-              },
-              {
-                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-              {
-                associated_skill: RULESET.character.MARTIAL_APART_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Grip",
-      },
-      {
-        id: "resistant",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect:
-              "Attaquant : Dégât > 8</br>\
-            Vous : Résistance +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Attaquant : Dégât > 7</br>\
-            Vous : Résistance +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Attaquant : Dégât > 6</br>\
-            Vous : Résistance +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Attaquant : Dégât > 5</br>\
-            Vous : Résistance +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Attaquant : Dégât > 5</br>\
-            Vous : Résistance +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 2,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Resistant",
-      },
-      {
-        id: "sturdy",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect:
-              "Attaquant : Dégât > 8</br>\
-            Vous : Armure +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Attaquant : Dégât > 7</br>\
-            Vous : Armure +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Attaquant : Dégât > 6</br>\
-            Vous : Armure +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Attaquant : Dégât > 5</br>\
-            Vous : Armure +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect:
-              "Attaquant : Dégât > 5</br>\
-            Vous : Armure +1 contre l'attaque.",
-            skill_alterations: [],
-            limit_amount: 2,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Sturdy",
-      },
-      {
-        id: "stable",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect: "Repousse : Vous : DR Robustesse - Ténacité +1.",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-          {
-            effect: "Pousse : Vous : DR Robustesse - Ténacité +1.",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-          {
-            effect: "Déplacement forcé : Vous : DR Robustesse - Ténacité +1.",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 1,
-          },
-          {
-            effect: "Déplacement forcé : Vous : DR Robustesse - Ténacité +1.",
-            skill_alterations: [
-              {
-                associated_skill: RULESET.character.TENACITY_SKILL_PATH,
-                dos_mod: 1,
-                adv_amount: 0,
-                disadv_amount: 0,
-              },
-            ],
-            limit_amount: 2,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Stable",
-      },
-      {
-        id: "direct",
-        is_shown_on_attack: false,
-        initial_levels: [
-          {
-            effect: "Attaquer avec X : Coût Seconde -1.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-          {
-            effect: "Attaquer avec X : Coût Seconde -1.",
-            skill_alterations: [],
-            limit_amount: 1,
-          },
-        ],
-        label: "ATORIA.Ruleset.Keywords.Direct",
-      },
       {
         id: "preserve",
         is_shown_on_attack: false,
         initial_levels: [
           {
-            effect:
-              "Peut contenir jusqu'à X d'une ressource qui augmente de Y.</br>\
-            Peut être utilisée pour payer le coût d'une réussite de sort.</br>\
-            5 endurance sont considérés comme une seule quantité X.",
+            effect: game.i18n.localize(
+              "ATORIA.Ruleset.Keywords_description.Preserve",
+            ),
             skill_alterations: [],
             limit_amount: 0,
           },
         ],
-        label: "ATORIA.Ruleset.Keywords.Preserve",
+        label: "ATORIA.Ruleset.Keywords.Preserve.Label",
       },
     ];
   },
