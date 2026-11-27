@@ -13,6 +13,13 @@ export default class AtoriaInventoryItem extends atoria_models.AtoriaItemBase {
         max: utils.ruleset.keywords.max_amount.two_handed,
         label: "ATORIA.Ruleset.Keywords.Two_handed",
       }),
+      sharpened: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+        max: utils.ruleset.keywords.max_amount.sharpened,
+        label: "ATORIA.Ruleset.Keywords.Sharpened",
+      }),
       reach: new fields.NumberField({
         required: true,
         initial: 0,

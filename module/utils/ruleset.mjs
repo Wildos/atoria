@@ -1699,6 +1699,7 @@ RULESET["keywords"] = {
   },
   max_amount: {
     two_handed: 5,
+    sharpened: 1,
     reach: 5,
     brute: 5,
     deployable: 5,
@@ -1731,6 +1732,7 @@ RULESET["keywords"] = {
   },
   weapon_linked: [
     "two_handed",
+    "sharpened",
     "deployable",
     "smash",
     "throwable",
@@ -1828,6 +1830,33 @@ RULESET["keywords"] = {
           },
         ],
         label: "ATORIA.Ruleset.Keywords.Two_handed",
+      },
+      {
+        id: "sharpened",
+        is_shown_on_attack: true,
+        initial_levels: [
+          {
+            effect:
+              "Arme perforante ou tranchante : Pénétration +1</br>\
+              Dissipé après Combat.",
+            skill_alterations: [
+              {
+                associated_skill: RULESET.character.MARTIAL_CONTACT_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+              {
+                associated_skill: RULESET.character.MARTIAL_APART_PATH,
+                dos_mod: 0,
+                adv_amount: 0,
+                disadv_amount: 0,
+              },
+            ],
+            limit_amount: 0,
+          },
+        ],
+        label: "ATORIA.Ruleset.Keywords.Sharpened",
       },
       {
         id: "reach",

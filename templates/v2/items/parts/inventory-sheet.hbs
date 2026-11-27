@@ -9,6 +9,11 @@
                     input=@root.atoria_inputs.visualNumberInput
                     max=4
                     }}
+                    {{ formInput systemFields.keywords.fields.sharpened
+                    value=system.keywords.sharpened disabled=(not @root.editable)
+                    input=@root.atoria_inputs.visualNumberInput
+                    max=1
+                    }}
                     {{ formInput systemFields.keywords.fields.reach
                     value=system.keywords.reach disabled=(not @root.editable)
                     input=@root.atoria_inputs.visualNumberInput
