@@ -1,58 +1,51 @@
-<li class="item {{item.type}} atoria-horizontal-bar flexcol" data-item-id="{{item._id}}">
+<li class="item {{item.type}} atoria-item-preserve-edit atoria-horizontal-bar flexrow" data-item-id="{{item._id}}">
     <label class="name">{{item.name}}</label>
-    {{#if item.keywords_recap.has_preserve}}
-    {{!-- <div class="flexrow"> --}}
-        <label>
-            {{localize item.systemFields.keywords.fields.preserve.label}}
-            {{item.system.keywords.preserve.max_amount}}
-            {{localize (lookup item.systemFields.keywords.fields.preserve.fields.type.choices
-                item.system.keywords.preserve.type)}}
-            {{item.system.keywords.preserve.increment}}
-            <span style="margin: 0px 10px; border-left: dashed var(--color-text-primary) 1px"> </span>
-            {{item.system.keywords.preserve.trigger}}
-        </label>
-        {{#if (includes (arraytize "all" "mana") item.system.keywords.preserve.type)}}
-        <label>{{localize item.systemFields.keywords.fields.preserve_mana.label}}:
-            <input class="item-update float-input" data-name="system.keywords.preserve_mana"
-            type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_mana}}"
-            data-tooltip="{{localize item.systemFields.keywords.fields.preserve_mana.label}}" {{disabled (not @root.editable)}}/>
-        </label>
+    <div class="atoria-item-edit-area flexcol">
+        {{#if item.keywords_recap.has_preserve}}
+        <div class="flexrow">
+            <label data-tooltip="{{item.system.keywords.preserve.trigger}}">
+                {{localize item.systemFields.keywords.fields.preserve.label}}
+            </label>
+            {{#if (includes (arraytize "all" "mana") item.system.keywords.preserve.type)}}
+                <input class="item-update atoria-mana colored" data-name="system.keywords.preserve_mana"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_mana}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_mana.label}}" {{disabled (not @root.editable)}}/>
+            {{/if}}
+            {{#if (includes (arraytize "all" "health") item.system.keywords.preserve.type)}}
+                <input class="item-update atoria-health colored" data-name="system.keywords.preserve_health"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_health}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_health.label}}" {{disabled (not @root.editable)}}/>
+            {{/if}}
+            {{#if (includes (arraytize "all" "stamina") item.system.keywords.preserve.type)}}
+                <input class="item-update atoria-stamina colored" data-name="system.keywords.preserve_stamina"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_stamina}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_stamina.label}}" {{disabled (not @root.editable)}}/>
+            {{/if}}
+            {{#if (includes (arraytize "all" "endurance") item.system.keywords.preserve.type)}}
+                <input class="item-update atoria-endurance colored" data-name="system.keywords.preserve_endurance"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_endurance}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_endurance.label}}" {{disabled (not @root.editable)}}/>
+            {{/if}}
+            {{#if (includes (arraytize "all" "sanity") item.system.keywords.preserve.type)}}
+                <input class="item-update atoria-sanity colored" data-name="system.keywords.preserve_sanity"
+                type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_sanity}}"
+                data-tooltip="{{localize item.systemFields.keywords.fields.preserve_sanity.label}}" {{disabled (not @root.editable)}}/>
+            {{/if}}
+            <label>
+                <span style="margin: 0px 10px; border-left: dashed var(--color-text-primary) 1px"> </span>
+                {{item.system.keywords.preserve.max_amount}}
+                {{localize (lookup item.systemFields.keywords.fields.preserve.fields.type.choices
+                    item.system.keywords.preserve.type)}}
+                {{item.system.keywords.preserve.increment}}
+            </label>
+        </div>
         {{/if}}
-        {{#if (includes (arraytize "all" "health") item.system.keywords.preserve.type)}}
-        <label>{{localize item.systemFields.keywords.fields.preserve_health.label}}:
-            <input class="item-update float-input" data-name="system.keywords.preserve_health"
-            type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_health}}"
-            data-tooltip="{{localize item.systemFields.keywords.fields.preserve_health.label}}" {{disabled (not @root.editable)}}/>
-        </label>
+        {{#if item.keywords_recap.has_reserve}}
+        <label>{{localize item.systemFields.keywords.fields.reserve.label}}
+            <input class="item-update atoria-default-input colored" data-name="system.keywords.reserve_current"
+            type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.reserve_current}}"
+            data-tooltip="{{localize item.systemFields.keywords.fields.reserve_current.label}}" {{disabled (not @root.editable)}}/>
+            / {{item.system.keywords.reserve_max}}</label>
         {{/if}}
-        {{#if (includes (arraytize "all" "stamina") item.system.keywords.preserve.type)}}
-        <label>{{localize item.systemFields.keywords.fields.preserve_stamina.label}}:
-            <input class="item-update float-input" data-name="system.keywords.preserve_stamina"
-            type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_stamina}}"
-            data-tooltip="{{localize item.systemFields.keywords.fields.preserve_stamina.label}}" {{disabled (not @root.editable)}}/>
-        </label>
-        {{/if}}
-        {{#if (includes (arraytize "all" "endurance") item.system.keywords.preserve.type)}}
-        <label>{{localize item.systemFields.keywords.fields.preserve_endurance.label}}:
-            <input class="item-update float-input" data-name="system.keywords.preserve_endurance"
-            type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_endurance}}"
-            data-tooltip="{{localize item.systemFields.keywords.fields.preserve_endurance.label}}" {{disabled (not @root.editable)}}/>
-        </label>
-        {{/if}}
-        {{#if (includes (arraytize "all" "sanity") item.system.keywords.preserve.type)}}
-        <label>{{localize item.systemFields.keywords.fields.preserve_sanity.label}}:
-            <input class="item-update float-input" data-name="system.keywords.preserve_sanity"
-            type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.preserve_sanity}}"
-            data-tooltip="{{localize item.systemFields.keywords.fields.preserve_sanity.label}}" {{disabled (not @root.editable)}}/>
-        </label>
-        {{/if}}
-    {{!-- </div> --}}
-    {{/if}}
-    {{#if item.keywords_recap.has_reserve}}
-    <label>{{localize item.systemFields.keywords.fields.reserve.label}}
-        <input class="item-update float-input" data-name="system.keywords.reserve_current"
-        type="text" inputmode="numeric" data-dtype="Number"  value="{{item.system.keywords.reserve_current}}"
-        data-tooltip="{{localize item.systemFields.keywords.fields.reserve_current.label}}" {{disabled (not @root.editable)}}/>
-        / {{item.system.keywords.reserve_max}}</label>
-    {{/if}}
+    </div>
 </li>

@@ -123,6 +123,10 @@
   --atoria-color-disabled-value: var(--atoria-color-resistance);
   --disabled-background-color: var(--atoria-color-resistance);
 }
+.system-atoria .atoria .atoria-default-input {
+  --atoria-color-disabled-value: var(--input-background-color);
+  --disabled-background-color: var(--input-background-color);
+}
 .system-atoria label,
 .system-atoria h5,
 .system-atoria h6,
@@ -1234,6 +1238,10 @@
 }
 .system-atoria .atoria-item-line-display + .atoria-expand-direct-data > .flexrow {
   gap: var(--atoria-rows-gap) var(--atoria-columns-gap);
+}
+.system-atoria .atoria-item-preserve-edit > .atoria-item-edit-area,
+.system-atoria .atoria-item-preserve-edit > .atoria-item-edit-area * {
+  min-width: fit-content;
 }
 .system-atoria .atoria-character-simple-inventory {
   grid-area: char-smpl-inv;
