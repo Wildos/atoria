@@ -794,6 +794,7 @@ export default class AtoriaItem extends Item {
         critical_effects_data,
       );
       let main_roll_is_success = rolls[0].is_success;
+      let main_roll_is_critical_fumble = rolls[0].is_critical_failure;
 
       await utils.chat_message_from_roll(
         this,
@@ -801,7 +802,7 @@ export default class AtoriaItem extends Item {
         rolls,
         system_data,
       );
-      if (main_roll_is_success) {
+      if (main_roll_is_success || main_roll_is_critical_fumble) {
         for (let supp of roll_parameters.used_supplementaries) {
           this.takeOneSupplementaryUse(supp.id);
         }
