@@ -3262,22 +3262,10 @@ RULESET["actable"] = {
 
 RULESET["status_effects"] = [
   {
-    id: "sharpened",
-    name: "ATORIA.Ruleset.Status_effect.Sharpened.Label",
-    img: "systems/atoria/imgs/sparkling-sabre.svg",
-    description: "ATORIA.Ruleset.Status_effect.Sharpened.Description",
-  },
-  {
     id: "hungry",
     name: "ATORIA.Ruleset.Status_effect.Hungry.Label",
     img: "systems/atoria/imgs/meat.svg",
     description: "ATORIA.Ruleset.Status_effect.Hungry.Description",
-  },
-  {
-    id: "dehydrated",
-    name: "ATORIA.Ruleset.Status_effect.Dehydrated.Label",
-    img: "systems/atoria/imgs/waterskin.svg",
-    description: "ATORIA.Ruleset.Status_effect.Dehydrated.Description",
   },
   {
     id: "banished",
@@ -3310,12 +3298,6 @@ RULESET["status_effects"] = [
     description: "ATORIA.Ruleset.Status_effect.Blindness.Description",
   },
   {
-    id: "charmed",
-    name: "ATORIA.Ruleset.Status_effect.Charmed.Label",
-    img: "systems/atoria/imgs/hearts.svg",
-    description: "ATORIA.Ruleset.Status_effect.Charmed.Description",
-  },
-  {
     id: "shocked",
     name: "ATORIA.Ruleset.Status_effect.Shocked.Label",
     img: "icons/svg/lightning.svg",
@@ -3340,6 +3322,12 @@ RULESET["status_effects"] = [
     description: "ATORIA.Ruleset.Status_effect.Conductive.Description",
   },
   {
+    id: "dehydrated",
+    name: "ATORIA.Ruleset.Status_effect.Dehydrated.Label",
+    img: "systems/atoria/imgs/waterskin.svg",
+    description: "ATORIA.Ruleset.Status_effect.Dehydrated.Description",
+  },
+  {
     id: "drunk",
     name: "ATORIA.Ruleset.Status_effect.Drunk.Label",
     img: "systems/atoria/imgs/beer-stein.svg",
@@ -3358,34 +3346,16 @@ RULESET["status_effects"] = [
     description: "ATORIA.Ruleset.Status_effect.Burning.Description",
   },
   {
-    id: "burning+",
-    name: "ATORIA.Ruleset.Status_effect.Burning+.Label",
-    img: "systems/atoria/imgs/flame+.svg",
-    description: "ATORIA.Ruleset.Status_effect.Burning+.Description",
-  },
-  {
     id: "numb",
     name: "ATORIA.Ruleset.Status_effect.Numb.Label",
     img: "systems/atoria/imgs/hand-bandage.svg",
     description: "ATORIA.Ruleset.Status_effect.Numb.Description",
   },
   {
-    id: "numb+",
-    name: "ATORIA.Ruleset.Status_effect.Numb+.Label",
-    img: "systems/atoria/imgs/hand-bandage+.svg",
-    description: "ATORIA.Ruleset.Status_effect.Numb+.Description",
-  },
-  {
     id: "enraged",
     name: "ATORIA.Ruleset.Status_effect.Enraged.Label",
     img: "systems/atoria/imgs/enrage.svg",
     description: "ATORIA.Ruleset.Status_effect.Enraged.Description",
-  },
-  {
-    id: "stunned",
-    name: "ATORIA.Ruleset.Status_effect.Stunned.Label",
-    img: "systems/atoria/imgs/knocked-out-stars.svg",
-    description: "ATORIA.Ruleset.Status_effect.Stunned.Description",
   },
   {
     id: "evocation",
@@ -3406,12 +3376,6 @@ RULESET["status_effects"] = [
     description: "ATORIA.Ruleset.Status_effect.Frostbite.Description",
   },
   {
-    id: "dazed",
-    name: "ATORIA.Ruleset.Status_effect.Dazed.Label",
-    img: "systems/atoria/imgs/electric.svg",
-    description: "ATORIA.Ruleset.Status_effect.Dazed.Description",
-  },
-  {
     id: "moist",
     name: "ATORIA.Ruleset.Status_effect.Moist.Label",
     img: "systems/atoria/imgs/water-drop.svg",
@@ -3428,6 +3392,12 @@ RULESET["status_effects"] = [
     name: "ATORIA.Ruleset.Status_effect.Disability.Label",
     img: "systems/atoria/imgs/imprisoned.svg",
     description: "ATORIA.Ruleset.Status_effect.Disability.Description",
+  },
+  {
+    id: "incited",
+    name: "ATORIA.Ruleset.Status_effect.Incited.Label",
+    img: "systems/atoria/imgs/angry-eyes.svg",
+    description: "ATORIA.Ruleset.Status_effect.Incited.Description",
   },
   {
     id: "unconscious",
@@ -3474,14 +3444,8 @@ RULESET["status_effects"] = [
   {
     id: "provoked",
     name: "ATORIA.Ruleset.Status_effect.Provoked.Label",
-    img: "systems/atoria/imgs/angry-eyes.svg",
+    img: "systems/atoria/imgs/confrontation.svg",
     description: "ATORIA.Ruleset.Status_effect.Provoked.Description",
-  },
-  {
-    id: "provoked+",
-    name: "ATORIA.Ruleset.Status_effect.Provoked+.Label",
-    img: "systems/atoria/imgs/angry-eyes+.svg",
-    description: "ATORIA.Ruleset.Status_effect.Provoked+.Description",
   },
   {
     id: "slowed",
@@ -3522,7 +3486,7 @@ RULESET["status_effects"] = [
   {
     id: "captivated",
     name: "ATORIA.Ruleset.Status_effect.Captivated.Label",
-    img: "systems/atoria/imgs/lovers.svg",
+    img: "systems/atoria/imgs/hearts.svg",
     description: "ATORIA.Ruleset.Status_effect.Captivated.Description",
   },
   {
@@ -3536,12 +3500,6 @@ RULESET["status_effects"] = [
     name: "ATORIA.Ruleset.Status_effect.Terrified.Label",
     img: "icons/svg/terror.svg",
     description: "ATORIA.Ruleset.Status_effect.Terrified.Description",
-  },
-  {
-    id: "hangover",
-    name: "ATORIA.Ruleset.Status_effect.Hangover.Label",
-    img: "systems/atoria/imgs/beer-stein+.svg",
-    description: "ATORIA.Ruleset.Status_effect.Hangover.Description",
   },
   {
     id: "dead",

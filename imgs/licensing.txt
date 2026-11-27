@@ -70,3 +70,5 @@ broken-skull.svg: https://game-icons.net/1x1/lorc/broken-skull.html, by Lorc und
 cracked-shield.svg: https://game-icons.net/1x1/lorc/cracked-shield.html, by Lorc under CC BY 3.0
 
 static-guard.svg: https://game-icons.net/1x1/lorc/static-guard.html, by Lorc under CC BY 3.0
+
+confrontation.svg: https://game-icons.net/1x1/delapouite/confrontation.html, by Delapouite under CC BY 3.0
